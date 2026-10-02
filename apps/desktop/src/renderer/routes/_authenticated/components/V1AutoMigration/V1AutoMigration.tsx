@@ -6,6 +6,7 @@ import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { authClient } from "renderer/lib/auth-client";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { posthog } from "renderer/lib/posthog";
+import { electronTrpcClient } from "renderer/lib/trpc-client";
 import { runV1Migration } from "renderer/lib/v1-migration";
 import { listV1AttentionItems } from "renderer/lib/v1-migration/attention";
 import {
@@ -25,6 +26,7 @@ import {
 import { scopeV1MigrationIpc } from "renderer/lib/v1-migration/ownership";
 import { planV1AutoPass } from "renderer/lib/v1-migration/pass";
 import {
+	isHostVersionSkewV1MigrationFailure,
 	isTransientV1MigrationFailure,
 	nextV1MigrationRetryDelayMs,
 } from "renderer/lib/v1-migration/retry";
@@ -55,7 +57,9 @@ import { appendPendingMigratedTerminals } from "renderer/stores/workspace-create
  * Cross-instance single-flight via a main-process lock file. A pass that
  * throws, or leaves the gate open only for transient reasons (network,
  * host-service down), re-arms itself on a short backoff within the session;
- * anything else waits for the next boot.
+ * anything else waits for the next boot. A pass that throws because the
+ * adopted host-service is older than this desktop resets that host-service
+ * once per session first, so the retry reaches a current one.
  */
 async function listGatingFailureReasons(
 	ipc: V1MigrationIpc,
@@ -96,6 +100,7 @@ export function V1AutoMigration() {
 	const retryAttemptsRef = useRef<Map<string, number>>(new Map());
 	const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 	const activeOrgRef = useRef<string | null>(null);
+	const hostResetOrgsRef = useRef<Set<string>>(new Set());
 	const [retryTick, setRetryTick] = useState(0);
 
 	const organizationId = session?.session?.activeOrganizationId ?? null;
@@ -351,14 +356,36 @@ export function V1AutoMigration() {
 			} catch (err) {
 				// Retries next boot; the ledger holds whatever progress landed.
 				console.error("[v1-migration] auto pass failed", err);
+				const message = err instanceof Error ? err.message : String(err);
+				const durationMs = Date.now() - startedAt;
+				// Terminals live in the pty-daemon, which outlives a host-service
+				// reset, so this is safe on either surface.
+				let hostReset: "ok" | "failed" | undefined;
+				if (
+					isHostVersionSkewV1MigrationFailure(message) &&
+					!hostResetOrgsRef.current.has(organizationId)
+				) {
+					hostResetOrgsRef.current.add(organizationId);
+					try {
+						await electronTrpcClient.hostServiceCoordinator.reset.mutate({
+							organizationId,
+						});
+						hostReset = "ok";
+					} catch (resetError) {
+						hostReset = "failed";
+						console.error(
+							"[v1-migration] host-service reset failed",
+							resetError,
+						);
+					}
+				}
 				posthog.capture("v1_auto_migration_failed", {
 					trigger,
-					duration_ms: Date.now() - startedAt,
-					error: err instanceof Error ? err.message : String(err),
+					duration_ms: durationMs,
+					error: message,
+					host_reset: hostReset,
 				});
-				const retrying = scheduleRetry([
-					err instanceof Error ? err.message : String(err),
-				]);
+				const retrying = scheduleRetry([message]);
 				if (showsProgress && !retrying) {
 					setStatus(organizationId, "blocked");
 				}
