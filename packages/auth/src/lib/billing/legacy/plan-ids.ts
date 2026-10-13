@@ -1,19 +1,24 @@
 import type { PlanTier } from "@superset/shared/billing";
 
-export const SEATS_FEATURE_ID = "seats";
+/**
+ * @deprecated Plan ids only translate what released desktops send to
+ * `/subscription/upgrade`; new clients pick plans from Autumn.
+ */
+// TODO(2027-01-31): drop; desktops before the first build on /api/auth/autumn/* send { plan: "pro", annual }.
 export const PRO_MONTHLY_PLAN_ID = "pro";
+/** @deprecated See PRO_MONTHLY_PLAN_ID. */
 export const PRO_ANNUAL_PLAN_ID = "pro_annual";
 
-const PRO_PLAN_IDS = new Set([PRO_MONTHLY_PLAN_ID, PRO_ANNUAL_PLAN_ID]);
-
+/** @deprecated See PRO_MONTHLY_PLAN_ID. */
 export function autumnPlanIdFor(annual: boolean): string {
 	return annual ? PRO_ANNUAL_PLAN_ID : PRO_MONTHLY_PLAN_ID;
 }
 
-export function isPaidAutumnPlan(planId: string): boolean {
-	return PRO_PLAN_IDS.has(planId) || planId.startsWith("enterprise");
-}
-
+/**
+ * @deprecated Reads a tier from a Stripe price for subscriptions Autumn has
+ * not imported yet.
+ */
+// TODO(2027-01-31): drop; once the flip to Autumn is verified, every subscription has Autumn flags.
 export function planFromStripePrice(
 	priceId: string | undefined,
 	prices: { pro: string[]; enterprise: string[] },
@@ -22,10 +27,4 @@ export function planFromStripePrice(
 	if (prices.enterprise.includes(priceId)) return "enterprise";
 	if (prices.pro.includes(priceId)) return "pro";
 	return null;
-}
-
-export function legacyPlanName(
-	autumnPlanId: string,
-): Exclude<PlanTier, "free"> {
-	return autumnPlanId.startsWith("enterprise") ? "enterprise" : "pro";
 }

@@ -1,394 +1,499 @@
-import { ensureAutumnCustomer } from "@superset/auth/billing";
-import { db, dbWs } from "@superset/db/client";
-import { cloudWorkspaceSessions, cloudWorkspaces } from "@superset/db/schema";
-import { and, count, eq, inArray, isNull, lt, max, or, sql } from "drizzle-orm";
-import { autumn, BOX_MINUTES_FEATURE_ID } from "../../lib/billing/autumn";
+import { randomUUID } from "node:crypto";
+import * as Sentry from "@sentry/core";
+import { autumnClient } from "@superset/auth/autumn";
 import {
+	ACTIVE_CPU_MINUTES_FEATURE_ID,
+	BOX_GB_MINUTES_FEATURE_ID,
+	ensureAutumnCustomer,
+} from "@superset/auth/billing";
+import { db } from "@superset/db/client";
+import { cloudWorkspaceBoots, cloudWorkspaces } from "@superset/db/schema";
+import { and, eq, inArray, isNull, lt, ne, or, sql } from "drizzle-orm";
+import { userError } from "../../i18n-error";
+import {
+	findSandboxSession,
+	IMAGE_SANDBOX_VCPUS,
 	listActiveWorkspaceSandboxes,
-	listSandboxSessions,
-	type SandboxSession,
+	MEMORY_MB_PER_VCPU,
+	stopSandbox,
 } from "../../lib/sandbox";
 import { publishCloudWorkspaceJob } from "./jobs";
 
-export const STANDARD_BOX_VCPUS = 8;
-const MIN_RUNNING_REPORT_MS = 60_000;
+const LOCK_WINDOW_MS = 15 * 60 * 1000;
+const LOCK_TTL_MS = 40 * 60 * 1000;
+const SETTLE_LEASE_MS = 2 * 60 * 1000;
+const UNATTACHED_BOOT_GRACE_MS = 30 * 60 * 1000;
 const RECONCILE_LOOKBACK_MS = 30 * 60 * 1000;
 const RECONCILE_CONCURRENCY = 25;
-const FIRST_SIGHT_GRACE_MS = 24 * 60 * 60 * 1000;
-const RECORDED_EVENT_WINDOW_MS = 5 * 60 * 1000;
-const RECORDED_EVENT_PAGES = 5;
 
-type SessionRow = typeof cloudWorkspaceSessions.$inferSelect;
+export const DEFAULT_BOX = {
+	memoryMb: IMAGE_SANDBOX_VCPUS * MEMORY_MB_PER_VCPU,
+	vcpus: IMAGE_SANDBOX_VCPUS,
+};
 
-export class UsageReportError extends AggregateError {}
+type Boot = typeof cloudWorkspaceBoots.$inferSelect;
+type Refusal = "cloudNeedsPaidPlan" | "usageLimitReached";
 
-export function boxMinutes(ms: number, vcpus: number): number {
-	return (ms / 60_000) * (vcpus / STANDARD_BOX_VCPUS);
-}
-
-export function observedMs(session: SandboxSession, now: number): number {
-	return Math.max(0, (session.endedAt ?? now) - session.startedAt);
-}
-
-export function unreportedMs(row: SessionRow): number {
-	const delta = row.observedMs - row.reportedMs;
-	if (row.stoppedAt === null && delta < MIN_RUNNING_REPORT_MS) return 0;
-	return Math.max(0, delta);
-}
-
-export function initialReportedMs(
-	session: SandboxSession,
-	now: number,
-	context: { reporting: boolean; firstSight: boolean },
-): number {
-	const ms = observedMs(session, now);
-	if (!context.reporting) return ms;
-	const endedLongAgo =
-		session.endedAt !== null && session.endedAt < now - FIRST_SIGHT_GRACE_MS;
-	return context.firstSight && endedLongAgo ? ms : 0;
-}
-
-export function rangeKey(row: SessionRow, to: number): string {
-	return `${row.id}:${row.reportedMs}-${to}`;
-}
-
-async function usageAlreadyRecorded(args: {
-	organizationId: string;
-	key: string;
-	timestamp: number;
-}): Promise<boolean> {
-	if (!autumn) return false;
-	let startCursor: string | undefined;
-	for (let page = 0; page < RECORDED_EVENT_PAGES; page += 1) {
-		const { list, nextCursor } = await autumn.events.list({
-			customerId: args.organizationId,
-			featureId: BOX_MINUTES_FEATURE_ID,
-			customRange: {
-				start: args.timestamp - RECORDED_EVENT_WINDOW_MS,
-				end: args.timestamp + RECORDED_EVENT_WINDOW_MS,
-			},
-			limit: 100,
-			...(startCursor ? { startCursor } : {}),
-		});
-		if (list.some((event) => event.properties?.rangeKey === args.key)) {
-			return true;
-		}
-		if (!nextCursor) return false;
-		startCursor = nextCursor;
-	}
-	throw new Error(
-		`[cloud-workspace] could not confirm whether ${args.key} was recorded`,
-	);
-}
-
-export function meteringCutoff(bounds: {
-	oldestOpenStart: Date | null;
-	lastStop: Date | null;
-	workspaceCreatedAt: Date;
+export function gbMinutes({
+	ms,
+	memoryMb,
+}: {
+	ms: number;
+	memoryMb: number;
 }): number {
-	return (
-		bounds.oldestOpenStart ??
-		bounds.lastStop ??
-		bounds.workspaceCreatedAt
-	).getTime();
+	return (Math.max(0, ms) / 60_000) * (memoryMb / 1024);
 }
 
-async function recordSessions(workspace: {
-	id: string;
-	providerSandboxId: string;
-	createdAt: Date;
-	billable: boolean;
-}): Promise<void> {
-	const reporting = autumn !== null && workspace.billable;
-	const [bounds] = await db
-		.select({
-			oldestOpenStart:
-				sql<Date | null>`min(${cloudWorkspaceSessions.startedAt}) filter (where ${cloudWorkspaceSessions.stoppedAt} is null)`.mapWith(
-					cloudWorkspaceSessions.startedAt,
-				),
-			lastStop: max(cloudWorkspaceSessions.stoppedAt),
-			count: count(),
-		})
-		.from(cloudWorkspaceSessions)
-		.where(eq(cloudWorkspaceSessions.cloudWorkspaceId, workspace.id));
-	const firstSight = (bounds?.count ?? 0) === 0;
-	const sessions = await listSandboxSessions(
-		workspace.providerSandboxId,
-		meteringCutoff({
-			oldestOpenStart: bounds?.oldestOpenStart ?? null,
-			lastStop: bounds?.lastStop ?? null,
-			workspaceCreatedAt: workspace.createdAt,
-		}),
-	);
-	if (sessions === null) {
-		await db
-			.update(cloudWorkspaceSessions)
-			.set({
-				stoppedAt: sql`${cloudWorkspaceSessions.startedAt} + make_interval(secs => ${cloudWorkspaceSessions.observedMs} / 1000.0)`,
-			})
-			.where(
-				and(
-					eq(cloudWorkspaceSessions.cloudWorkspaceId, workspace.id),
-					isNull(cloudWorkspaceSessions.stoppedAt),
-				),
-			);
-		return;
-	}
-	if (sessions.length === 0) return;
-	const now = Date.now();
-	const observed = sql`greatest(${cloudWorkspaceSessions.observedMs}, excluded.observed_ms)`;
-	await db
-		.insert(cloudWorkspaceSessions)
-		.values(
-			sessions.map((session) => ({
-				id: session.id,
-				cloudWorkspaceId: workspace.id,
-				vcpus: session.vcpus,
-				startedAt: new Date(session.startedAt),
-				stoppedAt: session.endedAt === null ? null : new Date(session.endedAt),
-				observedMs: observedMs(session, now),
-				reportedMs: initialReportedMs(session, now, { reporting, firstSight }),
-			})),
-		)
-		.onConflictDoUpdate({
-			target: cloudWorkspaceSessions.id,
-			set: {
-				stoppedAt: sql`coalesce(excluded.stopped_at, ${cloudWorkspaceSessions.stoppedAt})`,
-				observedMs: observed,
-				...(reporting ? {} : { reportedMs: observed }),
-				updatedAt: new Date(),
-			},
-		});
+export function lockIdFor(bootId: string, seq: number): string {
+	return `${bootId}:${seq}`;
 }
 
-async function reportSession(args: {
-	row: SessionRow;
+export function refusalFor(result: {
+	allowed: boolean;
+	balance: unknown;
+}): Refusal | null {
+	if (result.allowed) return null;
+	return result.balance ? "usageLimitReached" : "cloudNeedsPaidPlan";
+}
+
+const REFUSAL_MESSAGES: Record<Refusal, string> = {
+	cloudNeedsPaidPlan:
+		"Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one.",
+	usageLimitReached:
+		"Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace.",
+};
+
+function refusalError(refusal: Refusal) {
+	return userError({
+		code: "FORBIDDEN",
+		message: REFUSAL_MESSAGES[refusal],
+		i18nKey: `serverError.cloudWorkspace.${refusal}`,
+	});
+}
+
+function reservation(memoryMb: number): number {
+	return gbMinutes({ ms: LOCK_WINDOW_MS, memoryMb });
+}
+
+const OPEN_BOOT = or(
+	isNull(cloudWorkspaceBoots.stoppedAt),
+	isNull(cloudWorkspaceBoots.finalizedThrough),
+	lt(cloudWorkspaceBoots.finalizedThrough, cloudWorkspaceBoots.stoppedAt),
+);
+
+export async function assertMayBoot(
+	organizationId: string,
+	box = DEFAULT_BOX,
+): Promise<void> {
+	await ensureAutumnCustomer(organizationId);
+	const result = await autumnClient.check({
+		customerId: organizationId,
+		featureId: BOX_GB_MINUTES_FEATURE_ID,
+		requiredBalance: reservation(box.memoryMb),
+	});
+	const refusal = refusalFor(result);
+	if (refusal) throw refusalError(refusal);
+}
+
+export async function authorizeBoot(args: {
 	organizationId: string;
-	createdByUserId: string | null;
-	projectId: string | null;
-}): Promise<number> {
-	const { row } = args;
-	if (!autumn) return 0;
-	const tracker = autumn;
-	const isResend = row.inflightToMs !== null;
-	let to = row.inflightToMs;
-	if (to === null) {
-		if (unreportedMs(row) === 0) return 0;
-		const claimed = await db
-			.update(cloudWorkspaceSessions)
-			.set({ inflightToMs: row.observedMs })
-			.where(
-				and(
-					eq(cloudWorkspaceSessions.id, row.id),
-					eq(cloudWorkspaceSessions.reportedMs, row.reportedMs),
-					isNull(cloudWorkspaceSessions.inflightToMs),
-				),
-			)
-			.returning({ id: cloudWorkspaceSessions.id });
-		if (claimed.length === 0) return 0;
-		to = row.observedMs;
-	}
-	const range = to;
-	const delta = range - row.reportedMs;
-	const key = rangeKey(row, range);
-	const timestamp = row.startedAt.getTime() + range;
-	return dbWs.transaction(async (tx) => {
-		await tx.execute(
-			sql`select pg_advisory_xact_lock(hashtextextended(${`box-usage:${row.id}`}, 0))`,
-		);
-		const [current] = await tx
-			.select({ inflightToMs: cloudWorkspaceSessions.inflightToMs })
-			.from(cloudWorkspaceSessions)
-			.where(eq(cloudWorkspaceSessions.id, row.id));
-		if (current?.inflightToMs !== range) return 0;
-		const recorded =
-			isResend &&
-			(await usageAlreadyRecorded({
-				organizationId: args.organizationId,
-				key,
-				timestamp,
-			}));
-		if (!recorded) {
-			const result = await tracker.track(
-				{
-					customerId: args.organizationId,
-					featureId: BOX_MINUTES_FEATURE_ID,
-					value: boxMinutes(delta, row.vcpus),
-					timestamp,
-					overageBehavior: "overflow",
-					async: false,
-					properties: {
-						cloudWorkspaceId: row.cloudWorkspaceId,
-						sessionId: row.id,
-						projectId: args.projectId,
-						userId: args.createdByUserId,
-						vcpus: row.vcpus,
-						wallMs: delta,
-						rangeKey: key,
-					},
-				},
-				{ headers: { "Idempotency-Key": key } },
-			);
-			if (!result.balance) {
-				throw new Error(
-					`[cloud-workspace] ${args.organizationId} has no ${BOX_MINUTES_FEATURE_ID} balance; usage for ${key} was not recorded`,
-				);
-			}
-		}
-		await tx
-			.update(cloudWorkspaceSessions)
-			.set({ reportedMs: range, inflightToMs: null })
-			.where(eq(cloudWorkspaceSessions.id, row.id));
-		return delta;
+	cloudWorkspaceId: string;
+	memoryMb: number;
+	vcpus: number;
+}): Promise<{ bootId: string }> {
+	await ensureAutumnCustomer(args.organizationId);
+	const bootId = `boot_${randomUUID()}`;
+	const result = await autumnClient.check({
+		customerId: args.organizationId,
+		featureId: BOX_GB_MINUTES_FEATURE_ID,
+		requiredBalance: reservation(args.memoryMb),
+		lock: {
+			enabled: true,
+			lockId: lockIdFor(bootId, 0),
+			expiresAt: Date.now() + LOCK_TTL_MS,
+		},
 	});
+	const refusal = refusalFor(result);
+	if (refusal) throw refusalError(refusal);
+	await db.insert(cloudWorkspaceBoots).values({
+		id: bootId,
+		organizationId: args.organizationId,
+		cloudWorkspaceId: args.cloudWorkspaceId,
+		memoryMb: args.memoryMb,
+		vcpus: args.vcpus,
+		startedAt: new Date(),
+	});
+	return { bootId };
 }
 
-export async function meterCloudWorkspace(
-	cloudWorkspaceId: string,
-): Promise<{ reportedMs: number }> {
-	const [workspace] = await db
-		.select({
-			provider: cloudWorkspaces.provider,
-			providerSandboxId: cloudWorkspaces.providerSandboxId,
-			organizationId: cloudWorkspaces.organizationId,
-			createdByUserId: cloudWorkspaces.createdByUserId,
-			createdAt: cloudWorkspaces.createdAt,
-			status: cloudWorkspaces.status,
-			projectId: cloudWorkspaces.projectId,
-		})
-		.from(cloudWorkspaces)
-		.where(eq(cloudWorkspaces.id, cloudWorkspaceId));
-	if (!workspace || workspace.provider !== "vercel") return { reportedMs: 0 };
-
-	const billable = workspace.status !== "failed";
-	await recordSessions({
-		id: cloudWorkspaceId,
-		providerSandboxId: workspace.providerSandboxId,
-		createdAt: workspace.createdAt,
-		billable,
-	});
-	if (!autumn || !billable) return { reportedMs: 0 };
-
-	const unsettled = await db
+export async function releaseBoot(bootId: string): Promise<void> {
+	const [boot] = await db
 		.select()
-		.from(cloudWorkspaceSessions)
+		.from(cloudWorkspaceBoots)
+		.where(eq(cloudWorkspaceBoots.id, bootId));
+	if (!boot || boot.stoppedAt) return;
+	if (boot.lockOpen) {
+		await autumnClient.balances
+			.finalize({
+				lockId: lockIdFor(boot.id, boot.lockSeq),
+				action: "release",
+			})
+			.catch((error) =>
+				console.error(
+					`[cloud-workspace/meter] release of ${bootId} failed`,
+					error,
+				),
+			);
+	}
+	const now = new Date();
+	await db
+		.update(cloudWorkspaceBoots)
+		.set({
+			stoppedAt: now,
+			finalizedThrough: now,
+			lockOpen: false,
+			settleLeaseUntil: null,
+		})
+		.where(eq(cloudWorkspaceBoots.id, bootId));
+}
+
+export async function attachBootSession(args: {
+	bootId: string;
+	providerSandboxId: string;
+}): Promise<void> {
+	const found = await findSandboxSession(args.providerSandboxId, null);
+	const session = found?.session;
+	if (!session) return;
+	const attached = await db
+		.update(cloudWorkspaceBoots)
+		.set({
+			vercelSessionId: session.id,
+			startedAt: new Date(session.startedAt),
+			memoryMb: session.memoryMb,
+			vcpus: session.vcpus,
+		})
 		.where(
 			and(
-				eq(cloudWorkspaceSessions.cloudWorkspaceId, cloudWorkspaceId),
-				lt(
-					cloudWorkspaceSessions.reportedMs,
-					cloudWorkspaceSessions.observedMs,
-				),
+				eq(cloudWorkspaceBoots.id, args.bootId),
+				isNull(cloudWorkspaceBoots.vercelSessionId),
+				sql`not exists (select 1 from ${cloudWorkspaceBoots} other where other.vercel_session_id = ${session.id})`,
 			),
-		);
-	if (
-		!unsettled.some((row) => row.inflightToMs !== null || unreportedMs(row) > 0)
-	) {
-		return { reportedMs: 0 };
-	}
-
-	let reportedMs = 0;
-	const failures: unknown[] = [];
-	try {
-		await ensureAutumnCustomer(workspace.organizationId);
-	} catch (error) {
-		throw new UsageReportError(
-			[error],
-			`[cloud-workspace] ${cloudWorkspaceId} Autumn customer unavailable`,
-		);
-	}
-	for (const row of unsettled) {
-		try {
-			reportedMs += await reportSession({
-				row,
-				organizationId: workspace.organizationId,
-				createdByUserId: workspace.createdByUserId,
-				projectId: workspace.projectId,
-			});
-		} catch (error) {
-			failures.push(error);
-		}
-	}
-	if (failures.length > 0) {
-		throw new UsageReportError(
-			failures,
-			`[cloud-workspace] ${cloudWorkspaceId} usage report failed`,
-		);
-	}
-	return { reportedMs };
+		)
+		.returning({ id: cloudWorkspaceBoots.id });
+	if (attached.length === 0) await releaseBoot(args.bootId);
 }
 
-export async function queueMeterCloudWorkspace(
-	cloudWorkspaceId: string,
-): Promise<void> {
-	await publishCloudWorkspaceJob({
-		path: "/api/cloud-workspaces/meter",
-		body: { cloudWorkspaceId },
-		runLocally: (body) => meterCloudWorkspace(body.cloudWorkspaceId),
-	}).catch((error) => {
-		console.error(
-			`[cloud-workspace] could not queue the meter for ${cloudWorkspaceId}`,
-			error,
+async function recordUsage(boot: Boot, amount: number): Promise<void> {
+	const lockId = lockIdFor(boot.id, boot.lockSeq);
+	if (boot.lockOpen) {
+		try {
+			await autumnClient.balances.finalize({
+				lockId,
+				action: "confirm",
+				overrideValue: amount,
+			});
+			return;
+		} catch (error) {
+			Sentry.captureException(error, {
+				extra: {
+					bootId: boot.id,
+					lockId,
+					organizationId: boot.organizationId,
+				},
+			});
+		}
+	}
+	if (amount <= 0) return;
+	await autumnClient.track(
+		{
+			customerId: boot.organizationId,
+			featureId: BOX_GB_MINUTES_FEATURE_ID,
+			value: amount,
+			overageBehavior: "overflow",
+			async: false,
+			properties: { bootId: boot.id, lockSeq: boot.lockSeq },
+		},
+		{ headers: { "Idempotency-Key": `${lockId}:track` } },
+	);
+}
+
+async function claimSettle(bootId: string): Promise<Boot | null> {
+	const [boot] = await db
+		.update(cloudWorkspaceBoots)
+		.set({ settleLeaseUntil: new Date(Date.now() + SETTLE_LEASE_MS) })
+		.where(
+			and(
+				eq(cloudWorkspaceBoots.id, bootId),
+				or(
+					isNull(cloudWorkspaceBoots.settleLeaseUntil),
+					lt(cloudWorkspaceBoots.settleLeaseUntil, new Date()),
+				),
+				OPEN_BOOT,
+			),
+		)
+		.returning();
+	return boot ?? null;
+}
+
+function clearLease(bootId: string) {
+	return db
+		.update(cloudWorkspaceBoots)
+		.set({ settleLeaseUntil: null })
+		.where(eq(cloudWorkspaceBoots.id, bootId));
+}
+
+async function recordActiveCpu(boot: Boot, activeCpuMs: number) {
+	await autumnClient
+		.track(
+			{
+				customerId: boot.organizationId,
+				featureId: ACTIVE_CPU_MINUTES_FEATURE_ID,
+				value: activeCpuMs / 60_000,
+				async: false,
+				properties: { bootId: boot.id },
+			},
+			{ headers: { "Idempotency-Key": `${boot.id}:active-cpu` } },
+		)
+		.catch((error) =>
+			console.error(
+				`[cloud-workspace/meter] CPU for ${boot.id} not recorded`,
+				error,
+			),
 		);
+}
+
+/**
+ * Bills a boot's GB-minutes since its last settle against its current lock,
+ * then takes the next lock while the box runs, or closes the boot once it
+ * stopped. A refused renewal stops the box at the spend cap.
+ */
+export async function settleBoot(
+	bootId: string,
+): Promise<"renewed" | "stopped" | "closed" | "skipped"> {
+	const boot = await claimSettle(bootId);
+	if (!boot) return "skipped";
+	try {
+		const [workspace] = boot.cloudWorkspaceId
+			? await db
+					.select({ providerSandboxId: cloudWorkspaces.providerSandboxId })
+					.from(cloudWorkspaces)
+					.where(eq(cloudWorkspaces.id, boot.cloudWorkspaceId))
+			: [];
+		if (!boot.vercelSessionId) {
+			if (
+				workspace &&
+				Date.now() - boot.createdAt.getTime() < UNATTACHED_BOOT_GRACE_MS
+			) {
+				await attachBootSession({
+					bootId,
+					providerSandboxId: workspace.providerSandboxId,
+				});
+				await clearLease(bootId);
+				return "skipped";
+			}
+			await releaseBoot(bootId);
+			return "closed";
+		}
+		const found = workspace
+			? await findSandboxSession(
+					workspace.providerSandboxId,
+					boot.vercelSessionId,
+				)
+			: null;
+		if (!found?.session) {
+			Sentry.captureMessage(
+				`[cloud-workspace/meter] boot ${bootId} lost its sandbox; unsettled minutes released`,
+			);
+			await releaseBoot(bootId);
+			return "closed";
+		}
+		const { session } = found;
+		const end = session.endedAt ?? Date.now();
+		const from = (
+			boot.finalizedThrough ?? new Date(session.startedAt)
+		).getTime();
+		await recordUsage(
+			boot,
+			gbMinutes({ ms: end - from, memoryMb: session.memoryMb }),
+		);
+
+		if (session.endedAt !== null) {
+			if (session.activeCpuMs) await recordActiveCpu(boot, session.activeCpuMs);
+			await db
+				.update(cloudWorkspaceBoots)
+				.set({
+					finalizedThrough: new Date(end),
+					stoppedAt: new Date(end),
+					lockOpen: false,
+					settleLeaseUntil: null,
+				})
+				.where(eq(cloudWorkspaceBoots.id, bootId));
+			return "closed";
+		}
+
+		const nextSeq = boot.lockSeq + 1;
+		const renewal = await autumnClient.check({
+			customerId: boot.organizationId,
+			featureId: BOX_GB_MINUTES_FEATURE_ID,
+			requiredBalance: reservation(session.memoryMb),
+			lock: {
+				enabled: true,
+				lockId: lockIdFor(bootId, nextSeq),
+				expiresAt: Date.now() + LOCK_TTL_MS,
+			},
+		});
+		await db
+			.update(cloudWorkspaceBoots)
+			.set({
+				finalizedThrough: new Date(end),
+				lockSeq: nextSeq,
+				lockOpen: renewal.allowed,
+				settleLeaseUntil: null,
+			})
+			.where(eq(cloudWorkspaceBoots.id, bootId));
+		if (!renewal.allowed && workspace) {
+			await stopSandbox(workspace.providerSandboxId);
+			return "stopped";
+		}
+		return "renewed";
+	} catch (error) {
+		await clearLease(bootId);
+		throw error;
+	}
+}
+
+async function openBootIds(cloudWorkspaceId?: string): Promise<string[]> {
+	const rows = await db
+		.select({ id: cloudWorkspaceBoots.id })
+		.from(cloudWorkspaceBoots)
+		.where(
+			cloudWorkspaceId
+				? and(
+						eq(cloudWorkspaceBoots.cloudWorkspaceId, cloudWorkspaceId),
+						OPEN_BOOT,
+					)
+				: OPEN_BOOT,
+		);
+	return rows.map((row) => row.id);
+}
+
+function queueSettle(bootId: string): Promise<void> {
+	return publishCloudWorkspaceJob({
+		path: "/api/cloud-workspaces/meter",
+		body: { bootId },
+		runLocally: (body) => settleBoot(body.bootId),
 	});
 }
 
-export async function reconcileCloudWorkspaceUsage(): Promise<{
-	queued: number;
-	failed: number;
-}> {
+export async function queueSettleWorkspace(
+	cloudWorkspaceId: string,
+): Promise<void> {
+	const ids = await openBootIds(cloudWorkspaceId).catch((error) => {
+		console.error(
+			`[cloud-workspace/meter] could not list boots of ${cloudWorkspaceId}`,
+			error,
+		);
+		return [];
+	});
+	await Promise.all(
+		ids.map((id) =>
+			queueSettle(id).catch((error) =>
+				console.error(`[cloud-workspace/meter] could not queue ${id}`, error),
+			),
+		),
+	);
+}
+
+export async function settleWorkspaceNow(
+	cloudWorkspaceId: string,
+): Promise<void> {
+	for (const id of await openBootIds(cloudWorkspaceId)) {
+		await settleBoot(id);
+	}
+}
+
+async function adoptRunningBoxes(): Promise<number> {
 	const names = await listActiveWorkspaceSandboxes(
 		Date.now() - RECONCILE_LOOKBACK_MS,
 	);
-	const [running, unsettled] = await Promise.all([
-		names.length === 0
-			? []
-			: db
-					.select({ id: cloudWorkspaces.id })
-					.from(cloudWorkspaces)
-					.where(
-						and(
-							eq(cloudWorkspaces.provider, "vercel"),
-							inArray(cloudWorkspaces.providerSandboxId, names),
-						),
-					),
-		db
-			.selectDistinct({ id: cloudWorkspaceSessions.cloudWorkspaceId })
-			.from(cloudWorkspaceSessions)
-			.where(
-				autumn
-					? or(
-							isNull(cloudWorkspaceSessions.stoppedAt),
-							lt(
-								cloudWorkspaceSessions.reportedMs,
-								cloudWorkspaceSessions.observedMs,
-							),
-						)
-					: isNull(cloudWorkspaceSessions.stoppedAt),
+	if (names.length === 0) return 0;
+	const unmetered = await db
+		.select({
+			id: cloudWorkspaces.id,
+			organizationId: cloudWorkspaces.organizationId,
+			providerSandboxId: cloudWorkspaces.providerSandboxId,
+		})
+		.from(cloudWorkspaces)
+		.where(
+			and(
+				eq(cloudWorkspaces.provider, "vercel"),
+				ne(cloudWorkspaces.status, "failed"),
+				inArray(cloudWorkspaces.providerSandboxId, names),
+				sql`not exists (select 1 from ${cloudWorkspaceBoots} boot where boot.cloud_workspace_id = ${cloudWorkspaces.id} and boot.stopped_at is null)`,
 			),
-	]);
-	const ids = [...new Set([...running, ...unsettled].map((row) => row.id))];
+		);
+	let adopted = 0;
+	for (const workspace of unmetered) {
+		const found = await findSandboxSession(workspace.providerSandboxId, null);
+		const session = found?.session;
+		if (!session || session.endedAt !== null) continue;
+		const claimed = await db
+			.select({ id: cloudWorkspaceBoots.id })
+			.from(cloudWorkspaceBoots)
+			.where(eq(cloudWorkspaceBoots.vercelSessionId, session.id));
+		if (claimed.length > 0) continue;
+		try {
+			const { bootId } = await authorizeBoot({
+				organizationId: workspace.organizationId,
+				cloudWorkspaceId: workspace.id,
+				memoryMb: session.memoryMb,
+				vcpus: session.vcpus,
+			});
+			await db
+				.update(cloudWorkspaceBoots)
+				.set({
+					vercelSessionId: session.id,
+					startedAt: new Date(session.startedAt),
+					finalizedThrough: new Date(),
+				})
+				.where(eq(cloudWorkspaceBoots.id, bootId));
+			adopted += 1;
+		} catch (error) {
+			console.error(
+				`[cloud-workspace/meter] ${workspace.id} runs past its limit; stopping it`,
+				error,
+			);
+			await stopSandbox(workspace.providerSandboxId);
+		}
+	}
+	return adopted;
+}
 
+/**
+ * Queues a settle for every open boot, and starts metering boxes running
+ * without one (boxes already up when metering shipped).
+ */
+export async function reconcileCloudWorkspaceUsage(): Promise<{
+	adopted: number;
+	queued: number;
+	failed: number;
+}> {
+	const adopted = await adoptRunningBoxes().catch((error) => {
+		Sentry.captureException(error);
+		return 0;
+	});
+	const ids = await openBootIds();
 	let failed = 0;
 	for (let i = 0; i < ids.length; i += RECONCILE_CONCURRENCY) {
 		const results = await Promise.allSettled(
-			ids.slice(i, i + RECONCILE_CONCURRENCY).map((cloudWorkspaceId) =>
-				publishCloudWorkspaceJob({
-					path: "/api/cloud-workspaces/meter",
-					body: { cloudWorkspaceId },
-					runLocally: (body) => meterCloudWorkspace(body.cloudWorkspaceId),
-				}),
-			),
+			ids.slice(i, i + RECONCILE_CONCURRENCY).map(queueSettle),
 		);
 		for (const result of results) {
 			if (result.status === "rejected") {
 				failed += 1;
-				console.error(
-					"[cloud-workspace] reconcile queue failed",
-					result.reason,
-				);
+				console.error("[cloud-workspace/meter] queue failed", result.reason);
 			}
 		}
 	}
-	return { queued: ids.length - failed, failed };
+	return { adopted, queued: ids.length - failed, failed };
 }

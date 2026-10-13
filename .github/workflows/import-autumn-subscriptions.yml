@@ -8,6 +8,9 @@ on:
         type: boolean
         default: false
 
+permissions:
+  contents: read
+
 jobs:
   import:
     name: Import Subscriptions into Autumn
@@ -21,6 +24,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
 
       - name: Setup Bun
         id: setup-bun
@@ -49,7 +54,7 @@ jobs:
           APPLY: ${{ inputs.apply }}
         run: |
           if [ "$APPLY" = "true" ]; then
-            bun run packages/auth/src/import-autumn-subscriptions.ts --apply
+            bun run packages/auth/scripts/import-autumn-subscriptions.ts --apply
           else
-            bun run packages/auth/src/import-autumn-subscriptions.ts
+            bun run packages/auth/scripts/import-autumn-subscriptions.ts
           fi

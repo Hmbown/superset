@@ -41,7 +41,7 @@ import {
 	visibleTo,
 } from "./access";
 import { recordCloudWorkspaceActivity } from "./activity";
-import { meterCloudWorkspace, queueMeterCloudWorkspace } from "./meter";
+import { queueSettleWorkspace, settleWorkspaceNow } from "./meter";
 import { nextSandboxNameFor } from "./provision";
 import { queueReap } from "./reap";
 import { cloudWorkspaceRecordRouter } from "./record";
@@ -526,7 +526,7 @@ export const cloudWorkspaceRouter = {
 			const { running } = await addressSandbox(row, "address");
 			if (running) {
 				await stopAndSnapshot(row.providerSandboxId);
-				await queueMeterCloudWorkspace(row.id);
+				await queueSettleWorkspace(row.id);
 			}
 			return { stopped: running };
 		}),
@@ -649,7 +649,7 @@ export const cloudWorkspaceRouter = {
 							`[cloud-workspace] could not queue the reap for ${row.id}`,
 							error,
 						);
-						await meterCloudWorkspace(row.id).catch((meterError) =>
+						await settleWorkspaceNow(row.id).catch((meterError) =>
 							console.error(
 								`[cloud-workspace] ${row.id} final meter failed`,
 								meterError,

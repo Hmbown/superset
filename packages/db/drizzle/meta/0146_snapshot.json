@@ -1,5 +1,5 @@
 {
-  "id": "7eabe29d-39af-4eba-aee8-58d7cf795f57",
+  "id": "8e6d1c0c-e33e-46ee-a4e8-515b2ab0402a",
   "prevId": "3e174d9c-4cd7-4136-bc0f-fb7dc8e4e057",
   "version": "7",
   "dialect": "postgresql",
@@ -6589,6 +6589,176 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.cloud_workspace_boots": {
+      "name": "cloud_workspace_boots",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "vercel_session_id": {
+          "name": "vercel_session_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cloud_workspace_id": {
+          "name": "cloud_workspace_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "memory_mb": {
+          "name": "memory_mb",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vcpus": {
+          "name": "vcpus",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "stopped_at": {
+          "name": "stopped_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lock_seq": {
+          "name": "lock_seq",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "lock_open": {
+          "name": "lock_open",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "finalized_through": {
+          "name": "finalized_through",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "settle_lease_until": {
+          "name": "settle_lease_until",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "cloud_workspace_boots_cloud_workspace_id_idx": {
+          "name": "cloud_workspace_boots_cloud_workspace_id_idx",
+          "columns": [
+            {
+              "expression": "cloud_workspace_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "cloud_workspace_boots_organization_id_idx": {
+          "name": "cloud_workspace_boots_organization_id_idx",
+          "columns": [
+            {
+              "expression": "organization_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "cloud_workspace_boots_open_idx": {
+          "name": "cloud_workspace_boots_open_idx",
+          "columns": [
+            {
+              "expression": "started_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"cloud_workspace_boots\".\"stopped_at\" is null or \"cloud_workspace_boots\".\"finalized_through\" is null or \"cloud_workspace_boots\".\"finalized_through\" < \"cloud_workspace_boots\".\"stopped_at\"",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "cloud_workspace_boots_cloud_workspace_id_cloud_workspaces_id_fk": {
+          "name": "cloud_workspace_boots_cloud_workspace_id_cloud_workspaces_id_fk",
+          "tableFrom": "cloud_workspace_boots",
+          "tableTo": "cloud_workspaces",
+          "columnsFrom": [
+            "cloud_workspace_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "cloud_workspace_boots_vercel_session_id_unique": {
+          "name": "cloud_workspace_boots_vercel_session_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "vercel_session_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.cloud_workspace_labels": {
       "name": "cloud_workspace_labels",
       "schema": "",
@@ -6849,129 +7019,6 @@
           ]
         }
       },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.cloud_workspace_sessions": {
-      "name": "cloud_workspace_sessions",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "cloud_workspace_id": {
-          "name": "cloud_workspace_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "vcpus": {
-          "name": "vcpus",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "started_at": {
-          "name": "started_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "stopped_at": {
-          "name": "stopped_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "observed_ms": {
-          "name": "observed_ms",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        },
-        "reported_ms": {
-          "name": "reported_ms",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        },
-        "inflight_to_ms": {
-          "name": "inflight_to_ms",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "cloud_workspace_sessions_cloud_workspace_id_idx": {
-          "name": "cloud_workspace_sessions_cloud_workspace_id_idx",
-          "columns": [
-            {
-              "expression": "cloud_workspace_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "cloud_workspace_sessions_unsettled_idx": {
-          "name": "cloud_workspace_sessions_unsettled_idx",
-          "columns": [
-            {
-              "expression": "cloud_workspace_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "where": "\"cloud_workspace_sessions\".\"stopped_at\" is null or \"cloud_workspace_sessions\".\"reported_ms\" < \"cloud_workspace_sessions\".\"observed_ms\"",
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "cloud_workspace_sessions_cloud_workspace_id_cloud_workspaces_id_fk": {
-          "name": "cloud_workspace_sessions_cloud_workspace_id_cloud_workspaces_id_fk",
-          "tableFrom": "cloud_workspace_sessions",
-          "tableTo": "cloud_workspaces",
-          "columnsFrom": [
-            "cloud_workspace_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -13352,7 +13399,8 @@
         "workspace_not_found",
         "cloud_not_ready",
         "cloud_access_denied",
-        "cloud_environment_unusable"
+        "cloud_environment_unusable",
+        "cloud_usage_limit_reached"
       ]
     },
     "public.automation_run_status": {

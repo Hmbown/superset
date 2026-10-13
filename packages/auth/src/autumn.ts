@@ -1,20 +1,12 @@
 import { Autumn } from "autumn-js";
 import { env } from "./env";
 
-export const autumnClient = env.AUTUMN_SECRET_KEY
-	? new Autumn({ secretKey: env.AUTUMN_SECRET_KEY, failOpen: false })
-	: null;
+export const AUTUMN_API_VERSION = "2.4.0";
 
-export const billingUsesAutumn =
-	env.BILLING_PROVIDER === "autumn" && autumnClient !== null;
+export const autumnClient = new Autumn({
+	secretKey: env.AUTUMN_SECRET_KEY,
+	xApiVersion: AUTUMN_API_VERSION,
+	failOpen: false,
+});
 
-if (env.BILLING_PROVIDER === "autumn" && !billingUsesAutumn) {
-	console.error(
-		"[billing] BILLING_PROVIDER=autumn but AUTUMN_SECRET_KEY is not set; billing stays on Stripe",
-	);
-}
-if (billingUsesAutumn && !env.AUTUMN_WEBHOOK_SECRET) {
-	console.error(
-		"[billing] AUTUMN_WEBHOOK_SECRET is not set; Autumn plan changes sync only from Stripe events",
-	);
-}
+export const billingUsesAutumn = env.BILLING_PROVIDER === "autumn";

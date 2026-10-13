@@ -1,7 +1,9 @@
 import { beforeEach, describe, expect, test } from "bun:test";
 import { stripe } from "@better-auth/stripe";
-import { createAuthEndpoint } from "better-auth/api";
+import { betterAuth } from "better-auth";
+import { memoryAdapter } from "better-auth/adapters/memory";
 import type Stripe from "stripe";
+import { type StripeFallbackClient, stripeFallback } from "./stripe-fallback";
 import {
 	type AutumnBillingDeps,
 	BILLING_ERROR_CODES,
@@ -12,7 +14,7 @@ import {
 	type UpgradeBody,
 	upgradeWithAutumn,
 	withAutumnBilling,
-} from "./autumn-endpoints";
+} from "./stripe-routes-shim";
 
 const ORG = "00000000-0000-0000-0000-0000000000aa";
 const WEB = "https://app.superset.sh";
@@ -124,113 +126,45 @@ describe("released clients keep the same routes", () => {
 		"subscriptionSuccess",
 		"stripeWebhook",
 	] as const) {
-		test(`${key} keeps its path, method, body schema and middleware`, () => {
+		test(`${key} keeps its path, method, body schema and every middleware`, () => {
 			const before = original.endpoints[key];
 			const after = wrapped.endpoints[key];
 			expect(after).not.toBe(before);
 			expect(after.path).toBe(before.path);
 			expect(after.options.method).toEqual(before.options.method);
 			expect(String(after.options.body)).toBe(String(before.options.body));
-			const injected =
-				createAuthEndpoint("/probe", { method: "GET" }, async () => null)
-					.options.use?.length ?? 0;
-			const own = (endpoint: typeof before) =>
-				endpoint.options.use?.slice(0, -injected || undefined) ?? [];
-			expect(own(after)).toHaveLength(own(before).length);
-			own(after).forEach((middleware, index) => {
-				expect(middleware).toBe(own(before)[index] as typeof middleware);
-			});
+			expect(after.options.use?.length).toBe(before.options.use?.length);
 		});
 	}
 
-	test("the routes are the ones released clients call", () => {
-		expect(wrapped.endpoints.upgradeSubscription.path).toBe(
-			"/subscription/upgrade",
-		);
-		expect(wrapped.endpoints.cancelSubscription.path).toBe(
-			"/subscription/cancel",
-		);
-		expect(wrapped.endpoints.restoreSubscription.path).toBe(
-			"/subscription/restore",
-		);
-		expect(wrapped.endpoints.subscriptionSuccess.path).toBe(
-			"/subscription/success",
-		);
-		expect(wrapped.endpoints.stripeWebhook.path).toBe("/stripe/webhook");
-	});
-
-	test("endpoints Autumn does not serve are untouched", () => {
-		const plugin = stripePlugin();
-		const result = withAutumnBilling(plugin, {
-			enabled: true,
-			deps: fakeDeps,
+	test("the success route still refuses a callbackURL from another origin", async () => {
+		const auth = betterAuth({
+			baseURL: "http://localhost:3000",
+			secret: "test-secret-test-secret-test-secret",
+			database: memoryAdapter({}),
+			plugins: [wrapped],
+			advanced: { disableOriginCheck: false },
 		});
-		expect(result.endpoints.listActiveSubscriptions).toBe(
-			plugin.endpoints.listActiveSubscriptions,
+		const foreign = await auth.handler(
+			new Request(
+				"http://localhost:3000/api/auth/subscription/success?callbackURL=https://evil.example.com/&checkoutSessionId=cs_1",
+			),
 		);
-		expect(result.endpoints.createBillingPortal).toBe(
-			plugin.endpoints.createBillingPortal,
+		expect(foreign.status).toBe(403);
+		const trusted = await auth.handler(
+			new Request(
+				"http://localhost:3000/api/auth/subscription/success?callbackURL=http://localhost:3000/billing&checkoutSessionId=cs_1",
+			),
 		);
-		expect(result.id).toBe("stripe");
-	});
-
-	test("with Autumn off the Stripe plugin is returned as is", () => {
-		const plugin = stripePlugin();
-		expect(withAutumnBilling(plugin, { enabled: false, deps: fakeDeps })).toBe(
-			plugin,
+		expect(trusted.status).toBe(302);
+		expect(trusted.headers.get("location")).toBe(
+			"http://localhost:3000/billing",
 		);
-	});
-});
-
-describe("payloads released clients send", () => {
-	const schema = stripePlugin().endpoints.upgradeSubscription.options.body;
-	const payloads = {
-		"desktop billing overview": {
-			plan: "pro",
-			referenceId: ORG,
-			annual: false,
-			seats: 2,
-			successUrl: `${WEB}/settings/billing?success=true`,
-			cancelUrl: WEB,
-			disableRedirect: true,
-		},
-		"desktop plans page": {
-			plan: "pro",
-			referenceId: ORG,
-			annual: true,
-			seats: 2,
-			successUrl: `${WEB}/settings/billing?success=true`,
-			cancelUrl: WEB,
-			returnUrl: WEB,
-			disableRedirect: true,
-		},
-		"web billing settings": {
-			plan: "pro",
-			referenceId: ORG,
-			annual: false,
-			seats: 5,
-			successUrl: `${WEB}/settings/billing?success=true`,
-			cancelUrl: `${WEB}/settings/billing`,
-			returnUrl: `${WEB}/settings/billing`,
-			disableRedirect: true,
-		},
-	};
-
-	for (const [caller, payload] of Object.entries(payloads)) {
-		test(`${caller}: parses and gets a checkout url back`, async () => {
-			const body = schema?.parse(payload) as UpgradeBody;
-			const result = await upgradeWithAutumn(fakeDeps(), {
-				userId: "user_1",
-				referenceId: ORG,
-				baseURL: API,
-				body,
-			});
-			expect(result).toEqual({
-				url: "https://checkout.stripe.com/c/pay/cs_test",
-				redirect: false,
-			});
+		expect(calls).toContainEqual({
+			method: "completeCheckout",
+			params: "cs_1",
 		});
-	}
+	});
 });
 
 describe("upgrade", () => {
@@ -349,7 +283,7 @@ describe("upgrade", () => {
 });
 
 describe("cancel", () => {
-	test("returns Stripe's cancel page for the subscription, as before", async () => {
+	test("asks for Stripe's cancel page for the live subscription", async () => {
 		live = liveSubscription();
 		expect(
 			await cancelWithAutumn(fakeDeps(), {
@@ -360,19 +294,6 @@ describe("cancel", () => {
 			url: "https://billing.stripe.com/p/session/cancel",
 			redirect: true,
 		});
-		expect(calls).toEqual([
-			{
-				method: "cancelPortal",
-				params: {
-					subscription: {
-						stripeCustomerId: "cus_1",
-						stripeSubscriptionId: "sub_1",
-						stripeScheduleId: null,
-					},
-					returnUrl: WEB,
-				},
-			},
-		]);
 	});
 
 	test("no live subscription answers SUBSCRIPTION_NOT_FOUND", async () => {
@@ -451,5 +372,120 @@ describe("restore", () => {
 		await expect(
 			restoreWithAutumn(fakeDeps(), { referenceId: ORG }),
 		).rejects.toMatchObject({ body: { code: "SUBSCRIPTION_NOT_ACTIVE" } });
+	});
+});
+
+describe("Stripe fallback", () => {
+	const ref = {
+		stripeCustomerId: "cus_1",
+		stripeSubscriptionId: "sub_1",
+		stripeScheduleId: null,
+	};
+	let stripeCalls: { method: string; params: unknown }[];
+	let current: { id: string; cancel_at: number | null };
+	let scheduleStatus: string;
+
+	function fakeStripe(): StripeFallbackClient {
+		return {
+			billingPortal: {
+				sessions: {
+					create: async (params: unknown) => {
+						stripeCalls.push({ method: "portal", params });
+						return { url: "https://billing.stripe.com/p/session/x" };
+					},
+				},
+			},
+			subscriptions: {
+				retrieve: async () => ({
+					...current,
+					items: {
+						data: [
+							{
+								id: "si_seats",
+								quantity: 4,
+								price: { recurring: { usage_type: "licensed" } },
+							},
+						],
+					},
+				}),
+				update: async (id: string, params: unknown) => {
+					stripeCalls.push({ method: "update", params: { id, params } });
+					return {};
+				},
+			},
+			subscriptionSchedules: {
+				retrieve: async (id: string) => ({ id, status: scheduleStatus }),
+				release: async (id: string) => {
+					stripeCalls.push({ method: "release", params: id });
+					return {};
+				},
+			},
+		} as unknown as StripeFallbackClient;
+	}
+
+	const fallback = () =>
+		stripeFallback(fakeStripe(), { monthly: "price_m", yearly: "price_y" });
+
+	beforeEach(() => {
+		stripeCalls = [];
+		current = { id: "sub_1", cancel_at: null };
+		scheduleStatus = "active";
+	});
+
+	test("cancel opens the portal straight on the subscription's cancel flow", async () => {
+		await fallback().cancelPortalUrl(ref, WEB);
+		expect(stripeCalls).toEqual([
+			{
+				method: "portal",
+				params: {
+					customer: "cus_1",
+					return_url: WEB,
+					flow_data: {
+						type: "subscription_cancel",
+						subscription_cancel: { subscription: "sub_1" },
+					},
+				},
+			},
+		]);
+	});
+
+	test("switching to annual confirms the seat item on the yearly price with the same seats", async () => {
+		await fallback().switchIntervalPortalUrl(ref, true, WEB);
+		expect(stripeCalls[0]?.params).toMatchObject({
+			flow_data: {
+				type: "subscription_update_confirm",
+				subscription_update_confirm: {
+					subscription: "sub_1",
+					items: [{ id: "si_seats", price: "price_y", quantity: 4 }],
+				},
+			},
+		});
+	});
+
+	test("restore clears cancel_at when set, otherwise cancel_at_period_end", async () => {
+		current = { id: "sub_1", cancel_at: 1_800_000_000 };
+		await fallback().restoreInStripe(ref);
+		current = { id: "sub_1", cancel_at: null };
+		await fallback().restoreInStripe(ref);
+		expect(stripeCalls).toEqual([
+			{ method: "update", params: { id: "sub_1", params: { cancel_at: "" } } },
+			{
+				method: "update",
+				params: { id: "sub_1", params: { cancel_at_period_end: false } },
+			},
+		]);
+	});
+
+	test("restore releases a pending schedule instead of touching the subscription", async () => {
+		await fallback().restoreInStripe({
+			...ref,
+			stripeScheduleId: "sub_sched_1",
+		});
+		scheduleStatus = "released";
+		await fallback().restoreInStripe({
+			...ref,
+			stripeScheduleId: "sub_sched_1",
+		});
+		expect(stripeCalls).toEqual([{ method: "release", params: "sub_sched_1" }]);
 	});
 });

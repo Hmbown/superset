@@ -37,7 +37,8 @@ const SESSION_TIMEOUT_MS = 4 * 60 * 60 * 1000;
 const EXTEND_BELOW_MS = 60 * 60 * 1000;
 const WORKSPACE_SNAPSHOT_EXPIRATION_MS = 30 * 24 * 60 * 60 * 1000;
 /** 2 GB of memory per vCPU; disk is 64 GB regardless. */
-const IMAGE_SANDBOX_VCPUS = 8;
+export const IMAGE_SANDBOX_VCPUS = 8;
+export const MEMORY_MB_PER_VCPU = 2048;
 const GOLDEN_SESSION_TIMEOUT_MS = 30 * 60 * 1000;
 const BOOT_COMMAND = "/usr/local/bin/superset-boot";
 const HOST_PROBE_TIMEOUT_MS = 1_500;
@@ -353,6 +354,8 @@ async function hostServiceAnswers(hostTarget: string): Promise<boolean> {
 export async function wakeSandbox(args: {
 	providerSandboxId: string;
 	claim: SandboxClaim;
+	/** Runs once the box is known to be stopped, before anything resumes it. */
+	beforeResume?: (box: { memoryMb: number; vcpus: number }) => Promise<void>;
 }): Promise<{
 	hostTarget: string;
 	/** The session was stopped, so every process on the box started from this claim. */
@@ -366,6 +369,12 @@ export async function wakeSandbox(args: {
 		});
 		const hostTarget = sandbox.domain(HOST_SERVICE_PORT);
 		const wasRunning = sandbox.status === "running";
+		if (!wasRunning && args.beforeResume) {
+			await args.beforeResume({
+				memoryMb: sandbox.memory ?? IMAGE_SANDBOX_VCPUS * MEMORY_MB_PER_VCPU,
+				vcpus: sandbox.vcpus ?? IMAGE_SANDBOX_VCPUS,
+			});
+		}
 		if (wasRunning) {
 			const remaining = (sandbox.expiresAt?.getTime() ?? 0) - Date.now();
 			if (remaining < EXTEND_BELOW_MS) {
@@ -525,15 +534,17 @@ export async function stopSandbox(providerSandboxId: string): Promise<void> {
 	await sandbox.stop();
 }
 
-export interface SandboxSession {
+export interface BoxSession {
 	id: string;
+	memoryMb: number;
 	vcpus: number;
 	startedAt: number;
 	endedAt: number | null;
+	activeCpuMs: number | null;
 }
 
-const SESSIONS_PAGE_SIZE = 50;
 const LIVE_STATUSES = new Set(["pending", "running"]);
+const SESSION_SEARCH_LIMIT = 20;
 
 export function sessionEndedAt(session: {
 	status: string;
@@ -551,28 +562,51 @@ export function sessionEndedAt(session: {
 	);
 }
 
-export async function listSandboxSessions(
+interface RawSession {
+	id: string;
+	memory: number;
+	vcpus: number;
+	status: string;
+	startedAt?: number;
+	stoppedAt?: number;
+	abortedAt?: number;
+	requestedStopAt?: number;
+	updatedAt: number;
+	activeCpuDurationMs?: number;
+}
+
+function toBoxSession(session: RawSession): BoxSession | null {
+	if (session.startedAt === undefined) return null;
+	return {
+		id: session.id,
+		memoryMb: session.memory,
+		vcpus: session.vcpus,
+		startedAt: session.startedAt,
+		endedAt: sessionEndedAt(session),
+		activeCpuMs: session.activeCpuDurationMs ?? null,
+	};
+}
+
+/** Null when the sandbox no longer exists. */
+export async function findSandboxSession(
 	providerSandboxId: string,
-	since: number,
-): Promise<SandboxSession[] | null> {
+	sessionId: string | null,
+): Promise<{ session: BoxSession | null } | null> {
 	const sandbox = await getSandbox(providerSandboxId);
 	if (!sandbox) return null;
-	const sessions: SandboxSession[] = [];
-	for await (const session of await sandbox.listSessions({
+	let seen = 0;
+	for await (const raw of await sandbox.listSessions({
 		sortOrder: "desc",
-		limit: SESSIONS_PAGE_SIZE,
+		limit: SESSION_SEARCH_LIMIT,
 	})) {
-		if (session.startedAt === undefined) continue;
-		const endedAt = sessionEndedAt(session);
-		if (endedAt !== null && endedAt < since) break;
-		sessions.push({
-			id: session.id,
-			vcpus: session.vcpus,
-			startedAt: session.startedAt,
-			endedAt,
-		});
+		const session = toBoxSession(raw);
+		if (session && (sessionId === null || session.id === sessionId)) {
+			return { session };
+		}
+		seen += 1;
+		if (seen >= SESSION_SEARCH_LIMIT) break;
 	}
-	return sessions;
+	return { session: null };
 }
 
 const SESSION_MAX_MS = 24 * 60 * 60 * 1000;

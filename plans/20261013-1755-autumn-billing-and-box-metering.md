@@ -38,11 +38,11 @@ Each question has a placeholder in the Decision Log.
 - [x] (2026-10-13 17:55Z) Discovery: plan-state readers, Autumn SDK (locks, flags, plugin, webhooks), box boot paths and client error display mapped.
 - [x] (2026-10-13 18:10Z) Product questions D-Q1 to D-Q4 answered and recorded.
 - [ ] D-Q5 (sandbox keys) answered.
-- [ ] Plan approved.
-- [ ] M0 Autumn sandbox spike.
-- [ ] M1 Layout, legacy markers, svix, required env, pinned API version, test cleanup.
-- [ ] M2 Final `0146` schema.
-- [ ] M3 Metering on rolling locks.
+- [x] (2026-10-13 18:30Z) Plan approved ("go ahead"); no sandbox keys, so M0 is deferred and lock behaviours stay unverified until it runs.
+- [ ] M0 Autumn sandbox spike (deferred: needs keys).
+- [x] (2026-10-13 19:40Z) M1 Layout (autumn/, legacy/ + README), deprecation markers, svix in the webhook route, required env in apps/api, pinned xApiVersion 2.4.0, workflow permissions, reviewer test changes, Stripe fallback tested with a stubbed client, real originCheck test.
+- [x] (2026-10-13 19:40Z) M2 Final `0146`: `cloud_workspace_boots` (boot id, Vercel session id, organization id without FK, workspace set null, memory, lock_seq, lock_open, finalized_through, settle lease) and the `cloud_usage_limit_reached` run error code.
+- [x] (2026-10-13 19:40Z) M3 Metering on rolling locks: check at create, lock at provision and wake, settle (finalize + renew, refusal stops the box, finalize failure falls back to an idempotent track), stop and delete triggers, adoption of already-running boxes, Sentry monitor on the reconciler. Remaining: unit tests for settleBoot paths.
 - [ ] M4 Over-limit experience in desktop, web, mobile, automations.
 - [ ] M5 Plan state from Autumn.
 - [ ] M6 Official better-auth plugin with role hook; desktop and web move to it.
@@ -67,6 +67,16 @@ Each question has a placeholder in the Decision Log.
 
 
 ## Decision Log
+
+- Decision: `subscriptions` stays written by our sync (tier from Autumn's access features, Stripe ids and periods from the Stripe subscription Autumn manages) and lives in `autumn/projection.ts`, not `legacy/`.
+  Rationale: Autumn does not expose the Stripe subscription id, which seat sync, the Slack jobs, cancellation feedback, purge and the Enterprise ARR report need; so the projection cannot be written from Autumn alone.
+  Date/Author: 2026-10-13 / Claude.
+- Decision: a settle that cannot finalize its lock records the minutes with `track` and an idempotency key derived from the lock id; settles are serialized by a lease column, not a transaction held across Autumn calls.
+  Rationale: finalize behaviour on expired or repeated locks is unverified (M0); a lease avoids holding a database transaction open during network calls (reviewer N3).
+  Date/Author: 2026-10-13 / Claude.
+- Decision: a refused renewal stops the running box; a failed settle on archive delete still deletes the box.
+  Rationale: the spend cap must hold mid-session; a stuck delete would leak storage, and at most one lock window (about 15 minutes) goes unbilled.
+  Date/Author: 2026-10-13 / Claude.
 
 - Decision: the full move ships in one PR (#8354), as the reviewer's plan describes, rather than stacked PRs.
   Rationale: requested by the PR author.

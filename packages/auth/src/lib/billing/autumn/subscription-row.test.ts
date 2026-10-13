@@ -1,7 +1,8 @@
 import { describe, expect, test } from "bun:test";
 import { PLAN_TIERS } from "@superset/shared/billing";
 import type Stripe from "stripe";
-import { isPaidAutumnPlan, legacyPlanName, planFromStripePrice } from "./plans";
+import { planFromStripePrice } from "../legacy/plan-ids";
+import { paidPlanIdFromFlags, tierFromFlags } from "./entitlements";
 import {
 	subscriptionRowFromStripe,
 	subscriptionTransitions,
@@ -145,32 +146,39 @@ describe("notices fire when the Stripe plugin fired them", () => {
 	});
 });
 
-describe("plan names old clients understand", () => {
-	test("every paid Autumn plan reads as a tier released clients know", () => {
-		for (const planId of [
-			"pro",
-			"pro_annual",
-			"pro_plus",
-			"ultra",
-			"teams",
-			"enterprise",
-			"enterprise_acme",
+describe("plan tiers come from Autumn's access features", () => {
+	const flag = (planId: string) => ({ planId });
+
+	test("enterprise_access wins over pro_access, and neither is free", () => {
+		expect(
+			tierFromFlags({
+				pro_access: flag("pro"),
+				enterprise_access: flag("enterprise_acme"),
+			}),
+		).toBe("enterprise");
+		expect(tierFromFlags({ pro_access: flag("teams") })).toBe("pro");
+		expect(tierFromFlags({ box_gb_minutes: flag("hobby") })).toBe("free");
+		expect(tierFromFlags(undefined)).toBe("free");
+	});
+
+	test("every tier is one released clients know", () => {
+		for (const flags of [
+			{},
+			{ pro_access: flag("pro") },
+			{ enterprise_access: flag("enterprise") },
 		]) {
-			expect(PLAN_TIERS).toContain(legacyPlanName(planId));
+			expect(PLAN_TIERS).toContain(tierFromFlags(flags));
 		}
-		expect(legacyPlanName("pro_annual")).toBe("pro");
-		expect(legacyPlanName("enterprise_acme")).toBe("enterprise");
 	});
 
-	test("only known paid plans grant Pro; a new Autumn plan does not by default", () => {
-		expect(isPaidAutumnPlan("pro")).toBe(true);
-		expect(isPaidAutumnPlan("pro_annual")).toBe(true);
-		expect(isPaidAutumnPlan("enterprise_acme")).toBe(true);
-		expect(isPaidAutumnPlan("hobby")).toBe(false);
-		expect(isPaidAutumnPlan("starter_trial")).toBe(false);
+	test("the paid plan id is the plan granting access", () => {
+		expect(paidPlanIdFromFlags({ pro_access: flag("pro_annual") })).toBe(
+			"pro_annual",
+		);
+		expect(paidPlanIdFromFlags({ box_gb_minutes: flag("hobby") })).toBeNull();
 	});
 
-	test("an enterprise subscription made in Stripe reads as enterprise from its price", () => {
+	test("a subscription Autumn has not imported reads its tier from its Stripe price", () => {
 		const prices = { pro: ["price_m", "price_y"], enterprise: ["price_e"] };
 		expect(planFromStripePrice("price_e", prices)).toBe("enterprise");
 		expect(planFromStripePrice("price_y", prices)).toBe("pro");

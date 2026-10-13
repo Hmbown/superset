@@ -999,19 +999,24 @@ export const cloudWorkspacePresence = pgTable(
 	],
 );
 
-export const cloudWorkspaceSessions = pgTable(
-	"cloud_workspace_sessions",
+export const cloudWorkspaceBoots = pgTable(
+	"cloud_workspace_boots",
 	{
 		id: text().primaryKey(),
-		cloudWorkspaceId: uuid("cloud_workspace_id")
-			.notNull()
-			.references(() => cloudWorkspaces.id, { onDelete: "cascade" }),
+		vercelSessionId: text("vercel_session_id").unique(),
+		organizationId: uuid("organization_id").notNull(),
+		cloudWorkspaceId: uuid("cloud_workspace_id").references(
+			() => cloudWorkspaces.id,
+			{ onDelete: "set null" },
+		),
+		memoryMb: integer("memory_mb").notNull(),
 		vcpus: integer().notNull(),
 		startedAt: timestamp("started_at", { withTimezone: true }).notNull(),
 		stoppedAt: timestamp("stopped_at", { withTimezone: true }),
-		observedMs: integer("observed_ms").notNull().default(0),
-		reportedMs: integer("reported_ms").notNull().default(0),
-		inflightToMs: integer("inflight_to_ms"),
+		lockSeq: integer("lock_seq").notNull().default(0),
+		lockOpen: boolean("lock_open").notNull().default(true),
+		finalizedThrough: timestamp("finalized_through", { withTimezone: true }),
+		settleLeaseUntil: timestamp("settle_lease_until", { withTimezone: true }),
 		createdAt: timestamp("created_at", { withTimezone: true })
 			.notNull()
 			.defaultNow(),
@@ -1021,13 +1026,14 @@ export const cloudWorkspaceSessions = pgTable(
 			.$onUpdate(() => new Date()),
 	},
 	(table) => [
-		index("cloud_workspace_sessions_cloud_workspace_id_idx").on(
+		index("cloud_workspace_boots_cloud_workspace_id_idx").on(
 			table.cloudWorkspaceId,
 		),
-		index("cloud_workspace_sessions_unsettled_idx")
-			.on(table.cloudWorkspaceId)
+		index("cloud_workspace_boots_organization_id_idx").on(table.organizationId),
+		index("cloud_workspace_boots_open_idx")
+			.on(table.startedAt)
 			.where(
-				sql`${table.stoppedAt} is null or ${table.reportedMs} < ${table.observedMs}`,
+				sql`${table.stoppedAt} is null or ${table.finalizedThrough} is null or ${table.finalizedThrough} < ${table.stoppedAt}`,
 			),
 	],
 );

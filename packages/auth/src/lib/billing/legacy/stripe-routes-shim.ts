@@ -1,5 +1,6 @@
 import { APIError, createAuthEndpoint } from "better-auth/api";
-import { autumnPlanIdFor, SEATS_FEATURE_ID } from "./plans";
+import { SEATS_FEATURE_ID } from "../autumn/features";
+import { autumnPlanIdFor } from "./plan-ids";
 
 export const BILLING_ERROR_CODES = {
 	SUBSCRIPTION_NOT_FOUND: "Subscription not found",
@@ -82,6 +83,7 @@ export interface UpgradeBody {
 	disableRedirect: boolean;
 }
 
+/** @deprecated Part of the Stripe-routes shim; see withAutumnBilling. */
 export function checkoutSuccessUrl(
 	baseURL: string,
 	successUrl: string,
@@ -89,6 +91,7 @@ export function checkoutSuccessUrl(
 	return `${baseURL}/subscription/success?callbackURL=${encodeURIComponent(successUrl)}&checkoutSessionId={CHECKOUT_SESSION_ID}`;
 }
 
+/** @deprecated Part of the Stripe-routes shim; see withAutumnBilling. */
 export async function upgradeWithAutumn(
 	deps: AutumnBillingDeps,
 	args: {
@@ -159,6 +162,7 @@ function stripeRef(live: LiveSubscription): StripeSubscriptionRef | null {
 	};
 }
 
+/** @deprecated Part of the Stripe-routes shim; see withAutumnBilling. */
 export async function cancelWithAutumn(
 	deps: AutumnBillingDeps,
 	args: {
@@ -175,6 +179,7 @@ export async function cancelWithAutumn(
 	};
 }
 
+/** @deprecated Part of the Stripe-routes shim; see withAutumnBilling. */
 export async function restoreWithAutumn(
 	deps: AutumnBillingDeps,
 	args: { referenceId: string },
@@ -259,6 +264,11 @@ interface ReferencedContext {
 	};
 }
 
+/**
+ * @deprecated Serves the Stripe plugin's /subscription/* routes from Autumn
+ * for released clients.
+ */
+// TODO(2027-01-31): drop once MINIMUM_DESKTOP_VERSION is at or past the first build on /api/auth/autumn/*.
 export function withAutumnBilling<Plugin extends StripePluginShape>(
 	plugin: Plugin,
 	options: { enabled: boolean; deps: () => AutumnBillingDeps },

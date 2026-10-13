@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import { reconcileCloudWorkspaceUsage } from "@superset/trpc/cloud-workspace-meter";
 import { verifyQstashRequest } from "@/lib/verifyQstash";
 
@@ -17,6 +18,10 @@ export async function POST(request: Request): Promise<Response> {
 	);
 	if (rejected) return rejected;
 
-	const outcome = await reconcileCloudWorkspaceUsage();
+	const outcome = await Sentry.withMonitor(
+		"reconcile-usage",
+		reconcileCloudWorkspaceUsage,
+		{ schedule: { type: "crontab", value: "*/10 * * * *" } },
+	);
 	return Response.json({ ok: true, ...outcome });
 }

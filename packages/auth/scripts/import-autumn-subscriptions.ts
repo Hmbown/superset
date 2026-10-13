@@ -3,16 +3,16 @@ import { subscriptions } from "@superset/db/schema";
 import * as authSchema from "@superset/db/schema/auth";
 import { ACTIVE_SUBSCRIPTION_STATUSES } from "@superset/shared/billing";
 import { desc, eq, inArray } from "drizzle-orm";
-import { autumnClient } from "./autumn";
-import { env } from "./env";
+import { autumnClient } from "../src/autumn";
+import { env } from "../src/env";
+import { paidPlanIdFromFlags } from "../src/lib/billing/autumn/entitlements";
+import { SEATS_FEATURE_ID } from "../src/lib/billing/autumn/features";
+import { seatItem } from "../src/lib/billing/autumn/subscription-row";
 import {
-	isPaidAutumnPlan,
 	PRO_ANNUAL_PLAN_ID,
 	PRO_MONTHLY_PLAN_ID,
-	SEATS_FEATURE_ID,
-} from "./lib/billing/plans";
-import { seatItem } from "./lib/billing/subscription-row";
-import { stripeClient } from "./stripe";
+} from "../src/lib/billing/legacy/plan-ids";
+import { stripeClient } from "../src/stripe";
 
 const PLAN_BY_PRICE: Record<string, string> = {
 	[env.STRIPE_PRO_MONTHLY_PRICE_ID]: PRO_MONTHLY_PLAN_ID,
@@ -23,7 +23,6 @@ const PLAN_BY_PRICE: Record<string, string> = {
 const apply = process.argv.includes("--apply");
 
 async function main() {
-	if (!autumnClient) throw new Error("AUTUMN_SECRET_KEY is not set");
 	const autumn = autumnClient;
 	const rows = await db
 		.select({
@@ -53,13 +52,9 @@ async function main() {
 				continue;
 			}
 			const existing = await autumn.customers
-				.get({ customerId: row.organizationId })
+				.get({ customerId: row.organizationId, expand: ["flags.feature"] })
 				.catch(() => null);
-			if (
-				existing?.subscriptions.some((subscription) =>
-					isPaidAutumnPlan(subscription.planId),
-				)
-			) {
+			if (existing && paidPlanIdFromFlags(existing.flags)) {
 				counts.alreadyLinked += 1;
 				continue;
 			}

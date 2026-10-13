@@ -14,7 +14,7 @@ import {
 } from "../../utils/billing";
 import { captureBillingEvent } from "../billing-analytics";
 import { resend } from "../resend";
-import { seatItem } from "./subscription-row";
+import { seatItem } from "./autumn/subscription-row";
 
 const qstash = new Client({ token: env.QSTASH_TOKEN });
 

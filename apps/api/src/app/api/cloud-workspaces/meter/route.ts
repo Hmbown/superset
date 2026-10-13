@@ -1,12 +1,10 @@
-import { meterCloudWorkspace } from "@superset/trpc/cloud-workspace-meter";
+import { settleBoot } from "@superset/trpc/cloud-workspace-meter";
 import { z } from "zod";
 import { verifyQstashRequest } from "@/lib/verifyQstash";
 
 export const dynamic = "force-dynamic";
 
-const payloadSchema = z
-	.object({ cloudWorkspaceId: z.string().uuid() })
-	.strict();
+const payloadSchema = z.object({ bootId: z.string().min(1) }).strict();
 
 export async function POST(request: Request): Promise<Response> {
 	const body = await request.text();
@@ -22,6 +20,6 @@ export async function POST(request: Request): Promise<Response> {
 		console.error("[cloud-workspaces/meter] invalid payload", parsed.error);
 		return Response.json({ error: "Invalid payload" }, { status: 400 });
 	}
-	const outcome = await meterCloudWorkspace(parsed.data.cloudWorkspaceId);
-	return Response.json({ ok: true, ...outcome });
+	const outcome = await settleBoot(parsed.data.bootId);
+	return Response.json({ ok: true, outcome });
 }

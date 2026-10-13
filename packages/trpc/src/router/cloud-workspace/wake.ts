@@ -8,7 +8,12 @@ import {
 	stopAndSnapshot,
 	wakeSandbox,
 } from "../../lib/sandbox";
-import { queueMeterCloudWorkspace } from "./meter";
+import {
+	attachBootSession,
+	authorizeBoot,
+	queueSettleWorkspace,
+	releaseBoot,
+} from "./meter";
 import { transitionCloudWorkspace } from "./transition";
 
 type CloudWorkspaceRow = typeof cloudWorkspaces.$inferSelect;
@@ -24,10 +29,27 @@ export async function wakeCloudWorkspace(
 	row: CloudWorkspaceRow,
 ): Promise<WokenCloudWorkspace> {
 	const { claim, agentCredentialDigest } = await buildSandboxClaim({ row });
+	let bootId: string | null = null;
 	const { hostTarget, booted } = await wakeSandbox({
 		providerSandboxId: row.providerSandboxId,
 		claim,
+		beforeResume: async (box) => {
+			({ bootId } = await authorizeBoot({
+				organizationId: row.organizationId,
+				cloudWorkspaceId: row.id,
+				...box,
+			}));
+		},
+	}).catch(async (error) => {
+		if (bootId) await releaseBoot(bootId);
+		throw error;
 	});
+	if (bootId) {
+		await attachBootSession({
+			bootId,
+			providerSandboxId: row.providerSandboxId,
+		});
+	}
 	const set: Partial<CloudWorkspaceRow> = {
 		...(hostTarget !== row.sandboxUrl ? { sandboxUrl: hostTarget } : {}),
 		...(booted ? { bootAgentCredentialDigest: agentCredentialDigest } : {}),
@@ -38,7 +60,6 @@ export async function wakeCloudWorkspace(
 			.set(set)
 			.where(eq(cloudWorkspaces.id, row.id));
 	}
-	if (booted) await queueMeterCloudWorkspace(row.id);
 	return {
 		hostTarget,
 		agentCredentialsChanged:
@@ -53,7 +74,10 @@ export async function restartCloudWorkspace(
 	row: CloudWorkspaceRow,
 ): Promise<WokenCloudWorkspace> {
 	const { running } = await describeSandbox(row.providerSandboxId);
-	if (running) await stopAndSnapshot(row.providerSandboxId);
+	if (running) {
+		await stopAndSnapshot(row.providerSandboxId);
+		await queueSettleWorkspace(row.id);
+	}
 	return wakeCloudWorkspace(row);
 }
 

@@ -50,13 +50,11 @@ stub(jobs, {
 });
 
 stub(meter, {
-	meterCloudWorkspace: () => {
-		meterCalls.push("meter");
-		return meterFailure
-			? Promise.reject(meterFailure)
-			: Promise.resolve({ reportedMs: 0 });
+	settleWorkspaceNow: () => {
+		meterCalls.push("settle");
+		return meterFailure ? Promise.reject(meterFailure) : Promise.resolve();
 	},
-	queueMeterCloudWorkspace: () => {
+	queueSettleWorkspace: () => {
 		meterCalls.push("queue");
 		return Promise.resolve();
 	},
@@ -125,7 +123,7 @@ describe("reapArchivedCloudWorkspace", () => {
 		meterFailure = null;
 	});
 
-	test("the stop stage stops the box and queues its meter", async () => {
+	test("the stop stage stops the box and queues its final settle", async () => {
 		expect(await reapArchivedCloudWorkspace({ ...input, stage: "stop" })).toBe(
 			"stopped",
 		);
@@ -134,27 +132,19 @@ describe("reapArchivedCloudWorkspace", () => {
 		expect(queued).toEqual([]);
 	});
 
-	test("a delete whose sessions could not be saved keeps the box for the retry", async () => {
-		meterFailure = new Error("vercel down");
-		await expect(
-			reapArchivedCloudWorkspace({ ...input, stage: "delete" }),
-		).rejects.toThrow("vercel down");
-		expect(sandboxCalls).toEqual([]);
-	});
-
-	test("a delete whose usage could not be sent still deletes: the sessions are saved", async () => {
-		meterFailure = new meter.UsageReportError([], "autumn down");
+	test("the delete stage settles the box's usage before deleting it", async () => {
 		expect(
 			await reapArchivedCloudWorkspace({ ...input, stage: "delete" }),
 		).toBe("reaped");
+		expect(meterCalls).toEqual(["settle"]);
 		expect(sandboxCalls).toEqual(["delete:ws-box"]);
 	});
 
-	test("the delete stage meters the box before deleting it", async () => {
+	test("a delete still deletes when the final settle fails: at most one lock window goes unbilled", async () => {
+		meterFailure = new Error("autumn down");
 		expect(
 			await reapArchivedCloudWorkspace({ ...input, stage: "delete" }),
 		).toBe("reaped");
-		expect(meterCalls).toEqual(["meter"]);
 		expect(sandboxCalls).toEqual(["delete:ws-box"]);
 	});
 
