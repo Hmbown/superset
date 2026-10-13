@@ -42,9 +42,9 @@ Each question has a placeholder in the Decision Log.
 - [ ] M0 Autumn sandbox spike (deferred: needs keys).
 - [x] (2026-10-13 19:40Z) M1 Layout (autumn/, legacy/ + README), deprecation markers, svix in the webhook route, required env in apps/api, pinned xApiVersion 2.4.0, workflow permissions, reviewer test changes, Stripe fallback tested with a stubbed client, real originCheck test.
 - [x] (2026-10-13 19:40Z) M2 Final `0146`: `cloud_workspace_boots` (boot id, Vercel session id, organization id without FK, workspace set null, memory, lock_seq, lock_open, finalized_through, settle lease) and the `cloud_usage_limit_reached` run error code.
-- [x] (2026-10-13 19:40Z) M3 Metering on rolling locks: check at create, lock at provision and wake, settle (finalize + renew, refusal stops the box, finalize failure falls back to an idempotent track), stop and delete triggers, adoption of already-running boxes, Sentry monitor on the reconciler. Remaining: unit tests for settleBoot paths.
+- [x] (2026-10-13 19:40Z) M3 Metering on rolling locks: check at create, lock at provision and wake, settle (finalize + renew, refusal stops the box, finalize failure falls back to an idempotent track), stop and delete triggers, adoption of already-running boxes, Sentry monitor on the reconciler. settleBoot paths covered by unit tests (renew, close, cap refusal, finalize fallback, lease).
 - [ ] M4 Over-limit experience in desktop, web, mobile, automations.
-- [ ] M5 Plan state from Autumn.
+- [x] (2026-10-13 20:30Z) M5 Plan state from Autumn in Autumn mode: `organizationBilling` (memory, Redis, last-known, fail-open) feeds `activePlan` (same fields plus optional `paymentState`), `organizationPlan`, the automations gate, the Slack gate, `beforeAddMember` and `authorizeReference`; tiers come from `pro_access`/`enterprise_access`; every sync invalidates the cache. SQL readers keep the projection. Not covered by tests: the cache tiers (Redis is module-scoped).
 - [ ] M6 Official better-auth plugin with role hook; desktop and web move to it.
 - [ ] M7 Dunning webhook, purge, import script.
 - [ ] M8 Full validation, PR description, plan to `done/`.

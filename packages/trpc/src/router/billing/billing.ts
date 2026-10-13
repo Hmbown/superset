@@ -1,3 +1,5 @@
+import { billingUsesAutumn } from "@superset/auth/autumn";
+import { organizationBilling } from "@superset/auth/billing";
 import { stripeClient } from "@superset/auth/stripe";
 import { db } from "@superset/db/client";
 import { members, organizations, subscriptions } from "@superset/db/schema";
@@ -127,6 +129,22 @@ export const billingRouter = {
 	activePlan: protectedProcedure.query(async ({ ctx }) => {
 		const activeOrgId = ctx.activeOrganizationId;
 		if (!activeOrgId) return { ...EMPTY_ACTIVE_PLAN, organizationId: null };
+
+		if (billingUsesAutumn) {
+			const billing = await organizationBilling(activeOrgId);
+			const date = (value: string | null) => (value ? new Date(value) : null);
+			return {
+				organizationId: activeOrgId,
+				plan: billing.tier,
+				status: billing.status,
+				cancelAt: date(billing.cancelAt),
+				periodStart: date(billing.periodStart),
+				periodEnd: date(billing.periodEnd),
+				billingInterval: billing.billingInterval,
+				lapsed: billing.lapsed,
+				paymentState: billing.paymentState,
+			};
+		}
 
 		const subscription = await db.query.subscriptions.findFirst({
 			where: and(

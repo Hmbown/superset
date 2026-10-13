@@ -39,6 +39,7 @@ import { env } from "./env";
 import { acceptInvitationEndpoint } from "./lib/accept-invitation-endpoint";
 import {
 	autumnBillingDeps,
+	organizationPlanFromAutumn,
 	seatItem,
 	setAutumnSeats,
 	withAutumnBilling,
@@ -736,14 +737,16 @@ export const auth = betterAuth({
 						}
 					}
 
-					const subscription = await db.query.subscriptions.findFirst({
-						where: and(
-							eq(subscriptions.referenceId, organization.id),
-							eq(subscriptions.status, "active"),
-						),
-					});
+					const paying = billingUsesAutumn
+						? (await organizationPlanFromAutumn(organization.id)) !== "free"
+						: !!(await db.query.subscriptions.findFirst({
+								where: and(
+									eq(subscriptions.referenceId, organization.id),
+									eq(subscriptions.status, "active"),
+								),
+							}));
 
-					if (subscription) return;
+					if (paying) return;
 
 					// Not countBillableSeats: the free-plan limit is about how many
 					// people are in the organization, not how many seats we bill,
@@ -1142,13 +1145,18 @@ export const auth = betterAuth({
 							action === "cancel-subscription" ||
 							action === "restore-subscription"
 						) {
-							const subscription = await db.query.subscriptions.findFirst({
-								where: and(
-									eq(subscriptions.referenceId, referenceId),
-									eq(subscriptions.status, "active"),
-								),
-							});
-							if (subscription?.plan === "enterprise") return false;
+							const enterprise = billingUsesAutumn
+								? (await organizationPlanFromAutumn(referenceId)) ===
+									"enterprise"
+								: (
+										await db.query.subscriptions.findFirst({
+											where: and(
+												eq(subscriptions.referenceId, referenceId),
+												eq(subscriptions.status, "active"),
+											),
+										})
+									)?.plan === "enterprise";
+							if (enterprise) return false;
 						}
 
 						switch (action) {

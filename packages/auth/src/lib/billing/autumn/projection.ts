@@ -17,6 +17,7 @@ import {
 	saveStripeCustomerId,
 } from "./customer";
 import { tierFromFlags } from "./entitlements";
+import { invalidateOrganizationBilling } from "./plan-state";
 import {
 	seatItem,
 	subscriptionRowFromStripe,
@@ -131,6 +132,7 @@ async function autumnTierFor(
 export async function syncOrganizationSubscription(
 	organizationId: string,
 ): Promise<void> {
+	await invalidateOrganizationBilling(organizationId);
 	const stripeCustomerId = await resolveStripeCustomerId(organizationId);
 	if (!stripeCustomerId) return;
 
