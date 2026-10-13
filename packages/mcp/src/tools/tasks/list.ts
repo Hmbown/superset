@@ -65,7 +65,7 @@ export function register(server: McpServer): void {
 				.nullish()
 				.describe("Free-text search on title."),
 			labels: z
-				.array(z.string().min(1))
+				.array(z.string().trim().min(1))
 				.max(20)
 				.nullish()
 				.describe(
