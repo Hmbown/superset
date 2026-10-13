@@ -521,6 +521,24 @@ export async function installPlugin(
 	};
 }
 
+export async function recordToolsOnlyPlugin(plugin: {
+	name: string;
+	marketplace: string;
+	version: string;
+}): Promise<Omit<InstallPluginResult, "installPath">> {
+	const plugins = readInstalledPlugins().filter(
+		(p) => !(p.name === plugin.name && p.marketplace === plugin.marketplace),
+	);
+	plugins.push({
+		...plugin,
+		installedAt: new Date().toISOString(),
+		enabled: true,
+	} satisfies InstalledPlugin);
+	writeInstalledPlugins(plugins);
+
+	return { ...plugin, skills: (await syncPlugins()).skills };
+}
+
 /**
  * Flips a plugin's `enabled` flag on this machine.
  *

@@ -535,7 +535,14 @@ export function pluginProxyMcpServers(
 	options: { headersHelper?: string } = {},
 ): Record<string, PluginMcpServerConfig> | undefined {
 	if (!pluginConnectorSlug(name)) return undefined;
+	return proxyMcpServer(name, marketplace, options);
+}
 
+function proxyMcpServer(
+	name: string,
+	marketplace: string,
+	options: { headersHelper?: string },
+): Record<string, PluginMcpServerConfig> {
 	return {
 		[name]: {
 			type: "http",
@@ -573,6 +580,13 @@ export function desiredPluginMcpServers(
 		// marketplace it came from: another marketplace's same-named plugin
 		// would otherwise be served Superset's.
 		const marketplace = install.marketplace || DEFAULT_MARKETPLACE;
+		if (isOrganizationMarketplace(marketplace)) {
+			Object.assign(
+				desired,
+				proxyMcpServer(install.name, marketplace, options),
+			);
+			continue;
+		}
 		if (marketplace !== DEFAULT_MARKETPLACE) continue;
 		const entry = PLUGIN_CATALOG.find((p) => p.name === install.name);
 		if (!entry) continue;

@@ -1,7 +1,7 @@
 import { db } from "@superset/db/client";
-import { pluginInstalls } from "@superset/db/schema";
+import { organizationPlugins, pluginInstalls } from "@superset/db/schema";
 import type { SandboxPlugin } from "@superset/shared/sandbox-contract";
-import { and, asc, eq, isNull, or } from "drizzle-orm";
+import { and, asc, eq, isNotNull, isNull, or } from "drizzle-orm";
 
 export async function creatorPlugins(
 	userId: string | null,
@@ -16,12 +16,19 @@ export async function creatorPlugins(
 			enabled: pluginInstalls.enabled,
 		})
 		.from(pluginInstalls)
+		.leftJoin(
+			organizationPlugins,
+			eq(organizationPlugins.id, pluginInstalls.organizationPluginId),
+		)
 		.where(
 			and(
 				eq(pluginInstalls.userId, userId),
 				or(
 					isNull(pluginInstalls.organizationId),
-					eq(pluginInstalls.organizationId, organizationId),
+					and(
+						eq(pluginInstalls.organizationId, organizationId),
+						isNotNull(organizationPlugins.publishedAt),
+					),
 				),
 			),
 		)
