@@ -48,9 +48,6 @@ export async function resolveAuth(
 	} else if (config.auth) {
 		const auth = config.auth;
 		if (!isAuthFresh(auth, Date.now())) {
-			if (!auth.refreshToken) {
-				throw new CLIError("Session expired", "Run: superset auth login");
-			}
 			// Coordinated across processes: parallel commands must spend the
 			// stored refresh token at most once, or the server's rotation
 			// revokes the whole login (GH #8426).
