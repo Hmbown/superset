@@ -36,6 +36,7 @@ import { env } from "./env";
 import { acceptInvitationEndpoint } from "./lib/accept-invitation-endpoint";
 import {
 	autumnBillingDeps,
+	autumnBillingRoutes,
 	handleStripeBillingEvent,
 	organizationPlanFromAutumn,
 	seatItem,
@@ -1212,6 +1213,7 @@ export const auth = betterAuth({
 			{ enabled: billingUsesAutumn, deps: autumnBillingDeps },
 		),
 		acceptInvitationEndpoint,
+		autumnBillingRoutes,
 	],
 });
 

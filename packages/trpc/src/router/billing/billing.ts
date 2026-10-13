@@ -128,7 +128,12 @@ async function isBillingOwner(userId: string, organizationId: string) {
 export const billingRouter = {
 	activePlan: protectedProcedure.query(async ({ ctx }) => {
 		const activeOrgId = ctx.activeOrganizationId;
-		if (!activeOrgId) return { ...EMPTY_ACTIVE_PLAN, organizationId: null };
+		const billingProvider = billingUsesAutumn
+			? ("autumn" as const)
+			: ("stripe" as const);
+		if (!activeOrgId) {
+			return { ...EMPTY_ACTIVE_PLAN, organizationId: null, billingProvider };
+		}
 
 		if (billingUsesAutumn) {
 			const billing = await organizationBilling(activeOrgId);
@@ -143,6 +148,7 @@ export const billingRouter = {
 				billingInterval: billing.billingInterval,
 				lapsed: billing.lapsed,
 				paymentState: billing.paymentState,
+				billingProvider,
 			};
 		}
 
@@ -170,6 +176,7 @@ export const billingRouter = {
 				organizationId: activeOrgId,
 				lapsed:
 					previous?.status === "canceled" || previous?.status === "unpaid",
+				billingProvider,
 			};
 		}
 
@@ -182,6 +189,7 @@ export const billingRouter = {
 			periodEnd: subscription.periodEnd,
 			billingInterval: subscription.billingInterval,
 			lapsed: false,
+			billingProvider,
 		};
 	}),
 

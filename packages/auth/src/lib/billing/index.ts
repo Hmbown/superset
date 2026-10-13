@@ -19,6 +19,7 @@ export {
 	syncFromStripeEvent,
 	syncOrganizationSubscription,
 } from "./autumn/projection";
+export { autumnBillingRoutes } from "./autumn/routes";
 export { seatItem } from "./autumn/subscription-row";
 export { withAutumnBilling } from "./legacy/stripe-routes-shim";
 export { autumnBillingDeps } from "./legacy/stripe-routes-shim-deps";

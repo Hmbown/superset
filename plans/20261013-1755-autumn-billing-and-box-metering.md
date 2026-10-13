@@ -68,6 +68,13 @@ Each question has a placeholder in the Decision Log.
 
 ## Decision Log
 
+- Decision: instead of mounting `autumn-js/better-auth` behind a role hook, serve the same `/api/auth/autumn/*` route names from our own better-auth plugin (`autumn/routes.ts`) with whitelisted bodies.
+  Rationale: a better-auth `before` hook runs before the bearer plugin turns a desktop's bearer token into a session cookie, so a role hook would see no session for desktop requests and lock them out; endpoint middleware runs after it. Our endpoints also never pass client-supplied `customize`, `discounts`, `checkoutSessionParams` or enterprise plans to Autumn, which the official plugin does.
+  Date/Author: 2026-10-13 / Claude.
+- Decision: `activePlan` gains `billingProvider` so clients call `/api/auth/autumn/*` only in Autumn mode and keep the Stripe-plugin routes otherwise.
+  Rationale: the new routes 404 in Stripe mode; additive output fields are safe for released clients (trpc-compat).
+  Date/Author: 2026-10-13 / Claude.
+
 - Decision: `subscriptions` stays written by our sync (tier from Autumn's access features, Stripe ids and periods from the Stripe subscription Autumn manages) and lives in `autumn/projection.ts`, not `legacy/`.
   Rationale: Autumn does not expose the Stripe subscription id, which seat sync, the Slack jobs, cancellation feedback, purge and the Enterprise ARR report need; so the projection cannot be written from Autumn alone.
   Date/Author: 2026-10-13 / Claude.
