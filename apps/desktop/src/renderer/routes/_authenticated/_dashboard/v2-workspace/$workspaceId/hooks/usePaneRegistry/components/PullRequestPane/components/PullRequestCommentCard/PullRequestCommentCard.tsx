@@ -220,7 +220,7 @@ export function PullRequestCommentCard({
 			>
 				<PullRequestMarkdown body={comment.body} size="comment" />
 			</PullRequestActivityCard>
-			{replying && !collapsed && replyTarget && replyId != null ? (
+			{replying && replyTarget && replyId != null ? (
 				<div className="mt-2">
 					<PullRequestConversationComposer
 						ref={replyBoxRef}

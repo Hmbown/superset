@@ -166,7 +166,8 @@ export function PullRequestConversationComposer({
 					aria-label={t({ message: "Cancel" })}
 					title={t({ message: "Cancel" })}
 					onClick={onClose}
-					className="mb-0.5 flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+					disabled={post.isPending}
+					className="mb-0.5 flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-40"
 				>
 					<X className="size-4" />
 				</button>

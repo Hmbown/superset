@@ -127,6 +127,31 @@ describe("the Activity comment box", () => {
 		]);
 	});
 
+	test("Cancel stays disabled while a reply is posting", async () => {
+		let release: () => void = () => {};
+		const server = Bun.serve({
+			port: 0,
+			hostname: "127.0.0.1",
+			fetch: () =>
+				new Promise<Response>((resolve) => {
+					release = () => resolve(new Response(null, { status: 500 }));
+				}),
+		});
+		stopHost = () => {
+			release();
+			void server.stop(true);
+		};
+		const { view, field } = renderComposer({
+			hostUrl: `http://127.0.0.1:${server.port}`,
+			threadCommentId: 42,
+			onClose: () => {},
+		});
+		const cancel = view.getByRole("button", { name: "Cancel" });
+		expect(cancel).toHaveProperty("disabled", false);
+		fireEvent.change(field(), { target: { value: "On it." } });
+		fireEvent.keyDown(field(), { key: "Enter" });
+		await waitFor(() => expect(cancel).toHaveProperty("disabled", true));
+	});
 	test("Enter in a reply box answers its thread and closes the box", async () => {
 		const host = startHost();
 		const onClose = mock(() => {});

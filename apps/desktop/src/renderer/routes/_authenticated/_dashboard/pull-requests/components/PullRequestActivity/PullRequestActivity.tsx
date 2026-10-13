@@ -147,19 +147,11 @@ export function PullRequestActivity({
 											/>
 										);
 									case "comment":
-										if (layout === "row")
-											return (
-												<li key={item.comment.id}>
-													<PullRequestActivityComment
-														comment={item.comment}
-														prUrl={data.url}
-													/>
-												</li>
-											);
 										return (
 											<PullRequestTimelineStop
 												key={item.comment.id}
 												card
+												rail={layout === "card"}
 												first={first}
 												last={last}
 												node={
@@ -175,12 +167,11 @@ export function PullRequestActivity({
 											</PullRequestTimelineStop>
 										);
 									case "entry":
-										if (layout === "row")
-											return <li key={item.entry.id}>{item.entry.card}</li>;
 										return (
 											<PullRequestTimelineStop
 												key={item.entry.id}
 												card
+												rail={layout === "card"}
 												first={first}
 												last={last}
 												node={

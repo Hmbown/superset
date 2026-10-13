@@ -139,6 +139,22 @@ describe("review cards", () => {
 		fireEvent.click(body);
 		expect(onOpenInDiff).not.toHaveBeenCalled();
 	});
+	test("folding a thread keeps its open reply box and draft", () => {
+		const view = renderCard(
+			{ comment: { ...comment, threadId: "T1", isResolved: true } },
+			true,
+		);
+		fireEvent.click(view.getByRole("button", { name: /Expand/ }));
+		fireEvent.click(view.getByRole("button", { name: "Reply" }));
+		fireEvent.change(view.getByRole("textbox"), {
+			target: { value: "Still relevant" },
+		});
+		fireEvent.click(view.getByRole("button", { name: /Collapse/ }));
+		expect(view.queryByText(/Keep the/)).toBeNull();
+		expect((view.getByRole("textbox") as HTMLTextAreaElement).value).toBe(
+			"Still relevant",
+		);
+	});
 	test("Reply opens an empty box under the thread, or opens GitHub when nothing can take it", () => {
 		const inline = renderCard({ comment }, true);
 		expect(inline.queryByRole("textbox")).toBeNull();
