@@ -803,11 +803,11 @@ export const taskRouter = {
 					);
 				}
 
-				if ("assigneeId" in data) {
+				if (data.assigneeId !== undefined) {
 					updateData.assigneeId = await getScopedAssigneeId(
 						tx,
 						taskAccess.organizationId,
-						data.assigneeId ?? null,
+						data.assigneeId,
 						"Assignee must belong to the task organization",
 					);
 				}
