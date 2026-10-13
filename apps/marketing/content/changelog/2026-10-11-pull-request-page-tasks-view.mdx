@@ -1,6 +1,7 @@
 ---
 title: Redesigned Pull Requests and a Unified Tasks View
 date: 2026-10-11
+image: /changelog/2026-10-11-pull-request-page.png
 ---
 
 ## Redesigned Pull Request Page <PRBadge url="https://github.com/superset-sh/superset/pull/8247" /> <PRBadge url="https://github.com/superset-sh/superset/pull/8322" /> <PRBadge url="https://github.com/superset-sh/superset/pull/8323" /> <PRBadge url="https://github.com/superset-sh/superset/pull/8301" />
@@ -11,13 +12,15 @@ A pull request now opens as its own page: a header with state, labels, and autho
 - Reply to a review thread without leaving the pane; bot findings show a title and severity line
 - Draft PRs get a **Ready for review** button, and reviewers link straight to their GitHub profile <PRBadge url="https://github.com/superset-sh/superset/pull/8343" />
 
-{/* TODO: Capture the PR pane's Summary tab with the info rail open. */}
+![A merged pull request's Summary tab with merge status, reviews, and checks in the info rail](/changelog/2026-10-11-pull-request-page.png)
 
 ## One Tasks View That Follows Your Tracker <PRBadge url="https://github.com/superset-sh/superset/pull/8100" /> <PRBadge url="https://github.com/superset-sh/superset/pull/8112" /> <PRBadge url="https://github.com/superset-sh/superset/pull/8115" />
 
 The Tasks tab now mirrors whichever tracker your org uses. Pick it once in **Settings → Organization → Track tasks in**, and the separate Linear tab is gone.
 
 - Superset tasks can be filed under a team with `--team`, and admins can rename a team's task key (for example `DESIG` → `ART`) from **Settings → Teams**
+
+![Track tasks in setting under Settings → Organization, with Superset and Linear options](/changelog/2026-10-11-track-tasks-in.png)
 
 Docs: [Tasks](https://docs.superset.sh/docs/tasks).
 
@@ -27,6 +30,8 @@ Connect Google Calendar, Vercel, Neon, and PostHog from **Plugins**, so an agent
 
 - Google Calendar reuses your existing Google connection from Gmail
 - Vercel, Neon, and PostHog connect through each vendor's own hosted MCP server
+
+![Plugins page with Google Calendar, Vercel, Neon, and PostHog](/changelog/2026-10-11-plugins.png)
 
 ## Improvements
 
