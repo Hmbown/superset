@@ -46,7 +46,19 @@ describe("buildTaskListConditions", () => {
 			}),
 		);
 		expect(sql).toContain("label.name like");
-		expect(params).toEqual([ORG, "acme/web_1", "acme/web\\_1/%"]);
+		expect(params).toEqual([
+			ORG,
+			"acme / web_1",
+			"acme/web_1",
+			"acme/web\\_1/%",
+		]);
+	});
+
+	test("a label that cannot exist still filters, matching nothing", () => {
+		const { params } = render(
+			buildTaskListConditions({ organizationId: ORG, labels: ["///"] }),
+		);
+		expect(params).toEqual([ORG, "///"]);
 	});
 
 	test("escapes LIKE wildcards in search and matches title or description", () => {

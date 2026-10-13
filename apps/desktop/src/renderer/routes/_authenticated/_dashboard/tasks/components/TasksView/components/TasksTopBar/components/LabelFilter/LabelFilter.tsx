@@ -39,7 +39,7 @@ export function LabelFilter({ value, onChange }: LabelFilterProps) {
 	const tree = useMemo(() => sortLabelsAsTree(labels ?? []), [labels]);
 	const query = search.trim().toLowerCase();
 	const visible = query
-		? tree.filter((label) => label.name.includes(query))
+		? tree.filter((label) => label.name.toLowerCase().includes(query))
 		: tree;
 
 	const handleSelect = (name: string | null) => {

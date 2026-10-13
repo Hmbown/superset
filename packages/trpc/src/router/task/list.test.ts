@@ -58,14 +58,16 @@ describe("task list label filter", () => {
 		expect(whereParams).toEqual([
 			"org-1",
 			"acme",
+			"acme",
 			"acme/%",
+			"client-one",
 			"client-one",
 			"client-one/%",
 		]);
 
 		whereParams = [];
 		await caller.task.listPage({ labels: ["acme"] });
-		expect(whereParams).toEqual(["org-1", "acme", "acme/%"]);
+		expect(whereParams).toEqual(["org-1", "acme", "acme", "acme/%"]);
 	});
 
 	test("rejects a label that is only spaces", async () => {
