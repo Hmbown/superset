@@ -105,11 +105,17 @@ describe("checkConfig", () => {
 
 	it("errors on auth fields of the wrong type", () => {
 		const result = check({
-			auth: { accessToken: "tok", refreshToken: 7, expiresAt: "soon" },
+			auth: {
+				accessToken: "tok",
+				refreshToken: 7,
+				expiresAt: "soon",
+				refreshStartedAt: "now",
+			},
 		});
 		expect(result.valid).toBe(false);
 		expect(result.issues.map((i) => i.message)).toEqual([
 			"`auth.refreshToken` must be a non-empty string",
+			"`auth.refreshStartedAt` must be a finite number (ms since the epoch)",
 			"`auth.expiresAt` must be a finite number (ms since the epoch)",
 		]);
 	});

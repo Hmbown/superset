@@ -62,6 +62,17 @@ function checkAuth(value: unknown, now: number): FieldCheck {
 	if (value.refreshToken !== undefined && !hasRefresh) {
 		issues.push(error("`auth.refreshToken` must be a non-empty string"));
 	}
+	if (
+		value.refreshStartedAt !== undefined &&
+		(typeof value.refreshStartedAt !== "number" ||
+			!Number.isFinite(value.refreshStartedAt))
+	) {
+		issues.push(
+			error(
+				"`auth.refreshStartedAt` must be a finite number (ms since the epoch)",
+			),
+		);
+	}
 	for (const key of Object.keys(value)) {
 		if (!Object.hasOwn(AUTH_KEYS, key)) {
 			issues.push(
