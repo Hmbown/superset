@@ -816,6 +816,9 @@ msgstr "{count} hosts run an older host service than this app"
 msgid "{count}/day"
 msgstr "{count}/day"
 
+msgid "{current} of {total}"
+msgstr "{current} of {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} of {totalBranches}"
 
@@ -3785,6 +3788,9 @@ msgstr "Cloning…"
 msgid "Close"
 msgstr "Close"
 
+msgid "Close (Esc)"
+msgstr "Close (Esc)"
+
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "Close {0}"
@@ -3915,6 +3921,10 @@ msgstr "Close workspace"
 msgid "Close Workspace"
 msgstr "Close Workspace"
 
+msgid "Closed"
+msgstr "Closed"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Closed"
 
@@ -6277,6 +6287,10 @@ msgstr "Downloading..."
 msgid "Downloads"
 msgstr "Downloads"
 
+msgid "Draft"
+msgstr "Draft"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Draft"
 
@@ -8868,6 +8882,9 @@ msgstr "Is there a free plan?"
 msgid "Isolation"
 msgstr "Isolation"
 
+msgid "Issue"
+msgstr "Issue"
+
 #. placeholder {0}: link.number
 msgid "Issue #{0}"
 msgstr "Issue #{0}"
@@ -9930,6 +9947,10 @@ msgstr "Merge status unknown"
 msgid "Merged"
 msgstr "Merged"
 
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Merged"
+
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Merged by {0}"
@@ -10422,6 +10443,9 @@ msgstr "News, updates, and insights from the Superset team about parallel coding
 
 msgid "Next"
 msgstr "Next"
+
+msgid "Next (Enter)"
+msgstr "Next (Enter)"
 
 msgid "Next branch"
 msgstr "Next branch"
@@ -11413,6 +11437,10 @@ msgstr "Only you can see this page"
 msgid "open"
 msgstr "open"
 
+msgid "Open"
+msgstr "Open"
+
+msgctxt "pull request or issue state"
 msgid "Open"
 msgstr "Open"
 
@@ -12604,6 +12632,9 @@ msgstr "Preview: GitHub star nag toast"
 
 msgid "Previous"
 msgstr "Previous"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Previous (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Previous branch"

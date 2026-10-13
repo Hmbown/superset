@@ -21,11 +21,13 @@ export function parseGithubWorkItemUrl(
 	if (!/^(www\.)?github\.com$/.test(url.hostname)) return null;
 	const match = WORK_ITEM_PATH.exec(url.pathname);
 	if (!match) return null;
-	const [, owner = "", repo = "", resource, number = ""] = match;
+	const [, owner = "", repo = "", resource, digits = ""] = match;
+	const number = Number(digits);
+	if (!Number.isSafeInteger(number)) return null;
 	return {
 		kind: resource === "pull" ? "pr" : "issue",
 		owner,
 		repo,
-		number: Number(number),
+		number,
 	};
 }

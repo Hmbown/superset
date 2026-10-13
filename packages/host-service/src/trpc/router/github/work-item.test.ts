@@ -32,7 +32,9 @@ const ISSUE = {
 	updated_at: "2026-10-01T00:00:00Z",
 };
 
-function fakeOctokit(options: { prStatus?: number; issue?: object } = {}) {
+function fakeOctokit(
+	options: { prStatus?: number; issue?: object; token?: string } = {},
+) {
 	const pullsGet = mock(async () => {
 		if (options.prStatus)
 			throw Object.assign(new Error("nope"), { status: options.prStatus });
@@ -40,6 +42,7 @@ function fakeOctokit(options: { prStatus?: number; issue?: object } = {}) {
 	});
 	const issuesGet = mock(async () => ({ data: options.issue ?? ISSUE }));
 	const octokit = {
+		auth: async () => ({ type: "token", token: options.token ?? "token-a" }),
 		pulls: { get: pullsGet },
 		issues: { get: issuesGet },
 	} as unknown as Octokit;
@@ -95,6 +98,23 @@ describe("github work item loader", () => {
 			author: null,
 			baseRefName: null,
 		});
+	});
+
+	it("does not answer one credential from another's cache", async () => {
+		const load = createGithubWorkItemLoader();
+		const ref = {
+			owner: "superset-sh",
+			repo: "superset",
+			kind: "pr" as const,
+			number: 8329,
+		};
+		const first = fakeOctokit({ token: "token-a" });
+		const second = fakeOctokit({ token: "token-b" });
+		await load(first.octokit, ref);
+		await load(second.octokit, ref);
+		await load(first.octokit, ref);
+		expect(first.pullsGet).toHaveBeenCalledTimes(1);
+		expect(second.pullsGet).toHaveBeenCalledTimes(1);
 	});
 
 	it("remembers an item for a while, and forgets a failed lookup", async () => {

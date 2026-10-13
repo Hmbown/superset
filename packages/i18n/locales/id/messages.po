@@ -816,6 +816,9 @@ msgstr "{count} host menjalankan layanan host yang lebih lama dari aplikasi ini"
 msgid "{count}/day"
 msgstr "{count}/hari"
 
+msgid "{current} of {total}"
+msgstr "{current} dari {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} dari {totalBranches}"
 
@@ -3785,6 +3788,9 @@ msgstr "Meng-clone…"
 msgid "Close"
 msgstr "Tutup"
 
+msgid "Close (Esc)"
+msgstr "Tutup (Esc)"
+
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "Tutup {0}"
@@ -3915,6 +3921,10 @@ msgstr "Tutup workspace"
 msgid "Close Workspace"
 msgstr "Tutup Workspace"
 
+msgid "Closed"
+msgstr "Ditutup"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Ditutup"
 
@@ -6277,6 +6287,10 @@ msgstr "Mengunduh..."
 msgid "Downloads"
 msgstr "Unduhan"
 
+msgid "Draft"
+msgstr "Draf"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Draf"
 
@@ -8868,6 +8882,9 @@ msgstr "Apakah ada paket gratis?"
 msgid "Isolation"
 msgstr "Isolasi"
 
+msgid "Issue"
+msgstr "Issue"
+
 #. placeholder {0}: link.number
 msgid "Issue #{0}"
 msgstr "Issue #{0}"
@@ -9930,6 +9947,10 @@ msgstr "Status merge tidak diketahui"
 msgid "Merged"
 msgstr "Di-merge"
 
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Di-merge"
+
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Di-merge oleh {0}"
@@ -10422,6 +10443,9 @@ msgstr "Berita, pembaruan, dan wawasan dari tim Superset tentang agen coding par
 
 msgid "Next"
 msgstr "Berikutnya"
+
+msgid "Next (Enter)"
+msgstr "Berikutnya (Enter)"
 
 msgid "Next branch"
 msgstr "Branch berikutnya"
@@ -11415,6 +11439,10 @@ msgstr "buka"
 
 msgid "Open"
 msgstr "Buka"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Terbuka"
 
 msgctxt "status"
 msgid "Open"
@@ -12604,6 +12632,9 @@ msgstr "Pratinjau: pengingat bintang GitHub"
 
 msgid "Previous"
 msgstr "Sebelumnya"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Sebelumnya (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Branch sebelumnya"

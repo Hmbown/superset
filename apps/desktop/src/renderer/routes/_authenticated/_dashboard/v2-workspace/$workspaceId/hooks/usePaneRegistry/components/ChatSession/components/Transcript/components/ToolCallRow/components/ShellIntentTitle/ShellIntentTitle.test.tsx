@@ -20,6 +20,7 @@ test("a read is a verb and a file chip that opens the file at its line", () => {
 		<ChatPaneActionsProvider openLink={openLink}>
 			<ShellIntentTitle
 				intent={{ verb: "read", path: "src/app.ts", startLine: 120 }}
+				verb="Read"
 				running={false}
 			/>
 		</ChatPaneActionsProvider>,
@@ -39,6 +40,7 @@ test("an absolute path shows its name and opens in full", () => {
 		<ChatPaneActionsProvider openLink={openLink}>
 			<ShellIntentTitle
 				intent={{ verb: "read", path: "/Users/me/repo/src/app.ts" }}
+				verb="Read"
 				running={false}
 			/>
 		</ChatPaneActionsProvider>,
@@ -54,6 +56,7 @@ test("a search shows its query plain and where it looked", () => {
 	const view = render(
 		<ShellIntentTitle
 			intent={{ verb: "search", query: "useQueue", path: "src" }}
+			verb="Searched"
 			running={false}
 		/>,
 	);
@@ -64,7 +67,11 @@ test("a search shows its query plain and where it looked", () => {
 
 test("without a pane to open into, the chip is plain", () => {
 	const view = render(
-		<ShellIntentTitle intent={{ verb: "list", path: "apps" }} running={true} />,
+		<ShellIntentTitle
+			intent={{ verb: "list", path: "apps" }}
+			verb="Listing"
+			running={true}
+		/>,
 	);
 	expect(view.container.textContent).toBe("Listingapps");
 	expect(view.queryByRole("button")).toBeNull();

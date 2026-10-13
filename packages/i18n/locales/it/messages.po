@@ -816,6 +816,9 @@ msgstr "{count} host eseguono un servizio host più vecchio di questa app"
 msgid "{count}/day"
 msgstr "{count}/giorno"
 
+msgid "{current} of {total}"
+msgstr "{current} di {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} di {totalBranches}"
 
@@ -3785,6 +3788,9 @@ msgstr "Clonazione…"
 msgid "Close"
 msgstr "Chiudi"
 
+msgid "Close (Esc)"
+msgstr "Chiudi (Esc)"
+
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "Chiudi {0}"
@@ -3915,6 +3921,10 @@ msgstr "Chiudi il workspace"
 msgid "Close Workspace"
 msgstr "Chiudi workspace"
 
+msgid "Closed"
+msgstr "Chiusa"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Chiusa"
 
@@ -6277,6 +6287,10 @@ msgstr "Download..."
 msgid "Downloads"
 msgstr "Download"
 
+msgid "Draft"
+msgstr "Bozza"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Bozza"
 
@@ -8868,6 +8882,9 @@ msgstr "Esiste un piano gratuito?"
 msgid "Isolation"
 msgstr "Isolamento"
 
+msgid "Issue"
+msgstr "Issue"
+
 #. placeholder {0}: link.number
 msgid "Issue #{0}"
 msgstr "Issue #{0}"
@@ -9930,6 +9947,10 @@ msgstr "Stato del merge sconosciuto"
 msgid "Merged"
 msgstr "Unita"
 
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Unita"
+
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Unita da {0}"
@@ -10422,6 +10443,9 @@ msgstr "Notizie, aggiornamenti e approfondimenti dal team Superset su agenti di 
 
 msgid "Next"
 msgstr "Avanti"
+
+msgid "Next (Enter)"
+msgstr "Successivo (Invio)"
 
 msgid "Next branch"
 msgstr "Branch successivo"
@@ -11415,6 +11439,10 @@ msgstr "apri"
 
 msgid "Open"
 msgstr "Apri"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Aperta"
 
 msgctxt "status"
 msgid "Open"
@@ -12604,6 +12632,9 @@ msgstr "Anteprima: promemoria stella GitHub"
 
 msgid "Previous"
 msgstr "Indietro"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Precedente (Maiusc+Invio)"
 
 msgid "Previous branch"
 msgstr "Branch precedente"
@@ -18021,7 +18052,7 @@ msgstr "Aggiornato"
 
 #. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
 msgid "Updated {0}"
-msgstr "Aggiornato {0}"
+msgstr "Ultimo aggiornamento {0}"
 
 msgid "Updated {date}"
 msgstr "Aggiornato il {date}"

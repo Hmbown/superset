@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import type { Octokit } from "@octokit/rest";
 import { TRPCError } from "@trpc/server";
 
@@ -143,7 +144,19 @@ function notFound(error: unknown): boolean {
 }
 
 /**
- * One item per repository, kind and number, remembered for a short while so
+ * The credential behind a client, hashed: a cached item answers only the
+ * credential that fetched it, and the token itself never becomes a key.
+ */
+async function credentialKey(octokit: Octokit): Promise<string> {
+	const auth = (await octokit.auth?.().catch(() => null)) as {
+		token?: unknown;
+	} | null;
+	const token = typeof auth?.token === "string" ? auth.token : "";
+	return createHash("sha256").update(token).digest("hex").slice(0, 16);
+}
+
+/**
+ * One item per credential, repository, kind and number, remembered for a short while so
  * a chip hovered twice, or ten chips for the same pull request, cost one
  * request. A lookup that failed is not remembered.
  */
@@ -154,8 +167,8 @@ export function createGithubWorkItemLoader(
 		string,
 		{ at: number; item: Promise<GithubWorkItem> }
 	>();
-	return (octokit, ref) => {
-		const key = `${ref.owner}/${ref.repo}#${ref.kind}#${ref.number}`;
+	return async (octokit, ref) => {
+		const key = `${await credentialKey(octokit)}:${ref.owner}/${ref.repo}#${ref.kind}#${ref.number}`;
 		const hit = cache.get(key);
 		if (hit && now() - hit.at < CACHE_TTL_MS) return hit.item;
 		const item = loadWorkItem(octokit, ref).catch((error: unknown) => {

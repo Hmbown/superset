@@ -816,6 +816,9 @@ msgstr "{count} 台主機執行的主機服務比此應用程式舊"
 msgid "{count}/day"
 msgstr "{count}/天"
 
+msgid "{current} of {total}"
+msgstr "第 {current} 項，共 {total} 項"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage}/{totalBranches}"
 
@@ -3740,10 +3743,10 @@ msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "點擊「↑ update」按鈕查看更新前的確認提示"
 
 msgid "Click the chip to open the issue"
-msgstr "點擊標籤開啟 Issue"
+msgstr "點擊開啟議題"
 
 msgid "Click the chip to open the pull request"
-msgstr "點擊標籤開啟拉取請求"
+msgstr "點擊開啟拉取請求"
 
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "點選複製會話ID（使用`claude --resume <id>`恢復）。"
@@ -3784,6 +3787,9 @@ msgstr "正在克隆…"
 
 msgid "Close"
 msgstr "關閉"
+
+msgid "Close (Esc)"
+msgstr "關閉（Esc）"
 
 #. placeholder {0}: row.title
 msgid "Close {0}"
@@ -3915,6 +3921,10 @@ msgstr "關閉工作區"
 msgid "Close Workspace"
 msgstr "關閉工作區"
 
+msgid "Closed"
+msgstr "已關閉"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "已關閉"
 
@@ -6277,6 +6287,10 @@ msgstr "正在下載..."
 msgid "Downloads"
 msgstr "下載"
 
+msgid "Draft"
+msgstr "草稿"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "草稿"
 
@@ -8868,9 +8882,12 @@ msgstr "有免費方案嗎？"
 msgid "Isolation"
 msgstr "隔離"
 
+msgid "Issue"
+msgstr "議題"
+
 #. placeholder {0}: link.number
 msgid "Issue #{0}"
-msgstr "Issue #{0}"
+msgstr "議題 #{0}"
 
 msgid "Issue archived"
 msgstr "問題已歸檔"
@@ -9930,6 +9947,10 @@ msgstr "合併狀態不明"
 msgid "Merged"
 msgstr "已合併"
 
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "已合併"
+
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "由{0}合併"
@@ -10422,6 +10443,9 @@ msgstr "來自 Superset 團隊的新聞、更新與洞察，涵蓋平行編碼�
 
 msgid "Next"
 msgstr "下一頁"
+
+msgid "Next (Enter)"
+msgstr "下一個匹配項（Enter）"
 
 msgid "Next branch"
 msgstr "下一個分支"
@@ -11415,6 +11439,10 @@ msgstr "開啟"
 
 msgid "Open"
 msgstr "開啟"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "開放"
 
 msgctxt "status"
 msgid "Open"
@@ -12604,6 +12632,9 @@ msgstr "預覽：GitHub 星標提醒通知"
 
 msgid "Previous"
 msgstr "上一頁"
+
+msgid "Previous (Shift+Enter)"
+msgstr "上一個匹配項（Shift+Enter）"
 
 msgid "Previous branch"
 msgstr "上一個分支"

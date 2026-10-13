@@ -816,6 +816,9 @@ msgstr "{count} hosts draaien een oudere hostservice dan deze app"
 msgid "{count}/day"
 msgstr "{count}/dag"
 
+msgid "{current} of {total}"
+msgstr "{current} van {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} van {totalBranches}"
 
@@ -3785,6 +3788,9 @@ msgstr "Klonen…"
 msgid "Close"
 msgstr "Sluiten"
 
+msgid "Close (Esc)"
+msgstr "Sluiten (Esc)"
+
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "{0} sluiten"
@@ -3915,6 +3921,10 @@ msgstr "Werkruimte sluiten"
 msgid "Close Workspace"
 msgstr "Werkruimte sluiten"
 
+msgid "Closed"
+msgstr "Gesloten"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Gesloten"
 
@@ -6277,6 +6287,10 @@ msgstr "Downloaden..."
 msgid "Downloads"
 msgstr "Downloads"
 
+msgid "Draft"
+msgstr "Draft"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Draft"
 
@@ -8868,6 +8882,9 @@ msgstr "Is er een gratis plan?"
 msgid "Isolation"
 msgstr "Isolatie"
 
+msgid "Issue"
+msgstr "Issue"
+
 #. placeholder {0}: link.number
 msgid "Issue #{0}"
 msgstr "Issue #{0}"
@@ -9930,6 +9947,10 @@ msgstr "Mergestatus onbekend"
 msgid "Merged"
 msgstr "Gemerged"
 
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Gemerged"
+
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Gemerged door {0}"
@@ -10422,6 +10443,9 @@ msgstr "Nieuws, updates en inzichten van het Superset-team over parallelle codin
 
 msgid "Next"
 msgstr "Volgende"
+
+msgid "Next (Enter)"
+msgstr "Volgende (Enter)"
 
 msgid "Next branch"
 msgstr "Volgende branch"
@@ -11415,6 +11439,10 @@ msgstr "openen"
 
 msgid "Open"
 msgstr "Openen"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Open"
 
 msgctxt "status"
 msgid "Open"
@@ -12604,6 +12632,9 @@ msgstr "Voorbeeld: GitHub-sterherinnering"
 
 msgid "Previous"
 msgstr "Vorige"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Vorige (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Vorige branch"

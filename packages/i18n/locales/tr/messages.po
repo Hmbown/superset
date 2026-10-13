@@ -816,6 +816,9 @@ msgstr "{count} ana makine bu uygulamadan daha eski bir ana makine hizmeti çal�
 msgid "{count}/day"
 msgstr "{count}/gün"
 
+msgid "{current} of {total}"
+msgstr "{current} / {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{totalBranches} içinden {currentPage}"
 
@@ -3785,6 +3788,9 @@ msgstr "Klonlanıyor…"
 msgid "Close"
 msgstr "Kapat"
 
+msgid "Close (Esc)"
+msgstr "Kapat (Esc)"
+
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "{0} oturumunu kapat"
@@ -3915,6 +3921,10 @@ msgstr "Çalışma alanını kapat"
 msgid "Close Workspace"
 msgstr "Çalışma alanını kapat"
 
+msgid "Closed"
+msgstr "Kapalı"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Kapalı"
 
@@ -6277,6 +6287,10 @@ msgstr "İndiriliyor..."
 msgid "Downloads"
 msgstr "İndirilenler"
 
+msgid "Draft"
+msgstr "Taslak"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Taslak"
 
@@ -8868,6 +8882,9 @@ msgstr "Ücretsiz plan var mı?"
 msgid "Isolation"
 msgstr "Yalıtım"
 
+msgid "Issue"
+msgstr "Issue"
+
 #. placeholder {0}: link.number
 msgid "Issue #{0}"
 msgstr "Issue #{0}"
@@ -9930,6 +9947,10 @@ msgstr "Birleştirme durumu bilinmiyor"
 msgid "Merged"
 msgstr "Birleştirildi"
 
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Birleştirildi"
+
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "{0} birleştirdi"
@@ -10422,6 +10443,9 @@ msgstr "Superset ekibinden paralel kodlama ajanları ve geliştirici verimliliğ
 
 msgid "Next"
 msgstr "Sonraki"
+
+msgid "Next (Enter)"
+msgstr "Sonraki (Enter)"
 
 msgid "Next branch"
 msgstr "Sonraki dal"
@@ -11415,6 +11439,10 @@ msgstr "aç"
 
 msgid "Open"
 msgstr "Aç"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Açık"
 
 msgctxt "status"
 msgid "Open"
@@ -12604,6 +12632,9 @@ msgstr "Önizleme: GitHub yıldız hatırlatma bildirimi"
 
 msgid "Previous"
 msgstr "Önceki"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Önceki (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Önceki dal"

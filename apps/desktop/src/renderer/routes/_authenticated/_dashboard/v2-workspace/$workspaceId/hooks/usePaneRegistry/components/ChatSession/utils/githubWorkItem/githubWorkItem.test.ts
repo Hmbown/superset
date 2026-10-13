@@ -22,6 +22,14 @@ test("reads a pull request or issue, with a subpage or a fragment", () => {
 	).toMatchObject({ kind: "pr", number: 73 });
 });
 
+test("rejects a number too large to be a pull request", () => {
+	expect(
+		parseGithubWorkItemUrl(
+			"https://github.com/superset-sh/superset/pull/99999999999999999999",
+		),
+	).toBeNull();
+});
+
 test("leaves other GitHub pages and other sites alone", () => {
 	for (const href of [
 		"https://github.com/acme/widgets/actions",

@@ -816,6 +816,9 @@ msgstr "{count} hostitelů používá starší službu hostitele než tato aplik
 msgid "{count}/day"
 msgstr "{count}/den"
 
+msgid "{current} of {total}"
+msgstr "{current} z {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} z {totalBranches}"
 
@@ -3785,6 +3788,9 @@ msgstr "Klonuji…"
 msgid "Close"
 msgstr "Zavřít"
 
+msgid "Close (Esc)"
+msgstr "Zavřít (Esc)"
+
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "Zavřít {0}"
@@ -3917,6 +3923,10 @@ msgstr "Zavřít pracovní prostor"
 
 msgid "Closed"
 msgstr "Uzavřený"
+
+msgctxt "pull request or issue state"
+msgid "Closed"
+msgstr "Uzavřeno"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Zavřením těchto portů ukončíte procesy, které je používají."
@@ -6277,6 +6287,10 @@ msgstr "Stahuji..."
 msgid "Downloads"
 msgstr "Stahování"
 
+msgid "Draft"
+msgstr "Koncept"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Koncept"
 
@@ -8868,6 +8882,9 @@ msgstr "Existuje bezplatný tarif?"
 msgid "Isolation"
 msgstr "Izolace"
 
+msgid "Issue"
+msgstr "Issue"
+
 #. placeholder {0}: link.number
 msgid "Issue #{0}"
 msgstr "Issue #{0}"
@@ -9930,6 +9947,10 @@ msgstr "Stav sloučení neznámý"
 msgid "Merged"
 msgstr "Sloučený"
 
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Sloučeno"
+
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Sloučil {0}"
@@ -10422,6 +10443,9 @@ msgstr "Novinky, aktualizace a postřehy od týmu Superset o paralelních kódov
 
 msgid "Next"
 msgstr "Další"
+
+msgid "Next (Enter)"
+msgstr "Další (Enter)"
 
 msgid "Next branch"
 msgstr "Další větev"
@@ -11415,6 +11439,10 @@ msgstr "otevřít"
 
 msgid "Open"
 msgstr "Otevřít"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Otevřeno"
 
 msgctxt "status"
 msgid "Open"
@@ -12604,6 +12632,9 @@ msgstr "Náhled: připomínka hvězdičky na GitHubu"
 
 msgid "Previous"
 msgstr "Předchozí"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Předchozí (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Předchozí větev"

@@ -1,3 +1,4 @@
+import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { formatRelativeTime } from "@superset/i18n/format";
 import { cn } from "@superset/ui/utils";
@@ -35,45 +36,54 @@ export type GithubWorkItemLoad =
 const MAX_LABELS = 3;
 const MAX_ASSIGNEES = 3;
 
+const STATE_LABELS = {
+	pr: msg({ message: "Pull request" }),
+	issue: msg({ message: "Issue" }),
+	draft: msg({ message: "Draft", context: "pull request state" }),
+	merged: msg({ message: "Merged", context: "pull request state" }),
+	closed: msg({ message: "Closed", context: "pull request or issue state" }),
+	open: msg({ message: "Open", context: "pull request or issue state" }),
+};
+
 function statusOf(
 	kind: GithubWorkItemLink["kind"],
 	item: GithubWorkItemGlance | null,
-	t: ReturnType<typeof useLingui>["t"],
-): { Icon: LucideIcon; label: string; className: string } {
+): {
+	Icon: LucideIcon;
+	label: (typeof STATE_LABELS)[keyof typeof STATE_LABELS];
+	className: string;
+} {
 	if (!item) {
 		return {
 			Icon: kind === "pr" ? GitPullRequest : CircleDot,
-			label:
-				kind === "pr"
-					? t({ message: "Pull request" })
-					: t({ message: "Issue" }),
+			label: kind === "pr" ? STATE_LABELS.pr : STATE_LABELS.issue,
 			className: "text-foreground/50",
 		};
 	}
 	if (item.draft) {
 		return {
 			Icon: GitPullRequestDraft,
-			label: t({ message: "Draft", context: "pull request state" }),
+			label: STATE_LABELS.draft,
 			className: "text-foreground/50",
 		};
 	}
 	if (item.state === "merged") {
 		return {
 			Icon: GitMerge,
-			label: t({ message: "Merged", context: "pull request state" }),
+			label: STATE_LABELS.merged,
 			className: "text-violet-400/90",
 		};
 	}
 	if (item.state === "closed") {
 		return {
 			Icon: kind === "pr" ? GitPullRequestClosed : CircleX,
-			label: t({ message: "Closed", context: "pull request or issue state" }),
+			label: STATE_LABELS.closed,
 			className: "text-rose-400/90",
 		};
 	}
 	return {
 		Icon: kind === "pr" ? GitPullRequest : CircleDot,
-		label: t({ message: "Open", context: "pull request or issue state" }),
+		label: STATE_LABELS.open,
 		className: "text-emerald-400/90",
 	};
 }
@@ -120,9 +130,9 @@ export function GithubWorkItemCard({
 	link: GithubWorkItemLink;
 	load: GithubWorkItemLoad;
 }) {
-	const { t } = useLingui();
+	const { i18n, t } = useLingui();
 	const item = load.status === "ready" ? load.item : null;
-	const status = statusOf(link.kind, item, t);
+	const status = statusOf(link.kind, item);
 	const labels = item?.labels ?? [];
 	const assignees = item?.assignees ?? [];
 	const branches =
@@ -149,7 +159,7 @@ export function GithubWorkItemCard({
 						status.className,
 					)}
 				>
-					{status.label}
+					{i18n._(status.label)}
 				</span>
 			</div>
 

@@ -816,6 +816,9 @@ msgstr "{count} hôtes exécutent un service d'hôte plus ancien que cette appli
 msgid "{count}/day"
 msgstr "{count}/jour"
 
+msgid "{current} of {total}"
+msgstr "{current} sur {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} sur {totalBranches}"
 
@@ -3785,6 +3788,9 @@ msgstr "Clonage…"
 msgid "Close"
 msgstr "Fermer"
 
+msgid "Close (Esc)"
+msgstr "Fermer (Esc)"
+
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "Fermer {0}"
@@ -3915,6 +3921,10 @@ msgstr "Fermer l'espace de travail"
 msgid "Close Workspace"
 msgstr "Fermer l'espace de travail"
 
+msgid "Closed"
+msgstr "Fermée"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Fermée"
 
@@ -6277,6 +6287,10 @@ msgstr "Téléchargement..."
 msgid "Downloads"
 msgstr "Téléchargements"
 
+msgid "Draft"
+msgstr "Brouillon"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Brouillon"
 
@@ -8868,6 +8882,9 @@ msgstr "Existe-t-il une offre gratuite ?"
 msgid "Isolation"
 msgstr "Isolation"
 
+msgid "Issue"
+msgstr "Issue"
+
 #. placeholder {0}: link.number
 msgid "Issue #{0}"
 msgstr "Issue n°{0}"
@@ -9930,6 +9947,10 @@ msgstr "Statut de fusion inconnu"
 msgid "Merged"
 msgstr "Fusionnée"
 
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Fusionnée"
+
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Fusionnée par {0}"
@@ -10422,6 +10443,9 @@ msgstr "Actualités, mises à jour et analyses de l'équipe Superset sur les age
 
 msgid "Next"
 msgstr "Suivant"
+
+msgid "Next (Enter)"
+msgstr "Suivant (Entrée)"
 
 msgid "Next branch"
 msgstr "Branche suivante"
@@ -11415,6 +11439,10 @@ msgstr "ouvrir"
 
 msgid "Open"
 msgstr "Ouvrir"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Ouverte"
 
 msgctxt "status"
 msgid "Open"
@@ -12604,6 +12632,9 @@ msgstr "Aperçu : toast de rappel d'étoile GitHub"
 
 msgid "Previous"
 msgstr "Précédent"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Précédent (Maj+Entrée)"
 
 msgid "Previous branch"
 msgstr "Branche précédente"

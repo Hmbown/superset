@@ -816,6 +816,9 @@ msgstr "{count} hostów działa na starszej usłudze hosta niż ta aplikacja"
 msgid "{count}/day"
 msgstr "{count}/dzień"
 
+msgid "{current} of {total}"
+msgstr "{current} z {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} z {totalBranches}"
 
@@ -3740,10 +3743,10 @@ msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Kliknij „↑ update”, aby zobaczyć potwierdzenie przed aktualizacją"
 
 msgid "Click the chip to open the issue"
-msgstr "Kliknij etykietę, aby otworzyć issue"
+msgstr "Kliknij chip, aby otworzyć zgłoszenie"
 
 msgid "Click the chip to open the pull request"
-msgstr "Kliknij etykietę, aby otworzyć pull request"
+msgstr "Kliknij chip, aby otworzyć pull request"
 
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Kliknij, aby skopiować ID sesji (wznów przez `claude --resume <id>`)."
@@ -3784,6 +3787,9 @@ msgstr "Klonowanie…"
 
 msgid "Close"
 msgstr "Zamknij"
+
+msgid "Close (Esc)"
+msgstr "Zamknij (Esc)"
 
 #. placeholder {0}: row.title
 msgid "Close {0}"
@@ -3917,6 +3923,10 @@ msgstr "Zamknij obszar roboczy"
 
 msgid "Closed"
 msgstr "Zamknięty"
+
+msgctxt "pull request or issue state"
+msgid "Closed"
+msgstr "Zamknięte"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Zamknięcie tych portów zakończy procesy, które ich używają."
@@ -6277,6 +6287,10 @@ msgstr "Pobieranie..."
 msgid "Downloads"
 msgstr "Pobrane"
 
+msgid "Draft"
+msgstr "Szkic"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Szkic"
 
@@ -8868,9 +8882,12 @@ msgstr "Czy jest plan darmowy?"
 msgid "Isolation"
 msgstr "Izolacja"
 
+msgid "Issue"
+msgstr "Zgłoszenie"
+
 #. placeholder {0}: link.number
 msgid "Issue #{0}"
-msgstr "Issue #{0}"
+msgstr "Zgłoszenie #{0}"
 
 msgid "Issue archived"
 msgstr "Zgłoszenie zarchiwizowane"
@@ -9930,6 +9947,10 @@ msgstr "Stan scalania nieznany"
 msgid "Merged"
 msgstr "Scalony"
 
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Scalone"
+
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Scalone przez {0}"
@@ -10422,6 +10443,9 @@ msgstr "Nowości, aktualizacje i spostrzeżenia zespołu Superset na temat równ
 
 msgid "Next"
 msgstr "Dalej"
+
+msgid "Next (Enter)"
+msgstr "Dalej (Enter)"
 
 msgid "Next branch"
 msgstr "Następna gałąź"
@@ -11415,6 +11439,10 @@ msgstr "otwórz"
 
 msgid "Open"
 msgstr "Otwórz"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Otwarte"
 
 msgctxt "status"
 msgid "Open"
@@ -12604,6 +12632,9 @@ msgstr "Podgląd: przypomnienie o gwiazdce na GitHub"
 
 msgid "Previous"
 msgstr "Wstecz"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Wstecz (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Poprzednia gałąź"

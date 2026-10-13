@@ -1,40 +1,16 @@
-import { msg } from "@lingui/core/macro";
-import { Trans, useLingui } from "@lingui/react/macro";
+import { Trans } from "@lingui/react/macro";
 import { ShimmerLabel } from "@superset/ui/ai-elements/shimmer-label";
 import { cn } from "@superset/ui/utils";
 import { FileIcon } from "renderer/lib/fileIcons";
 import { useChatPaneActions } from "../../../../../../providers/ChatPaneActionsProvider";
 import { isLocalPathText } from "../../../../../../utils/pathText";
 import { fileName } from "../../../../utils/fileChange";
-import type { ShellIntent, ShellVerb } from "../../../../utils/shellIntent";
+import type { ShellIntent } from "../../../../utils/shellIntent";
 
 const CHIP_CLASSNAME =
 	"flex min-w-0 max-w-full items-center gap-1 rounded bg-foreground/[0.06] px-1 py-0.5 text-left font-mono text-[13px] text-foreground/70";
 const OPENABLE_CLASSNAME =
 	"pointer-events-auto cursor-pointer transition-colors hover:bg-foreground/[0.12] hover:text-link-hover";
-
-const VERBS = {
-	read: {
-		running: msg({ message: "Reading", context: "shell intent" }),
-		settled: msg({ message: "Read", context: "shell intent" }),
-	},
-	search: {
-		running: msg({ message: "Searching", context: "shell intent" }),
-		settled: msg({ message: "Searched", context: "shell intent" }),
-	},
-	list: {
-		running: msg({ message: "Listing", context: "shell intent" }),
-		settled: msg({ message: "Listed", context: "shell intent" }),
-	},
-	write: {
-		running: msg({ message: "Writing", context: "shell intent" }),
-		settled: msg({ message: "Wrote", context: "shell intent" }),
-	},
-	edit: {
-		running: msg({ message: "Editing", context: "shell intent" }),
-		settled: msg({ message: "Edited", context: "shell intent" }),
-	},
-} satisfies Record<ShellVerb, unknown>;
 
 /**
  * "Read package.json", "Searched useQueue in src": what a shell command did,
@@ -45,12 +21,13 @@ const VERBS = {
 export function ShellIntentTitle({
 	intent,
 	running,
+	verb,
 }: {
 	intent: ShellIntent;
 	running: boolean;
+	/** "Read", "Searching": from `toolTitle`, so find matches what is shown. */
+	verb: string;
 }) {
-	const { i18n } = useLingui();
-	const verb = i18n._(VERBS[intent.verb][running ? "running" : "settled"]);
 	return (
 		<>
 			<span className="shrink-0">

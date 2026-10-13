@@ -816,6 +816,9 @@ msgstr "{count} hosts executam um serviço de host mais antigo que este app"
 msgid "{count}/day"
 msgstr "{count}/dia"
 
+msgid "{current} of {total}"
+msgstr "{current} de {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} de {totalBranches}"
 
@@ -3785,6 +3788,9 @@ msgstr "Clonando…"
 msgid "Close"
 msgstr "Fechar"
 
+msgid "Close (Esc)"
+msgstr "Fechar (Esc)"
+
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "Fechar {0}"
@@ -3915,6 +3921,10 @@ msgstr "Fechar área de trabalho"
 msgid "Close Workspace"
 msgstr "Fechar área de trabalho"
 
+msgid "Closed"
+msgstr "Fechado"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Fechado"
 
@@ -6277,6 +6287,10 @@ msgstr "Baixando..."
 msgid "Downloads"
 msgstr "Downloads"
 
+msgid "Draft"
+msgstr "Rascunho"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Rascunho"
 
@@ -8868,6 +8882,9 @@ msgstr "Existe um plano gratuito?"
 msgid "Isolation"
 msgstr "Isolamento"
 
+msgid "Issue"
+msgstr "Issue"
+
 #. placeholder {0}: link.number
 msgid "Issue #{0}"
 msgstr "Issue #{0}"
@@ -9930,6 +9947,10 @@ msgstr "Status do merge desconhecido"
 msgid "Merged"
 msgstr "Mesclado"
 
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Mesclado"
+
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Mesclado por {0}"
@@ -10422,6 +10443,9 @@ msgstr "Notícias, atualizações e análises da equipe do Superset sobre agente
 
 msgid "Next"
 msgstr "Próxima"
+
+msgid "Next (Enter)"
+msgstr "Próxima (Enter)"
 
 msgid "Next branch"
 msgstr "Próxima branch"
@@ -11415,6 +11439,10 @@ msgstr "abrir"
 
 msgid "Open"
 msgstr "Abrir"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Aberto"
 
 msgctxt "status"
 msgid "Open"
@@ -12604,6 +12632,9 @@ msgstr "Prévia: lembrete de estrela no GitHub"
 
 msgid "Previous"
 msgstr "Anterior"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Anterior (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Branch anterior"

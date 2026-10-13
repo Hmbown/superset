@@ -9,15 +9,10 @@ import {
 import { cn } from "@superset/ui/utils";
 import { ChevronRight, CircleDashed } from "lucide-react";
 import type { ReactNode } from "react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { PluginIcon } from "renderer/components/PluginIcon";
 import { usePluginMentionOptions } from "renderer/hooks/usePluginMentionOptions";
-import { fileChangeOf } from "../../utils/fileChange";
-import {
-	toolCallCommand,
-	toolCallIntent,
-	unwrapShellCommand,
-} from "../../utils/shellIntent";
+import { toolTitle } from "../../utils/toolTitle";
 import { ToolContentList } from "../ToolContentList";
 import { FileChangeTitle } from "./components/FileChangeTitle";
 import { ShellIntentTitle } from "./components/ShellIntentTitle";
@@ -38,12 +33,6 @@ export function ToolCallRow({ item }: { item: ToolCall }) {
 	const [open, setOpen] = useState(false);
 	const hasBody = item.content.length > 0;
 	const running = item.status === "running";
-	const command = item.toolKind === "execute";
-	const change = useMemo(() => fileChangeOf(item), [item]);
-	const intent = useMemo(
-		() => (change ? null : toolCallIntent(item)),
-		[change, item],
-	);
 	const installedPlugins = usePluginMentionOptions();
 	const mcpServer = item.mcpServer;
 	const plugin = mcpServer
@@ -51,6 +40,11 @@ export function ToolCallRow({ item }: { item: ToolCall }) {
 		: undefined;
 	const toggle = hasBody ? () => setOpen((value) => !value) : undefined;
 
+	const { change, command, intent, label } = toolTitle(
+		item,
+		t,
+		Boolean(plugin),
+	);
 	let title: ReactNode;
 	if (change) {
 		title = (
@@ -59,29 +53,13 @@ export function ToolCallRow({ item }: { item: ToolCall }) {
 				item={item}
 				onToggle={toggle}
 				running={running}
+				verb={label}
 			/>
 		);
 	} else if (intent) {
-		title = <ShellIntentTitle intent={intent} running={running} />;
+		title = <ShellIntentTitle intent={intent} running={running} verb={label} />;
 	} else {
-		// The translator names a command "Terminal" until the command itself
-		// arrives a beat later; "Running" says more in the meantime.
-		const rawMcpTitle =
-			!item.title ||
-			item.title.startsWith("mcp__") ||
-			item.title === `${mcpServer?.tool} (${mcpServer?.name})`;
-		const shell = command ? toolCallCommand(item) : null;
-		const titleIsCommand = shell === null || item.title.endsWith(shell);
-		const label =
-			plugin && mcpServer && rawMcpTitle
-				? mcpServer.tool
-				: running && command && item.title === "Terminal"
-					? t({ message: "Running" })
-					: shell && titleIsCommand
-						? item.title.slice(0, -shell.length) + unwrapShellCommand(shell)
-						: item.title;
-		const face =
-			command && titleIsCommand ? "font-mono text-[13px]" : undefined;
+		const face = command ? "font-mono text-[13px]" : undefined;
 		title = running ? (
 			<span className="min-w-0 truncate">
 				<ShimmerLabel
@@ -124,7 +102,12 @@ export function ToolCallRow({ item }: { item: ToolCall }) {
 							/>
 						)
 					)}
-					<span className="flex min-w-0 items-center gap-1.5">{title}</span>
+					<span
+						className="flex min-w-0 items-center gap-1.5"
+						data-find-item={item.id}
+					>
+						{title}
+					</span>
 					<StatusWord status={item.status} />
 					{hasBody && (
 						<ChevronRight

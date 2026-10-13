@@ -816,6 +816,9 @@ msgstr "{count} Hosts führen einen älteren Host-Dienst aus als diese App"
 msgid "{count}/day"
 msgstr "{count}/Tag"
 
+msgid "{current} of {total}"
+msgstr "{current} von {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} von {totalBranches}"
 
@@ -3785,6 +3788,9 @@ msgstr "Wird geklont…"
 msgid "Close"
 msgstr "Schließen"
 
+msgid "Close (Esc)"
+msgstr "Schließen (Esc)"
+
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "{0} schließen"
@@ -3915,6 +3921,10 @@ msgstr "Arbeitsbereich schließen"
 msgid "Close Workspace"
 msgstr "Arbeitsbereich schließen"
 
+msgid "Closed"
+msgstr "Geschlossen"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Geschlossen"
 
@@ -6277,6 +6287,10 @@ msgstr "Wird heruntergeladen..."
 msgid "Downloads"
 msgstr "Downloads"
 
+msgid "Draft"
+msgstr "Entwurf"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Entwurf"
 
@@ -8868,6 +8882,9 @@ msgstr "Gibt es einen kostenlosen Tarif?"
 msgid "Isolation"
 msgstr "Isolation"
 
+msgid "Issue"
+msgstr "Issue"
+
 #. placeholder {0}: link.number
 msgid "Issue #{0}"
 msgstr "Issue #{0}"
@@ -9930,6 +9947,10 @@ msgstr "Merge-Status unbekannt"
 msgid "Merged"
 msgstr "Zusammengeführt"
 
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Zusammengeführt"
+
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Zusammengeführt von {0}"
@@ -10422,6 +10443,9 @@ msgstr "Neuigkeiten, Updates und Einblicke vom Superset-Team zu parallelen Codin
 
 msgid "Next"
 msgstr "Weiter"
+
+msgid "Next (Enter)"
+msgstr "Weiter (Eingabetaste)"
 
 msgid "Next branch"
 msgstr "Nächster Branch"
@@ -11415,6 +11439,10 @@ msgstr "öffnen"
 
 msgid "Open"
 msgstr "Öffnen"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Offen"
 
 msgctxt "status"
 msgid "Open"
@@ -12604,6 +12632,9 @@ msgstr "Vorschau: GitHub-Stern-Erinnerung"
 
 msgid "Previous"
 msgstr "Zurück"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Zurück (Umschalt+Eingabetaste)"
 
 msgid "Previous branch"
 msgstr "Vorheriger Branch"
