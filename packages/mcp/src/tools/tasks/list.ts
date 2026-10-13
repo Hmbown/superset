@@ -69,7 +69,7 @@ export function register(server: McpServer): void {
 				.max(20)
 				.nullish()
 				.describe(
-					"Superset only: label names. A task must have all of them (exact match, case-insensitive).",
+					"Superset only: label names. A task must have all of them (case-insensitive). A label also matches its sub-labels: acme matches acme/web.",
 				),
 			limit: z
 				.number()

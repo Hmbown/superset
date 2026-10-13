@@ -55,11 +55,17 @@ beforeEach(() => {
 describe("task list label filter", () => {
 	test("task.list and task.listPage filter on every label", async () => {
 		await caller.task.list({ labels: [" Acme ", "client-one"] });
-		expect(whereParams).toEqual(["org-1", "acme", "client-one"]);
+		expect(whereParams).toEqual([
+			"org-1",
+			"acme",
+			"acme/%",
+			"client-one",
+			"client-one/%",
+		]);
 
 		whereParams = [];
 		await caller.task.listPage({ labels: ["acme"] });
-		expect(whereParams).toEqual(["org-1", "acme"]);
+		expect(whereParams).toEqual(["org-1", "acme", "acme/%"]);
 	});
 
 	test("rejects a label that is only spaces", async () => {

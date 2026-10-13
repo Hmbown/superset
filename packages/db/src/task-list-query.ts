@@ -1,3 +1,7 @@
+import {
+	LABEL_PATH_SEPARATOR,
+	normalizeLabelName,
+} from "@superset/shared/labels";
 import type { SQL } from "drizzle-orm";
 import {
 	and,
@@ -161,8 +165,11 @@ export function buildTaskListConditions(
 	}
 
 	for (const name of filters.labels ?? []) {
+		const normalized = normalizeLabelName(name);
+		if (!normalized) continue;
+		const descendants = `${escapeLikePattern(normalized)}${LABEL_PATH_SEPARATOR}%`;
 		conditions.push(
-			sql`exists (select 1 from task_label_assignments assignment join task_labels label on label.id = assignment.label_id where assignment.task_id = "tasks"."id" and label.name = ${name.trim().toLowerCase()})`,
+			sql`exists (select 1 from task_label_assignments assignment join task_labels label on label.id = assignment.label_id where assignment.task_id = "tasks"."id" and (label.name = ${normalized} or label.name like ${descendants}))`,
 		);
 	}
 

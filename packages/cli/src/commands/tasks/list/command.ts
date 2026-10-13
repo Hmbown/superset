@@ -44,7 +44,7 @@ export default command({
 		creatorMe: boolean().desc("Filter to tasks I created"),
 		search: string().alias("s").desc("Search by title or description"),
 		labels: string().desc(
-			"Comma-separated labels; a task must have all of them (exact match)",
+			"Comma-separated labels; a task must have all of them. A label also matches its sub-labels (acme matches acme/web)",
 		),
 		dueFrom: string().desc("Tasks due on or after this date (YYYY-MM-DD)"),
 		dueTo: string().desc("Tasks due on or before this date (YYYY-MM-DD)"),
