@@ -42,6 +42,18 @@ export type QueueState = {
 	}[];
 };
 
+export type UnfinishedSession = {
+	sessionId: string;
+	scopeId: string;
+	harness: string;
+	harnessSessionId: string;
+	terminalId?: string;
+	modeId?: string;
+	modelId?: string;
+	interrupted: boolean;
+	prompts: UserContent[][];
+};
+
 type PendingPrompt = {
 	item: UserMessage;
 	content: UserContent[];
@@ -94,6 +106,31 @@ export class LiveSession {
 
 	get queuedCount(): number {
 		return this.queue.length;
+	}
+
+	unfinished(): UnfinishedSession | null {
+		const harnessSessionId = this.sessionState.harnessSessionId;
+		if (!harnessSessionId) return null;
+		const interrupted =
+			this.currentTurn?.status === "running" ||
+			(this.sessionState.backgroundTasks?.length ?? 0) > 0;
+		const prompts = [
+			...(this.awaitingTurn ? [this.awaitingTurn] : []),
+			...this.pendingSteers,
+			...this.queue,
+		].map((pending) => pending.content);
+		if (!interrupted && prompts.length === 0) return null;
+		return {
+			sessionId: this.options.sessionId,
+			scopeId: this.options.scopeId,
+			harness: this.options.harness,
+			harnessSessionId,
+			terminalId: this.options.terminalId,
+			modeId: this.sessionState.modeId,
+			modelId: this.sessionState.modelId,
+			interrupted,
+			prompts,
+		};
 	}
 
 	start(startOptions: HarnessStartOptions): void {

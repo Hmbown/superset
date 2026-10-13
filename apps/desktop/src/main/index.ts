@@ -355,7 +355,8 @@ app.on("before-quit", async (event) => {
 		isDev,
 		forceFullCleanup,
 		isUpdateInstalling,
-		stopHostServices: () => getHostServiceCoordinator().stopAll(),
+		stopHostServices: () =>
+			getHostServiceCoordinator().stopAll({ resumeChats: isUpdateInstalling }),
 		teardownTerminalHost,
 		stopPtyDaemons,
 		disposeTerminalHostClient,

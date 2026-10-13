@@ -49,6 +49,7 @@ import type {
 	LiveSessionRegistry,
 	PromptResult,
 	QueueState,
+	UnfinishedSession,
 } from "../../sessions";
 
 export const createSessionCommandSchema = createSessionInputSchema
@@ -86,6 +87,11 @@ export type GetSessionResult = {
 	live: boolean;
 };
 
+export type ResumeSessionInput = Omit<
+	UnfinishedSession,
+	"sessionId" | "interrupted"
+> & { cwd: string };
+
 export type GetQueueResult = QueueState & { live: boolean };
 
 export type ChatSessionListEntry = ChatSessionRow & {
@@ -95,6 +101,7 @@ export type ChatSessionListEntry = ChatSessionRow & {
 
 export type ChatCommands = {
 	createSession(input: CreateSessionCommandInput): CreateSessionResult;
+	resumeSession(input: ResumeSessionInput): CreateSessionResult;
 	prompt(input: PromptInput): PromptResult;
 	removeQueuedPrompt(input: QueuedPromptInput): void;
 	steerQueuedPrompt(input: QueuedPromptInput): void;
@@ -187,6 +194,28 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 		return { ok: true, snapshot };
 	};
 
+	const resumedByTerminal = new Map<
+		string,
+		{ sessionId: string; harness: string; harnessSessionId: string }
+	>();
+	const takeResumed = (
+		input: z.output<typeof createSessionCommandSchema>,
+	): CreateSessionResult | null => {
+		if (!input.terminalId || !input.resume) return null;
+		const resumed = resumedByTerminal.get(input.terminalId);
+		if (
+			!resumed ||
+			resumed.harness !== input.harness ||
+			resumed.harnessSessionId !== input.resume.harnessSessionId
+		) {
+			return null;
+		}
+		resumedByTerminal.delete(input.terminalId);
+		const row = options.sessions.get(resumed.sessionId);
+		if (!row || !options.live.get(resumed.sessionId)) return null;
+		return { sessionId: resumed.sessionId, epoch: row.epoch };
+	};
+
 	const listSessions = (
 		input: ListSessionsCommandInput,
 	): ChatSessionListEntry[] => {
@@ -208,6 +237,8 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 		createSession(input) {
 			const parsed = createSessionCommandSchema.parse(input);
 			return options.dedupe.run(`createSession:${parsed.commandId}`, () => {
+				const resumed = takeResumed(parsed);
+				if (resumed) return resumed;
 				if (!options.live.supports(parsed.harness)) {
 					throw new Error(`unknown harness ${parsed.harness}`);
 				}
@@ -234,6 +265,29 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 				}
 				return { sessionId, epoch: opened.epoch };
 			});
+		},
+
+		resumeSession(input) {
+			const created = this.createSession({
+				commandId: randomUUID(),
+				scopeId: input.scopeId,
+				cwd: input.cwd,
+				harness: input.harness,
+				modeId: input.modeId,
+				modelId: input.modelId,
+				terminalId: input.terminalId,
+				resume: { harnessSessionId: input.harnessSessionId },
+			});
+			const live = options.live.require(created.sessionId);
+			for (const content of input.prompts) live.prompt(content, randomUUID());
+			if (input.terminalId) {
+				resumedByTerminal.set(input.terminalId, {
+					sessionId: created.sessionId,
+					harness: input.harness,
+					harnessSessionId: input.harnessSessionId,
+				});
+			}
+			return created;
 		},
 
 		prompt(input) {
