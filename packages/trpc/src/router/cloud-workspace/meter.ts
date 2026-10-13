@@ -8,6 +8,7 @@ import {
 } from "@superset/auth/billing";
 import { db } from "@superset/db/client";
 import { cloudWorkspaceBoots, cloudWorkspaces } from "@superset/db/schema";
+import { AutumnError } from "autumn-js";
 import { and, eq, inArray, isNull, lt, ne, or, sql } from "drizzle-orm";
 import { userError } from "../../i18n-error";
 import {
@@ -204,17 +205,22 @@ async function recordUsage(boot: Boot, amount: number): Promise<void> {
 		}
 	}
 	if (amount <= 0) return;
-	await autumnClient.track(
-		{
-			customerId: boot.organizationId,
-			featureId: BOX_GB_MINUTES_FEATURE_ID,
-			value: amount,
-			overageBehavior: "overflow",
-			async: false,
-			properties: { bootId: boot.id, lockSeq: boot.lockSeq },
-		},
-		{ headers: { "Idempotency-Key": `${lockId}:track` } },
-	);
+	try {
+		await autumnClient.track(
+			{
+				customerId: boot.organizationId,
+				featureId: BOX_GB_MINUTES_FEATURE_ID,
+				value: amount,
+				overageBehavior: "overflow",
+				async: false,
+				properties: { bootId: boot.id, lockSeq: boot.lockSeq },
+			},
+			{ headers: { "Idempotency-Key": `${lockId}:track` } },
+		);
+	} catch (error) {
+		if (error instanceof AutumnError && error.statusCode === 409) return;
+		throw error;
+	}
 }
 
 async function claimSettle(bootId: string): Promise<Boot | null> {

@@ -48,6 +48,8 @@ Each question has a placeholder in the Decision Log.
 - [x] (2026-10-13 22:40Z) M6 Our own `/api/auth/autumn/*` routes with role rules (see Decision Log) and `billingProvider` on `activePlan`; desktop and web billing pages call them in Autumn mode and the Stripe-plugin routes otherwise (shared `useBillingActions` hooks).
 - [x] (2026-10-13 21:10Z) M7 Dunning: `handleStripeBillingEvent` (payment failed, renewal with the `"year"` fix, payment succeeded, checkout abandoned, plan changed) is the plugin's top-level `onEvent` and runs from the Autumn-mode webhook; orgs found through the Stripe customer when `referenceId` is absent. Purge settles the org's open boots, cancels through Autumn, and cancels Stripe with `invoice_now`. Import script verifies drift with `billing.verify`. Not covered by tests: `handleStripeBillingEvent` (moved code).
 - [x] (2026-10-13 23:30Z) M8 Validation (see Outcomes), PR description rewritten. Plan stays active until M0 runs against the Autumn sandbox.
+- [x] (2026-10-13 23:55Z) Review follow-ups: `@deprecated` markers on `activePlan`'s `status` and `lapsed`; a test pins the client's API version to 2.4.0; a `track` answered 409 (key already recorded) counts as recorded, so a settle does not retry forever; the shim's `attach`/`update` types come from the SDK.
+- [ ] Not done from the review: server-assigned experiment arm on attach, a daily reconciliation against Autumn (F1), owner notices on Autumn limit and usage-alert webhooks, a test with a real `billing.updated` payload (needs sandbox keys).
 
 
 ## Surprises & Discoveries
@@ -248,3 +250,5 @@ New dependencies: `svix@2.8.0` (apps/api). Existing: `autumn-js@1.3.55` (auth, t
 Revision note (2026-10-13 18:10Z): recorded answers to D-Q1 to D-Q4 (free orgs refused with a distinct "needs a paid plan" error; golden builds unbilled; Stripe onEvent notices turned on; flip one-way after a clean import) and updated M3, M4 and M7 to match.
 
 Revision note (2026-10-13 23:30Z): implementation of M1 to M8 recorded in Progress, Decision Log and Outcomes; M0 remains open pending Autumn sandbox keys.
+
+Revision note (2026-10-13 23:55Z): recorded the review follow-ups (deprecation markers, API version test, 409 on track, SDK-derived shim types) and the review items still open.

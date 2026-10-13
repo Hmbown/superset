@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, test } from "bun:test";
 import { autumnClient } from "@superset/auth/autumn";
 import { db } from "@superset/db/client";
+import { AutumnError } from "autumn-js";
 import { stub } from "../../../test/stub";
 import type { BoxSession } from "../../lib/sandbox";
 import * as sandbox from "../../lib/sandbox";
@@ -14,6 +15,7 @@ let boot: Record<string, unknown> | null;
 let session: BoxSession | null;
 let renewalAllowed: boolean;
 let finalizeFails: boolean;
+let trackError: Error | null;
 let writes: Record<string, unknown>[];
 let autumnCalls: { method: string; params: unknown; headers?: unknown }[];
 let stopped: string[];
@@ -50,6 +52,7 @@ stub(autumnClient, {
 	},
 	track: async (params: unknown, options?: { headers?: unknown }) => {
 		autumnCalls.push({ method: "track", params, headers: options?.headers });
+		if (trackError) throw trackError;
 		return { balance: {} };
 	},
 });
@@ -82,6 +85,7 @@ beforeEach(() => {
 	};
 	renewalAllowed = true;
 	finalizeFails = false;
+	trackError = null;
 	writes = [];
 	autumnCalls = [];
 	stopped = [];
@@ -146,6 +150,22 @@ describe("settleBoot", () => {
 				(call.params as { featureId: string }).featureId === "box_gb_minutes",
 		);
 		expect(track?.headers).toEqual({ "Idempotency-Key": "boot_1:0:track" });
+	});
+
+	test("a track Autumn already recorded under that key counts as recorded", async () => {
+		finalizeFails = true;
+		trackError = new AutumnError("duplicate", {
+			response: new Response("", { status: 409 }),
+			request: new Request("https://api.useautumn.com/v1/track"),
+			body: "",
+		});
+		expect(await settleBoot("boot_1")).toBe("renewed");
+	});
+
+	test("a track that fails for another reason keeps the boot unsettled", async () => {
+		finalizeFails = true;
+		trackError = new Error("network down");
+		await expect(settleBoot("boot_1")).rejects.toThrow("network down");
 	});
 
 	test("a boot another run is settling is left alone", async () => {

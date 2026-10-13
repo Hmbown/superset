@@ -68,6 +68,7 @@ async function requireOwnerWithCustomer(ctx: {
 
 const EMPTY_ACTIVE_PLAN = {
 	plan: "free" as const,
+	/** @deprecated TODO(2027-01-31): Stripe vocabulary; read `paymentState`. */
 	status: null,
 	cancelAt: null,
 	periodStart: null,
@@ -79,6 +80,8 @@ const EMPTY_ACTIVE_PLAN = {
 	 * uses it to decide whether to ask Stripe about an unpaid invoice, and
 	 * doing that for every free organization would put a Stripe round-trip on
 	 * every app load for everyone who ever paid us.
+	 *
+	 * @deprecated TODO(2027-01-31): read `paymentState`.
 	 */
 	lapsed: false,
 };

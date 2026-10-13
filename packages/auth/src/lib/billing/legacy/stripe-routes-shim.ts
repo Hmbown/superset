@@ -1,3 +1,4 @@
+import type { Autumn } from "autumn-js";
 import { APIError, createAuthEndpoint } from "better-auth/api";
 import { SEATS_FEATURE_ID } from "../autumn/features";
 import { autumnPlanIdFor } from "./plan-ids";
@@ -38,20 +39,13 @@ export interface StripeSubscriptionRef {
 	stripeScheduleId: string | null;
 }
 
+type AutumnBilling = Autumn["billing"];
+
 export interface AutumnBillingDeps {
-	attach(params: {
-		customerId: string;
-		planId: string;
-		featureQuantities: { featureId: string; quantity: number }[];
-		successUrl: string;
-		redirectMode: "always";
-		checkoutSessionParams: Record<string, unknown>;
-	}): Promise<{ paymentUrl: string | null }>;
-	update(params: {
-		customerId: string;
-		planId: string;
-		cancelAction: "uncancel";
-	}): Promise<unknown>;
+	attach(
+		params: Parameters<AutumnBilling["attach"]>[0],
+	): Promise<Pick<Awaited<ReturnType<AutumnBilling["attach"]>>, "paymentUrl">>;
+	update(params: Parameters<AutumnBilling["update"]>[0]): Promise<unknown>;
 	managedByAutumn(organizationId: string): Promise<boolean>;
 	cancelPortalUrl(
 		subscription: StripeSubscriptionRef,
