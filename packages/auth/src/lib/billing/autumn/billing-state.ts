@@ -1,6 +1,7 @@
 import type { PlanTier } from "@superset/shared/billing";
 import type { getAutumnCustomer } from "./customer";
 import { paidPlanIdFromFlags, tierFromFlags } from "./entitlements";
+import { SEATS_FEATURE_ID } from "./features";
 
 export type PaymentState =
 	| { kind: "ok" }
@@ -74,7 +75,11 @@ export function billingFromCustomer(
 		cancelAt: iso(paid?.expiresAt),
 		periodStart: iso(paid?.currentPeriodStart),
 		periodEnd: iso(paid?.currentPeriodEnd),
-		billingInterval: paid?.plan?.price?.interval ?? null,
+		billingInterval:
+			paid?.plan?.price?.interval ??
+			paid?.plan?.items.find((item) => item.featureId === SEATS_FEATURE_ID)
+				?.price?.interval ??
+			null,
 		lapsed,
 		paymentState,
 	};

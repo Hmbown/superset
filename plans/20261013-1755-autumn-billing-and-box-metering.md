@@ -39,7 +39,7 @@ Each question has a placeholder in the Decision Log.
 - [x] (2026-10-13 18:10Z) Product questions D-Q1 to D-Q4 answered and recorded.
 - [ ] D-Q5 (sandbox keys) answered.
 - [x] (2026-10-13 18:30Z) Plan approved ("go ahead"); no sandbox keys, so M0 is deferred and lock behaviours stay unverified until it runs.
-- [ ] M0 Autumn sandbox spike (deferred: needs keys).
+- [x] (2026-10-13 21:00Z) M0 Autumn sandbox spike, run against a sandbox catalog with test prices and one real Stripe test checkout. Confirmed: a free customer's check returns allowed false with a null balance; a lock holds its amount and a fractional confirm refunds the rest; a repeated track or keyed confirm returns 409; a paid customer reads as tier pro, active, monthly; cancel and uncancel set and clear cancelAt; a spend limit refuses check and check-with-lock. Found and fixed: a second confirm returns 400 "Lock not found", the same as an expired lock, so confirms now carry an Idempotency-Key; billingInterval was null for seat-priced plans. Not yet run: the webhook, the import script, and a real box.
 - [x] (2026-10-13 19:40Z) M1 Layout (autumn/, legacy/ + README), deprecation markers, svix in the webhook route, required env in apps/api, pinned xApiVersion 2.4.0, workflow permissions, reviewer test changes, Stripe fallback tested with a stubbed client, real originCheck test.
 - [x] (2026-10-13 19:40Z) M2 Final `0146`: `cloud_workspace_boots` (boot id, Vercel session id, organization id without FK, workspace set null, memory, lock_seq, lock_open, finalized_through, settle lease) and the `cloud_usage_limit_reached` run error code.
 - [x] (2026-10-13 19:40Z) M3 Metering on rolling locks: check at create, lock at provision and wake, settle (finalize + renew, refusal stops the box, finalize failure falls back to an idempotent track), stop and delete triggers, adoption of already-running boxes, Sentry monitor on the reconciler. settleBoot paths covered by unit tests (renew, close, cap refusal, finalize fallback, lease).
@@ -53,6 +53,13 @@ Each question has a placeholder in the Decision Log.
 
 
 ## Surprises & Discoveries
+
+- Observation: overage has no ceiling until a spend limit exists. A Pro customer with no spend limit was allowed a lock at three times its included GB-minutes.
+  Evidence: sandbox check with requiredBalance 240 at usage 150140 of 50000 returned allowed true; after setting a 5000-unit spend limit it returned allowed false.
+- Observation: a track with overageBehavior "overflow" past a spend limit returns 200 and records nothing.
+  Evidence: sandbox track of 50 at the limit returned OK; usage stayed 150140. Minutes a box runs past the cap before it stops are not billed.
+- Observation: an expired lock is not swept at once; a confirm 10 s after expiry succeeded.
+  Evidence: sandbox lock with a 5 s expiry, confirm after 15 s returned success.
 
 - Observation: the session's plan is computed by one SQL statement on every authenticated request, and several readers embed plan state inside their own SQL (`organizationSyncs` predicate used by Linear/GitHub sync and the suspend cron; automations evaluate; admin analytics needs history).
   Evidence: `packages/auth/src/lib/load-custom-session-data.ts:78-121` (comment at `server.ts:1050`: "runs on every authenticated request"); `packages/trpc/src/lib/sync-policy/syncPolicy.ts:34-75`; `apps/api/src/app/api/automations/evaluate/route.ts:55-80`; `packages/trpc/src/router/analytics/business.ts:789-991`.
@@ -252,3 +259,5 @@ Revision note (2026-10-13 18:10Z): recorded answers to D-Q1 to D-Q4 (free orgs r
 Revision note (2026-10-13 23:30Z): implementation of M1 to M8 recorded in Progress, Decision Log and Outcomes; M0 remains open pending Autumn sandbox keys.
 
 Revision note (2026-10-13 23:55Z): recorded the review follow-ups (deprecation markers, API version test, 409 on track, SDK-derived shim types) and the review items still open.
+
+Revision note (2026-10-13 21:00Z): ran M0 in the Autumn sandbox; recorded results, two fixes (keyed confirm, seat-price interval) and the spend-limit discoveries.

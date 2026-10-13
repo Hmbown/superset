@@ -29,13 +29,24 @@ function customer(overrides: {
 						currentPeriodStart: NOW - 10 * DAY,
 						currentPeriodEnd: NOW + 20 * DAY,
 						quantity: 1,
-						plan: { price: { interval: "month" } },
+						plan: seatPricedPlan("month"),
 						...overrides.subscription,
 					} as Customer["subscriptions"][number],
 				]
 			: [],
 		invoices: overrides.invoices ?? [],
 	} as Customer;
+}
+
+function seatPricedPlan(interval: "month" | "year") {
+	return {
+		price: null,
+		items: [
+			{ featureId: "box_gb_minutes", price: { interval: "month" } },
+			{ featureId: "seats", price: { interval } },
+			{ featureId: "pro_access", price: null },
+		],
+	};
 }
 
 const pro = { pro_access: { planId: "pro" } } as unknown as Customer["flags"];
@@ -67,6 +78,17 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 			lapsed: false,
 			paymentState: { kind: "ok" },
 		});
+	});
+
+	test("an annual Pro org reads its interval from the seat price", () => {
+		const billing = billingFromCustomer(
+			customer({
+				flags: pro,
+				subscription: { plan: seatPricedPlan("year") } as never,
+			}),
+			NOW,
+		);
+		expect(billing.billingInterval).toBe("year");
 	});
 
 	test("a pending cancel shows its end date as cancelAt", () => {
