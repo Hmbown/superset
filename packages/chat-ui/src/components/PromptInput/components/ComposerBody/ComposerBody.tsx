@@ -65,6 +65,7 @@ import type {
 } from "../../types";
 import { registerDraftEdit } from "../../utils/draftEdit";
 import { registerHistoryNavigation } from "../../utils/historyNavigation";
+import { $insertTranscript } from "../../utils/insertTranscript";
 import { matchToken } from "../../utils/matchToken";
 import { rankCommands } from "../../utils/rankCommands";
 import { $restoreChips } from "../../utils/restoreChips";
@@ -465,22 +466,23 @@ export function ComposerBody({
 	const submitRef = useRef(submit);
 	submitRef.current = submit;
 
+	const isFocusUnclaimed = () => {
+		const active = document.activeElement;
+		return (
+			active == null ||
+			active === document.body ||
+			Boolean(rootRef.current?.contains(active))
+		);
+	};
+
 	const dictationSession = useDictation({
 		transcribe: (audio) => dictation?.transcribe(audio) ?? "",
 		onError: (dictationError) => dictation?.onError?.(dictationError),
+		maxSeconds: dictation?.maxSeconds,
+		audioBitsPerSecond: dictation?.audioBitsPerSecond,
 		onTranscript: (text) => {
-			editor.update(() => {
-				$getRoot().selectEnd();
-				const selection = $getSelection();
-				if (!$isRangeSelection(selection)) return;
-				const anchorNode = selection.anchor.getNode();
-				const offset = selection.anchor.offset;
-				const previousChar = $isTextNode(anchorNode)
-					? anchorNode.getTextContent()[offset - 1]
-					: undefined;
-				const needsSpace = previousChar != null && !/\s/.test(previousChar);
-				selection.insertText(needsSpace ? ` ${text}` : text);
-			});
+			editor.update(() => $insertTranscript(text));
+			if (isFocusUnclaimed()) editor.focus();
 		},
 	});
 
@@ -634,19 +636,32 @@ export function ComposerBody({
 		void entry.select(actionContextRef.current);
 	};
 
-	// Escape aborts dictation without transcribing; it outranks every other
-	// Escape behavior while a recording or failed transcription is active.
+	// While dictating, Escape aborts without inserting anything and Enter
+	// never sends: it stops and transcribes, or retries a failed transcript.
+	// Both outrank every other Escape/Enter behavior, including stopping the
+	// agent.
 	useEffect(() => {
-		if (
-			dictationSession.status !== "recording" &&
-			dictationSession.status !== "error"
-		)
-			return;
+		if (dictationSession.status === "idle") return;
 		const onKeyDown = (event: KeyboardEvent) => {
-			if (event.key !== "Escape") return;
+			if (event.key === "Escape") {
+				event.preventDefault();
+				event.stopPropagation();
+				dictationSession.cancel();
+				return;
+			}
+			if (
+				event.key !== "Enter" ||
+				event.shiftKey ||
+				event.isComposing ||
+				!isFocusUnclaimed()
+			)
+				return;
 			event.preventDefault();
 			event.stopPropagation();
-			dictationSession.cancel();
+			if (dictationSession.status === "recording")
+				void dictationSession.finish();
+			else if (dictationSession.status === "error")
+				void dictationSession.retry();
 		};
 		window.addEventListener("keydown", onKeyDown, { capture: true });
 		return () =>
@@ -948,6 +963,11 @@ export function ComposerBody({
 						<DictationBar
 							canvasRef={dictationSession.canvasRef}
 							seconds={dictationSession.seconds}
+							status={
+								dictationSession.status === "transcribing"
+									? "transcribing"
+									: "recording"
+							}
 						/>
 						<button
 							type="button"
@@ -979,15 +999,16 @@ export function ComposerBody({
 						{toolbar}
 						<div className="flex-1" />
 						{toolbarEnd}
-						{dictation && status !== "streaming" && (
+						{dictation && (
 							<button
 								type="button"
 								aria-label={t({
 									message: "Dictate",
 								})}
-								onClick={() => {
+								onClick={async () => {
 									setBrowseOpen(false);
-									void dictationSession.start();
+									await dictationSession.start();
+									editor.focus();
 								}}
 								className={GHOST_FOOTER_BUTTON_CLASS}
 							>
