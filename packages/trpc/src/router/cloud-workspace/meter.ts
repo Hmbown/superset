@@ -188,13 +188,15 @@ async function recordUsage(boot: Boot, amount: number): Promise<void> {
 	const lockId = lockIdFor(boot.id, boot.lockSeq);
 	if (boot.lockOpen) {
 		try {
-			await autumnClient.balances.finalize({
-				lockId,
-				action: "confirm",
-				overrideValue: amount,
-			});
+			await autumnClient.balances.finalize(
+				{ lockId, action: "confirm", overrideValue: amount },
+				{ headers: { "Idempotency-Key": `${lockId}:confirm` } },
+			);
 			return;
 		} catch (error) {
+			if (!(error instanceof AutumnError)) throw error;
+			if (error.statusCode === 409) return;
+			if (error.statusCode >= 500) throw error;
 			Sentry.captureException(error, {
 				extra: {
 					bootId: boot.id,

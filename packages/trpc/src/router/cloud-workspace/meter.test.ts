@@ -14,7 +14,7 @@ const NOW = Date.now();
 let boot: Record<string, unknown> | null;
 let session: BoxSession | null;
 let renewalAllowed: boolean;
-let finalizeFails: boolean;
+let finalizeError: Error | null;
 let trackError: Error | null;
 let writes: Record<string, unknown>[];
 let autumnCalls: { method: string; params: unknown; headers?: unknown }[];
@@ -57,12 +57,20 @@ stub(autumnClient, {
 	},
 });
 stub(autumnClient.balances, {
-	finalize: async (params: unknown) => {
-		autumnCalls.push({ method: "finalize", params });
-		if (finalizeFails) throw new Error("lock expired");
+	finalize: async (params: unknown, options?: { headers?: unknown }) => {
+		autumnCalls.push({ method: "finalize", params, headers: options?.headers });
+		if (finalizeError) throw finalizeError;
 		return { success: true };
 	},
 });
+
+function autumnError(status: number) {
+	return new AutumnError(`status ${status}`, {
+		response: new Response("", { status }),
+		request: new Request("https://api.useautumn.com/v1"),
+		body: "",
+	});
+}
 
 beforeEach(() => {
 	boot = {
@@ -84,7 +92,7 @@ beforeEach(() => {
 		activeCpuMs: null,
 	};
 	renewalAllowed = true;
-	finalizeFails = false;
+	finalizeError = null;
 	trackError = null;
 	writes = [];
 	autumnCalls = [];
@@ -142,7 +150,7 @@ describe("settleBoot", () => {
 	});
 
 	test("minutes a lock can no longer take are tracked once, keyed by that lock", async () => {
-		finalizeFails = true;
+		finalizeError = autumnError(400);
 		await settleBoot("boot_1");
 		const track = autumnCalls.find(
 			(call) =>
@@ -153,19 +161,30 @@ describe("settleBoot", () => {
 	});
 
 	test("a track Autumn already recorded under that key counts as recorded", async () => {
-		finalizeFails = true;
-		trackError = new AutumnError("duplicate", {
-			response: new Response("", { status: 409 }),
-			request: new Request("https://api.useautumn.com/v1/track"),
-			body: "",
-		});
+		finalizeError = autumnError(400);
+		trackError = autumnError(409);
 		expect(await settleBoot("boot_1")).toBe("renewed");
 	});
 
 	test("a track that fails for another reason keeps the boot unsettled", async () => {
-		finalizeFails = true;
+		finalizeError = autumnError(400);
 		trackError = new Error("network down");
 		await expect(settleBoot("boot_1")).rejects.toThrow("network down");
+	});
+
+	test("a confirm Autumn already took under that key is not tracked again", async () => {
+		finalizeError = autumnError(409);
+		expect(await settleBoot("boot_1")).toBe("renewed");
+		expect(
+			autumnCalls.find((call) => call.method === "finalize")?.headers,
+		).toEqual({ "Idempotency-Key": "boot_1:0:confirm" });
+		expect(autumnCalls.some((call) => call.method === "track")).toBe(false);
+	});
+
+	test("a confirm that fails on Autumn's side is retried, not tracked", async () => {
+		finalizeError = autumnError(503);
+		await expect(settleBoot("boot_1")).rejects.toThrow("status 503");
+		expect(autumnCalls.some((call) => call.method === "track")).toBe(false);
 	});
 
 	test("a boot another run is settling is left alone", async () => {
