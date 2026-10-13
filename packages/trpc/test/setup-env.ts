@@ -7,6 +7,7 @@ process.env.BILLING_PROVIDER = "stripe";
 process.env.STRIPE_SECRET_KEY ??= "sk_test_placeholder";
 process.env.AUTUMN_SECRET_KEY ??= "am_sk_test_placeholder";
 process.env.RESEND_API_KEY ??= "re_placeholder";
+process.env.NEXT_PUBLIC_MARKETING_URL ??= "https://superset.test";
 process.env.NEXT_PUBLIC_POSTHOG_KEY ??= "phc_placeholder";
 process.env.DATABASE_URL ??= "postgresql://test:test@localhost:5432/test";
 process.env.DATABASE_URL_UNPOOLED ??= process.env.DATABASE_URL;

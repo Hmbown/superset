@@ -8,6 +8,7 @@ import {
 } from "@superset/auth/billing";
 import { db } from "@superset/db/client";
 import { cloudWorkspaceBoots, cloudWorkspaces } from "@superset/db/schema";
+import { CLOUD_USAGE_REFUSAL_KEYS } from "@superset/shared/billing";
 import { AutumnError } from "autumn-js";
 import { and, eq, inArray, isNull, lt, ne, or, sql } from "drizzle-orm";
 import { userError } from "../../i18n-error";
@@ -466,13 +467,15 @@ async function adoptRunningBoxes(): Promise<number> {
 			.from(cloudWorkspaceBoots)
 			.where(eq(cloudWorkspaceBoots.vercelSessionId, session.id));
 		if (claimed.length > 0) continue;
+		let bootId: string | null = null;
 		try {
-			const { bootId } = await authorizeBoot({
+			({ bootId } = await authorizeBoot({
 				organizationId: workspace.organizationId,
 				cloudWorkspaceId: workspace.id,
 				memoryMb: session.memoryMb,
 				vcpus: session.vcpus,
-			});
+			}));
+			if (!bootId) continue;
 			await db
 				.update(cloudWorkspaceBoots)
 				.set({
@@ -483,9 +486,18 @@ async function adoptRunningBoxes(): Promise<number> {
 				.where(eq(cloudWorkspaceBoots.id, bootId));
 			adopted += 1;
 		} catch (error) {
+			if (bootId) await releaseBoot(bootId).catch(() => {});
+			const refused = (CLOUD_USAGE_REFUSAL_KEYS as readonly string[]).includes(
+				String((error as { cause?: { i18nKey?: unknown } }).cause?.i18nKey),
+			);
+			if (!refused) {
+				Sentry.captureException(error, {
+					extra: { cloudWorkspaceId: workspace.id },
+				});
+				continue;
+			}
 			console.error(
 				`[cloud-workspace/meter] ${workspace.id} runs past its limit; stopping it`,
-				error,
 			);
 			await stopSandbox(workspace.providerSandboxId);
 		}
