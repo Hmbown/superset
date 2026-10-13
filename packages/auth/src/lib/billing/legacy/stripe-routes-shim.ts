@@ -134,6 +134,8 @@ export async function upgradeWithAutumn(
 			cancel_url: body.cancelUrl,
 			allow_promotion_codes: !annual,
 			billing_address_collection: "required",
+			tax_id_collection: { enabled: true },
+			customer_update: { name: "auto", address: "auto" },
 			metadata: { organizationId: referenceId, initiatedByUserId: args.userId },
 			subscription_data: {
 				metadata: { organizationId: referenceId, userId: args.userId },

@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import * as Sentry from "@sentry/core";
-import { autumnClient } from "@superset/auth/autumn";
+import { autumnClient, billingUsesAutumn } from "@superset/auth/autumn";
 import {
 	ACTIVE_CPU_MINUTES_FEATURE_ID,
 	BOX_GB_MINUTES_FEATURE_ID,
@@ -86,6 +86,7 @@ export async function assertMayBoot(
 	organizationId: string,
 	box = DEFAULT_BOX,
 ): Promise<void> {
+	if (!billingUsesAutumn) return;
 	await ensureAutumnCustomer(organizationId);
 	const result = await autumnClient.check({
 		customerId: organizationId,
@@ -101,7 +102,8 @@ export async function authorizeBoot(args: {
 	cloudWorkspaceId: string;
 	memoryMb: number;
 	vcpus: number;
-}): Promise<{ bootId: string }> {
+}): Promise<{ bootId: string | null }> {
+	if (!billingUsesAutumn) return { bootId: null };
 	await ensureAutumnCustomer(args.organizationId);
 	const bootId = `boot_${randomUUID()}`;
 	const result = await autumnClient.check({
@@ -500,6 +502,7 @@ export async function reconcileCloudWorkspaceUsage(): Promise<{
 	queued: number;
 	failed: number;
 }> {
+	if (!billingUsesAutumn) return { adopted: 0, queued: 0, failed: 0 };
 	const adopted = await adoptRunningBoxes().catch((error) => {
 		Sentry.captureException(error);
 		return 0;

@@ -1,6 +1,7 @@
 import "../../../scripts/test-preload.ts";
 
 process.env.SKIP_ENV_VALIDATION = "1";
+process.env.BILLING_PROVIDER = "stripe";
 // Importing a module that constructs a client throws without these. None
 // connects until it is used.
 process.env.STRIPE_SECRET_KEY ??= "sk_test_placeholder";

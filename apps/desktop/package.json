@@ -38,6 +38,7 @@
 		"generate:routes": "tsr generate",
 		"pretypecheck": "bun run generate:icons && bun run generate:routes",
 		"typecheck": "tsc --noEmit",
+		"pretest": "bun run generate:icons",
 		"test": "bun test"
 	},
 	"dependencies": {

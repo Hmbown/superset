@@ -6,7 +6,15 @@ import { stub } from "../../../test/stub";
 import type { BoxSession } from "../../lib/sandbox";
 import * as sandbox from "../../lib/sandbox";
 import { sessionEndedAt } from "../../lib/sandbox/vercel";
-import { gbMinutes, lockIdFor, refusalFor, settleBoot } from "./meter";
+import {
+	assertMayBoot,
+	authorizeBoot,
+	gbMinutes,
+	lockIdFor,
+	reconcileCloudWorkspaceUsage,
+	refusalFor,
+	settleBoot,
+} from "./meter";
 
 const MINUTE = 60_000;
 const NOW = Date.now();
@@ -225,5 +233,25 @@ describe("meter", () => {
 			sessionEndedAt({ status: "stopping", requestedStopAt: 4, updatedAt: 9 }),
 		).toBe(4);
 		expect(sessionEndedAt({ status: "aborted", updatedAt: 9 })).toBe(9);
+	});
+});
+
+describe("with BILLING_PROVIDER=stripe", () => {
+	test("boxes start, wake and reconcile without asking Autumn", async () => {
+		await assertMayBoot("org_1");
+		expect(
+			await authorizeBoot({
+				organizationId: "org_1",
+				cloudWorkspaceId: "ws_1",
+				memoryMb: 16_384,
+				vcpus: 8,
+			}),
+		).toEqual({ bootId: null });
+		expect(await reconcileCloudWorkspaceUsage()).toEqual({
+			adopted: 0,
+			queued: 0,
+			failed: 0,
+		});
+		expect(autumnCalls).toEqual([]);
 	});
 });

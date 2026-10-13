@@ -37,7 +37,8 @@ export function QuestionPage({
 	const isPicked = (value: string) =>
 		Array.isArray(current) ? current.includes(value) : current === value;
 	const textField = freeform ? field : other;
-	const typed = textField ? answerText(values[textField.id]) : "";
+	const textValue = textField ? values[textField.id] : undefined;
+	const typed = answerText(textValue);
 	const invalid = isInvalidNumber(field, values[field.id]);
 
 	return (
@@ -136,7 +137,7 @@ export function QuestionPage({
 							}
 							step={field.input === "integer" ? 1 : "any"}
 							type={numeric ? "number" : "text"}
-							value={typed}
+							value={typeof textValue === "string" ? textValue : typed}
 						/>
 					</label>
 				)}

@@ -39,6 +39,8 @@ export function checkoutSessionParams(args: {
 		...(args.cancelUrl ? { cancel_url: args.cancelUrl } : {}),
 		allow_promotion_codes: !args.planId.endsWith("_annual"),
 		billing_address_collection: "required",
+		tax_id_collection: { enabled: true },
+		customer_update: { name: "auto", address: "auto" },
 		metadata: {
 			organizationId: args.organizationId,
 			initiatedByUserId: args.userId,

@@ -103,6 +103,26 @@ export function ChatPane({
 						...(handoffPrompt ? { pendingPrompt: handoffPrompt } : {}),
 					});
 				}}
+				onForkAgent={({ presetId, label, model, modeId, handoffPrompt }) =>
+					ctx.store.getState().addTab({
+						panes: [
+							{
+								kind: "chat-v3",
+								titleOverride: label,
+								data: {
+									terminalId: crypto.randomUUID(),
+									sessionId: null,
+									agent: { id: presetId },
+									...(model
+										? { chatModelId: model.id, chatModelLabel: model.label }
+										: {}),
+									...(modeId ? { chatModeId: modeId } : {}),
+									pendingPrompt: handoffPrompt,
+								} satisfies ChatPaneData,
+							},
+						],
+					})
+				}
 				onModeChange={(chatModeId) => {
 					if (data.agent) saveChatMode(data.agent.id, chatModeId);
 					ctx.actions.updateData({ ...data, chatModeId });

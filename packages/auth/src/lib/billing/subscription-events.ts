@@ -7,6 +7,7 @@ import { Client } from "@upstash/qstash";
 import { eq } from "drizzle-orm";
 import type Stripe from "stripe";
 import { env } from "../../env";
+import { syncCustomerName } from "../../stripe";
 import {
 	formatPrice,
 	getOrganizationBillingRecipients,
@@ -91,6 +92,15 @@ export async function notifySubscriptionStarted({
 	if (!org) return;
 
 	if (planName === "enterprise") return;
+
+	if (org.stripeCustomerId) {
+		await syncCustomerName(org.stripeCustomerId, org.name).catch((error) => {
+			console.error(
+				"[stripe/subscription-complete] Failed to restore customer name:",
+				error,
+			);
+		});
+	}
 
 	const owners = await getOrganizationOwners(subscription.referenceId);
 

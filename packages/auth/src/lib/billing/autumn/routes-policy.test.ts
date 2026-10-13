@@ -43,6 +43,8 @@ describe("billing routes keep today's owner and admin rules", () => {
 		).toEqual({
 			allow_promotion_codes: true,
 			billing_address_collection: "required",
+			tax_id_collection: { enabled: true },
+			customer_update: { name: "auto", address: "auto" },
 			metadata: { organizationId: "org_1", initiatedByUserId: "user_1" },
 			subscription_data: {
 				metadata: { organizationId: "org_1", userId: "user_1" },

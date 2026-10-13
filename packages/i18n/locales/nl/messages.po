@@ -22,10 +22,6 @@ msgstr "- className=\"rounded-sm border border-border bg-background …\""
 msgid ", selected"
 msgstr ", geselecteerd"
 
-#. placeholder {0}: data.unbilledLogos
-msgid ". {0} not yet modeled as Stripe subscriptions"
-msgstr ". {0} nog niet gemodelleerd als Stripe-abonnementen"
-
 msgid ". Each card shows the canonical import path — click it to copy. Reach for these before writing anything custom."
 msgstr ". Elke kaart toont het canonieke importpad — klik erop om het te kopiëren. Grijp hiernaar voordat je zelf iets bouwt."
 
@@ -93,9 +89,6 @@ msgstr "(bewerkt)"
 msgid "(no output)"
 msgstr "(geen uitvoer)"
 
-msgid "(so far)"
-msgstr "(tot nu toe)"
-
 #. placeholder {0}: connections.length
 msgid "{0, plural, one {# account connected} other {# accounts connected}}"
 msgstr "{0, plural, one {# account verbonden} other {# accounts verbonden}}"
@@ -119,6 +112,10 @@ msgstr "{0, plural, one {# automatisering kon niet worden gestart} other {# auto
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {# gewijzigd bestand} other {# gewijzigde bestanden}}"
+
+#. placeholder {0}: titles.length
+msgid "{0, plural, one {# chat closed} other {# chats closed}}"
+msgstr "{0, plural, one {# chat gesloten} other {# chats gesloten}}"
 
 #. placeholder {0}: comments.length
 msgid "{0, plural, one {# comment attached} other {# comments attached}}"
@@ -459,10 +456,6 @@ msgstr "{0} draait hostservice {1} — deze app heeft {2} of nieuwer nodig. Werk
 msgid "{0} is set up on this machine, but not on your account"
 msgstr "{0} is ingesteld op deze machine, maar niet op je account"
 
-#. placeholder {0}: formatNumber(lastFullWeek)
-msgid "{0} last full week"
-msgstr "{0} in de laatste volledige week"
-
 #. placeholder {0}: matches.length - VISIBLE_LIMIT
 msgid "{0} more — refine your search"
 msgstr "Nog {0} — verfijn je zoekopdracht"
@@ -488,23 +481,9 @@ msgstr "{0} van {1} checks bezig"
 msgid "{0} of {totalCount}"
 msgstr "{0} van {totalCount}"
 
-#. placeholder {0}: rate(teams, signups)
-msgid "{0} of accounts"
-msgstr "{0} van de accounts"
-
-#. placeholder {0}: rate(downloaders, visitors)
-#. placeholder {0}: rate(signups, visitors)
-msgid "{0} of visitors"
-msgstr "{0} van de bezoekers"
-
 #. placeholder {0}: plugin.interface.displayName
 msgid "{0} options"
 msgstr "Opties voor {0}"
-
-#. placeholder {0}: formatNumber(dropped, undefined)
-#. placeholder {0}: formatNumber(step.count, undefined)
-msgid "{0} persons"
-msgstr "{0} personen"
 
 #. placeholder {0}: i18n._(plan.name)
 msgid "{0} plan"
@@ -546,11 +525,6 @@ msgstr "{0} tokens op {1}"
 msgid "{0} tokens over {1} active days"
 msgstr "{0} tokens over {1} actieve dagen"
 
-#. placeholder {0}: formatNumber(section.updatedRecently)
-#. placeholder {1}: formatNumber(data?.recentDays ?? 30)
-msgid "{0} touched in {1} days"
-msgstr "{0} aangepast in {1} dagen"
-
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} uninstalled"
 msgstr "{0} verwijderd"
@@ -567,10 +541,6 @@ msgstr "{0} tegen {1}"
 #. placeholder {0}: file.path
 msgid "{0} was deleted in this change."
 msgstr "{0} is verwijderd in deze wijziging."
-
-#. placeholder {0}: formatNumber(option)
-msgid "{0} weeks"
-msgstr "{0} weken"
 
 #. placeholder {0}: winner?.name
 #. placeholder {1}: result.events.length
@@ -720,6 +690,9 @@ msgstr "{actor} heeft de koppeling met workspace {workspace} verwijderd"
 msgid "{actual} so far · ~{projected} projected"
 msgstr "{actual} tot nu toe · ~{projected} verwacht"
 
+msgid "{agents} sessions resume when you open their workspace."
+msgstr "{agents}-sessies worden hervat wanneer je hun workspace opent."
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {# commit achter op main, rebase nodig} other {# commits achter op main, rebase nodig}}"
 
@@ -731,6 +704,9 @@ msgstr "{closedCount, plural, one {# poort gesloten} other {# poorten gesloten}}
 
 msgid "{closedCount} closed"
 msgstr "{closedCount} gesloten"
+
+msgid "{commitCount, plural, one {# commit} other {# commits}}"
+msgstr "{commitCount, plural, one {# commit} other {# commits}}"
 
 #. placeholder {0}: relevant.length
 msgid "{completed} of {0} checks complete"
@@ -757,6 +733,9 @@ msgstr "{count, plural, one {# check mislukt} other {# checks mislukt}}"
 msgid "{count, plural, one {# Check Needs Action} other {# Checks Need Action}}"
 msgstr "{count, plural, one {# check vraagt actie} other {# checks vragen actie}}"
 
+msgid "{count, plural, one {# comment, new replies} other {# comments, new replies}}"
+msgstr "{count, plural, one {# opmerking, nieuwe reacties} other {# opmerkingen, nieuwe reacties}}"
+
 msgid "{count, plural, one {# comment} other {# comments}}"
 msgstr "{count, plural, one {# opmerking} other {# opmerkingen}}"
 
@@ -771,6 +750,9 @@ msgstr "{count, plural, one {# stap} other {# stappen}}"
 
 msgid "{count, plural, one {# worktree in this repository has no workspace. It will be imported as a workspace.} other {# worktrees in this repository have no workspace. They will be imported as workspaces.}}"
 msgstr "{count, plural, one {# worktree in deze repository heeft geen werkruimte. Die wordt als werkruimte geïmporteerd.} other {# worktrees in deze repository hebben geen werkruimte. Ze worden als werkruimtes geïmporteerd.}}"
+
+msgid "{count, plural, one {added a commit} other {added # commits}}"
+msgstr "{count, plural, one {heeft een commit toegevoegd} other {heeft # commits toegevoegd}}"
 
 msgid "{count, plural, one {Created # workspace} other {Created # workspaces}}"
 msgstr "{count, plural, one {# werkruimte aangemaakt} other {# werkruimtes aangemaakt}}"
@@ -828,6 +810,9 @@ msgstr "{count} hosts draaien een oudere hostservice dan deze app"
 
 msgid "{count}/day"
 msgstr "{count}/dag"
+
+msgid "{current} of {total}"
+msgstr "{current} van {total}"
 
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} van {totalBranches}"
@@ -929,9 +914,6 @@ msgstr "{kind} · door {author}"
 msgid "{kindLabel} theme"
 msgstr "{kindLabel} thema"
 
-msgid "{label} (partial week)"
-msgstr "{label} (onvolledige week)"
-
 msgid "{label} in cloud workspaces"
 msgstr "{label} in cloudwerkruimtes"
 
@@ -986,9 +968,6 @@ msgstr "{name} is ingebouwd en kan niet worden vervangen"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} is niet toegevoegd"
 
-msgid "{nonBrandPct} of clicks"
-msgstr "{nonBrandPct} van de klikken"
-
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Geef minstens één persoon op, of kies {choice}.} sender {Geef minstens één afzender op, of kies {choice}.} other {Geef minstens één item op, of kies {choice}.}}"
 
@@ -997,6 +976,18 @@ msgstr "{noun, select, repository {Geef minstens één repository op.} channel {
 
 msgid "{openCount} open"
 msgstr "{openCount} open"
+
+msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
+msgstr "{pageTitle} kan namens jou gegevens in je {pluginLabel}-account lezen en wijzigen, ook in toekomstige versies van deze pagina. Wat de pagina leest, kan ze naar andere websites sturen. Sta alleen pagina’s toe die je vertrouwt."
+
+msgid "{pageTitle} can use {pluginLabel} as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
+msgstr "{pageTitle} kan {pluginLabel} namens jou gebruiken, ook in toekomstige versies van deze pagina. Wat de pagina leest, kan ze naar andere websites sturen. Sta alleen pagina’s toe die je vertrouwt."
+
+msgid "{pageTitle} uses {pluginLabel}. Install it to continue."
+msgstr "{pageTitle} gebruikt {pluginLabel}. Installeer het om door te gaan."
+
+msgid "{pageTitle} will use this account."
+msgstr "{pageTitle} gebruikt dit account."
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} gedeeltelijk"
@@ -1084,9 +1075,6 @@ msgstr "{skipped, plural, one {# overgeslagen} other {# overgeslagen}}"
 
 msgid "{starCount} stars and counting"
 msgstr "{starCount} sterren en het worden er meer"
-
-msgid "{stars} stars · {perDay}/day this week · {peakPerDay}/day at peak"
-msgstr "{stars} sterren · {perDay}/dag deze week · {peakPerDay}/dag op de piek"
 
 msgid "{started, plural, one {Started # automation} other {Started # automations}}"
 msgstr "{started, plural, one {# automatisering gestart} other {# automatiseringen gestart}}"
@@ -1183,12 +1171,6 @@ msgstr "#{0} {1}\n"
 msgid "#engineering"
 msgstr "#engineering"
 
-msgid "% of subscribed orgs at month end still subscribed one month later (count-based; $ NRR needs a Sigma query)"
-msgstr "% van de betalende organisaties aan het eind van de maand dat een maand later nog een abonnement heeft (op aantal; $ NRR vereist een Sigma-query)"
-
-msgid "% of subscriptions started each month still active k months later (Neon, enterprise excluded)"
-msgstr "% van de abonnementen die elke maand starten en k maanden later nog actief zijn (Neon, enterprise uitgesloten)"
-
 #. placeholder {0}: COMPANY.NAME
 msgid "%s | {0} Docs"
 msgstr "%s | Documentatie van {0}"
@@ -1284,22 +1266,6 @@ msgstr "✓ 2u geleden"
 msgid "✓ 3d ago"
 msgstr "✓ 3d geleden"
 
-#. placeholder {0}: formatNumber(latest.startMrrUsd, undefined)
-#. placeholder {1}: latest.customers
-#. placeholder {2}: formatNumber(latest.retainedMrrUsd, undefined)
-msgid "${0} from {1} customers became ${2}"
-msgstr "MRR van {1} klanten ging van ${0} naar ${2}"
-
-#. placeholder {0}: formatNumber(latest.prevUsd, undefined)
-#. placeholder {1}: latest.prevDate
-msgid "${0} previous period ({1})"
-msgstr "${0} vorige periode ({1})"
-
-#. placeholder {0}: formatNumber(data.arrUsd, undefined)
-#. placeholder {1}: accounts.length
-msgid "${0}/yr across {1} logos — already inside MRR, not additive"
-msgstr "${0}/jr over {1} logo's — zit al in MRR, niet aanvullend"
-
 msgid "${balance} credits"
 msgstr "${balance} tegoed"
 
@@ -1335,9 +1301,6 @@ msgstr "1 week geleden"
 
 msgid "10+ concurrent workstreams without dropped state"
 msgstr "10+ gelijktijdige werkstromen zonder verlies van context"
-
-msgid "100% (retain everything)"
-msgstr "100% (alles behouden)"
 
 msgid "10h ago"
 msgstr "10u geleden"
@@ -1443,6 +1406,9 @@ msgstr "Een CDP-endpoint per paneel"
 
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "Elke week verschijnt er een changelog. De meeste nieuwe collega's leveren in hun eerste dagen al op aan gebruikers."
+
+msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
+msgstr "Een chat kan halverwege niet overstappen naar een andere provider. Fork dit gesprek in plaats daarvan naar een nieuwe {label}-chat. Deze {currentLabel}-chat blijft open."
 
 msgid "A chat takes its name from the agent."
 msgstr "Een chat krijgt zijn naam van de agent."
@@ -1618,12 +1584,6 @@ msgstr "Prestaties"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
-msgid "Acquisition"
-msgstr "Acquisitie"
-
-msgid "Acquisition, content, conversion, retention, and distribution in one place. Weekly charts cover the selected range; the current week is partial. Drag a tile by its top edge, resize from the corner."
-msgstr "Acquisitie, content, conversie, retentie en distributie op één plek. Weekgrafieken beslaan de gekozen periode; de huidige week is nog niet compleet. Sleep een tegel aan de bovenrand, verander de grootte via de hoek."
-
 msgid "Action"
 msgstr "Actie"
 
@@ -1633,12 +1593,6 @@ msgstr "Acties"
 #. placeholder {0}: page.title
 msgid "Actions for {0}"
 msgstr "Acties voor {0}"
-
-msgid "activation rate"
-msgstr "activatiegraad"
-
-msgid "Activation, how much people use it once they are in, and whether they come back."
-msgstr "Activatie, hoeveel mensen het gebruiken zodra ze binnen zijn, en of ze terugkomen."
 
 msgid "Active"
 msgstr "Actief"
@@ -2002,15 +1956,6 @@ msgstr "AI · Gesprek"
 msgid "AI · Status"
 msgstr "AI · Status"
 
-msgid "AI agents reading the site, last {dayCount} days"
-msgstr "AI-agents die de site lezen, laatste {dayCount} dagen"
-
-msgid "AI assistant referrals"
-msgstr "Verwijzingen van AI-assistenten"
-
-msgid "AI assistants"
-msgstr "AI-assistenten"
-
 msgid "AI authentication failed. Please check your AI settings."
 msgstr "AI-authenticatie mislukt. Controleer je AI-instellingen."
 
@@ -2202,11 +2147,20 @@ msgstr "Externe toegang tot dit apparaat via de relay toestaan"
 msgid "Allow this action?"
 msgstr "Deze actie toestaan?"
 
+msgid "Allow this page to use {pluginLabel}?"
+msgstr "Deze pagina toestaan {pluginLabel} te gebruiken?"
+
 msgid "Allowed"
 msgstr "Toegestaan"
 
 msgid "Allowed for session"
 msgstr "Toegestaan voor deze sessie"
+
+msgid "Already brought over to another organization. Switch to it to see this project."
+msgstr "Al overgezet naar een andere organisatie. Schakel daarnaar over om dit project te zien."
+
+msgid "Already brought over to another organization. Switch to it to see this workspace."
+msgstr "Al overgezet naar een andere organisatie. Schakel daarnaar over om deze werkruimte te zien."
 
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "Heb je al een account? <0>Inloggen</0>"
@@ -2268,9 +2222,6 @@ msgstr "Er is een onbekende fout opgetreden"
 msgid "An update is ready to install."
 msgstr "Er staat een update klaar om te installeren."
 
-msgid "Analytics, Ops, and more"
-msgstr "Analyses, beheer en meer"
-
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android komt eraan. Hoor het als eerste wanneer het uitkomt."
 
@@ -2285,9 +2236,6 @@ msgstr "Geanimeerd WebGL-gradiënt (stripe-gradient)"
 
 msgid "Annual billing only"
 msgstr "Alleen jaarlijkse facturering"
-
-msgid "Annualized enterprise Stripe subscriptions"
-msgstr "Geannualiseerde enterprise-abonnementen in Stripe"
 
 msgid "Annually"
 msgstr "Jaarlijks"
@@ -2306,6 +2254,9 @@ msgstr "Anonieme Assembleur"
 
 msgid "another device"
 msgstr "een ander apparaat"
+
+msgid "Answer any questions in the terminal below, such as a password."
+msgstr "Beantwoord vragen in de terminal hieronder, zoals een wachtwoord."
 
 msgid "Answer this question on desktop, or skip it."
 msgstr "Beantwoord deze vraag op desktop, of sla hem over."
@@ -2387,9 +2338,6 @@ msgstr "Nog iets? (optioneel)"
 
 msgid "AP"
 msgstr "AP"
-
-msgid "Apache Superset"
-msgstr "Apache Superset"
 
 msgid "API"
 msgstr "API"
@@ -2605,9 +2553,6 @@ msgstr "Aan jou toegewezen"
 msgid "Assignee"
 msgstr "Toegewezen persoon"
 
-msgid "Assistants that opened our pages in a real browser on someone's behalf. Crawlers that only fetch HTML never run analytics and are not counted."
-msgstr "Assistenten die onze pagina's namens iemand in een echte browser openden. Crawlers die alleen HTML ophalen draaien nooit analytics en tellen niet mee."
-
 msgid "Assisted"
 msgstr "Ondersteund"
 
@@ -2667,6 +2612,9 @@ msgstr "Bijlagen vereisen een online host"
 
 msgid "Attempt before checks pass"
 msgstr "Proberen vóór de checks slagen"
+
+msgid "Attempted changes"
+msgstr "Geprobeerde wijzigingen"
 
 msgid "Attention queue"
 msgstr "Aandachtswachtrij"
@@ -2812,9 +2760,6 @@ msgstr "Autonome pijplijn van ticket naar PR"
 msgid "Available"
 msgstr "Beschikbaar"
 
-msgid "Available when v2 is enabled."
-msgstr "Beschikbaar wanneer v2 aanstaat."
-
 msgid "Avatar"
 msgstr "Avatar"
 
@@ -2823,15 +2768,6 @@ msgstr "Avatar (atoom)"
 
 msgid "Avatar updated!"
 msgstr "Avatar bijgewerkt!"
-
-msgid "Average time from previous"
-msgstr "Gemiddelde tijd sinds vorige"
-
-msgid "Avg monthly outflow per counterparty, last 3 complete months"
-msgstr "Gem. maandelijkse uitstroom per tegenpartij, laatste 3 volledige maanden"
-
-msgid "avg position {avgPosition}"
-msgstr "gem. positie {avgPosition}"
 
 #. placeholder {0}: requestedReviewers.join(", ")
 msgid "Awaiting {0}"
@@ -2857,9 +2793,6 @@ msgstr "Terug naar automatiseringen"
 
 msgid "Back to billing"
 msgstr "Terug naar facturering"
-
-msgid "Back to Blog"
-msgstr "Terug naar blog"
 
 msgid "Back to Changelog"
 msgstr "Terug naar changelog"
@@ -3021,9 +2954,6 @@ msgstr "Citaat"
 msgid "Blog"
 msgstr "Blog"
 
-msgid "Blog posts"
-msgstr "Blogposts"
-
 msgid "Blue"
 msgstr "Blauw"
 
@@ -3047,9 +2977,6 @@ msgstr "Geleend van hoe zelfrijdende auto's worden beoordeeld, toegepast op hoe 
 
 msgid "Bottom drawer, swipe-friendly on touch devices."
 msgstr "Lade onderaan, swipevriendelijk op touchapparaten."
-
-msgid "Bounce"
-msgstr "Bounce"
 
 msgid "Box"
 msgstr "Box"
@@ -3117,9 +3044,6 @@ msgstr "Branches en naamgeving"
 msgid "Branches..."
 msgstr "Branches..."
 
-msgid "brand"
-msgstr "merk"
-
 msgid "Brand assets"
 msgstr "Merkmateriaal"
 
@@ -3135,8 +3059,8 @@ msgstr "Breng {companyName} naar je team. Neem contact op voor meer informatie o
 msgid "Bring a link to something you built recently."
 msgstr "Neem een link mee naar iets wat je onlangs hebt gebouwd."
 
-msgid "Bring Any Agent."
-msgstr "Neem elke agent mee."
+msgid "Bring Any Agent"
+msgstr "Neem elke agent mee"
 
 msgid "Bring over your projects"
 msgstr "Neem je projecten over"
@@ -3152,6 +3076,9 @@ msgstr "Neem projecten, werkruimtes en terminalscripts uit v1 mee naar v2. Elk i
 
 msgid "Bring your agents together."
 msgstr "Breng je agents samen."
+
+msgid "Bringing over your v1 projects"
+msgstr "Je v1-projecten worden overgezet"
 
 msgid "Browse and install skills, MCP servers, and agent configs shared by the community."
 msgstr "Blader door skills, MCP-servers en agentconfiguraties die de community deelt, en installeer ze."
@@ -3228,9 +3155,6 @@ msgstr "Meegeleverd met de Superset-app op dit apparaat."
 
 msgid "Bundled with the Superset app on this device. Updates with the app."
 msgstr "Meegeleverd met de Superset-app op dit apparaat. Wordt samen met de app bijgewerkt."
-
-msgid "Burn by vendor (Mercury)"
-msgstr "Burn per leverancier (Mercury)"
 
 msgid "Button — sizes"
 msgstr "Knop — formaten"
@@ -3355,6 +3279,9 @@ msgstr "Bewerkingen annuleren"
 msgid "Cancel plan"
 msgstr "Plan opzeggen"
 
+msgid "Cancel reply"
+msgstr "Antwoord annuleren"
+
 msgid "Canceled"
 msgstr "Geannuleerd"
 
@@ -3406,9 +3333,6 @@ msgstr "Vacatures"
 msgid "Carousel"
 msgstr "Carousel"
 
-msgid "Cash — total balance (Mercury)"
-msgstr "Cash — totaal saldo (Mercury)"
-
 msgid "Category"
 msgstr "Categorie"
 
@@ -3450,6 +3374,9 @@ msgstr "Logo van organisatie wijzigen"
 
 msgid "Change organization slug"
 msgstr "Slug van organisatie wijzigen"
+
+msgid "Change preview"
+msgstr "Wijzigingsvoorbeeld"
 
 msgid "Change priority"
 msgstr "Prioriteit wijzigen"
@@ -3516,6 +3443,9 @@ msgstr "Kanaal aangemaakt"
 msgid "Chat"
 msgstr "Chat"
 
+msgid "Chat closed"
+msgstr "Chat gesloten"
+
 msgid "Chat is being reworked"
 msgstr "Chat wordt herbouwd"
 
@@ -3573,9 +3503,6 @@ msgstr "Check je inbox"
 msgid "Checkbox · Radio · Switch"
 msgstr "Checkbox · Radio · Switch"
 
-msgid "Checking + savings + Treasury over time; fundraise tranches are the steps"
-msgstr "Betaal- + spaarrekening + Treasury over tijd; financieringstranches zijn de stappen"
-
 msgid "Checking agents…"
 msgstr "Agents controleren…"
 
@@ -3627,6 +3554,9 @@ msgstr "Checks geslaagd"
 msgid "Checks Skipped"
 msgstr "Checks overgeslagen"
 
+msgid "Choose a {pluginLabel} account"
+msgstr "Kies een {pluginLabel}-account"
+
 msgid "Choose a fighter"
 msgstr "Kies een vechter"
 
@@ -3671,9 +3601,6 @@ msgstr "Kies wanneer Superset je een seintje geeft."
 
 msgid "Choose where agents started from comments, design mode, and Pages open."
 msgstr "Kies waar agents worden geopend die vanuit opmerkingen, de ontwerpmodus en Pages worden gestart."
-
-msgid "Churn"
-msgstr "Opzeggingen"
 
 msgid "CI failed"
 msgstr "CI mislukt"
@@ -3804,6 +3731,12 @@ msgstr "Klik hier als je niet wordt doorgestuurd"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Klik op ‘↑ update’ om de bevestiging vóór de update te bekijken"
 
+msgid "Click the chip to open the issue"
+msgstr "Klik op de chip om de issue te openen"
+
+msgid "Click the chip to open the pull request"
+msgstr "Klik op de chip om de pull request te openen"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Klik om de sessie-ID te kopiëren (hervatten met `claude --resume <id>`)."
 
@@ -3812,15 +3745,6 @@ msgstr "Klik om te openen op GitHub"
 
 msgid "Click two commits to define the range."
 msgstr "Klik op twee commits om het bereik te bepalen."
-
-msgid "Click-through rate"
-msgstr "Doorklikratio"
-
-msgid "Clicked upgrade"
-msgstr "Klikte op upgraden"
-
-msgid "Clicks"
-msgstr "Klikken"
 
 msgid "Clients"
 msgstr "Clients"
@@ -3852,6 +3776,9 @@ msgstr "Klonen…"
 
 msgid "Close"
 msgstr "Sluiten"
+
+msgid "Close (Esc)"
+msgstr "Sluiten (Esc)"
 
 #. placeholder {0}: row.title
 msgid "Close {0}"
@@ -3986,6 +3913,10 @@ msgstr "Werkruimte sluiten"
 msgid "Closed"
 msgstr "Gesloten"
 
+msgctxt "pull request or issue state"
+msgid "Closed"
+msgstr "Gesloten"
+
 msgid "Closing these ports will end the processes using them."
 msgstr "Als je deze poorten sluit, worden de processen die ze gebruiken beëindigd."
 
@@ -4037,12 +3968,6 @@ msgstr "Codeblok"
 
 msgid "Code Block"
 msgstr "Codeblok"
-
-msgid "Cohort"
-msgstr "Cohort"
-
-msgid "Cohort retention"
-msgstr "Cohortretentie"
 
 msgid "Collapse"
 msgstr "Inklappen"
@@ -4202,9 +4127,6 @@ msgstr "Communicatie"
 msgid "Community"
 msgstr "Community"
 
-msgid "Community size from the public invite, refreshed every half hour."
-msgstr "Grootte van de community volgens de openbare uitnodiging, elk half uur ververst."
-
 msgid "Company"
 msgstr "Bedrijf"
 
@@ -4214,14 +4136,8 @@ msgstr "Bedrijfsbeschrijving, laatste nieuws, merkmateriaal en perscontact van S
 msgid "Company email"
 msgstr "Zakelijk e-mailadres"
 
-msgid "Company Metrics"
-msgstr "Bedrijfsstatistieken"
-
 msgid "Compare"
 msgstr "Vergelijken"
-
-msgid "Compare pages"
-msgstr "Vergelijkingspagina's"
 
 msgid "Compare plans"
 msgstr "Plannen vergelijken"
@@ -4250,9 +4166,6 @@ msgstr "component-showcase"
 
 msgid "Composable form layout — pairs with @superset/ui/form for react-hook-form"
 msgstr "Samenstelbare formulierlay-out — combineert met @superset/ui/form voor react-hook-form"
-
-msgid "Computing in Stripe — up to a minute on first load"
-msgstr "Wordt berekend in Stripe — kan de eerste keer een minuut duren"
 
 msgid "Config location"
 msgstr "Configuratielocatie"
@@ -4299,6 +4212,9 @@ msgstr "Verbinden"
 
 msgid "Connect {name}"
 msgstr "{name} verbinden"
+
+msgid "Connect {pluginLabel}"
+msgstr "{pluginLabel} verbinden"
 
 msgid "Connect a device"
 msgstr "Apparaat koppelen"
@@ -4362,6 +4278,9 @@ msgstr "Verbind Slack om taken vanuit gesprekken te beheren. Vermeld de bot in e
 
 msgid "Connect this computer"
 msgstr "Verbind deze computer"
+
+msgid "Connect your {pluginLabel} account, then reload this page."
+msgstr "Verbind je {pluginLabel}-account en laad deze pagina daarna opnieuw."
 
 msgid "Connect your coding agents to the apps your team already uses."
 msgstr "Verbind je codeeragents met de apps die je team al gebruikt."
@@ -4520,12 +4439,6 @@ msgstr "Contact opnemen"
 msgid "Contains this text..."
 msgstr "Bevat deze tekst..."
 
-msgid "Content"
-msgstr "Content"
-
-msgid "Content published or updated"
-msgstr "Gepubliceerde of bijgewerkte content"
-
 msgid "Context"
 msgstr "Context"
 
@@ -4534,6 +4447,9 @@ msgstr "Contextmenu"
 
 msgid "Continue"
 msgstr "Doorgaan"
+
+msgid "Continue in a new {label} chat?"
+msgstr "Doorgaan in een nieuwe {label}-chat?"
 
 msgid "Continue or fork session"
 msgstr "Sessie voortzetten of forken"
@@ -4573,9 +4489,6 @@ msgstr "Een agentsessie voortzetten vereist een vastgezette workspace"
 msgid "continuing the last session"
 msgstr "de laatste sessie voortzetten"
 
-msgid "Contraction"
-msgstr "Krimp"
-
 msgid "Contributions"
 msgstr "Bijdragen"
 
@@ -4591,20 +4504,8 @@ msgstr "Gesprek"
 msgid "Conversation · Message"
 msgstr "Gesprek · Bericht"
 
-msgid "Conversion"
-msgstr "Conversie"
-
-msgid "Conversion from previous"
-msgstr "Conversie sinds vorige"
-
-msgid "Conversion so far"
-msgstr "Conversie tot nu toe"
-
 msgid "Convert to draft"
 msgstr "Omzetten naar concept"
-
-msgid "Converted"
-msgstr "Geconverteerd"
 
 msgid "Converting to draft…"
 msgstr "Omzetten naar concept…"
@@ -5551,9 +5452,6 @@ msgstr "Inloggegevens blijven op de server"
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "Componenten die over features heen worden gebruikt en buiten packages/ui staan — kijk hier voordat je een nieuwe bouwt"
 
-msgid "CTR"
-msgstr "CTR"
-
 msgid "Ctrl+click"
 msgstr "Ctrl+klik"
 
@@ -6044,6 +5942,9 @@ msgstr "Losgekoppeld"
 msgid "Details"
 msgstr "Details"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Details zijn hier niet beschikbaar, maar de link opent nog steeds."
+
 msgid "Dev"
 msgstr "Dev"
 
@@ -6113,14 +6014,8 @@ msgstr "Grootte van diff"
 msgid "Digital Product Designer"
 msgstr "Ontwerper van digitale producten"
 
-msgid "Direct"
-msgstr "Direct"
-
 msgid "Direct mode"
 msgstr "Directe modus"
-
-msgid "Directories, blogs, newsletters, and communities that sent visitors. Search, social, GitHub, and assistants are excluded so listings and links stand out."
-msgstr "Directories, blogs, nieuwsbrieven en communities die bezoekers stuurden. Zoeken, social, GitHub en assistenten zijn uitgesloten zodat vermeldingen en links opvallen."
 
 msgid "Directory"
 msgstr "Map"
@@ -6246,14 +6141,14 @@ msgstr "Suggesties sluiten"
 msgid "Dismissed"
 msgstr "Afgewezen"
 
+msgid "dismissed their review"
+msgstr "heeft de review ingetrokken"
+
 msgid "Display"
 msgstr "Weergave"
 
 msgid "Displays the mobile sidebar."
 msgstr "Toont de mobiele zijbalk."
-
-msgid "Distribution and community"
-msgstr "Distributie en community"
 
 msgid "Do anything"
 msgstr "Doe wat je wilt"
@@ -6286,6 +6181,9 @@ msgstr "Docs"
 
 msgid "Documentation"
 msgstr "Documentatie"
+
+msgid "Don't allow"
+msgstr "Niet toestaan"
 
 msgid "Don't ask again"
 msgstr "Niet meer vragen"
@@ -6322,9 +6220,6 @@ msgstr "{name} downloaden"
 
 msgid "Download app"
 msgstr "App downloaden"
-
-msgid "Download clicks"
-msgstr "Downloadklikken"
 
 msgid "Download failed"
 msgstr "Downloaden mislukt"
@@ -6378,6 +6273,10 @@ msgstr "Downloads"
 msgid "Draft"
 msgstr "Draft"
 
+msgctxt "pull request state"
+msgid "Draft"
+msgstr "Draft"
+
 msgid "Draft · file"
 msgstr "Concept · bestand"
 
@@ -6390,9 +6289,6 @@ msgstr "Draft geopend"
 
 msgid "drafted 3 support replies"
 msgstr "3 supportantwoorden opgesteld"
-
-msgid "Drag to move"
-msgstr "Sleep om te verplaatsen"
 
 msgid "Drag to reorder"
 msgstr "Sleep om te herordenen"
@@ -6427,12 +6323,6 @@ msgstr "Sleep hierheen om vast te zetten"
 msgid "Drop to unpin"
 msgstr "Sleep hierheen om los te maken"
 
-msgid "Drop-off from previous"
-msgstr "Uitval sinds vorige"
-
-msgid "Drop-off from start"
-msgstr "Uitval sinds start"
-
 msgid "dropdown"
 msgstr "dropdown"
 
@@ -6441,9 +6331,6 @@ msgstr "Dropdownmenu"
 
 msgid "Dropdown, context, and application menus"
 msgstr "Dropdown-, context- en applicatiemenu's"
-
-msgid "Dropped off"
-msgstr "Uitgevallen"
 
 msgid "Duration"
 msgstr "Duur"
@@ -6703,12 +6590,6 @@ msgstr "Voer URL in..."
 msgid "Enterprise"
 msgstr "Enterprise"
 
-msgid "Enterprise ARR by account"
-msgstr "Enterprise-ARR per account"
-
-msgid "Entries by section"
-msgstr "Instappen per sectie"
-
 msgid "Environment"
 msgstr "Omgeving"
 
@@ -6878,9 +6759,6 @@ msgstr "Spraak uitvouwen"
 
 msgid "Expand workspace"
 msgstr "Werkruimte uitklappen"
-
-msgid "Expansion"
-msgstr "Uitbreiding"
 
 msgid "Experimental"
 msgstr "Experimenteel"
@@ -7165,9 +7043,6 @@ msgstr "Laden van branches mislukt"
 msgid "Failed to load file"
 msgstr "Laden van bestand mislukt"
 
-msgid "Failed to load funnel data"
-msgstr "Laden van funnelgegevens mislukt"
-
 msgid "Failed to load image"
 msgstr "Laden van afbeelding mislukt"
 
@@ -7363,10 +7238,6 @@ msgstr "Instellen van kleur mislukt"
 msgid "Failed to set icon"
 msgstr "Instellen van icoon mislukt"
 
-#. placeholder {0}: error.message
-msgid "Failed to set password: {0}"
-msgstr "Wachtwoord instellen mislukt: {0}"
-
 msgid "Failed to sign in. Please try again."
 msgstr "Inloggen mislukt. Probeer het opnieuw."
 
@@ -7450,6 +7321,9 @@ msgstr "Mislukt"
 
 msgid "FAQ"
 msgstr "FAQ"
+
+msgid "Fast"
+msgstr "Snel"
 
 msgid "Fatal"
 msgstr "Fatal"
@@ -7652,12 +7526,6 @@ msgstr "Voltooid"
 msgid "finished · worked for 7s"
 msgstr "klaar · 7s gewerkt"
 
-msgid "First sign-in view → auth → onboarding → real workspace (last 7d, 2d window)"
-msgstr "Eerste weergave inlogscherm → auth → onboarding → echte werkruimte (laatste 7d, venster van 2d)"
-
-msgid "First-ever pageview on superset.sh, daily"
-msgstr "Allereerste paginaweergave op superset.sh, dagelijks"
-
 msgid "Fix all failing checks"
 msgstr "Alle mislukte checks fixen"
 
@@ -7763,6 +7631,9 @@ msgstr "Tekengrootte"
 msgid "Font weight"
 msgstr "Tekendikte"
 
+msgid "For a project, open the importer to link it."
+msgstr "Open voor een project de importer om het te koppelen."
+
 msgid "For bug reports and feature requests, the fastest path is a GitHub issue at <0>github.com/superset-sh/superset</0>. Our community lives on <1>Discord</1>, and we post updates on <2>X (@superset_sh)</2> and <3>LinkedIn</3>."
 msgstr "Voor bugmeldingen en featureverzoeken is een GitHub-issue op <0>github.com/superset-sh/superset</0> de snelste route. Onze community zit op <1>Discord</1> en we plaatsen updates op <2>X (@superset_sh)</2> en <3>LinkedIn</3>."
 
@@ -7841,8 +7712,8 @@ msgstr "Sessie forken"
 msgid "Fork session…"
 msgstr "Sessie forken…"
 
-msgid "Forks"
-msgstr "Forks"
+msgid "Fork to new chat"
+msgstr "Forken naar nieuwe chat"
 
 msgid "Form controls and field composition"
 msgstr "Formulierbesturing en veldsamenstelling"
@@ -7882,12 +7753,6 @@ msgstr "vanaf {price}/gebruiker/mnd"
 
 msgid "From a hackathon project to the workspace for parallel coding agents."
 msgstr "Van hackathonproject tot de werkplek voor parallelle coding agents."
-
-msgid "From a visit to a download to an account to a paying organization."
-msgstr "Van een bezoek naar een download, naar een account, naar een betalende organisatie."
-
-msgid "From the public sitemap: compare pages, posts, and changelog entries by the week they were published or last revised."
-msgstr "Uit de openbare sitemap: vergelijkingspagina's, posts en changelog-items per week waarin ze zijn gepubliceerd of voor het laatst herzien."
 
 msgid "Front matter hidden — switch to Markdown to edit it"
 msgstr "Front matter verborgen — schakel over naar Markdown om die te bewerken"
@@ -8045,9 +7910,6 @@ msgstr "GitHub heeft de inloggegevens van deze machine geweigerd, dus pull reque
 msgid "GitHub sign-in needed"
 msgstr "Aanmelden bij GitHub vereist"
 
-msgid "GitHub stars"
-msgstr "GitHub-sterren"
-
 msgid "GitHub sync requires the Pro plan."
 msgstr "GitHub-synchronisatie vereist het Pro-abonnement."
 
@@ -8114,8 +7976,8 @@ msgstr "Naar werkruimte"
 msgid "Google did not grant lasting access. Remove Superset from your Google account's third-party access and try again."
 msgstr "Google heeft geen blijvende toegang verleend. Verwijder Superset uit de externe toegang van je Google-account en probeer het opnieuw."
 
-msgid "Google Search Console"
-msgstr "Google Search Console"
+msgid "Got it"
+msgstr "Begrepen"
 
 msgid "Grant the OS permissions Superset needs."
 msgstr "Geef Superset de OS-rechten die het nodig heeft."
@@ -8143,9 +8005,6 @@ msgstr "Groeperen op"
 
 msgid "Group new branches under a folder."
 msgstr "Groepeer nieuwe branches onder een map."
-
-msgid "Growth"
-msgstr "Groei"
 
 msgid "GTM & AI Automation Architect, Mistral AI"
 msgstr "Architect GTM en AI-automatisering, Mistral AI"
@@ -8438,9 +8297,6 @@ msgstr "Hoeveel verborgen terminals volledig geladen blijven ({MIN_TERMINAL_PARK
 msgid "How much agent work engineers are actually running — tokens, cost, models and sessions, published by people who opted in."
 msgstr "Hoeveel agentwerk engineers daadwerkelijk draaien — tokens, kosten, modellen en sessies, gepubliceerd door mensen die zich hebben aangemeld."
 
-msgid "How people reach superset.sh and the docs, and how much of it is search and assistants rather than the brand."
-msgstr "Hoe mensen superset.sh en de docs bereiken, en hoeveel daarvan zoeken en assistenten is in plaats van het merk."
-
 msgid "How should the agent's actions be approved?"
 msgstr "Hoe moeten de acties van de agent worden goedgekeurd?"
 
@@ -8617,6 +8473,9 @@ msgstr "Importeren uit bestand"
 msgid "Import from v1"
 msgstr "Importeren uit v1"
 
+msgid "Import puts a worktree on a new branch at its current commit, so it can come over. Your files do not change."
+msgstr "Importeren zet een worktree op een nieuwe branch op zijn huidige commit, zodat hij kan worden overgezet. Je bestanden veranderen niet."
+
 msgid "Import settings from another browser"
 msgstr "Instellingen importeren uit een andere browser"
 
@@ -8657,9 +8516,6 @@ msgstr "Importeren..."
 
 msgid "Importing…"
 msgstr "Importeren…"
-
-msgid "Impressions"
-msgstr "Vertoningen"
 
 msgid "Improve the agent instructions"
 msgstr "De agentinstructies verbeteren"
@@ -8804,6 +8660,9 @@ msgstr "{0} inspecteren"
 msgid "Install"
 msgstr "Installeren"
 
+msgid "Install {pluginLabel}?"
+msgstr "{pluginLabel} installeren?"
+
 msgid "Install & restart"
 msgstr "Installeren en herstarten"
 
@@ -8859,8 +8718,8 @@ msgstr "Geïnstalleerd via"
 msgid "Installing..."
 msgstr "Installeren..."
 
-msgid "Installs"
-msgstr "Installaties"
+msgid "Installs Superset on a machine you can reach with ssh, signs Superset in to your account, and keeps it running as a service."
+msgstr "Installeert Superset op een machine die je via ssh bereikt, meldt Superset aan bij je account en houdt Superset actief als service."
 
 msgid "Instructions"
 msgstr "Instructies"
@@ -8990,6 +8849,13 @@ msgstr "Is er een gratis plan?"
 
 msgid "Isolation"
 msgstr "Isolatie"
+
+msgid "Issue"
+msgstr "Issue"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Issue #{0}"
 
 msgid "Issue archived"
 msgstr "Issue gearchiveerd"
@@ -9619,6 +9485,9 @@ msgstr "Bestanden laden..."
 msgid "Loading fonts..."
 msgstr "Lettertypen laden..."
 
+msgid "Loading GitHub details"
+msgstr "GitHub-details laden"
+
 msgid "Loading groups…"
 msgstr "Groepen laden…"
 
@@ -9717,12 +9586,6 @@ msgstr "logins overgeslagen (toegang tot Sleutelhanger geweigerd)"
 
 msgid "Logo"
 msgstr "Logo"
-
-msgid "logo retention"
-msgstr "logoretentie"
-
-msgid "Logo retention — monthly"
-msgstr "Logoretentie — maandelijks"
 
 msgid "Logo updated"
 msgstr "Logo bijgewerkt"
@@ -9942,9 +9805,6 @@ msgstr "MCP-server"
 msgid "MCP Server Commands"
 msgstr "MCP-servercommando's"
 
-msgid "Mean"
-msgstr "Gemiddelde"
-
 msgid "Measured over the trailing 30 days"
 msgstr "Gemeten over de laatste 30 dagen"
 
@@ -9960,9 +9820,6 @@ msgstr "Mediakit"
 
 msgid "Median ticket-to-production time under one day for routine work."
 msgstr "Mediane tijd van ticket tot productie onder één dag voor routinewerk."
-
-msgid "Median time from previous"
-msgstr "Mediane tijd sinds vorige"
 
 msgid "Medical and dental at no cost to you, a 401(k), unlimited time off, a $5K desk stipend, and free meals in the office."
 msgstr "Gratis medische en tandartsverzekering, een 401(k), onbeperkt vrij, een bureaubudget van $5K en gratis maaltijden op kantoor."
@@ -10047,6 +9904,10 @@ msgstr "Mergestatus onbekend"
 msgid "Merged"
 msgstr "Gemerged"
 
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Gemerged"
+
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Gemerged door {0}"
@@ -10111,9 +9972,6 @@ msgstr "GitHub-issues minimaliseren"
 
 msgid "Minimum contrast"
 msgstr "Minimumcontrast"
-
-msgid "Mirror of the <0>PostHog Success Metrics dashboard</0> — product via saved insights, business live from Stripe/Neon"
-msgstr "Spiegel van het <0>PostHog Success Metrics-dashboard</0> — product via opgeslagen insights, business live uit Stripe/Neon"
 
 msgid "missed"
 msgstr "gemist"
@@ -10203,9 +10061,6 @@ msgstr "Monospace"
 msgid "Month"
 msgstr "Maand"
 
-msgid "Month {offset}"
-msgstr "Maand {offset}"
-
 msgid "monthly"
 msgstr "maandelijks"
 
@@ -10214,12 +10069,6 @@ msgstr "Maandelijks"
 
 msgid "Monthly at {time}"
 msgstr "Maandelijks om {time}"
-
-msgid "monthly NRR"
-msgstr "maandelijkse NRR"
-
-msgid "monthly NRR (month so far)"
-msgstr "maandelijkse NRR (deze maand tot nu toe)"
 
 msgid "Monthly on {day}"
 msgstr "Maandelijks op {day}"
@@ -10292,15 +10141,6 @@ msgstr "Naar rechts verplaatsen"
 
 msgid "Move to Tab"
 msgstr "Verplaatsen naar tabblad"
-
-msgid "MRR"
-msgstr "MRR"
-
-msgid "MRR — daily (Stripe)"
-msgstr "MRR — dagelijks (Stripe)"
-
-msgid "MRR from customers paying at the end of the prior month, as a share of what they paid then: expansion and contraction net of churn, new customers excluded"
-msgstr "MRR van klanten die eind vorige maand betaalden, als aandeel van wat ze toen betaalden: uitbreiding en krimp na aftrek van opzeggingen, zonder nieuwe klanten"
 
 msgid "Multi-select"
 msgstr "Meerdere keuzes"
@@ -10419,15 +10259,6 @@ msgstr "Wacht op jou"
 msgid "Nerd Fonts"
 msgstr "Nerd Fonts"
 
-msgid "net burn"
-msgstr "netto burn"
-
-msgid "Net burn — monthly (Mercury)"
-msgstr "Netto burn — maandelijks (Mercury)"
-
-msgid "Net revenue retention — monthly (Stripe)"
-msgstr "Netto-omzetbehoud — maandelijks (Stripe)"
-
 msgid "Network Changed"
 msgstr "Netwerk gewijzigd"
 
@@ -10446,9 +10277,6 @@ msgstr "Nieuw"
 
 msgid "New {providerLabel} agents will use {accountLabel}."
 msgstr "Nieuwe {providerLabel}-agents gebruiken {accountLabel}."
-
-msgid "New accounts"
-msgstr "Nieuwe accounts"
 
 msgid "New agent"
 msgstr "Nieuwe agent"
@@ -10501,9 +10329,6 @@ msgstr "Nieuwe issue"
 msgid "New page"
 msgstr "Nieuwe pagina"
 
-msgid "New password (min 8 characters)"
-msgstr "Nieuw wachtwoord (min. 8 tekens)"
-
 msgid "New project"
 msgstr "Nieuw project"
 
@@ -10534,9 +10359,6 @@ msgstr "Nieuw tabblad + panelen"
 msgid "New task"
 msgstr "Nieuwe taak"
 
-msgid "New teams"
-msgstr "Nieuwe teams"
-
 msgid "New terminal"
 msgstr "Nieuwe terminal"
 
@@ -10558,14 +10380,8 @@ msgstr "Nieuwe werkruimte"
 msgid "New Workspace ({shortcutText})"
 msgstr "Nieuwe werkruimte ({shortcutText})"
 
-msgid "new workspace creators"
-msgstr "nieuwe makers van werkruimtes"
-
 msgid "New workspace in {name}"
 msgstr "Nieuwe werkruimte in {name}"
-
-msgid "New-user activation"
-msgstr "Activatie van nieuwe gebruikers"
 
 msgid "Newer than this app"
 msgstr "Nieuwer dan deze app"
@@ -10584,6 +10400,9 @@ msgstr "Nieuws, updates en inzichten van het Superset-team over parallelle codin
 
 msgid "Next"
 msgstr "Volgende"
+
+msgid "Next (Enter)"
+msgstr "Volgende (Enter)"
 
 msgid "Next branch"
 msgstr "Volgende branch"
@@ -10640,9 +10459,6 @@ msgstr "Geen {0}-logins op deze host — log in en het gebruik verschijnt hier."
 
 msgid "No access to this host"
 msgstr "Geen toegang tot deze host"
-
-msgid "No active enterprise accounts"
-msgstr "Geen actieve enterprise-accounts"
 
 msgid "No active host"
 msgstr "Geen actieve host"
@@ -10783,9 +10599,6 @@ msgstr "Geen contributors gevonden."
 msgid "No credit card required."
 msgstr "Geen creditcard nodig."
 
-msgid "No data"
-msgstr "Geen gegevens"
-
 msgid "No description"
 msgstr "Geen beschrijving"
 
@@ -10833,9 +10646,6 @@ msgstr "Geen bestanden komen overeen met je zoekopdracht"
 
 msgid "No fonts found."
 msgstr "Geen lettertypen gevonden."
-
-msgid "No funnel data available for this period"
-msgstr "Geen funnelgegevens beschikbaar voor deze periode"
 
 msgid "No git remote detected"
 msgstr "Geen git-remote gedetecteerd"
@@ -11069,9 +10879,6 @@ msgstr "Geen resultaten voor “{query}”"
 msgid "No results found."
 msgstr "Geen resultaten gevonden."
 
-msgid "No review body."
-msgstr "Geen reviewtekst."
-
 msgid "No Reviewers Assigned"
 msgstr "Geen reviewers toegewezen"
 
@@ -11231,12 +11038,6 @@ msgstr "Nog niemand in je team heeft automatiseringen gedeeld."
 msgid "Nobody reviews differently because of it."
 msgstr "Niemand reviewt er anders door."
 
-msgid "non-brand"
-msgstr "niet-merk"
-
-msgid "Non-brand clicks"
-msgstr "Niet-merkklikken"
-
 msgid "None"
 msgstr "Geen"
 
@@ -11276,14 +11077,8 @@ msgstr "Niet verbonden"
 msgid "Not connected · cloud workspaces push as your organization's GitHub App"
 msgstr "Niet gekoppeld · cloudwerkruimtes pushen als de GitHub App van je organisatie"
 
-msgid "Not connected: {unavailableReason}. Add a Google service account to the Search Console property and set GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT."
-msgstr "Niet verbonden: {unavailableReason}. Voeg een Google-serviceaccount toe aan de Search Console-property en stel GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT in."
-
 msgid "Not demoed here"
 msgstr "Hier niet gedemonstreerd"
-
-msgid "Not every client emits {gaps} yet, so that stage is under-counted."
-msgstr "Nog niet elke client verstuurt {gaps}, dus die stap wordt ondergeteld."
 
 msgid "Not found"
 msgstr "Niet gevonden"
@@ -11518,9 +11313,6 @@ msgstr "online"
 msgid "Online"
 msgstr "Online"
 
-msgid "Online now"
-msgstr "Nu online"
-
 msgid "Online Now"
 msgstr "Nu online"
 
@@ -11604,6 +11396,10 @@ msgstr "openen"
 
 msgid "Open"
 msgstr "Openen"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Open"
 
 msgctxt "status"
 msgid "Open"
@@ -11719,6 +11515,9 @@ msgstr "Openen vanuit map"
 msgid "Open full screen"
 msgstr "Openen op volledig scherm"
 
+msgid "Open host"
+msgstr "Host openen"
+
 msgid "Open importer"
 msgstr "Importer openen"
 
@@ -11804,11 +11603,11 @@ msgstr "Openen in nieuw tabblad"
 msgid "Open in New Tab"
 msgstr "Openen in nieuw tabblad"
 
-msgid "Open in PostHog"
-msgstr "Openen in PostHog"
-
 msgid "Open in Pull Requests"
 msgstr "Openen in Pull requests"
+
+msgid "Open in right pane"
+msgstr "Openen in rechterpaneel"
 
 msgid "Open in Scira AI"
 msgstr "Openen in Scira AI"
@@ -12073,8 +11872,8 @@ msgstr "Oranje"
 msgid "Orchestrate Parallel Agents"
 msgstr "Parallelle agents orkestreren"
 
-msgid "Orchestrate Them All."
-msgstr "Orkestreer ze allemaal."
+msgid "Orchestrate Them All"
+msgstr "Orkestreer ze allemaal"
 
 msgid "Orchestrated"
 msgstr "Georkestreerd"
@@ -12084,12 +11883,6 @@ msgstr "Orkestratiechat"
 
 msgid "Orchestration guide"
 msgstr "Orkestratiegids"
-
-msgid "Organic search"
-msgstr "Organisch zoeken"
-
-msgid "Organic search by engine"
-msgstr "Organisch zoeken per zoekmachine"
 
 msgid "Organization"
 msgstr "Organisatie"
@@ -12134,9 +11927,6 @@ msgstr "URL van organisatie bijgewerkt!"
 msgid "Organization: <0>{0}</0>"
 msgstr "Organisatie: <0>{0}</0>"
 
-msgid "Organizations with a second member vs single-member accounts; the line is teams per 1,000."
-msgstr "Organisaties met een tweede lid versus accounts met één lid; de lijn is teams per 1.000."
-
 msgid "Organize your work into teams. Tasks and integrations can sync per-team."
 msgstr "Organiseer je werk in teams. Taken en integraties kunnen per team synchroniseren."
 
@@ -12178,9 +11968,6 @@ msgstr "Uitkomst erin, software eruit. Mensen specificeren intentie, randvoorwaa
 
 msgid "Outdated"
 msgstr "Verouderd"
-
-msgid "Outflows less Stripe payouts per month (treasury sweeps excluded); current month partial"
-msgstr "Uitstroom minus Stripe-uitbetalingen per maand (treasury-sweeps uitgesloten); huidige maand onvolledig"
 
 msgid "Outline"
 msgstr "Outline"
@@ -12267,9 +12054,6 @@ msgstr "Rate limiting voor paginarapportages is niet geconfigureerd"
 msgid "Page title"
 msgstr "Paginatitel"
 
-msgid "Page views"
-msgstr "Paginaweergaven"
-
 msgid "Pages"
 msgstr "Pagina's"
 
@@ -12278,9 +12062,6 @@ msgstr "Pagina's konden niet worden geladen"
 
 msgid "Pages open in a grid, and floating keyboards work. Requires iPadOS 26 or later."
 msgstr "Pages openen in een raster en zwevende toetsenborden werken. Vereist iPadOS 26 of later."
-
-msgid "Pages sessions started on, with the share that left without a second page. The compare pages are the SEO surface."
-msgstr "Pagina's waarop sessies begonnen, met het aandeel dat vertrok zonder een tweede pagina. De vergelijkingspagina's zijn het SEO-oppervlak."
 
 msgid "Pages that save answers"
 msgstr "Pagina's die antwoorden opslaan"
@@ -12293,15 +12074,6 @@ msgstr "paginering"
 
 msgid "Pagination"
 msgstr "Paginering"
-
-msgid "Paid"
-msgstr "Betaald"
-
-msgid "Paid churn — cohort survival"
-msgstr "Betaalde churn — cohortoverleving"
-
-msgid "Paid search"
-msgstr "Betaald zoeken"
 
 msgid "Paid work trial"
 msgstr "Betaalde proefweek"
@@ -12372,9 +12144,6 @@ msgstr "Wachtwoord"
 msgid "Password for {email}"
 msgstr "Wachtwoord voor {email}"
 
-msgid "Password set"
-msgstr "Wachtwoord ingesteld"
-
 msgid "Past month"
 msgstr "Afgelopen maand"
 
@@ -12430,9 +12199,6 @@ msgstr "Betaalmethode"
 msgid "Payment Successful"
 msgstr "Betaling geslaagd"
 
-msgid "Paywall → paid"
-msgstr "Paywall → betaald"
-
 msgid "PDF"
 msgstr "PDF"
 
@@ -12444,9 +12210,6 @@ msgstr "Openstaande uitnodigingen"
 
 msgid "People"
 msgstr "Personen"
-
-msgid "People whose first paywall view was in the last {PAYWALL_FUNNEL_WEEKS} weeks, and how far they got. A stage counts anyone who reached it after that view, so recent cohorts are still maturing."
-msgstr "Personen die de paywall voor het eerst zagen in de afgelopen {PAYWALL_FUNNEL_WEEKS} weken, en hoe ver ze kwamen. Een stap telt iedereen die deze na die weergave bereikte, dus recente cohorten zijn nog niet volgroeid."
 
 msgid "People with access"
 msgstr "Personen met toegang"
@@ -12581,6 +12344,9 @@ msgstr "Vastgezet"
 msgid "PK"
 msgstr "PK"
 
+msgid "Plain text"
+msgstr "Platte tekst"
+
 msgid "Plan"
 msgstr "Plan"
 
@@ -12691,9 +12457,6 @@ msgstr "Poorten in dropdown in de bovenbalk"
 msgid "Ports on remote hosts"
 msgstr "Poorten op externe hosts"
 
-msgid "Position"
-msgstr "Positie"
-
 msgid "Possible on good days. Supervision cost still grows too fast."
 msgstr "Mogelijk op goede dagen. De kosten van toezicht groeien nog te snel."
 
@@ -12703,8 +12466,15 @@ msgstr "Posten"
 msgid "Post comment"
 msgstr "Opmerking plaatsen"
 
+msgid "Post reply"
+msgstr "Antwoord plaatsen"
+
 msgid "PR"
 msgstr "PR"
+
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
 
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
@@ -12825,6 +12595,9 @@ msgstr "Voorbeeld: GitHub-sterherinnering"
 
 msgid "Previous"
 msgstr "Vorige"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Vorige (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Vorige branch"
@@ -13160,9 +12933,6 @@ msgstr "Zet terugkerend werk op een schema of laat het starten door een gebeurte
 msgid "px"
 msgstr "px"
 
-msgid "Query"
-msgstr "Zoekopdracht"
-
 msgid "Query events and feature flags"
 msgstr "Bevraag events en feature flags"
 
@@ -13266,9 +13036,6 @@ msgstr "Bereik deze Mac van overal via de Superset-relay, of start cloudwerkruim
 msgid "Reached"
 msgstr "Bereikt"
 
-msgid "Reached a dashboard page"
-msgstr "Dashboardpagina bereikt"
-
 msgid "React layer of the shared pane/workspace layout engine"
 msgstr "React-laag van de gedeelde lay-outengine voor panelen/werkruimtes"
 
@@ -13347,9 +13114,6 @@ msgstr "Klaar om te mergen"
 
 msgid "Ready to try Superset?"
 msgstr "Klaar om Superset te proberen?"
-
-msgid "Real workspaces on 2+ distinct days within week 1 of first workspace (retention-validated definition)"
-msgstr "Echte werkruimtes op 2+ verschillende dagen binnen week 1 na de eerste werkruimte (retentie-gevalideerde definitie)"
 
 msgid "Reapply all commits"
 msgstr "Alle commits opnieuw toepassen"
@@ -13447,9 +13211,6 @@ msgstr "Genoemd, niet gedemonstreerd"
 msgid "References"
 msgstr "Verwijst naar"
 
-msgid "Referral"
-msgstr "Verwijzing"
-
 msgid "Refresh"
 msgstr "Vernieuwen"
 
@@ -13497,9 +13258,6 @@ msgstr "Herstart draaiende agents om ze te wisselen."
 
 msgid "Relay access enabled, connecting to the relay…"
 msgstr "Relaytoegang ingeschakeld, verbinden met de relay…"
-
-msgid "Release"
-msgstr "Release"
 
 msgid "Release control"
 msgstr "Besturing loslaten"
@@ -13766,6 +13524,9 @@ msgstr "Antwoorden"
 msgid "Reply to thread…"
 msgstr "Reageren op thread…"
 
+msgid "Replying to {replyingTo}"
+msgstr "Antwoord aan {replyingTo}"
+
 msgid "repo"
 msgstr "repo"
 
@@ -13807,9 +13568,6 @@ msgstr "Repository's: {label}"
 
 msgid "Repository"
 msgstr "Repository"
-
-msgid "Repository reach and desktop release downloads. Installs are dmg and AppImage downloads; updates are the zip the auto-updater pulls, so they count existing users."
-msgstr "Bereik van de repository en downloads van desktopreleases. Installaties zijn dmg- en AppImage-downloads; updates zijn de zip die de auto-updater ophaalt, dus die tellen bestaande gebruikers."
 
 msgid "Repository URL or path"
 msgstr "Repository-URL of pad"
@@ -13861,9 +13619,6 @@ msgstr "Editor resetten"
 
 msgid "Reset GitHub star nag state"
 msgstr "Status van GitHub-sterherinnering resetten"
-
-msgid "Reset layout"
-msgstr "Indeling herstellen"
 
 msgid "Reset location"
 msgstr "Locatie resetten"
@@ -14035,9 +13790,6 @@ msgstr "Plan herstellen"
 msgid "restore the agent defaults"
 msgstr "de standaardwaarden van de agent herstellen"
 
-msgid "Restore the workspace you just archived"
-msgstr "De werkruimte herstellen die je net hebt gearchiveerd"
-
 msgid "Restore this version?"
 msgstr "Deze versie herstellen?"
 
@@ -14090,12 +13842,6 @@ msgstr "{0} hervatten…"
 msgid "Resuming the conversation…"
 msgstr "Gesprek wordt hervat…"
 
-msgid "Retained MRR"
-msgstr "Behouden MRR"
-
-msgid "Retention and revenue"
-msgstr "Retentie en omzet"
-
 msgid "Retry"
 msgstr "Opnieuw"
 
@@ -14140,9 +13886,6 @@ msgstr "Tonen in zijbalk"
 
 msgid "Reveal my rank"
 msgstr "Mijn positie tonen"
-
-msgid "Revenue first, then how many people are actually using it, then what it costs to run."
-msgstr "Eerst de omzet, dan hoeveel mensen het echt gebruiken, dan wat het kost om te draaien."
 
 msgid "Review"
 msgstr "Review"
@@ -14240,6 +13983,9 @@ msgstr "Uitgebreide invoer ({hotkeyText})"
 
 msgid "Rich input for the terminal"
 msgstr "Uitgebreide invoer voor de terminal"
+
+msgid "right pane"
+msgstr "rechterpaneel"
 
 msgid "Right-click here"
 msgstr "Klik hier met rechts"
@@ -14513,9 +14259,6 @@ msgstr "Opslaan..."
 msgid "Saving…"
 msgstr "Opslaan…"
 
-msgid "Saw the paywall"
-msgstr "Zag de paywall"
-
 msgid "Scale to 100+ agents"
 msgstr "Schaal op naar meer dan 100 agents"
 
@@ -14673,9 +14416,6 @@ msgstr "GitHub-issues zoeken…"
 
 msgid "Search history"
 msgstr "Geschiedenis doorzoeken"
-
-msgid "Search impressions and clicks for the last 28 days, with queries split into our brand, Apache Superset (not us), and everything else. Non-brand is the share SEO work exists to grow. Google delivers this data three days late."
-msgstr "Zoekvertoningen en klikken van de laatste 28 dagen, met zoekopdrachten gesplitst in ons merk, Apache Superset (niet wij) en al het andere. Niet-merk is het aandeel dat SEO-werk moet laten groeien. Google levert deze data drie dagen te laat."
 
 msgid "Search in {frameTitle}…"
 msgstr "Zoeken in {frameTitle}…"
@@ -15079,10 +14819,6 @@ msgstr "Sentry-triggers stoppen tot je opnieuw verbindt. De integratie blijft in
 msgid "Separator"
 msgstr "Separator"
 
-#. placeholder {0}: i + 1
-msgid "series {0}"
-msgstr "reeks {0}"
-
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "De beschikbaarheid van de dienst staat op <0>status.superset.sh</0> en documentatie over security en compliance op <1>trust.superset.sh</1>."
 
@@ -15135,12 +14871,6 @@ msgstr "Groepskleur instellen"
 msgid "Set icon to {0}"
 msgstr "Icoon instellen op {0}"
 
-msgid "Set password"
-msgstr "Wachtwoord instellen"
-
-msgid "Set Password"
-msgstr "Wachtwoord instellen"
-
 msgid "Set project…"
 msgstr "Project instellen…"
 
@@ -15157,6 +14887,9 @@ msgstr "Instellen"
 msgid "Set up {0}"
 msgstr "{0} instellen"
 
+msgid "Set up a host over SSH"
+msgstr "Host instellen via SSH"
+
 msgid "Set up an automation"
 msgstr "Stel een automatisering in"
 
@@ -15171,10 +14904,6 @@ msgstr "Dit project instellen voor Superset"
 
 msgid "Set up your organization to get started"
 msgstr "Stel je organisatie in om te beginnen"
-
-#. placeholder {0}: user.email
-msgid "Sets an email+password credential for <0>{0}</0> via Better Auth (hashed with scrypt). Existing sign-in methods keep working."
-msgstr "Stelt via Better Auth een e-mail+wachtwoord-inlog in voor <0>{0}</0> (gehasht met scrypt). Bestaande inlogmethoden blijven werken."
 
 msgid "Setting saved"
 msgstr "Instelling opgeslagen"
@@ -15202,6 +14931,9 @@ msgstr "Setup"
 
 msgid "Setup script"
 msgstr "Setup-script"
+
+msgid "Setup stopped. The reason is in the output below."
+msgstr "Instellen is gestopt. De reden staat in de uitvoer hieronder."
 
 msgid "Sexual content"
 msgstr "Seksuele inhoud"
@@ -15545,17 +15277,8 @@ msgstr "Sites waarop je bent ingelogd"
 msgid "Signing in..."
 msgstr "Inloggen..."
 
-msgid "signup → paid ≤30d"
-msgstr "aanmelding → betaald ≤30d"
-
-msgid "Signup → paid within 30d"
-msgstr "Aanmelding → betaald binnen 30d"
-
 msgid "Signup works. The welcome screen loads and the console is clean."
 msgstr "Aanmelden werkt. Het welkomstscherm laadt en de console is schoon."
-
-msgid "signups"
-msgstr "aanmeldingen"
 
 msgid "Simple pricing for every team"
 msgstr "Eenvoudige prijzen voor elk team"
@@ -15580,9 +15303,6 @@ msgstr "Eén tabblad + panelen"
 
 msgid "Single-select"
 msgstr "Eén keuze"
-
-msgid "Site"
-msgstr "Site"
 
 msgid "Site-wide telemetry · {range}"
 msgstr "Telemetrie sitebreed · {range}"
@@ -15680,9 +15400,6 @@ msgstr "SOC 2 Type II-compliant. Vraag ons rapport aan."
 msgid "SOC 2 Type II report"
 msgstr "SOC 2 Type II-rapport"
 
-msgid "Social"
-msgstr "Social"
-
 msgid "Some files are not an accepted type and were not added."
 msgstr "Sommige bestanden hebben geen toegestaan type en zijn niet toegevoegd."
 
@@ -15704,6 +15421,12 @@ msgstr "Sommige thema's zijn overgeslagen"
 
 msgid "Some triggers need additional configuration"
 msgstr "Sommige triggers hebben extra configuratie nodig"
+
+msgid "Some v1 items did not come over"
+msgstr "Sommige v1-items zijn niet overgezet"
+
+msgid "Some v1 work needs your attention"
+msgstr "Een deel van je v1-werk vraagt aandacht"
 
 msgid "Someone"
 msgstr "Iemand"
@@ -15865,6 +15588,9 @@ msgstr "Squashen en mergen"
 msgid "SS"
 msgstr "SS"
 
+msgid "SSH destination"
+msgstr "SSH-bestemming"
+
 msgid "SSO/SAML"
 msgstr "SSO/SAML"
 
@@ -15986,10 +15712,6 @@ msgstr "Begin gratis. Upgrade wanneer je team eruit groeit. Enterprise-plannen v
 msgid "Start from a template"
 msgstr "Beginnen met een sjabloon"
 
-#. placeholder {0}: datum.customers
-msgid "Start MRR ({0} customers)"
-msgstr "Start-MRR ({0} klanten)"
-
 msgid "Start new session"
 msgstr "Nieuwe sessie starten"
 
@@ -16010,9 +15732,6 @@ msgstr "Begin overal met werken"
 
 msgid "Started"
 msgstr "Gestart"
-
-msgid "Started checkout"
-msgstr "Startte het afrekenen"
 
 msgid "starting"
 msgstr "starten"
@@ -16082,9 +15801,6 @@ msgstr "Bijsturen"
 msgid "Step {0} of 2"
 msgstr "Stap {0} van 2"
 
-msgid "Step {step}: {name}"
-msgstr "Stap {step}: {name}"
-
 msgid "Steps 3 and 4 repeat at every scheduled time."
 msgstr "Stap 3 en 4 herhalen zich op elk gepland tijdstip."
 
@@ -16150,16 +15866,6 @@ msgstr "Doorhalen"
 msgid "Strip redundant overrides at call sites"
 msgstr "Overbodige overrides bij aanroepplekken verwijderen"
 
-#. placeholder {0}: formatDateTime(new Date(series.dataThrough), TIMESTAMP_FORMAT)
-msgid "Stripe data through {0}"
-msgstr "Stripe-gegevens t/m {0}"
-
-msgid "Stripe revenue"
-msgstr "Stripe-omzet"
-
-msgid "Stripe's own Sigma MRR report, computed on demand via the Query Run API"
-msgstr "Stripe's eigen Sigma MRR-rapport, on demand berekend via de Query Run API"
-
 msgid "Structure, scrolling, and overflow handling"
 msgstr "Structuur, scrollen en overflow-afhandeling"
 
@@ -16192,9 +15898,6 @@ msgstr "Rate limiting voor het insturen van prompts is niet geconfigureerd"
 
 msgid "Submitting…"
 msgstr "Insturen…"
-
-msgid "Subs"
-msgstr "Abo's"
 
 msgid "SUBSCRIBE"
 msgstr "ABONNEER"
@@ -16256,9 +15959,6 @@ msgstr "Superset"
 msgid "Superset (YC S26) is the open-source IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
 msgstr "Superset (YC S26) is de open-source IDE voor het tijdperk van AI-agents, waarin engineers honderden codeeragents zoals Claude Code en Codex parallel draaien."
 
-msgid "Superset | Company Dashboard"
-msgstr "Superset | Bedrijfsdashboard"
-
 msgid "Superset Agent"
 msgstr "Superset Agent"
 
@@ -16285,6 +15985,9 @@ msgstr "Superset-componenten"
 
 msgid "Superset Components"
 msgstr "Superset-componenten"
+
+msgid "Superset could not bring over some of your v1 projects or workspaces. Open the importer to see why and retry each one."
+msgstr "Superset kon sommige van je v1-projecten of -workspaces niet overzetten. Open de importer om te zien waarom en probeer elk item opnieuw."
 
 msgid "Superset could not complete sign-in. Please try again."
 msgstr "Superset kon het inloggen niet voltooien. Probeer het opnieuw."
@@ -16346,6 +16049,9 @@ msgstr "Superset wordt gebouwd in Superset, dus we zijn zelf onze belangrijkste 
 msgid "Superset is designed to work with your existing tool, we natively support deep-linking to IDEs like Cursor so you can open your workspaces and files in your IDE."
 msgstr "Superset is gemaakt om samen te werken met je bestaande tool; we ondersteunen deeplinks naar IDE's zoals Cursor, zodat je je werkruimtes en bestanden in je IDE kunt openen."
 
+msgid "Superset is getting a new name soon"
+msgstr "Superset krijgt binnenkort een nieuwe naam"
+
 msgid "Superset is open source. If it's helped you today, a GitHub star helps other developers find it."
 msgstr "Superset is open source. Als het je vandaag geholpen heeft, helpt een GitHub-ster andere ontwikkelaars het te vinden."
 
@@ -16381,9 +16087,6 @@ msgstr "Code-diff in Superset Mobile op iPhone"
 
 msgid "Superset mobile gives me the power of my desktop anywhere I go."
 msgstr "Superset mobile geeft me de kracht van mijn desktop, waar ik ook ga."
-
-msgid "Superset Mobile is here"
-msgstr "Superset Mobile is er"
 
 msgid "Superset Mobile is part of Pro"
 msgstr "Superset Mobile hoort bij Pro"
@@ -16744,17 +16447,8 @@ msgstr "Teaminstellingen"
 msgid "Teammates pin feedback to the exact part of the page they mean."
 msgstr "Teamgenoten pinnen feedback op precies het deel van de pagina dat ze bedoelen."
 
-msgid "teams"
-msgstr "teams"
-
 msgid "Teams"
 msgstr "Teams"
-
-msgid "teams per 1,000 organizations"
-msgstr "teams per 1.000 organisaties"
-
-msgid "Teams vs individual accounts (Neon)"
-msgstr "Teams versus individuele accounts (Neon)"
 
 msgid "Teardown"
 msgstr "Teardown"
@@ -17054,6 +16748,9 @@ msgstr "De host was na vijftien minuten nog niet terug."
 msgid "The host hasn't answered."
 msgstr "De host heeft niet geantwoord."
 
+msgid "The host is online. Pick it when you create a workspace."
+msgstr "De host is online. Kies hem wanneer je een werkruimte aanmaakt."
+
 msgid "The host isn't connected to the Superset relay. If it's this device, turn on \"Allow remote access to this device via relay\" in Settings > Remote Access, then try again."
 msgstr "De host is niet verbonden met de Superset-relay. Als het dit apparaat is, zet dan \"Externe toegang via de relay toegang geven tot dit apparaat\" aan bij Instellingen > Externe toegang en probeer het opnieuw."
 
@@ -17212,9 +16909,6 @@ msgstr "De Superset-hostservice voor {organization} is onverwacht gestopt ({caus
 msgid "The Superset host service stopped unexpectedly ({cause}) and could not be restarted automatically."
 msgstr "De Superset-hostservice is onverwacht gestopt ({cause}) en kon niet automatisch opnieuw worden gestart."
 
-msgid "The surfaces outside the site that carry the product: the repository, releases, and Discord."
-msgstr "De plekken buiten de site die het product dragen: de repository, releases en Discord."
-
 msgid "the target host"
 msgstr "de doelhost"
 
@@ -17268,6 +16962,9 @@ msgstr "Thema's en agents"
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Deze commando's draaien automatisch wanneer een werkruimte wordt aangemaakt. <0>Lees onze docs<1/></0>"
+
+msgid "These folders still have your files, but they did not come over to the new Superset on their own."
+msgstr "Deze mappen bevatten nog je bestanden, maar zijn niet vanzelf naar het nieuwe Superset overgezet."
 
 msgid "These ports are still in use"
 msgstr "Deze poorten zijn nog in gebruik"
@@ -17564,6 +17261,9 @@ msgstr "Deze thread heeft geen opmerking om op te reageren."
 msgid "This thread is not open to agents. A person has to comment on it before an agent can reply."
 msgstr "Deze thread is niet aan een agent overgedragen. Iemand moet hem eerst vanaf de pagina overdragen."
 
+msgid "This update restarted your terminals once. New ones open in the same folders."
+msgstr "Deze update heeft je terminals eenmalig opnieuw gestart. Nieuwe openen in dezelfde mappen."
+
 msgid "This user runs the host service for this device and can't be removed."
 msgstr "Deze gebruiker draait de hostservice voor dit apparaat en kan niet worden verwijderd."
 
@@ -17661,9 +17361,6 @@ msgstr "Tier"
 msgid "Time"
 msgstr "Tijd"
 
-msgid "Time range"
-msgstr "Periode"
-
 msgid "Times use your time zone."
 msgstr "Tijden gebruiken je tijdzone."
 
@@ -17675,6 +17372,12 @@ msgstr "Titel"
 
 msgid "To"
 msgstr "Naar"
+
+msgid "To resume an agent conversation, run this in its folder:"
+msgstr "Voer dit uit in de map om een agentgesprek te hervatten:"
+
+msgid "To resume another agent conversation, run this in its folder:"
+msgstr "Voer dit uit in de map om een ander agentgesprek te hervatten:"
 
 msgid "Toast (Sonner)"
 msgstr "Toast (Sonner)"
@@ -17817,14 +17520,8 @@ msgstr "Tooltip aan"
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
 
-msgid "Top landing pages, last {dayCount} days"
-msgstr "Top landingspagina's, laatste {dayCount} dagen"
-
 msgid "Top models"
 msgstr "Topmodellen"
-
-msgid "Top referring sites, last {dayCount} days"
-msgstr "Top verwijzende sites, laatste {dayCount} dagen"
 
 msgid "Top tier. Nothing left to clear."
 msgstr "Hoogste niveau. Er valt niets meer te halen."
@@ -17840,9 +17537,6 @@ msgstr "Totaal aantal agent-sessies"
 
 msgid "Total automations"
 msgstr "Totaal automatiseringen"
-
-msgid "total cash"
-msgstr "totale cash"
 
 msgid "Total cost"
 msgstr "Totale kosten"
@@ -17939,9 +17633,6 @@ msgstr "Probeer het"
 
 msgid "Try now"
 msgstr "Nu proberen"
-
-msgid "Try Superset v2"
-msgstr "Probeer Superset v2"
 
 msgid "Tufte"
 msgstr "Tufte"
@@ -18063,12 +17754,6 @@ msgstr "Onbewaakte runs van 8 uur of langer slagen bij een meerderheid van de ro
 msgid "Unavailable"
 msgstr "Niet beschikbaar"
 
-msgid "Unavailable: {unavailableReason}"
-msgstr "Niet beschikbaar: {unavailableReason}"
-
-msgid "unbilled"
-msgstr "niet gefactureerd"
-
 msgid "Uncached input"
 msgstr "Niet-gecachete input"
 
@@ -18093,8 +17778,8 @@ msgstr "Gaande"
 msgid "Undo"
 msgstr "Ongedaan maken"
 
-msgid "Undo Archive"
-msgstr "Archiveren ongedaan maken"
+msgid "Undo the last archived workspace or closed chats"
+msgstr "Laatst gearchiveerde werkruimte of gesloten chats ongedaan maken"
 
 msgid "Ungroup"
 msgstr "Groepering opheffen"
@@ -18110,15 +17795,6 @@ msgstr "Verwijderen mislukt"
 
 msgid "Unique"
 msgstr "Uniek"
-
-msgid "Unique users creating a real workspace per calendar week; current week dashed"
-msgstr "Unieke gebruikers die per kalenderweek een echte werkruimte aanmaken; huidige week gestippeld"
-
-msgid "Unique users creating a real workspace, daily"
-msgstr "Unieke gebruikers die dagelijks een echte werkruimte aanmaken"
-
-msgid "Unique visitors starting a session on superset.sh or the docs each week, by how they arrived. AI assistants means a link inside ChatGPT, Claude, Gemini, or Perplexity."
-msgstr "Unieke bezoekers die elke week een sessie starten op superset.sh of de docs, naar herkomst. AI-assistenten betekent een link in ChatGPT, Claude, Gemini of Perplexity."
 
 msgid "unknown"
 msgstr "onbekend"
@@ -18315,6 +17991,10 @@ msgstr "de branchprefix bijwerken"
 msgid "Updated"
 msgstr "Bijgewerkt"
 
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "Bijgewerkt {0}"
+
 msgid "Updated {date}"
 msgstr "Bijgewerkt {date}"
 
@@ -18434,11 +18114,11 @@ msgstr "Gebruik Superset op je telefoon met Pro."
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "Gebruik de desktop-app om parallelle coding agents te draaien."
 
-msgid "Use the new workspace experience."
-msgstr "Gebruik de nieuwe werkruimte-ervaring."
-
 msgid "Use the Superset tray menu > Host Service > Restart, then retry."
 msgstr "Gebruik het Superset-menu in de menubalk > Hostservice > Opnieuw starten en probeer het opnieuw."
+
+msgid "Use this account"
+msgstr "Dit account gebruiken"
 
 msgid "Use this folder"
 msgstr "Deze map gebruiken"
@@ -18490,6 +18170,9 @@ msgstr "Gebruiker niet gevonden"
 
 msgid "user@example.com"
 msgstr "gebruiker@voorbeeld.com"
+
+msgid "user@host, ssh://user@host:2222, or an ssh config alias"
+msgstr "gebruiker@host, ssh://gebruiker@host:2222 of een alias uit je ssh-configuratie"
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "Willekeurige branchnaam gebruikt (AI-generatie duurde te lang)"
@@ -18635,18 +18318,6 @@ msgstr "Gebruik bekijken"
 msgid "Violence or harassment"
 msgstr "Geweld of intimidatie"
 
-msgid "Visitors"
-msgstr "Bezoekers"
-
-msgid "Visitors by channel"
-msgstr "Bezoekers per kanaal"
-
-msgid "Visitors to downloads to accounts"
-msgstr "Van bezoekers naar downloads naar accounts"
-
-msgid "Visitors whose session began on a link an assistant gave them. This is the number an AEO effort should move."
-msgstr "Bezoekers van wie de sessie begon op een link die een assistent gaf. Dit is het getal dat een AEO-inspanning moet bewegen."
-
 msgid "Voice"
 msgstr "Spraak"
 
@@ -18688,9 +18359,6 @@ msgstr "Wachten op het eerste bericht van de subagent…"
 msgid "Waiting for your input"
 msgstr "Wacht op je invoer"
 
-msgid "Waitlist signups"
-msgstr "Wachtlijstaanmeldingen"
-
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Wil je iets eerder zien? <0>Laat het weten in Discord</0>. Veel van wat hier staat begon als gebruikersverzoek."
 
@@ -18705,9 +18373,6 @@ msgstr "Bekijk hoe een designreview van opmerking naar nieuwe versie gaat."
 
 msgid "Watch the Superset Automations video on YouTube"
 msgstr "Bekijk de Superset Automations-video op YouTube"
-
-msgid "Watchers"
-msgstr "Watchers"
 
 msgid "Wayfinding and disclosure"
 msgstr "Wegwijs worden en informatie ontvouwen"
@@ -18802,13 +18467,6 @@ msgstr "Website"
 msgid "Week"
 msgstr "Week"
 
-msgid "Week {week}"
-msgstr "Week {week}"
-
-#. placeholder {0}: formatDay(data?.weeks[last] ?? "")
-msgid "week of {0}"
-msgstr "week van {0}"
-
 msgid "Week of {formatted}"
 msgstr "Week van {formatted}"
 
@@ -18839,26 +18497,8 @@ msgstr "Wekelijks"
 msgid "Weekly at {time}"
 msgstr "Wekelijks om {time}"
 
-msgid "Weekly cohorts by first real workspace; % returning with another workspace each week"
-msgstr "Wekelijkse cohorten op basis van eerste echte werkruimte; % dat elke week terugkeert met nog een werkruimte"
-
-msgid "Weekly p50/p90 real workspaces per creator; current week dashed"
-msgstr "Wekelijkse p50/p90 echte werkruimtes per maker; huidige week gestippeld"
-
-msgid "Weekly pageview → download conversion, Mac visitors; current week dashed"
-msgstr "Wekelijkse conversie paginaweergave → download, Mac-bezoekers; huidige week gestippeld"
-
 msgid "Weekly release notes"
 msgstr "Wekelijkse release notes"
-
-msgid "Weekly signup cohorts (Neon); cohorts younger than 30d excluded"
-msgstr "Wekelijkse aanmeldcohorten (Neon); cohorten jonger dan 30d uitgesloten"
-
-msgid "Weekly site visitors (PostHog sessions), people who clicked download, accounts created (Neon, company emails excluded), and teams: organizations that gained their second member that week. Rates are for the last complete week."
-msgstr "Wekelijkse sitebezoekers (PostHog-sessies), mensen die op downloaden klikten, aangemaakte accounts (Neon, bedrijfsmails uitgesloten) en teams: organisaties die die week hun tweede lid kregen. Percentages gelden voor de laatste volledige week."
-
-msgid "Weekly visitors arriving from a search results page. Search Console below says which queries they typed."
-msgstr "Wekelijkse bezoekers vanaf een zoekresultatenpagina. Search Console hieronder laat zien welke zoekopdrachten ze typten."
 
 msgid "Welcome back"
 msgstr "Welkom terug"
@@ -18883,9 +18523,6 @@ msgstr "Wat wil je doen?"
 
 msgid "What early users say"
 msgstr "Wat de eerste gebruikers zeggen"
-
-msgid "What Google shows us for and how much of it is not our own name."
-msgstr "Waarvoor Google ons toont en hoeveel daarvan niet onze eigen naam is."
 
 msgid "What has to become true"
 msgstr "Wat waar moet worden"
@@ -18919,9 +18556,6 @@ msgstr "Wat gaan we hierna bouwen?"
 
 msgid "What Superset is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Wat Superset is, wie het bouwt en voor wie het bedoeld is. Een team uit San Francisco onder leiding van drie ex-YC-CTO's dat de werkruimte voor parallelle coding agents bouwt."
-
-msgid "What the content is doing: which pages sessions start on, and how much is being published."
-msgstr "Wat de content doet: op welke pagina's sessies beginnen en hoeveel er wordt gepubliceerd."
 
 msgid "What these were written against is no longer on the page, so they have no pin."
 msgstr "Waar deze op sloegen staat niet meer op de pagina, dus ze hebben geen markering."
@@ -18971,9 +18605,6 @@ msgstr "Waar draait mijn code?"
 msgid "Where serious teams are"
 msgstr "Waar serieuze teams staan"
 
-msgid "Where sessions begin: the home page, a compare page, the docs, a post, or a changelog entry. Content that ranks shows up here before it shows up in signups."
-msgstr "Waar sessies beginnen: de homepage, een vergelijkingspagina, de docs, een post of een changelog-item. Content die rankt verschijnt hier voordat ze in aanmeldingen verschijnt."
-
 msgid "Where the industry is, honestly"
 msgstr "Waar de sector staat, eerlijk gezegd"
 
@@ -18986,9 +18617,6 @@ msgstr "Waar dit terminalscript beschikbaar is."
 msgid "Where to look next"
 msgstr "Waar je verder kunt kijken"
 
-msgid "Whether the people acquired stay and what they pay."
-msgstr "Of de geworven mensen blijven en wat ze betalen."
-
 msgid "Which agents are supported?"
 msgstr "Welke agents worden ondersteund?"
 
@@ -19000,9 +18628,6 @@ msgstr "Wie deze pagina via de link kan openen"
 
 msgid "Who can open this workspace"
 msgstr "Wie deze werkruimte kan openen"
-
-msgid "Whole site"
-msgstr "Hele site"
 
 msgid "Whole Task"
 msgstr "Hele taak"
@@ -19183,17 +18808,11 @@ msgstr "Instellingen van werkruimte"
 msgid "Workspace worktree not available"
 msgstr "Worktree van werkruimte niet beschikbaar"
 
-msgid "workspaces"
-msgstr "werkruimtes"
-
 msgid "Workspaces"
 msgstr "Werkruimtes"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Werkruimtes zijn geïsoleerde taakomgevingen op basis van git-worktrees."
-
-msgid "Workspaces created per user in the last 7 days, by percentile"
-msgstr "Aangemaakte werkruimtes per gebruiker in de laatste 7 dagen, per percentiel"
 
 msgid "Workspaces on this device will show up here."
 msgstr "Werkruimtes op dit apparaat verschijnen hier."
@@ -19237,6 +18856,9 @@ msgstr "Worktrees worden van de schijf verwijderd; werkruimtes op de checkout va
 msgid "Would you like to reassign it?"
 msgstr "Wil je hem opnieuw toewijzen?"
 
+msgid "Wrap lines"
+msgstr "Regels afbreken"
+
 msgid "Write a comment"
 msgstr "Schrijf een reactie"
 
@@ -19248,6 +18870,9 @@ msgstr "Schrijf een notitie en kies een agent. Je notitie komt aan met de code v
 
 msgid "Write a prompt and pick a schedule. Each run opens a workspace you can review and continue."
 msgstr "Schrijf een prompt en kies een schema. Elke run opent een werkruimte die je kunt beoordelen en voortzetten."
+
+msgid "Write a reply"
+msgstr "Schrijf een antwoord"
 
 msgid "Write a reply…"
 msgstr "Schrijf een antwoord…"
@@ -19530,12 +19155,18 @@ msgstr "Je teamgenoten kunnen rechtstreeks met je agent praten."
 msgid "Your terminal sessions won't be interrupted."
 msgstr "Je terminalsessies worden niet onderbroken."
 
+msgid "Your terminals restarted"
+msgstr "Je terminals zijn opnieuw gestart"
+
 #. placeholder {0}: String(gaps.length)
 msgid "Your tier is a weighted score across the {0} axes measured for you, so a strong axis offsets a weak one. The axes below are the ones lagging."
 msgstr "Je niveau is een gewogen score over de {0} assen die voor jou gemeten zijn, dus een sterke as compenseert een zwakke. De assen hieronder blijven achter."
 
 msgid "Your tokens"
 msgstr "Je tokens"
+
+msgid "Your v1 projects and workspaces are moving to the new Superset. They appear in the sidebar as each one is ready."
+msgstr "Je v1-projecten en -workspaces worden overgezet naar het nieuwe Superset. Ze verschijnen in de zijbalk zodra elk ervan klaar is."
 
 msgid "Your version: {currentVersion}"
 msgstr "Jouw versie: {currentVersion}"

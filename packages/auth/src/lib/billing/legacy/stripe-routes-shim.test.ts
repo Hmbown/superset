@@ -196,6 +196,8 @@ describe("upgrade", () => {
 				cancel_url: WEB,
 				allow_promotion_codes: true,
 				billing_address_collection: "required",
+				tax_id_collection: { enabled: true },
+				customer_update: { name: "auto", address: "auto" },
 				metadata: { organizationId: ORG, initiatedByUserId: "user_1" },
 				subscription_data: {
 					metadata: { organizationId: ORG, userId: "user_1" },

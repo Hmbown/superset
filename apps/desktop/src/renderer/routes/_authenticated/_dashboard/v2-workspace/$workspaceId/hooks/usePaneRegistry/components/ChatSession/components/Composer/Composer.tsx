@@ -38,6 +38,7 @@ import { elementsForChips } from "../../utils/messageElements";
 import { type AgentSwitcher, ModelPicker } from "./components/ModelPicker";
 import { ModePicker, type SessionMode } from "./components/ModePicker";
 import { QueuedPrompts } from "./components/QueuedPrompts";
+import { useAttachmentPreview } from "./hooks/useAttachmentPreview";
 import {
 	takeRecoveredDraftText,
 	useComposerDraft,
@@ -119,6 +120,7 @@ export const Composer = memo(function Composer({
 	const trpcUtils = workspaceTrpc.useUtils();
 	const cloudUtils = cloudTrpc.useUtils();
 	const uploadAttachments = useUploadAttachments(workspaceId);
+	const attachmentPreview = useAttachmentPreview();
 	const { storedDraft, onChange, clearDraft } = useComposerDraft(draftKey);
 	const promptInputRef = useRef<PromptInputHandle>(null);
 	const queueActions = useQueueActions(promptQueue, promptInputRef);
@@ -351,6 +353,7 @@ export const Composer = memo(function Composer({
 				history={history}
 				key={draftKey}
 				mentionProviders={mentionProviders}
+				onAttachmentClick={attachmentPreview.onAttachmentClick}
 				onChange={onChange}
 				onStop={onCancelTurn ?? undefined}
 				onSubmit={handleSubmit}
@@ -362,24 +365,25 @@ export const Composer = memo(function Composer({
 				status={onCancelTurn ? "streaming" : "ready"}
 				submitWhileStreaming={promptQueue !== undefined}
 				toolbar={
-					<div className="flex min-w-0 items-center gap-1">
-						{configOptions && onSetConfigOption ? (
-							<ModelPicker
-								agentSwitcher={agentSwitcher}
-								configOptions={configOptions}
-								onSelect={onSetConfigOption}
-							/>
-						) : null}
-						{modes && onSetMode ? (
-							<ModePicker
-								currentModeId={currentModeId}
-								modes={modes}
-								onSelect={onSetMode}
-							/>
-						) : null}
-					</div>
+					modes && onSetMode ? (
+						<ModePicker
+							currentModeId={currentModeId}
+							modes={modes}
+							onSelect={onSetMode}
+						/>
+					) : undefined
+				}
+				toolbarEnd={
+					configOptions && onSetConfigOption ? (
+						<ModelPicker
+							agentSwitcher={agentSwitcher}
+							configOptions={configOptions}
+							onSelect={onSetConfigOption}
+						/>
+					) : undefined
 				}
 			/>
+			{attachmentPreview.overlay}
 		</div>
 	);
 });
