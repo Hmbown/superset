@@ -22,6 +22,8 @@ export type SupersetConfig = {
 		accessToken: string;
 		refreshToken?: string;
 		expiresAt: number;
+		/** Set while a refresh may have reached the server without its result being stored. */
+		refreshStartedAt?: number;
 	};
 	apiKey?: string;
 	organizationId?: string;

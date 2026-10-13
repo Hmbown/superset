@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import { join } from "node:path";
-import { refreshAccessToken } from "./auth";
+import { refreshAccessToken, TokenRefreshHttpError } from "./auth";
 import {
 	AUTH_REFRESH_LEEWAY_MS,
 	readConfig,
@@ -11,13 +11,12 @@ import {
 import { getSupersetHomeDir } from "./settings/paths";
 
 /**
- * The token endpoint rotates the refresh token on every call: the old one is
- * revoked, and sending a revoked one again is treated as theft, revoking
- * every token the user holds for this client (GH #8426). Several CLI
- * processes run at once as a matter of course here, so the refresh must
- * behave as if the whole machine were one client: take a lock, re-read the
- * config in case another process already renewed, and only then spend the
- * stored refresh token.
+ * The token endpoint rotates the refresh token on every call. Sending a
+ * rotated token again is treated as theft and revokes every token the user
+ * holds for this client (GH #8426), unless it comes within the server's reuse
+ * grace window (REFRESH_REUSE_GRACE_MS in packages/auth). So the machine
+ * refreshes as one client: one process at a time, under a lock, and a
+ * refresh whose outcome is unknown is retried only inside that window.
  */
 export interface RefreshDeps {
 	refresh: (refreshToken: string) => Promise<{
@@ -28,11 +27,14 @@ export interface RefreshDeps {
 	readConfig: () => SupersetConfig;
 	writeConfig: (config: SupersetConfig) => void;
 	lockPath: string;
-	/** A lock older than this belongs to a dead process and may be taken over. */
+	/** A lock not touched for this long belongs to a dead process. */
 	lockStaleMs: number;
-	/** How long to wait for another process before proceeding without the lock. */
+	lockHeartbeatMs: number;
+	/** How long to wait for a live holder before giving up on this command. */
 	lockTimeoutMs: number;
 	pollMs: number;
+	/** How long after an unknown outcome the stored token may still be sent. Must stay below the server's grace window. */
+	retryWindowMs: number;
 	now: () => number;
 	sleep: (ms: number) => Promise<void>;
 }
@@ -43,21 +45,31 @@ export function defaultRefreshDeps(): RefreshDeps {
 		readConfig,
 		writeConfig,
 		lockPath: join(getSupersetHomeDir(), "auth-refresh.lock"),
-		// Three times the bounded refresh call (REFRESH_TIMEOUT_MS), so a
-		// live holder can never be mistaken for a dead one; the wait budget
-		// exceeds the stale threshold so a waiter outlives one takeover.
-		lockStaleMs: 30_000,
-		lockTimeoutMs: 45_000,
+		lockStaleMs: 5_000,
+		lockHeartbeatMs: 1_000,
+		lockTimeoutMs: 75_000,
 		pollMs: 25,
+		retryWindowMs: 5 * 60 * 1000,
 		now: () => Date.now(),
 		sleep: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
 	};
 }
 
-/** A live holder outlasted the wait budget; the command should retry, not re-login. */
 export class RefreshInProgressError extends Error {
 	constructor() {
 		super("session refresh still in progress elsewhere");
+	}
+}
+
+export class SessionExpiredError extends Error {
+	constructor() {
+		super("session expired");
+	}
+}
+
+export class ServerUnreachableError extends Error {
+	constructor(cause: unknown) {
+		super("could not reach the server", { cause });
 	}
 }
 
@@ -70,8 +82,7 @@ export function isAuthFresh(
 
 /**
  * Renews the stored OAuth tokens, coordinating with every other CLI process
- * on this machine. Returns the config holding a usable access token. Throws
- * when the session is genuinely gone and the user must log in again.
+ * on this machine. Returns the config holding a usable access token.
  */
 export async function refreshStoredAuth(
 	deps: RefreshDeps = defaultRefreshDeps(),
@@ -80,53 +91,76 @@ export async function refreshStoredAuth(
 	try {
 		const latest = deps.readConfig();
 		const auth = latest.auth;
-		// Whoever held the lock before us may have done the work already.
 		if (auth && isAuthFresh(auth, deps.now())) return latest;
-		if (!auth?.refreshToken) throw new Error("session expired");
-		if (lock.state === "timed-out") {
-			// A live holder outlasted the whole wait budget. Spending the
-			// stored token beside it is the exact race this module exists to
-			// prevent, so fail this one command instead; the holder's own
-			// outcome lands in the config for the next invocation.
-			throw new RefreshInProgressError();
+		if (!auth?.refreshToken) throw new SessionExpiredError();
+		if (lock.state === "timed-out") throw new RefreshInProgressError();
+
+		const startedAt = auth.refreshStartedAt ?? deps.now();
+		if (deps.now() - startedAt > deps.retryWindowMs) {
+			deps.writeConfig(
+				withAuth(latest, {
+					...auth,
+					refreshToken: undefined,
+					refreshStartedAt: undefined,
+				}),
+			);
+			throw new SessionExpiredError();
 		}
-		// Consume the token from disk before spending it. A refresh the
-		// client aborts or crashes out of is ambiguous: the server may have
-		// rotated anyway, and replaying the old token later reads as theft
-		// and revokes the user's tokens on every machine. Worst case of
-		// consuming first is one re-login on this machine.
-		deps.writeConfig({
-			...latest,
-			auth: { ...auth, refreshToken: undefined },
-		});
+		deps.writeConfig(
+			withAuth(latest, { ...auth, refreshStartedAt: startedAt }),
+		);
+
 		let refreshed: Awaited<ReturnType<RefreshDeps["refresh"]>>;
 		try {
 			refreshed = await deps.refresh(auth.refreshToken);
 		} catch (error) {
-			// The refresh token may have just been spent by a writer the lock
-			// could not see (an unlockable filesystem, or a non-CLI writer).
-			// A fresh token on disk means the race was lost benignly; use the
-			// winner's token instead of failing the command.
-			const rechecked = deps.readConfig();
-			if (rechecked.auth && isAuthFresh(rechecked.auth, deps.now())) {
-				return rechecked;
+			const current = deps.readConfig();
+			if (current.auth && isAuthFresh(current.auth, deps.now())) {
+				return current;
 			}
-			if (neverReachedServer(error)) deps.writeConfig(latest);
-			throw error;
+			switch (classifyFailure(error)) {
+				case "unsent":
+					deps.writeConfig(latest);
+					throw new ServerUnreachableError(error);
+				case "rejected":
+					deps.writeConfig(
+						withAuth(latest, {
+							...auth,
+							refreshToken: undefined,
+							refreshStartedAt: undefined,
+						}),
+					);
+					throw new SessionExpiredError();
+				case "unknown":
+					throw error;
+			}
 		}
-		const next: SupersetConfig = {
-			...latest,
-			auth: {
-				accessToken: refreshed.accessToken,
-				refreshToken: refreshed.refreshToken,
-				expiresAt: refreshed.expiresAt,
-			},
-		};
+
+		const current = deps.readConfig();
+		if (
+			current.auth?.refreshToken !== auth.refreshToken &&
+			current.auth &&
+			isAuthFresh(current.auth, deps.now())
+		) {
+			return current;
+		}
+		const next = withAuth(current, {
+			accessToken: refreshed.accessToken,
+			refreshToken: refreshed.refreshToken,
+			expiresAt: refreshed.expiresAt,
+		});
 		deps.writeConfig(next);
 		return next;
 	} finally {
 		lock.release();
 	}
+}
+
+function withAuth(
+	config: SupersetConfig,
+	auth: NonNullable<SupersetConfig["auth"]>,
+): SupersetConfig {
+	return { ...config, auth };
 }
 
 const UNSENT_ERROR_CODES = new Set([
@@ -136,32 +170,33 @@ const UNSENT_ERROR_CODES = new Set([
 	"EAI_AGAIN",
 ]);
 
-function neverReachedServer(error: unknown): boolean {
+function classifyFailure(error: unknown): "unsent" | "rejected" | "unknown" {
+	if (error instanceof TokenRefreshHttpError) {
+		if (error.status === 400 || error.status === 401) return "rejected";
+		if (error.status === 429) return "unsent";
+		return "unknown";
+	}
 	const { code, cause } = error as {
 		code?: unknown;
 		cause?: { code?: unknown };
 	};
-	return (
+	if (
 		UNSENT_ERROR_CODES.has(String(code)) ||
 		UNSENT_ERROR_CODES.has(String(cause?.code))
-	);
+	) {
+		return "unsent";
+	}
+	return "unknown";
 }
 
 /**
- * Exclusive-create lock file holding an ownership token. The token makes
- * release and takeover honest: release removes the lock only while it still
- * holds this acquisition's token, and a stale takeover is confirmed by
- * re-reading the renamed file; a lock that changed hands in between is
- * given back. Staleness is sound because the refresh call itself is bounded
- * (REFRESH_TIMEOUT_MS in auth.ts), so a live holder can never look dead.
- * On timeout the caller proceeds without the lock: by then the holder is
- * past every bound and blocking auth forever is worse, and the re-read
- * paths in refreshStoredAuth still cover the degraded case.
+ * Exclusive-create lock file holding an ownership token. The holder touches
+ * it every `lockHeartbeatMs`, so a lock left untouched for `lockStaleMs`
+ * belongs to a dead process however long a live refresh takes. Release and
+ * takeover check the token, so a lock that changed hands is never removed.
  */
 type AcquiredLock = {
-	/** "held" owns the lock; "unlockable" means the filesystem cannot lock at
-	 * all (then no process can, so there is nobody to race); "timed-out"
-	 * means a live holder outlasted the wait budget. */
+	/** "unlockable": the filesystem refuses locks, so no process can hold one. */
 	state: "held" | "unlockable" | "timed-out";
 	release: () => void;
 };
@@ -169,37 +204,46 @@ type AcquiredLock = {
 async function acquireLock(deps: RefreshDeps): Promise<AcquiredLock> {
 	const token = `${process.pid} ${randomUUID()}`;
 	const deadline = deps.now() + deps.lockTimeoutMs;
+	const ownsLock = () => {
+		try {
+			return fs.readFileSync(deps.lockPath, "utf-8") === token;
+		} catch {
+			return false;
+		}
+	};
 	for (;;) {
 		try {
 			const fd = fs.openSync(deps.lockPath, "wx");
 			fs.writeSync(fd, token);
 			fs.closeSync(fd);
+			const heartbeat = setInterval(() => {
+				if (!ownsLock()) return;
+				try {
+					const now = new Date();
+					fs.utimesSync(deps.lockPath, now, now);
+				} catch {}
+			}, deps.lockHeartbeatMs);
+			heartbeat.unref?.();
 			return {
 				state: "held",
 				release: () => {
+					clearInterval(heartbeat);
 					try {
-						if (fs.readFileSync(deps.lockPath, "utf-8") === token) {
-							fs.unlinkSync(deps.lockPath);
-						}
+						if (ownsLock()) fs.unlinkSync(deps.lockPath);
 					} catch {}
 				},
 			};
 		} catch (error) {
 			if ((error as NodeJS.ErrnoException).code !== "EEXIST") {
-				// The home dir is missing or the filesystem refuses locks.
-				// No other process can lock here either, so proceeding is
-				// not a race, and blocking auth would be worse.
 				return { state: "unlockable", release: () => {} };
 			}
 		}
-		// Checked before any takeover work so no error path below can spin
-		// without ever reaching the deadline.
 		if (deps.now() >= deadline) {
 			return { state: "timed-out", release: () => {} };
 		}
 		try {
 			const observed = fs.readFileSync(deps.lockPath, "utf-8");
-			const age = deps.now() - fs.statSync(deps.lockPath).mtimeMs;
+			const age = Date.now() - fs.statSync(deps.lockPath).mtimeMs;
 			if (age > deps.lockStaleMs) {
 				const corpse = `${deps.lockPath}.${randomUUID()}.stale`;
 				fs.renameSync(deps.lockPath, corpse);
@@ -207,10 +251,8 @@ async function acquireLock(deps: RefreshDeps): Promise<AcquiredLock> {
 					fs.unlinkSync(corpse);
 					continue;
 				}
-				// The lock changed hands between the read and the rename:
-				// that is a live holder, not a corpse. Give it back with a
-				// hard link, which cannot replace a lock a third process
-				// created at the path in the meantime (rename would).
+				// Changed hands between the read and the rename: give it back.
+				// A hard link cannot replace a lock created at the path since.
 				try {
 					fs.linkSync(corpse, deps.lockPath);
 				} catch {}
@@ -218,11 +260,7 @@ async function acquireLock(deps: RefreshDeps): Promise<AcquiredLock> {
 					fs.unlinkSync(corpse);
 				} catch {}
 			}
-		} catch {
-			// Holder released between open and stat, or the filesystem
-			// refused the takeover; the sleep below keeps either case from
-			// spinning hot.
-		}
+		} catch {}
 		await deps.sleep(deps.pollMs);
 	}
 }

@@ -10,6 +10,8 @@ import {
 	isAuthFresh,
 	RefreshInProgressError,
 	refreshStoredAuth,
+	ServerUnreachableError,
+	SessionExpiredError,
 } from "./oauth-refresh";
 
 export type AuthSource = "override" | "host" | "config" | "oauth" | "sandbox";
@@ -48,19 +50,10 @@ export async function resolveAuth(
 	} else if (config.auth) {
 		const auth = config.auth;
 		if (!isAuthFresh(auth, Date.now())) {
-			// Coordinated across processes: parallel commands must spend the
-			// stored refresh token at most once, or the server's rotation
-			// revokes the whole login (GH #8426).
 			try {
 				config = await refreshStoredAuth();
 			} catch (error) {
-				if (error instanceof RefreshInProgressError) {
-					throw new CLIError(
-						"Another superset command is renewing the login",
-						"Retry in a few seconds",
-					);
-				}
-				throw new CLIError("Session expired", "Run: superset auth login");
+				throw refreshFailureToCLIError(error);
 			}
 			bearer = config.auth?.accessToken;
 			if (!bearer) {
@@ -88,4 +81,26 @@ export async function resolveAuth(
 
 	const api = createApiClient({ bearer, organizationId });
 	return { config: resolvedConfig, api, bearer, authSource };
+}
+
+function refreshFailureToCLIError(error: unknown): CLIError {
+	if (error instanceof RefreshInProgressError) {
+		return new CLIError(
+			"Another superset command is renewing the login",
+			"Retry in a few seconds",
+		);
+	}
+	if (error instanceof ServerUnreachableError) {
+		return new CLIError(
+			"Could not reach Superset to renew the login",
+			"Check your connection and retry",
+		);
+	}
+	if (error instanceof SessionExpiredError) {
+		return new CLIError("Session expired", "Run: superset auth login");
+	}
+	return new CLIError(
+		"Could not renew the login",
+		"Retry in a minute. If it keeps failing, run: superset auth login",
+	);
 }

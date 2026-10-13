@@ -2,11 +2,14 @@ import { describe, expect, it } from "bun:test";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { TokenRefreshHttpError } from "./auth";
 import type { SupersetConfig } from "./config";
 import {
 	isAuthFresh,
 	type RefreshDeps,
 	refreshStoredAuth,
+	ServerUnreachableError,
+	SessionExpiredError,
 } from "./oauth-refresh";
 
 /**
@@ -37,8 +40,10 @@ function makeHarness(initialAuth: SupersetConfig["auth"]) {
 		},
 		lockPath: path.join(dir, "auth-refresh.lock"),
 		lockStaleMs: 1000,
+		lockHeartbeatMs: 10,
 		lockTimeoutMs: 500,
 		pollMs: 5,
+		retryWindowMs: 60_000,
 		now: () => Date.now(),
 		sleep: (ms) => {
 			sleepCalls += 1;
@@ -191,20 +196,105 @@ describe("refreshStoredAuth", () => {
 		}
 	});
 
-	it("consumes the refresh token from disk before spending it", async () => {
+	it("keeps the token on disk while the refresh is in flight, marked as started", async () => {
+		const h = makeHarness(staleAuth());
+		let onDisk: SupersetConfig["auth"];
+		h.deps.refresh = async () => {
+			onDisk = h.stored.auth;
+			throw new Error("killed");
+		};
+		try {
+			await expect(refreshStoredAuth(h.deps)).rejects.toThrow(/killed/);
+			expect(onDisk?.refreshToken).toBe("stale-refresh");
+			expect(onDisk?.refreshStartedAt).toBeNumber();
+			expect(h.stored.auth?.refreshStartedAt).toBe(onDisk?.refreshStartedAt);
+		} finally {
+			h.cleanup();
+		}
+	});
+
+	it("retries a refresh with an unknown outcome inside the retry window", async () => {
 		const h = makeHarness(staleAuth());
 		const realRefresh = h.deps.refresh;
-		let tokenOnDiskDuringRefresh: string | undefined = "unread";
-		h.deps.refresh = async (refreshToken) => {
-			tokenOnDiskDuringRefresh = h.stored.auth?.refreshToken;
-			return realRefresh(refreshToken);
+		h.deps.refresh = async () => {
+			throw new TokenRefreshHttpError(500);
+		};
+		try {
+			await expect(refreshStoredAuth(h.deps)).rejects.toThrow(/500/);
+			h.deps.refresh = realRefresh;
+			const result = await refreshStoredAuth(h.deps);
+			expect(result.auth?.accessToken).toBe("fresh-1");
+			expect(h.stored.auth?.refreshStartedAt).toBeUndefined();
+		} finally {
+			h.cleanup();
+		}
+	});
+
+	it("drops the token instead of sending it once an unknown outcome is older than the retry window", async () => {
+		const h = makeHarness({
+			...staleAuth(),
+			refreshStartedAt: Date.now() - 61_000,
+		});
+		try {
+			await expect(refreshStoredAuth(h.deps)).rejects.toBeInstanceOf(
+				SessionExpiredError,
+			);
+			expect(h.refreshCalls).toBe(0);
+			expect(h.stored.auth?.refreshToken).toBeUndefined();
+		} finally {
+			h.cleanup();
+		}
+	});
+
+	it("drops the token when the server rejects it", async () => {
+		const h = makeHarness(staleAuth());
+		h.deps.refresh = async () => {
+			throw new TokenRefreshHttpError(400);
+		};
+		try {
+			await expect(refreshStoredAuth(h.deps)).rejects.toBeInstanceOf(
+				SessionExpiredError,
+			);
+			expect(h.stored.auth?.refreshToken).toBeUndefined();
+		} finally {
+			h.cleanup();
+		}
+	});
+
+	it("keeps a login that was stored while the refresh was in flight", async () => {
+		const h = makeHarness(staleAuth());
+		const realRefresh = h.deps.refresh;
+		h.deps.refresh = async (token) => {
+			h.deps.writeConfig({
+				auth: {
+					accessToken: "login-access",
+					refreshToken: "login-refresh",
+					expiresAt: Date.now() + 60 * 60 * 1000,
+				},
+				organizationId: "org-from-login",
+			});
+			return realRefresh(token);
 		};
 		try {
 			const result = await refreshStoredAuth(h.deps);
-			// A crash mid-refresh must leave nothing replayable on disk.
-			expect(tokenOnDiskDuringRefresh).toBeUndefined();
-			expect(result.auth?.refreshToken).toBe("rotated-1");
-			expect(h.stored.auth?.refreshToken).toBe("rotated-1");
+			expect(result.auth?.refreshToken).toBe("login-refresh");
+			expect(h.stored.organizationId).toBe("org-from-login");
+		} finally {
+			h.cleanup();
+		}
+	});
+
+	it("a holder slower than the stale threshold keeps its lock by heartbeat", async () => {
+		const h = makeHarness(staleAuth());
+		h.deps.lockStaleMs = 40;
+		const realRefresh = h.deps.refresh;
+		h.deps.refresh = async (token) => {
+			await new Promise((resolve) => setTimeout(resolve, 150));
+			return realRefresh(token);
+		};
+		try {
+			await Promise.all([refreshStoredAuth(h.deps), refreshStoredAuth(h.deps)]);
+			expect(h.refreshCalls).toBe(1);
 		} finally {
 			h.cleanup();
 		}
@@ -218,30 +308,10 @@ describe("refreshStoredAuth", () => {
 			});
 		};
 		try {
-			await expect(refreshStoredAuth(h.deps)).rejects.toThrow(
-				/Unable to connect/,
+			await expect(refreshStoredAuth(h.deps)).rejects.toBeInstanceOf(
+				ServerUnreachableError,
 			);
 			expect(h.stored.auth?.refreshToken).toBe("stale-refresh");
-		} finally {
-			h.cleanup();
-		}
-	});
-
-	it("a failed refresh burns the token, so no later caller can replay it", async () => {
-		const h = makeHarness(staleAuth());
-		h.deps.refresh = async () => {
-			throw new Error("network down");
-		};
-		try {
-			await expect(refreshStoredAuth(h.deps)).rejects.toThrow(/network down/);
-			// An ambiguous failure may have rotated server-side; a replay of
-			// the old token would read as theft and revoke every machine.
-			// The second caller must not touch the network at all.
-			await expect(refreshStoredAuth(h.deps)).rejects.toThrow(
-				/session expired/,
-			);
-			expect(h.refreshCalls).toBe(0);
-			expect(h.sleepCalls).toBe(0);
 		} finally {
 			h.cleanup();
 		}

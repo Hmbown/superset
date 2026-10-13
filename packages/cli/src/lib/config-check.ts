@@ -42,7 +42,12 @@ function isNonEmptyString(value: unknown): value is string {
 
 // Exhaustive over the auth block for the same reason as CHECKS below.
 const AUTH_KEYS: { [K in keyof NonNullable<SupersetConfig["auth"]>]-?: true } =
-	{ accessToken: true, refreshToken: true, expiresAt: true };
+	{
+		accessToken: true,
+		refreshToken: true,
+		expiresAt: true,
+		refreshStartedAt: true,
+	};
 
 function checkAuth(value: unknown, now: number): FieldCheck {
 	if (!isPlainObject(value)) {

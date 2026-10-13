@@ -231,13 +231,16 @@ async function exchangeCodeForToken({
 }
 
 /**
- * Upper bound on one refresh round trip. The cross-process refresh lock
- * (oauth-refresh.ts) treats a lock older than its stale threshold as a dead
- * holder, so the refresh a holder runs under that lock must finish or fail
- * well inside that threshold; an unbounded fetch would make a slow network
- * look like a crashed process and get a live lock stolen.
+ * Upper bound on one refresh round trip. The refresh lock in oauth-refresh.ts
+ * stays alive by heartbeat for as long as this runs.
  */
-export const REFRESH_TIMEOUT_MS = 10_000;
+export const REFRESH_TIMEOUT_MS = 60_000;
+
+export class TokenRefreshHttpError extends CLIError {
+	constructor(readonly status: number) {
+		super(`Token refresh failed: ${status}`, LOGIN_AGAIN_SUGGESTION);
+	}
+}
 
 export async function refreshAccessToken(
 	refreshToken: string,
@@ -256,10 +259,7 @@ export async function refreshAccessToken(
 	});
 
 	if (!response.ok) {
-		throw new CLIError(
-			`Token refresh failed: ${response.status}`,
-			LOGIN_AGAIN_SUGGESTION,
-		);
+		throw new TokenRefreshHttpError(response.status);
 	}
 
 	const data = (await response.json()) as {
