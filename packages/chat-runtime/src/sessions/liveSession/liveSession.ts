@@ -52,6 +52,7 @@ export type UnfinishedSession = {
 	modelId?: string;
 	interrupted: boolean;
 	prompts: UserContent[][];
+	pausedPrompts: UserContent[][];
 };
 
 type PendingPrompt = {
@@ -80,6 +81,7 @@ export class LiveSession {
 	private pump: Promise<void> | null = null;
 	private stopped = false;
 	private heldUntilStarted: UserContent[][] = [];
+	private heldPaused: UserContent[][] = [];
 
 	constructor(private readonly options: LiveSessionOptions) {
 		this.sessionState = { status: "starting", harness: options.harness };
@@ -122,7 +124,12 @@ export class LiveSession {
 		]
 			.map((pending) => pending.content)
 			.concat(this.heldUntilStarted);
-		if (!interrupted && prompts.length === 0) return null;
+		const pausedPrompts = (this.queuePaused ? this.queue : [])
+			.map((pending) => pending.content)
+			.concat(this.heldPaused);
+		if (!interrupted && prompts.length === 0 && pausedPrompts.length === 0) {
+			return null;
+		}
 		return {
 			sessionId: this.options.sessionId,
 			scopeId: this.options.scopeId,
@@ -133,11 +140,16 @@ export class LiveSession {
 			modelId: this.sessionState.modelId,
 			interrupted,
 			prompts,
+			pausedPrompts,
 		};
 	}
 
-	promptOnceStarted(prompts: UserContent[][]): void {
+	promptOnceStarted(
+		prompts: UserContent[][],
+		pausedPrompts: UserContent[][] = [],
+	): void {
 		this.heldUntilStarted.push(...prompts);
+		this.heldPaused.push(...pausedPrompts);
 		this.releaseHeldPrompts();
 	}
 
@@ -377,10 +389,32 @@ export class LiveSession {
 
 	private releaseHeldPrompts(): void {
 		const status = this.sessionState.status;
-		if (status === "starting" || this.heldUntilStarted.length === 0) return;
+		if (status === "starting") return;
 		const held = this.heldUntilStarted.splice(0);
+		const paused = this.heldPaused.splice(0);
 		if (status === "dead") return;
 		for (const content of held) this.prompt(content, this.mintId());
+		if (paused.length > 0) this.holdPaused(paused);
+	}
+
+	private holdPaused(prompts: UserContent[][]): void {
+		for (const content of prompts) {
+			const item: UserMessage = {
+				id: this.mintId(),
+				kind: "user_message",
+				clientId: this.mintId(),
+				startedAtMs: this.now(),
+				content,
+				queued: true,
+			};
+			const turnId = this.mintId();
+			this.queue.push({ item, content, turnId, seq: ++this.sent });
+			this.appendDurable({ type: "item", item, turnId });
+		}
+		if (!this.queuePaused) {
+			this.queuePaused = true;
+			this.emitSession({ queuePaused: true });
+		}
 	}
 
 	private attributeAwaitingPrompt(turnId: string): void {

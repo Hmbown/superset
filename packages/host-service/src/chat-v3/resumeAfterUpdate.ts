@@ -1,4 +1,10 @@
-import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+	existsSync,
+	readFileSync,
+	renameSync,
+	unlinkSync,
+	writeFileSync,
+} from "node:fs";
 import { userContentSchema } from "@superset/chat/protocol";
 import type { ChatRuntime } from "@superset/chat-runtime";
 import { z } from "zod";
@@ -17,6 +23,7 @@ const sessionSchema = z.object({
 	modelId: z.string().optional(),
 	interrupted: z.boolean(),
 	prompts: z.array(z.array(userContentSchema).min(1)),
+	pausedPrompts: z.array(z.array(userContentSchema).min(1)).default([]),
 });
 
 const markerSchema = z.object({
@@ -30,13 +37,15 @@ export function recordUnfinishedChats(
 ): boolean {
 	if (!existsSync(markerPath)) return false;
 	const marker = markerSchema.safeParse(readMarker(markerPath));
+	const pending = `${markerPath}.${process.pid}.tmp`;
 	writeFileSync(
-		markerPath,
+		pending,
 		JSON.stringify({
 			requestedAt: marker.success ? marker.data.requestedAt : Date.now(),
 			sessions: runtime.live.unfinished(),
 		}),
 	);
+	renameSync(pending, markerPath);
 	return true;
 }
 
@@ -48,7 +57,9 @@ export function resumeUnfinishedChats(options: {
 }): void {
 	if (!existsSync(options.markerPath)) return;
 	const marker = markerSchema.safeParse(readMarker(options.markerPath));
-	rmSync(options.markerPath, { force: true });
+	try {
+		unlinkSync(options.markerPath);
+	} catch {}
 	if (!marker.success || !marker.data.sessions?.length) return;
 	const age = (options.now ?? Date.now()) - marker.data.requestedAt;
 	if (age > RESUME_MARKER_MAX_AGE_MS) return;

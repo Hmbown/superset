@@ -69,6 +69,7 @@ describe("resuming chats after a restart", () => {
 				terminalId: "terminal-1",
 				interrupted: true,
 				prompts: [text("second")],
+				pausedPrompts: [],
 			}),
 		]);
 		await runtime.dispose();
@@ -82,6 +83,7 @@ describe("resuming chats after a restart", () => {
 			harnessSessionId: "agent-1",
 			cwd: "/tmp/workspace",
 			prompts: [text("continue")],
+			pausedPrompts: [],
 		});
 		await waitFor(
 			() => runtime.live.get(sessionId)?.turn?.status === "running",
@@ -96,7 +98,7 @@ describe("resuming chats after a restart", () => {
 		await runtime.dispose();
 	});
 
-	test("prompts held in a paused queue are not resent", async () => {
+	test("prompts held in a paused queue come back paused", async () => {
 		const { runtime } = runtimeWithStartedAgents();
 		const { sessionId } = runtime.commands.createSession({
 			commandId: randomUUID(),
@@ -113,8 +115,33 @@ describe("resuming chats after a restart", () => {
 		await waitFor(() => live.turn?.status === "interrupted");
 
 		expect(live.queueState.paused).toBe(true);
-		expect(runtime.live.unfinished()).toEqual([]);
+		const [unfinished] = runtime.live.unfinished();
+		expect(unfinished).toMatchObject({
+			interrupted: false,
+			prompts: [],
+			pausedPrompts: [text("held")],
+		});
 		await runtime.dispose();
+
+		const after = runtimeWithStartedAgents();
+		const resumed = after.runtime.commands.resumeSession({
+			scopeId: "workspace-1",
+			harness: FAKE_HARNESS,
+			harnessSessionId: "agent-1",
+			cwd: "/tmp/workspace",
+			prompts: [],
+			pausedPrompts: unfinished?.pausedPrompts ?? [],
+		});
+		await waitFor(
+			() => after.runtime.live.get(resumed.sessionId)?.state.status === "idle",
+		);
+		const restored = after.runtime.live.require(resumed.sessionId);
+		expect(restored.queueState.paused).toBe(true);
+		expect(restored.queueState.prompts.map((p) => p.content)).toEqual([
+			text("held"),
+		]);
+		expect(restored.turn).toBeNull();
+		await after.runtime.dispose();
 	});
 
 	test("an idle chat with a command running in the background is unfinished", async () => {
@@ -161,6 +188,7 @@ describe("resuming chats after a restart", () => {
 			terminalId: "terminal-1",
 			cwd: "/tmp/workspace",
 			prompts: [text("continue")],
+			pausedPrompts: [],
 		});
 		const reattach = (harnessSessionId: string) =>
 			runtime.commands.createSession({

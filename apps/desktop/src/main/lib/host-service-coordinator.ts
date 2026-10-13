@@ -528,14 +528,14 @@ export class HostServiceCoordinator extends EventEmitter {
 	}
 
 	private markChatResume(organizationId: string): void {
+		const marker = path.join(
+			this.deps.manifestDir(organizationId),
+			HOST_CHAT_RESUME_MARKER_FILE,
+		);
+		const pending = `${marker}.${process.pid}.tmp`;
 		try {
-			fs.writeFileSync(
-				path.join(
-					this.deps.manifestDir(organizationId),
-					HOST_CHAT_RESUME_MARKER_FILE,
-				),
-				JSON.stringify({ requestedAt: Date.now() }),
-			);
+			fs.writeFileSync(pending, JSON.stringify({ requestedAt: Date.now() }));
+			fs.renameSync(pending, marker);
 		} catch (error) {
 			log.warn(
 				`[host-service:${organizationId}] could not mark chats to resume`,

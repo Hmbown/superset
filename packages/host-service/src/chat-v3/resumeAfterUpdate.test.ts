@@ -23,6 +23,7 @@ const UNFINISHED: UnfinishedSession = {
 	modeId: "default",
 	interrupted: true,
 	prompts: [[{ type: "text", text: "queued" }]],
+	pausedPrompts: [],
 };
 
 function fakeRuntime(unfinished: UnfinishedSession[]) {
@@ -73,6 +74,7 @@ describe("resuming chats after an update", () => {
 					[{ type: "text", text: CONTINUE_AFTER_UPDATE_PROMPT }],
 					[{ type: "text", text: "queued" }],
 				],
+				pausedPrompts: [],
 			},
 		]);
 		expect(existsSync(markerPath)).toBe(false);

@@ -279,7 +279,6 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 				terminalId: input.terminalId,
 				resume: { harnessSessionId: input.harnessSessionId },
 			});
-			options.live.require(created.sessionId).promptOnceStarted(input.prompts);
 			if (input.terminalId) {
 				resumedByTerminal.set(input.terminalId, {
 					sessionId: created.sessionId,
@@ -287,6 +286,9 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 					harnessSessionId: input.harnessSessionId,
 				});
 			}
+			options.live
+				.require(created.sessionId)
+				.promptOnceStarted(input.prompts, input.pausedPrompts);
 			return created;
 		},
 
