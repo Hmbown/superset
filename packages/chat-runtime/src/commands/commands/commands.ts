@@ -212,7 +212,8 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 		}
 		resumedByTerminal.delete(input.terminalId);
 		const row = options.sessions.get(resumed.sessionId);
-		if (!row || !options.live.get(resumed.sessionId)) return null;
+		const live = options.live.get(resumed.sessionId);
+		if (!row || !live || live.state.status === "dead") return null;
 		return { sessionId: resumed.sessionId, epoch: row.epoch };
 	};
 
@@ -278,8 +279,7 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 				terminalId: input.terminalId,
 				resume: { harnessSessionId: input.harnessSessionId },
 			});
-			const live = options.live.require(created.sessionId);
-			for (const content of input.prompts) live.prompt(content, randomUUID());
+			options.live.require(created.sessionId).promptOnceStarted(input.prompts);
 			if (input.terminalId) {
 				resumedByTerminal.set(input.terminalId, {
 					sessionId: created.sessionId,

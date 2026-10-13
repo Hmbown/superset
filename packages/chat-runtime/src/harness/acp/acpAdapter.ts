@@ -835,7 +835,11 @@ export class AcpAdapter implements HarnessAdapter {
 		const client = this.client;
 		if (!client || !this.sessionId) return;
 		const turnId = this.mintId();
-		this.emitTurn({ id: turnId, status: "running", startedAtMs: this.now() });
+		this.emitTurn({
+			id: turnId,
+			status: "running",
+			startedAtMs: this.nextStartMs(),
+		});
 		this.emitSession({ status: "running" });
 		try {
 			const response = await client.request("session/prompt", {

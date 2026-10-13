@@ -3,9 +3,13 @@ import { randomUUID } from "node:crypto";
 import type { SessionState, UserContent } from "@superset/chat/protocol";
 import { FakeHarness } from "../../harness/fake";
 import type { HarnessFactoryOptions, HarnessRegistry } from "../../sessions";
-import { turn } from "../../testing/fixtures";
+import { agentMessage, turn } from "../../testing/fixtures";
 import { createTestRuntime } from "../../testing/testRuntime";
-import { FAKE_HARNESS, waitFor } from "../../testing/testUtils";
+import {
+	FAKE_HARNESS,
+	journalEnvelopes,
+	waitFor,
+} from "../../testing/testUtils";
 
 const text = (value: string): UserContent[] => [{ type: "text", text: value }];
 
@@ -19,7 +23,13 @@ function runtimeWithStartedAgents(session: Partial<SessionState> = {}) {
 				return new FakeHarness({
 					start: [
 						{
+							kind: "item",
+							item: agentMessage("history", "earlier reply"),
+							turnId: "history-turn",
+						},
+						{
 							kind: "session",
+							delayMs: 5,
 							session: {
 								status: "idle",
 								harnessSessionId: "agent-1",
@@ -61,6 +71,49 @@ describe("resuming chats after a restart", () => {
 				prompts: [text("second")],
 			}),
 		]);
+		await runtime.dispose();
+	});
+
+	test("a resumed chat is prompted only after the agent reloads its history", async () => {
+		const { runtime } = runtimeWithStartedAgents();
+		const { sessionId } = runtime.commands.resumeSession({
+			scopeId: "workspace-1",
+			harness: FAKE_HARNESS,
+			harnessSessionId: "agent-1",
+			cwd: "/tmp/workspace",
+			prompts: [text("continue")],
+		});
+		await waitFor(
+			() => runtime.live.get(sessionId)?.turn?.status === "running",
+		);
+
+		const kinds = journalEnvelopes(runtime, sessionId).flatMap(({ event }) =>
+			event.type === "item" ? [event.item.kind] : [],
+		);
+		expect(kinds.indexOf("user_message")).toBeGreaterThan(
+			kinds.indexOf("agent_message"),
+		);
+		await runtime.dispose();
+	});
+
+	test("prompts held in a paused queue are not resent", async () => {
+		const { runtime } = runtimeWithStartedAgents();
+		const { sessionId } = runtime.commands.createSession({
+			commandId: randomUUID(),
+			scopeId: "workspace-1",
+			harness: FAKE_HARNESS,
+			cwd: "/tmp/workspace",
+		});
+		await waitFor(() => runtime.live.get(sessionId)?.state.status === "idle");
+		const live = runtime.live.require(sessionId);
+		live.prompt(text("first"), randomUUID());
+		await waitFor(() => live.turn?.status === "running");
+		live.prompt(text("held"), randomUUID());
+		live.cancelTurn(undefined, true);
+		await waitFor(() => live.turn?.status === "interrupted");
+
+		expect(live.queueState.paused).toBe(true);
+		expect(runtime.live.unfinished()).toEqual([]);
 		await runtime.dispose();
 	});
 

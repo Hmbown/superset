@@ -154,7 +154,10 @@ export function createChatV3Mount(options: {
 				resolveCwd: createResolveCwd(options.db),
 			}),
 		recordUnfinished: () => {
-			if (built) recordUnfinishedChats(built, markerPath);
+			if (!built || !recordUnfinishedChats(built, markerPath)) return;
+			built.live.disposeAll().catch((error: unknown) => {
+				console.warn("[chat-v3] could not stop chats for the update", error);
+			});
 		},
 		dispose: async () => {
 			const current = built;

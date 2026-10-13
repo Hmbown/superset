@@ -8,29 +8,27 @@ export const RESUME_MARKER_MAX_AGE_MS = 30 * 60_000;
 export const CONTINUE_AFTER_UPDATE_PROMPT =
 	"Superset restarted to install an update, which stopped your work before it finished, including any commands running in the background. Continue where you left off.";
 
+const sessionSchema = z.object({
+	scopeId: z.string().min(1),
+	harness: z.string().min(1),
+	harnessSessionId: z.string().min(1),
+	terminalId: z.string().min(1).optional(),
+	modeId: z.string().optional(),
+	modelId: z.string().optional(),
+	interrupted: z.boolean(),
+	prompts: z.array(z.array(userContentSchema).min(1)),
+});
+
 const markerSchema = z.object({
 	requestedAt: z.number(),
-	sessions: z
-		.array(
-			z.object({
-				scopeId: z.string().min(1),
-				harness: z.string().min(1),
-				harnessSessionId: z.string().min(1),
-				terminalId: z.string().min(1).optional(),
-				modeId: z.string().optional(),
-				modelId: z.string().optional(),
-				interrupted: z.boolean(),
-				prompts: z.array(z.array(userContentSchema).min(1)),
-			}),
-		)
-		.optional(),
+	sessions: z.array(z.unknown()).optional(),
 });
 
 export function recordUnfinishedChats(
 	runtime: ChatRuntime,
 	markerPath: string,
-): void {
-	if (!existsSync(markerPath)) return;
+): boolean {
+	if (!existsSync(markerPath)) return false;
 	const marker = markerSchema.safeParse(readMarker(markerPath));
 	writeFileSync(
 		markerPath,
@@ -39,6 +37,7 @@ export function recordUnfinishedChats(
 			sessions: runtime.live.unfinished(),
 		}),
 	);
+	return true;
 }
 
 export function resumeUnfinishedChats(options: {
@@ -55,7 +54,10 @@ export function resumeUnfinishedChats(options: {
 	if (age > RESUME_MARKER_MAX_AGE_MS) return;
 
 	const runtime = options.runtime();
-	for (const { interrupted, prompts, ...session } of marker.data.sessions) {
+	for (const entry of marker.data.sessions) {
+		const parsed = sessionSchema.safeParse(entry);
+		if (!parsed.success) continue;
+		const { interrupted, prompts, ...session } = parsed.data;
 		if (!runtime.live.supports(session.harness)) continue;
 		try {
 			runtime.commands.resumeSession({

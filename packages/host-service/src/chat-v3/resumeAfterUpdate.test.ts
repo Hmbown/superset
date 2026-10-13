@@ -78,6 +78,23 @@ describe("resuming chats after an update", () => {
 		expect(existsSync(markerPath)).toBe(false);
 	});
 
+	test("an entry that no longer parses does not stop the others", () => {
+		const markerPath = markerIn({
+			requestedAt: 1_000,
+			sessions: [{ harness: "claude-acp" }, UNFINISHED],
+		});
+		const { runtime, resumed } = fakeRuntime([]);
+
+		resumeUnfinishedChats({
+			markerPath,
+			runtime: () => runtime,
+			resolveCwd: () => "/worktree",
+			now: 2_000,
+		});
+
+		expect(resumed.map((input) => input.harnessSessionId)).toEqual(["agent-1"]);
+	});
+
 	test("a quit that was not for an update records nothing", () => {
 		const markerPath = markerIn();
 		recordUnfinishedChats(fakeRuntime([UNFINISHED]).runtime, markerPath);

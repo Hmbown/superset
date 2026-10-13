@@ -79,6 +79,7 @@ export class LiveSession {
 	private currentTurn: Turn | null = null;
 	private pump: Promise<void> | null = null;
 	private stopped = false;
+	private heldUntilStarted: UserContent[][] = [];
 
 	constructor(private readonly options: LiveSessionOptions) {
 		this.sessionState = { status: "starting", harness: options.harness };
@@ -110,15 +111,17 @@ export class LiveSession {
 
 	unfinished(): UnfinishedSession | null {
 		const harnessSessionId = this.sessionState.harnessSessionId;
-		if (!harnessSessionId) return null;
+		if (!harnessSessionId || this.sessionState.status === "dead") return null;
 		const interrupted =
 			this.currentTurn?.status === "running" ||
 			(this.sessionState.backgroundTasks?.length ?? 0) > 0;
 		const prompts = [
 			...(this.awaitingTurn ? [this.awaitingTurn] : []),
 			...this.pendingSteers,
-			...this.queue,
-		].map((pending) => pending.content);
+			...(this.queuePaused ? [] : this.queue),
+		]
+			.map((pending) => pending.content)
+			.concat(this.heldUntilStarted);
 		if (!interrupted && prompts.length === 0) return null;
 		return {
 			sessionId: this.options.sessionId,
@@ -131,6 +134,11 @@ export class LiveSession {
 			interrupted,
 			prompts,
 		};
+	}
+
+	promptOnceStarted(prompts: UserContent[][]): void {
+		this.heldUntilStarted.push(...prompts);
+		this.releaseHeldPrompts();
 	}
 
 	start(startOptions: HarnessStartOptions): void {
@@ -353,6 +361,7 @@ export class LiveSession {
 			case "session":
 				if (event.session.status === "dead") this.discardPending();
 				this.emitSession(event.session);
+				this.releaseHeldPrompts();
 				if (event.session.awaitingBackground) this.steerQueueIntoHeldTurn();
 				return;
 			case "delta":
@@ -364,6 +373,14 @@ export class LiveSession {
 				});
 				return;
 		}
+	}
+
+	private releaseHeldPrompts(): void {
+		const status = this.sessionState.status;
+		if (status === "starting" || this.heldUntilStarted.length === 0) return;
+		const held = this.heldUntilStarted.splice(0);
+		if (status === "dead") return;
+		for (const content of held) this.prompt(content, this.mintId());
 	}
 
 	private attributeAwaitingPrompt(turnId: string): void {
