@@ -46,7 +46,7 @@ Each question has a placeholder in the Decision Log.
 - [ ] M4 Over-limit experience in desktop, web, mobile, automations.
 - [x] (2026-10-13 20:30Z) M5 Plan state from Autumn in Autumn mode: `organizationBilling` (memory, Redis, last-known, fail-open) feeds `activePlan` (same fields plus optional `paymentState`), `organizationPlan`, the automations gate, the Slack gate, `beforeAddMember` and `authorizeReference`; tiers come from `pro_access`/`enterprise_access`; every sync invalidates the cache. SQL readers keep the projection. Not covered by tests: the cache tiers (Redis is module-scoped).
 - [ ] M6 Official better-auth plugin with role hook; desktop and web move to it.
-- [ ] M7 Dunning webhook, purge, import script.
+- [x] (2026-10-13 21:10Z) M7 Dunning: `handleStripeBillingEvent` (payment failed, renewal with the `"year"` fix, payment succeeded, checkout abandoned, plan changed) is the plugin's top-level `onEvent` and runs from the Autumn-mode webhook; orgs found through the Stripe customer when `referenceId` is absent. Purge settles the org's open boots, cancels through Autumn, and cancels Stripe with `invoice_now`. Import script verifies drift with `billing.verify`. Not covered by tests: `handleStripeBillingEvent` (moved code).
 - [ ] M8 Full validation, PR description, plan to `done/`.
 
 

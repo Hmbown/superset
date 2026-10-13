@@ -12,6 +12,7 @@ import {
 	syncFromStripeEvent,
 	syncOrganizationSubscription,
 } from "../autumn/projection";
+import { handleStripeBillingEvent } from "../stripe-billing-events";
 import { stripeFallback } from "./stripe-fallback";
 import type { AutumnBillingDeps } from "./stripe-routes-shim";
 
@@ -71,6 +72,7 @@ export function autumnBillingDeps(): AutumnBillingDeps {
 			if (SYNCED_STRIPE_EVENTS.has(event.type)) {
 				await syncFromStripeEvent(event);
 			}
+			await handleStripeBillingEvent(event);
 		},
 	};
 }

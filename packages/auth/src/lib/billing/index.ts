@@ -2,6 +2,7 @@ export type { OrganizationBilling, PaymentState } from "./autumn/billing-state";
 export {
 	ensureAutumnCustomer,
 	organizationForStripeCustomer,
+	paidAutumnPlanId,
 	setAutumnSeats,
 } from "./autumn/customer";
 export {
@@ -21,3 +22,4 @@ export {
 export { seatItem } from "./autumn/subscription-row";
 export { withAutumnBilling } from "./legacy/stripe-routes-shim";
 export { autumnBillingDeps } from "./legacy/stripe-routes-shim-deps";
+export { handleStripeBillingEvent } from "./stripe-billing-events";

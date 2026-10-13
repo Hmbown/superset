@@ -9,8 +9,6 @@ import * as authSchema from "@superset/db/schema/auth";
 import { seedDefaultStatuses } from "@superset/db/seed-default-statuses";
 import { MemberAddedBillingEmail } from "@superset/email/emails/billing/member-added";
 import { MemberRemovedBillingEmail } from "@superset/email/emails/billing/member-removed";
-import { PaymentFailedEmail } from "@superset/email/emails/billing/payment-failed";
-import { RenewalUpcomingEmail } from "@superset/email/emails/billing/renewal-upcoming";
 import { OrganizationInvitationEmail } from "@superset/email/emails/team/invitation";
 import { MemberAddedEmail } from "@superset/email/emails/team/member-added";
 import { MemberRemovedEmail } from "@superset/email/emails/team/member-removed";
@@ -33,12 +31,12 @@ import {
 } from "better-auth/plugins";
 import { jwt } from "better-auth/plugins/jwt";
 import { and, asc, count, desc, eq, inArray, ne, sql } from "drizzle-orm";
-import type Stripe from "stripe";
 import { billingUsesAutumn } from "./autumn";
 import { env } from "./env";
 import { acceptInvitationEndpoint } from "./lib/accept-invitation-endpoint";
 import {
 	autumnBillingDeps,
+	handleStripeBillingEvent,
 	organizationPlanFromAutumn,
 	seatItem,
 	setAutumnSeats,
@@ -49,7 +47,6 @@ import {
 	notifySubscriptionCanceled,
 	notifySubscriptionStarted,
 } from "./lib/billing/subscription-events";
-import { captureBillingEvent } from "./lib/billing-analytics";
 import { jwksAdapter } from "./lib/cached-jwks";
 import { generateMagicTokenForInvite } from "./lib/generate-magic-token";
 import { getActivationVariant } from "./lib/lifecycle";
@@ -105,26 +102,6 @@ const desktopDevOrigins =
 				`http://127.0.0.1:${desktopDevPort}`,
 			]
 		: [];
-
-/**
- * Stripe is the authority here, not our `subscriptions` row: the row is keyed
- * by organization, so an organization that resubscribed has more than one and
- * the wrong status can win. On a read failure this answers `false`, which
- * sends the mail — a duplicate notice beats swallowing a real one.
- */
-async function isStripeSubscriptionCancelled(stripeSubscriptionId: string) {
-	try {
-		const stripeSubscription =
-			await stripeClient.subscriptions.retrieve(stripeSubscriptionId);
-		return stripeSubscription.status === "canceled";
-	} catch (error) {
-		console.error(
-			"[stripe/payment-failed] Failed to read subscription status:",
-			error,
-		);
-		return false;
-	}
-}
 
 export const auth = betterAuth({
 	baseURL: env.NEXT_PUBLIC_API_URL,
@@ -1116,6 +1093,7 @@ export const auth = betterAuth({
 				stripeWebhookSecret: env.STRIPE_WEBHOOK_SECRET,
 				createCustomerOnSignUp: false,
 
+				onEvent: handleStripeBillingEvent,
 				subscription: {
 					enabled: true,
 					plans: [
@@ -1228,313 +1206,6 @@ export const auth = betterAuth({
 							stripeSubscription,
 							cancellationDetails,
 						});
-					},
-
-					onEvent: async (event: Stripe.Event) => {
-						if (event.type === "invoice.payment_failed") {
-							const invoice = event.data.object as Stripe.Invoice;
-
-							const customerId =
-								typeof invoice.customer === "string"
-									? invoice.customer
-									: invoice.customer?.id;
-
-							if (!customerId) return;
-
-							const org = await db.query.organizations.findFirst({
-								where: eq(
-									authSchema.organizations.stripeCustomerId,
-									customerId,
-								),
-							});
-
-							if (!org?.stripeCustomerId) return;
-
-							const subscription = await db.query.subscriptions.findFirst({
-								where: eq(subscriptions.referenceId, org.id),
-							});
-
-							// The invoice names the subscription this event is about, so it
-							// wins. The organization-level row is only a fallback: the lookup
-							// above is unordered and an organization that resubscribed has
-							// several, so preferring it can check — or notify Slack about —
-							// a subscription that has nothing to do with this invoice.
-							const stripeSubId =
-								(invoice.parent?.subscription_details?.subscription as
-									| string
-									| undefined) ?? subscription?.stripeSubscriptionId;
-
-							const isFinalAttempt = invoice.next_payment_attempt == null;
-							const isFirstAttempt = (invoice.attempt_count ?? 0) <= 1;
-
-							// Stripe keeps retrying the closing invoice after someone cancels,
-							// so this still fires for subscriptions that are already gone.
-							// Warning them they are about to lose access would be false, and
-							// nagging someone who already left is worse than saying nothing.
-							const alreadyCancelled = stripeSubId
-								? await isStripeSubscriptionCancelled(stripeSubId)
-								: false;
-
-							// Stripe fires this on every retry. Mailing all of them trains
-							// people to ignore the one that matters, so only the opening
-							// notice and the last-chance notice go out.
-							if (!alreadyCancelled && (isFirstAttempt || isFinalAttempt)) {
-								const recipients = await getOrganizationBillingRecipients(
-									org.id,
-								);
-								const amount = formatPrice(
-									invoice.amount_due,
-									invoice.currency,
-								);
-								const nextRetryDate = invoice.next_payment_attempt
-									? new Date(invoice.next_payment_attempt * 1000)
-									: null;
-
-								await resend.batch.send(
-									recipients.map((recipient) => ({
-										from: "Superset <noreply@superset.sh>",
-										to: recipient.email,
-										subject: isFinalAttempt
-											? `Final notice: payment failed for ${org.name}`
-											: `Payment failed for ${org.name}`,
-										react: PaymentFailedEmail({
-											recipientName: recipient.name,
-											organizationName: org.name,
-											planName: subscription?.plan ?? "Pro",
-											amount,
-											nextRetryDate,
-											// Anyone holding the link can settle a hosted invoice,
-											// so every billing recipient gets it. The old
-											// owners-only gate existed because this used to be a
-											// billing portal session, which needs ownership.
-											payInvoiceUrl: invoice.hosted_invoice_url ?? undefined,
-										}),
-									})),
-								);
-							}
-
-							if (stripeSubId) {
-								try {
-									await qstash.publishJSON({
-										url: NOTIFY_SLACK_URL,
-										body: {
-											eventType: "payment_failed",
-											stripeSubscriptionId: stripeSubId,
-											amountCents: invoice.amount_due,
-											currency: invoice.currency,
-										},
-										retries: 3,
-									});
-								} catch (error) {
-									console.error(
-										"[stripe/payment-failed] Failed to queue Slack notification:",
-										error,
-									);
-								}
-							}
-
-							await captureBillingEvent({
-								event: "payment_failed",
-								organizationId: org.id,
-								initiatedByUserId:
-									invoice.parent?.subscription_details?.metadata?.userId,
-								idempotencyKey: event.id,
-								occurredAt: new Date(event.created * 1000),
-								properties: {
-									// No money moved, so this must not be `revenue`.
-									amount_due: invoice.amount_due,
-									currency: invoice.currency,
-									attempt_count: invoice.attempt_count ?? 0,
-									is_final_attempt: isFinalAttempt,
-									already_cancelled: alreadyCancelled,
-									stripe_subscription_id: stripeSubId ?? null,
-								},
-							});
-						}
-
-						if (event.type === "invoice.upcoming") {
-							const invoice = event.data.object as Stripe.Invoice;
-
-							const customerId =
-								typeof invoice.customer === "string"
-									? invoice.customer
-									: invoice.customer?.id;
-
-							if (!customerId) return;
-
-							const stripeSubId = invoice.parent?.subscription_details
-								?.subscription as string | undefined;
-
-							if (!stripeSubId) return;
-
-							// Matched on the Stripe id, not the organization: an organization
-							// that resubscribed has several rows and the wrong one can win.
-							const subscription = await db.query.subscriptions.findFirst({
-								where: eq(subscriptions.stripeSubscriptionId, stripeSubId),
-							});
-
-							// Annual only — see RenewalUpcomingEmail for why monthly plans and
-							// seat changes are deliberately left out.
-							if (subscription?.billingInterval !== "yearly") return;
-
-							const renewsAtSeconds =
-								invoice.next_payment_attempt ?? invoice.period_end;
-
-							if (!renewsAtSeconds) return;
-
-							const org = await db.query.organizations.findFirst({
-								where: eq(
-									authSchema.organizations.stripeCustomerId,
-									customerId,
-								),
-							});
-
-							if (!org) return;
-
-							const recipients = await getOrganizationBillingRecipients(org.id);
-							// Max, not sum: a proration line carries its own quantity and
-							// adding them together reports more seats than exist.
-							const seatCount = invoice.lines.data.reduce(
-								(largest, line) => Math.max(largest, line.quantity ?? 0),
-								0,
-							);
-
-							await resend.batch.send(
-								recipients.map((recipient) => ({
-									from: "Superset <noreply@superset.sh>",
-									to: recipient.email,
-									subject: `${org.name}'s ${subscription.plan} plan renews soon`,
-									react: RenewalUpcomingEmail({
-										recipientName: recipient.name,
-										organizationName: org.name,
-										planName: subscription.plan,
-										amount: formatPrice(invoice.amount_due, invoice.currency),
-										renewsAt: new Date(renewsAtSeconds * 1000),
-										seatCount: Math.max(1, seatCount),
-										isOwner: recipient.role === "owner",
-									}),
-								})),
-							);
-						}
-
-						if (event.type === "invoice.paid") {
-							const invoice = event.data.object as Stripe.Invoice;
-
-							const subscriptionDetails =
-								invoice.parent?.subscription_details ?? undefined;
-							const stripeSubId = subscriptionDetails?.subscription as
-								| string
-								| undefined;
-
-							if (stripeSubId) {
-								try {
-									await qstash.publishJSON({
-										url: NOTIFY_SLACK_URL,
-										body: {
-											eventType: "payment_succeeded",
-											stripeSubscriptionId: stripeSubId,
-											amountCents: invoice.amount_paid,
-											currency: invoice.currency,
-											periodStart: invoice.period_start ?? 0,
-											periodEnd: invoice.period_end ?? 0,
-										},
-										retries: 3,
-									});
-								} catch (error) {
-									console.error(
-										"[stripe/payment-succeeded] Failed to queue Slack notification:",
-										error,
-									);
-								}
-							}
-
-							// `referenceId` is the organization id — Better Auth writes it
-							// onto the subscription, and Stripe copies subscription metadata
-							// onto every invoice it raises, so this needs no lookup.
-							const organizationId = subscriptionDetails?.metadata?.referenceId;
-
-							if (organizationId) {
-								await captureBillingEvent({
-									event: "payment_succeeded",
-									organizationId,
-									initiatedByUserId: subscriptionDetails?.metadata?.userId,
-									idempotencyKey: event.id,
-									occurredAt: new Date(event.created * 1000),
-									properties: {
-										revenue: invoice.amount_paid,
-										currency: invoice.currency,
-										// `subscription_create` is the first payment, everything
-										// else is a renewal or a seat change.
-										billing_reason: invoice.billing_reason,
-										stripe_subscription_id: stripeSubId ?? null,
-									},
-								});
-							}
-						}
-
-						// Stripe expires an unpaid Checkout session ~24h after it opens, so
-						// this arrives late by design. It is the only signal that someone
-						// reached the payment page and did not pay — the paid side comes
-						// through `onSubscriptionComplete` instead.
-						if (event.type === "checkout.session.expired") {
-							const session = event.data.object as Stripe.Checkout.Session;
-							const organizationId = session.metadata?.organizationId;
-
-							if (organizationId) {
-								await captureBillingEvent({
-									event: "checkout_abandoned",
-									organizationId,
-									initiatedByUserId: session.metadata?.userId,
-									idempotencyKey: event.id,
-									occurredAt: new Date(event.created * 1000),
-									properties: {
-										// No money moved, so this must not be `revenue`.
-										abandoned_value: session.amount_total ?? 0,
-										currency: session.currency ?? "usd",
-										stripe_session_id: session.id,
-									},
-								});
-							}
-						}
-
-						if (event.type === "customer.subscription.updated") {
-							const stripeSubscription = event.data
-								.object as Stripe.Subscription;
-							const previousAttributes = event.data.previous_attributes as
-								| Partial<Stripe.Subscription>
-								| undefined;
-
-							const previousPriceId =
-								previousAttributes?.items?.data?.[0]?.price?.id;
-							const currentPriceId =
-								stripeSubscription.items.data[0]?.price?.id;
-
-							if (!previousPriceId || previousPriceId === currentPriceId)
-								return;
-
-							const previousInterval =
-								previousAttributes?.items?.data?.[0]?.price?.recurring
-									?.interval === "year"
-									? "yearly"
-									: "monthly";
-
-							try {
-								await qstash.publishJSON({
-									url: NOTIFY_SLACK_URL,
-									body: {
-										eventType: "plan_changed",
-										stripeSubscriptionId: stripeSubscription.id,
-										previousInterval,
-									},
-									retries: 3,
-								});
-							} catch (error) {
-								console.error(
-									"[stripe/plan-changed] Failed to queue Slack notification:",
-									error,
-								);
-							}
-						}
 					},
 				},
 			}),

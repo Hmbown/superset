@@ -404,6 +404,20 @@ export async function queueSettleWorkspace(
 	);
 }
 
+export async function settleOrganizationNow(
+	organizationId: string,
+): Promise<void> {
+	const rows = await db
+		.select({ id: cloudWorkspaceBoots.id })
+		.from(cloudWorkspaceBoots)
+		.where(
+			and(eq(cloudWorkspaceBoots.organizationId, organizationId), OPEN_BOOT),
+		);
+	for (const { id } of rows) {
+		await settleBoot(id);
+	}
+}
+
 export async function settleWorkspaceNow(
 	cloudWorkspaceId: string,
 ): Promise<void> {

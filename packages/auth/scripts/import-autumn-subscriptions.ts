@@ -40,7 +40,22 @@ async function main() {
 		.orderBy(desc(subscriptions.createdAt));
 
 	const seen = new Set<string>();
-	const counts = { imported: 0, alreadyLinked: 0, skipped: 0 };
+	const counts = { imported: 0, alreadyLinked: 0, skipped: 0, drifted: 0 };
+	const verify = async (organizationId: string) => {
+		const result = await autumn.billing.verify({ customerId: organizationId });
+		const mismatched = result.subscriptions.filter(
+			(subscription) => subscription.mismatches.length > 0,
+		);
+		if (result.customerMismatches.length > 0 || mismatched.length > 0) {
+			counts.drifted += 1;
+			console.log(
+				`[autumn-import] drift ${organizationId}: ${JSON.stringify({
+					customer: result.customerMismatches,
+					subscriptions: mismatched,
+				})}`,
+			);
+		}
+	};
 	for (const row of rows) {
 		if (seen.has(row.organizationId)) continue;
 		seen.add(row.organizationId);
@@ -56,6 +71,7 @@ async function main() {
 				.catch(() => null);
 			if (existing && paidPlanIdFromFlags(existing.flags)) {
 				counts.alreadyLinked += 1;
+				await verify(row.organizationId);
 				continue;
 			}
 			const stripeSubscription = await stripeClient.subscriptions.retrieve(
@@ -102,6 +118,7 @@ async function main() {
 				continue;
 			}
 			counts.imported += 1;
+			if (apply) await verify(row.organizationId);
 		} catch (error) {
 			counts.skipped += 1;
 			console.error(`[autumn-import] failed ${label}`, error);
@@ -109,7 +126,7 @@ async function main() {
 	}
 
 	console.log(
-		`[autumn-import] ${apply ? "imported" : "would import"} ${counts.imported}, already linked ${counts.alreadyLinked}, skipped ${counts.skipped}, of ${seen.size} organizations`,
+		`[autumn-import] ${apply ? "imported" : "would import"} ${counts.imported}, already linked ${counts.alreadyLinked}, skipped ${counts.skipped}, drifted ${counts.drifted}, of ${seen.size} organizations. Flip BILLING_PROVIDER only when skipped and drifted are both 0.`,
 	);
 }
 
