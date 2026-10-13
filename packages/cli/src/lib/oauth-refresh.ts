@@ -39,7 +39,7 @@ export interface RefreshDeps {
 	sleep: (ms: number) => Promise<void>;
 }
 
-export function defaultRefreshDeps(): RefreshDeps {
+function defaultRefreshDeps(): RefreshDeps {
 	return {
 		refresh: refreshAccessToken,
 		readConfig,
@@ -73,10 +73,7 @@ export class ServerUnreachableError extends Error {
 	}
 }
 
-export function isAuthFresh(
-	auth: NonNullable<SupersetConfig["auth"]>,
-	now: number,
-): boolean {
+export function isAuthFresh(auth: StoredAuth, now: number): boolean {
 	return auth.expiresAt - AUTH_REFRESH_LEEWAY_MS > now;
 }
 
@@ -86,17 +83,16 @@ export function isAuthFresh(
  */
 export async function refreshStoredAuth(
 	deps: RefreshDeps = defaultRefreshDeps(),
-): Promise<SupersetConfig> {
+): Promise<AuthedConfig> {
 	const lock = await acquireLock(deps);
 	try {
 		const latest = deps.readConfig();
 		const auth = latest.auth;
-		if (auth && isAuthFresh(auth, deps.now())) return latest;
+		if (hasFreshAuth(latest, deps.now())) return latest;
 		if (!auth?.refreshToken) throw new SessionExpiredError();
 		if (lock.state === "timed-out") throw new RefreshInProgressError();
 
-		const startedAt = auth.refreshStartedAt ?? deps.now();
-		if (deps.now() - startedAt > deps.retryWindowMs) {
+		const dropRefreshToken = () => {
 			deps.writeConfig(
 				withAuth(latest, {
 					...auth,
@@ -104,8 +100,11 @@ export async function refreshStoredAuth(
 					refreshStartedAt: undefined,
 				}),
 			);
-			throw new SessionExpiredError();
-		}
+			return new SessionExpiredError();
+		};
+
+		const startedAt = auth.refreshStartedAt ?? deps.now();
+		if (deps.now() - startedAt > deps.retryWindowMs) throw dropRefreshToken();
 		deps.writeConfig(
 			withAuth(latest, { ...auth, refreshStartedAt: startedAt }),
 		);
@@ -115,22 +114,13 @@ export async function refreshStoredAuth(
 			refreshed = await deps.refresh(auth.refreshToken);
 		} catch (error) {
 			const current = deps.readConfig();
-			if (current.auth && isAuthFresh(current.auth, deps.now())) {
-				return current;
-			}
+			if (hasFreshAuth(current, deps.now())) return current;
 			switch (classifyFailure(error)) {
 				case "unsent":
 					deps.writeConfig(latest);
 					throw new ServerUnreachableError(error);
 				case "rejected":
-					deps.writeConfig(
-						withAuth(latest, {
-							...auth,
-							refreshToken: undefined,
-							refreshStartedAt: undefined,
-						}),
-					);
-					throw new SessionExpiredError();
+					throw dropRefreshToken();
 				case "unknown":
 					throw error;
 			}
@@ -139,8 +129,7 @@ export async function refreshStoredAuth(
 		const current = deps.readConfig();
 		if (
 			current.auth?.refreshToken !== auth.refreshToken &&
-			current.auth &&
-			isAuthFresh(current.auth, deps.now())
+			hasFreshAuth(current, deps.now())
 		) {
 			return current;
 		}
@@ -156,10 +145,17 @@ export async function refreshStoredAuth(
 	}
 }
 
-function withAuth(
+type StoredAuth = NonNullable<SupersetConfig["auth"]>;
+type AuthedConfig = SupersetConfig & { auth: StoredAuth };
+
+function hasFreshAuth(
 	config: SupersetConfig,
-	auth: NonNullable<SupersetConfig["auth"]>,
-): SupersetConfig {
+	now: number,
+): config is AuthedConfig {
+	return config.auth !== undefined && isAuthFresh(config.auth, now);
+}
+
+function withAuth(config: SupersetConfig, auth: StoredAuth): AuthedConfig {
 	return { ...config, auth };
 }
 

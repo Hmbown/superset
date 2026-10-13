@@ -51,13 +51,11 @@ export async function resolveAuth(
 		const auth = config.auth;
 		if (!isAuthFresh(auth, Date.now())) {
 			try {
-				config = await refreshStoredAuth();
+				const refreshed = await refreshStoredAuth();
+				config = refreshed;
+				bearer = refreshed.auth.accessToken;
 			} catch (error) {
 				throw refreshFailureToCLIError(error);
-			}
-			bearer = config.auth?.accessToken;
-			if (!bearer) {
-				throw new CLIError("Session expired", "Run: superset auth login");
 			}
 		} else {
 			bearer = auth.accessToken;

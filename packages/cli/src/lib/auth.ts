@@ -234,7 +234,7 @@ async function exchangeCodeForToken({
  * Upper bound on one refresh round trip. The refresh lock in oauth-refresh.ts
  * stays alive by heartbeat for as long as this runs.
  */
-export const REFRESH_TIMEOUT_MS = 60_000;
+const REFRESH_TIMEOUT_MS = 60_000;
 
 export class TokenRefreshHttpError extends CLIError {
 	constructor(readonly status: number) {
