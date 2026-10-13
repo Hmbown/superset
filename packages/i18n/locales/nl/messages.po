@@ -2988,6 +2988,9 @@ msgstr "Facturering"
 msgid "Billing details"
 msgstr "Factuurgegevens"
 
+msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "Facturering heeft het starten van een cloudwerkruimte geweigerd: de organisatie heeft een betaald abonnement nodig of heeft haar limiet voor cloudgebruik bereikt. Upgrade of verhoog de limiet in Instellingen > Facturering, of voer de automatisering uit op een apparaat."
+
 msgid "Binary"
 msgstr "Binair"
 
@@ -4016,6 +4019,9 @@ msgstr "Cloudwerkruimtes"
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Cloudworkspaces negeren deze variabele. Agents melden zich in plaats daarvan aan via Instellingen › Agents."
+
+msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
+msgstr "Cloudwerkruimtes vereisen een betaald abonnement. Upgrade in Instellingen, Facturering om er een te starten."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Cloudworkspaces stoppen met het uitvoeren van {agentLabel} hiermee."
@@ -11647,6 +11653,9 @@ msgstr "App Store openen"
 msgid "Open as comment pane"
 msgstr "Openen als opmerkingenpaneel"
 
+msgid "Open billing"
+msgstr "Facturering openen"
+
 msgid "Open branch on GitHub"
 msgstr "Branch openen op GitHub"
 
@@ -12581,6 +12590,9 @@ msgstr "Plan"
 
 msgid "Plan restored"
 msgstr "Plan hersteld"
+
+msgid "Plan updated"
+msgstr "Abonnement bijgewerkt"
 
 msgctxt "project state"
 msgid "Planned"
@@ -17336,6 +17348,9 @@ msgstr "Hiermee sluit je de geselecteerde werkruimtes en hun terminals. De besta
 msgid "This closes the workspace and its terminals. The project's files, branches and other workspaces stay as they are."
 msgstr "Hiermee sluit je de werkruimte en de bijbehorende terminals. De bestanden, branches en andere werkruimtes van het project blijven ongewijzigd."
 
+msgid "This cloud workspace can't start"
+msgstr "Deze cloudwerkruimte kan niet starten"
+
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "Deze cloudwerkruimte wordt gewekt. Na inactiviteit kan dat tot 30 seconden duren."
 
@@ -19474,6 +19489,9 @@ msgstr "Je naam"
 
 msgid "Your name <0>(if we use your prompt, we'll credit you in the changelog)</0>"
 msgstr "Je naam <0>(als we je prompt gebruiken, vermelden we je in de changelog)</0>"
+
+msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
+msgstr "Je organisatie heeft haar limiet voor cloudgebruik bereikt. Verhoog de limiet of upgrade in Instellingen, Facturering om deze werkruimte te starten."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Je eigen accounts. De integraties van je organisatie geven Superset toegang tot haar tools; als je die van jou koppelt, verschijnt het werk dat Superset voor je doet onder jouw naam."

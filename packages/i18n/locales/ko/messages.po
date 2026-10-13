@@ -2988,6 +2988,9 @@ msgstr "결제"
 msgid "Billing details"
 msgstr "결제 정보"
 
+msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "결제 문제로 클라우드 워크스페이스를 시작할 수 없습니다. 조직에 유료 플랜이 필요하거나 클라우드 사용 한도에 도달했습니다. 설정 > 결제에서 업그레이드하거나 한도를 올리거나, 자동화를 기기에서 실행하세요."
+
 msgid "Binary"
 msgstr "바이너리"
 
@@ -4016,6 +4019,9 @@ msgstr "클라우드 워크스페이스"
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "클라우드 워크스페이스는 이 변수를 무시합니다. 에이전트는 대신 설정 › 에이전트에서 로그인합니다."
+
+msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
+msgstr "클라우드 워크스페이스에는 유료 플랜이 필요합니다. 설정의 결제에서 업그레이드하면 시작할 수 있습니다."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "클라우드 워크스페이스에서 더 이상 이것으로 {agentLabel}을(를) 실행하지 않습니다."
@@ -11647,6 +11653,9 @@ msgstr "App Store 열기"
 msgid "Open as comment pane"
 msgstr "코멘트 패널으로 열기"
 
+msgid "Open billing"
+msgstr "결제 열기"
+
 msgid "Open branch on GitHub"
 msgstr "GitHub에서 브랜치 열기"
 
@@ -12581,6 +12590,9 @@ msgstr "플랜"
 
 msgid "Plan restored"
 msgstr "플랜이 복원되었습니다"
+
+msgid "Plan updated"
+msgstr "플랜이 업데이트되었습니다"
 
 msgctxt "project state"
 msgid "Planned"
@@ -17336,6 +17348,9 @@ msgstr "선택한 워크스페이스와 해당 터미널을 닫습니다. 프로
 msgid "This closes the workspace and its terminals. The project's files, branches and other workspaces stay as they are."
 msgstr "워크스페이스와 해당 터미널을 닫습니다. 프로젝트의 파일, 브랜치, 다른 워크스페이스는 그대로 유지됩니다."
 
+msgid "This cloud workspace can't start"
+msgstr "이 클라우드 워크스페이스를 시작할 수 없습니다"
+
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "이 클라우드 워크스페이스를 깨우는 중입니다. 한동안 사용하지 않았다면 최대 30초가 걸릴 수 있습니다."
 
@@ -19474,6 +19489,9 @@ msgstr "이름"
 
 msgid "Your name <0>(if we use your prompt, we'll credit you in the changelog)</0>"
 msgstr "이름 <0>(프롬프트를 채택하면 변경 로그에 이름을 남겨 드립니다)</0>"
+
+msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
+msgstr "조직이 클라우드 사용 한도에 도달했습니다. 이 워크스페이스를 시작하려면 설정의 결제에서 한도를 올리거나 업그레이드하세요."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "본인의 계정입니다. 조직의 통합은 Superset이 해당 도구에 접근하게 하며, 본인 계정을 연결하면 Superset이 대신 한 작업이 본인 이름으로 표시됩니다."

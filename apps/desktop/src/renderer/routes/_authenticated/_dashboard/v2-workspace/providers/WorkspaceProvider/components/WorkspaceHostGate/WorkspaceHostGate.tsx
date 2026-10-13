@@ -9,6 +9,7 @@ import { useSandboxAccess } from "renderer/routes/_authenticated/providers/Sandb
 import { useHostReachability } from "../../../../hooks/useHostReachability";
 import { LOCAL_HOST_SERVICE_DETAIL } from "../../utils/localHostServiceDetail";
 import { AgentCredentialsChangedBanner } from "./components/AgentCredentialsChangedBanner";
+import { CloudUsageRefusedBanner } from "./components/CloudUsageRefusedBanner";
 import { HostConnectionStrip } from "./components/HostConnectionStrip";
 
 /** Keeps loaded panes accessible while reporting the shared host connection. */
@@ -34,8 +35,11 @@ export function WorkspaceHostGate({
 		retry,
 	} = useHostReachability(hostUrl);
 	const { hosts: hostRows } = useKnownHosts();
-	const { targets: sandboxes, agentCredentialsChangedWorkspaceId } =
-		useSandboxAccess();
+	const {
+		targets: sandboxes,
+		agentCredentialsChangedWorkspaceId,
+		usageRefusal,
+	} = useSandboxAccess();
 	const isSandbox = sandboxes.some(
 		(sandbox) => sandbox.workspaceId === workspace.hostId,
 	);
@@ -64,7 +68,12 @@ export function WorkspaceHostGate({
 			{agentCredentialsChangedWorkspaceId === workspace.hostId ? (
 				<AgentCredentialsChangedBanner workspaceId={workspace.hostId} />
 			) : null}
-			{isDegraded || isAccessDenied ? (
+			{usageRefusal?.workspaceId === workspace.hostId ? (
+				<CloudUsageRefusedBanner
+					workspaceId={workspace.hostId}
+					error={usageRefusal.error}
+				/>
+			) : isDegraded || isAccessDenied ? (
 				<HostConnectionStrip
 					settingsHostId={isSandbox ? null : workspace.hostId}
 					hostName={hostName}

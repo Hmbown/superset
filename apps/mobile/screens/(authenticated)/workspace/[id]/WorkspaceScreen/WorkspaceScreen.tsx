@@ -150,6 +150,7 @@ export function WorkspaceScreen() {
 		cloud,
 		sandboxUnreachable,
 		sandboxWaking,
+		sandboxRefusal,
 		retrySandbox,
 		isResolving,
 	} = useWorkspaceHost(id ?? null);
@@ -1104,6 +1105,27 @@ export function WorkspaceScreen() {
 						refreshing={refreshing}
 						title={t({
 							message: "This host needs an update",
+						})}
+					/>
+				) : cloud && sandboxRefusal ? (
+					<WorkspacePlaceholder
+						action={
+							<Pressable
+								accessibilityRole="button"
+								className="bg-secondary h-[38px] flex-row items-center justify-center gap-1.5 rounded-md px-5 active:opacity-80"
+								onPress={retrySandbox}
+							>
+								<Text className="font-medium text-[15px]">
+									<Trans>Try again</Trans>
+								</Text>
+							</Pressable>
+						}
+						body={sandboxRefusal}
+						icon={CloudOff}
+						onRefresh={onRefresh}
+						refreshing={refreshing}
+						title={t({
+							message: "This cloud workspace can't start",
 						})}
 					/>
 				) : activeIsChat && activeTerminalId && host && hostUrl && id ? (

@@ -2988,6 +2988,9 @@ msgstr "帳單"
 msgid "Billing details"
 msgstr "帳單資訊"
 
+msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "帳單原因導致無法啟動雲端工作區：組織需要付費方案，或已達到雲端用量上限。請在「設定 > 帳單」中升級或提高上限，或在裝置上執行該自動化。"
+
 msgid "Binary"
 msgstr "二進位"
 
@@ -4016,6 +4019,9 @@ msgstr "雲端工作區"
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "雲端工作區會忽略此變數。代理程式改為在「設定 › 代理程式」中登入。"
+
+msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
+msgstr "雲端工作區需要付費方案。請在「設定」中的「帳單」升級後啟動。"
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "雲端工作區將不再用它執行{agentLabel}。"
@@ -11647,6 +11653,9 @@ msgstr "開啟 App Store"
 msgid "Open as comment pane"
 msgstr "作為評論面板開啟"
 
+msgid "Open billing"
+msgstr "開啟帳單"
+
 msgid "Open branch on GitHub"
 msgstr "在GitHub上開啟分支"
 
@@ -12581,6 +12590,9 @@ msgstr "方案"
 
 msgid "Plan restored"
 msgstr "方案已恢復"
+
+msgid "Plan updated"
+msgstr "方案已更新"
 
 msgctxt "project state"
 msgid "Planned"
@@ -17336,6 +17348,9 @@ msgstr "這將關閉所選工作區及其終端機。專案的檔案和分支保
 msgid "This closes the workspace and its terminals. The project's files, branches and other workspaces stay as they are."
 msgstr "這將關閉該工作區及其終端機。專案的檔案、分支和其他工作區保持不變。"
 
+msgid "This cloud workspace can't start"
+msgstr "無法啟動此雲端工作區"
+
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "正在喚醒此雲端工作區。如果它已閒置一段時間，可能需要最多 30 秒。"
 
@@ -19474,6 +19489,9 @@ msgstr "你的姓名"
 
 msgid "Your name <0>(if we use your prompt, we'll credit you in the changelog)</0>"
 msgstr "你的名字 <0>（若我們採用你的提示詞，會在更新日誌中署名致謝）</0>"
+
+msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
+msgstr "你的組織已達到雲端用量上限。請在「設定」中的「帳單」提高上限或升級，以啟動此工作區。"
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "你自己的帳戶。組織的整合讓 Superset 存取其工具；連結你自己的帳戶後，Superset 為你完成的工作會以你的名義顯示。"

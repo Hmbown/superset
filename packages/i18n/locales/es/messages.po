@@ -2988,6 +2988,9 @@ msgstr "Facturación"
 msgid "Billing details"
 msgstr "Datos de facturación"
 
+msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "La facturación impidió iniciar un espacio de trabajo en la nube: la organización necesita un plan de pago o alcanzó su límite de uso en la nube. Mejora el plan o aumenta el límite en Configuración > Facturación, o ejecuta la automatización en un dispositivo."
+
 msgid "Binary"
 msgstr "Binario"
 
@@ -4016,6 +4019,9 @@ msgstr "Espacios de trabajo en la nube"
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Los espacios de trabajo en la nube ignoran esta variable. Los agentes inician sesión en Configuración › Agentes en su lugar."
+
+msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
+msgstr "Los espacios de trabajo en la nube necesitan un plan de pago. Mejora el plan en Configuración, Facturación para iniciar uno."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Los espacios de trabajo en la nube dejarán de ejecutar {agentLabel} con ella."
@@ -11647,6 +11653,9 @@ msgstr "Abrir App Store"
 msgid "Open as comment pane"
 msgstr "Abrir como panel de comentarios"
 
+msgid "Open billing"
+msgstr "Abrir facturación"
+
 msgid "Open branch on GitHub"
 msgstr "Abrir la rama en GitHub"
 
@@ -12581,6 +12590,9 @@ msgstr "Plan"
 
 msgid "Plan restored"
 msgstr "Plan restaurado"
+
+msgid "Plan updated"
+msgstr "Plan actualizado"
 
 msgctxt "project state"
 msgid "Planned"
@@ -17336,6 +17348,9 @@ msgstr "Esto cierra los espacios de trabajo seleccionados y sus terminales. Los 
 msgid "This closes the workspace and its terminals. The project's files, branches and other workspaces stay as they are."
 msgstr "Esto cierra el espacio de trabajo y sus terminales. Los archivos, las ramas y los demás espacios de trabajo del proyecto se mantienen tal cual."
 
+msgid "This cloud workspace can't start"
+msgstr "No se puede iniciar este espacio de trabajo en la nube"
+
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "Este espacio de trabajo en la nube se está reactivando, lo que puede tardar hasta 30 segundos tras un periodo de inactividad."
 
@@ -19474,6 +19489,9 @@ msgstr "Tu nombre"
 
 msgid "Your name <0>(if we use your prompt, we'll credit you in the changelog)</0>"
 msgstr "Tu nombre <0>(si usamos tu prompt, te acreditaremos en el registro de cambios)</0>"
+
+msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
+msgstr "Tu organización alcanzó su límite de uso en la nube. Aumenta el límite o mejora el plan en Configuración, Facturación para iniciar este espacio de trabajo."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Tus propias cuentas. Las integraciones de tu organización permiten a Superset acceder a sus herramientas; conectar las tuyas hace que el trabajo que Superset hace por ti aparezca a tu nombre."
