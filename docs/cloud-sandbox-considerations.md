@@ -29,15 +29,18 @@ quota and cost visibility in the product — and a decision on unattended agent
 runs, which die with the session (Blaxel froze processes; Vercel snapshots the
 filesystem and boots fresh).
 
-**Box time is metered, not yet enforced.** Every Vercel session of a workspace
-box is recorded in `cloud_workspace_sessions` when the box starts or stops, and
-a QStash schedule (`/api/cloud-workspaces/jobs/reconcile-usage`, every 10
-minutes, set in the Upstash console) catches sessions Vercel ended on its own
-and long sessions still running. Where `AUTUMN_SECRET_KEY` is set, the unbilled
-part is reported to Autumn as `box_minutes`: one per minute of an 8 vCPU box,
-today's default size; a smaller or larger box counts in proportion. Prices and included hours live in Autumn, not
-here. Still owed: a `check` before a box starts, a stop at the spend cap, our
-own idle stop, and per-member billing for Teams.
+**Box time is metered and capped.** Creating a workspace checks the
+organization may run boxes; every box start or wake takes a short Autumn
+balance lock first, recorded in `cloud_workspace_boots`, and is refused with
+"needs a paid plan" (free organizations) or "usage limit reached". A QStash
+schedule (`/api/cloud-workspaces/jobs/reconcile-usage`, every 10 minutes, set
+in the Upstash console and watched by a Sentry cron monitor) finalizes each
+running box's memory GB-minutes and takes the next lock; a box whose next lock
+is refused is stopped. Stopping, archiving or deleting a box settles the rest.
+Environment builds are not billed. Prices and limits live in Autumn, not here.
+Still owed: our own idle stop (boxes run until Vercel's session timeout, and
+every minute is billed), per-member billing for Teams, and confirming Autumn's
+lock behaviour (retried and expired finalize) in its sandbox.
 
 **A golden lives exactly as long as its environment. Fixed (2026-09-25).** A
 golden is a stopped persistent sandbox whose snapshot never expires, about

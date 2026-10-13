@@ -25,9 +25,10 @@ function chain(rows: () => unknown[]) {
 			return link;
 		},
 		from: () => link,
-		where: () => link,
-		returning: async () => rows(),
-		then: (resolve: (value: unknown[]) => unknown) => resolve(rows()),
+		where: () =>
+			Object.assign(Promise.resolve().then(rows), {
+				returning: async () => rows(),
+			}),
 	};
 	return link;
 }
