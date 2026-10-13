@@ -118,6 +118,67 @@ describe("resuming chats after a restart", () => {
 		await runtime.dispose();
 	});
 
+	test("prompts from a resume whose agent died go to the pane's next attempt", async () => {
+		let attempts = 0;
+		const harnesses: HarnessRegistry = new Map([
+			[
+				FAKE_HARNESS,
+				() =>
+					new FakeHarness({
+						start: [
+							{
+								kind: "session",
+								delayMs: 5,
+								session:
+									++attempts === 1
+										? { status: "dead" }
+										: { status: "idle", harnessSessionId: "agent-1" },
+							},
+						],
+						turns: [[{ kind: "turn", turn: turn("t1") }]],
+					}),
+			],
+		]);
+		const runtime = createTestRuntime({ harnesses });
+		const failed = runtime.commands.resumeSession({
+			scopeId: "workspace-1",
+			harness: FAKE_HARNESS,
+			harnessSessionId: "agent-1",
+			terminalId: "terminal-1",
+			cwd: "/tmp/workspace",
+			prompts: [text("continue")],
+			pausedPrompts: [text("held")],
+		});
+		await waitFor(
+			() => runtime.live.get(failed.sessionId)?.state.status === "dead",
+		);
+
+		const retried = runtime.commands.createSession({
+			commandId: randomUUID(),
+			scopeId: "workspace-1",
+			harness: FAKE_HARNESS,
+			cwd: "/tmp/workspace",
+			terminalId: "terminal-1",
+			resume: { harnessSessionId: "agent-1" },
+		});
+		const live = runtime.live.require(retried.sessionId);
+		await waitFor(() => live.turn?.status === "running");
+
+		expect(retried.sessionId).not.toBe(failed.sessionId);
+		const sent = journalEnvelopes(runtime, retried.sessionId).flatMap(
+			({ event }) =>
+				event.type === "item" && event.item.kind === "user_message"
+					? [event.item.content]
+					: [],
+		);
+		expect(sent).toContainEqual(text("continue"));
+		expect(live.queueState).toMatchObject({
+			paused: true,
+			prompts: [expect.objectContaining({ content: text("held") })],
+		});
+		await runtime.dispose();
+	});
+
 	test("prompts held in a paused queue come back paused", async () => {
 		const { runtime } = runtimeWithStartedAgents();
 		const { sessionId } = runtime.commands.createSession({

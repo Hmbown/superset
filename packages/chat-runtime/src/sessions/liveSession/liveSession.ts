@@ -82,6 +82,7 @@ export class LiveSession {
 	private stopped = false;
 	private heldUntilStarted: UserContent[][] = [];
 	private heldPaused: UserContent[][] = [];
+	private onHeldReleased: (() => void) | null = null;
 
 	constructor(private readonly options: LiveSessionOptions) {
 		this.sessionState = { status: "starting", harness: options.harness };
@@ -147,9 +148,11 @@ export class LiveSession {
 	promptOnceStarted(
 		prompts: UserContent[][],
 		pausedPrompts: UserContent[][] = [],
+		onReleased?: () => void,
 	): void {
 		this.heldUntilStarted.push(...prompts);
 		this.heldPaused.push(...pausedPrompts);
+		this.onHeldReleased = onReleased ?? null;
 		this.releaseHeldPrompts();
 	}
 
@@ -392,7 +395,10 @@ export class LiveSession {
 		if (status === "starting") return;
 		const held = this.heldUntilStarted.splice(0);
 		const paused = this.heldPaused.splice(0);
+		const onReleased = this.onHeldReleased;
+		this.onHeldReleased = null;
 		if (status === "dead") return;
+		onReleased?.();
 		this.queue.unshift(...held.map((content) => this.queuedPrompt(content)));
 		if (this.currentTurn?.status !== "running" && !this.awaitingTurn) {
 			this.deliverNextQueued();

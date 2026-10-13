@@ -92,6 +92,14 @@ export type ResumeSessionInput = Omit<
 	"sessionId" | "interrupted"
 > & { cwd: string };
 
+type ResumedChat = {
+	terminalId: string;
+	sessionId: string;
+	harness: string;
+	harnessSessionId: string;
+	pending: Pick<ResumeSessionInput, "prompts" | "pausedPrompts"> | null;
+};
+
 export type GetQueueResult = QueueState & { live: boolean };
 
 export type ChatSessionListEntry = ChatSessionRow & {
@@ -194,13 +202,10 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 		return { ok: true, snapshot };
 	};
 
-	const resumedByTerminal = new Map<
-		string,
-		{ sessionId: string; harness: string; harnessSessionId: string }
-	>();
-	const takeResumed = (
+	const resumedByTerminal = new Map<string, ResumedChat>();
+	const resumedFor = (
 		input: z.output<typeof createSessionCommandSchema>,
-	): CreateSessionResult | null => {
+	): ResumedChat | null => {
 		if (!input.terminalId || !input.resume) return null;
 		const resumed = resumedByTerminal.get(input.terminalId);
 		if (
@@ -210,11 +215,27 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 		) {
 			return null;
 		}
-		resumedByTerminal.delete(input.terminalId);
+		return resumed;
+	};
+	const handOff = (resumed: ResumedChat): CreateSessionResult | null => {
 		const row = options.sessions.get(resumed.sessionId);
 		const live = options.live.get(resumed.sessionId);
 		if (!row || !live || live.state.status === "dead") return null;
+		if (!resumed.pending) resumedByTerminal.delete(resumed.terminalId);
 		return { sessionId: resumed.sessionId, epoch: row.epoch };
+	};
+	const sendPending = (resumed: ResumedChat, sessionId: string): void => {
+		const pending = resumed.pending;
+		if (!pending) {
+			resumedByTerminal.delete(resumed.terminalId);
+			return;
+		}
+		resumed.sessionId = sessionId;
+		options.live
+			.require(sessionId)
+			.promptOnceStarted(pending.prompts, pending.pausedPrompts, () => {
+				resumed.pending = null;
+			});
 	};
 
 	const listSessions = (
@@ -238,8 +259,9 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 		createSession(input) {
 			const parsed = createSessionCommandSchema.parse(input);
 			return options.dedupe.run(`createSession:${parsed.commandId}`, () => {
-				const resumed = takeResumed(parsed);
-				if (resumed) return resumed;
+				const resumed = resumedFor(parsed);
+				const handedOff = resumed && handOff(resumed);
+				if (handedOff) return handedOff;
 				if (!options.live.supports(parsed.harness)) {
 					throw new Error(`unknown harness ${parsed.harness}`);
 				}
@@ -264,6 +286,7 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 					options.journal.discard(sessionId);
 					throw error;
 				}
+				if (resumed) sendPending(resumed, sessionId);
 				return { sessionId, epoch: opened.epoch };
 			});
 		},
@@ -279,16 +302,25 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 				terminalId: input.terminalId,
 				resume: { harnessSessionId: input.harnessSessionId },
 			});
-			if (input.terminalId) {
-				resumedByTerminal.set(input.terminalId, {
-					sessionId: created.sessionId,
-					harness: input.harness,
-					harnessSessionId: input.harnessSessionId,
-				});
+			const pending = {
+				prompts: input.prompts,
+				pausedPrompts: input.pausedPrompts,
+			};
+			if (!input.terminalId) {
+				options.live
+					.require(created.sessionId)
+					.promptOnceStarted(pending.prompts, pending.pausedPrompts);
+				return created;
 			}
-			options.live
-				.require(created.sessionId)
-				.promptOnceStarted(input.prompts, input.pausedPrompts);
+			const resumed: ResumedChat = {
+				terminalId: input.terminalId,
+				sessionId: created.sessionId,
+				harness: input.harness,
+				harnessSessionId: input.harnessSessionId,
+				pending,
+			};
+			resumedByTerminal.set(input.terminalId, resumed);
+			sendPending(resumed, created.sessionId);
 			return created;
 		},
 
