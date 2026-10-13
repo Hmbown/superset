@@ -64,6 +64,13 @@ export function register(server: McpServer): void {
 				.min(1)
 				.nullish()
 				.describe("Free-text search on title."),
+			labels: z
+				.array(z.string().min(1))
+				.max(20)
+				.nullish()
+				.describe(
+					"Superset only: label names. A task must have all of them (exact match, case-insensitive).",
+				),
 			limit: z
 				.number()
 				.int()
@@ -97,6 +104,7 @@ export function register(server: McpServer): void {
 				statusId: filters.statusId,
 				priority: filters.priority,
 				creatorMe: filters.creatorMe,
+				labels: filters.labels,
 			});
 			const organizationId = ctx.organizationId;
 			const workspace =

@@ -480,6 +480,7 @@ async function buildTaskListFilters(
 		assigneeId: input?.assigneeMe ? userId : (input?.assigneeId ?? undefined),
 		creatorId: input?.creatorMe ? userId : undefined,
 		search: input?.search ?? undefined,
+		labels: input?.labels ?? undefined,
 		externalProjectId: input?.externalProjectId ?? undefined,
 		externalProjectName: input?.externalProjectName ?? undefined,
 		externalCycleId: input?.externalCycleId ?? undefined,
