@@ -393,28 +393,30 @@ export class LiveSession {
 		const held = this.heldUntilStarted.splice(0);
 		const paused = this.heldPaused.splice(0);
 		if (status === "dead") return;
-		for (const content of held) this.prompt(content, this.mintId());
-		if (paused.length > 0) this.holdPaused(paused);
-	}
-
-	private holdPaused(prompts: UserContent[][]): void {
-		for (const content of prompts) {
-			const item: UserMessage = {
-				id: this.mintId(),
-				kind: "user_message",
-				clientId: this.mintId(),
-				startedAtMs: this.now(),
-				content,
-				queued: true,
-			};
-			const turnId = this.mintId();
-			this.queue.push({ item, content, turnId, seq: ++this.sent });
-			this.appendDurable({ type: "item", item, turnId });
+		this.queue.unshift(...held.map((content) => this.queuedPrompt(content)));
+		if (this.currentTurn?.status !== "running" && !this.awaitingTurn) {
+			this.deliverNextQueued();
 		}
+		if (paused.length === 0) return;
+		this.queue.push(...paused.map((content) => this.queuedPrompt(content)));
 		if (!this.queuePaused) {
 			this.queuePaused = true;
 			this.emitSession({ queuePaused: true });
 		}
+	}
+
+	private queuedPrompt(content: UserContent[]): PendingPrompt {
+		const item: UserMessage = {
+			id: this.mintId(),
+			kind: "user_message",
+			clientId: this.mintId(),
+			startedAtMs: this.now(),
+			content,
+			queued: true,
+		};
+		const turnId = this.mintId();
+		this.appendDurable({ type: "item", item, turnId });
+		return { item, content, turnId, seq: ++this.sent };
 	}
 
 	private attributeAwaitingPrompt(turnId: string): void {
@@ -593,7 +595,8 @@ export class LiveSession {
 		return (
 			this.currentTurn?.status === "running" ||
 			this.hasPendingWork() ||
-			this.pendingSteers.length > 0
+			this.pendingSteers.length > 0 ||
+			this.heldUntilStarted.length > 0
 		);
 	}
 

@@ -59,7 +59,12 @@ export function resumeUnfinishedChats(options: {
 	const marker = markerSchema.safeParse(readMarker(options.markerPath));
 	try {
 		unlinkSync(options.markerPath);
-	} catch {}
+	} catch (error) {
+		if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+			console.warn("[chat-v3] could not remove the resume marker", error);
+			return;
+		}
+	}
 	if (!marker.success || !marker.data.sessions?.length) return;
 	const age = (options.now ?? Date.now()) - marker.data.requestedAt;
 	if (age > RESUME_MARKER_MAX_AGE_MS) return;

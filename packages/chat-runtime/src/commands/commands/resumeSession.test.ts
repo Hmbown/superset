@@ -98,6 +98,26 @@ describe("resuming chats after a restart", () => {
 		await runtime.dispose();
 	});
 
+	test("a prompt sent while the resumed agent loads waits behind the resume prompts", async () => {
+		const { runtime } = runtimeWithStartedAgents();
+		const { sessionId } = runtime.commands.resumeSession({
+			scopeId: "workspace-1",
+			harness: FAKE_HARNESS,
+			harnessSessionId: "agent-1",
+			cwd: "/tmp/workspace",
+			prompts: [text("continue")],
+			pausedPrompts: [],
+		});
+		const live = runtime.live.require(sessionId);
+		expect(live.prompt(text("from the pane"), randomUUID()).queued).toBe(true);
+		await waitFor(() => live.turn?.status === "running");
+
+		expect(live.queueState.prompts.map((p) => p.content)).toEqual([
+			text("from the pane"),
+		]);
+		await runtime.dispose();
+	});
+
 	test("prompts held in a paused queue come back paused", async () => {
 		const { runtime } = runtimeWithStartedAgents();
 		const { sessionId } = runtime.commands.createSession({
