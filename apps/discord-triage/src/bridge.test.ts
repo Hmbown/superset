@@ -4,7 +4,7 @@ process.env.DISCORD_BOT_TOKEN ??= "test";
 process.env.DISCORD_CHANNEL_IDS ??= "1";
 process.env.LINEAR_FILING_ENABLED = "false";
 
-const { replyText } = await import("./bridge");
+const { replyText, senderName, splitMessage } = await import("./bridge");
 const { verifyWebhook } = await import("./resend");
 const { store } = await import("./store");
 
@@ -22,6 +22,40 @@ describe("replyText", () => {
 	test("keeps a quote that is followed by more reply text", () => {
 		const text = "> you said X\n\nYes, and also Y.";
 		expect(replyText(text)).toBe(text);
+	});
+});
+
+describe("senderName", () => {
+	test("keeps the agent's name from Plain's From line", () => {
+		expect(senderName('"Kiet Ho at Superset" <support@superset.sh>')).toBe(
+			"Kiet Ho",
+		);
+		expect(senderName("Kiet Ho at Superset <support@superset.sh>")).toBe(
+			"Kiet Ho",
+		);
+	});
+
+	test("falls back to the support name when Discord would reject it", () => {
+		expect(senderName("<support@superset.sh>")).toBe("Superset Support");
+		expect(senderName("Discord Team <x@y>")).toBe("Superset Support");
+		expect(senderName(`${"a".repeat(81)} <x@y>`)).toBe("Superset Support");
+	});
+});
+
+describe("splitMessage", () => {
+	test("leaves a short reply whole", () => {
+		expect(splitMessage("Hey will fix")).toEqual(["Hey will fix"]);
+	});
+
+	test("splits a long reply on line breaks under Discord's limit", () => {
+		const paragraph = "x".repeat(1500);
+		const chunks = splitMessage(`${paragraph}\n\n${paragraph}`);
+		expect(chunks).toEqual([paragraph, paragraph]);
+	});
+
+	test("hard-cuts a reply with no line breaks", () => {
+		const chunks = splitMessage("y".repeat(4500));
+		expect(chunks.map((c) => c.length)).toEqual([2000, 2000, 500]);
 	});
 });
 

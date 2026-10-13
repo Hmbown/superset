@@ -3,7 +3,7 @@
 Gateway bot that turns Discord support posts into tickets. Every new top-level message in a watched text channel (and every new post in a watched forum channel) is picked up, the bot opens a thread on it, and two optional sinks run:
 
 - **Linear** (`LINEAR_FILING_ENABLED`): files a Triage issue labeled `Source: Discord` and links it from the thread; issue close archives the thread via the Linear webhook.
-- **Plain bridge** (`PLAIN_BRIDGE_ENABLED`): mirrors the post into Plain over email so the support team (and the Parahelp agent) can work it like any other ticket. Each Discord user is a synthetic Plain customer `discord-<userId>@<BRIDGE_EMAIL_DOMAIN>`; the post is emailed to Plain's inbound address, follow-ups in the Discord thread are emailed as replies (threaded with `In-Reply-To`), and support replies are sent by Plain to the synthetic address, received by Resend, delivered to `/resend-webhook`, and posted into the Discord thread as "Superset Support". The thread <-> email map lives in SQLite on a Fly volume.
+- **Plain bridge** (`PLAIN_BRIDGE_ENABLED`): mirrors the post into Plain over email so the support team (and the Parahelp agent) can work it like any other ticket. Each Discord user is a synthetic Plain customer `discord-<userId>@<BRIDGE_EMAIL_DOMAIN>`; the post is emailed to Plain's inbound address, follow-ups in the Discord thread are emailed as replies (threaded with `In-Reply-To`), and support replies are sent by Plain to the synthetic address, received by Resend, delivered to `/resend-webhook`, and posted into the Discord thread as a plain message under the agent's name (from Plain's `<agent> at Superset` sender) with the bot avatar, through a webhook the bot creates on each support channel. Without Manage Webhooks the bot posts the reply itself. The thread <-> email map lives in SQLite on a Fly volume.
 
 After filing, an async enhancement pass mirrors message attachments to Linear uploads (Discord CDN URLs expire) and — when `ANTHROPIC_API_KEY` is set — has Claude Sonnet rewrite the ticket into the standard format (improved title, Context, Artifacts, References, original report preserved as a quote). Screenshots are passed to the model as vision input. Enhancement failures leave the raw issue untouched.
 
@@ -32,7 +32,7 @@ After filing, an async enhancement pass mirrors message attachments to Linear up
 1. [discord.com/developers/applications](https://discord.com/developers/applications) → New Application → Bot:
    - enable **Message Content Intent** (privileged)
    - copy the bot token
-2. Invite it: OAuth2 → URL Generator → scope `bot`, permissions: View Channels, Send Messages, Send Messages in Threads, Create Public Threads, Read Message History. Open the generated URL, add to the server.
+2. Invite it: OAuth2 → URL Generator → scope `bot`, permissions: View Channels, Send Messages, Send Messages in Threads, Create Public Threads, Read Message History, Manage Webhooks (Plain replies under the agent's name). Open the generated URL, add to the server.
 3. Right-click the support channel → Copy Channel ID (enable Developer Mode in Discord settings if missing).
 4. Linear personal API key: Linear → Settings → API.
 5. Deploy:

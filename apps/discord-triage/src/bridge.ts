@@ -1,12 +1,14 @@
 import {
+	type AnyThreadChannel,
 	type Attachment,
 	AttachmentBuilder,
 	type Client,
 	type Message,
 	type ThreadChannel,
 	type User,
+	type Webhook,
 } from "discord.js";
-import { brandedEmbed, SUPPORT_NAME } from "./branding";
+import { SUPPORT_NAME } from "./branding";
 import { env } from "./env";
 import {
 	getReceivedAttachment,
@@ -22,7 +24,7 @@ import { store } from "./store";
 // Resend rejects larger uploads; bigger files stay as (expiring) Discord links.
 const MAX_EMAIL_ATTACHMENT_BYTES = 10 * 1024 * 1024;
 const MAX_DISCORD_UPLOAD_BYTES = 8 * 1024 * 1024;
-const MAX_EMBED_CHARS = 4000;
+const MAX_MESSAGE_CHARS = 2000;
 
 const domain = env.BRIDGE_EMAIL_DOMAIN ?? "";
 const inbound = env.PLAIN_INBOUND_ADDRESS ?? "";
@@ -179,6 +181,60 @@ async function discordFiles(
 	return files;
 }
 
+// Plain sends as "<agent> at <workspace> <support@...>"; Discord shows the
+// agent's name next to the bot avatar, so the workspace suffix is redundant.
+export function senderName(from: string): string {
+	const display = from
+		.replace(/<[^>]*>/, "")
+		.replace(/^\s*"|"\s*$/g, "")
+		.trim()
+		.replace(/\s+at\s+Superset$/i, "")
+		.trim();
+	// Discord rejects webhook names containing these, or over 80 characters.
+	if (!display || display.length > 80 || /discord|clyde|```/i.test(display)) {
+		return SUPPORT_NAME;
+	}
+	return display;
+}
+
+export function splitMessage(text: string): string[] {
+	const chunks: string[] = [];
+	let rest = text;
+	while (rest.length > MAX_MESSAGE_CHARS) {
+		const window = rest.slice(0, MAX_MESSAGE_CHARS);
+		const breakAt = Math.max(
+			window.lastIndexOf("\n\n"),
+			window.lastIndexOf("\n"),
+		);
+		const cut = breakAt > MAX_MESSAGE_CHARS / 2 ? breakAt : MAX_MESSAGE_CHARS;
+		chunks.push(rest.slice(0, cut).trimEnd());
+		rest = rest.slice(cut).trimStart();
+	}
+	if (rest) chunks.push(rest);
+	return chunks;
+}
+
+const webhooks = new Map<string, Webhook>();
+
+// Replies go out through a channel webhook so they read as a message from the
+// agent rather than a bot card. Needs Manage Webhooks on the support channels.
+async function replyWebhook(
+	discord: Client,
+	thread: AnyThreadChannel,
+): Promise<Webhook | undefined> {
+	const parent = thread.parent;
+	if (!parent || !("fetchWebhooks" in parent)) return undefined;
+	const cached = webhooks.get(parent.id);
+	if (cached) return cached;
+	const existing = (await parent.fetchWebhooks()).find(
+		(w) => w.owner?.id === discord.user?.id && w.token,
+	);
+	const webhook =
+		existing ?? (await parent.createWebhook({ name: SUPPORT_NAME }));
+	webhooks.set(parent.id, webhook);
+	return webhook;
+}
+
 async function deliverReply(discord: Client, email: ReceivedEmail) {
 	// Message-ID correlation only: anyone can email a synthetic address, so a
 	// subject or recipient match must never be enough to speak in a thread.
@@ -192,16 +248,33 @@ async function deliverReply(discord: Client, email: ReceivedEmail) {
 	}
 	const channel = await discord.channels.fetch(thread.discordThreadId);
 	if (!channel?.isThread()) return;
-	const body = replyText(email.text ?? "") || "(empty reply)";
-	const embed = brandedEmbed()
-		.setAuthor({ name: SUPPORT_NAME })
-		.setDescription(
-			body.length > MAX_EMBED_CHARS
-				? `${body.slice(0, MAX_EMBED_CHARS - 1)}…`
-				: body,
-		);
-	await channel.send({ embeds: [embed], files: await discordFiles(email) });
 	if (channel.archived) await channel.setArchived(false).catch(() => {});
+	const chunks = splitMessage(replyText(email.text ?? "") || "(empty reply)");
+	const files = await discordFiles(email);
+	const webhook = await replyWebhook(discord, channel).catch((err) => {
+		console.error(`reply webhook for thread ${channel.id} failed`, err);
+		return undefined;
+	});
+	const username = senderName(email.from);
+	const avatarURL = discord.user?.displayAvatarURL();
+	for (const [i, content] of chunks.entries()) {
+		const message = {
+			content,
+			files: i === chunks.length - 1 ? files : [],
+			allowedMentions: { parse: [] },
+		};
+		if (webhook) {
+			await webhook
+				.send({ ...message, threadId: channel.id, username, avatarURL })
+				.catch((err) => {
+					// A webhook deleted in Discord stays cached until it fails once.
+					webhooks.delete(webhook.channelId);
+					throw err;
+				});
+		} else {
+			await channel.send(message);
+		}
+	}
 	console.log(`relayed email ${email.id} to thread ${thread.discordThreadId}`);
 }
 
