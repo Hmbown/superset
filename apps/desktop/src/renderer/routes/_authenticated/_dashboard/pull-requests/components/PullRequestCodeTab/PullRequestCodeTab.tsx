@@ -41,6 +41,10 @@ import { PullRequestCommentThread } from "./components/PullRequestCommentThread"
 import { fetchPullRequestDiff } from "./utils/fetchPullRequestDiff";
 import { getFileItemVersion } from "./utils/getFileItemVersion";
 import { parsePullRequestPatch } from "./utils/parsePullRequestPatch";
+import {
+	pullRequestDiffQueryKey,
+	pullRequestThreadsQueryKey,
+} from "./utils/pullRequestCodeTabQueryKeys";
 
 interface PullRequestCodeTabProps {
 	projectId: string | null;
@@ -265,14 +269,13 @@ export function PullRequestCodeTab({
 	const canUseProject = !!projectId && !!hostUrl;
 
 	const { data, isLoading, error, refetch } = useQuery({
-		queryKey: [
-			"pull-request-diff",
+		queryKey: pullRequestDiffQueryKey({
 			organizationId,
 			repoFullName,
 			projectId,
 			hostUrl,
 			prNumber,
-		],
+		}),
 		queryFn: () =>
 			fetchPullRequestDiff({
 				projectId,
@@ -285,12 +288,11 @@ export function PullRequestCodeTab({
 		gcTime: 10 * 60_000,
 	});
 
-	const threadsQueryKey = [
-		"pull-request-threads",
+	const threadsQueryKey = pullRequestThreadsQueryKey({
 		projectId,
 		hostUrl,
 		prNumber,
-	];
+	});
 	const { data: threadsData, dataUpdatedAt: threadsUpdatedAt } = useQuery({
 		queryKey: threadsQueryKey,
 		enabled: canUseProject,

@@ -4,7 +4,12 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { LuCheck, LuCopy, LuMaximize2, LuRefreshCw } from "react-icons/lu";
+import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { useCopyToClipboard } from "renderer/hooks/useCopyToClipboard";
+import {
+	pullRequestDiffQueryKey,
+	pullRequestThreadsQueryKey,
+} from "renderer/routes/_authenticated/_dashboard/pull-requests/components/PullRequestCodeTab/utils/pullRequestCodeTabQueryKeys";
 import { pullRequestDetailQueryKey } from "renderer/routes/_authenticated/_dashboard/pull-requests/hooks/usePullRequestDetail";
 import { usePullRequestsSplitViewStore } from "renderer/routes/_authenticated/_dashboard/pull-requests/stores/pullRequestsSplitViewStore";
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
@@ -24,6 +29,7 @@ export function PullRequestPaneHeaderExtras({
 	const { copyToClipboard, copied } = useCopyToClipboard();
 	const detail = usePullRequestPaneDetail(data);
 	const { hostUrl } = useWorkspace();
+	const organizationId = useActiveOrganizationId();
 	const isRefreshing =
 		useIsFetching({
 			queryKey: pullRequestDetailQueryKey({
@@ -44,13 +50,20 @@ export function PullRequestPaneHeaderExtras({
 		]) {
 			void queryClient.invalidateQueries({ queryKey });
 		}
+		const codeTabKey = {
+			projectId: detail.projectId,
+			hostUrl: hostUrl ?? "",
+			prNumber: data.number,
+		};
 		void queryClient.invalidateQueries({
-			predicate: ({ queryKey }) =>
-				(queryKey[0] === "pull-request-diff" &&
-					queryKey.includes(data.repoFullName) &&
-					queryKey.includes(data.number)) ||
-				(queryKey[0] === "pull-request-threads" &&
-					queryKey.includes(data.number)),
+			queryKey: pullRequestDiffQueryKey({
+				...codeTabKey,
+				organizationId,
+				repoFullName: data.repoFullName,
+			}),
+		});
+		void queryClient.invalidateQueries({
+			queryKey: pullRequestThreadsQueryKey(codeTabKey),
 		});
 	};
 	const copyLabel = copied
