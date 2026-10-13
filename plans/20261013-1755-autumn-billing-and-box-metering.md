@@ -47,7 +47,7 @@ Each question has a placeholder in the Decision Log.
 - [x] (2026-10-13 20:30Z) M5 Plan state from Autumn in Autumn mode: `organizationBilling` (memory, Redis, last-known, fail-open) feeds `activePlan` (same fields plus optional `paymentState`), `organizationPlan`, the automations gate, the Slack gate, `beforeAddMember` and `authorizeReference`; tiers come from `pro_access`/`enterprise_access`; every sync invalidates the cache. SQL readers keep the projection. Not covered by tests: the cache tiers (Redis is module-scoped).
 - [x] (2026-10-13 22:40Z) M6 Our own `/api/auth/autumn/*` routes with role rules (see Decision Log) and `billingProvider` on `activePlan`; desktop and web billing pages call them in Autumn mode and the Stripe-plugin routes otherwise (shared `useBillingActions` hooks).
 - [x] (2026-10-13 21:10Z) M7 Dunning: `handleStripeBillingEvent` (payment failed, renewal with the `"year"` fix, payment succeeded, checkout abandoned, plan changed) is the plugin's top-level `onEvent` and runs from the Autumn-mode webhook; orgs found through the Stripe customer when `referenceId` is absent. Purge settles the org's open boots, cancels through Autumn, and cancels Stripe with `invoice_now`. Import script verifies drift with `billing.verify`. Not covered by tests: `handleStripeBillingEvent` (moved code).
-- [ ] M8 Full validation, PR description, plan to `done/`.
+- [x] (2026-10-13 23:30Z) M8 Validation (see Outcomes), PR description rewritten. Plan stays active until M0 runs against the Autumn sandbox.
 
 
 ## Surprises & Discoveries
@@ -119,7 +119,9 @@ Each question has a placeholder in the Decision Log.
 
 ## Outcomes & Retrospective
 
-Not started.
+At 2026-10-13 23:30Z, M1 to M8 shipped on PR #8354 except M0. Tests: packages/auth 52, packages/trpc 582, apps/api 230, packages/db 21, packages/shared 1313, packages/i18n 165, all passing; desktop 7980 pass with 36 failures that are environmental and order-dependent (real-git, shell-environment and terminal-transport tests; the same terminal-transport tests fail on the base commit, and the git tests pass in isolation on both). Typecheck matches the base in every package (auth 5, trpc 22, api 24, desktop 28 vs 29, web 26, mobile 212, all pre-existing). Repo-wide biome and sherif are clean; `check:i18n` compiles every locale.
+
+Gaps: M0 is not run, so a retried or expired `finalize`, a fractional `overrideValue`, and `track` on an unpriced feature are unverified against live Autumn; the plan-state cache tiers and `handleStripeBillingEvent` have no unit tests; the over-limit UI and billing pages are typechecked and unit-tested but not driven end to end. Two deviations from the reviewer's plan are recorded in the Decision Log: the `subscriptions` projection stays (Autumn does not expose Stripe subscription ids), and `/api/auth/autumn/*` is served by our own plugin (a before hook cannot see a desktop's bearer session).
 
 
 ## Context and Orientation
@@ -244,3 +246,5 @@ New dependencies: `svix@2.8.0` (apps/api). Existing: `autumn-js@1.3.55` (auth, t
       | { kind: "ended_unpaid"; amountDue: number | null; currency: string };
 
 Revision note (2026-10-13 18:10Z): recorded answers to D-Q1 to D-Q4 (free orgs refused with a distinct "needs a paid plan" error; golden builds unbilled; Stripe onEvent notices turned on; flip one-way after a clean import) and updated M3, M4 and M7 to match.
+
+Revision note (2026-10-13 23:30Z): implementation of M1 to M8 recorded in Progress, Decision Log and Outcomes; M0 remains open pending Autumn sandbox keys.
