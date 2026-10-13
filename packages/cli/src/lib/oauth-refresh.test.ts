@@ -210,6 +210,23 @@ describe("refreshStoredAuth", () => {
 		}
 	});
 
+	it("keeps the token when the request never left this machine", async () => {
+		const h = makeHarness(staleAuth());
+		h.deps.refresh = async () => {
+			throw Object.assign(new Error("Unable to connect"), {
+				code: "ConnectionRefused",
+			});
+		};
+		try {
+			await expect(refreshStoredAuth(h.deps)).rejects.toThrow(
+				/Unable to connect/,
+			);
+			expect(h.stored.auth?.refreshToken).toBe("stale-refresh");
+		} finally {
+			h.cleanup();
+		}
+	});
+
 	it("a failed refresh burns the token, so no later caller can replay it", async () => {
 		const h = makeHarness(staleAuth());
 		h.deps.refresh = async () => {

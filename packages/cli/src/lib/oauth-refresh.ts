@@ -111,6 +111,7 @@ export async function refreshStoredAuth(
 			if (rechecked.auth && isAuthFresh(rechecked.auth, deps.now())) {
 				return rechecked;
 			}
+			if (neverReachedServer(error)) deps.writeConfig(latest);
 			throw error;
 		}
 		const next: SupersetConfig = {
@@ -126,6 +127,24 @@ export async function refreshStoredAuth(
 	} finally {
 		lock.release();
 	}
+}
+
+const UNSENT_ERROR_CODES = new Set([
+	"ConnectionRefused",
+	"ECONNREFUSED",
+	"ENOTFOUND",
+	"EAI_AGAIN",
+]);
+
+function neverReachedServer(error: unknown): boolean {
+	const { code, cause } = error as {
+		code?: unknown;
+		cause?: { code?: unknown };
+	};
+	return (
+		UNSENT_ERROR_CODES.has(String(code)) ||
+		UNSENT_ERROR_CODES.has(String(cause?.code))
+	);
 }
 
 /**
