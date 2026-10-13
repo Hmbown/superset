@@ -69,6 +69,7 @@ function workspace(
 		lastActivityAt: null,
 		taskId: null,
 		pendingTransaction: null,
+		isMine: null,
 	};
 }
 const pinnedWorkspaces = [

@@ -105,6 +105,26 @@ describe("filterDashboardSidebarProjects", () => {
 		expect(byWorkspace[0]).toBe(projects[1]);
 	});
 
+	it("matches cloud workspaces and prunes them to the matches", () => {
+		const withCloud = [
+			makeProject({
+				id: "p-cloud",
+				name: "Cloud Repo",
+				isCollapsed: true,
+				cloudWorkspaces: [
+					makeWorkspace({ id: "c1", name: "cloud-login", hostType: "cloud" }),
+					makeWorkspace({ id: "c2", name: "cloud-billing", hostType: "cloud" }),
+				],
+			}),
+		];
+
+		const result = filterDashboardSidebarProjects(withCloud, "login");
+		expect(result).toHaveLength(1);
+		expect(result[0]?.isCollapsed).toBe(false);
+		expect(result[0]?.cloudWorkspaces?.map((w) => w.id)).toEqual(["c1"]);
+		expect(filterDashboardSidebarProjects(withCloud, "zzz")).toHaveLength(0);
+	});
+
 	it("never mutates the input", () => {
 		filterDashboardSidebarProjects(projects, "api");
 		expect(projects[0]?.isCollapsed).toBe(true);

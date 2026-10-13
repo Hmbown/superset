@@ -5,10 +5,12 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useLingui } from "@lingui/react/macro";
+import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { OverflowFadeContainer } from "@superset/ui/overflow-fade-container";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
 import { useMatchRoute, useNavigate } from "@tanstack/react-router";
+import { useFeatureFlagEnabled } from "posthog-js/react";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 import {
@@ -153,6 +155,9 @@ export function DashboardSidebar({
 	isCollapsed = false,
 }: DashboardSidebarProps) {
 	const { t } = useLingui();
+	const inlineCloudWorkspaces =
+		useFeatureFlagEnabled(FEATURE_FLAGS.SIDEBAR_INLINE_CLOUD_WORKSPACES) ===
+		true;
 	const {
 		groups,
 		hiddenProjects,
@@ -162,7 +167,7 @@ export function DashboardSidebar({
 		githubStatus,
 		refreshWorkspacePullRequest,
 		toggleProjectCollapsed,
-	} = useDashboardSidebarData();
+	} = useDashboardSidebarData({ inlineCloudWorkspaces });
 	const {
 		deleteSection,
 		reorderProjects,
@@ -462,10 +467,12 @@ export function DashboardSidebar({
 												onWorkspaceHover={refreshWorkspacePullRequest}
 											/>
 										)}
-										<DashboardSidebarCloudSection
-											isCollapsed={isCollapsed}
-											onWorkspaceHover={refreshWorkspacePullRequest}
-										/>
+										{!inlineCloudWorkspaces && (
+											<DashboardSidebarCloudSection
+												isCollapsed={isCollapsed}
+												onWorkspaceHover={refreshWorkspacePullRequest}
+											/>
+										)}
 										<DashboardSidebarSessionsSection
 											sessionWorkspaces={sessionWorkspaces}
 											isCollapsed={isCollapsed}

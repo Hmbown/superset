@@ -124,6 +124,7 @@ function decorateSidebarWorkspace(
 		taskId: workspace.taskId,
 		isPinned: workspace.pinnedAt != null,
 		pendingTransaction: workspace.pendingTransaction,
+		isMine: null,
 	};
 }
 

@@ -70,7 +70,10 @@ export function DashboardSidebarProjectSection({
 		project,
 	});
 
-	const totalWorkspaceCount = flattenedCollapsedWorkspaces.length;
+	const cloudWorkspaces = project.cloudWorkspaces;
+	const isCloudRepo = project.kind === "cloud-repo";
+	const totalWorkspaceCount =
+		flattenedCollapsedWorkspaces.length + (cloudWorkspaces?.length ?? 0);
 
 	const deleteProjectDialog = canDeleteProject && (
 		<DeleteProjectDialog
@@ -101,6 +104,7 @@ export function DashboardSidebarProjectSection({
 		return (
 			<DashboardSidebarProjectContextMenu
 				projectId={project.id}
+				kind={project.kind}
 				onCreateSection={handleNewSection}
 				onImportWorktrees={handleImportWorktrees}
 				onOpenInFinder={handleOpenInFinder}
@@ -117,6 +121,7 @@ export function DashboardSidebarProjectSection({
 						projectColor={project.color}
 						isCollapsed={project.isCollapsed}
 						totalWorkspaceCount={totalWorkspaceCount}
+						trailingWorkspaces={cloudWorkspaces}
 						workspaceShortcutLabels={workspaceShortcutLabels}
 						onWorkspaceHover={onWorkspaceHover}
 						onToggleCollapse={() => onToggleCollapse(project.id)}
@@ -132,6 +137,7 @@ export function DashboardSidebarProjectSection({
 		<div className="mt-1 first:mt-0">
 			<DashboardSidebarProjectContextMenu
 				projectId={project.id}
+				kind={project.kind}
 				onCreateSection={handleNewSection}
 				onImportWorktrees={handleImportWorktrees}
 				onOpenInFinder={handleOpenInFinder}
@@ -150,7 +156,7 @@ export function DashboardSidebarProjectSection({
 					onRenameValueChange={setRenameValue}
 					onSubmitRename={submitRename}
 					onCancelRename={cancelRename}
-					onStartRename={startRename}
+					onStartRename={isCloudRepo ? undefined : startRename}
 					onToggleCollapse={() => onToggleCollapse(project.id)}
 					onNewWorkspace={handleNewWorkspace}
 					{...(dragHandleAttributes ?? {})}
@@ -171,6 +177,7 @@ export function DashboardSidebarProjectSection({
 							containerId={project.id}
 							projectId={project.id}
 							isCollapsed={project.isCollapsed}
+							trailingWorkspaces={cloudWorkspaces}
 							workspaceShortcutLabels={workspaceShortcutLabels}
 							onWorkspaceHover={onWorkspaceHover}
 							onDeleteSection={deleteSection}

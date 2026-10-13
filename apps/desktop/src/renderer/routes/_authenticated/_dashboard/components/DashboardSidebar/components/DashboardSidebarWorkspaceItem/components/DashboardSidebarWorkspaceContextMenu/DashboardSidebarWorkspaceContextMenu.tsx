@@ -11,6 +11,7 @@ import {
 	ContextMenuTrigger,
 } from "@superset/ui/context-menu";
 import {
+	LuArchive,
 	LuArrowRightLeft,
 	LuArrowUp,
 	LuBellOff,
@@ -44,6 +45,11 @@ interface DashboardSidebarWorkspaceContextMenuProps {
 	isSessionWorkspace?: boolean;
 	isInSection?: boolean;
 	isLocalWorkspace: boolean;
+	/**
+	 * A cloud workspace has no placement row (no pin or group), no host
+	 * bindings to clear, and is archived rather than deleted.
+	 */
+	isCloudWorkspace?: boolean;
 	isPinned: boolean;
 	isUnread: boolean;
 	hasStatus: boolean;
@@ -56,7 +62,8 @@ interface DashboardSidebarWorkspaceContextMenuProps {
 	onCopyPath: () => void;
 	onCopyBranchName: () => void;
 	onCopyWorkspaceId: () => void;
-	onRemoveFromSidebar: () => void;
+	/** Absent when the row can't leave the sidebar (your own cloud workspace). */
+	onRemoveFromSidebar?: () => void;
 	onRename?: () => void;
 	onDelete?: () => void;
 	onToggleUnread: () => void;
@@ -71,6 +78,7 @@ export function DashboardSidebarWorkspaceContextMenu({
 	isSessionWorkspace = false,
 	isInSection,
 	isLocalWorkspace,
+	isCloudWorkspace = false,
 	isPinned,
 	isUnread,
 	hasStatus,
@@ -103,7 +111,8 @@ export function DashboardSidebarWorkspaceContextMenu({
 	// The derived union — a tag-only folder with no stored row is a valid
 	// move target.
 	const { sections } = useProjectTagFolderSections(projectId);
-	const canJoinGroup = projectId !== null || isSessionWorkspace;
+	const canJoinGroup =
+		!isCloudWorkspace && (projectId !== null || isSessionWorkspace);
 	const handleCloseAllPorts = () => {
 		if (isKillingPorts) return;
 		void killPorts(ports);
@@ -113,19 +122,21 @@ export function DashboardSidebarWorkspaceContextMenu({
 		<ContextMenu onOpenChange={setContextMenuOpen}>
 			<ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
 			<ContextMenuContent onCloseAutoFocus={onCloseAutoFocus}>
-				<ContextMenuItem onSelect={onTogglePin}>
-					{isPinned ? (
-						<>
-							<LuPinOff className="size-4 mr-2" />
-							<Trans>Unpin</Trans>
-						</>
-					) : (
-						<>
-							<LuPin className="size-4 mr-2" />
-							<Trans>Pin</Trans>
-						</>
-					)}
-				</ContextMenuItem>
+				{!isCloudWorkspace && (
+					<ContextMenuItem onSelect={onTogglePin}>
+						{isPinned ? (
+							<>
+								<LuPinOff className="size-4 mr-2" />
+								<Trans>Unpin</Trans>
+							</>
+						) : (
+							<>
+								<LuPin className="size-4 mr-2" />
+								<Trans>Pin</Trans>
+							</>
+						)}
+					</ContextMenuItem>
+				)}
 				{onRename && (
 					<ContextMenuItem onSelect={() => runAfterClose(onRename)}>
 						<LuPencil className="size-4 mr-2" />
@@ -168,13 +179,13 @@ export function DashboardSidebarWorkspaceContextMenu({
 						</>
 					)}
 				</ContextMenuItem>
-				{hasStatus && (
+				{hasStatus && !isCloudWorkspace && (
 					<ContextMenuItem onSelect={onClearStatus}>
 						<LuBellOff className="size-4 mr-2" />
 						<Trans>Clear Status</Trans>
 					</ContextMenuItem>
 				)}
-				{hasPullRequest && (
+				{hasPullRequest && !isCloudWorkspace && (
 					<ContextMenuItem onSelect={onRemovePullRequest}>
 						<LuUnlink className="size-4 mr-2" />
 						<Trans>Remove PR Link</Trans>
@@ -235,17 +246,28 @@ export function DashboardSidebarWorkspaceContextMenu({
 						<Trans>Close all ports</Trans>
 					</ContextMenuItem>
 				)}
-				<ContextMenuItem onSelect={onRemoveFromSidebar}>
-					<LuX className="size-4 mr-2" />
-					<Trans>Remove from Sidebar</Trans>
-				</ContextMenuItem>
+				{onRemoveFromSidebar && (
+					<ContextMenuItem onSelect={onRemoveFromSidebar}>
+						<LuX className="size-4 mr-2" />
+						<Trans>Remove from Sidebar</Trans>
+					</ContextMenuItem>
+				)}
 				{onDelete ? (
 					<ContextMenuItem
 						onSelect={onDelete}
 						className="text-destructive focus:text-destructive"
 					>
-						<LuTrash2 className="size-4 mr-2 text-destructive" />
-						<Trans>Delete</Trans>
+						{isCloudWorkspace ? (
+							<>
+								<LuArchive className="size-4 mr-2 text-destructive" />
+								<Trans>Archive</Trans>
+							</>
+						) : (
+							<>
+								<LuTrash2 className="size-4 mr-2 text-destructive" />
+								<Trans>Delete</Trans>
+							</>
+						)}
 						{showDeleteShortcut && (
 							<ContextMenuShortcut>{deleteHotkeyText}</ContextMenuShortcut>
 						)}

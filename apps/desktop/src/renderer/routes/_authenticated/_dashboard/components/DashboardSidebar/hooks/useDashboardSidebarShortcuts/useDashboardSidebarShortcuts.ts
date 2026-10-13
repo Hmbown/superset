@@ -83,9 +83,10 @@ export function useDashboardSidebarShortcuts(
 			[
 				// Sessions render above the project groups.
 				...sessionWorkspaces,
-				...groups.flatMap((project) =>
-					getProjectChildrenWorkspaces(project.children),
-				),
+				...groups.flatMap((project) => [
+					...getProjectChildrenWorkspaces(project.children),
+					...(project.cloudWorkspaces ?? []),
+				]),
 				// A destroy in flight keeps its row until the archive commit —
 				// don't hand shortcuts a workspace that is about to vanish.
 			].filter((workspace) => !deletingIds.has(workspace.id)),
@@ -122,6 +123,14 @@ export function useDashboardSidebarShortcuts(
 						sectionIsCollapsed: child.section.isCollapsed,
 					});
 				}
+			}
+			for (const workspace of project.cloudWorkspaces ?? []) {
+				map.set(workspace.id, {
+					projectId: project.id,
+					projectIsCollapsed: project.isCollapsed,
+					sectionId: null,
+					sectionIsCollapsed: false,
+				});
 			}
 		}
 		for (const workspace of sessionWorkspaces) {

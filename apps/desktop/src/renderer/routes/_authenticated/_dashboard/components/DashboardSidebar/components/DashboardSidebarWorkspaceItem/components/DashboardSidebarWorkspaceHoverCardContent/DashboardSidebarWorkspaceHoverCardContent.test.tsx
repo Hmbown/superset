@@ -37,6 +37,7 @@ function workspaceWithName(name: string): DashboardSidebarWorkspace {
 		taskId: null,
 		isPinned: false,
 		pendingTransaction: null,
+		isMine: null,
 	};
 }
 

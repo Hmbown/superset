@@ -80,7 +80,8 @@ function isPointInsideCardCone(
 
 export interface DashboardSidebarHoverPayload {
 	workspace: DashboardSidebarWorkspace;
-	onEditBranchClick: (branchName: string) => void;
+	/** Absent when the branch can't be renamed from here (a cloud workspace). */
+	onEditBranchClick?: (branchName: string) => void;
 }
 
 interface HoverState {

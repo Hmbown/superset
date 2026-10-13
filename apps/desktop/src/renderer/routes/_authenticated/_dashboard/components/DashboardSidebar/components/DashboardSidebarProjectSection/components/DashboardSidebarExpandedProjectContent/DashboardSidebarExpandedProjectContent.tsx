@@ -13,6 +13,7 @@ import type {
 	DashboardSidebarWorkspace,
 	DashboardSidebarWorkspaceIndentation,
 } from "../../../../types";
+import { DashboardSidebarWorkspaceItem } from "../../../DashboardSidebarWorkspaceItem";
 import { WorkspaceBulkMenuScope } from "../../../DashboardSidebarWorkspaceItem/components/WorkspaceBulkMenuScope";
 import { SidebarDropZone } from "../../../SidebarDropZone";
 import { SortableSectionHeader } from "../../../SortableSectionHeader";
@@ -37,6 +38,11 @@ interface DashboardSidebarExpandedProjectContentProps {
 		"grouped"
 	>;
 	groupedIndentation?: DashboardSidebarWorkspaceIndentation;
+	/**
+	 * Rows listed after the sortable ones, outside the DnD container: they
+	 * have no placement row to reorder or group (cloud workspaces).
+	 */
+	trailingWorkspaces?: DashboardSidebarWorkspace[];
 	workspaceShortcutLabels: Map<string, string>;
 	onWorkspaceHover: (workspaceId: string) => void | Promise<void>;
 	onDeleteSection: (sectionId: string) => void;
@@ -55,6 +61,7 @@ export function DashboardSidebarExpandedProjectContent({
 	isCollapsed,
 	topLevelIndentation,
 	groupedIndentation,
+	trailingWorkspaces,
 	workspaceShortcutLabels,
 	onWorkspaceHover,
 	onDeleteSection,
@@ -189,6 +196,15 @@ export function DashboardSidebarExpandedProjectContent({
 									);
 								})}
 							</SortableContext>
+							{trailingWorkspaces?.map((workspace) => (
+								<DashboardSidebarWorkspaceItem
+									key={workspace.id}
+									workspace={workspace}
+									indentation={topLevelIndentation}
+									onHoverCardOpen={onWorkspaceHover}
+									shortcutLabel={workspaceShortcutLabels.get(workspace.id)}
+								/>
+							))}
 							{dropZoneEligible && (
 								<SidebarDropZone
 									dropZoneId={dropZoneId(containerId)}
