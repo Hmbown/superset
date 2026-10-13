@@ -811,6 +811,9 @@ msgstr "{count} host menjalankan layanan host yang lebih lama dari aplikasi ini"
 msgid "{count}/day"
 msgstr "{count}/hari"
 
+msgid "{current} of {total}"
+msgstr "{current} dari {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} dari {totalBranches}"
 
@@ -2252,6 +2255,9 @@ msgstr "Perakit Anonim"
 msgid "another device"
 msgstr "perangkat lain"
 
+msgid "Answer any questions in the terminal below, such as a password."
+msgstr "Jawab pertanyaan di terminal di bawah, misalnya kata sandi."
+
 msgid "Answer this question on desktop, or skip it."
 msgstr "Jawab pertanyaan ini di desktop, atau lewati."
 
@@ -2607,6 +2613,9 @@ msgstr "Lampiran memerlukan host yang online"
 msgid "Attempt before checks pass"
 msgstr "Coba sebelum check lulus"
 
+msgid "Attempted changes"
+msgstr "Perubahan yang dicoba"
+
 msgid "Attention queue"
 msgstr "Antrean perhatian"
 
@@ -2784,9 +2793,6 @@ msgstr "Kembali ke otomatisasi"
 
 msgid "Back to billing"
 msgstr "Kembali ke penagihan"
-
-msgid "Back to Blog"
-msgstr "Kembali ke Blog"
 
 msgid "Back to Changelog"
 msgstr "Kembali ke Changelog"
@@ -3050,8 +3056,8 @@ msgstr "Bawa {companyName} ke tim Anda. Hubungi kami untuk mempelajari lebih lan
 msgid "Bring a link to something you built recently."
 msgstr "Bawa tautan ke sesuatu yang baru-baru ini Anda bangun."
 
-msgid "Bring Any Agent."
-msgstr "Bawa Agen Apa Pun."
+msgid "Bring Any Agent"
+msgstr "Bawa Agen Apa Pun"
 
 msgid "Bring over your projects"
 msgstr "Impor proyek Anda"
@@ -3365,6 +3371,9 @@ msgstr "Ganti logo organisasi"
 
 msgid "Change organization slug"
 msgstr "Ubah slug organisasi"
+
+msgid "Change preview"
+msgstr "Pratinjau perubahan"
 
 msgid "Change priority"
 msgstr "Ubah prioritas"
@@ -3719,6 +3728,12 @@ msgstr "Klik di sini kalau tidak dialihkan"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Klik tombol “↑ update” untuk melihat konfirmasi sebelum pembaruan"
 
+msgid "Click the chip to open the issue"
+msgstr "Klik chip untuk membuka issue"
+
+msgid "Click the chip to open the pull request"
+msgstr "Klik chip untuk membuka pull request"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Klik untuk menyalin ID sesi (lanjutkan dengan `claude --resume <id>`)."
 
@@ -3758,6 +3773,9 @@ msgstr "Meng-clone…"
 
 msgid "Close"
 msgstr "Tutup"
+
+msgid "Close (Esc)"
+msgstr "Tutup (Esc)"
 
 #. placeholder {0}: row.title
 msgid "Close {0}"
@@ -3889,6 +3907,10 @@ msgstr "Tutup workspace"
 msgid "Close Workspace"
 msgstr "Tutup Workspace"
 
+msgid "Closed"
+msgstr "Ditutup"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Ditutup"
 
@@ -5914,6 +5936,9 @@ msgstr "Terlepas"
 msgid "Details"
 msgstr "Detail"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Detail tidak tersedia di sini, tetapi tautan tetap bisa dibuka."
+
 msgid "Dev"
 msgstr "Dev"
 
@@ -6239,6 +6264,10 @@ msgstr "Mengunduh..."
 msgid "Downloads"
 msgstr "Unduhan"
 
+msgid "Draft"
+msgstr "Draf"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Draf"
 
@@ -8683,6 +8712,9 @@ msgstr "Diinstal melalui"
 msgid "Installing..."
 msgstr "Memasang..."
 
+msgid "Installs Superset on a machine you can reach with ssh, signs Superset in to your account, and keeps it running as a service."
+msgstr "Memasang Superset di mesin yang bisa Anda jangkau dengan ssh, menghubungkan Superset ke akun Anda, dan menjaga Superset tetap berjalan sebagai layanan."
+
 msgid "Instructions"
 msgstr "Instruksi"
 
@@ -8811,6 +8843,13 @@ msgstr "Apakah ada paket gratis?"
 
 msgid "Isolation"
 msgstr "Isolasi"
+
+msgid "Issue"
+msgstr "Issue"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Issue #{0}"
 
 msgid "Issue archived"
 msgstr "Issue diarsipkan"
@@ -9440,6 +9479,9 @@ msgstr "Memuat file..."
 msgid "Loading fonts..."
 msgstr "Memuat font..."
 
+msgid "Loading GitHub details"
+msgstr "Memuat detail GitHub"
+
 msgid "Loading groups…"
 msgstr "Memuat grup…"
 
@@ -9853,6 +9895,10 @@ msgstr "Status merge"
 msgid "Merge status unknown"
 msgstr "Status merge tidak diketahui"
 
+msgid "Merged"
+msgstr "Di-merge"
+
+msgctxt "pull request state"
 msgid "Merged"
 msgstr "Di-merge"
 
@@ -10348,6 +10394,9 @@ msgstr "Berita, pembaruan, dan wawasan dari tim Superset tentang agen coding par
 
 msgid "Next"
 msgstr "Berikutnya"
+
+msgid "Next (Enter)"
+msgstr "Berikutnya (Enter)"
 
 msgid "Next branch"
 msgstr "Branch berikutnya"
@@ -11342,6 +11391,10 @@ msgstr "buka"
 msgid "Open"
 msgstr "Buka"
 
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Terbuka"
+
 msgctxt "status"
 msgid "Open"
 msgstr "Buka"
@@ -11452,6 +11505,9 @@ msgstr "Buka dari folder"
 
 msgid "Open full screen"
 msgstr "Buka layar penuh"
+
+msgid "Open host"
+msgstr "Buka host"
 
 msgid "Open importer"
 msgstr "Buka importer"
@@ -11807,8 +11863,8 @@ msgstr "Oranye"
 msgid "Orchestrate Parallel Agents"
 msgstr "Orkestrasi Agen Paralel"
 
-msgid "Orchestrate Them All."
-msgstr "Orkestrasi Semuanya."
+msgid "Orchestrate Them All"
+msgstr "Orkestrasi Semuanya"
 
 msgid "Orchestrated"
 msgstr "Terorkestrasi"
@@ -12404,6 +12460,10 @@ msgstr "Kirim balasan"
 msgid "PR"
 msgstr "PR"
 
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
+
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
 msgid "PR #{0} — {1}"
@@ -12523,6 +12583,9 @@ msgstr "Pratinjau: pengingat bintang GitHub"
 
 msgid "Previous"
 msgstr "Sebelumnya"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Sebelumnya (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Branch sebelumnya"
@@ -14815,6 +14878,9 @@ msgstr "Siapkan"
 msgid "Set up {0}"
 msgstr "Siapkan {0}"
 
+msgid "Set up a host over SSH"
+msgstr "Siapkan host lewat SSH"
+
 msgid "Set up an automation"
 msgstr "Siapkan otomatisasi"
 
@@ -14856,6 +14922,9 @@ msgstr "Setup"
 
 msgid "Setup script"
 msgstr "Skrip setup"
+
+msgid "Setup stopped. The reason is in the output below."
+msgstr "Penyiapan berhenti. Alasannya ada di output di bawah."
 
 msgid "Sexual content"
 msgstr "Konten seksual"
@@ -15510,6 +15579,9 @@ msgstr "Squash dan merge"
 msgid "SS"
 msgstr "SS"
 
+msgid "SSH destination"
+msgstr "Tujuan SSH"
+
 msgid "SSO/SAML"
 msgstr "SSO/SAML"
 
@@ -15968,6 +16040,9 @@ msgstr "Superset dibangun menggunakan Superset, jadi kami sendiri adalah penggun
 msgid "Superset is designed to work with your existing tool, we natively support deep-linking to IDEs like Cursor so you can open your workspaces and files in your IDE."
 msgstr "Superset dirancang untuk bekerja dengan alat yang sudah Anda pakai; kami mendukung deep-link ke IDE seperti Cursor secara native sehingga Anda bisa membuka workspace dan file di IDE Anda."
 
+msgid "Superset is getting a new name soon"
+msgstr "Superset akan segera berganti nama"
+
 msgid "Superset is open source. If it's helped you today, a GitHub star helps other developers find it."
 msgstr "Superset bersifat open source. Kalau hari ini membantu Anda, satu star GitHub membantu developer lain menemukannya."
 
@@ -16003,9 +16078,6 @@ msgstr "Diff kode Superset Mobile di iPhone"
 
 msgid "Superset mobile gives me the power of my desktop anywhere I go."
 msgstr "Superset mobile memberi saya kekuatan desktop ke mana pun saya pergi."
-
-msgid "Superset Mobile is here"
-msgstr "Superset Mobile telah hadir"
 
 msgid "Superset Mobile is part of Pro"
 msgstr "Superset Mobile termasuk dalam Pro"
@@ -16666,6 +16738,9 @@ msgstr "Host tidak kembali dalam lima belas menit."
 
 msgid "The host hasn't answered."
 msgstr "Host tidak merespons."
+
+msgid "The host is online. Pick it when you create a workspace."
+msgstr "Host sudah online. Pilih host ini saat membuat workspace."
 
 msgid "The host isn't connected to the Superset relay. If it's this device, turn on \"Allow remote access to this device via relay\" in Settings > Remote Access, then try again."
 msgstr "Host tidak terhubung ke relay Superset. Kalau ini perangkatnya, aktifkan \"Izinkan akses jarak jauh ke perangkat ini melalui relay\" di Pengaturan > Akses Jarak Jauh, lalu coba lagi."
@@ -17904,6 +17979,10 @@ msgstr "memperbarui prefix branch"
 msgid "Updated"
 msgstr "Diperbarui"
 
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "Diperbarui {0}"
+
 msgid "Updated {date}"
 msgstr "Diperbarui {date}"
 
@@ -18079,6 +18158,9 @@ msgstr "Pengguna tidak ditemukan"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "user@host, ssh://user@host:2222, or an ssh config alias"
+msgstr "user@host, ssh://user@host:2222, atau alias dari konfigurasi ssh"
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "Memakai nama branch acak (pembuatan AI kehabisan waktu)"

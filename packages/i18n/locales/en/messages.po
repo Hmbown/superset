@@ -811,6 +811,9 @@ msgstr "{count} hosts run an older host service than this app"
 msgid "{count}/day"
 msgstr "{count}/day"
 
+msgid "{current} of {total}"
+msgstr "{current} of {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} of {totalBranches}"
 
@@ -2252,6 +2255,9 @@ msgstr "Anonymous Assembler"
 msgid "another device"
 msgstr "another device"
 
+msgid "Answer any questions in the terminal below, such as a password."
+msgstr "Answer any questions in the terminal below, such as a password."
+
 msgid "Answer this question on desktop, or skip it."
 msgstr "Answer this question on desktop, or skip it."
 
@@ -2607,6 +2613,9 @@ msgstr "Attachments need an online host"
 msgid "Attempt before checks pass"
 msgstr "Attempt before checks pass"
 
+msgid "Attempted changes"
+msgstr "Attempted changes"
+
 msgid "Attention queue"
 msgstr "Attention queue"
 
@@ -2784,9 +2793,6 @@ msgstr "Back to automations"
 
 msgid "Back to billing"
 msgstr "Back to billing"
-
-msgid "Back to Blog"
-msgstr "Back to Blog"
 
 msgid "Back to Changelog"
 msgstr "Back to Changelog"
@@ -3050,8 +3056,8 @@ msgstr "Bring {companyName} to your team. Get in touch to learn more about enter
 msgid "Bring a link to something you built recently."
 msgstr "Bring a link to something you built recently."
 
-msgid "Bring Any Agent."
-msgstr "Bring Any Agent."
+msgid "Bring Any Agent"
+msgstr "Bring Any Agent"
 
 msgid "Bring over your projects"
 msgstr "Bring over your projects"
@@ -3365,6 +3371,9 @@ msgstr "Change organization logo"
 
 msgid "Change organization slug"
 msgstr "Change organization slug"
+
+msgid "Change preview"
+msgstr "Change preview"
 
 msgid "Change priority"
 msgstr "Change priority"
@@ -3719,6 +3728,12 @@ msgstr "Click here if not redirected"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Click the “↑ update” pill to see the pre-update confirm"
 
+msgid "Click the chip to open the issue"
+msgstr "Click the chip to open the issue"
+
+msgid "Click the chip to open the pull request"
+msgstr "Click the chip to open the pull request"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Click to copy the session ID (resume with `claude --resume <id>`)."
 
@@ -3758,6 +3773,9 @@ msgstr "Cloning…"
 
 msgid "Close"
 msgstr "Close"
+
+msgid "Close (Esc)"
+msgstr "Close (Esc)"
 
 #. placeholder {0}: row.title
 msgid "Close {0}"
@@ -3889,6 +3907,10 @@ msgstr "Close workspace"
 msgid "Close Workspace"
 msgstr "Close Workspace"
 
+msgid "Closed"
+msgstr "Closed"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Closed"
 
@@ -5914,6 +5936,9 @@ msgstr "Detached"
 msgid "Details"
 msgstr "Details"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Details are not available here, but the link still opens."
+
 msgid "Dev"
 msgstr "Dev"
 
@@ -6239,6 +6264,10 @@ msgstr "Downloading..."
 msgid "Downloads"
 msgstr "Downloads"
 
+msgid "Draft"
+msgstr "Draft"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Draft"
 
@@ -8683,6 +8712,9 @@ msgstr "Installed via"
 msgid "Installing..."
 msgstr "Installing..."
 
+msgid "Installs Superset on a machine you can reach with ssh, signs Superset in to your account, and keeps it running as a service."
+msgstr "Installs Superset on a machine you can reach with ssh, signs Superset in to your account, and keeps it running as a service."
+
 msgid "Instructions"
 msgstr "Instructions"
 
@@ -8811,6 +8843,13 @@ msgstr "Is there a free plan?"
 
 msgid "Isolation"
 msgstr "Isolation"
+
+msgid "Issue"
+msgstr "Issue"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Issue #{0}"
 
 msgid "Issue archived"
 msgstr "Issue archived"
@@ -9440,6 +9479,9 @@ msgstr "Loading files..."
 msgid "Loading fonts..."
 msgstr "Loading fonts..."
 
+msgid "Loading GitHub details"
+msgstr "Loading GitHub details"
+
 msgid "Loading groups…"
 msgstr "Loading groups…"
 
@@ -9853,6 +9895,10 @@ msgstr "Merge status"
 msgid "Merge status unknown"
 msgstr "Merge status unknown"
 
+msgid "Merged"
+msgstr "Merged"
+
+msgctxt "pull request state"
 msgid "Merged"
 msgstr "Merged"
 
@@ -10348,6 +10394,9 @@ msgstr "News, updates, and insights from the Superset team about parallel coding
 
 msgid "Next"
 msgstr "Next"
+
+msgid "Next (Enter)"
+msgstr "Next (Enter)"
 
 msgid "Next branch"
 msgstr "Next branch"
@@ -11342,6 +11391,10 @@ msgstr "open"
 msgid "Open"
 msgstr "Open"
 
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Open"
+
 msgctxt "status"
 msgid "Open"
 msgstr "Open"
@@ -11452,6 +11505,9 @@ msgstr "Open from folder"
 
 msgid "Open full screen"
 msgstr "Open full screen"
+
+msgid "Open host"
+msgstr "Open host"
 
 msgid "Open importer"
 msgstr "Open importer"
@@ -11807,8 +11863,8 @@ msgstr "Orange"
 msgid "Orchestrate Parallel Agents"
 msgstr "Orchestrate Parallel Agents"
 
-msgid "Orchestrate Them All."
-msgstr "Orchestrate Them All."
+msgid "Orchestrate Them All"
+msgstr "Orchestrate Them All"
 
 msgid "Orchestrated"
 msgstr "Orchestrated"
@@ -12404,6 +12460,10 @@ msgstr "Post reply"
 msgid "PR"
 msgstr "PR"
 
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
+
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
 msgid "PR #{0} — {1}"
@@ -12523,6 +12583,9 @@ msgstr "Preview: GitHub star nag toast"
 
 msgid "Previous"
 msgstr "Previous"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Previous (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Previous branch"
@@ -14815,6 +14878,9 @@ msgstr "Set up"
 msgid "Set up {0}"
 msgstr "Set up {0}"
 
+msgid "Set up a host over SSH"
+msgstr "Set up a host over SSH"
+
 msgid "Set up an automation"
 msgstr "Set up an automation"
 
@@ -14856,6 +14922,9 @@ msgstr "Setup"
 
 msgid "Setup script"
 msgstr "Setup script"
+
+msgid "Setup stopped. The reason is in the output below."
+msgstr "Setup stopped. The reason is in the output below."
 
 msgid "Sexual content"
 msgstr "Sexual content"
@@ -15510,6 +15579,9 @@ msgstr "Squash and merge"
 msgid "SS"
 msgstr "SS"
 
+msgid "SSH destination"
+msgstr "SSH destination"
+
 msgid "SSO/SAML"
 msgstr "SSO/SAML"
 
@@ -15968,6 +16040,9 @@ msgstr "Superset is built in Superset, so we're our own #1 users. You get paid t
 msgid "Superset is designed to work with your existing tool, we natively support deep-linking to IDEs like Cursor so you can open your workspaces and files in your IDE."
 msgstr "Superset is designed to work with your existing tool, we natively support deep-linking to IDEs like Cursor so you can open your workspaces and files in your IDE."
 
+msgid "Superset is getting a new name soon"
+msgstr "Superset is getting a new name soon"
+
 msgid "Superset is open source. If it's helped you today, a GitHub star helps other developers find it."
 msgstr "Superset is open source. If it's helped you today, a GitHub star helps other developers find it."
 
@@ -16003,9 +16078,6 @@ msgstr "Superset Mobile code diff on iPhone"
 
 msgid "Superset mobile gives me the power of my desktop anywhere I go."
 msgstr "Superset mobile gives me the power of my desktop anywhere I go."
-
-msgid "Superset Mobile is here"
-msgstr "Superset Mobile is here"
 
 msgid "Superset Mobile is part of Pro"
 msgstr "Superset Mobile is part of Pro"
@@ -16666,6 +16738,9 @@ msgstr "The host did not come back within fifteen minutes."
 
 msgid "The host hasn't answered."
 msgstr "The host hasn't answered."
+
+msgid "The host is online. Pick it when you create a workspace."
+msgstr "The host is online. Pick it when you create a workspace."
 
 msgid "The host isn't connected to the Superset relay. If it's this device, turn on \"Allow remote access to this device via relay\" in Settings > Remote Access, then try again."
 msgstr "The host isn't connected to the Superset relay. If it's this device, turn on \"Allow remote access to this device via relay\" in Settings > Remote Access, then try again."
@@ -17904,6 +17979,10 @@ msgstr "update the branch prefix"
 msgid "Updated"
 msgstr "Updated"
 
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "Updated {0}"
+
 msgid "Updated {date}"
 msgstr "Updated {date}"
 
@@ -18079,6 +18158,9 @@ msgstr "User not found"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "user@host, ssh://user@host:2222, or an ssh config alias"
+msgstr "user@host, ssh://user@host:2222, or an ssh config alias"
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "Using random branch name (AI generation timed out)"

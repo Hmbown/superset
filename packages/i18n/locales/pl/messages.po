@@ -811,6 +811,9 @@ msgstr "{count} hostów działa na starszej usłudze hosta niż ta aplikacja"
 msgid "{count}/day"
 msgstr "{count}/dzień"
 
+msgid "{current} of {total}"
+msgstr "{current} z {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} z {totalBranches}"
 
@@ -2252,6 +2255,9 @@ msgstr "Anonimowy Monter"
 msgid "another device"
 msgstr "inne urządzenie"
 
+msgid "Answer any questions in the terminal below, such as a password."
+msgstr "Odpowiadaj na pytania w terminalu poniżej, na przykład podaj hasło."
+
 msgid "Answer this question on desktop, or skip it."
 msgstr "Odpowiedz na to pytanie na komputerze lub je pomiń."
 
@@ -2607,6 +2613,9 @@ msgstr "Załączniki wymagają hosta online"
 msgid "Attempt before checks pass"
 msgstr "Spróbuj przed przejściem kontroli"
 
+msgid "Attempted changes"
+msgstr "Próby wprowadzenia zmian"
+
 msgid "Attention queue"
 msgstr "Kolejka uwagi"
 
@@ -2784,9 +2793,6 @@ msgstr "Powrót do automatyzacji"
 
 msgid "Back to billing"
 msgstr "Wróć do rozliczeń"
-
-msgid "Back to Blog"
-msgstr "Wróć do bloga"
 
 msgid "Back to Changelog"
 msgstr "Wróć do changeloga"
@@ -3050,8 +3056,8 @@ msgstr "Wdróż {companyName} w swoim zespole. Skontaktuj się z nami, aby dowie
 msgid "Bring a link to something you built recently."
 msgstr "Podeślij link do czegoś, co niedawno zbudowałeś."
 
-msgid "Bring Any Agent."
-msgstr "Przyprowadź dowolnego agenta."
+msgid "Bring Any Agent"
+msgstr "Przyprowadź dowolnego agenta"
 
 msgid "Bring over your projects"
 msgstr "Przenieś swoje projekty"
@@ -3365,6 +3371,9 @@ msgstr "Zmień logo organizacji"
 
 msgid "Change organization slug"
 msgstr "Zmień slug organizacji"
+
+msgid "Change preview"
+msgstr "Podgląd zmian"
 
 msgid "Change priority"
 msgstr "Zmień priorytet"
@@ -3719,6 +3728,12 @@ msgstr "Kliknij tutaj, jeśli przekierowanie nie nastąpi"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Kliknij „↑ update”, aby zobaczyć potwierdzenie przed aktualizacją"
 
+msgid "Click the chip to open the issue"
+msgstr "Kliknij chip, aby otworzyć zgłoszenie"
+
+msgid "Click the chip to open the pull request"
+msgstr "Kliknij chip, aby otworzyć pull request"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Kliknij, aby skopiować ID sesji (wznów przez `claude --resume <id>`)."
 
@@ -3758,6 +3773,9 @@ msgstr "Klonowanie…"
 
 msgid "Close"
 msgstr "Zamknij"
+
+msgid "Close (Esc)"
+msgstr "Zamknij (Esc)"
 
 #. placeholder {0}: row.title
 msgid "Close {0}"
@@ -3891,6 +3909,10 @@ msgstr "Zamknij obszar roboczy"
 
 msgid "Closed"
 msgstr "Zamknięty"
+
+msgctxt "pull request or issue state"
+msgid "Closed"
+msgstr "Zamknięte"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Zamknięcie tych portów zakończy procesy, które ich używają."
@@ -5914,6 +5936,9 @@ msgstr "Odłączona"
 msgid "Details"
 msgstr "Szczegóły"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Szczegóły nie są tu dostępne, ale link nadal się otwiera."
+
 msgid "Dev"
 msgstr "Dev"
 
@@ -6239,6 +6264,10 @@ msgstr "Pobieranie..."
 msgid "Downloads"
 msgstr "Pobrane"
 
+msgid "Draft"
+msgstr "Szkic"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Szkic"
 
@@ -8683,6 +8712,9 @@ msgstr "Zainstalowano przez"
 msgid "Installing..."
 msgstr "Instalowanie..."
 
+msgid "Installs Superset on a machine you can reach with ssh, signs Superset in to your account, and keeps it running as a service."
+msgstr "Instaluje Superset na maszynie dostępnej przez ssh, loguje Superset na Twoje konto i utrzymuje Superset uruchomiony jako usługę."
+
 msgid "Instructions"
 msgstr "Instrukcje"
 
@@ -8811,6 +8843,13 @@ msgstr "Czy jest plan darmowy?"
 
 msgid "Isolation"
 msgstr "Izolacja"
+
+msgid "Issue"
+msgstr "Zgłoszenie"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Zgłoszenie #{0}"
 
 msgid "Issue archived"
 msgstr "Zgłoszenie zarchiwizowane"
@@ -9440,6 +9479,9 @@ msgstr "Wczytywanie plików..."
 msgid "Loading fonts..."
 msgstr "Wczytywanie czcionek..."
 
+msgid "Loading GitHub details"
+msgstr "Wczytywanie szczegółów z GitHub"
+
 msgid "Loading groups…"
 msgstr "Wczytywanie grup…"
 
@@ -9855,6 +9897,10 @@ msgstr "Stan scalania nieznany"
 
 msgid "Merged"
 msgstr "Scalony"
+
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Scalone"
 
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
@@ -10348,6 +10394,9 @@ msgstr "Nowości, aktualizacje i spostrzeżenia zespołu Superset na temat równ
 
 msgid "Next"
 msgstr "Dalej"
+
+msgid "Next (Enter)"
+msgstr "Dalej (Enter)"
 
 msgid "Next branch"
 msgstr "Następna gałąź"
@@ -11342,6 +11391,10 @@ msgstr "otwórz"
 msgid "Open"
 msgstr "Otwórz"
 
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Otwarte"
+
 msgctxt "status"
 msgid "Open"
 msgstr "Otwarty"
@@ -11452,6 +11505,9 @@ msgstr "Otwórz z folderu"
 
 msgid "Open full screen"
 msgstr "Otwórz na pełnym ekranie"
+
+msgid "Open host"
+msgstr "Otwórz host"
 
 msgid "Open importer"
 msgstr "Otwórz importer"
@@ -11807,8 +11863,8 @@ msgstr "Pomarańczowy"
 msgid "Orchestrate Parallel Agents"
 msgstr "Orkiestruj równoległych agentów"
 
-msgid "Orchestrate Them All."
-msgstr "Zarządzaj nimi wszystkimi."
+msgid "Orchestrate Them All"
+msgstr "Zarządzaj nimi wszystkimi"
 
 msgid "Orchestrated"
 msgstr "Zorkiestrowany"
@@ -12404,6 +12460,10 @@ msgstr "Opublikuj odpowiedź"
 msgid "PR"
 msgstr "PR"
 
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
+
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
 msgid "PR #{0} — {1}"
@@ -12523,6 +12583,9 @@ msgstr "Podgląd: przypomnienie o gwiazdce na GitHub"
 
 msgid "Previous"
 msgstr "Wstecz"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Wstecz (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Poprzednia gałąź"
@@ -14815,6 +14878,9 @@ msgstr "Skonfiguruj"
 msgid "Set up {0}"
 msgstr "Skonfiguruj {0}"
 
+msgid "Set up a host over SSH"
+msgstr "Skonfiguruj host przez SSH"
+
 msgid "Set up an automation"
 msgstr "Skonfiguruj automatyzację"
 
@@ -14856,6 +14922,9 @@ msgstr "Konfiguracja"
 
 msgid "Setup script"
 msgstr "Skrypt konfiguracyjny"
+
+msgid "Setup stopped. The reason is in the output below."
+msgstr "Konfiguracja została przerwana. Przyczyna jest w danych wyjściowych poniżej."
 
 msgid "Sexual content"
 msgstr "Treści seksualne"
@@ -15510,6 +15579,9 @@ msgstr "Squash i scal"
 msgid "SS"
 msgstr "SS"
 
+msgid "SSH destination"
+msgstr "Cel SSH"
+
 msgid "SSO/SAML"
 msgstr "SSO/SAML"
 
@@ -15968,6 +16040,9 @@ msgstr "Superset powstaje w Superset, więc sami jesteśmy jego głównymi użyt
 msgid "Superset is designed to work with your existing tool, we natively support deep-linking to IDEs like Cursor so you can open your workspaces and files in your IDE."
 msgstr "Superset jest zaprojektowany tak, aby działać z narzędziem, którego już używasz — natywnie obsługujemy głębokie linki do IDE takich jak Cursor, więc otworzysz swoje obszary robocze i pliki we własnym IDE."
 
+msgid "Superset is getting a new name soon"
+msgstr "Superset wkrótce zmieni nazwę"
+
 msgid "Superset is open source. If it's helped you today, a GitHub star helps other developers find it."
 msgstr "Superset jest open source. Jeśli pomógł Ci dzisiaj, gwiazdka na GitHub pomoże innym programistom go znaleźć."
 
@@ -16003,9 +16078,6 @@ msgstr "Diff kodu w Superset Mobile na iPhonie"
 
 msgid "Superset mobile gives me the power of my desktop anywhere I go."
 msgstr "Superset mobile daje mi moc mojego komputera, gdziekolwiek jestem."
-
-msgid "Superset Mobile is here"
-msgstr "Superset Mobile już jest"
 
 msgid "Superset Mobile is part of Pro"
 msgstr "Superset Mobile jest częścią planu Pro"
@@ -16666,6 +16738,9 @@ msgstr "Host nie wrócił do działania w ciągu piętnastu minut."
 
 msgid "The host hasn't answered."
 msgstr "Host nie odpowiedział."
+
+msgid "The host is online. Pick it when you create a workspace."
+msgstr "Host jest online. Wybierz go podczas tworzenia obszaru roboczego."
 
 msgid "The host isn't connected to the Superset relay. If it's this device, turn on \"Allow remote access to this device via relay\" in Settings > Remote Access, then try again."
 msgstr "Host nie jest połączony z przekaźnikiem Superset. Jeśli chodzi o to urządzenie, włącz „Zezwól na zdalny dostęp do tego urządzenia przez przekaźnik” w Ustawienia > Dostęp zdalny i spróbuj ponownie."
@@ -17904,6 +17979,10 @@ msgstr "zaktualizować prefiksu gałęzi"
 msgid "Updated"
 msgstr "Zaktualizowano"
 
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "Zaktualizowano {0}"
+
 msgid "Updated {date}"
 msgstr "Zaktualizowano {date}"
 
@@ -18079,6 +18158,9 @@ msgstr "Nie znaleziono użytkownika"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "user@host, ssh://user@host:2222, or an ssh config alias"
+msgstr "użytkownik@host, ssh://użytkownik@host:2222 lub alias z konfiguracji ssh"
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "Losowa nazwa gałęzi (przekroczono czas generowania AI)"

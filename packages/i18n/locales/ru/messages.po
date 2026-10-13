@@ -811,6 +811,9 @@ msgstr "{count} хостов работают на более старой ве�
 msgid "{count}/day"
 msgstr "{count}/день"
 
+msgid "{current} of {total}"
+msgstr "{current} из {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} из {totalBranches}"
 
@@ -2252,6 +2255,9 @@ msgstr "Анонимный сборщик"
 msgid "another device"
 msgstr "другое устройство"
 
+msgid "Answer any questions in the terminal below, such as a password."
+msgstr "Отвечайте на вопросы в терминале ниже, например введите пароль."
+
 msgid "Answer this question on desktop, or skip it."
 msgstr "Ответьте на этот вопрос на компьютере или пропустите его."
 
@@ -2607,6 +2613,9 @@ msgstr "Для вложений нужен хост в сети"
 msgid "Attempt before checks pass"
 msgstr "Попробовать до прохождения проверок"
 
+msgid "Attempted changes"
+msgstr "Попытка изменений"
+
 msgid "Attention queue"
 msgstr "Очередь внимания"
 
@@ -2784,9 +2793,6 @@ msgstr "Назад к автоматизациям"
 
 msgid "Back to billing"
 msgstr "Назад к оплате"
-
-msgid "Back to Blog"
-msgstr "К блогу"
 
 msgid "Back to Changelog"
 msgstr "К changelog"
@@ -3050,8 +3056,8 @@ msgstr "Подключите {companyName} для своей команды. С�
 msgid "Bring a link to something you built recently."
 msgstr "Принесите ссылку на то, что вы недавно создали."
 
-msgid "Bring Any Agent."
-msgstr "Приводите любого агента."
+msgid "Bring Any Agent"
+msgstr "Приводите любого агента"
 
 msgid "Bring over your projects"
 msgstr "Перенесите проекты"
@@ -3365,6 +3371,9 @@ msgstr "Сменить логотип организации"
 
 msgid "Change organization slug"
 msgstr "Изменить slug организации"
+
+msgid "Change preview"
+msgstr "Предпросмотр изменений"
 
 msgid "Change priority"
 msgstr "Изменить приоритет"
@@ -3719,6 +3728,12 @@ msgstr "Нажмите здесь, если переход не произошё
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Нажмите «↑ update», чтобы увидеть подтверждение перед обновлением"
 
+msgid "Click the chip to open the issue"
+msgstr "Нажмите на чип, чтобы открыть задачу"
+
+msgid "Click the chip to open the pull request"
+msgstr "Нажмите на чип, чтобы открыть пул-реквест"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Нажмите, чтобы скопировать ID сессии (возобновление: `claude --resume <id>`)."
 
@@ -3758,6 +3773,9 @@ msgstr "Клонирование…"
 
 msgid "Close"
 msgstr "Закрыть"
+
+msgid "Close (Esc)"
+msgstr "Закрыть (Esc)"
 
 #. placeholder {0}: row.title
 msgid "Close {0}"
@@ -3891,6 +3909,10 @@ msgstr "Закрыть рабочую область"
 
 msgid "Closed"
 msgstr "Закрыт"
+
+msgctxt "pull request or issue state"
+msgid "Closed"
+msgstr "Закрыто"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Закрытие этих портов завершит использующие их процессы."
@@ -5914,6 +5936,9 @@ msgstr "Отключена"
 msgid "Details"
 msgstr "Детали"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Сведения здесь недоступны, но ссылка всё равно открывается."
+
 msgid "Dev"
 msgstr "Dev"
 
@@ -6239,6 +6264,10 @@ msgstr "Загрузка..."
 msgid "Downloads"
 msgstr "Загрузки"
 
+msgid "Draft"
+msgstr "Черновик"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Черновик"
 
@@ -8683,6 +8712,9 @@ msgstr "Установлено через"
 msgid "Installing..."
 msgstr "Установка..."
 
+msgid "Installs Superset on a machine you can reach with ssh, signs Superset in to your account, and keeps it running as a service."
+msgstr "Устанавливает Superset на машину, доступную по ssh, выполняет вход Superset в вашу учётную запись и держит Superset запущенным как службу."
+
 msgid "Instructions"
 msgstr "Инструкции"
 
@@ -8811,6 +8843,13 @@ msgstr "Есть ли бесплатный тариф?"
 
 msgid "Isolation"
 msgstr "Изоляция"
+
+msgid "Issue"
+msgstr "Задача"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Задача #{0}"
 
 msgid "Issue archived"
 msgstr "Задача архивирована"
@@ -9440,6 +9479,9 @@ msgstr "Загрузка файлов..."
 msgid "Loading fonts..."
 msgstr "Загрузка шрифтов..."
 
+msgid "Loading GitHub details"
+msgstr "Загрузка сведений из GitHub"
+
 msgid "Loading groups…"
 msgstr "Загрузка групп…"
 
@@ -9855,6 +9897,10 @@ msgstr "Статус слияния неизвестен"
 
 msgid "Merged"
 msgstr "Объединён"
+
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Объединено"
 
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
@@ -10348,6 +10394,9 @@ msgstr "Новости, обновления и заметки команды Su
 
 msgid "Next"
 msgstr "Далее"
+
+msgid "Next (Enter)"
+msgstr "Далее (Enter)"
 
 msgid "Next branch"
 msgstr "Следующая ветка"
@@ -11342,6 +11391,10 @@ msgstr "открыть"
 msgid "Open"
 msgstr "Открыть"
 
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Открыто"
+
 msgctxt "status"
 msgid "Open"
 msgstr "Открыт"
@@ -11452,6 +11505,9 @@ msgstr "Открыть из папки"
 
 msgid "Open full screen"
 msgstr "Открыть во весь экран"
+
+msgid "Open host"
+msgstr "Открыть хост"
 
 msgid "Open importer"
 msgstr "Открыть импортёр"
@@ -11807,8 +11863,8 @@ msgstr "Оранжевый"
 msgid "Orchestrate Parallel Agents"
 msgstr "Оркестрируйте параллельных агентов"
 
-msgid "Orchestrate Them All."
-msgstr "Оркестрируйте всех."
+msgid "Orchestrate Them All"
+msgstr "Оркестрируйте всех"
 
 msgid "Orchestrated"
 msgstr "С оркестрацией"
@@ -12404,6 +12460,10 @@ msgstr "Отправить ответ"
 msgid "PR"
 msgstr "PR"
 
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
+
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
 msgid "PR #{0} — {1}"
@@ -12523,6 +12583,9 @@ msgstr "Предпросмотр: напоминание о звезде на Gi
 
 msgid "Previous"
 msgstr "Назад"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Назад (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Предыдущая ветка"
@@ -14815,6 +14878,9 @@ msgstr "Настроить"
 msgid "Set up {0}"
 msgstr "Настроить {0}"
 
+msgid "Set up a host over SSH"
+msgstr "Настроить хост по SSH"
+
 msgid "Set up an automation"
 msgstr "Настройте автоматизацию"
 
@@ -14856,6 +14922,9 @@ msgstr "Установка"
 
 msgid "Setup script"
 msgstr "Скрипт установки"
+
+msgid "Setup stopped. The reason is in the output below."
+msgstr "Настройка остановлена. Причина указана в выводе ниже."
 
 msgid "Sexual content"
 msgstr "Сексуальный контент"
@@ -15510,6 +15579,9 @@ msgstr "Сжать и объединить"
 msgid "SS"
 msgstr "SS"
 
+msgid "SSH destination"
+msgstr "Адрес SSH"
+
 msgid "SSO/SAML"
 msgstr "SSO/SAML"
 
@@ -15968,6 +16040,9 @@ msgstr "Superset разрабатывается в Superset, поэтому мы
 msgid "Superset is designed to work with your existing tool, we natively support deep-linking to IDEs like Cursor so you can open your workspaces and files in your IDE."
 msgstr "Superset рассчитан на работу с вашим текущим инструментом: мы нативно поддерживаем переход по ссылкам в IDE вроде Cursor, чтобы открывать рабочие области и файлы прямо там."
 
+msgid "Superset is getting a new name soon"
+msgstr "Superset скоро сменит название"
+
 msgid "Superset is open source. If it's helped you today, a GitHub star helps other developers find it."
 msgstr "Superset — проект с открытым исходным кодом. Если он сегодня помог, звезда на GitHub поможет другим разработчикам его найти."
 
@@ -16003,9 +16078,6 @@ msgstr "Diff кода в Superset Mobile на iPhone"
 
 msgid "Superset mobile gives me the power of my desktop anywhere I go."
 msgstr "Superset mobile даёт мне мощь моего компьютера, где бы я ни был."
-
-msgid "Superset Mobile is here"
-msgstr "Superset Mobile уже здесь"
 
 msgid "Superset Mobile is part of Pro"
 msgstr "Superset Mobile входит в Pro"
@@ -16666,6 +16738,9 @@ msgstr "Хост не восстановил работу в течение пя
 
 msgid "The host hasn't answered."
 msgstr "Хост не ответил."
+
+msgid "The host is online. Pick it when you create a workspace."
+msgstr "Хост в сети. Выберите его при создании рабочей области."
 
 msgid "The host isn't connected to the Superset relay. If it's this device, turn on \"Allow remote access to this device via relay\" in Settings > Remote Access, then try again."
 msgstr "Хост не подключён к реле Superset. Если это текущее устройство, включите «Разрешить удалённый доступ к этому устройству через реле» в Настройки > Удалённый доступ и повторите."
@@ -17904,6 +17979,10 @@ msgstr "обновить префикс ветки"
 msgid "Updated"
 msgstr "Обновлено"
 
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "Обновлено {0}"
+
 msgid "Updated {date}"
 msgstr "Обновлено {date}"
 
@@ -18079,6 +18158,9 @@ msgstr "Пользователь не найден"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "user@host, ssh://user@host:2222, or an ssh config alias"
+msgstr "user@host, ssh://user@host:2222 или псевдоним из конфигурации ssh"
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "Используется случайное имя ветки (истекло время генерации AI)"

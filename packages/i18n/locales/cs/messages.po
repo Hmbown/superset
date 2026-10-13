@@ -811,6 +811,9 @@ msgstr "{count} hostitelů používá starší službu hostitele než tato aplik
 msgid "{count}/day"
 msgstr "{count}/den"
 
+msgid "{current} of {total}"
+msgstr "{current} z {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} z {totalBranches}"
 
@@ -2252,6 +2255,9 @@ msgstr "Anonymní montér"
 msgid "another device"
 msgstr "jiné zařízení"
 
+msgid "Answer any questions in the terminal below, such as a password."
+msgstr "Odpovězte na dotazy v terminálu níže, například heslo."
+
 msgid "Answer this question on desktop, or skip it."
 msgstr "Odpovězte na tuto otázku na počítači, nebo ji přeskočte."
 
@@ -2607,6 +2613,9 @@ msgstr "Přílohy vyžadují hosta online"
 msgid "Attempt before checks pass"
 msgstr "Zkusit ještě před dokončením kontrol"
 
+msgid "Attempted changes"
+msgstr "Pokus o změny"
+
 msgid "Attention queue"
 msgstr "Fronta pozornosti"
 
@@ -2784,9 +2793,6 @@ msgstr "Zpět na automatizace"
 
 msgid "Back to billing"
 msgstr "Zpět na fakturaci"
-
-msgid "Back to Blog"
-msgstr "Zpět na blog"
 
 msgid "Back to Changelog"
 msgstr "Zpět na changelog"
@@ -3050,8 +3056,8 @@ msgstr "Přineste {companyName} svému týmu. Ozvěte se nám a zjistěte více 
 msgid "Bring a link to something you built recently."
 msgstr "Přineste odkaz na něco, co jste nedávno vytvořili."
 
-msgid "Bring Any Agent."
-msgstr "Přiveďte jakéhokoli agenta."
+msgid "Bring Any Agent"
+msgstr "Přiveďte jakéhokoli agenta"
 
 msgid "Bring over your projects"
 msgstr "Převeďte své projekty"
@@ -3365,6 +3371,9 @@ msgstr "Změnit logo organizace"
 
 msgid "Change organization slug"
 msgstr "Změnit slug organizace"
+
+msgid "Change preview"
+msgstr "Náhled změn"
 
 msgid "Change priority"
 msgstr "Změnit prioritu"
@@ -3719,6 +3728,12 @@ msgstr "Pokud nedojde k přesměrování, klikněte sem"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Kliknutím na „↑ update“ zobrazíte potvrzení před aktualizací"
 
+msgid "Click the chip to open the issue"
+msgstr "Kliknutím na štítek otevřete issue"
+
+msgid "Click the chip to open the pull request"
+msgstr "Kliknutím na štítek otevřete pull request"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Kliknutím zkopírujete ID relace (pokračování přes `claude --resume <id>`)."
 
@@ -3758,6 +3773,9 @@ msgstr "Klonuji…"
 
 msgid "Close"
 msgstr "Zavřít"
+
+msgid "Close (Esc)"
+msgstr "Zavřít (Esc)"
 
 #. placeholder {0}: row.title
 msgid "Close {0}"
@@ -3891,6 +3909,10 @@ msgstr "Zavřít pracovní prostor"
 
 msgid "Closed"
 msgstr "Uzavřený"
+
+msgctxt "pull request or issue state"
+msgid "Closed"
+msgstr "Uzavřeno"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Zavřením těchto portů ukončíte procesy, které je používají."
@@ -5914,6 +5936,9 @@ msgstr "Odpojeno"
 msgid "Details"
 msgstr "Podrobnosti"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Podrobnosti zde nejsou k dispozici, ale odkaz se přesto otevře."
+
 msgid "Dev"
 msgstr "Vývoj"
 
@@ -6239,6 +6264,10 @@ msgstr "Stahuji..."
 msgid "Downloads"
 msgstr "Stahování"
 
+msgid "Draft"
+msgstr "Koncept"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Koncept"
 
@@ -8683,6 +8712,9 @@ msgstr "Nainstalováno přes"
 msgid "Installing..."
 msgstr "Instaluji..."
 
+msgid "Installs Superset on a machine you can reach with ssh, signs Superset in to your account, and keeps it running as a service."
+msgstr "Nainstaluje Superset na počítač dostupný přes ssh, přihlásí Superset k vašemu účtu a udržuje Superset spuštěný jako službu."
+
 msgid "Instructions"
 msgstr "Instrukce"
 
@@ -8811,6 +8843,13 @@ msgstr "Existuje bezplatný tarif?"
 
 msgid "Isolation"
 msgstr "Izolace"
+
+msgid "Issue"
+msgstr "Issue"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Issue #{0}"
 
 msgid "Issue archived"
 msgstr "Issue archivována"
@@ -9440,6 +9479,9 @@ msgstr "Načítám soubory..."
 msgid "Loading fonts..."
 msgstr "Načítám fonty..."
 
+msgid "Loading GitHub details"
+msgstr "Načítání podrobností z GitHubu"
+
 msgid "Loading groups…"
 msgstr "Načítám skupiny…"
 
@@ -9855,6 +9897,10 @@ msgstr "Stav sloučení neznámý"
 
 msgid "Merged"
 msgstr "Sloučený"
+
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Sloučeno"
 
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
@@ -10348,6 +10394,9 @@ msgstr "Novinky, aktualizace a postřehy od týmu Superset o paralelních kódov
 
 msgid "Next"
 msgstr "Další"
+
+msgid "Next (Enter)"
+msgstr "Další (Enter)"
 
 msgid "Next branch"
 msgstr "Další větev"
@@ -11342,6 +11391,10 @@ msgstr "otevřít"
 msgid "Open"
 msgstr "Otevřít"
 
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Otevřeno"
+
 msgctxt "status"
 msgid "Open"
 msgstr "Otevřený"
@@ -11452,6 +11505,9 @@ msgstr "Otevřít ze složky"
 
 msgid "Open full screen"
 msgstr "Otevřít na celou obrazovku"
+
+msgid "Open host"
+msgstr "Otevřít host"
 
 msgid "Open importer"
 msgstr "Otevřít import"
@@ -11807,8 +11863,8 @@ msgstr "Oranžová"
 msgid "Orchestrate Parallel Agents"
 msgstr "Řiďte paralelní agenty"
 
-msgid "Orchestrate Them All."
-msgstr "Řiďte je všechny."
+msgid "Orchestrate Them All"
+msgstr "Řiďte je všechny"
 
 msgid "Orchestrated"
 msgstr "Orchestrovaný"
@@ -12404,6 +12460,10 @@ msgstr "Odeslat odpověď"
 msgid "PR"
 msgstr "PR"
 
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
+
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
 msgid "PR #{0} — {1}"
@@ -12523,6 +12583,9 @@ msgstr "Náhled: připomínka hvězdičky na GitHubu"
 
 msgid "Previous"
 msgstr "Předchozí"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Předchozí (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Předchozí větev"
@@ -14815,6 +14878,9 @@ msgstr "Nastavit"
 msgid "Set up {0}"
 msgstr "Nastavit {0}"
 
+msgid "Set up a host over SSH"
+msgstr "Nastavit host přes SSH"
+
 msgid "Set up an automation"
 msgstr "Nastavte automatizaci"
 
@@ -14856,6 +14922,9 @@ msgstr "Setup"
 
 msgid "Setup script"
 msgstr "Setup skript"
+
+msgid "Setup stopped. The reason is in the output below."
+msgstr "Nastavení se zastavilo. Důvod je ve výstupu níže."
 
 msgid "Sexual content"
 msgstr "Sexuální obsah"
@@ -15510,6 +15579,9 @@ msgstr "Squash a sloučit"
 msgid "SS"
 msgstr "SS"
 
+msgid "SSH destination"
+msgstr "Cíl SSH"
+
 msgid "SSO/SAML"
 msgstr "SSO/SAML"
 
@@ -15968,6 +16040,9 @@ msgstr "Superset vyvíjíme v Superset, takže jsme sami jeho největšími uži
 msgid "Superset is designed to work with your existing tool, we natively support deep-linking to IDEs like Cursor so you can open your workspaces and files in your IDE."
 msgstr "Superset je navržený tak, aby fungoval s vaším stávajícím nástrojem. Nativně podporujeme hluboké odkazy do IDE, jako je Cursor, takže si pracovní prostory a soubory otevřete ve svém IDE."
 
+msgid "Superset is getting a new name soon"
+msgstr "Superset brzy dostane nový název"
+
 msgid "Superset is open source. If it's helped you today, a GitHub star helps other developers find it."
 msgstr "Superset je open source. Pokud vám dnes pomohl, hvězda na GitHubu pomůže dalším vývojářům ho najít."
 
@@ -16003,9 +16078,6 @@ msgstr "Diff kódu v Superset Mobile na iPhonu"
 
 msgid "Superset mobile gives me the power of my desktop anywhere I go."
 msgstr "Superset mobile mi dává výkon mého počítače, ať jsem kdekoli."
-
-msgid "Superset Mobile is here"
-msgstr "Superset Mobile je tady"
 
 msgid "Superset Mobile is part of Pro"
 msgstr "Superset Mobile je součástí tarifu Pro"
@@ -16666,6 +16738,9 @@ msgstr "Hostitel se neobnovil do patnácti minut."
 
 msgid "The host hasn't answered."
 msgstr "Host neodpověděl."
+
+msgid "The host is online. Pick it when you create a workspace."
+msgstr "Host je online. Vyberte ho při vytváření pracovního prostoru."
 
 msgid "The host isn't connected to the Superset relay. If it's this device, turn on \"Allow remote access to this device via relay\" in Settings > Remote Access, then try again."
 msgstr "Host není připojený k Superset relay. Pokud jde o toto zařízení, zapněte „Povolit vzdálený přístup k tomuto zařízení přes relay“ v Nastavení > Vzdálený přístup a zkuste to znovu."
@@ -17904,6 +17979,10 @@ msgstr "aktualizovat prefix větve"
 msgid "Updated"
 msgstr "Aktualizováno"
 
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "Aktualizováno {0}"
+
 msgid "Updated {date}"
 msgstr "Aktualizováno {date}"
 
@@ -18079,6 +18158,9 @@ msgstr "Uživatel nenalezen"
 
 msgid "user@example.com"
 msgstr "uzivatel@example.com"
+
+msgid "user@host, ssh://user@host:2222, or an ssh config alias"
+msgstr "uživatel@host, ssh://uživatel@host:2222 nebo alias z konfigurace ssh"
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "Použije se náhodný název větve (generování přes AI vypršelo)"

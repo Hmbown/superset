@@ -811,6 +811,9 @@ msgstr "{count} 台主機執行的主機服務比此應用程式舊"
 msgid "{count}/day"
 msgstr "{count}/天"
 
+msgid "{current} of {total}"
+msgstr "第 {current} 項，共 {total} 項"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage}/{totalBranches}"
 
@@ -2252,6 +2255,9 @@ msgstr "匿名組裝工"
 msgid "another device"
 msgstr "另一臺裝置"
 
+msgid "Answer any questions in the terminal below, such as a password."
+msgstr "請在下方終端機中回答問題，例如輸入密碼。"
+
 msgid "Answer this question on desktop, or skip it."
 msgstr "請在桌面版回答此問題，或略過。"
 
@@ -2607,6 +2613,9 @@ msgstr "附件需要主機線上"
 msgid "Attempt before checks pass"
 msgstr "在檢查通過前就嘗試"
 
+msgid "Attempted changes"
+msgstr "嘗試的變更"
+
 msgid "Attention queue"
 msgstr "待處理佇列"
 
@@ -2784,9 +2793,6 @@ msgstr "返回自動化"
 
 msgid "Back to billing"
 msgstr "返回帳單"
-
-msgid "Back to Blog"
-msgstr "返回部落格"
 
 msgid "Back to Changelog"
 msgstr "返回更新日誌"
@@ -3050,8 +3056,8 @@ msgstr "將 {companyName} 引入您的團隊。與我們聯繫以進一步瞭解
 msgid "Bring a link to something you built recently."
 msgstr "請帶上你最近做的作品連結。"
 
-msgid "Bring Any Agent."
-msgstr "帶上任意代理程式。"
+msgid "Bring Any Agent"
+msgstr "帶上任意代理程式"
 
 msgid "Bring over your projects"
 msgstr "遷入專案"
@@ -3365,6 +3371,9 @@ msgstr "更改組織logo"
 
 msgid "Change organization slug"
 msgstr "更改組織slug"
+
+msgid "Change preview"
+msgstr "變更預覽"
 
 msgid "Change priority"
 msgstr "變更優先順序"
@@ -3719,6 +3728,12 @@ msgstr "如果沒有自動跳轉，請點選這裡"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "點擊「↑ update」按鈕查看更新前的確認提示"
 
+msgid "Click the chip to open the issue"
+msgstr "點擊開啟議題"
+
+msgid "Click the chip to open the pull request"
+msgstr "點擊開啟拉取請求"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "點選複製會話ID（使用`claude --resume <id>`恢復）。"
 
@@ -3758,6 +3773,9 @@ msgstr "正在克隆…"
 
 msgid "Close"
 msgstr "關閉"
+
+msgid "Close (Esc)"
+msgstr "關閉（Esc）"
 
 #. placeholder {0}: row.title
 msgid "Close {0}"
@@ -3889,6 +3907,10 @@ msgstr "關閉工作區"
 msgid "Close Workspace"
 msgstr "關閉工作區"
 
+msgid "Closed"
+msgstr "已關閉"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "已關閉"
 
@@ -5914,6 +5936,9 @@ msgstr "已分離"
 msgid "Details"
 msgstr "詳情"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "此處無法顯示詳細資料，但連結仍可開啟。"
+
 msgid "Dev"
 msgstr "開發"
 
@@ -6239,6 +6264,10 @@ msgstr "正在下載..."
 msgid "Downloads"
 msgstr "下載"
 
+msgid "Draft"
+msgstr "草稿"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "草稿"
 
@@ -8683,6 +8712,9 @@ msgstr "安裝方式"
 msgid "Installing..."
 msgstr "正在安裝..."
 
+msgid "Installs Superset on a machine you can reach with ssh, signs Superset in to your account, and keeps it running as a service."
+msgstr "在可透過 ssh 連線的機器上安裝 Superset，將 Superset 登入你的帳戶，並讓它以服務形式持續執行。"
+
 msgid "Instructions"
 msgstr "說明"
 
@@ -8811,6 +8843,13 @@ msgstr "有免費方案嗎？"
 
 msgid "Isolation"
 msgstr "隔離"
+
+msgid "Issue"
+msgstr "議題"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "議題 #{0}"
 
 msgid "Issue archived"
 msgstr "問題已歸檔"
@@ -9440,6 +9479,9 @@ msgstr "正在載入檔案..."
 msgid "Loading fonts..."
 msgstr "正在載入字型..."
 
+msgid "Loading GitHub details"
+msgstr "正在載入 GitHub 詳細資料"
+
 msgid "Loading groups…"
 msgstr "正在載入群組…"
 
@@ -9853,6 +9895,10 @@ msgstr "合併狀態"
 msgid "Merge status unknown"
 msgstr "合併狀態不明"
 
+msgid "Merged"
+msgstr "已合併"
+
+msgctxt "pull request state"
 msgid "Merged"
 msgstr "已合併"
 
@@ -10348,6 +10394,9 @@ msgstr "來自 Superset 團隊的新聞、更新與洞察，涵蓋平行編碼�
 
 msgid "Next"
 msgstr "下一頁"
+
+msgid "Next (Enter)"
+msgstr "下一個匹配項（Enter）"
 
 msgid "Next branch"
 msgstr "下一個分支"
@@ -11342,6 +11391,10 @@ msgstr "開啟"
 msgid "Open"
 msgstr "開啟"
 
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "開放"
+
 msgctxt "status"
 msgid "Open"
 msgstr "開啟"
@@ -11452,6 +11505,9 @@ msgstr "從資料夾開啟"
 
 msgid "Open full screen"
 msgstr "全螢幕開啟"
+
+msgid "Open host"
+msgstr "開啟主機"
 
 msgid "Open importer"
 msgstr "開啟匯入器"
@@ -11807,8 +11863,8 @@ msgstr "橙色"
 msgid "Orchestrate Parallel Agents"
 msgstr "編排並行代理程式"
 
-msgid "Orchestrate Them All."
-msgstr "統一編排。"
+msgid "Orchestrate Them All"
+msgstr "統一編排"
 
 msgid "Orchestrated"
 msgstr "編排"
@@ -12404,6 +12460,10 @@ msgstr "發表回覆"
 msgid "PR"
 msgstr "PR"
 
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
+
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
 msgid "PR #{0} — {1}"
@@ -12523,6 +12583,9 @@ msgstr "預覽：GitHub 星標提醒通知"
 
 msgid "Previous"
 msgstr "上一頁"
+
+msgid "Previous (Shift+Enter)"
+msgstr "上一個匹配項（Shift+Enter）"
 
 msgid "Previous branch"
 msgstr "上一個分支"
@@ -14815,6 +14878,9 @@ msgstr "設定"
 msgid "Set up {0}"
 msgstr "設定 {0}"
 
+msgid "Set up a host over SSH"
+msgstr "透過 SSH 設定主機"
+
 msgid "Set up an automation"
 msgstr "設定自動化"
 
@@ -14856,6 +14922,9 @@ msgstr "初始化"
 
 msgid "Setup script"
 msgstr "設定指令碼"
+
+msgid "Setup stopped. The reason is in the output below."
+msgstr "設定已停止。原因請見下方輸出。"
 
 msgid "Sexual content"
 msgstr "色情內容"
@@ -15510,6 +15579,9 @@ msgstr "壓縮併合併"
 msgid "SS"
 msgstr "SS"
 
+msgid "SSH destination"
+msgstr "SSH 目的地"
+
 msgid "SSO/SAML"
 msgstr "SSO/SAML"
 
@@ -15968,6 +16040,9 @@ msgstr "Superset 就是在 Superset 中建構的，因此我們自己就是它�
 msgid "Superset is designed to work with your existing tool, we natively support deep-linking to IDEs like Cursor so you can open your workspaces and files in your IDE."
 msgstr "Superset的設計就是配合你現有的工具。我們原生支援深度連結到Cursor這類IDE，你可以直接在自己的IDE裡開啟工作區和檔案。"
 
+msgid "Superset is getting a new name soon"
+msgstr "Superset 即將更名"
+
 msgid "Superset is open source. If it's helped you today, a GitHub star helps other developers find it."
 msgstr "Superset是開源的。如果它今天幫到了你，一個GitHub星標能幫助更多開發者找到它。"
 
@@ -16003,9 +16078,6 @@ msgstr "iPhone 上的 Superset Mobile 程式碼差異"
 
 msgid "Superset mobile gives me the power of my desktop anywhere I go."
 msgstr "無論走到哪裡，Superset 手機版都讓我擁有桌上型電腦的能力。"
-
-msgid "Superset Mobile is here"
-msgstr "Superset Mobile 來了"
 
 msgid "Superset Mobile is part of Pro"
 msgstr "Superset Mobile屬於專業版"
@@ -16666,6 +16738,9 @@ msgstr "主機未在十五分鐘內恢復。"
 
 msgid "The host hasn't answered."
 msgstr "主機未回應。"
+
+msgid "The host is online. Pick it when you create a workspace."
+msgstr "主機已上線。建立工作區時選擇它。"
 
 msgid "The host isn't connected to the Superset relay. If it's this device, turn on \"Allow remote access to this device via relay\" in Settings > Remote Access, then try again."
 msgstr "該主機沒有連線到Superset中繼。如果就是此裝置，請在「設定>遠端存取」中開啟「允許遠端存取通過中繼存取此裝置」，然後重試。"
@@ -17904,6 +17979,10 @@ msgstr "更新分支字首"
 msgid "Updated"
 msgstr "已更新"
 
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "更新於{0}"
+
 msgid "Updated {date}"
 msgstr "更新於{date}"
 
@@ -18079,6 +18158,9 @@ msgstr "未找到使用者"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "user@host, ssh://user@host:2222, or an ssh config alias"
+msgstr "user@host、ssh://user@host:2222 或 ssh 設定中的別名"
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "使用隨機分支名（AI生成逾時）"

@@ -811,6 +811,9 @@ msgstr "{count}台のホストがこのアプリより古いホストサービ�
 msgid "{count}/day"
 msgstr "{count}/日"
 
+msgid "{current} of {total}"
+msgstr "{total} 件中 {current} 件目"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage}/{totalBranches}"
 
@@ -2252,6 +2255,9 @@ msgstr "匿名の組立工"
 msgid "another device"
 msgstr "別のデバイス"
 
+msgid "Answer any questions in the terminal below, such as a password."
+msgstr "パスワードなど、下のターミナルでの質問に答えてください。"
+
 msgid "Answer this question on desktop, or skip it."
 msgstr "この質問はデスクトップで回答するか、スキップしてください。"
 
@@ -2607,6 +2613,9 @@ msgstr "添付にはオンラインのホストが必要です"
 msgid "Attempt before checks pass"
 msgstr "チェック通過前に実行"
 
+msgid "Attempted changes"
+msgstr "試みた変更"
+
 msgid "Attention queue"
 msgstr "アテンションキュー"
 
@@ -2784,9 +2793,6 @@ msgstr "オートメーションに戻る"
 
 msgid "Back to billing"
 msgstr "請求に戻る"
-
-msgid "Back to Blog"
-msgstr "ブログに戻る"
 
 msgid "Back to Changelog"
 msgstr "Changelogに戻る"
@@ -3050,8 +3056,8 @@ msgstr "{companyName}をチームに導入しましょう。エンタープラ�
 msgid "Bring a link to something you built recently."
 msgstr "最近作ったもののリンクをお持ちください。"
 
-msgid "Bring Any Agent."
-msgstr "どのエージェントでも。"
+msgid "Bring Any Agent"
+msgstr "どのエージェントでも"
 
 msgid "Bring over your projects"
 msgstr "プロジェクトを引き継ぐ"
@@ -3365,6 +3371,9 @@ msgstr "組織のロゴを変更"
 
 msgid "Change organization slug"
 msgstr "組織スラッグを変更"
+
+msgid "Change preview"
+msgstr "変更のプレビュー"
 
 msgid "Change priority"
 msgstr "優先度を変更"
@@ -3719,6 +3728,12 @@ msgstr "リダイレクトされない場合はこちらをクリック"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "「↑ update」ボタンをクリックすると更新前の確認が表示されます"
 
+msgid "Click the chip to open the issue"
+msgstr "チップをクリックするとIssueを開きます"
+
+msgid "Click the chip to open the pull request"
+msgstr "チップをクリックするとプルリクエストを開きます"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "クリックでセッションIDをコピーします(`claude --resume <id>`で再開)。"
 
@@ -3758,6 +3773,9 @@ msgstr "クローン中…"
 
 msgid "Close"
 msgstr "閉じる"
+
+msgid "Close (Esc)"
+msgstr "閉じる (Esc)"
 
 #. placeholder {0}: row.title
 msgid "Close {0}"
@@ -3889,6 +3907,10 @@ msgstr "ワークスペースを閉じる"
 msgid "Close Workspace"
 msgstr "ワークスペースを閉じる"
 
+msgid "Closed"
+msgstr "クローズ済み"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "クローズ済み"
 
@@ -5914,6 +5936,9 @@ msgstr "切断中"
 msgid "Details"
 msgstr "詳細"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "ここでは詳細を表示できませんが、リンクは開けます。"
+
 msgid "Dev"
 msgstr "開発"
 
@@ -6239,6 +6264,10 @@ msgstr "ダウンロード中..."
 msgid "Downloads"
 msgstr "ダウンロード"
 
+msgid "Draft"
+msgstr "ドラフト"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "ドラフト"
 
@@ -8683,6 +8712,9 @@ msgstr "インストール方法"
 msgid "Installing..."
 msgstr "インストール中..."
 
+msgid "Installs Superset on a machine you can reach with ssh, signs Superset in to your account, and keeps it running as a service."
+msgstr "ssh で接続できるマシンに Superset をインストールし、Superset をあなたのアカウントにサインインさせ、サービスとして実行し続けます。"
+
 msgid "Instructions"
 msgstr "指示"
 
@@ -8811,6 +8843,13 @@ msgstr "無料プランはありますか?"
 
 msgid "Isolation"
 msgstr "分離"
+
+msgid "Issue"
+msgstr "Issue"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Issue #{0}"
 
 msgid "Issue archived"
 msgstr "Issueをアーカイブ"
@@ -9440,6 +9479,9 @@ msgstr "ファイルを読み込み中..."
 msgid "Loading fonts..."
 msgstr "フォントを読み込み中..."
 
+msgid "Loading GitHub details"
+msgstr "GitHubの詳細を読み込み中"
+
 msgid "Loading groups…"
 msgstr "グループを読み込み中…"
 
@@ -9853,6 +9895,10 @@ msgstr "マージ状態"
 msgid "Merge status unknown"
 msgstr "マージ状態は不明です"
 
+msgid "Merged"
+msgstr "マージ済み"
+
+msgctxt "pull request state"
 msgid "Merged"
 msgstr "マージ済み"
 
@@ -10348,6 +10394,9 @@ msgstr "並列コーディングエージェントと開発者の生産性に関
 
 msgid "Next"
 msgstr "次へ"
+
+msgid "Next (Enter)"
+msgstr "次へ (Enter)"
 
 msgid "Next branch"
 msgstr "次のブランチ"
@@ -11342,6 +11391,10 @@ msgstr "開く"
 msgid "Open"
 msgstr "開く"
 
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "オープン"
+
 msgctxt "status"
 msgid "Open"
 msgstr "オープン"
@@ -11452,6 +11505,9 @@ msgstr "フォルダから開く"
 
 msgid "Open full screen"
 msgstr "全画面で開く"
+
+msgid "Open host"
+msgstr "ホストを開く"
 
 msgid "Open importer"
 msgstr "インポーターを開く"
@@ -11807,8 +11863,8 @@ msgstr "オレンジ"
 msgid "Orchestrate Parallel Agents"
 msgstr "並列エージェントを指揮"
 
-msgid "Orchestrate Them All."
-msgstr "すべてを指揮する。"
+msgid "Orchestrate Them All"
+msgstr "すべてを指揮する"
 
 msgid "Orchestrated"
 msgstr "オーケストレーション"
@@ -12404,6 +12460,10 @@ msgstr "返信を投稿"
 msgid "PR"
 msgstr "PR"
 
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
+
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
 msgid "PR #{0} — {1}"
@@ -12523,6 +12583,9 @@ msgstr "プレビュー: GitHub スター催促トースト"
 
 msgid "Previous"
 msgstr "前へ"
+
+msgid "Previous (Shift+Enter)"
+msgstr "前へ (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "前のブランチ"
@@ -14815,6 +14878,9 @@ msgstr "設定する"
 msgid "Set up {0}"
 msgstr "{0} をセットアップ"
 
+msgid "Set up a host over SSH"
+msgstr "SSH でホストを設定"
+
 msgid "Set up an automation"
 msgstr "自動化を設定する"
 
@@ -14856,6 +14922,9 @@ msgstr "セットアップ"
 
 msgid "Setup script"
 msgstr "セットアップスクリプト"
+
+msgid "Setup stopped. The reason is in the output below."
+msgstr "設定が停止しました。理由は下の出力に表示されています。"
 
 msgid "Sexual content"
 msgstr "性的なコンテンツ"
@@ -15510,6 +15579,9 @@ msgstr "スカッシュしてマージ"
 msgid "SS"
 msgstr "SS"
 
+msgid "SSH destination"
+msgstr "SSH の接続先"
+
 msgid "SSO/SAML"
 msgstr "SSO/SAML"
 
@@ -15968,6 +16040,9 @@ msgstr "SupersetはSupersetで開発されています。私たち自身が一�
 msgid "Superset is designed to work with your existing tool, we natively support deep-linking to IDEs like Cursor so you can open your workspaces and files in your IDE."
 msgstr "Supersetは既存のツールと併用できるように設計されています。CursorのようなIDEへのディープリンクをネイティブにサポートしているので、ワークスペースやファイルをそのままIDEで開けます。"
 
+msgid "Superset is getting a new name soon"
+msgstr "Superset はまもなく新しい名前になります"
+
 msgid "Superset is open source. If it's helped you today, a GitHub star helps other developers find it."
 msgstr "Supersetはオープンソースです。今日役に立ったなら、GitHubスターが他の開発者の発見につながります。"
 
@@ -16003,9 +16078,6 @@ msgstr "iPhone 上の Superset Mobile のコード差分"
 
 msgid "Superset mobile gives me the power of my desktop anywhere I go."
 msgstr "Supersetモバイルは、どこにいてもデスクトップの力を使えるようにしてくれます。"
-
-msgid "Superset Mobile is here"
-msgstr "Superset Mobile が登場"
 
 msgid "Superset Mobile is part of Pro"
 msgstr "Superset MobileはProの一部です"
@@ -16666,6 +16738,9 @@ msgstr "ホストが15分以内に復帰しませんでした。"
 
 msgid "The host hasn't answered."
 msgstr "ホストからの応答がありません。"
+
+msgid "The host is online. Pick it when you create a workspace."
+msgstr "ホストはオンラインです。ワークスペースを作成するときに選択してください。"
 
 msgid "The host isn't connected to the Superset relay. If it's this device, turn on \"Allow remote access to this device via relay\" in Settings > Remote Access, then try again."
 msgstr "ホストがSupersetリレーに接続されていません。このデバイスの場合は、設定 > リモートアクセスで「リレー経由でこのデバイスへのリモートアクセスを許可」をオンにしてから再試行してください。"
@@ -17904,6 +17979,10 @@ msgstr "ブランチのプレフィックスを更新する"
 msgid "Updated"
 msgstr "更新済み"
 
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "更新: {0}"
+
 msgid "Updated {date}"
 msgstr "{date}に更新"
 
@@ -18079,6 +18158,9 @@ msgstr "ユーザーが見つかりません"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "user@host, ssh://user@host:2222, or an ssh config alias"
+msgstr "user@host、ssh://user@host:2222、または ssh config のエイリアス"
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "ランダムなブランチ名を使用します(AI生成がタイムアウトしました)"

@@ -811,6 +811,9 @@ msgstr "{count} máy chủ đang chạy dịch vụ máy chủ cũ hơn ứng d�
 msgid "{count}/day"
 msgstr "{count}/ngày"
 
+msgid "{current} of {total}"
+msgstr "{current} / {total}"
+
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage}/{totalBranches}"
 
@@ -2252,6 +2255,9 @@ msgstr "Thợ lắp ráp ẩn danh"
 msgid "another device"
 msgstr "thiết bị khác"
 
+msgid "Answer any questions in the terminal below, such as a password."
+msgstr "Trả lời các câu hỏi trong terminal bên dưới, chẳng hạn mật khẩu."
+
 msgid "Answer this question on desktop, or skip it."
 msgstr "Trả lời câu hỏi này trên máy tính, hoặc bỏ qua."
 
@@ -2607,6 +2613,9 @@ msgstr "Đính kèm cần một host đang trực tuyến"
 msgid "Attempt before checks pass"
 msgstr "Thử trước khi các check qua"
 
+msgid "Attempted changes"
+msgstr "Thay đổi đã thử"
+
 msgid "Attention queue"
 msgstr "Hàng chờ cần chú ý"
 
@@ -2784,9 +2793,6 @@ msgstr "Quay lại tự động hóa"
 
 msgid "Back to billing"
 msgstr "Quay lại thanh toán"
-
-msgid "Back to Blog"
-msgstr "Quay lại Blog"
 
 msgid "Back to Changelog"
 msgstr "Quay lại Changelog"
@@ -3050,8 +3056,8 @@ msgstr "Đưa {companyName} đến với đội của bạn. Liên hệ với ch
 msgid "Bring a link to something you built recently."
 msgstr "Mang theo đường dẫn tới một thứ bạn đã xây dựng gần đây."
 
-msgid "Bring Any Agent."
-msgstr "Mang mọi agent về đây."
+msgid "Bring Any Agent"
+msgstr "Mang mọi agent về đây"
 
 msgid "Bring over your projects"
 msgstr "Nhập các dự án của bạn"
@@ -3365,6 +3371,9 @@ msgstr "Đổi logo tổ chức"
 
 msgid "Change organization slug"
 msgstr "Đổi slug tổ chức"
+
+msgid "Change preview"
+msgstr "Xem trước thay đổi"
 
 msgid "Change priority"
 msgstr "Đổi mức ưu tiên"
@@ -3719,6 +3728,12 @@ msgstr "Nhấp vào đây nếu không được chuyển hướng"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Nhấp vào nút “↑ update” để xem xác nhận trước khi cập nhật"
 
+msgid "Click the chip to open the issue"
+msgstr "Nhấp vào thẻ để mở issue"
+
+msgid "Click the chip to open the pull request"
+msgstr "Nhấp vào thẻ để mở pull request"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Nhấp để sao chép ID phiên (resume bằng `claude --resume <id>`)."
 
@@ -3758,6 +3773,9 @@ msgstr "Đang clone…"
 
 msgid "Close"
 msgstr "Đóng"
+
+msgid "Close (Esc)"
+msgstr "Đóng (Esc)"
 
 #. placeholder {0}: row.title
 msgid "Close {0}"
@@ -3889,6 +3907,10 @@ msgstr "Đóng workspace"
 msgid "Close Workspace"
 msgstr "Đóng workspace"
 
+msgid "Closed"
+msgstr "Đã đóng"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Đã đóng"
 
@@ -5914,6 +5936,9 @@ msgstr "Đã tách"
 msgid "Details"
 msgstr "Chi tiết"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Không có chi tiết ở đây, nhưng liên kết vẫn mở được."
+
 msgid "Dev"
 msgstr "Dev"
 
@@ -6239,6 +6264,10 @@ msgstr "Đang tải xuống..."
 msgid "Downloads"
 msgstr "Tải xuống"
 
+msgid "Draft"
+msgstr "Nháp"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Nháp"
 
@@ -8683,6 +8712,9 @@ msgstr "Cài đặt qua"
 msgid "Installing..."
 msgstr "Đang cài đặt..."
 
+msgid "Installs Superset on a machine you can reach with ssh, signs Superset in to your account, and keeps it running as a service."
+msgstr "Cài Superset lên một máy bạn truy cập được bằng ssh, đăng nhập Superset vào tài khoản của bạn và giữ Superset chạy như một dịch vụ."
+
 msgid "Instructions"
 msgstr "Hướng dẫn"
 
@@ -8811,6 +8843,13 @@ msgstr "Có gói miễn phí không?"
 
 msgid "Isolation"
 msgstr "Tách biệt"
+
+msgid "Issue"
+msgstr "Issue"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Issue #{0}"
 
 msgid "Issue archived"
 msgstr "Issue được lưu trữ"
@@ -9440,6 +9479,9 @@ msgstr "Đang tải tệp..."
 msgid "Loading fonts..."
 msgstr "Đang tải font..."
 
+msgid "Loading GitHub details"
+msgstr "Đang tải chi tiết từ GitHub"
+
 msgid "Loading groups…"
 msgstr "Đang tải nhóm…"
 
@@ -9853,6 +9895,10 @@ msgstr "Trạng thái merge"
 msgid "Merge status unknown"
 msgstr "Trạng thái merge không xác định"
 
+msgid "Merged"
+msgstr "Đã merge"
+
+msgctxt "pull request state"
 msgid "Merged"
 msgstr "Đã merge"
 
@@ -10348,6 +10394,9 @@ msgstr "Tin tức, cập nhật và góc nhìn từ đội ngũ Superset về c�
 
 msgid "Next"
 msgstr "Tiếp"
+
+msgid "Next (Enter)"
+msgstr "Tiếp (Enter)"
 
 msgid "Next branch"
 msgstr "Nhánh kế tiếp"
@@ -11342,6 +11391,10 @@ msgstr "mở"
 msgid "Open"
 msgstr "Mở"
 
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Đang mở"
+
 msgctxt "status"
 msgid "Open"
 msgstr "Đang mở"
@@ -11452,6 +11505,9 @@ msgstr "Mở từ thư mục"
 
 msgid "Open full screen"
 msgstr "Mở toàn màn hình"
+
+msgid "Open host"
+msgstr "Mở host"
 
 msgid "Open importer"
 msgstr "Mở trình nhập"
@@ -11807,8 +11863,8 @@ msgstr "Cam"
 msgid "Orchestrate Parallel Agents"
 msgstr "Điều phối agent song song"
 
-msgid "Orchestrate Them All."
-msgstr "Điều phối tất cả."
+msgid "Orchestrate Them All"
+msgstr "Điều phối tất cả"
 
 msgid "Orchestrated"
 msgstr "Điều phối"
@@ -12404,6 +12460,10 @@ msgstr "Đăng trả lời"
 msgid "PR"
 msgstr "PR"
 
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
+
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
 msgid "PR #{0} — {1}"
@@ -12523,6 +12583,9 @@ msgstr "Xem trước: lời nhắc gắn sao GitHub"
 
 msgid "Previous"
 msgstr "Trước"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Trước (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Nhánh trước"
@@ -14815,6 +14878,9 @@ msgstr "Thiết lập"
 msgid "Set up {0}"
 msgstr "Thiết lập {0}"
 
+msgid "Set up a host over SSH"
+msgstr "Thiết lập host qua SSH"
+
 msgid "Set up an automation"
 msgstr "Thiết lập tự động hóa"
 
@@ -14856,6 +14922,9 @@ msgstr "Thiết lập"
 
 msgid "Setup script"
 msgstr "Script thiết lập"
+
+msgid "Setup stopped. The reason is in the output below."
+msgstr "Quá trình thiết lập đã dừng. Lý do có trong output bên dưới."
 
 msgid "Sexual content"
 msgstr "Nội dung tình dục"
@@ -15510,6 +15579,9 @@ msgstr "Squash và merge"
 msgid "SS"
 msgstr "SS"
 
+msgid "SSH destination"
+msgstr "Đích SSH"
+
 msgid "SSO/SAML"
 msgstr "SSO/SAML"
 
@@ -15968,6 +16040,9 @@ msgstr "Superset được xây dựng ngay trong Superset, nên chúng tôi chí
 msgid "Superset is designed to work with your existing tool, we natively support deep-linking to IDEs like Cursor so you can open your workspaces and files in your IDE."
 msgstr "Superset được thiết kế để làm việc cùng công cụ sẵn có của bạn, chúng tôi hỗ trợ sẵn deep-link tới các IDE như Cursor để bạn mở workspace và tệp ngay trong IDE của mình."
 
+msgid "Superset is getting a new name soon"
+msgstr "Superset sắp có tên mới"
+
 msgid "Superset is open source. If it's helped you today, a GitHub star helps other developers find it."
 msgstr "Superset là mã nguồn mở. Nếu hôm nay nó giúp được bạn, một star trên GitHub sẽ giúp các lập trình viên khác tìm thấy nó."
 
@@ -16003,9 +16078,6 @@ msgstr "Diff mã của Superset Mobile trên iPhone"
 
 msgid "Superset mobile gives me the power of my desktop anywhere I go."
 msgstr "Superset mobile mang sức mạnh của máy tính để bàn đến bất cứ đâu tôi đi."
-
-msgid "Superset Mobile is here"
-msgstr "Superset Mobile đã ra mắt"
 
 msgid "Superset Mobile is part of Pro"
 msgstr "Superset Mobile thuộc gói Pro"
@@ -16666,6 +16738,9 @@ msgstr "Máy chủ không hoạt động trở lại trong vòng mười lăm ph
 
 msgid "The host hasn't answered."
 msgstr "Host không phản hồi."
+
+msgid "The host is online. Pick it when you create a workspace."
+msgstr "Host đã trực tuyến. Hãy chọn nó khi tạo workspace."
 
 msgid "The host isn't connected to the Superset relay. If it's this device, turn on \"Allow remote access to this device via relay\" in Settings > Remote Access, then try again."
 msgstr "Host chưa kết nối tới relay của Superset. Nếu đó là thiết bị này, hãy bật \"Cho phép truy cập từ xa vào thiết bị này qua relay\" trong Cài đặt > Truy cập từ xa, rồi thử lại."
@@ -17904,6 +17979,10 @@ msgstr "cập nhật tiền tố nhánh"
 msgid "Updated"
 msgstr "Đã cập nhật"
 
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "Đã cập nhật {0}"
+
 msgid "Updated {date}"
 msgstr "Cập nhật {date}"
 
@@ -18079,6 +18158,9 @@ msgstr "Không tìm thấy người dùng"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "user@host, ssh://user@host:2222, or an ssh config alias"
+msgstr "user@host, ssh://user@host:2222 hoặc một bí danh trong cấu hình ssh"
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "Dùng tên nhánh ngẫu nhiên (AI tạo tên bị quá thời gian)"
