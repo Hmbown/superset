@@ -5827,7 +5827,7 @@ msgid "Deleted workspaces, but couldn’t finish updating the sidebar"
 msgstr "Arbeitsbereiche gelöscht, aber die Seitenleiste konnte nicht fertig aktualisiert werden"
 
 msgid "Deletes <0>{currentScriptFile}</0>, which an earlier import created"
-msgstr "Löscht <0>{currentScriptFile}</0>, das ein früherer Import erstellt hat"
+msgstr "Löscht <0>{currentScriptFile}</0>, die bei einem früheren Import erstellt wurde"
 
 #. placeholder {0}: account?.sourceLabel
 msgid "Deletes the {0} profile and its saved sign-in on this machine. The account itself is unaffected."
@@ -8521,8 +8521,9 @@ msgstr "Importieren…"
 msgid "Important"
 msgstr "Wichtig"
 
+msgctxt "heading over the commands an import would write, below the current ones"
 msgid "Imported"
-msgstr "Importiert"
+msgstr "Wird importiert"
 
 #. placeholder {0}: untracked.length
 #. placeholder {1}: errors[0]
@@ -13573,8 +13574,8 @@ msgstr "1 Datei in {where} ersetzt"
 msgid "Replaces <0>{currentCwd}</0> with <1>{importedCwd}</1>"
 msgstr "Ersetzt <0>{currentCwd}</0> durch <1>{importedCwd}</1>"
 
-msgid "Replaces current"
-msgstr "Ersetzt aktuelles"
+msgid "Replaces current commands"
+msgstr "Ersetzt die aktuellen Befehle"
 
 msgid "Reply"
 msgstr "Antworten"

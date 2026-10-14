@@ -8521,8 +8521,9 @@ msgstr "匯入…"
 msgid "Important"
 msgstr "重要"
 
+msgctxt "heading over the commands an import would write, below the current ones"
 msgid "Imported"
-msgstr "匯入後"
+msgstr "將匯入的內容"
 
 #. placeholder {0}: untracked.length
 #. placeholder {1}: errors[0]
@@ -13573,8 +13574,8 @@ msgstr "已替換{where}中的1個檔案"
 msgid "Replaces <0>{currentCwd}</0> with <1>{importedCwd}</1>"
 msgstr "將 <0>{currentCwd}</0> 取代為 <1>{importedCwd}</1>"
 
-msgid "Replaces current"
-msgstr "取代目前內容"
+msgid "Replaces current commands"
+msgstr "取代目前指令"
 
 msgid "Reply"
 msgstr "回覆"

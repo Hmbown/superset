@@ -8521,8 +8521,9 @@ msgstr "Импортировать…"
 msgid "Important"
 msgstr "Важно"
 
+msgctxt "heading over the commands an import would write, below the current ones"
 msgid "Imported"
-msgstr "После импорта"
+msgstr "Будет импортировано"
 
 #. placeholder {0}: untracked.length
 #. placeholder {1}: errors[0]
@@ -13573,8 +13574,8 @@ msgstr "В {where} заменён 1 файл"
 msgid "Replaces <0>{currentCwd}</0> with <1>{importedCwd}</1>"
 msgstr "Заменяет <0>{currentCwd}</0> на <1>{importedCwd}</1>"
 
-msgid "Replaces current"
-msgstr "Заменяет текущее"
+msgid "Replaces current commands"
+msgstr "Заменяет текущие команды"
 
 msgid "Reply"
 msgstr "Ответить"

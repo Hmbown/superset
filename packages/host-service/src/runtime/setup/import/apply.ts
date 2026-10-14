@@ -1,10 +1,5 @@
-import {
-	existsSync,
-	mkdirSync,
-	readFileSync,
-	rmSync,
-	writeFileSync,
-} from "node:fs";
+import { randomUUID } from "node:crypto";
+import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { getProjectConfigPath } from "../config";
 import { compareWithCurrentSetup } from "./inspect";
@@ -25,13 +20,37 @@ export class InvalidProjectConfigError extends Error {
 	}
 }
 
-function readConfigObject(configPath: string): Record<string, unknown> {
-	if (!existsSync(configPath)) return {};
+async function readConfigObject(
+	configPath: string,
+): Promise<Record<string, unknown>> {
+	let content: string;
 	try {
-		const parsed = asRecord(JSON.parse(readFileSync(configPath, "utf-8")));
+		content = await readFile(configPath, "utf-8");
+	} catch (error) {
+		if ((error as NodeJS.ErrnoException).code === "ENOENT") return {};
+		throw error;
+	}
+	try {
+		const parsed = asRecord(JSON.parse(content));
 		if (parsed) return parsed;
 	} catch {}
 	throw new InvalidProjectConfigError(configPath);
+}
+
+/** A crash mid-write leaves the old file whole: the rename is atomic. */
+async function writeFileAtomic(
+	filePath: string,
+	content: string,
+	mode = 0o644,
+): Promise<void> {
+	const tempPath = `${filePath}.${randomUUID()}.tmp`;
+	try {
+		await writeFile(tempPath, content, { encoding: "utf-8", mode });
+		await rename(tempPath, filePath);
+	} catch (error) {
+		await rm(tempPath, { force: true });
+		throw error;
+	}
 }
 
 /**
@@ -39,11 +58,11 @@ function readConfigObject(configPath: string): Record<string, unknown> {
  * field unless `overwrite` is set, and never touches keys it does not import.
  * Returns the repo-relative paths it wrote.
  */
-export function applySetupImport(args: {
+export async function applySetupImport(args: {
 	repoPath: string;
 	candidate: SetupImportCandidate;
 	overwrite: boolean;
-}): string[] {
+}): Promise<string[]> {
 	const { repoPath, candidate } = args;
 	const { conflicts } = compareWithCurrentSetup(repoPath, candidate);
 	if (conflicts.length > 0 && !args.overwrite) {
@@ -51,21 +70,18 @@ export function applySetupImport(args: {
 	}
 
 	const configPath = getProjectConfigPath(repoPath);
-	const config = readConfigObject(configPath);
-	mkdirSync(dirname(configPath), { recursive: true });
+	const config = await readConfigObject(configPath);
+	await mkdir(dirname(configPath), { recursive: true });
 
 	const written: string[] = [];
 	for (const key of IMPORTED_SCRIPT_KEYS) {
 		const plan = candidate.scripts[key];
 		if (!plan) continue;
 		if (plan.scriptFile) {
-			writeFileSync(
+			await writeFileAtomic(
 				join(repoPath, plan.scriptFile.path),
 				plan.scriptFile.content,
-				{
-					encoding: "utf-8",
-					mode: 0o755,
-				},
+				0o755,
 			);
 			written.push(plan.scriptFile.path);
 		}
@@ -73,12 +89,12 @@ export function applySetupImport(args: {
 	}
 	if (candidate.cwd) config.cwd = candidate.cwd;
 
-	writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`, "utf-8");
+	await writeFileAtomic(configPath, `${JSON.stringify(config, null, 2)}\n`);
 	written.push(".superset/config.json");
 
 	for (const conflict of conflicts) {
 		if (conflict.removesScriptFile && conflict.currentScriptFile) {
-			rmSync(join(repoPath, conflict.currentScriptFile), { force: true });
+			await rm(join(repoPath, conflict.currentScriptFile), { force: true });
 		}
 	}
 	return written;

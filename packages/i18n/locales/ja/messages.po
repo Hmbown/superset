@@ -8521,8 +8521,9 @@ msgstr "インポート…"
 msgid "Important"
 msgstr "重要"
 
+msgctxt "heading over the commands an import would write, below the current ones"
 msgid "Imported"
-msgstr "インポート後"
+msgstr "インポートする内容"
 
 #. placeholder {0}: untracked.length
 #. placeholder {1}: errors[0]
@@ -13573,8 +13574,8 @@ msgstr "1件のファイルを{where}で置き換えました"
 msgid "Replaces <0>{currentCwd}</0> with <1>{importedCwd}</1>"
 msgstr "<0>{currentCwd}</0>を<1>{importedCwd}</1>に置き換えます"
 
-msgid "Replaces current"
-msgstr "現在の内容を置き換え"
+msgid "Replaces current commands"
+msgstr "現在のコマンドを置き換え"
 
 msgid "Reply"
 msgstr "返信"

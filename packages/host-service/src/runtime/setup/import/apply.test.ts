@@ -66,7 +66,7 @@ describe("inspectSetupImports", () => {
 });
 
 describe("applySetupImport", () => {
-	it("writes the imported fields and keeps other config keys", () => {
+	it("writes the imported fields and keeps other config keys", async () => {
 		write(
 			".superset/config.json",
 			JSON.stringify({ teardown: ["make clean"], custom: 1 }),
@@ -79,7 +79,11 @@ describe("applySetupImport", () => {
 			conflicts: [],
 		});
 		expect(
-			applySetupImport({ repoPath, candidate: candidate, overwrite: false }),
+			await applySetupImport({
+				repoPath,
+				candidate: candidate,
+				overwrite: false,
+			}),
 		).toEqual([".superset/config.json"]);
 		expect(readConfig()).toEqual({
 			teardown: ["make clean"],
@@ -89,7 +93,7 @@ describe("applySetupImport", () => {
 		});
 	});
 
-	it("refuses to replace an existing field unless asked", () => {
+	it("refuses to replace an existing field unless asked", async () => {
 		write(".superset/config.json", JSON.stringify({ setup: ["npm ci"] }));
 		write("conductor.json", conductorJson);
 		const candidate = onlyCandidate();
@@ -102,12 +106,12 @@ describe("applySetupImport", () => {
 				removesScriptFile: false,
 			},
 		]);
-		expect(() =>
-			applySetupImport({ repoPath, candidate: candidate, overwrite: false }),
-		).toThrow(SetupImportConflictError);
+		await expect(
+			applySetupImport({ repoPath, candidate, overwrite: false }),
+		).rejects.toThrow(SetupImportConflictError);
 		expect(readConfig().setup).toEqual(["npm ci"]);
 
-		applySetupImport({ repoPath, candidate: candidate, overwrite: true });
+		await applySetupImport({ repoPath, candidate: candidate, overwrite: true });
 		expect(readConfig().setup).toEqual(["bun install"]);
 	});
 
@@ -125,7 +129,7 @@ describe("applySetupImport", () => {
 		]);
 	});
 
-	it("writes a multi-line script to .superset/setup.sh and runs it from config", () => {
+	it("writes a multi-line script to .superset/setup.sh and runs it from config", async () => {
 		write(
 			"conductor.json",
 			JSON.stringify({
@@ -135,7 +139,11 @@ describe("applySetupImport", () => {
 			}),
 		);
 		const candidate = onlyCandidate();
-		applySetupImport({ repoPath, candidate: candidate, overwrite: false });
+		await applySetupImport({
+			repoPath,
+			candidate: candidate,
+			overwrite: false,
+		});
 
 		expect(readConfig().setup).toEqual([
 			'bash "$SUPERSET_ROOT_PATH/.superset/setup.sh"',
@@ -149,12 +157,12 @@ describe("applySetupImport", () => {
 		});
 	});
 
-	it("deletes the script an earlier import wrote when a new import replaces it", () => {
+	it("deletes the script an earlier import wrote when a new import replaces it", async () => {
 		write(
 			"conductor.json",
 			JSON.stringify({ scripts: { setup: "if [ -f x ]; then\n  echo x\nfi" } }),
 		);
-		applySetupImport({
+		await applySetupImport({
 			repoPath,
 			candidate: onlyCandidate(),
 			overwrite: false,
@@ -178,12 +186,12 @@ describe("applySetupImport", () => {
 			compareWithCurrentSetup(repoPath, candidate).conflicts[0]
 				?.removesScriptFile,
 		).toBe(true);
-		applySetupImport({ repoPath, candidate, overwrite: true });
+		await applySetupImport({ repoPath, candidate, overwrite: true });
 		expect(readConfig().setup).toEqual(["bun install"]);
 		expect(existsSync(join(repoPath, ".superset/setup.sh"))).toBe(false);
 	});
 
-	it("keeps a hand-written .superset/setup.sh", () => {
+	it("keeps a hand-written .superset/setup.sh", async () => {
 		write(
 			".superset/config.json",
 			JSON.stringify({
@@ -197,7 +205,7 @@ describe("applySetupImport", () => {
 			compareWithCurrentSetup(repoPath, candidate).conflicts[0]
 				?.removesScriptFile,
 		).toBe(false);
-		applySetupImport({ repoPath, candidate, overwrite: true });
+		await applySetupImport({ repoPath, candidate, overwrite: true });
 		expect(existsSync(join(repoPath, ".superset/setup.sh"))).toBe(true);
 	});
 });

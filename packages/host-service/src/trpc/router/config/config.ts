@@ -167,7 +167,7 @@ export const configRouter = router({
 				overwrite: z.boolean().optional(),
 			}),
 		)
-		.mutation(({ ctx, input }) => {
+		.mutation(async ({ ctx, input }) => {
 			const project = requireProject(ctx, input.projectId);
 			const candidate = inspectSetupImports(project.repoPath).find(
 				(entry) => entry.source === input.source,
@@ -180,7 +180,7 @@ export const configRouter = router({
 			}
 			try {
 				return {
-					written: applySetupImport({
+					written: await applySetupImport({
 						repoPath: project.repoPath,
 						candidate,
 						overwrite: input.overwrite ?? false,

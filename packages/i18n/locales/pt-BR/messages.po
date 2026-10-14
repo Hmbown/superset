@@ -8521,8 +8521,9 @@ msgstr "Importar…"
 msgid "Important"
 msgstr "Importante"
 
+msgctxt "heading over the commands an import would write, below the current ones"
 msgid "Imported"
-msgstr "Importado"
+msgstr "Será importado"
 
 #. placeholder {0}: untracked.length
 #. placeholder {1}: errors[0]
@@ -13573,8 +13574,8 @@ msgstr "1 arquivo substituído em {where}"
 msgid "Replaces <0>{currentCwd}</0> with <1>{importedCwd}</1>"
 msgstr "Substitui <0>{currentCwd}</0> por <1>{importedCwd}</1>"
 
-msgid "Replaces current"
-msgstr "Substitui o atual"
+msgid "Replaces current commands"
+msgstr "Substitui os comandos atuais"
 
 msgid "Reply"
 msgstr "Responder"

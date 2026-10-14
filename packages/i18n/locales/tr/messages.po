@@ -8521,8 +8521,9 @@ msgstr "İçe aktar…"
 msgid "Important"
 msgstr "Önemli"
 
+msgctxt "heading over the commands an import would write, below the current ones"
 msgid "Imported"
-msgstr "İçe aktarılan"
+msgstr "İçe aktarılacak"
 
 #. placeholder {0}: untracked.length
 #. placeholder {1}: errors[0]
@@ -13573,8 +13574,8 @@ msgstr "{where} konumunda 1 dosya değiştirildi"
 msgid "Replaces <0>{currentCwd}</0> with <1>{importedCwd}</1>"
 msgstr "<0>{currentCwd}</0> yerine <1>{importedCwd}</1> kullanılır"
 
-msgid "Replaces current"
-msgstr "Geçerli olanı değiştirir"
+msgid "Replaces current commands"
+msgstr "Geçerli komutları değiştirir"
 
 msgid "Reply"
 msgstr "Yanıtla"

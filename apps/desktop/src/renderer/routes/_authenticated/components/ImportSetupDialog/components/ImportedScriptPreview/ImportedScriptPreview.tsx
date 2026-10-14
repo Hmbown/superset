@@ -41,7 +41,7 @@ export function ImportedScriptPreview({
 				<p className="text-sm font-medium">{title}</p>
 				{conflict && (
 					<Badge variant="outline" className="text-[10px]">
-						<Trans>Replaces current</Trans>
+						<Trans>Replaces current commands</Trans>
 					</Badge>
 				)}
 			</div>
@@ -80,7 +80,9 @@ export function ImportedScriptPreview({
 						</p>
 					)}
 					<p className="pt-1 text-xs text-muted-foreground">
-						<Trans>Imported</Trans>
+						<Trans context="heading over the commands an import would write, below the current ones">
+							Imported
+						</Trans>
 					</p>
 				</div>
 			)}
