@@ -50,7 +50,7 @@ From the CLI, `/delegate` hands a task to the Copilot cloud agent, and `copilot 
 
 ### GitHub.com and GitHub Mobile
 
-You can steer Copilot CLI sessions from GitHub.com or GitHub Mobile, so you can start a task at your desk and check on it from your phone.
+After you turn on remote control for a Copilot CLI session, you can steer it from GitHub.com or GitHub Mobile, so you can start a task at your desk and check on it from your phone. Without remote control, the synced session is view-only.
 
 ### Superset
 
@@ -61,7 +61,7 @@ Superset runs GitHub Copilot CLI as a built-in agent. Each new local branch-base
 - For one task, use Copilot CLI in the terminal.
 - To edit with completions and chat, use VS Code with Copilot.
 - For work that keeps going without your machine, use `/delegate` or `copilot --cloud`.
-- To steer from your phone, use GitHub.com or GitHub Mobile.
+- To steer from your phone, turn on remote control for the session and use GitHub.com or GitHub Mobile.
 - For many Copilot CLI tasks next to other agents, with PRs and review in one place, use Superset.
 
 ## Verdict
@@ -77,7 +77,7 @@ For the agent head-to-head, see [Claude Code vs GitHub Copilot CLI](/compare/cla
 3. To compare agents, create a second workspace with Claude Code or Codex and give it the same prompt.
 4. Compare the diffs in the Changes pane, then open a PR from the better one.
 
-Superset never proxies model calls. Each agent uses your own subscription or key, and the Usage tab shows token use per agent login.
+Superset never proxies model calls. Each agent uses your own subscription or key, and the Usage page shows Copilot's token use.
 
 ## Frequently Asked Questions
 

@@ -38,7 +38,7 @@ Facts below were checked against each vendor's own docs, pricing, and changelogs
 | Agent | Vendor | Models | How you pay | License |
 |---|---|---|---|---|
 | **Claude Code** | Anthropic | Claude | Claude Pro from $20/mo, Max from $100/mo, or API key | Proprietary |
-| **Codex CLI** | OpenAI | OpenAI GPT models | ChatGPT Plus, Pro, Business, or API key | Open source (Apache-2.0) |
+| **Codex CLI** | OpenAI | OpenAI GPT models | ChatGPT plans, including limited use on Free, or API key | Open source (Apache-2.0) |
 | **Antigravity CLI (`agy`)** | Google | Gemini, plus Claude and gpt-oss | Free with weekly limits; Google AI Pro and Ultra; API key | Proprietary |
 | **GitHub Copilot CLI** | GitHub | Claude, GPT, Gemini, Grok, Kimi | Free tier; Pro $10, Pro+ $39, Max $100/mo | Proprietary |
 | **Cursor CLI** | Cursor | Cursor's model list | Cursor plans, free tier included | Proprietary |
@@ -111,7 +111,7 @@ See [Superset vs Google Antigravity](/compare/superset-vs-antigravity) and [Best
 
 ### GitHub Copilot CLI
 
-Copilot's terminal agent offers models from several vendors on one plan, starting with a free tier. Its strength is GitHub itself: issues, pull requests, and the GitHub MCP server are built in, `/delegate` hands work to Copilot's cloud agent, and you can steer sessions from GitHub.com or GitHub Mobile.
+Copilot's terminal agent offers models from several vendors on one plan, starting with a free tier. Its strength is GitHub itself: issues, pull requests, and the GitHub MCP server are built in, `/delegate` hands work to Copilot's cloud agent, and with remote control turned on you can steer sessions from GitHub.com or GitHub Mobile.
 
 **Best for:** teams that live in GitHub and want several vendors' models on one bill.
 
@@ -163,9 +163,9 @@ xAI's open-source agent, written in Rust, can give each subagent its own worktre
 
 ### Kiro CLI
 
-AWS's agent shares one configuration with the Kiro IDE, web app, and mobile app, and adds spec-driven work, sub-agents, workflows, and cloud sessions. Its version 3 becomes the default in October 2026.
+AWS's agent shares one configuration with the Kiro IDE, web app, and mobile app, and adds sub-agents, workflows, and cloud sessions. Kiro began offering version 3 of the CLI in October 2026, and plans a spec mode for CLI 3.0.
 
-**Best for:** AWS teams, and anyone who wants spec-driven development.
+**Best for:** AWS teams, and teams that already use the Kiro IDE.
 
 ### Devin CLI
 
@@ -177,7 +177,7 @@ See [Superset vs Devin](/compare/superset-vs-devin).
 
 ### Open-model agents: Kimi Code, Mistral Vibe, Qwen Code
 
-The open-weight labs ship strong agents of their own, all open source. **Kimi Code** (MIT) runs Moonshot's Kimi models with subagents and video input. **Mistral Vibe** (Apache-2.0) is the cheapest paid plan here at $14.99 a month, with worktrees and remote cloud agents. **Qwen Code** (Apache-2.0) runs Qwen or any other API, or local models, and has subagents, agent teams, and worktrees.
+The open-weight labs ship strong agents of their own, all open source. **Kimi Code** (MIT) runs Moonshot's Kimi models with subagents and video input. **Mistral Vibe** (Apache-2.0) has a $14.99-a-month Pro plan, with worktrees and remote cloud agents. **Qwen Code** (Apache-2.0) runs Qwen or any other API, or local models, and has subagents, agent teams, and worktrees.
 
 **Best for:** open models, lower prices, and self-hosting.
 
@@ -191,11 +191,11 @@ These bring no model of their own and work with any provider. **Pi** is a minima
 
 - **Best overall for deep work:** Claude Code.
 - **Best open-source agent from a major lab:** Codex CLI.
-- **Best free start:** Antigravity CLI, or Copilot CLI's free tier.
+- **Best free start:** Antigravity CLI, Copilot CLI's free tier, or Codex on ChatGPT Free.
 - **Best for GitHub-centric teams:** Copilot CLI.
 - **Best for any model, open source:** OpenCode.
 - **Best for multi-agent workflows in one session:** Muse Code or Claude Code.
-- **Best low-cost subscription:** Mistral Vibe.
+- **Best low-cost subscriptions:** Copilot Pro at $10 a month, or Mistral Vibe Pro at $14.99.
 - **Best for local or self-hosted models:** Qwen Code, Pi, or Hermes Agent.
 - **Best for handing long tasks to the cloud:** Devin CLI, Amp, or Codex.
 
@@ -221,7 +221,7 @@ It depends on your models and budget. Claude Code has the richest parallel featu
 
 ### Which coding agent is free?
 
-Antigravity CLI is free with weekly limits, Copilot CLI has a free tier, and Mistral Vibe and Devin CLI have limited free tiers. OpenCode, Pi, Hermes Agent, and Goose are free open-source agents; you pay only for the model.
+Antigravity CLI is free with weekly limits, Copilot CLI has a free tier, Codex includes limited use on ChatGPT Free, and Mistral Vibe and Devin CLI have limited free tiers. OpenCode, Pi, Hermes Agent, and Goose are free open-source agents; you pay only for the model.
 
 ### Which coding agents are open source?
 
