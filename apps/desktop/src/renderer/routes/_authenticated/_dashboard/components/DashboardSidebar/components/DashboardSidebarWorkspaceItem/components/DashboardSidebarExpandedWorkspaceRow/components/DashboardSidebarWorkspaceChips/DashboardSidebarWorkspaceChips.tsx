@@ -1,11 +1,8 @@
 import { cn } from "@superset/ui/utils";
 import type { MouseEventHandler, SyntheticEvent } from "react";
-import { useDashboardSidebarWorkspacePorts } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/providers/DashboardSidebarPortsProvider";
-import { useInlineWorkspacePortsEnabled } from "renderer/stores/inline-workspace-ports";
 import { useWorkspaceAgentsRowEnabled } from "renderer/stores/workspace-agents-row";
 import type { DashboardSidebarWorkspaceIndentation } from "../../../../../../types";
 import { DashboardSidebarAgentsChip } from "./components/DashboardSidebarAgentsChip";
-import { DashboardSidebarPortsChip } from "./components/DashboardSidebarPortsChip";
 import { useDashboardSidebarWorkspaceRunningAgents } from "./hooks/useDashboardSidebarWorkspaceRunningAgents";
 
 interface DashboardSidebarWorkspaceChipsProps {
@@ -27,8 +24,8 @@ function stopChipDragStart(event: SyntheticEvent<HTMLDivElement>) {
 }
 
 /**
- * Activity line beneath a workspace row, left-aligned with the title: an
- * agents chip and a ports chip. Agent chips appear only when more than one
+ * Activity line beneath a workspace row, left-aligned with the title: the
+ * running-agents chip. It appears only when more than one
  * agent is running — a lone agent is the norm for a workspace and showing it
  * adds no signal.
  */
@@ -38,11 +35,8 @@ export function DashboardSidebarWorkspaceChips({
 	indentation,
 	onClick,
 }: DashboardSidebarWorkspaceChipsProps) {
-	const inlineWorkspacePortsEnabled = useInlineWorkspacePortsEnabled();
 	const workspaceAgentsRowEnabled = useWorkspaceAgentsRowEnabled();
 
-	const portGroup = useDashboardSidebarWorkspacePorts(workspaceId);
-	const ports = inlineWorkspacePortsEnabled ? (portGroup?.ports ?? []) : [];
 	const runningAgents = useDashboardSidebarWorkspaceRunningAgents(workspaceId);
 	// One agent alone is what the pane already shows; the chip earns its
 	// place once there is more than one, or once the one has subagents
@@ -55,7 +49,7 @@ export function DashboardSidebarWorkspaceChips({
 			? runningAgents
 			: [];
 
-	if (ports.length === 0 && agents.length === 0) {
+	if (agents.length === 0) {
 		return null;
 	}
 
@@ -90,10 +84,7 @@ export function DashboardSidebarWorkspaceChips({
 				onClick(event);
 			}}
 		>
-			{agents.length > 0 && (
-				<DashboardSidebarAgentsChip workspaceId={workspaceId} agents={agents} />
-			)}
-			{ports.length > 0 && <DashboardSidebarPortsChip ports={ports} />}
+			<DashboardSidebarAgentsChip workspaceId={workspaceId} agents={agents} />
 		</div>
 	);
 }

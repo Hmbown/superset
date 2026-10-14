@@ -72,7 +72,7 @@ export function DashboardSidebarWorkspaceItem({
 	} = workspace;
 	const isSessionWorkspace = workspace.type === "session";
 	const isCloudWorkspace = hostType === "cloud";
-	const { status: workspaceStatus, diffStats } = useSidebarWorkspaceStatus(id);
+	const { status: workspaceStatus } = useSidebarWorkspaceStatus(id);
 	const {
 		cancelRename,
 		pendingName,
@@ -323,7 +323,6 @@ export function DashboardSidebarWorkspaceItem({
 				renameValue={renameValue}
 				shortcutLabel={shortcutLabel}
 				pinnedContext={pinnedContext}
-				diffStats={isPending ? null : diffStats}
 				workspaceStatus={workspaceStatus}
 				isInSection={isInSection}
 				indentation={indentation}
