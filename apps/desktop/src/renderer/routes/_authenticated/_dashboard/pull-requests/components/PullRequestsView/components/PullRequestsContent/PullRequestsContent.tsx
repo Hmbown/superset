@@ -69,7 +69,6 @@ export function PullRequestsContent({
 				"pullRequests",
 				"searchPullRequests",
 				target.key,
-				target.hostUrl,
 				debouncedQuery.trim(),
 				authorFilter,
 				reviewFilter,
