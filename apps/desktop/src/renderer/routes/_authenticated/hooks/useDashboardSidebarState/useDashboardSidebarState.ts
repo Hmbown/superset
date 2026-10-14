@@ -296,6 +296,17 @@ export function useDashboardSidebarState() {
 		},
 		[v2Workspaces],
 	);
+	// Folder membership is a host tag; a row no host serves (a placed cloud
+	// workspace) keeps only its local pointer.
+	const writeHostWorkspaceTags = useCallback(
+		(workspaceId: string, tags: string[]) => {
+			if (!hostWorkspaces.some((workspace) => workspace.id === workspaceId)) {
+				return;
+			}
+			void writeWorkspaceTags(workspaceId, tags);
+		},
+		[hostWorkspaces, writeWorkspaceTags],
+	);
 
 	// Folder presentation (label, color) is host-owned beside its workspaces.
 	// Projects can have a row on multiple serving hosts, so project writes fan
@@ -518,7 +529,7 @@ export function useDashboardSidebarState() {
 						null,
 					);
 					if (strippedTags.join("\n") !== currentTags.join("\n")) {
-						writeWorkspaceTags(item.id, strippedTags);
+						writeHostWorkspaceTags(item.id, strippedTags);
 					}
 					collections.v2WorkspaceLocalState.update(item.id, (draft) => {
 						draft.sidebarState.tabOrder = tabOrder;
@@ -541,7 +552,7 @@ export function useDashboardSidebarState() {
 			ensureSectionRow,
 			hostWorkspaces,
 			tagFolderContext,
-			writeWorkspaceTags,
+			writeHostWorkspaceTags,
 		],
 	);
 
@@ -576,7 +587,7 @@ export function useDashboardSidebarState() {
 						targetTag,
 					);
 					if (nextTags.join("\n") !== currentTags.join("\n")) {
-						writeWorkspaceTags(workspaceId, nextTags);
+						writeHostWorkspaceTags(workspaceId, nextTags);
 					}
 				}
 				collections.v2WorkspaceLocalState.update(workspaceId, (draft) => {
@@ -587,7 +598,7 @@ export function useDashboardSidebarState() {
 				});
 			});
 		},
-		[collections, hostWorkspaces, tagFolderContext, writeWorkspaceTags],
+		[collections, hostWorkspaces, tagFolderContext, writeHostWorkspaceTags],
 	);
 
 	const createSection = useCallback(
@@ -765,7 +776,7 @@ export function useDashboardSidebarState() {
 					null,
 				);
 				if (strippedTags.join("\n") !== currentTags.join("\n")) {
-					writeWorkspaceTags(workspaceId, strippedTags);
+					writeHostWorkspaceTags(workspaceId, strippedTags);
 				}
 				const topLevelItems = getProjectTopLevelItems(
 					collections,
@@ -819,7 +830,7 @@ export function useDashboardSidebarState() {
 				.map((item) => ({ tabOrder: item.sidebarState.tabOrder }));
 
 			if (targetTag !== null) {
-				writeWorkspaceTags(
+				writeHostWorkspaceTags(
 					workspaceId,
 					applyFolderTagChange(currentTags, folderIndex.keys(), targetTag),
 				);
@@ -834,7 +845,7 @@ export function useDashboardSidebarState() {
 				draft.sidebarState.isHidden = false;
 			});
 		},
-		[collections, hostWorkspaces, tagFolderContext, writeWorkspaceTags],
+		[collections, hostWorkspaces, tagFolderContext, writeHostWorkspaceTags],
 	);
 
 	const deleteSection = useCallback(

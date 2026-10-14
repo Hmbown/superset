@@ -111,8 +111,7 @@ export function DashboardSidebarWorkspaceContextMenu({
 	// The derived union — a tag-only folder with no stored row is a valid
 	// move target.
 	const { sections } = useProjectTagFolderSections(projectId);
-	const canJoinGroup =
-		!isCloudWorkspace && (projectId !== null || isSessionWorkspace);
+	const canJoinGroup = projectId !== null || isSessionWorkspace;
 	const handleCloseAllPorts = () => {
 		if (isKillingPorts) return;
 		void killPorts(ports);
@@ -122,21 +121,19 @@ export function DashboardSidebarWorkspaceContextMenu({
 		<ContextMenu onOpenChange={setContextMenuOpen}>
 			<ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
 			<ContextMenuContent onCloseAutoFocus={onCloseAutoFocus}>
-				{!isCloudWorkspace && (
-					<ContextMenuItem onSelect={onTogglePin}>
-						{isPinned ? (
-							<>
-								<LuPinOff className="size-4 mr-2" />
-								<Trans>Unpin</Trans>
-							</>
-						) : (
-							<>
-								<LuPin className="size-4 mr-2" />
-								<Trans>Pin</Trans>
-							</>
-						)}
-					</ContextMenuItem>
-				)}
+				<ContextMenuItem onSelect={onTogglePin}>
+					{isPinned ? (
+						<>
+							<LuPinOff className="size-4 mr-2" />
+							<Trans>Unpin</Trans>
+						</>
+					) : (
+						<>
+							<LuPin className="size-4 mr-2" />
+							<Trans>Pin</Trans>
+						</>
+					)}
+				</ContextMenuItem>
 				{onRename && (
 					<ContextMenuItem onSelect={() => runAfterClose(onRename)}>
 						<LuPencil className="size-4 mr-2" />

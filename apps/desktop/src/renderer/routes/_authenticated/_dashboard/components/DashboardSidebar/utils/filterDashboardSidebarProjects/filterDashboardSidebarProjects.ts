@@ -72,23 +72,11 @@ export function filterDashboardSidebarProjects(
 			return [expandProject(project)];
 		}
 		const children = filterChildren(project.children, normalizedQuery);
-		const cloudWorkspaces = (project.cloudWorkspaces ?? []).filter(
-			(workspace) => matches(workspace.name, normalizedQuery),
-		);
-		if (children.length === 0 && cloudWorkspaces.length === 0) return [];
+		if (children.length === 0) return [];
 		const childrenUnchanged =
 			children.length === project.children.length &&
 			children.every((child, index) => child === project.children[index]);
-		const cloudUnchanged =
-			cloudWorkspaces.length === (project.cloudWorkspaces?.length ?? 0);
-		if (childrenUnchanged && cloudUnchanged) return [expandProject(project)];
-		return [
-			{
-				...project,
-				isCollapsed: false,
-				children,
-				...(project.cloudWorkspaces ? { cloudWorkspaces } : {}),
-			},
-		];
+		if (childrenUnchanged) return [expandProject(project)];
+		return [{ ...project, isCollapsed: false, children }];
 	});
 }

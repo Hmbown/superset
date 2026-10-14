@@ -70,10 +70,8 @@ export function DashboardSidebarProjectSection({
 		project,
 	});
 
-	const cloudWorkspaces = project.cloudWorkspaces;
 	const isCloudRepo = project.kind === "cloud-repo";
-	const totalWorkspaceCount =
-		flattenedCollapsedWorkspaces.length + (cloudWorkspaces?.length ?? 0);
+	const totalWorkspaceCount = flattenedCollapsedWorkspaces.length;
 
 	const deleteProjectDialog = canDeleteProject && (
 		<DeleteProjectDialog
@@ -121,7 +119,6 @@ export function DashboardSidebarProjectSection({
 						projectColor={project.color}
 						isCollapsed={project.isCollapsed}
 						totalWorkspaceCount={totalWorkspaceCount}
-						trailingWorkspaces={cloudWorkspaces}
 						workspaceShortcutLabels={workspaceShortcutLabels}
 						onWorkspaceHover={onWorkspaceHover}
 						onToggleCollapse={() => onToggleCollapse(project.id)}
@@ -177,7 +174,6 @@ export function DashboardSidebarProjectSection({
 							containerId={project.id}
 							projectId={project.id}
 							isCollapsed={project.isCollapsed}
-							trailingWorkspaces={cloudWorkspaces}
 							workspaceShortcutLabels={workspaceShortcutLabels}
 							onWorkspaceHover={onWorkspaceHover}
 							onDeleteSection={deleteSection}

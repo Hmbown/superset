@@ -125,12 +125,6 @@ export interface DashboardSidebarProject {
 	isCollapsed: boolean;
 	children: DashboardSidebarProjectChild[];
 	/**
-	 * Cloud workspaces of this project's repo. Listed from the cloud, not
-	 * placed: they have no placement row, so they render after `children`
-	 * and take no part in drag, grouping or bulk selection.
-	 */
-	cloudWorkspaces?: DashboardSidebarWorkspace[];
-	/**
 	 * A `cloud-repo` project stands in for a GitHub repo that no host has a
 	 * checkout of; it exists only to hold that repo's cloud workspaces.
 	 */

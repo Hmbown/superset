@@ -12,8 +12,6 @@ import {
 	parseId,
 	useDashboardSidebarDnd,
 } from "../../../../hooks/useSidebarDnd";
-import type { DashboardSidebarWorkspace } from "../../../../types";
-import { DashboardSidebarWorkspaceItem } from "../../../DashboardSidebarWorkspaceItem";
 import { SortableCollapsedWorkspaceItem } from "./components/SortableCollapsedWorkspaceItem";
 
 interface DashboardSidebarCollapsedProjectContentProps
@@ -25,7 +23,6 @@ interface DashboardSidebarCollapsedProjectContentProps
 	isCollapsed: boolean;
 	totalWorkspaceCount: number;
 	/** Rows after the sortable ones, outside DnD (cloud workspaces). */
-	trailingWorkspaces?: DashboardSidebarWorkspace[];
 	workspaceShortcutLabels: Map<string, string>;
 	onWorkspaceHover: (workspaceId: string) => void | Promise<void>;
 	onToggleCollapse: () => void;
@@ -43,7 +40,6 @@ export const DashboardSidebarCollapsedProjectContent = forwardRef<
 			projectColor,
 			isCollapsed,
 			totalWorkspaceCount,
-			trailingWorkspaces,
 			workspaceShortcutLabels,
 			onWorkspaceHover,
 			onToggleCollapse,
@@ -130,15 +126,6 @@ export const DashboardSidebarCollapsedProjectContent = forwardRef<
 										);
 									})}
 								</SortableContext>
-								{trailingWorkspaces?.map((workspace) => (
-									<DashboardSidebarWorkspaceItem
-										key={workspace.id}
-										workspace={workspace}
-										isCollapsed
-										onHoverCardOpen={onWorkspaceHover}
-										shortcutLabel={workspaceShortcutLabels.get(workspace.id)}
-									/>
-								))}
 							</div>
 						</motion.div>
 					)}

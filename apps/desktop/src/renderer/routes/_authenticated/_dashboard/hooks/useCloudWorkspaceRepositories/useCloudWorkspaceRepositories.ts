@@ -25,6 +25,10 @@ export function useCloudWorkspaceRepositories({
 			}
 			repositoriesById.set(row.cloudWorkspaceId, names);
 		}
-		return { repositoriesById, primaryRepositoryById };
+		return {
+			repositoriesById,
+			primaryRepositoryById,
+			isReady: data !== undefined,
+		};
 	}, [data]);
 }

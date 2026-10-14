@@ -30,7 +30,6 @@ const projects = [
 			{ type: "workspace", workspace: local },
 			{ type: "section", section },
 		],
-		cloudWorkspaces: [cloud],
 	}),
 	makeProject({
 		id: "p-local-only",
@@ -55,7 +54,6 @@ describe("filterDashboardSidebarProjectsByHost", () => {
 			{ type: "workspace", workspace: local },
 			{ type: "section", section: { ...section, workspaces: [remote] } },
 		]);
-		expect(mixed?.cloudWorkspaces).toEqual([]);
 		expect(localOnly).toBe(projects[1]);
 	});
 
@@ -65,6 +63,5 @@ describe("filterDashboardSidebarProjectsByHost", () => {
 		expect(result[0]?.children).toEqual([
 			{ type: "section", section: { ...section, workspaces: [cloud] } },
 		]);
-		expect(result[0]?.cloudWorkspaces).toEqual([cloud]);
 	});
 });

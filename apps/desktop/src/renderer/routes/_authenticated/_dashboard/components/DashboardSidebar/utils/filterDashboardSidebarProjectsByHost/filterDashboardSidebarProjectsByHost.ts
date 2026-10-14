@@ -51,22 +51,8 @@ export function filterDashboardSidebarProjectsByHost(
 
 	return projects.flatMap((project): DashboardSidebarProject[] => {
 		const children = filterChildren(project.children, filter);
-		const cloudWorkspaces = (project.cloudWorkspaces ?? []).filter(
-			(workspace) => keeps(workspace, filter),
-		);
-		if (children.length === 0 && cloudWorkspaces.length === 0) return [];
-		if (
-			sameItems(children, project.children) &&
-			cloudWorkspaces.length === (project.cloudWorkspaces?.length ?? 0)
-		) {
-			return [project];
-		}
-		return [
-			{
-				...project,
-				children,
-				...(project.cloudWorkspaces ? { cloudWorkspaces } : {}),
-			},
-		];
+		if (children.length === 0) return [];
+		if (sameItems(children, project.children)) return [project];
+		return [{ ...project, children }];
 	});
 }

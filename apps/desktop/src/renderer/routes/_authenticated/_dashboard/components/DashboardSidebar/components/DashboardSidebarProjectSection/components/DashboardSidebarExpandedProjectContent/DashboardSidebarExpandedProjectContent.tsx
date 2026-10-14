@@ -13,14 +13,15 @@ import type {
 	DashboardSidebarWorkspace,
 	DashboardSidebarWorkspaceIndentation,
 } from "../../../../types";
-import { DashboardSidebarWorkspaceItem } from "../../../DashboardSidebarWorkspaceItem";
 import { WorkspaceBulkMenuScope } from "../../../DashboardSidebarWorkspaceItem/components/WorkspaceBulkMenuScope";
 import { SidebarDropZone } from "../../../SidebarDropZone";
 import { SortableSectionHeader } from "../../../SortableSectionHeader";
 import { SortableWorkspaceItem } from "../../../SortableWorkspaceItem";
 
+// Bulk actions are host-backed; a cloud row stays out of the selection.
 const isBulkSelectable = (workspace: DashboardSidebarWorkspace) =>
-	workspace.pendingTransaction?.type !== "insert";
+	workspace.pendingTransaction?.type !== "insert" &&
+	workspace.hostType !== "cloud";
 
 interface DashboardSidebarExpandedProjectContentProps {
 	/** DnD container: a project id, or SESSIONS_CONTAINER for the Sessions lane. */
@@ -42,7 +43,6 @@ interface DashboardSidebarExpandedProjectContentProps {
 	 * Rows listed after the sortable ones, outside the DnD container: they
 	 * have no placement row to reorder or group (cloud workspaces).
 	 */
-	trailingWorkspaces?: DashboardSidebarWorkspace[];
 	workspaceShortcutLabels: Map<string, string>;
 	onWorkspaceHover: (workspaceId: string) => void | Promise<void>;
 	onDeleteSection: (sectionId: string) => void;
@@ -61,7 +61,6 @@ export function DashboardSidebarExpandedProjectContent({
 	isCollapsed,
 	topLevelIndentation,
 	groupedIndentation,
-	trailingWorkspaces,
 	workspaceShortcutLabels,
 	onWorkspaceHover,
 	onDeleteSection,
@@ -196,15 +195,6 @@ export function DashboardSidebarExpandedProjectContent({
 									);
 								})}
 							</SortableContext>
-							{trailingWorkspaces?.map((workspace) => (
-								<DashboardSidebarWorkspaceItem
-									key={workspace.id}
-									workspace={workspace}
-									indentation={topLevelIndentation}
-									onHoverCardOpen={onWorkspaceHover}
-									shortcutLabel={workspaceShortcutLabels.get(workspace.id)}
-								/>
-							))}
 							{dropZoneEligible && (
 								<SidebarDropZone
 									dropZoneId={dropZoneId(containerId)}
