@@ -21,8 +21,10 @@ import { SubscriptionStartedEmail } from "@superset/email/emails/billing/subscri
 import { OrganizationInvitationEmail } from "@superset/email/emails/team/invitation";
 import { MemberAddedEmail } from "@superset/email/emails/team/member-added";
 import { MemberRemovedEmail } from "@superset/email/emails/team/member-removed";
+import { NOREPLY_FROM } from "@superset/email/sender";
 import { canInvite, type OrganizationRole } from "@superset/shared/auth";
 import { ACTIVE_SUBSCRIPTION_STATUSES } from "@superset/shared/billing";
+import { COMPANY } from "@superset/shared/constants";
 import { getTrustedVercelPreviewOrigins } from "@superset/shared/vercel-preview-origins";
 import { Client } from "@upstash/qstash";
 import { betterAuth } from "better-auth";
@@ -562,7 +564,7 @@ export const auth = betterAuth({
 				});
 
 				await resend.emails.send({
-					from: "Superset <noreply@superset.sh>",
+					from: NOREPLY_FROM,
 					to: data.email,
 					subject: `${data.inviter.user.name} invited you to join ${data.organization.name}`,
 					react: OrganizationInvitationEmail({
@@ -855,7 +857,7 @@ export const auth = betterAuth({
 
 					if (acceptedInvitation) {
 						await resend.emails.send({
-							from: "Superset <noreply@superset.sh>",
+							from: NOREPLY_FROM,
 							to: user.email,
 							subject: `You've been added to ${organization.name}`,
 							react: MemberAddedEmail({
@@ -924,7 +926,7 @@ export const auth = betterAuth({
 
 					await resend.batch.send(
 						recipients.map((recipient) => ({
-							from: "Superset <noreply@superset.sh>",
+							from: NOREPLY_FROM,
 							to: recipient.email,
 							subject: `Billing update: New member added to ${organization.name}`,
 							react: MemberAddedBillingEmail({
@@ -964,7 +966,7 @@ export const auth = betterAuth({
 
 				afterRemoveMember: async ({ user, organization }) => {
 					await resend.emails.send({
-						from: "Superset <noreply@superset.sh>",
+						from: NOREPLY_FROM,
 						to: user.email,
 						subject: `You've been removed from ${organization.name}`,
 						react: MemberRemovedEmail({
@@ -1035,7 +1037,7 @@ export const auth = betterAuth({
 
 					await resend.batch.send(
 						recipients.map((recipient) => ({
-							from: "Superset <noreply@superset.sh>",
+							from: NOREPLY_FROM,
 							to: recipient.email,
 							subject: `Billing update: Member removed from ${organization.name}`,
 							react: MemberRemovedBillingEmail({
@@ -1211,7 +1213,7 @@ export const auth = betterAuth({
 				) => {
 					if (plan.name === "enterprise") {
 						throw new Error(
-							"Enterprise subscriptions are managed by admins. Contact support@superset.sh.",
+							`Enterprise subscriptions are managed by admins. Contact ${COMPANY.SUPPORT_EMAIL}.`,
 						);
 					}
 
@@ -1283,7 +1285,7 @@ export const auth = betterAuth({
 
 					await resend.batch.send(
 						owners.map((owner) => ({
-							from: "Superset <noreply@superset.sh>",
+							from: NOREPLY_FROM,
 							to: owner.email,
 							subject: `Welcome to Superset ${plan.name}!`,
 							react: SubscriptionStartedEmail({
@@ -1390,7 +1392,7 @@ export const auth = betterAuth({
 
 					await resend.batch.send(
 						recipients.map((recipient) => ({
-							from: "Superset <noreply@superset.sh>",
+							from: NOREPLY_FROM,
 							to: recipient.email,
 							subject: dueToPaymentFailure
 								? `Your ${subscription.plan} subscription ended`
@@ -1482,7 +1484,7 @@ export const auth = betterAuth({
 
 							await resend.batch.send(
 								recipients.map((recipient) => ({
-									from: "Superset <noreply@superset.sh>",
+									from: NOREPLY_FROM,
 									to: recipient.email,
 									subject: isFinalAttempt
 										? `Final notice: payment failed for ${org.name}`
@@ -1588,7 +1590,7 @@ export const auth = betterAuth({
 
 						await resend.batch.send(
 							recipients.map((recipient) => ({
-								from: "Superset <noreply@superset.sh>",
+								from: NOREPLY_FROM,
 								to: recipient.email,
 								subject: `${org.name}'s ${subscription.plan} plan renews soon`,
 								react: RenewalUpcomingEmail({
