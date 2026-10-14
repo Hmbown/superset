@@ -62,10 +62,13 @@ export function ImportSetupDialog({
 	const describeError = (error: unknown, label: string) => {
 		const code = (error as { data?: { code?: string } } | null)?.data?.code;
 		if (code === "CONFLICT") {
-			return t`Your Superset setup changed while this was open. Review the update and import again.`;
+			return t`This setup changed while the dialog was open. Review the update and import again.`;
 		}
 		if (code === "NOT_FOUND") {
 			return t`The ${label} setup file is no longer in this project.`;
+		}
+		if (code === "PRECONDITION_FAILED") {
+			return t`Superset does not write through a symlink or outside this project.`;
 		}
 		if (code === "BAD_REQUEST") {
 			return t`.superset/config.json is not valid JSON. Fix it, then import again.`;
@@ -77,6 +80,7 @@ export function ImportSetupDialog({
 		mutationFn: (input: {
 			source: SetupImportCandidate["source"];
 			overwrite: boolean;
+			fingerprint: string;
 		}) =>
 			getHostServiceClientByUrl(hostUrl).config.importSetup.mutate({
 				projectId,
@@ -155,6 +159,8 @@ export function ImportSetupDialog({
 		candidate.conflicts.find((conflict) => conflict.field === field);
 	const cwdConflict = conflictFor("cwd");
 	const fileList = candidate.files.join(", ");
+	const unsafePaths = candidate.unsafePaths ?? [];
+	const unsafePathList = unsafePaths.join(", ");
 	const currentCwd = cwdConflict?.current[0];
 	const importedCwd = candidate.cwd;
 
@@ -238,6 +244,19 @@ export function ImportSetupDialog({
 					<NotImportedList entries={candidate.notImported} />
 				</div>
 
+				{unsafePaths.length > 0 && (
+					<p className="flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs">
+						<HiExclamationTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
+						<span>
+							<Trans>
+								<code className="font-mono">{unsafePathList}</code> is a symlink
+								or leads outside this project. Superset does not write through
+								it; replace it with a regular file or folder, then import.
+							</Trans>
+						</span>
+					</p>
+				)}
+
 				{configInvalid && (
 					<p className="flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs">
 						<HiExclamationTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
@@ -263,11 +282,16 @@ export function ImportSetupDialog({
 						</Button>
 						<Button
 							variant={replaces ? "destructive" : "default"}
-							disabled={importMutation.isPending || configInvalid}
+							disabled={
+								importMutation.isPending ||
+								configInvalid ||
+								unsafePaths.length > 0
+							}
 							onClick={() =>
 								importMutation.mutate({
 									source: candidate.source,
 									overwrite: replaces,
+									fingerprint: candidate.fingerprint,
 								})
 							}
 						>

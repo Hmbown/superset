@@ -1225,6 +1225,9 @@ msgstr "<0>{displayName}</0> fordert Zugriff auf dein Superset-Konto an"
 msgid "<0>{primaryFont}</0> is not installed on this system. Falling back to the next available font."
 msgstr "<0>{primaryFont}</0> ist auf diesem System nicht installiert. Es wird auf die nächste verfügbare Schrift zurückgegriffen."
 
+msgid "<0>{unsafePathList}</0> is a symlink or leads outside this project. Superset does not write through it; replace it with a regular file or folder, then import."
+msgstr "<0>{unsafePathList}</0> ist ein symbolischer Link oder führt aus diesem Projekt heraus. Superset schreibt nicht darüber; ersetze ihn durch eine normale Datei oder einen Ordner und importiere dann."
+
 #. placeholder {0}: formatNumber(rank)
 #. placeholder {1}: formatNumber(total)
 msgid "<0>#{0}</0> <1>of {1} on the leaderboard</1>"
@@ -16072,6 +16075,9 @@ msgstr "Superset-Desktop-App"
 msgid "Superset does not set this variable"
 msgstr "Superset setzt diese Variable nicht"
 
+msgid "Superset does not write through a symlink or outside this project."
+msgstr "Superset schreibt nicht über einen symbolischen Link oder außerhalb dieses Projekts."
+
 msgid "Superset Enterprise is Superset for teams. Reach out to learn more about what's included and how it can work for your organization."
 msgstr "Superset Enterprise ist Superset für Teams. Melde dich, um mehr darüber zu erfahren, was enthalten ist und wie es für deine Organisation funktionieren kann."
 
@@ -17316,6 +17322,9 @@ msgstr "Diesen Bildschirm gibt es nicht"
 
 msgid "This script has shell blocks that do not split into separate commands, so it is saved to <0>{scriptPath}</0>:"
 msgstr "Dieses Skript enthält Shell-Blöcke, die sich nicht in einzelne Befehle aufteilen lassen, daher wird es in <0>{scriptPath}</0> gespeichert:"
+
+msgid "This setup changed while the dialog was open. Review the update and import again."
+msgstr "Dieses Setup hat sich geändert, während der Dialog geöffnet war. Prüfe die Änderung und importiere erneut."
 
 msgid "This Slack workspace is already connected by {owner}. Ask them to disconnect first."
 msgstr "Dieser Slack-Workspace wurde bereits von {owner} verbunden. Bitte diese Person, die Verbindung zuerst zu trennen."
@@ -19237,9 +19246,6 @@ msgstr "Dein Abo wird entsprechend angepasst."
 
 msgid "Your Superset download is starting."
 msgstr "Dein Superset-Download startet."
-
-msgid "Your Superset setup changed while this was open. Review the update and import again."
-msgstr "Dein Superset-Setup hat sich geändert, während dies geöffnet war. Prüfe die Änderung und importiere erneut."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Dein Team kann direkt mit deinem Agenten sprechen."

@@ -1225,6 +1225,9 @@ msgstr "<0>{displayName}</0> está pedindo acesso à sua conta do Superset"
 msgid "<0>{primaryFont}</0> is not installed on this system. Falling back to the next available font."
 msgstr "<0>{primaryFont}</0> não está instalada neste sistema. Usando a próxima fonte disponível."
 
+msgid "<0>{unsafePathList}</0> is a symlink or leads outside this project. Superset does not write through it; replace it with a regular file or folder, then import."
+msgstr "<0>{unsafePathList}</0> é um link simbólico ou leva para fora deste projeto. O Superset não grava por meio dele; substitua-o por um arquivo ou pasta comum e importe novamente."
+
 #. placeholder {0}: formatNumber(rank)
 #. placeholder {1}: formatNumber(total)
 msgid "<0>#{0}</0> <1>of {1} on the leaderboard</1>"
@@ -16072,6 +16075,9 @@ msgstr "App para desktop do Superset"
 msgid "Superset does not set this variable"
 msgstr "O Superset não define esta variável"
 
+msgid "Superset does not write through a symlink or outside this project."
+msgstr "O Superset não grava por meio de um link simbólico nem fora deste projeto."
+
 msgid "Superset Enterprise is Superset for teams. Reach out to learn more about what's included and how it can work for your organization."
 msgstr "O Superset Enterprise é o Superset para times. Fale com a gente para saber o que está incluído e como ele pode funcionar na sua organização."
 
@@ -17316,6 +17322,9 @@ msgstr "Esta tela não existe"
 
 msgid "This script has shell blocks that do not split into separate commands, so it is saved to <0>{scriptPath}</0>:"
 msgstr "Este script tem blocos de shell que não se dividem em comandos separados, então ele é salvo em <0>{scriptPath}</0>:"
+
+msgid "This setup changed while the dialog was open. Review the update and import again."
+msgstr "Esta configuração mudou enquanto a caixa de diálogo estava aberta. Revise a alteração e importe novamente."
 
 msgid "This Slack workspace is already connected by {owner}. Ask them to disconnect first."
 msgstr "Este workspace do Slack já está conectado por {owner}. Peça para essa pessoa desconectar primeiro."
@@ -19237,9 +19246,6 @@ msgstr "Sua assinatura será ajustada conforme isso."
 
 msgid "Your Superset download is starting."
 msgstr "O download do Superset está começando."
-
-msgid "Your Superset setup changed while this was open. Review the update and import again."
-msgstr "Sua configuração do Superset mudou enquanto isto estava aberto. Revise a alteração e importe novamente."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Sua equipe pode falar diretamente com o seu agente."

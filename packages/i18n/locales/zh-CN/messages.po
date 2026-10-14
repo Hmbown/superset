@@ -1225,6 +1225,9 @@ msgstr "<0>{displayName}</0>请求访问你的Superset账户"
 msgid "<0>{primaryFont}</0> is not installed on this system. Falling back to the next available font."
 msgstr "此系统未安装<0>{primaryFont}</0>。将回退到下一个可用字体。"
 
+msgid "<0>{unsafePathList}</0> is a symlink or leads outside this project. Superset does not write through it; replace it with a regular file or folder, then import."
+msgstr "<0>{unsafePathList}</0> 是符号链接或指向此项目之外。Superset 不会通过它写入；请将其替换为普通文件或文件夹，然后再导入。"
+
 #. placeholder {0}: formatNumber(rank)
 #. placeholder {1}: formatNumber(total)
 msgid "<0>#{0}</0> <1>of {1} on the leaderboard</1>"
@@ -16072,6 +16075,9 @@ msgstr "Superset 桌面应用"
 msgid "Superset does not set this variable"
 msgstr "Superset 不会设置此变量"
 
+msgid "Superset does not write through a symlink or outside this project."
+msgstr "Superset 不会通过符号链接写入，也不会写到此项目之外。"
+
 msgid "Superset Enterprise is Superset for teams. Reach out to learn more about what's included and how it can work for your organization."
 msgstr "Superset Enterprise是面向团队的Superset。联系我们，了解它包含什么，以及如何适配你的组织。"
 
@@ -17316,6 +17322,9 @@ msgstr "此页面不存在"
 
 msgid "This script has shell blocks that do not split into separate commands, so it is saved to <0>{scriptPath}</0>:"
 msgstr "此脚本包含无法拆分为单独命令的 shell 代码块，因此会保存到 <0>{scriptPath}</0>："
+
+msgid "This setup changed while the dialog was open. Review the update and import again."
+msgstr "此对话框打开期间该初始化配置已更改。请检查更新后重新导入。"
 
 msgid "This Slack workspace is already connected by {owner}. Ask them to disconnect first."
 msgstr "这个Slack工作区已被{owner}连接。请让对方先断开连接。"
@@ -19237,9 +19246,6 @@ msgstr "你的订阅将相应调整。"
 
 msgid "Your Superset download is starting."
 msgstr "Superset 下载即将开始。"
-
-msgid "Your Superset setup changed while this was open. Review the update and import again."
-msgstr "此窗口打开期间，你的 Superset 初始化配置已更改。请检查更新后重新导入。"
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "你的队友可以直接与你的智能体对话。"

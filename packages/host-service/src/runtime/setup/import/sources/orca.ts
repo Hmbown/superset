@@ -64,24 +64,29 @@ function parentDirectory(path: string): string | null {
 	return slash === -1 ? null : path.slice(0, slash);
 }
 
-function linkSharedDirectory(path: string): string {
+/** Copy or link one root-checkout path into the workspace, Orca style. */
+function placeFromRoot(
+	path: string,
+	sourceTest: "-d" | "-e",
+	command: "ln -s" | "cp -R",
+): string {
 	const parent = parentDirectory(path);
+	// `./` keeps a path starting with `-` from reading as an option, and
+	// `-L` catches a dangling symlink, which `-e` reports as absent.
 	return [
-		`if [ -d "$SUPERSET_ROOT_PATH/${path}" ] && [ ! -e "${path}" ]; then`,
-		...(parent ? [`  mkdir -p "${parent}"`] : []),
-		`  ln -s "$SUPERSET_ROOT_PATH/${path}" "${path}"`,
+		`if [ ${sourceTest} "$SUPERSET_ROOT_PATH/${path}" ] && [ ! -e "./${path}" ] && [ ! -L "./${path}" ]; then`,
+		...(parent ? [`  mkdir -p "./${parent}"`] : []),
+		`  ${command} "$SUPERSET_ROOT_PATH/${path}" "./${path}"`,
 		"fi",
 	].join("\n");
 }
 
+function linkSharedDirectory(path: string): string {
+	return placeFromRoot(path, "-d", "ln -s");
+}
+
 function copyIncludedPath(path: string): string {
-	const parent = parentDirectory(path);
-	return [
-		`if [ -e "$SUPERSET_ROOT_PATH/${path}" ] && [ ! -e "${path}" ]; then`,
-		...(parent ? [`  mkdir -p "${parent}"`] : []),
-		`  cp -R "$SUPERSET_ROOT_PATH/${path}" "${path}"`,
-		"fi",
-	].join("\n");
+	return placeFromRoot(path, "-e", "cp -R");
 }
 
 function readSharedDirectories(

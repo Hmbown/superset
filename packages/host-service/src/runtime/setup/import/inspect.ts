@@ -1,4 +1,5 @@
-import { existsSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { getProjectConfigPath } from "../config";
 import { createRepoFileReader, parseJsonObject } from "./limits";
@@ -8,6 +9,7 @@ import {
 	getImportedScriptPath,
 	IMPORTED_SCRIPT_MARKER,
 } from "./plan";
+import { pathExistsNoFollow } from "./safe-paths";
 import { parseCmux } from "./sources/cmux";
 import { parseCodex } from "./sources/codex";
 import { parseConductor } from "./sources/conductor";
@@ -16,6 +18,8 @@ import { parseT3 } from "./sources/t3";
 import {
 	IMPORTED_SCRIPT_KEYS,
 	type ImportedScriptKey,
+	type ParsedSetupSource,
+	type RepoFileReader,
 	type SetupImportCandidate,
 } from "./types";
 
@@ -44,11 +48,24 @@ export function isProjectConfigInvalid(repoPath: string): boolean {
 }
 
 /** Every importable setup in the repo root, in priority order. */
-export function inspectSetupImports(repoPath: string): SetupImportCandidate[] {
+export function inspectSetupImports(
+	repoPath: string,
+	parsers: readonly ((
+		read: RepoFileReader,
+	) => ParsedSetupSource | null)[] = SOURCE_PARSERS,
+): SetupImportCandidate[] {
 	const read = createRepoFileReader(repoPath);
-	return SOURCE_PARSERS.flatMap((parse) => {
-		const candidate = buildCandidate(parse(read));
-		return candidate ? [candidate] : [];
+	return parsers.flatMap((parse) => {
+		try {
+			const candidate = buildCandidate(parse(read));
+			return candidate ? [candidate] : [];
+		} catch (error) {
+			// One unreadable file must not hide the other tools' setups.
+			console.error(
+				`[setup-import] ${parse.name} failed: ${error instanceof Error ? error.message : String(error)}`,
+			);
+			return [];
+		}
 	});
 }
 
@@ -102,7 +119,7 @@ export function compareWithCurrentSetup(
 		const current = readCurrentCommands(config, key);
 		const scriptFile = getImportedScriptPath(key);
 		const scriptPath = join(repoPath, scriptFile);
-		const scriptExists = existsSync(scriptPath);
+		const scriptExists = pathExistsNoFollow(scriptPath);
 		const scriptContent = scriptExists ? readText(scriptPath) : null;
 
 		const commandsChange = !sameCommands(current, plan.commands);
@@ -144,4 +161,32 @@ export function compareWithCurrentSetup(
 		}
 	}
 	return { changes, conflicts };
+}
+
+/**
+ * Identifies what the user reviewed: the proposed import and the current
+ * state of every field and script file it would replace. The mutation
+ * refuses when this no longer matches.
+ */
+export function fingerprintSetupImport(
+	repoPath: string,
+	candidate: SetupImportCandidate,
+): string {
+	const config = parseJsonObject(readText(getProjectConfigPath(repoPath)));
+	const current = IMPORTED_SCRIPT_KEYS.filter(
+		(key) => candidate.scripts[key],
+	).map((key) => ({
+		key,
+		commands: readCurrentCommands(config, key),
+		script: readText(join(repoPath, getImportedScriptPath(key))),
+	}));
+	return createHash("sha256")
+		.update(
+			JSON.stringify({
+				candidate,
+				current,
+				cwd: typeof config?.cwd === "string" ? config.cwd : null,
+			}),
+		)
+		.digest("hex");
 }

@@ -1,4 +1,17 @@
-import { describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "bun:test";
+import { spawnSync } from "node:child_process";
+import {
+	existsSync,
+	lstatSync,
+	mkdirSync,
+	mkdtempSync,
+	readlinkSync,
+	rmSync,
+	symlinkSync,
+	writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { buildCandidate } from "../plan";
 import { normalizeRelativePath, parseOrca } from "./orca";
 import { readerFor } from "./test-utils";
@@ -54,9 +67,9 @@ describe("parseOrca", () => {
 		);
 		const script = candidate?.scripts.setup?.scriptFile?.content ?? "";
 		expect(candidate?.files).toEqual(["orca.yaml", ".worktreeinclude"]);
-		expect(script).toContain('  ln -s "$SUPERSET_ROOT_PATH/.cache" ".cache"');
+		expect(script).toContain('  ln -s "$SUPERSET_ROOT_PATH/.cache" "./.cache"');
 		expect(script).toContain(
-			'  mkdir -p ".vscode"\n  cp -R "$SUPERSET_ROOT_PATH/.vscode/settings.json" ".vscode/settings.json"',
+			'  mkdir -p "./.vscode"\n  cp -R "$SUPERSET_ROOT_PATH/.vscode/settings.json" "./.vscode/settings.json"',
 		);
 		expect(script).not.toContain('cp -R "$SUPERSET_ROOT_PATH/.cache"');
 		expect(script.indexOf("ln -s")).toBeLessThan(script.indexOf("cp -R"));
@@ -75,7 +88,7 @@ describe("parseOrca", () => {
 		const parsed = parseOrca(readerFor({ ".worktreeinclude": ".env\n" }));
 		expect(parsed?.files).toEqual([".worktreeinclude"]);
 		expect(parsed?.scripts.setup?.[0]).toContain(
-			'cp -R "$SUPERSET_ROOT_PATH/.env" ".env"',
+			'cp -R "$SUPERSET_ROOT_PATH/.env" "./.env"',
 		);
 	});
 
@@ -105,5 +118,66 @@ describe("normalizeRelativePath", () => {
 		]) {
 			expect(normalizeRelativePath(path)).toBeNull();
 		}
+	});
+});
+
+describe("generated Orca setup script", () => {
+	let sandbox: string | null = null;
+	afterEach(() => {
+		if (sandbox) rmSync(sandbox, { recursive: true, force: true });
+		sandbox = null;
+	});
+
+	function runSetup(
+		files: Record<string, string>,
+		prepare: (root: string, workspace: string) => void,
+	) {
+		sandbox = mkdtempSync(join(tmpdir(), "orca-setup-run-"));
+		const root = join(sandbox, "root");
+		const workspace = join(sandbox, "workspace");
+		mkdirSync(root);
+		mkdirSync(workspace);
+		prepare(root, workspace);
+		const script =
+			buildCandidate(parseOrca(readerFor(files)))?.scripts.setup?.scriptFile
+				?.content ?? "";
+		const result = spawnSync("bash", ["-c", script], {
+			cwd: workspace,
+			env: { ...process.env, SUPERSET_ROOT_PATH: root },
+			encoding: "utf-8",
+		});
+		return { result, workspace };
+	}
+
+	it("leaves a dangling symlink in place instead of failing setup", () => {
+		const { result, workspace } = runSetup(
+			{ "orca.yaml": "worktree:\n  sharedDirectories:\n    - .cache\n" },
+			(root, workspace) => {
+				mkdirSync(join(root, ".cache"));
+				symlinkSync(join(workspace, "missing"), join(workspace, ".cache"));
+			},
+		);
+		expect(result.status).toBe(0);
+		expect(readlinkSync(join(workspace, ".cache"))).toBe(
+			join(workspace, "missing"),
+		);
+	});
+
+	it("treats a path that starts with a dash as a path, not an option", () => {
+		const { result, workspace } = runSetup(
+			{
+				"orca.yaml": "worktree:\n  sharedDirectories:\n    - -cache/sub\n",
+				".worktreeinclude": "-env\n",
+			},
+			(root) => {
+				mkdirSync(join(root, "-cache", "sub"), { recursive: true });
+				writeFileSync(join(root, "-env"), "A=1\n");
+			},
+		);
+		expect(result.status).toBe(0);
+		expect(lstatSync(join(workspace, "-cache", "sub")).isSymbolicLink()).toBe(
+			true,
+		);
+		expect(existsSync(join(workspace, "-env"))).toBe(true);
 	});
 });

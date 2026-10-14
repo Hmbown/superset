@@ -23,6 +23,50 @@ const BASIC_ESCAPES: Record<string, string> = {
 	"\\": "\\",
 };
 
+function isUnicodeScalar(code: number): boolean {
+	return (
+		Number.isInteger(code) &&
+		code >= 0 &&
+		code <= 0x10ffff &&
+		(code < 0xd800 || code > 0xdfff)
+	);
+}
+
+/** Splits a dotted key, unquoting `"..."` and `'...'` parts; null if malformed. */
+export function decodeDottedKey(raw: string): string | null {
+	const parts: string[] = [];
+	let rest = raw.trim();
+	while (rest.length > 0) {
+		let part: string;
+		if (rest.startsWith('"')) {
+			const match = rest.match(/^"((?:[^"\\]|\\.)*)"/);
+			if (!match) return null;
+			try {
+				part = JSON.parse(match[0]) as string;
+			} catch {
+				return null;
+			}
+			rest = rest.slice(match[0].length);
+		} else if (rest.startsWith("'")) {
+			const end = rest.indexOf("'", 1);
+			if (end === -1) return null;
+			part = rest.slice(1, end);
+			rest = rest.slice(end + 1);
+		} else {
+			const match = rest.match(/^[A-Za-z0-9_-]+/);
+			if (!match) return null;
+			part = match[0];
+			rest = rest.slice(part.length);
+		}
+		parts.push(part);
+		rest = rest.trimStart();
+		if (rest.length === 0) break;
+		if (!rest.startsWith(".")) return null;
+		rest = rest.slice(1).trimStart();
+	}
+	return parts.length > 0 ? parts.join(".") : null;
+}
+
 /**
  * Reads the key/value pairs of a TOML file, with string values decoded. Only
  * strings are decoded, which is all the setup import needs; other values are
@@ -90,7 +134,7 @@ export function readTomlEntries(content: string): TomlEntry[] | null {
 					content.slice(pos + 2, pos + 2 + length),
 					16,
 				);
-				if (Number.isNaN(code)) return null;
+				if (!isUnicodeScalar(code)) return null;
 				out += String.fromCodePoint(code);
 				pos += 2 + length;
 				continue;
@@ -152,12 +196,7 @@ export function readTomlEntries(content: string): TomlEntry[] | null {
 		const lineEnd = content.indexOf("\n", pos);
 		if (end === -1 || (lineEnd !== -1 && lineEnd < end)) return null;
 		pos = end + 1;
-		return content
-			.slice(start, end)
-			.trim()
-			.split(".")
-			.map((part) => part.trim().replace(/^"(.*)"$|^'(.*)'$/, "$1$2"))
-			.join(".");
+		return decodeDottedKey(content.slice(start, end));
 	};
 
 	while (pos < content.length) {
@@ -175,11 +214,11 @@ export function readTomlEntries(content: string): TomlEntry[] | null {
 			const close = content.indexOf(isArray ? "]]" : "]", pos);
 			const lineEnd = content.indexOf("\n", pos);
 			if (close === -1 || (lineEnd !== -1 && lineEnd < close)) return null;
-			table = content
-				.slice(pos + (isArray ? 2 : 1), close)
-				.split(".")
-				.map((part) => part.trim())
-				.join(".");
+			const decoded = decodeDottedKey(
+				content.slice(pos + (isArray ? 2 : 1), close),
+			);
+			if (decoded === null) return null;
+			table = decoded;
 			if (isArray) {
 				arrayIndex = (arrayCounts.get(table) ?? -1) + 1;
 				arrayCounts.set(table, arrayIndex);

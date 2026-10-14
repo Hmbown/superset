@@ -1225,6 +1225,9 @@ msgstr "<0>{displayName}</0> запрашивает доступ к вашему
 msgid "<0>{primaryFont}</0> is not installed on this system. Falling back to the next available font."
 msgstr "<0>{primaryFont}</0> не установлен в системе. Используется следующий доступный шрифт."
 
+msgid "<0>{unsafePathList}</0> is a symlink or leads outside this project. Superset does not write through it; replace it with a regular file or folder, then import."
+msgstr "<0>{unsafePathList}</0> — символическая ссылка или ведёт за пределы этого проекта. Superset не записывает через неё; замените её обычным файлом или папкой, затем импортируйте."
+
 #. placeholder {0}: formatNumber(rank)
 #. placeholder {1}: formatNumber(total)
 msgid "<0>#{0}</0> <1>of {1} on the leaderboard</1>"
@@ -16072,6 +16075,9 @@ msgstr "Десктопное приложение Superset"
 msgid "Superset does not set this variable"
 msgstr "Superset не задаёт эту переменную"
 
+msgid "Superset does not write through a symlink or outside this project."
+msgstr "Superset не записывает через символическую ссылку или за пределы этого проекта."
+
 msgid "Superset Enterprise is Superset for teams. Reach out to learn more about what's included and how it can work for your organization."
 msgstr "Superset Enterprise — это Superset для команд. Напишите нам, чтобы узнать, что входит и как это подойдёт вашей организации."
 
@@ -17316,6 +17322,9 @@ msgstr "Такого экрана нет"
 
 msgid "This script has shell blocks that do not split into separate commands, so it is saved to <0>{scriptPath}</0>:"
 msgstr "В этом скрипте есть блоки оболочки, которые нельзя разделить на отдельные команды, поэтому он сохраняется в <0>{scriptPath}</0>:"
+
+msgid "This setup changed while the dialog was open. Review the update and import again."
+msgstr "Эта настройка изменилась, пока диалог был открыт. Проверьте изменения и импортируйте снова."
 
 msgid "This Slack workspace is already connected by {owner}. Ask them to disconnect first."
 msgstr "Это рабочее пространство Slack уже подключено пользователем {owner}. Попросите отключить его."
@@ -19237,9 +19246,6 @@ msgstr "Подписка будет пересчитана соответств�
 
 msgid "Your Superset download is starting."
 msgstr "Загрузка Superset начинается."
-
-msgid "Your Superset setup changed while this was open. Review the update and import again."
-msgstr "Ваша настройка Superset изменилась, пока это окно было открыто. Проверьте изменения и импортируйте снова."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Ваша команда может общаться с вашим агентом напрямую."

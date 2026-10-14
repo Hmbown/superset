@@ -1225,6 +1225,9 @@ msgstr "<0>{displayName}</0> đang yêu cầu truy cập tài khoản Superset c
 msgid "<0>{primaryFont}</0> is not installed on this system. Falling back to the next available font."
 msgstr "<0>{primaryFont}</0> chưa được cài trên hệ thống này. Đang dùng font khả dụng kế tiếp."
 
+msgid "<0>{unsafePathList}</0> is a symlink or leads outside this project. Superset does not write through it; replace it with a regular file or folder, then import."
+msgstr "<0>{unsafePathList}</0> là liên kết tượng trưng hoặc dẫn ra ngoài dự án này. Superset không ghi qua nó; hãy thay bằng tệp hoặc thư mục thường rồi nhập lại."
+
 #. placeholder {0}: formatNumber(rank)
 #. placeholder {1}: formatNumber(total)
 msgid "<0>#{0}</0> <1>of {1} on the leaderboard</1>"
@@ -16072,6 +16075,9 @@ msgstr "Ứng dụng Superset cho máy tính"
 msgid "Superset does not set this variable"
 msgstr "Superset không đặt biến này"
 
+msgid "Superset does not write through a symlink or outside this project."
+msgstr "Superset không ghi qua liên kết tượng trưng hoặc ra ngoài dự án này."
+
 msgid "Superset Enterprise is Superset for teams. Reach out to learn more about what's included and how it can work for your organization."
 msgstr "Superset Enterprise là Superset dành cho đội nhóm. Hãy liên hệ để biết thêm về những gì được bao gồm và cách nó phù hợp với tổ chức của bạn."
 
@@ -17316,6 +17322,9 @@ msgstr "Màn hình này không tồn tại"
 
 msgid "This script has shell blocks that do not split into separate commands, so it is saved to <0>{scriptPath}</0>:"
 msgstr "Script này có các khối shell không thể tách thành lệnh riêng, nên nó được lưu vào <0>{scriptPath}</0>:"
+
+msgid "This setup changed while the dialog was open. Review the update and import again."
+msgstr "Thiết lập này đã thay đổi trong lúc hộp thoại mở. Hãy xem lại thay đổi và nhập lại."
 
 msgid "This Slack workspace is already connected by {owner}. Ask them to disconnect first."
 msgstr "Workspace Slack này đã được {owner} kết nối. Hãy nhờ họ ngắt kết nối trước."
@@ -19237,9 +19246,6 @@ msgstr "Gói đăng ký của bạn sẽ được điều chỉnh tương ứng.
 
 msgid "Your Superset download is starting."
 msgstr "Bản tải xuống Superset của bạn đang bắt đầu."
-
-msgid "Your Superset setup changed while this was open. Review the update and import again."
-msgstr "Thiết lập Superset của bạn đã thay đổi trong lúc cửa sổ này mở. Hãy xem lại thay đổi và nhập lại."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Đồng đội có thể trao đổi trực tiếp với agent của bạn."

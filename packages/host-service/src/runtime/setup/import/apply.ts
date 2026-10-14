@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { getProjectConfigPath } from "../config";
 import { compareWithCurrentSetup } from "./inspect";
 import { asRecord } from "./limits";
+import { findUnsafeImportPaths } from "./safe-paths";
 import { IMPORTED_SCRIPT_KEYS, type SetupImportCandidate } from "./types";
 
 export class SetupImportConflictError extends Error {
@@ -17,6 +18,15 @@ export class InvalidProjectConfigError extends Error {
 	constructor(configPath: string) {
 		super(`${configPath} is not a JSON object; fix it before importing`);
 		this.name = "InvalidProjectConfigError";
+	}
+}
+
+export class UnsafeImportPathError extends Error {
+	constructor(readonly paths: string[]) {
+		super(
+			`Import refuses to write through a symlink or outside the project: ${paths.join(", ")}`,
+		);
+		this.name = "UnsafeImportPathError";
 	}
 }
 
@@ -64,6 +74,8 @@ export async function applySetupImport(args: {
 	overwrite: boolean;
 }): Promise<string[]> {
 	const { repoPath, candidate } = args;
+	const unsafePaths = findUnsafeImportPaths(repoPath, candidate);
+	if (unsafePaths.length > 0) throw new UnsafeImportPathError(unsafePaths);
 	const { conflicts } = compareWithCurrentSetup(repoPath, candidate);
 	if (conflicts.length > 0 && !args.overwrite) {
 		throw new SetupImportConflictError(conflicts.map((c) => c.field));

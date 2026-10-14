@@ -1225,6 +1225,9 @@ msgstr "<0>{displayName}</0> žádá o přístup k vašemu účtu Superset"
 msgid "<0>{primaryFont}</0> is not installed on this system. Falling back to the next available font."
 msgstr "<0>{primaryFont}</0> není v tomto systému nainstalovaný. Použije se další dostupný font."
 
+msgid "<0>{unsafePathList}</0> is a symlink or leads outside this project. Superset does not write through it; replace it with a regular file or folder, then import."
+msgstr "<0>{unsafePathList}</0> je symbolický odkaz nebo vede mimo tento projekt. Superset přes něj nezapisuje; nahraďte ho běžným souborem nebo složkou a pak importujte."
+
 #. placeholder {0}: formatNumber(rank)
 #. placeholder {1}: formatNumber(total)
 msgid "<0>#{0}</0> <1>of {1} on the leaderboard</1>"
@@ -16072,6 +16075,9 @@ msgstr "Desktopová aplikace Superset"
 msgid "Superset does not set this variable"
 msgstr "Superset tuto proměnnou nenastavuje"
 
+msgid "Superset does not write through a symlink or outside this project."
+msgstr "Superset nezapisuje přes symbolický odkaz ani mimo tento projekt."
+
 msgid "Superset Enterprise is Superset for teams. Reach out to learn more about what's included and how it can work for your organization."
 msgstr "Superset Enterprise je Superset pro týmy. Ozvěte se a řekneme vám, co obsahuje a jak může fungovat ve vaší organizaci."
 
@@ -17316,6 +17322,9 @@ msgstr "Tato obrazovka neexistuje"
 
 msgid "This script has shell blocks that do not split into separate commands, so it is saved to <0>{scriptPath}</0>:"
 msgstr "Tento skript obsahuje bloky shellu, které nelze rozdělit na samostatné příkazy, proto se uloží do <0>{scriptPath}</0>:"
+
+msgid "This setup changed while the dialog was open. Review the update and import again."
+msgstr "Toto nastavení se změnilo, zatímco byl dialog otevřený. Zkontrolujte změnu a importujte znovu."
 
 msgid "This Slack workspace is already connected by {owner}. Ask them to disconnect first."
 msgstr "Tento Slack workspace už má připojený {owner}. Požádejte je, ať se nejdřív odpojí."
@@ -19237,9 +19246,6 @@ msgstr "Vaše předplatné se odpovídajícím způsobem upraví."
 
 msgid "Your Superset download is starting."
 msgstr "Vaše stahování Supersetu se spouští."
-
-msgid "Your Superset setup changed while this was open. Review the update and import again."
-msgstr "Vaše nastavení Superset se změnilo, zatímco bylo toto okno otevřené. Zkontrolujte změnu a importujte znovu."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Vaši kolegové mohou mluvit přímo s vaším agentem."

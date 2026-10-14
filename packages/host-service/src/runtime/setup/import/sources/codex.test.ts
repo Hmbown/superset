@@ -68,6 +68,25 @@ command = "pnpm test"
 		]);
 	});
 
+	it("reads quoted table and key names", () => {
+		const parsed = parseCodex(
+			environment(
+				'["setup"]\n"script" = "bun install"\n[\'actions\'."dev"]\ncommand = "bun dev"\n',
+			),
+		);
+		expect(parsed?.scripts.setup).toEqual(["bun install"]);
+		expect(parsed?.scripts.run).toEqual(["bun dev"]);
+	});
+
+	it("rejects an out-of-range unicode escape instead of throwing", () => {
+		expect(
+			parseCodex(environment('[setup]\nscript = "echo \\U00110000"\n')),
+		).toBeNull();
+		expect(
+			parseCodex(environment('[setup]\nscript = "echo \\uD800"\n')),
+		).toBeNull();
+	});
+
 	it("rejects an unterminated string", () => {
 		expect(
 			parseCodex(environment('[setup]\nscript = """\nbun i\n')),

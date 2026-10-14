@@ -8,6 +8,8 @@ describe("isStandaloneCommand", () => {
 			'cp "$SUPERSET_ROOT_PATH/.env" .env',
 			"docker compose up -d && sleep 2",
 			"echo 'a # not a comment'",
+			'echo "$(date +%s) (now)"',
+			"ver=$(node -v)",
 		]) {
 			expect(isStandaloneCommand(line)).toBe(true);
 		}
@@ -25,6 +27,9 @@ describe("isStandaloneCommand", () => {
 			'echo "unterminated',
 			"setup() {",
 			"for f in a b; do echo $f; done",
+			"value=$(false",
+			"printf fallback)",
+			"tag=`git describe",
 		]) {
 			expect(isStandaloneCommand(line)).toBe(false);
 		}
@@ -55,6 +60,21 @@ describe("planScript", () => {
 			content:
 				"#!/usr/bin/env bash\n# Imported by Superset from orca.yaml.\nset -e\n\nif [ ! -f .env ]; then\n  cp .env.example .env\nfi\n\nbun install\n",
 		});
+	});
+
+	it("keeps a command substitution that spans lines in the script file", () => {
+		const plan = planScript(
+			"setup",
+			["value=$(false ||\nprintf fallback)\necho $value"],
+			["conductor.json"],
+		);
+		expect(plan?.scriptFile?.content).toContain(
+			"value=$(false ||\nprintf fallback)\necho $value",
+		);
+		expect(
+			planScript("setup", ["value=$(false\nprintf fallback)"], ["x"])
+				?.scriptFile,
+		).toBeDefined();
 	});
 
 	it("returns null when nothing runnable remains", () => {

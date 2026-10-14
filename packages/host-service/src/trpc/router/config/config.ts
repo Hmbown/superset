@@ -15,11 +15,14 @@ import {
 import {
 	applySetupImport,
 	compareWithCurrentSetup,
+	findUnsafeImportPaths,
+	fingerprintSetupImport,
 	InvalidProjectConfigError,
 	inspectSetupImports,
 	isProjectConfigInvalid,
 	SETUP_IMPORT_SOURCES,
 	SetupImportConflictError,
+	UnsafeImportPathError,
 } from "../../../runtime/setup/import";
 import type { HostServiceContext } from "../../../types";
 import { protectedProcedure, router } from "../../index";
@@ -151,13 +154,16 @@ export const configRouter = router({
 				candidates: inspectSetupImports(project.repoPath).map((candidate) => ({
 					...candidate,
 					...compareWithCurrentSetup(project.repoPath, candidate),
+					fingerprint: fingerprintSetupImport(project.repoPath, candidate),
+					unsafePaths: findUnsafeImportPaths(project.repoPath, candidate),
 				})),
 			};
 		}),
 
 	/**
 	 * Re-reads the source and writes it into `.superset/`. Throws CONFLICT
-	 * when it would replace an existing field and `overwrite` is not set.
+	 * when it would replace an existing field and `overwrite` is not set, or
+	 * when `fingerprint` no longer matches what the user reviewed.
 	 */
 	importSetup: protectedProcedure
 		.input(
@@ -165,6 +171,8 @@ export const configRouter = router({
 				projectId: z.string().uuid(),
 				source: z.enum(SETUP_IMPORT_SOURCES),
 				overwrite: z.boolean().optional(),
+				/** From getSetupImportCandidates; omitted by callers that show no preview. */
+				fingerprint: z.string().optional(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
@@ -178,6 +186,16 @@ export const configRouter = router({
 					message: `No ${input.source} setup found in ${project.repoPath}`,
 				});
 			}
+			if (
+				input.fingerprint !== undefined &&
+				input.fingerprint !==
+					fingerprintSetupImport(project.repoPath, candidate)
+			) {
+				throw new TRPCError({
+					code: "CONFLICT",
+					message: "The setup changed after it was reviewed",
+				});
+			}
 			try {
 				return {
 					written: await applySetupImport({
@@ -189,6 +207,12 @@ export const configRouter = router({
 			} catch (error) {
 				if (error instanceof SetupImportConflictError) {
 					throw new TRPCError({ code: "CONFLICT", message: error.message });
+				}
+				if (error instanceof UnsafeImportPathError) {
+					throw new TRPCError({
+						code: "PRECONDITION_FAILED",
+						message: error.message,
+					});
 				}
 				if (error instanceof InvalidProjectConfigError) {
 					throw new TRPCError({ code: "BAD_REQUEST", message: error.message });

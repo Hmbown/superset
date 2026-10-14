@@ -13,9 +13,14 @@ const CONTROL_WORD_START =
 const OPEN_LINE_END = /(\\|&|\||;|\{|\(|\bthen|\bdo|\belse|\bin)$/;
 const FUNCTION_DEFINITION = /^[A-Za-z_][\w-]*\s*\(\s*\)/;
 
-/** Whether quotes close, and whether an unquoted `#` starts a comment. */
-function scanQuotes(line: string): { balanced: boolean; hasComment: boolean } {
+/**
+ * Whether quotes, `$(...)` and backticks close on this line, and whether an
+ * unquoted `#` starts a comment.
+ */
+function scanLine(line: string): { balanced: boolean; hasComment: boolean } {
 	let quote: "'" | '"' | null = null;
+	let parens = 0;
+	let inBacktick = false;
 	for (let index = 0; index < line.length; index++) {
 		const char = line[index];
 		if (quote === "'") {
@@ -26,7 +31,16 @@ function scanQuotes(line: string): { balanced: boolean; hasComment: boolean } {
 			index++;
 			continue;
 		}
-		if (char === '"') {
+		if (char === "`") {
+			inBacktick = !inBacktick;
+		} else if (char === "$" && line[index + 1] === "(") {
+			parens++;
+			index++;
+		} else if (char === "(" && quote === null) {
+			parens++;
+		} else if (char === ")" && (quote === null || parens > 0)) {
+			if (--parens < 0) return { balanced: false, hasComment: false };
+		} else if (char === '"') {
 			quote = quote === '"' ? null : '"';
 		} else if (quote === null && char === "'") {
 			quote = "'";
@@ -38,7 +52,10 @@ function scanQuotes(line: string): { balanced: boolean; hasComment: boolean } {
 			return { balanced: true, hasComment: true };
 		}
 	}
-	return { balanced: quote === null, hasComment: false };
+	return {
+		balanced: quote === null && parens === 0 && !inBacktick,
+		hasComment: false,
+	};
 }
 
 /**
@@ -55,7 +72,7 @@ export function isStandaloneCommand(line: string): boolean {
 		return false;
 	}
 	// An inline comment would swallow every command chained after it.
-	const { balanced, hasComment } = scanQuotes(line);
+	const { balanced, hasComment } = scanLine(line);
 	return balanced && !hasComment;
 }
 
