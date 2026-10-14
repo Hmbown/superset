@@ -34,6 +34,9 @@ msgstr "./"
 msgid ".sh"
 msgstr ".sh"
 
+msgid ".superset/config.json is not valid JSON. Fix it, then import again."
+msgstr ".superset/config.json is not valid JSON. Fix it, then import again."
+
 msgid "· updated {updatedAgo}"
 msgstr "· updated {updatedAgo}"
 
@@ -1204,6 +1207,9 @@ msgstr "+{hiddenCount} earlier"
 
 msgid "+{remainingCount} more"
 msgstr "+{remainingCount} more"
+
+msgid "<0>.superset/config.json</0> is not valid JSON. Fix it before you import, so Superset does not overwrite it."
+msgstr "<0>.superset/config.json</0> is not valid JSON. Fix it before you import, so Superset does not overwrite it."
 
 #. placeholder {0}: paths[0]?.split("/").pop()
 msgid "<0>{0}</0> is not a git repository. Would you like to initialize one?"
@@ -11181,6 +11187,9 @@ msgstr "Nothing here."
 msgid "Nothing is running. Archive it and create a new one."
 msgstr "Nothing is running. Archive it and create a new one."
 
+msgid "Nothing left to import"
+msgstr "Nothing left to import"
+
 msgid "Nothing lives at {pathname}."
 msgstr "Nothing lives at {pathname}."
 
@@ -16670,6 +16679,9 @@ msgstr "That machine is no longer available"
 msgid "That name isn't allowed."
 msgstr "That name isn't allowed."
 
+msgid "The {label} setup file is no longer in this project."
+msgstr "The {label} setup file is no longer in this project."
+
 msgid "The 2026 bet"
 msgstr "The 2026 bet"
 
@@ -16945,6 +16957,9 @@ msgstr "The self-driving software factory"
 
 msgid "The server could not be found"
 msgstr "The server could not be found"
+
+msgid "The setup files from other tools are gone, or this project already uses them."
+msgstr "The setup files from other tools are gone, or this project already uses them."
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "The sign-in link was incomplete. Please try again."
@@ -19221,6 +19236,9 @@ msgstr "Your subscription will be adjusted accordingly."
 
 msgid "Your Superset download is starting."
 msgstr "Your Superset download is starting."
+
+msgid "Your Superset setup changed while this was open. Review the update and import again."
+msgstr "Your Superset setup changed while this was open. Review the update and import again."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Your teammates can talk directly to your agent."

@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { SidebarCardEntry } from "renderer/components/SidebarCardSlot";
 import { useSetupImportCandidates } from "renderer/hooks/host-service/useSetupImportCandidates";
 import { useOpenNewWorkspace } from "renderer/hooks/useOpenNewWorkspace";
@@ -37,20 +37,27 @@ export function useV2SetupScriptCard({
 		enabled: !!hostUrl && !!projectId,
 		refetchOnWindowFocus: true,
 	});
-	const importCandidates = useSetupImportCandidates({
-		hostUrl,
-		projectId,
-		enabled: !!shouldShow && !isDismissed,
-	});
 	const [isImportOpen, setIsImportOpen] = useState(false);
-
-	if (!hostUrl || !projectId || !projectName || isDismissed || !shouldShow) {
-		return null;
-	}
-
+	const { candidates: importCandidates, configInvalid } =
+		useSetupImportCandidates({
+			hostUrl,
+			projectId,
+			enabled: (!!shouldShow && !isDismissed) || isImportOpen,
+		});
+	const lastImportLabelRef = useRef<string | null>(null);
 	const importCandidate = importCandidates[0];
-	if (importCandidate) {
-		const label = importCandidate.label;
+	useEffect(() => {
+		if (importCandidate) lastImportLabelRef.current = importCandidate.label;
+	}, [importCandidate]);
+
+	if (!hostUrl || !projectId || !projectName) return null;
+	// An open dialog outlives the card's eligibility so a failed import can
+	// show what changed instead of vanishing.
+	if (!isImportOpen && (isDismissed || !shouldShow)) return null;
+
+	const importLabel = importCandidate?.label ?? lastImportLabelRef.current;
+	if (importLabel && (importCandidate || isImportOpen)) {
+		const label = importLabel;
 		return {
 			id: `setup-script-import:${projectId}`,
 			badge: t({
@@ -68,6 +75,7 @@ export function useV2SetupScriptCard({
 					hostUrl={hostUrl}
 					projectId={projectId}
 					candidates={importCandidates}
+					configInvalid={configInvalid}
 					linkToSettings
 				/>
 			),

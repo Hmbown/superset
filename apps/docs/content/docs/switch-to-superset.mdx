@@ -44,7 +44,7 @@ The import never replaces an existing Superset script without asking. When a fie
 | `run` | `scripts.run` | First `defaultTabs` entry with a `command` | First action's `command` | | First script with the `play` icon |
 | `cwd` | | | | The setup command's `cwd` | |
 
-**Orca shared and copied paths.** Each `worktree.sharedDirectories` entry becomes a symlink to the root checkout, and each `.worktreeinclude` line becomes a copy. Both run before your setup script, and both skip a path that is missing in the root checkout or already present in the workspace. Paths must be literal and relative; globs and `..` are skipped.
+**Orca shared and copied paths.** Each `worktree.sharedDirectories` entry becomes a symlink to the root checkout, and each `.worktreeinclude` line becomes a copy. Both run before your setup script, and both skip a path that is missing in the root checkout or already present in the workspace. Paths must be literal and relative; globs and `..` are skipped. A symlink is not a directory to Git, so ignore a shared directory without a trailing slash (`.cache`, not `.cache/`), or it shows up as an untracked file.
 
 **cmux setup command.** cmux has no setup hook, so Superset picks the first command named `setup`, `project setup`, `workspace setup`, or `repository setup`. Failing that, it picks a command with the keyword `setup`, `init`, `initialize`, or `install` whose name or command mentions "setup".
 

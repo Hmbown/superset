@@ -17,6 +17,7 @@ import {
 	compareWithCurrentSetup,
 	InvalidProjectConfigError,
 	inspectSetupImports,
+	isProjectConfigInvalid,
 	SETUP_IMPORT_SOURCES,
 	SetupImportConflictError,
 } from "../../../runtime/setup/import";
@@ -146,6 +147,7 @@ export const configRouter = router({
 		.query(({ ctx, input }) => {
 			const project = requireProject(ctx, input.projectId);
 			return {
+				configInvalid: isProjectConfigInvalid(project.repoPath),
 				candidates: inspectSetupImports(project.repoPath).map((candidate) => ({
 					...candidate,
 					...compareWithCurrentSetup(project.repoPath, candidate),

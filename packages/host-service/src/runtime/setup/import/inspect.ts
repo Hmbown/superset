@@ -37,6 +37,12 @@ export interface SetupImportConflict {
 	removesScriptFile: boolean;
 }
 
+/** True when `.superset/config.json` exists but is not a JSON object. */
+export function isProjectConfigInvalid(repoPath: string): boolean {
+	const content = readText(getProjectConfigPath(repoPath));
+	return content !== null && parseJsonObject(content) === null;
+}
+
 /** Every importable setup in the repo root, in priority order. */
 export function inspectSetupImports(repoPath: string): SetupImportCandidate[] {
 	const read = createRepoFileReader(repoPath);

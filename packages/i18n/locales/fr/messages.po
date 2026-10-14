@@ -34,6 +34,9 @@ msgstr "./"
 msgid ".sh"
 msgstr ".sh"
 
+msgid ".superset/config.json is not valid JSON. Fix it, then import again."
+msgstr ".superset/config.json n'est pas un JSON valide. Corrigez-le, puis importez à nouveau."
+
 msgid "· updated {updatedAgo}"
 msgstr "· mise à jour {updatedAgo}"
 
@@ -1204,6 +1207,9 @@ msgstr "+{hiddenCount} précédents"
 
 msgid "+{remainingCount} more"
 msgstr "+{remainingCount} de plus"
+
+msgid "<0>.superset/config.json</0> is not valid JSON. Fix it before you import, so Superset does not overwrite it."
+msgstr "<0>.superset/config.json</0> n'est pas un JSON valide. Corrigez-le avant d'importer, pour que Superset ne l'écrase pas."
 
 #. placeholder {0}: paths[0]?.split("/").pop()
 msgid "<0>{0}</0> is not a git repository. Would you like to initialize one?"
@@ -11181,6 +11187,9 @@ msgstr "Rien ici."
 msgid "Nothing is running. Archive it and create a new one."
 msgstr "Rien ne tourne. Archivez-le et créez-en un nouveau."
 
+msgid "Nothing left to import"
+msgstr "Plus rien à importer"
+
 msgid "Nothing lives at {pathname}."
 msgstr "Il n'y a rien à l'emplacement {pathname}."
 
@@ -16670,6 +16679,9 @@ msgstr "Cette machine n'est plus disponible"
 msgid "That name isn't allowed."
 msgstr "Ce nom n'est pas autorisé."
 
+msgid "The {label} setup file is no longer in this project."
+msgstr "Le fichier de configuration {label} n'est plus dans ce projet."
+
 msgid "The 2026 bet"
 msgstr "Le pari 2026"
 
@@ -16945,6 +16957,9 @@ msgstr "L'usine logicielle autonome"
 
 msgid "The server could not be found"
 msgstr "Le serveur est introuvable"
+
+msgid "The setup files from other tools are gone, or this project already uses them."
+msgstr "Les fichiers de configuration d'autres outils ont disparu, ou ce projet les utilise déjà."
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Le lien de connexion était incomplet. Veuillez réessayer."
@@ -19221,6 +19236,9 @@ msgstr "Votre abonnement sera ajusté en conséquence."
 
 msgid "Your Superset download is starting."
 msgstr "Votre téléchargement de Superset démarre."
+
+msgid "Your Superset setup changed while this was open. Review the update and import again."
+msgstr "Votre configuration Superset a changé pendant que cette fenêtre était ouverte. Vérifiez la mise à jour et importez à nouveau."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Votre équipe peut parler directement à votre agent."

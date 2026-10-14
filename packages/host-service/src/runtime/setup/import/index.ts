@@ -6,6 +6,7 @@ export {
 export {
 	compareWithCurrentSetup,
 	inspectSetupImports,
+	isProjectConfigInvalid,
 	type SetupImportComparison,
 	type SetupImportConflict,
 } from "./inspect";

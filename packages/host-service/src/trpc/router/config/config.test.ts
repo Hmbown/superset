@@ -311,6 +311,30 @@ describe("configRouter", () => {
 			expect(config.setup).toEqual(["bun install"]);
 		});
 
+		it("flags a malformed config.json before import and refuses to overwrite it", async () => {
+			const caller = createCaller(sandbox.repoPath);
+			mkdirSync(join(sandbox.repoPath, ".superset"), { recursive: true });
+			const configPath = join(sandbox.repoPath, ".superset", "config.json");
+			writeFileSync(configPath, "{oops");
+			writeFileSync(
+				join(sandbox.repoPath, "conductor.json"),
+				`{"scripts":{"setup":"bun install"}}`,
+			);
+
+			const result = await caller.getSetupImportCandidates({
+				projectId: PROJECT_ID,
+			});
+			expect(result.configInvalid).toBe(true);
+			await expect(
+				caller.importSetup({
+					projectId: PROJECT_ID,
+					source: "conductor",
+					overwrite: true,
+				}),
+			).rejects.toMatchObject({ code: "BAD_REQUEST" });
+			expect(readFileSync(configPath, "utf-8")).toBe("{oops");
+		});
+
 		it("throws NOT_FOUND when the source is gone", async () => {
 			const caller = createCaller(sandbox.repoPath);
 			await expect(

@@ -14,7 +14,8 @@ import { cn } from "@superset/ui/utils";
 import { invalidateHostServiceQuery } from "@superset/workspace-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { HiExclamationTriangle } from "react-icons/hi2";
 import type { SetupImportCandidate } from "renderer/hooks/host-service/useSetupImportCandidates";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { ImportedScriptPreview } from "./components/ImportedScriptPreview";
@@ -28,6 +29,8 @@ interface ImportSetupDialogProps {
 	hostUrl: string;
 	projectId: string;
 	candidates: SetupImportCandidate[];
+	/** `.superset/config.json` exists but is not JSON; importing would fail. */
+	configInvalid?: boolean;
 	/** Adds a toast action that opens the project's scripts settings. */
 	linkToSettings?: boolean;
 }
@@ -38,6 +41,7 @@ export function ImportSetupDialog({
 	hostUrl,
 	projectId,
 	candidates,
+	configInvalid = false,
 	linkToSettings = false,
 }: ImportSetupDialogProps) {
 	const { t } = useLingui();
@@ -47,6 +51,27 @@ export function ImportSetupDialog({
 	const candidate =
 		candidates.find((entry) => entry.source === selectedSource) ??
 		candidates[0];
+	const openerRef = useRef<HTMLElement | null>(null);
+
+	useEffect(() => {
+		if (open && document.activeElement instanceof HTMLElement) {
+			openerRef.current = document.activeElement;
+		}
+	}, [open]);
+
+	const describeError = (error: unknown, label: string) => {
+		const code = (error as { data?: { code?: string } } | null)?.data?.code;
+		if (code === "CONFLICT") {
+			return t`Your Superset setup changed while this was open. Review the update and import again.`;
+		}
+		if (code === "NOT_FOUND") {
+			return t`The ${label} setup file is no longer in this project.`;
+		}
+		if (code === "BAD_REQUEST") {
+			return t`.superset/config.json is not valid JSON. Fix it, then import again.`;
+		}
+		return errorMessage(error);
+	};
 
 	const importMutation = useMutation({
 		mutationFn: (input: {
@@ -74,7 +99,11 @@ export function ImportSetupDialog({
 			});
 			onOpenChange(false);
 		},
-		onError: (error) => toast.error(errorMessage(error)),
+		onError: (error, { source }) => {
+			const label =
+				candidates.find((entry) => entry.source === source)?.label ?? source;
+			toast.error(describeError(error, label));
+		},
 		onSettled: () => {
 			void queryClient.invalidateQueries({ queryKey: ["host-config"] });
 			invalidateHostServiceQuery(hostUrl, [
@@ -84,7 +113,41 @@ export function ImportSetupDialog({
 		},
 	});
 
-	if (!candidate) return null;
+	const restoreFocus = (event: Event) => {
+		const opener = openerRef.current;
+		if (opener?.isConnected) {
+			event.preventDefault();
+			opener.focus();
+		}
+	};
+
+	if (!candidate) {
+		return (
+			<Dialog open={open} onOpenChange={onOpenChange}>
+				<DialogContent
+					className="top-[8vh] translate-y-0 sm:max-w-md"
+					onCloseAutoFocus={restoreFocus}
+				>
+					<DialogHeader>
+						<DialogTitle>
+							<Trans>Nothing left to import</Trans>
+						</DialogTitle>
+						<DialogDescription>
+							<Trans>
+								The setup files from other tools are gone, or this project
+								already uses them.
+							</Trans>
+						</DialogDescription>
+					</DialogHeader>
+					<DialogFooter>
+						<Button variant="outline" onClick={() => onOpenChange(false)}>
+							<Trans>Close</Trans>
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+		);
+	}
 
 	const label = candidate.label;
 	const replaces = candidate.conflicts.length > 0;
@@ -97,7 +160,10 @@ export function ImportSetupDialog({
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="top-[8vh] flex max-h-[84vh] translate-y-0 flex-col sm:max-w-2xl">
+			<DialogContent
+				className="top-[8vh] flex max-h-[84vh] translate-y-0 flex-col sm:max-w-2xl"
+				onCloseAutoFocus={restoreFocus}
+			>
 				<DialogHeader>
 					<DialogTitle>
 						<Trans>Import setup from {label}</Trans>
@@ -172,6 +238,19 @@ export function ImportSetupDialog({
 					<NotImportedList entries={candidate.notImported} />
 				</div>
 
+				{configInvalid && (
+					<p className="flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs">
+						<HiExclamationTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
+						<span>
+							<Trans>
+								<code className="font-mono">.superset/config.json</code> is not
+								valid JSON. Fix it before you import, so Superset does not
+								overwrite it.
+							</Trans>
+						</span>
+					</p>
+				)}
+
 				<DialogFooter className="items-center gap-2 sm:justify-between">
 					<p className="text-xs text-muted-foreground">
 						{replaces && (
@@ -184,7 +263,7 @@ export function ImportSetupDialog({
 						</Button>
 						<Button
 							variant={replaces ? "destructive" : "default"}
-							disabled={importMutation.isPending}
+							disabled={importMutation.isPending || configInvalid}
 							onClick={() =>
 								importMutation.mutate({
 									source: candidate.source,

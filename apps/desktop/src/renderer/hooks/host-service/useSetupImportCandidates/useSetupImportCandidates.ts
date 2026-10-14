@@ -15,7 +15,7 @@ export function useSetupImportCandidates({
 	hostUrl: string | null;
 	projectId: string | null;
 	enabled?: boolean;
-}): SetupImportCandidate[] {
+}): { candidates: SetupImportCandidate[]; configInvalid: boolean } {
 	const { data } = useQuery({
 		queryKey: ["host-config", "getSetupImportCandidates", hostUrl, projectId],
 		queryFn: () => {
@@ -29,7 +29,11 @@ export function useSetupImportCandidates({
 		retry: false,
 		refetchOnWindowFocus: true,
 	});
-	return (data?.candidates ?? []).filter(
-		(candidate) => candidate.changes.length > 0,
-	);
+	return {
+		candidates: (data?.candidates ?? []).filter(
+			(candidate) => candidate.changes.length > 0,
+		),
+		// Older hosts omit the field.
+		configInvalid: data?.configInvalid ?? false,
+	};
 }

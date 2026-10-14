@@ -14,12 +14,15 @@ export function SetupImportAction({
 	hostUrl,
 	projectId,
 }: SetupImportActionProps) {
-	const candidates = useSetupImportCandidates({ hostUrl, projectId });
+	const { candidates, configInvalid } = useSetupImportCandidates({
+		hostUrl,
+		projectId,
+	});
 	const [isOpen, setIsOpen] = useState(false);
 
 	const first = candidates[0];
-	if (!first) return null;
-	const label = first.label;
+	if (!first && !isOpen) return null;
+	const label = first?.label;
 
 	return (
 		<>
@@ -30,7 +33,7 @@ export function SetupImportAction({
 				onClick={() => setIsOpen(true)}
 			>
 				<HiArrowDownTray className="size-3.5" />
-				{candidates.length > 1 ? (
+				{candidates.length > 1 || !label ? (
 					<Trans>Import from another tool</Trans>
 				) : (
 					<Trans>Import from {label}</Trans>
@@ -42,6 +45,7 @@ export function SetupImportAction({
 				hostUrl={hostUrl}
 				projectId={projectId}
 				candidates={candidates}
+				configInvalid={configInvalid}
 			/>
 		</>
 	);
