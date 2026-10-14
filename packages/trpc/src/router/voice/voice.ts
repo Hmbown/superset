@@ -60,7 +60,15 @@ async function assertTranscribeRateLimit(userId: string) {
 		);
 		return;
 	}
-	const { success } = await transcribeRateLimit.limit(userId);
+	// A limiter outage lets the call through: losing a dictation costs the
+	// user more than one unmetered clip costs the key.
+	const success = await transcribeRateLimit.limit(userId).then(
+		(result) => result.success,
+		(error: unknown) => {
+			console.error("[voice/transcribe] rate limit check failed", error);
+			return true;
+		},
+	);
 	if (!success) {
 		throw new TRPCError({
 			code: "TOO_MANY_REQUESTS",
