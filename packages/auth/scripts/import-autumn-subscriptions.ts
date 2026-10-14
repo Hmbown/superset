@@ -3,7 +3,7 @@ import { subscriptions } from "@superset/db/schema";
 import * as authSchema from "@superset/db/schema/auth";
 import { ACTIVE_SUBSCRIPTION_STATUSES } from "@superset/shared/billing";
 import { AutumnError } from "autumn-js";
-import { desc, eq, inArray } from "drizzle-orm";
+import { and, desc, eq, inArray, isNull } from "drizzle-orm";
 import type Stripe from "stripe";
 import { autumnClient } from "../src/autumn";
 import { env } from "../src/env";
@@ -26,11 +26,32 @@ const PLAN_BY_PRICE: Record<string, string> = {
 };
 
 const ENTERPRISE_TEMPLATE_PLAN_ID = "enterprise";
+const COMPED_PLANS = [
+	{
+		planId: "pro_comped",
+		name: "Pro (comped)",
+		templateId: PRO_MONTHLY_PLAN_ID,
+		organizationIds: idList(process.env.GRANT_PRO_ORGS),
+	},
+	{
+		planId: "enterprise_comped",
+		name: "Enterprise (comped)",
+		templateId: ENTERPRISE_TEMPLATE_PLAN_ID,
+		organizationIds: idList(process.env.GRANT_ENTERPRISE_ORGS),
+	},
+];
 const SEAT_INTERVALS = new Set(["month", "year"]);
 
 const apply = process.argv.includes("--apply");
 
 type AutumnPlan = Awaited<ReturnType<typeof autumnClient.plans.get>>;
+
+function idList(value: string | undefined): string[] {
+	return (value ?? "")
+		.split(/[\s,]+/)
+		.map((id) => id.trim())
+		.filter(Boolean);
+}
 
 function nullWhenMissing(error: unknown): null {
 	if (error instanceof AutumnError && error.statusCode === 404) return null;
@@ -147,6 +168,88 @@ async function ensureDealPlan(
 	return planId;
 }
 
+/**
+ * A $0 copy of a paid plan: the same access and included usage, no price and
+ * no overage, so it attaches without a Stripe subscription.
+ */
+async function ensureCompedPlan(plan: (typeof COMPED_PLANS)[number]) {
+	if (
+		await autumnClient.plans.get({ planId: plan.planId }).catch(nullWhenMissing)
+	) {
+		return true;
+	}
+	const template = await autumnClient.plans.get({ planId: plan.templateId });
+	const items = template.items
+		.filter((item) => item.featureId !== SEATS_FEATURE_ID)
+		.map(({ featureId, included, unlimited, reset }) => ({
+			featureId,
+			included,
+			unlimited,
+			...(reset
+				? {
+						reset: {
+							interval: reset.interval,
+							intervalCount: reset.intervalCount,
+						},
+					}
+				: {}),
+		}));
+	console.log(
+		`[autumn-import] ${apply ? "create" : "would create"} plan ${plan.planId} "${plan.name}" from ${plan.templateId}, no price`,
+	);
+	if (!apply) return false;
+	await autumnClient.plans.create({
+		planId: plan.planId,
+		name: plan.name,
+		group: template.group ?? undefined,
+		items,
+	} as never);
+	return true;
+}
+
+async function grantComped(seen: Set<string>): Promise<number> {
+	let granted = 0;
+	for (const plan of COMPED_PLANS) {
+		if (plan.organizationIds.length === 0) continue;
+		const planExists = await ensureCompedPlan(plan);
+		const organizations = await db
+			.select({
+				id: authSchema.organizations.id,
+				name: authSchema.organizations.name,
+			})
+			.from(authSchema.organizations)
+			.where(inArray(authSchema.organizations.id, plan.organizationIds));
+		const missing = plan.organizationIds.filter(
+			(id) => !organizations.some((organization) => organization.id === id),
+		);
+		if (missing.length > 0) {
+			throw new Error(`${plan.planId}: unknown organizations ${missing}`);
+		}
+		for (const organization of organizations) {
+			seen.add(organization.id);
+			const label = `${organization.id} "${organization.name}"`;
+			if (!planExists) {
+				console.log(
+					`[autumn-import] would grant ${label} ${plan.planId}, without billing`,
+				);
+				granted += 1;
+				continue;
+			}
+			await autumnClient.billing.import({
+				customerId: organization.id,
+				customerData: { name: organization.name },
+				billables: [{ plan: { planId: plan.planId } }],
+				dryRun: !apply,
+			});
+			console.log(
+				`[autumn-import] ${apply ? "granted" : "would grant"} ${label} ${plan.planId}, without billing`,
+			);
+			granted += 1;
+		}
+	}
+	return granted;
+}
+
 async function main() {
 	const autumn = autumnClient;
 	await autumn.plans.list({});
@@ -168,7 +271,13 @@ async function main() {
 
 	const seen = new Set<string>();
 	const dealPlans = new Map<string, string>();
-	const counts = { imported: 0, alreadyLinked: 0, skipped: 0, drifted: 0 };
+	const counts = {
+		imported: 0,
+		granted: await grantComped(seen),
+		alreadyLinked: 0,
+		skipped: 0,
+		drifted: 0,
+	};
 	const verify = async (organizationId: string) => {
 		const result = await autumn.billing.verify({ customerId: organizationId });
 		const mismatched = result.subscriptions.filter(
@@ -189,6 +298,27 @@ async function main() {
 		seen.add(row.organizationId);
 		const label = `${row.organizationId} (${row.stripeSubscriptionId})`;
 		try {
+			if (row.stripeSubscriptionId && !row.stripeCustomerId) {
+				const { customer } = await stripeClient.subscriptions.retrieve(
+					row.stripeSubscriptionId,
+				);
+				row.stripeCustomerId =
+					typeof customer === "string" ? customer : customer.id;
+				console.log(
+					`[autumn-import] ${apply ? "saved" : "would save"} Stripe customer ${row.stripeCustomerId} on ${label} "${row.name}"`,
+				);
+				if (apply) {
+					await db
+						.update(authSchema.organizations)
+						.set({ stripeCustomerId: row.stripeCustomerId })
+						.where(
+							and(
+								eq(authSchema.organizations.id, row.organizationId),
+								isNull(authSchema.organizations.stripeCustomerId),
+							),
+						);
+				}
+			}
 			if (!row.stripeSubscriptionId || !row.stripeCustomerId) {
 				counts.skipped += 1;
 				console.log(
@@ -275,7 +405,7 @@ async function main() {
 		);
 	}
 	console.log(
-		`[autumn-import] ${apply ? "imported" : "would import"} ${counts.imported}, already linked ${counts.alreadyLinked}, skipped ${counts.skipped}, drifted ${counts.drifted}, of ${seen.size} organizations. Flip BILLING_PROVIDER only when skipped and drifted are both 0.`,
+		`[autumn-import] ${apply ? "imported" : "would import"} ${counts.imported}, ${apply ? "granted" : "would grant"} ${counts.granted} without billing, already linked ${counts.alreadyLinked}, skipped ${counts.skipped}, drifted ${counts.drifted}, of ${seen.size} organizations. Flip BILLING_PROVIDER only when skipped and drifted are both 0.`,
 	);
 }
 

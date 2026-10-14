@@ -7,6 +7,14 @@ on:
         description: Link the subscriptions in Autumn. Leave unchecked for a dry run that only reports.
         type: boolean
         default: false
+      grant_pro:
+        description: Organization ids to give Pro without billing (comma or space separated).
+        type: string
+        default: ""
+      grant_enterprise:
+        description: Organization ids to give Enterprise without billing (comma or space separated).
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -52,6 +60,8 @@ jobs:
           STRIPE_ENTERPRISE_YEARLY_PRICE_ID: ${{ secrets.STRIPE_ENTERPRISE_YEARLY_PRICE_ID }}
           AUTUMN_SECRET_KEY: ${{ secrets.AUTUMN_SECRET_KEY }}
           APPLY: ${{ inputs.apply }}
+          GRANT_PRO_ORGS: ${{ inputs.grant_pro }}
+          GRANT_ENTERPRISE_ORGS: ${{ inputs.grant_enterprise }}
         run: |
           if [ "$APPLY" = "true" ]; then
             bun run packages/auth/scripts/import-autumn-subscriptions.ts --apply
