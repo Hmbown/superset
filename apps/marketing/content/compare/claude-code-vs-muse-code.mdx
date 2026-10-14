@@ -2,6 +2,7 @@
 title: "Claude Code vs Muse Code (2026): Anthropic's Agent vs Meta's"
 description: "Compare Claude Code and Meta's Muse Code: models, pricing, subagents, /batch versus workflows, and Claude imports, and how to run both side by side."
 date: 2026-10-13
+lastUpdated: 2026-10-14
 type: "1v1"
 competitors:
   - claude-code
@@ -28,7 +29,7 @@ Facts were checked against Anthropic's and Meta's own docs on October 13, 2026.
 | **Vendor** | Anthropic | Meta |
 | **Models** | Claude models, with a 1M-token context on recent ones | Muse Spark and Muse Wonder, with a 1M-token context |
 | **Price** | Claude Pro from $20/mo, Max from $100/mo, or API key; no free tier | Muse usage subscriptions (Everyday, High, Power, Maximum) or per-token API |
-| **Subagents** | Yes, plus `/batch` across 5 to 30 worktrees and an agent view | On by default, up to 8 per tree (raisable to 64) |
+| **Subagents** | Yes, plus `/batch` across 5 to 30 worktrees and an agent view | On by default, up to 8 agents per tree counting the root (raisable to 64) |
 | **Multi-agent runs** | Agent teams (experimental) | Workflows run teams of subagents in parallel or in stages |
 | **Worktrees** | Built in | Muse-managed worktree per subagent |
 | **Headless** | `claude -p` | `muse exec` with JSONL output and exit codes |
@@ -95,7 +96,7 @@ Yes. Muse Code imports Claude skills and plugins, and Codex skills. It can also 
 
 ### Which is better for parallel agents?
 
-Both are strong. Claude Code has `/batch`, which fans out 5 to 30 subagents in separate worktrees, and an agent view. Muse Code runs up to 8 subagents per tree by default and has workflows for teams of subagents. Note that parallel runs multiply token use.
+Both are strong. Claude Code has `/batch`, which fans out 5 to 30 subagents in separate worktrees, and an agent view. Muse Code runs up to 8 agents per tree by default, counting the root agent, and has workflows for teams of subagents. Note that parallel runs multiply token use.
 
 ### Is Muse Code free?
 

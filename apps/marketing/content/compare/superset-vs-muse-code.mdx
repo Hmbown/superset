@@ -2,6 +2,7 @@
 title: "Superset vs Muse Code (2026): Agent Workspace vs Meta's Coding Agent"
 description: "Compare Superset and Meta's Muse Code. See how a workspace that runs any coding agent in parallel Git worktrees differs from Meta's terminal coding agent built for Muse Spark, and how to run Muse Code inside Superset."
 date: 2026-10-13
+lastUpdated: 2026-10-14
 type: "1v1"
 competitors:
   - muse-code
@@ -96,11 +97,11 @@ Yes. Muse Code is a built-in agent in Superset. Add it from **Settings → Agent
 
 ### Is Muse Code free?
 
-No. Muse Code needs a Muse subscription or API access. Subscriptions are usage tiers that reset every 5 hours and weekly, and the API is billed per token. Cheaper Contributor options let Meta train on your data.
+No. Muse Code needs a Muse subscription or API access. Subscriptions are usage tiers that reset every 5 hours and weekly, and the API is billed per token. Subscriptions default to Contributor mode, which gives more usage in exchange for letting Meta use your submitted content to train future models; you can turn it off in settings.
 
 ### Does Muse Code run agents in parallel?
 
-Yes, inside one session. Muse Code runs subagents, up to 8 per tree by default, and workflows that run teams of subagents in parallel or in stages. Superset runs separate tasks in parallel, each in its own workspace with any agent.
+Yes, inside one session. Muse Code runs up to 8 agents per tree by default, counting the root agent, and workflows that run teams of subagents in parallel or in stages. Superset runs separate tasks in parallel, each in its own workspace with any agent.
 
 ### Which platforms does Muse Code support?
 
