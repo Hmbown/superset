@@ -17046,6 +17046,9 @@ msgstr "Bu otomasyonun henüz talimatı yok. Çalıştırmadan önce ayarlarınd
 msgid "This automation is in another organization"
 msgstr "Bu otomasyon başka bir kuruluşta"
 
+msgid "This board opens once {minMembers} members have usage in this period. {members} so far."
+msgstr "Bu tablo, bu dönemde kullanımı olan {minMembers} üye olduğunda açılır. Şu an {members}."
+
 msgid "This cannot be undone."
 msgstr "Bu geri alınamaz."
 
@@ -19145,9 +19148,6 @@ msgstr "Kuruluşunuz bulut kullanım sınırına ulaştı. Bu çalışma alanın
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Kuruluşunuz bulut kullanım sınırına ulaştı. Sınır artırılmazsa bu çalışma alanı birkaç dakika içinde durdurulacak."
-
-msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
-msgstr "Kuruluşunuzun tablosu, {minMembers} üye liderlik tablosuna katıldığında açılır. Şu an {members}."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Kendi hesapların. Organizasyonunun entegrasyonları Superset'in araçlarına erişmesini sağlar; kendi hesaplarını bağladığında Superset'in senin için yaptığı işler senin adınla görünür."

@@ -17046,6 +17046,9 @@ msgstr "このオートメーションにはまだ指示がありません。実
 msgid "This automation is in another organization"
 msgstr "このオートメーションは別の組織にあります"
 
+msgid "This board opens once {minMembers} members have usage in this period. {members} so far."
+msgstr "このボードは、この期間に利用のあるメンバーが {minMembers} 人になると公開されます。現在 {members} 人です。"
+
 msgid "This cannot be undone."
 msgstr "この操作は元に戻せません。"
 
@@ -19145,9 +19148,6 @@ msgstr "組織がクラウドの利用上限に達しました。このワーク
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "組織がクラウドの利用上限に達しました。上限を引き上げない限り、このワークスペースは数分後に停止します。"
-
-msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
-msgstr "組織のボードは、{minMembers} 人のメンバーがリーダーボードに参加すると公開されます。現在 {members} 人です。"
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "あなた自身のアカウントです。組織の連携は Superset がそのツールにアクセスするためのもので、あなたのアカウントを接続すると、Superset があなたのために行った作業があなたの名前で表示されます。"

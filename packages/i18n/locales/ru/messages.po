@@ -17046,6 +17046,9 @@ msgstr "У этой автоматизации ещё нет инструкци�
 msgid "This automation is in another organization"
 msgstr "Эта автоматизация находится в другой организации"
 
+msgid "This board opens once {minMembers} members have usage in this period. {members} so far."
+msgstr "Эта таблица откроется, когда у {minMembers} участников будет активность за этот период. Сейчас: {members}."
+
 msgid "This cannot be undone."
 msgstr "Это нельзя отменить."
 
@@ -19145,9 +19148,6 @@ msgstr "Ваша организация достигла лимита испол
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Ваша организация достигла лимита использования облака. Эта рабочая область остановится через несколько минут, если лимит не увеличить."
-
-msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
-msgstr "Таблица вашей организации откроется, когда в рейтинге будет {minMembers} участника. Сейчас: {members}."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Ваши собственные учётные записи. Интеграции вашей организации дают Superset доступ к её инструментам; подключив свои, вы увидите работу, которую Superset делает для вас, под своим именем."

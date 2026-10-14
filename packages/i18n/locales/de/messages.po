@@ -17046,6 +17046,9 @@ msgstr "Diese Automatisierung hat noch keine Anweisungen. Schreibe vor dem Ausf�
 msgid "This automation is in another organization"
 msgstr "Diese Automatisierung befindet sich in einer anderen Organisation"
 
+msgid "This board opens once {minMembers} members have usage in this period. {members} so far."
+msgstr "Dieses Board öffnet, sobald {minMembers} Mitglieder in diesem Zeitraum Nutzung haben. Bisher {members}."
+
 msgid "This cannot be undone."
 msgstr "Das lässt sich nicht rückgängig machen."
 
@@ -19145,9 +19148,6 @@ msgstr "Deine Organisation hat ihr Cloud-Nutzungslimit erreicht. Erhöhe das Lim
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Deine Organisation hat ihr Cloud-Nutzungslimit erreicht. Dieser Arbeitsbereich stoppt in wenigen Minuten, wenn das Limit nicht erhöht wird."
-
-msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
-msgstr "Das Board deiner Organisation öffnet, sobald {minMembers} Mitglieder auf dem Leaderboard sind. Bisher {members}."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Deine eigenen Konten. Die Integrationen deiner Organisation lassen Superset ihre Tools erreichen; wenn du deine verbindest, erscheint die Arbeit, die Superset für dich erledigt, unter deinem Namen."

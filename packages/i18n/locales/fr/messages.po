@@ -17046,6 +17046,9 @@ msgstr "Cette automatisation n'a pas encore d'instructions. Rédigez un prompt d
 msgid "This automation is in another organization"
 msgstr "Cette automatisation se trouve dans une autre organisation"
 
+msgid "This board opens once {minMembers} members have usage in this period. {members} so far."
+msgstr "Ce classement s'ouvre dès que {minMembers} membres ont une utilisation sur cette période. {members} pour l'instant."
+
 msgid "This cannot be undone."
 msgstr "Cette action est irréversible."
 
@@ -19145,9 +19148,6 @@ msgstr "Votre organisation a atteint sa limite d'utilisation du cloud. Relevez l
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Votre organisation a atteint sa limite d'utilisation du cloud. Cet espace de travail s'arrêtera dans quelques minutes si la limite n'est pas relevée."
-
-msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
-msgstr "Le classement de votre organisation s'ouvre dès que {minMembers} membres sont dans le classement. {members} pour l'instant."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Vos propres comptes. Les intégrations de votre organisation permettent à Superset d'accéder à ses outils ; connecter les vôtres fait apparaître à votre nom le travail que Superset fait pour vous."

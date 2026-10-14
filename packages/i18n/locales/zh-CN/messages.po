@@ -17046,6 +17046,9 @@ msgstr "此自动化尚无指令。请先在设置中编写提示词，然后再
 msgid "This automation is in another organization"
 msgstr "此自动化位于其他组织"
 
+msgid "This board opens once {minMembers} members have usage in this period. {members} so far."
+msgstr "本期间内有 {minMembers} 名成员产生用量后，此榜单才会开放。目前已有 {members} 名。"
+
 msgid "This cannot be undone."
 msgstr "此操作无法撤销。"
 
@@ -19145,9 +19148,6 @@ msgstr "你的组织已达到云端用量上限。请在“设置”中的“账
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "你的组织已达到云端用量上限。除非提高上限，此工作区将在几分钟后停止。"
-
-msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
-msgstr "你的组织有 {minMembers} 名成员加入排行榜后，组织榜单才会开放。目前已有 {members} 名。"
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "你自己的账户。组织的集成让 Superset 访问其工具；连接你自己的账户后，Superset 为你完成的工作会以你的名义显示。"

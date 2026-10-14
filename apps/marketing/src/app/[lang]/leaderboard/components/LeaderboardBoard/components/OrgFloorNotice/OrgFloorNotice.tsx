@@ -10,8 +10,8 @@ export function OrgFloorNotice({ members, minMembers }: OrgFloorNoticeProps) {
 		<div className="border border-border p-12 text-center">
 			<p className="text-sm text-muted-foreground">
 				<Trans>
-					Your organization's board opens once {minMembers} members are on the
-					leaderboard. {members} so far.
+					This board opens once {minMembers} members have usage in this period.{" "}
+					{members} so far.
 				</Trans>
 			</p>
 			<p className="text-xs text-muted-foreground mt-2">
