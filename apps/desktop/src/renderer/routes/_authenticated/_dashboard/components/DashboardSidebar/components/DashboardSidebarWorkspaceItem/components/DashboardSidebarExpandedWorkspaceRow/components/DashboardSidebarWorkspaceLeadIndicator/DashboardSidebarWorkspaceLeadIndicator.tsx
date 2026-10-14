@@ -1,6 +1,5 @@
 import { WaveSpinner } from "@superset/ui/atoms/WaveSpinner";
 import { cn } from "@superset/ui/utils";
-import { LuCircle } from "react-icons/lu";
 import { StatusIndicator } from "renderer/screens/main/components/StatusIndicator";
 import type { ActivePaneStatus } from "shared/tabs-types";
 import type {
@@ -50,7 +49,5 @@ export function DashboardSidebarWorkspaceLeadIndicator({
 			/>
 		);
 	}
-	return (
-		<LuCircle className="size-3 text-muted-foreground/40" strokeWidth={2} />
-	);
+	return <span className="size-1.5 rounded-full bg-muted-foreground/50" />;
 }

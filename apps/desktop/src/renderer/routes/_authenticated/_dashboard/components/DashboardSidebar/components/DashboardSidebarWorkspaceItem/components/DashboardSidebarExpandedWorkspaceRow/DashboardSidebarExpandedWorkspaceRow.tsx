@@ -148,16 +148,14 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 			}
 		}, [isActive]);
 
-		const creationStatusText = isPending ? "Creating…" : null;
+		const creationStatusText = isPending ? t({ message: "Creating…" }) : null;
 		const isCloudWorkspace = hostType === "cloud";
 		const closeLabel = isCloudWorkspace
 			? t({ message: "Archive workspace" })
 			: t({ message: "Delete workspace" });
-		const showsPullRequest =
-			!isPending &&
-			workspace.sandboxStatus === null &&
-			workspaceStatus === null &&
-			pullRequest !== null;
+		// The slot stays the PR's button whatever glyph precedence puts in it,
+		// so a working row's PR is one click away, as before.
+		const showsPullRequest = !isPending && pullRequest !== null;
 		const inlinePortsEnabled = useInlineWorkspacePortsEnabled();
 		const portGroup = useDashboardSidebarWorkspacePorts(workspace.id);
 		const ports = inlinePortsEnabled ? (portGroup?.ports ?? []) : [];
@@ -270,8 +268,17 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 										{i18n._(PR_STATE_LABEL[pullRequest.state])}
 									</Trans>
 								</p>
+								{(sandboxLabel ??
+									(workspaceStatus && getStatusTooltip(workspaceStatus))) && (
+									<p className="text-xs text-muted-foreground">
+										{sandboxLabel ??
+											(workspaceStatus
+												? getStatusTooltip(workspaceStatus)
+												: null)}
+									</p>
+								)}
 								<p className="text-xs text-muted-foreground">
-									<Trans>Click to open on GitHub</Trans>
+									<Trans>Click to open the pull request</Trans>
 								</p>
 							</TooltipContent>
 						</Tooltip>

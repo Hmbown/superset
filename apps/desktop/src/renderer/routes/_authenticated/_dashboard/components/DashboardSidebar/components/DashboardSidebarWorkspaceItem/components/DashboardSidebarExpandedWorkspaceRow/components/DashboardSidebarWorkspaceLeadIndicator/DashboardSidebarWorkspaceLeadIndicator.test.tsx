@@ -34,7 +34,7 @@ test("live agent state outranks the pull request", () => {
 	expect(needsInput.querySelector(".text-emerald-500")).toBeNull();
 });
 
-test("an idle row shows its pull request state, else the quiet ring", () => {
+test("an idle row shows its pull request state, else a quiet dot", () => {
 	expect(
 		renderLead({ pullRequestState: "merged" }).querySelector(
 			".text-purple-500",
@@ -43,8 +43,9 @@ test("an idle row shows its pull request state, else the quiet ring", () => {
 	cleanup();
 
 	const idle = renderLead({});
-	expect(idle.querySelector("svg")?.getAttribute("class")).toContain(
-		"text-muted-foreground/40",
+	expect(idle.querySelector("svg")).toBeNull();
+	expect(idle.querySelector("span.rounded-full")?.className).toContain(
+		"bg-muted-foreground/50",
 	);
 });
 
