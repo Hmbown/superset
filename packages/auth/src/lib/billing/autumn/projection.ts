@@ -2,6 +2,7 @@ import { db, dbWs } from "@superset/db/client";
 import { subscriptions } from "@superset/db/schema";
 import * as authSchema from "@superset/db/schema/auth";
 import { ACTIVE_SUBSCRIPTION_STATUSES } from "@superset/shared/billing";
+import { AutumnError } from "autumn-js";
 import { and, desc, eq, inArray, isNull, sql } from "drizzle-orm";
 import type Stripe from "stripe";
 import { env } from "../../../env";
@@ -99,13 +100,18 @@ async function writeRow(
 async function resolveStripeCustomerId(
 	organizationId: string,
 ): Promise<string | null> {
+	const customer = await getAutumnCustomer(organizationId).catch((error) => {
+		if (error instanceof AutumnError && error.statusCode === 404) return null;
+		throw error;
+	});
+	if (customer?.stripeId) {
+		return saveStripeCustomerId(organizationId, customer.stripeId);
+	}
 	const org = await db.query.organizations.findFirst({
 		where: eq(authSchema.organizations.id, organizationId),
 		columns: { stripeCustomerId: true },
 	});
-	if (org?.stripeCustomerId) return org.stripeCustomerId;
-	const customer = await getAutumnCustomer(organizationId);
-	return saveStripeCustomerId(organizationId, customer.stripeId);
+	return org?.stripeCustomerId ?? null;
 }
 
 async function autumnTierFor(

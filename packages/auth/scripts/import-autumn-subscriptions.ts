@@ -3,7 +3,7 @@ import { subscriptions } from "@superset/db/schema";
 import * as authSchema from "@superset/db/schema/auth";
 import { ACTIVE_SUBSCRIPTION_STATUSES } from "@superset/shared/billing";
 import { AutumnError } from "autumn-js";
-import { and, desc, eq, inArray, isNull } from "drizzle-orm";
+import { desc, eq, inArray } from "drizzle-orm";
 import type Stripe from "stripe";
 import { autumnClient } from "../src/autumn";
 import { env } from "../src/env";
@@ -298,31 +298,10 @@ async function main() {
 		seen.add(row.organizationId);
 		const label = `${row.organizationId} (${row.stripeSubscriptionId})`;
 		try {
-			if (row.stripeSubscriptionId && !row.stripeCustomerId) {
-				const { customer } = await stripeClient.subscriptions.retrieve(
-					row.stripeSubscriptionId,
-				);
-				row.stripeCustomerId =
-					typeof customer === "string" ? customer : customer.id;
-				console.log(
-					`[autumn-import] ${apply ? "saved" : "would save"} Stripe customer ${row.stripeCustomerId} on ${label} "${row.name}"`,
-				);
-				if (apply) {
-					await db
-						.update(authSchema.organizations)
-						.set({ stripeCustomerId: row.stripeCustomerId })
-						.where(
-							and(
-								eq(authSchema.organizations.id, row.organizationId),
-								isNull(authSchema.organizations.stripeCustomerId),
-							),
-						);
-				}
-			}
-			if (!row.stripeSubscriptionId || !row.stripeCustomerId) {
+			if (!row.stripeSubscriptionId) {
 				counts.skipped += 1;
 				console.log(
-					`[autumn-import] skip ${label} "${row.name}" plan=${row.plan}: missing ${row.stripeSubscriptionId ? "" : "subscription id "}${row.stripeCustomerId ? "" : "customer id"}`,
+					`[autumn-import] skip ${label} "${row.name}" plan=${row.plan}: no Stripe subscription`,
 				);
 				continue;
 			}
@@ -337,6 +316,15 @@ async function main() {
 			const stripeSubscription = await stripeClient.subscriptions.retrieve(
 				row.stripeSubscriptionId,
 			);
+			const stripeCustomerId =
+				typeof stripeSubscription.customer === "string"
+					? stripeSubscription.customer
+					: stripeSubscription.customer.id;
+			if (stripeCustomerId !== row.stripeCustomerId) {
+				console.log(
+					`[autumn-import] ${label} "${row.name}": subscription is on Stripe customer ${stripeCustomerId}, the organization row has ${row.stripeCustomerId ?? "none"}; Autumn links ${stripeCustomerId}, the row is left as is`,
+				);
+			}
 			const seat = seatItem(stripeSubscription);
 			const planId = !seat
 				? undefined
@@ -366,7 +354,7 @@ async function main() {
 			const result = await autumn.billing.import({
 				customerId: row.organizationId,
 				customerData: { name: row.name },
-				processors: [{ type: "stripe", id: row.stripeCustomerId }],
+				processors: [{ type: "stripe", id: stripeCustomerId }],
 				billables: [
 					{
 						processor: "stripe",
