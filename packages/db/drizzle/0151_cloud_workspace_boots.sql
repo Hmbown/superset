@@ -17,6 +17,7 @@ CREATE TABLE "cloud_workspace_boots" (
 	CONSTRAINT "cloud_workspace_boots_vercel_session_id_unique" UNIQUE("vercel_session_id")
 );
 --> statement-breakpoint
+ALTER TABLE "cloud_workspaces" ADD COLUMN "usage_stop_at" timestamp with time zone;--> statement-breakpoint
 ALTER TABLE "cloud_workspace_boots" ADD CONSTRAINT "cloud_workspace_boots_cloud_workspace_id_cloud_workspaces_id_fk" FOREIGN KEY ("cloud_workspace_id") REFERENCES "public"."cloud_workspaces"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "cloud_workspace_boots_cloud_workspace_id_idx" ON "cloud_workspace_boots" USING btree ("cloud_workspace_id");--> statement-breakpoint
 CREATE INDEX "cloud_workspace_boots_organization_id_idx" ON "cloud_workspace_boots" USING btree ("organization_id");--> statement-breakpoint

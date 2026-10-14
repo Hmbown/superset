@@ -928,6 +928,8 @@ export const cloudWorkspaces = pgTable(
 			onDelete: "set null",
 		}),
 		deletedAt: timestamp("deleted_at", { withTimezone: true }),
+		/** When the box stops because its organization reached its usage limit; null otherwise. */
+		usageStopAt: timestamp("usage_stop_at", { withTimezone: true }),
 		createdByUserId: uuid("created_by_user_id").references(() => users.id, {
 			onDelete: "set null",
 		}),

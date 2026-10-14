@@ -50,7 +50,8 @@ Each question has a placeholder in the Decision Log.
 - [x] (2026-10-13 23:30Z) M8 Validation (see Outcomes), PR description rewritten. Plan stays active until M0 runs against the Autumn sandbox.
 - [x] (2026-10-13 23:55Z) Review follow-ups: `@deprecated` markers on `activePlan`'s `status` and `lapsed`; a test pins the client's API version to 2.4.0; a `track` answered 409 (key already recorded) counts as recorded, so a settle does not retry forever; the shim's `attach`/`update` types come from the SDK.
 - [x] (2026-10-13 23:20Z) Re-review fixes: metering only in Autumn mode; the reconciler stops a box only on a refusal; a settle saves its billed window before renewing, and the fallback track is keyed per window; an org Autumn has never seen reads as free; a paid tier always has a status; billing routes take the window's organization; boots fail open when Autumn is unreachable; a racing wake releases its hold instead of erroring; a failed wake keeps metering a box that resumed; a metering error no longer fails provision; purge stops boxes before the final settle; attach refuses Enterprise orgs, unknown plan ids and orgs still on a legacy Stripe subscription; seat sync falls back to Stripe when Autumn fails; the webhook route is tested with the documented payload.
-- [ ] Not done from the review: the grace period and in-product warning before a cap stop, sending the box's user to Autumn, a cancel confirmation in Autumn mode, caching a refusal per org, a daily reconciliation against Autumn (F1), and owner notices on Autumn limit and usage-alert webhooks.
+- [x] (2026-10-14 01:30Z) Cap stop with grace: a refused renewal sets `cloud_workspaces.usage_stop_at` ten minutes ahead, nudges clients and queues a settle for then; desktop shows a warning banner with Open billing; a raised limit or a stopped box clears it. Usage reports carry the box creator's user id. Mobile shows no warning yet.
+- [ ] Not done from the review: a mobile warning before a cap stop, a cancel confirmation in Autumn mode, caching a refusal per org, a daily reconciliation against Autumn (F1), and owner notices on Autumn limit and usage-alert webhooks.
 
 
 ## Surprises & Discoveries
@@ -264,3 +265,5 @@ Revision note (2026-10-13 23:55Z): recorded the review follow-ups (deprecation m
 Revision note (2026-10-13 21:00Z): ran M0 in the Autumn sandbox; recorded results, two fixes (keyed confirm, seat-price interval) and the spend-limit discoveries.
 
 Revision note (2026-10-13 23:20Z): recorded the re-review fixes and the items still open; the Outcomes gap no longer says M0 has not run.
+
+Revision note (2026-10-14 01:30Z): recorded the cap-stop grace period, the desktop warning, and the user id on usage reports; the migration 0151 now also adds `cloud_workspaces.usage_stop_at`.

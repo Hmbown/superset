@@ -12,6 +12,7 @@ import { CLOUD_USAGE_REFUSAL_KEYS } from "@superset/shared/billing";
 import { AutumnError } from "autumn-js";
 import { and, eq, inArray, isNull, lt, ne, or, sql } from "drizzle-orm";
 import { userError } from "../../i18n-error";
+import { nudge } from "../../lib/realtime";
 import {
 	findSandboxSession,
 	IMAGE_SANDBOX_VCPUS,
@@ -23,6 +24,7 @@ import { publishCloudWorkspaceJob } from "./jobs";
 
 const LOCK_WINDOW_MS = 15 * 60 * 1000;
 const LOCK_TTL_MS = 40 * 60 * 1000;
+const CAP_GRACE_MS = 10 * 60 * 1000;
 const SETTLE_LEASE_MS = 2 * 60 * 1000;
 const UNATTACHED_BOOT_GRACE_MS = 30 * 60 * 1000;
 const RECONCILE_LOOKBACK_MS = 30 * 60 * 1000;
@@ -215,14 +217,19 @@ export async function attachBootSession(args: {
 
 async function recordUsage(
 	boot: Boot,
-	window: { from: number; amount: number },
+	window: { from: number; amount: number; userId: string | null },
 ): Promise<void> {
 	const { amount } = window;
+	const properties = {
+		bootId: boot.id,
+		lockSeq: boot.lockSeq,
+		...(window.userId ? { userId: window.userId } : {}),
+	};
 	const lockId = lockIdFor(boot.id, boot.lockSeq);
 	if (boot.lockOpen) {
 		try {
 			await autumnClient.balances.finalize(
-				{ lockId, action: "confirm", overrideValue: amount },
+				{ lockId, action: "confirm", overrideValue: amount, properties },
 				{ headers: { "Idempotency-Key": `${lockId}:confirm` } },
 			);
 			return;
@@ -248,7 +255,7 @@ async function recordUsage(
 				value: amount,
 				overageBehavior: "overflow",
 				async: false,
-				properties: { bootId: boot.id, lockSeq: boot.lockSeq },
+				properties,
 			},
 			{ headers: { "Idempotency-Key": `${lockId}:track:${window.from}` } },
 		);
@@ -310,13 +317,17 @@ async function recordActiveCpu(boot: Boot, activeCpuMs: number) {
  */
 export async function settleBoot(
 	bootId: string,
-): Promise<"renewed" | "stopped" | "closed" | "skipped"> {
+): Promise<"renewed" | "warned" | "stopped" | "closed" | "skipped"> {
 	const boot = await claimSettle(bootId);
 	if (!boot) return "skipped";
 	try {
 		const [workspace] = boot.cloudWorkspaceId
 			? await db
-					.select({ providerSandboxId: cloudWorkspaces.providerSandboxId })
+					.select({
+						providerSandboxId: cloudWorkspaces.providerSandboxId,
+						createdByUserId: cloudWorkspaces.createdByUserId,
+						usageStopAt: cloudWorkspaces.usageStopAt,
+					})
 					.from(cloudWorkspaces)
 					.where(eq(cloudWorkspaces.id, boot.cloudWorkspaceId))
 			: [];
@@ -356,6 +367,7 @@ export async function settleBoot(
 		await recordUsage(boot, {
 			from,
 			amount: gbMinutes({ ms: end - from, memoryMb: session.memoryMb }),
+			userId: workspace?.createdByUserId ?? null,
 		});
 		await db
 			.update(cloudWorkspaceBoots)
@@ -368,6 +380,7 @@ export async function settleBoot(
 				.update(cloudWorkspaceBoots)
 				.set({ stoppedAt: new Date(end), settleLeaseUntil: null })
 				.where(eq(cloudWorkspaceBoots.id, bootId));
+			if (workspace?.usageStopAt) await setUsageStopAt(boot, null);
 			return "closed";
 		}
 
@@ -390,11 +403,23 @@ export async function settleBoot(
 				settleLeaseUntil: null,
 			})
 			.where(eq(cloudWorkspaceBoots.id, bootId));
-		if (!renewal.allowed && workspace) {
-			await stopSandbox(workspace.providerSandboxId);
-			return "stopped";
+		if (!workspace || !boot.cloudWorkspaceId) {
+			return renewal.allowed ? "renewed" : "stopped";
 		}
-		return "renewed";
+		const stopAt = workspace.usageStopAt;
+		if (renewal.allowed) {
+			if (stopAt) await setUsageStopAt(boot, null);
+			return "renewed";
+		}
+		if (!stopAt) {
+			await setUsageStopAt(boot, new Date(Date.now() + CAP_GRACE_MS));
+			await queueSettle(bootId, CAP_GRACE_MS / 1000);
+			return "warned";
+		}
+		if (stopAt.getTime() > Date.now()) return "warned";
+		await stopSandbox(workspace.providerSandboxId);
+		await setUsageStopAt(boot, null);
+		return "stopped";
 	} catch (error) {
 		await clearLease(bootId);
 		throw error;
@@ -416,10 +441,20 @@ async function openBootIds(cloudWorkspaceId?: string): Promise<string[]> {
 	return rows.map((row) => row.id);
 }
 
-function queueSettle(bootId: string): Promise<void> {
+async function setUsageStopAt(boot: Boot, at: Date | null): Promise<void> {
+	if (!boot.cloudWorkspaceId) return;
+	await db
+		.update(cloudWorkspaces)
+		.set({ usageStopAt: at })
+		.where(eq(cloudWorkspaces.id, boot.cloudWorkspaceId));
+	nudge(boot.organizationId, "cloud_workspaces");
+}
+
+function queueSettle(bootId: string, delaySeconds?: number): Promise<void> {
 	return publishCloudWorkspaceJob({
 		path: "/api/cloud-workspaces/meter",
 		body: { bootId },
+		...(delaySeconds ? { delaySeconds } : {}),
 		runLocally: (body) => settleBoot(body.bootId),
 	});
 }

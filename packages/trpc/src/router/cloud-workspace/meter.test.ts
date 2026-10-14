@@ -3,9 +3,11 @@ import { autumnClient } from "@superset/auth/autumn";
 import { db } from "@superset/db/client";
 import { AutumnError } from "autumn-js";
 import { stub } from "../../../test/stub";
+import * as realtime from "../../lib/realtime";
 import type { BoxSession } from "../../lib/sandbox";
 import * as sandbox from "../../lib/sandbox";
 import { sessionEndedAt } from "../../lib/sandbox/vercel";
+import * as jobs from "./jobs";
 import {
 	assertMayBoot,
 	authorizeBoot,
@@ -28,6 +30,8 @@ let renewalError: Error | null;
 let writes: Record<string, unknown>[];
 let autumnCalls: { method: string; params: unknown; headers?: unknown }[];
 let stopped: string[];
+let usageStopAt: Date | null;
+let delayedSettles: number[];
 
 function chain(rows: () => unknown[]) {
 	const link = {
@@ -46,12 +50,25 @@ function chain(rows: () => unknown[]) {
 
 stub(db, {
 	update: () => chain(() => (boot ? [boot] : [])),
-	select: () => chain(() => [{ providerSandboxId: "ws-box" }]),
+	select: () =>
+		chain(() => [
+			{
+				providerSandboxId: "ws-box",
+				createdByUserId: "user_1",
+				usageStopAt,
+			},
+		]),
 });
 stub(sandbox, {
 	findSandboxSession: async () => ({ session }),
 	stopSandbox: async (id: string) => {
 		stopped.push(id);
+	},
+});
+stub(realtime, { nudge: () => {} });
+stub(jobs, {
+	publishCloudWorkspaceJob: async (job: { delaySeconds?: number }) => {
+		delayedSettles.push(job.delaySeconds ?? 0);
 	},
 });
 stub(autumnClient, {
@@ -108,6 +125,8 @@ beforeEach(() => {
 	writes = [];
 	autumnCalls = [];
 	stopped = [];
+	usageStopAt = null;
+	delayedSettles = [];
 });
 
 describe("settleBoot", () => {
@@ -156,11 +175,39 @@ describe("settleBoot", () => {
 		});
 	});
 
-	test("a box whose next lock is refused at the spend cap is stopped", async () => {
+	test("a box refused at the spend cap is warned and given ten minutes, not stopped", async () => {
 		renewalAllowed = false;
+		expect(await settleBoot("boot_1")).toBe("warned");
+		expect(stopped).toEqual([]);
+		const stopAt = writes.find((write) => "usageStopAt" in write)
+			?.usageStopAt as Date;
+		expect(stopAt.getTime() - Date.now()).toBeGreaterThan(9 * MINUTE);
+		expect(delayedSettles).toEqual([600]);
+		expect(writes).toContainEqual(
+			expect.objectContaining({ lockSeq: 1, lockOpen: false }),
+		);
+	});
+
+	test("a box still refused once its grace ends is stopped and the warning cleared", async () => {
+		renewalAllowed = false;
+		usageStopAt = new Date(NOW - MINUTE);
 		expect(await settleBoot("boot_1")).toBe("stopped");
 		expect(stopped).toEqual(["ws-box"]);
-		expect(writes.at(-1)).toMatchObject({ lockSeq: 1, lockOpen: false });
+		expect(writes.at(-1)).toEqual({ usageStopAt: null });
+	});
+
+	test("a raised limit during the grace clears the warning and keeps the box running", async () => {
+		usageStopAt = new Date(NOW + 5 * MINUTE);
+		expect(await settleBoot("boot_1")).toBe("renewed");
+		expect(stopped).toEqual([]);
+		expect(writes.at(-1)).toEqual({ usageStopAt: null });
+	});
+
+	test("usage is reported with the user who made the box", async () => {
+		await settleBoot("boot_1");
+		expect(
+			autumnCalls.find((call) => call.method === "finalize")?.params,
+		).toMatchObject({ properties: { userId: "user_1", bootId: "boot_1" } });
 	});
 
 	test("minutes a lock can no longer take are tracked once, keyed by that lock", async () => {

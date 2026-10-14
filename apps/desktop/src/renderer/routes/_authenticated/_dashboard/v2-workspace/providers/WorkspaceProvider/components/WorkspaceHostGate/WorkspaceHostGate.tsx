@@ -4,12 +4,14 @@ import { useWorkspaceHostUrl } from "@superset/workspace-client";
 import type { ReactNode } from "react";
 import type { HostShapedWorkspace } from "renderer/hooks/host-workspaces/useHostWorkspaces";
 import { useKnownHosts } from "renderer/hooks/known-hosts/useKnownHosts";
+import { useCloudWorkspaces } from "renderer/hooks/useCloudWorkspaces";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import { useSandboxAccess } from "renderer/routes/_authenticated/providers/SandboxAccessProvider";
 import { useHostReachability } from "../../../../hooks/useHostReachability";
 import { LOCAL_HOST_SERVICE_DETAIL } from "../../utils/localHostServiceDetail";
 import { AgentCredentialsChangedBanner } from "./components/AgentCredentialsChangedBanner";
 import { CloudUsageRefusedBanner } from "./components/CloudUsageRefusedBanner";
+import { CloudUsageStoppingBanner } from "./components/CloudUsageStoppingBanner";
 import { HostConnectionStrip } from "./components/HostConnectionStrip";
 
 /** Keeps loaded panes accessible while reporting the shared host connection. */
@@ -43,6 +45,10 @@ export function WorkspaceHostGate({
 	const isSandbox = sandboxes.some(
 		(sandbox) => sandbox.workspaceId === workspace.hostId,
 	);
+	const { workspaces: cloudWorkspaces } = useCloudWorkspaces();
+	const stoppingAtLimit = Boolean(
+		cloudWorkspaces?.find((row) => row.id === workspace.hostId)?.usageStopAt,
+	);
 
 	const hostRow =
 		hostRows.find(
@@ -68,6 +74,7 @@ export function WorkspaceHostGate({
 			{agentCredentialsChangedWorkspaceId === workspace.hostId ? (
 				<AgentCredentialsChangedBanner workspaceId={workspace.hostId} />
 			) : null}
+			{stoppingAtLimit ? <CloudUsageStoppingBanner /> : null}
 			{usageRefusal?.workspaceId === workspace.hostId ? (
 				<CloudUsageRefusedBanner
 					workspaceId={workspace.hostId}
