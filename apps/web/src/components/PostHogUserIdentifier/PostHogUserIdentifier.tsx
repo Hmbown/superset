@@ -10,9 +10,9 @@ export function PostHogUserIdentifier() {
 	const { data: session, isPending, error } = authClient.useSession();
 
 	useEffect(() => {
-		// `session` is null while loading and after a failed fetch, not only
-		// when signed out.
-		if (isPending || (error && !session)) return;
+		// `session` is null while loading and can be stale after a failed
+		// refresh, so only a settled, successful fetch may change identity.
+		if (isPending || error) return;
 
 		const user = session?.user ?? null;
 		if (

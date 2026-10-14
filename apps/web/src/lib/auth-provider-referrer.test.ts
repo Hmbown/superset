@@ -94,6 +94,40 @@ describe("stripAuthProviderReferrer", () => {
 		expect(result?.properties.$referring_domain).toBe("$direct");
 	});
 
+	test("keeps a GitHub first touch that landed on the marketing site", () => {
+		const setOnce = {
+			$initial_referrer: "https://github.com/superset-sh/superset",
+			$initial_referring_domain: "github.com",
+			$initial_current_url: "https://superset.sh/",
+		};
+		const result = stripAuthProviderReferrer(
+			event(
+				{
+					$referrer: "https://github.com/",
+					$referring_domain: "github.com",
+					$current_url: "https://app.superset.sh/auth/desktop/success",
+				},
+				{ ...setOnce },
+			),
+		);
+		expect(result?.$set_once).toEqual(setOnce);
+		expect(result?.properties.$referring_domain).toBe("$direct");
+	});
+
+	test("replaces a provider session-entry referrer", () => {
+		const result = stripAuthProviderReferrer(
+			event({
+				$session_entry_referrer: "https://accounts.google.com/",
+				$session_entry_referring_domain: "accounts.google.com",
+				$current_url: "https://app.superset.sh/",
+			}),
+		);
+		expect(result?.properties).toMatchObject({
+			$session_entry_referrer: "$direct",
+			$session_entry_referring_domain: "$direct",
+		});
+	});
+
 	test("leaves other referrers and missing $set_once alone", () => {
 		const result = stripAuthProviderReferrer(
 			event({
