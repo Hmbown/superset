@@ -1,6 +1,6 @@
 export {
 	createComposerDictation,
-	type LocalTranscription,
+	type DesktopTranscription,
 	toDictationError,
 	useComposerDictation,
 } from "./useComposerDictation";

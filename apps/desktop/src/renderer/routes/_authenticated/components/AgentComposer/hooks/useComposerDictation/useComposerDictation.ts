@@ -23,9 +23,10 @@ type TranscribeRequest = (input: {
 	mimeType: string;
 }) => Promise<{ text: string }>;
 
-export type LocalTranscription =
+export type DesktopTranscription = (
 	| { ok: true; text: string }
-	| { ok: false; error: string; message: string };
+	| { ok: false; error: string; message: string }
+) & { engine?: "chatgpt" | "mac"; chatgptError?: string };
 
 const BASE64_CHUNK = 0x8000;
 const WAV_SAMPLE_RATE = 16_000;
@@ -40,7 +41,7 @@ function bytesToBase64(bytes: Uint8Array): string {
 	return btoa(binary);
 }
 
-/** Decodes the recorder's webm/opus into the WAV the Mac's transcriber reads. */
+/** Decodes the recorder's webm/opus into the WAV both desktop transcribers read. */
 async function blobToWav(blob: Blob): Promise<Uint8Array> {
 	const context = new OfflineAudioContext(1, 1, WAV_SAMPLE_RATE);
 	const decoded = await context.decodeAudioData(await blob.arrayBuffer());
@@ -54,7 +55,9 @@ async function blobToWav(blob: Blob): Promise<Uint8Array> {
 	return encodeWav(mono, WAV_SAMPLE_RATE);
 }
 
-async function transcribeOnDevice(audio: Blob): Promise<LocalTranscription> {
+async function requestDesktopTranscription(
+	audio: Blob,
+): Promise<DesktopTranscription> {
 	const wav = await blobToWav(audio);
 	return electronTrpcClient.dictation.transcribe.mutate({
 		wav: bytesToBase64(wav),
@@ -104,27 +107,29 @@ export function toDictationError(error: unknown): DictationError {
 export function createComposerDictation({
 	request,
 	notify,
-	transcribeLocally,
+	transcribeOnDesktop,
 }: {
 	request: TranscribeRequest;
 	notify: (message: string) => void;
-	// Tried first; any failure falls back to the API.
-	transcribeLocally?: (audio: Blob) => Promise<LocalTranscription>;
+	// ChatGPT via Codex, else the Mac, tried first; any failure falls back to the API.
+	transcribeOnDesktop?: (audio: Blob) => Promise<DesktopTranscription>;
 }): PromptInputDictation {
 	return {
 		maxSeconds: DICTATION_MAX_SECONDS,
 		audioBitsPerSecond: DICTATION_AUDIO_BITS_PER_SECOND,
 		async transcribe(audio) {
-			if (transcribeLocally) {
-				const local = await transcribeLocally(audio).catch(
-					(error: unknown): LocalTranscription => ({
+			if (transcribeOnDesktop) {
+				const local = await transcribeOnDesktop(audio).catch(
+					(error: unknown): DesktopTranscription => ({
 						ok: false,
 						error: "failed",
 						message: error instanceof Error ? error.message : String(error),
 					}),
 				);
+				if (local.chatgptError)
+					console.warn("[dictation] ChatGPT was skipped", local.chatgptError);
 				if (local.ok) return local.text;
-				console.warn("[dictation] on-device transcription failed", local);
+				console.warn("[dictation] desktop transcription failed", local);
 			}
 			if (audio.size > DICTATION_MAX_AUDIO_BYTES)
 				throw new DictationError(
@@ -152,18 +157,20 @@ export function createComposerDictation({
 
 export function useComposerDictation(): PromptInputDictation | undefined {
 	const enabled = useSettings((state) => state.dictationEnabled);
-	const { data: nativeAvailable } =
-		electronTrpc.dictation.nativeAvailable.useQuery(undefined, {
-			staleTime: Number.POSITIVE_INFINITY,
-		});
+	const { data: desktopAvailable } = electronTrpc.dictation.available.useQuery(
+		undefined,
+		{ staleTime: 5 * 60_000 },
+	);
 	const dictation = useMemo(
 		() =>
 			createComposerDictation({
 				request: (input) => apiTrpcClient.voice.transcribe.mutate(input),
 				notify: (message) => toast.error(message),
-				transcribeLocally: nativeAvailable ? transcribeOnDevice : undefined,
+				transcribeOnDesktop: desktopAvailable
+					? requestDesktopTranscription
+					: undefined,
 			}),
-		[nativeAvailable],
+		[desktopAvailable],
 	);
 	return enabled ? dictation : undefined;
 }

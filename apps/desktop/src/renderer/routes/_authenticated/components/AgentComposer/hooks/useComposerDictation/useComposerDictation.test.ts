@@ -84,7 +84,7 @@ describe("createComposerDictation", () => {
 				return { text: "from the API" };
 			},
 			notify: () => {},
-			transcribeLocally: async () => ({ ok: true, text: "from the Mac" }),
+			transcribeOnDesktop: async () => ({ ok: true, text: "from the Mac" }),
 		});
 		expect(await dictation.transcribe(clip)).toBe("from the Mac");
 		expect(called).toBe(false);
@@ -94,7 +94,7 @@ describe("createComposerDictation", () => {
 		const dictation = createComposerDictation({
 			request: async () => ({ text: "from the API" }),
 			notify: () => {},
-			transcribeLocally: async () => ({
+			transcribeOnDesktop: async () => ({
 				ok: false,
 				error: "unsupported-locale",
 				message: "no model",
@@ -104,7 +104,7 @@ describe("createComposerDictation", () => {
 		const throwing = createComposerDictation({
 			request: async () => ({ text: "from the API" }),
 			notify: () => {},
-			transcribeLocally: async () => {
+			transcribeOnDesktop: async () => {
 				throw new Error("decode failed");
 			},
 		});
