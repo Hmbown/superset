@@ -1,3 +1,7 @@
+import {
+	AGENT_PRESET_FEATURE_FLAGS,
+	getPresetById,
+} from "@superset/shared/host-agent-presets";
 import { parse } from "shell-quote";
 import { joinCommandArgsWithEnv, parseLaunchCommandString } from "./argv";
 
@@ -83,4 +87,31 @@ export function resolvePresetLaunchCommands(
 		return [getAgentCommandText(linkedAgent)];
 	}
 	return preset.commands;
+}
+
+type IsAgentPresetEnabled = (presetId: string) => boolean;
+
+export function runsGatedAgent(
+	commands: readonly string[],
+	isAgentPresetEnabled: IsAgentPresetEnabled,
+): boolean {
+	const programs = commands.map((command) => command.trim().split(/\s+/)[0]);
+	return [...AGENT_PRESET_FEATURE_FLAGS.keys()].some((presetId) => {
+		const binary = getPresetById(presetId)?.command;
+		return (
+			!isAgentPresetEnabled(presetId) &&
+			binary !== undefined &&
+			programs.includes(binary)
+		);
+	});
+}
+
+export function isTerminalPresetEnabled(
+	preset: { name: string; commands: readonly string[] },
+	isAgentPresetEnabled: IsAgentPresetEnabled,
+): boolean {
+	return (
+		isAgentPresetEnabled(preset.name) &&
+		!runsGatedAgent(preset.commands, isAgentPresetEnabled)
+	);
 }

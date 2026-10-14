@@ -2,6 +2,7 @@ import { describe, expect, it } from "bun:test";
 import {
 	findLinkedAgent,
 	getAgentCommandText,
+	isTerminalPresetEnabled,
 	parseAgentCommandText,
 	resolvePresetLaunchCommands,
 } from "./agent-launch-command";
@@ -87,5 +88,36 @@ describe("agent launch command helpers", () => {
 				[agent],
 			),
 		).toEqual(["claude --dangerously-skip-permissions"]);
+	});
+});
+
+describe("isTerminalPresetEnabled", () => {
+	const pdevOff = (presetId: string) => presetId !== "pdev";
+
+	it("hides a gated preset by its name or by the command it runs", () => {
+		expect(
+			isTerminalPresetEnabled({ name: "pdev", commands: [] }, pdevOff),
+		).toBe(false);
+		expect(
+			isTerminalPresetEnabled(
+				{ name: "my agent", commands: ["pdev --model pdev/auto"] },
+				pdevOff,
+			),
+		).toBe(false);
+	});
+
+	it("keeps other presets, and gated ones once the flag is on", () => {
+		expect(
+			isTerminalPresetEnabled(
+				{ name: "claude", commands: ["claude"] },
+				pdevOff,
+			),
+		).toBe(true);
+		expect(
+			isTerminalPresetEnabled(
+				{ name: "my agent", commands: ["pdev"] },
+				() => true,
+			),
+		).toBe(true);
 	});
 });
