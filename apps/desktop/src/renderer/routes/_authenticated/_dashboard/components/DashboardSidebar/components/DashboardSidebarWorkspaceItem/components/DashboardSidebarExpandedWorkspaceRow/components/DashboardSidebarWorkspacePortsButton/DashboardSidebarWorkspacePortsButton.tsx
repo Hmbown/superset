@@ -7,7 +7,7 @@ import {
 } from "@superset/ui/hover-card";
 import { Separator } from "@superset/ui/separator";
 import { toast } from "@superset/ui/sonner";
-import type { SyntheticEvent } from "react";
+import { type SyntheticEvent, useRef } from "react";
 import { LuLoaderCircle, LuRadioTower, LuX } from "react-icons/lu";
 import { useDashboardSidebarPortKill } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/hooks/useDashboardSidebarPortKill";
 import type { DashboardSidebarPort } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/hooks/useDashboardSidebarPortsData";
@@ -30,8 +30,15 @@ export function DashboardSidebarWorkspacePortsButton({
 }: DashboardSidebarWorkspacePortsButtonProps) {
 	const { t } = useLingui();
 	const { isPending, killPorts } = useDashboardSidebarPortKill();
-	const { isOpen, onOpenChange, onPointerEnter, onPointerLeave, toggleOpen } =
-		useDashboardSidebarChipHoverSuppression();
+	const cardRef = useRef<HTMLDivElement | null>(null);
+	const {
+		isOpen,
+		onOpenChange,
+		onPointerEnter,
+		onPointerLeave,
+		onCardPointerEnter,
+		toggleOpen,
+	} = useDashboardSidebarChipHoverSuppression(cardRef);
 
 	const handleCloseAll = async () => {
 		if (isPending) return;
@@ -111,6 +118,8 @@ export function DashboardSidebarWorkspacePortsButton({
 				</button>
 			</HoverCardTrigger>
 			<HoverCardContent
+				ref={cardRef}
+				onPointerEnter={onCardPointerEnter}
 				side="right"
 				align="start"
 				sideOffset={8}

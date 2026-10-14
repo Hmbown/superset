@@ -7,6 +7,7 @@ import {
 	HoverCardTrigger,
 } from "@superset/ui/hover-card";
 import { cn } from "@superset/ui/utils";
+import { useRef } from "react";
 import { STATUS_PRIORITY } from "shared/tabs-types";
 import { useDashboardSidebarChipHoverSuppression } from "../../../../hooks/useDashboardSidebarChipHoverSuppression";
 import type { DashboardSidebarRunningAgent } from "../../hooks/useDashboardSidebarWorkspaceRunningAgents";
@@ -29,8 +30,15 @@ export function DashboardSidebarAgentsChip({
 	agents,
 }: DashboardSidebarAgentsChipProps) {
 	const { t } = useLingui();
-	const { isOpen, onOpenChange, onPointerEnter, onPointerLeave, toggleOpen } =
-		useDashboardSidebarChipHoverSuppression();
+	const cardRef = useRef<HTMLDivElement | null>(null);
+	const {
+		isOpen,
+		onOpenChange,
+		onPointerEnter,
+		onPointerLeave,
+		onCardPointerEnter,
+		toggleOpen,
+	} = useDashboardSidebarChipHoverSuppression(cardRef);
 
 	const subagentCount = agents.reduce(
 		(total, agent) => total + agent.subagents.length,
@@ -113,6 +121,8 @@ export function DashboardSidebarAgentsChip({
 				</Badge>
 			</HoverCardTrigger>
 			<HoverCardContent
+				ref={cardRef}
+				onPointerEnter={onCardPointerEnter}
 				side="right"
 				align="start"
 				sideOffset={8}
