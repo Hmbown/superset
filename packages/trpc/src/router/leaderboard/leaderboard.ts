@@ -19,6 +19,7 @@ import {
 	publicProcedure,
 	userError,
 } from "../../trpc";
+import { verifyOrgMembership } from "../integration/utils";
 import { requireActiveOrgMembership } from "../utils/active-org";
 import { isUniqueViolation } from "../utils/unique-violation";
 import {
@@ -40,18 +41,24 @@ import {
 	resolveDayRange,
 } from "./periods";
 import {
+	getOrgStandings,
+	getOrgStats,
 	getParticipant,
 	getStandingFor,
 	getStandings,
 	getStats,
+	getViewerOrganizations,
 	getViewerProfile,
 	listPublicHandles,
+	ORG_MIN_MEMBERS,
 	searchParticipants,
 } from "./queries";
 import {
 	joinSchema,
 	MAX_HOSTS_PER_USER,
 	meSchema,
+	orgStandingsSchema,
+	orgStatsSchema,
 	participantSchema,
 	previewRankSchema,
 	profileSchema,
@@ -879,6 +886,36 @@ export const leaderboardRouter = createTRPCRouter({
 	standings: protectedProcedure
 		.input(standingsSchema)
 		.query(async ({ input }) => await getStandings(input)),
+
+	org: createTRPCRouter({
+		list: protectedProcedure.query(async ({ ctx }) => {
+			const organizations = await getViewerOrganizations(ctx.session.user.id);
+			const active = organizations.find(
+				(org) => org.id === ctx.activeOrganizationId,
+			);
+			return {
+				organizations,
+				defaultOrganizationId: (active ?? organizations[0])?.id ?? null,
+				minMembers: ORG_MIN_MEMBERS,
+			};
+		}),
+
+		standings: protectedProcedure
+			.input(orgStandingsSchema)
+			.query(async ({ ctx, input }) => {
+				const { organizationId, ...window } = input;
+				await verifyOrgMembership(ctx.session.user.id, organizationId);
+				return await getOrgStandings(organizationId, window);
+			}),
+
+		stats: protectedProcedure
+			.input(orgStatsSchema)
+			.query(async ({ ctx, input }) => {
+				const { organizationId, ...window } = input;
+				await verifyOrgMembership(ctx.session.user.id, organizationId);
+				return await getOrgStats(organizationId, window);
+			}),
+	}),
 
 	public: createTRPCRouter({
 		standings: publicProcedure

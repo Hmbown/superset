@@ -931,6 +931,9 @@ msgstr "{localHostName}（此设备）"
 msgid "{matchCount, plural, one {{0}} other {{1}}}"
 msgstr "{matchCount, plural, one {{0}} other {{1}}}"
 
+msgid "{members} of {minMembers}"
+msgstr "{members} / {minMembers}"
+
 #. placeholder {0}: gaps.length
 msgid "{met} of {0} objectives carrying for {nextLabel} — {laggingLabels} furthest behind."
 msgstr "{0} 项目标中有 {met} 项在为 {nextLabel} 出力 —— {laggingLabels} 落后最多。"
@@ -10771,6 +10774,9 @@ msgstr "没有打开的拉取请求。"
 msgid "No open review comments."
 msgstr "没有未解决的审查评论。"
 
+msgid "No organization by that name."
+msgstr "没有这个名称的组织。"
+
 msgid "No organization selected"
 msgstr "未选择组织"
 
@@ -14441,6 +14447,9 @@ msgstr "搜索Linear…"
 
 msgid "Search models"
 msgstr "搜索模型"
+
+msgid "Search organizations"
+msgstr "搜索组织"
 
 msgid "Search pages"
 msgstr "搜索页面"
@@ -19136,6 +19145,9 @@ msgstr "你的组织已达到云端用量上限。请在“设置”中的“账
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "你的组织已达到云端用量上限。除非提高上限，此工作区将在几分钟后停止。"
+
+msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
+msgstr "你的组织有 {minMembers} 名成员加入排行榜后，组织榜单才会开放。目前已有 {members} 名。"
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "你自己的账户。组织的集成让 Superset 访问其工具；连接你自己的账户后，Superset 为你完成的工作会以你的名义显示。"

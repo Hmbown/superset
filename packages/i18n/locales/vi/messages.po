@@ -931,6 +931,9 @@ msgstr "{localHostName} (thiết bị này)"
 msgid "{matchCount, plural, one {{0}} other {{1}}}"
 msgstr "{matchCount, plural, one {{0}} other {{1}}}"
 
+msgid "{members} of {minMembers}"
+msgstr "{members}/{minMembers}"
+
 #. placeholder {0}: gaps.length
 msgid "{met} of {0} objectives carrying for {nextLabel} — {laggingLabels} furthest behind."
 msgstr "{met} trên {0} mục tiêu đang góp sức cho {nextLabel} — {laggingLabels} tụt lại xa nhất."
@@ -10771,6 +10774,9 @@ msgstr "Không có pull request nào đang mở."
 msgid "No open review comments."
 msgstr "Không có bình luận review nào đang mở."
 
+msgid "No organization by that name."
+msgstr "Không có tổ chức nào có tên đó."
+
 msgid "No organization selected"
 msgstr "Chưa chọn tổ chức nào"
 
@@ -14441,6 +14447,9 @@ msgstr "Tìm trong Linear…"
 
 msgid "Search models"
 msgstr "Tìm mô hình"
+
+msgid "Search organizations"
+msgstr "Tìm tổ chức"
 
 msgid "Search pages"
 msgstr "Tìm trang"
@@ -19136,6 +19145,9 @@ msgstr "Tổ chức của bạn đã đạt giới hạn sử dụng cloud. Hãy
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Tổ chức của bạn đã đạt giới hạn sử dụng cloud. Workspace này sẽ dừng sau vài phút nếu giới hạn không được tăng."
+
+msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
+msgstr "Bảng của tổ chức bạn sẽ mở khi có {minMembers} thành viên trên bảng xếp hạng. Hiện có {members}."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Tài khoản của riêng bạn. Các tích hợp của tổ chức giúp Superset truy cập công cụ của tổ chức; kết nối tài khoản của bạn giúp công việc Superset làm cho bạn hiển thị dưới tên bạn."

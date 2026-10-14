@@ -931,6 +931,9 @@ msgstr "{localHostName} (this device)"
 msgid "{matchCount, plural, one {{0}} other {{1}}}"
 msgstr "{matchCount, plural, one {{0}} other {{1}}}"
 
+msgid "{members} of {minMembers}"
+msgstr "{members} of {minMembers}"
+
 #. placeholder {0}: gaps.length
 msgid "{met} of {0} objectives carrying for {nextLabel} — {laggingLabels} furthest behind."
 msgstr "{met} of {0} objectives carrying for {nextLabel} — {laggingLabels} furthest behind."
@@ -10771,6 +10774,9 @@ msgstr "No open pull requests."
 msgid "No open review comments."
 msgstr "No open review comments."
 
+msgid "No organization by that name."
+msgstr "No organization by that name."
+
 msgid "No organization selected"
 msgstr "No organization selected"
 
@@ -14441,6 +14447,9 @@ msgstr "Search Linear…"
 
 msgid "Search models"
 msgstr "Search models"
+
+msgid "Search organizations"
+msgstr "Search organizations"
 
 msgid "Search pages"
 msgstr "Search pages"
@@ -19136,6 +19145,9 @@ msgstr "Your organization has reached its cloud usage limit. Raise the limit or 
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
+
+msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
+msgstr "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."

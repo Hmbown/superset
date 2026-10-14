@@ -931,6 +931,9 @@ msgstr "{localHostName} (이 기기)"
 msgid "{matchCount, plural, one {{0}} other {{1}}}"
 msgstr "{matchCount, plural, one {{0}} other {{1}}}"
 
+msgid "{members} of {minMembers}"
+msgstr "{members} / {minMembers}"
+
 #. placeholder {0}: gaps.length
 msgid "{met} of {0} objectives carrying for {nextLabel} — {laggingLabels} furthest behind."
 msgstr "{0}개 목표 중 {met}개가 {nextLabel}을(를) 향해 제 몫을 하고 있습니다 — {laggingLabels}이(가) 가장 뒤처져 있습니다."
@@ -10771,6 +10774,9 @@ msgstr "열린 풀 리퀘스트가 없습니다."
 msgid "No open review comments."
 msgstr "열린 리뷰 코멘트가 없습니다."
 
+msgid "No organization by that name."
+msgstr "해당 이름의 조직이 없습니다."
+
 msgid "No organization selected"
 msgstr "선택된 조직이 없습니다"
 
@@ -14441,6 +14447,9 @@ msgstr "Linear 검색…"
 
 msgid "Search models"
 msgstr "모델 검색"
+
+msgid "Search organizations"
+msgstr "조직 검색"
 
 msgid "Search pages"
 msgstr "페이지 검색"
@@ -19136,6 +19145,9 @@ msgstr "조직이 클라우드 사용 한도에 도달했습니다. 이 워크�
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "조직이 클라우드 사용 한도에 도달했습니다. 한도를 올리지 않으면 이 워크스페이스는 몇 분 후에 중지됩니다."
+
+msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
+msgstr "멤버 {minMembers}명이 리더보드에 참여하면 조직 보드가 열립니다. 현재 {members}명입니다."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "본인의 계정입니다. 조직의 통합은 Superset이 해당 도구에 접근하게 하며, 본인 계정을 연결하면 Superset이 대신 한 작업이 본인 이름으로 표시됩니다."

@@ -931,6 +931,9 @@ msgstr "{localHostName} (это устройство)"
 msgid "{matchCount, plural, one {{0}} other {{1}}}"
 msgstr "{matchCount, plural, one {{0}} few {{1}} many {{1}} other {{1}}}"
 
+msgid "{members} of {minMembers}"
+msgstr "{members} из {minMembers}"
+
 #. placeholder {0}: gaps.length
 msgid "{met} of {0} objectives carrying for {nextLabel} — {laggingLabels} furthest behind."
 msgstr "На {nextLabel} работают {met} из {0} целей — дальше всего отстают {laggingLabels}."
@@ -10771,6 +10774,9 @@ msgstr "Нет открытых пул-реквестов."
 msgid "No open review comments."
 msgstr "Открытых комментариев ревью нет."
 
+msgid "No organization by that name."
+msgstr "Нет организации с таким названием."
+
 msgid "No organization selected"
 msgstr "Организация не выбрана"
 
@@ -14441,6 +14447,9 @@ msgstr "Поиск в Linear…"
 
 msgid "Search models"
 msgstr "Поиск моделей"
+
+msgid "Search organizations"
+msgstr "Поиск организаций"
 
 msgid "Search pages"
 msgstr "Поиск страниц"
@@ -19136,6 +19145,9 @@ msgstr "Ваша организация достигла лимита испол
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Ваша организация достигла лимита использования облака. Эта рабочая область остановится через несколько минут, если лимит не увеличить."
+
+msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
+msgstr "Таблица вашей организации откроется, когда в рейтинге будет {minMembers} участника. Сейчас: {members}."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Ваши собственные учётные записи. Интеграции вашей организации дают Superset доступ к её инструментам; подключив свои, вы увидите работу, которую Superset делает для вас, под своим именем."

@@ -931,6 +931,9 @@ msgstr "{localHostName} (este dispositivo)"
 msgid "{matchCount, plural, one {{0}} other {{1}}}"
 msgstr "{matchCount, plural, one {{0}} other {{1}}}"
 
+msgid "{members} of {minMembers}"
+msgstr "{members} de {minMembers}"
+
 #. placeholder {0}: gaps.length
 msgid "{met} of {0} objectives carrying for {nextLabel} — {laggingLabels} furthest behind."
 msgstr "{met} de {0} objetivos fazendo a sua parte para {nextLabel} — {laggingLabels} estão mais atrás."
@@ -10771,6 +10774,9 @@ msgstr "Nenhum pull request aberto."
 msgid "No open review comments."
 msgstr "Nenhum comentário de revisão em aberto."
 
+msgid "No organization by that name."
+msgstr "Nenhuma organização com esse nome."
+
 msgid "No organization selected"
 msgstr "Nenhuma organização selecionada"
 
@@ -14441,6 +14447,9 @@ msgstr "Buscar no Linear…"
 
 msgid "Search models"
 msgstr "Buscar modelos"
+
+msgid "Search organizations"
+msgstr "Buscar organizações"
 
 msgid "Search pages"
 msgstr "Buscar páginas"
@@ -19136,6 +19145,9 @@ msgstr "Sua organização atingiu o limite de uso na nuvem. Aumente o limite ou 
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Sua organização atingiu o limite de uso na nuvem. Esta área de trabalho será interrompida em alguns minutos, a menos que o limite seja aumentado."
+
+msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
+msgstr "O placar da sua organização abre quando {minMembers} membros estiverem no ranking. Até agora, {members}."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Suas próprias contas. As integrações da sua organização permitem que o Superset acesse as ferramentas dela; conectar as suas faz o trabalho que o Superset faz por você aparecer em seu nome."

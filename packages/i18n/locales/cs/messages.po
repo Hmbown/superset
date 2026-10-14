@@ -931,6 +931,9 @@ msgstr "{localHostName} (toto zařízení)"
 msgid "{matchCount, plural, one {{0}} other {{1}}}"
 msgstr "{matchCount, plural, one {{0}} few {{1}} many {{1}} other {{1}}}"
 
+msgid "{members} of {minMembers}"
+msgstr "{members} z {minMembers}"
+
 #. placeholder {0}: gaps.length
 msgid "{met} of {0} objectives carrying for {nextLabel} — {laggingLabels} furthest behind."
 msgstr "Na {nextLabel} táhne {met} z {0} cílů — nejvíc zaostává {laggingLabels}."
@@ -10771,6 +10774,9 @@ msgstr "Žádné otevřené pull requesty."
 msgid "No open review comments."
 msgstr "Žádné otevřené komentáře z revize."
 
+msgid "No organization by that name."
+msgstr "Žádná organizace s tímto názvem."
+
 msgid "No organization selected"
 msgstr "Není vybraná žádná organizace"
 
@@ -14441,6 +14447,9 @@ msgstr "Hledat v Linearu…"
 
 msgid "Search models"
 msgstr "Hledat modely"
+
+msgid "Search organizations"
+msgstr "Hledat organizace"
 
 msgid "Search pages"
 msgstr "Hledat stránky"
@@ -19136,6 +19145,9 @@ msgstr "Vaše organizace dosáhla limitu využití cloudu. Pro spuštění tohot
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Vaše organizace dosáhla limitu využití cloudu. Tento pracovní prostor se za několik minut zastaví, pokud limit nezvýšíte."
+
+msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
+msgstr "Žebříček vaší organizace se otevře, jakmile bude na žebříčku {minMembers} členů. Zatím {members}."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Vaše vlastní účty. Integrace vaší organizace umožňují Supersetu přístup k jejím nástrojům; když připojíte své účty, práce, kterou pro vás Superset udělá, se zobrazí pod vaším jménem."

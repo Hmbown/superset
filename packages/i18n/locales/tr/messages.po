@@ -931,6 +931,9 @@ msgstr "{localHostName} (bu cihaz)"
 msgid "{matchCount, plural, one {{0}} other {{1}}}"
 msgstr "{matchCount, plural, one {{0}} other {{1}}}"
 
+msgid "{members} of {minMembers}"
+msgstr "{members}/{minMembers}"
+
 #. placeholder {0}: gaps.length
 msgid "{met} of {0} objectives carrying for {nextLabel} — {laggingLabels} furthest behind."
 msgstr "{0} hedeften {met} tanesi {nextLabel} için üzerine düşeni yapıyor — en geride {laggingLabels} var."
@@ -10771,6 +10774,9 @@ msgstr "Açık pull request yok."
 msgid "No open review comments."
 msgstr "Açık inceleme yorumu yok."
 
+msgid "No organization by that name."
+msgstr "Bu adla bir kuruluş yok."
+
 msgid "No organization selected"
 msgstr "Kuruluş seçilmedi"
 
@@ -14441,6 +14447,9 @@ msgstr "Linear'da ara…"
 
 msgid "Search models"
 msgstr "Model ara"
+
+msgid "Search organizations"
+msgstr "Kuruluş ara"
 
 msgid "Search pages"
 msgstr "Sayfalarda ara"
@@ -19136,6 +19145,9 @@ msgstr "Kuruluşunuz bulut kullanım sınırına ulaştı. Bu çalışma alanın
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Kuruluşunuz bulut kullanım sınırına ulaştı. Sınır artırılmazsa bu çalışma alanı birkaç dakika içinde durdurulacak."
+
+msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
+msgstr "Kuruluşunuzun tablosu, {minMembers} üye liderlik tablosuna katıldığında açılır. Şu an {members}."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Kendi hesapların. Organizasyonunun entegrasyonları Superset'in araçlarına erişmesini sağlar; kendi hesaplarını bağladığında Superset'in senin için yaptığı işler senin adınla görünür."

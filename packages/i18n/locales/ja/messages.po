@@ -931,6 +931,9 @@ msgstr "{localHostName}（このデバイス）"
 msgid "{matchCount, plural, one {{0}} other {{1}}}"
 msgstr "{matchCount, plural, one {{0}} other {{1}}}"
 
+msgid "{members} of {minMembers}"
+msgstr "{members} / {minMembers}"
+
 #. placeholder {0}: gaps.length
 msgid "{met} of {0} objectives carrying for {nextLabel} — {laggingLabels} furthest behind."
 msgstr "{nextLabel} に向けて {0} 個中 {met} 個の目標が働いています — {laggingLabels} が最も遅れています。"
@@ -10771,6 +10774,9 @@ msgstr "オープンなプルリクエストはありません。"
 msgid "No open review comments."
 msgstr "未解決のレビューコメントはありません。"
 
+msgid "No organization by that name."
+msgstr "その名前の組織はありません。"
+
 msgid "No organization selected"
 msgstr "組織が選択されていません"
 
@@ -14441,6 +14447,9 @@ msgstr "Linearを検索…"
 
 msgid "Search models"
 msgstr "モデルを検索"
+
+msgid "Search organizations"
+msgstr "組織を検索"
 
 msgid "Search pages"
 msgstr "ページを検索"
@@ -19136,6 +19145,9 @@ msgstr "組織がクラウドの利用上限に達しました。このワーク
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "組織がクラウドの利用上限に達しました。上限を引き上げない限り、このワークスペースは数分後に停止します。"
+
+msgid "Your organization's board opens once {minMembers} members are on the leaderboard. {members} so far."
+msgstr "組織のボードは、{minMembers} 人のメンバーがリーダーボードに参加すると公開されます。現在 {members} 人です。"
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "あなた自身のアカウントです。組織の連携は Superset がそのツールにアクセスするためのもので、あなたのアカウントを接続すると、Superset があなたのために行った作業があなたの名前で表示されます。"
