@@ -393,19 +393,6 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 						)}
 
 						<div className="col-start-2 row-start-1 flex items-center gap-1.5">
-							{ports.length > 0 && (
-								// biome-ignore lint/a11y/noStaticElementInteractions: keeps the chip and its portaled card from starting a drag or activating the row
-								<span
-									className="flex shrink-0"
-									onMouseDown={stopRowEvent}
-									onTouchStart={stopRowEvent}
-									onClick={stopRowEvent}
-									onDoubleClick={stopRowEvent}
-									onKeyDown={stopRowEvent}
-								>
-									<DashboardSidebarPortsChip ports={ports} />
-								</span>
-							)}
 							<div className="grid h-5 shrink-0 items-center justify-items-end [&>*]:col-start-1 [&>*]:row-start-1">
 								{creationStatusText ? (
 									<span className="text-[11px] text-muted-foreground">
@@ -473,6 +460,19 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 									</div>
 								)}
 							</div>
+							{ports.length > 0 && (
+								// biome-ignore lint/a11y/noStaticElementInteractions: keeps the chip and its portaled card from starting a drag or activating the row
+								<span
+									className="flex shrink-0"
+									onMouseDown={stopRowEvent}
+									onTouchStart={stopRowEvent}
+									onClick={stopRowEvent}
+									onDoubleClick={stopRowEvent}
+									onKeyDown={stopRowEvent}
+								>
+									<DashboardSidebarPortsChip ports={ports} />
+								</span>
+							)}
 						</div>
 					</div>
 				</div>

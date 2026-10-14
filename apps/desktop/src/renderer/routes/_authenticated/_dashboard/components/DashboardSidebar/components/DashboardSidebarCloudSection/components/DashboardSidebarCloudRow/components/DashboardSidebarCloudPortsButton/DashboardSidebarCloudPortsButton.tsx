@@ -6,6 +6,7 @@ import {
 	HoverCardTrigger,
 } from "@superset/ui/hover-card";
 import { type ReactNode, useState } from "react";
+import { useHoverCardSafeTriangle } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/hooks/useHoverCardSafeTriangle";
 import { PortsCountIcon } from "renderer/routes/_authenticated/_dashboard/components/PortsCountIcon";
 
 interface DashboardSidebarCloudPortsButtonProps {
@@ -25,10 +26,11 @@ export function DashboardSidebarCloudPortsButton({
 		setIsOpen(open);
 		onOpenChange?.(open);
 	};
+	const safeTriangle = useHoverCardSafeTriangle(isOpen, setOpen);
 	return (
 		<HoverCard
 			open={isOpen}
-			onOpenChange={setOpen}
+			onOpenChange={safeTriangle.onOpenChange}
 			openDelay={150}
 			closeDelay={120}
 		>
@@ -36,6 +38,7 @@ export function DashboardSidebarCloudPortsButton({
 				<button
 					type="button"
 					onClick={() => setOpen(!isOpen)}
+					onPointerLeave={safeTriangle.onTriggerPointerLeave}
 					aria-expanded={isOpen}
 					aria-label={t({
 						message: plural(count, {
@@ -49,6 +52,8 @@ export function DashboardSidebarCloudPortsButton({
 				</button>
 			</HoverCardTrigger>
 			<HoverCardContent
+				ref={safeTriangle.setCardElement}
+				onPointerEnter={safeTriangle.onCardPointerEnter}
 				side="right"
 				align="start"
 				sideOffset={8}

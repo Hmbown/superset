@@ -10,6 +10,7 @@ import { toast } from "@superset/ui/sonner";
 import { LuLoaderCircle, LuX } from "react-icons/lu";
 import { useDashboardSidebarPortKill } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/hooks/useDashboardSidebarPortKill";
 import type { DashboardSidebarPort } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/hooks/useDashboardSidebarPortsData";
+import { useHoverCardSafeTriangle } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/hooks/useHoverCardSafeTriangle";
 import { PortsCountIcon } from "renderer/routes/_authenticated/_dashboard/components/PortsCountIcon";
 import { STROKE_WIDTH } from "renderer/screens/main/components/WorkspaceSidebar/constants";
 import { useDashboardSidebarChipHoverSuppression } from "../../hooks/useDashboardSidebarChipHoverSuppression";
@@ -31,6 +32,7 @@ export function DashboardSidebarPortsChip({
 	const { isPending, killPorts } = useDashboardSidebarPortKill();
 	const { isOpen, onOpenChange, onPointerEnter, onPointerLeave, toggleOpen } =
 		useDashboardSidebarChipHoverSuppression();
+	const safeTriangle = useHoverCardSafeTriangle(isOpen, onOpenChange);
 
 	const handleCloseAll = async () => {
 		if (isPending) return;
@@ -53,13 +55,16 @@ export function DashboardSidebarPortsChip({
 			open={isOpen}
 			openDelay={150}
 			closeDelay={120}
-			onOpenChange={onOpenChange}
+			onOpenChange={safeTriangle.onOpenChange}
 		>
 			<HoverCardTrigger asChild>
 				<button
 					type="button"
 					onPointerEnter={onPointerEnter}
-					onPointerLeave={onPointerLeave}
+					onPointerLeave={(event) => {
+						onPointerLeave();
+						safeTriangle.onTriggerPointerLeave(event);
+					}}
 					onPointerDown={(event) => {
 						event.stopPropagation();
 					}}
@@ -103,6 +108,8 @@ export function DashboardSidebarPortsChip({
 				</button>
 			</HoverCardTrigger>
 			<HoverCardContent
+				ref={safeTriangle.setCardElement}
+				onPointerEnter={safeTriangle.onCardPointerEnter}
 				side="right"
 				align="start"
 				sideOffset={8}
