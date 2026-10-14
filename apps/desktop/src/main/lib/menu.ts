@@ -1,7 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { i18n } from "@superset/i18n";
 import { COMPANY } from "@superset/shared/constants";
-import { BrowserWindow, Menu, shell } from "electron";
+import { app, BrowserWindow, Menu, shell } from "electron";
 import { env } from "main/env.main";
 import { resetTerminalStateDev } from "main/lib/terminal/dev-reset";
 import { getAppDisplayName } from "./app-display-name";
@@ -284,12 +284,16 @@ export function createApplicationMenu() {
 
 	if (process.platform === "darwin") {
 		const displayName = getAppDisplayName();
+		// Electron's built-in role labels are English and use app.name.
+		const renamed = displayName !== app.name;
 		template.unshift({
 			label: displayName,
 			submenu: [
 				{
 					role: "about",
-					label: i18n._(msg({ message: `About ${displayName}` })),
+					...(renamed && {
+						label: i18n._(msg({ message: `About ${displayName}` })),
+					}),
 				},
 				{ type: "separator" },
 				{
@@ -318,14 +322,18 @@ export function createApplicationMenu() {
 				{ type: "separator" },
 				{
 					role: "hide",
-					label: i18n._(msg({ message: `Hide ${displayName}` })),
+					...(renamed && {
+						label: i18n._(msg({ message: `Hide ${displayName}` })),
+					}),
 				},
 				{ role: "hideOthers" },
 				{ role: "unhide" },
 				{ type: "separator" },
 				{
 					role: "quit",
-					label: i18n._(msg({ message: `Quit ${displayName}` })),
+					...(renamed && {
+						label: i18n._(msg({ message: `Quit ${displayName}` })),
+					}),
 				},
 				{
 					label: i18n._(

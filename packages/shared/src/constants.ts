@@ -53,6 +53,15 @@ export const COMPANY = {
 	CAREERS_URL: "https://www.ycombinator.com/companies/superset/jobs",
 } as const;
 
+// Staff keep their @superset.sh accounts after the root domain changes.
+export const STAFF_EMAIL_DOMAINS = [
+	...new Set([COMPANY.EMAIL_DOMAIN, "@superset.sh"]),
+];
+
+export function isStaffEmail(email: string): boolean {
+	return STAFF_EMAIL_DOMAINS.some((domain) => email.endsWith(domain));
+}
+
 export const OPEN_ROLES = [
 	{
 		title: "Founding Engineer",

@@ -478,7 +478,9 @@ if (!gotTheLock) {
 		// (plans/20260826-i18n-strategy.md). Menus are built later in
 		// initAppServices/initTray, so a plain activate is enough here.
 		await initI18nAsync(resolveAppLocale(getLanguageSetting()));
-		app.setAboutPanelOptions({ applicationName: getAppDisplayName() });
+		if (getAppDisplayName() !== app.name) {
+			app.setAboutPanelOptions({ applicationName: getAppDisplayName() });
+		}
 		registerWithMacOSNotificationCenter();
 		requestAppleEventsAccess();
 		requestLocalNetworkAccess();

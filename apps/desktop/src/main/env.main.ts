@@ -18,7 +18,7 @@ export const env = createEnv({
 		NODE_ENV: z
 			.enum(["development", "production", "test"])
 			.default("development"),
-		NEXT_PUBLIC_API_URL: z.url().default(`https://api.${rootDomain}`),
+		NEXT_PUBLIC_API_URL: z.url().default("https://api.superset.sh"),
 		NEXT_PUBLIC_STREAMS_URL: z.url().default(`https://streams.${rootDomain}`),
 		NEXT_PUBLIC_WEB_URL: z.url().default(`https://app.${rootDomain}`),
 		NEXT_PUBLIC_MARKETING_URL: z.url().default(`https://${rootDomain}`),
