@@ -10,7 +10,6 @@ import {
 	forwardRef,
 	type KeyboardEventHandler,
 	type MouseEventHandler,
-	type SyntheticEvent,
 	useEffect,
 	useRef,
 } from "react";
@@ -36,6 +35,7 @@ import { DashboardSidebarWorkspaceDiffStats } from "../DashboardSidebarWorkspace
 import { DashboardSidebarWorkspaceIcon } from "../DashboardSidebarWorkspaceIcon";
 import { DashboardSidebarWorkspaceQueuedBadge } from "../DashboardSidebarWorkspaceQueuedBadge";
 import { DashboardSidebarPortsChip } from "./components/DashboardSidebarPortsChip";
+import { DashboardSidebarRowEventBoundary } from "./components/DashboardSidebarRowEventBoundary";
 import { DashboardSidebarWorkspaceChips } from "./components/DashboardSidebarWorkspaceChips";
 
 const PR_STATE_LABEL: Record<
@@ -59,10 +59,6 @@ const PR_STATE_LABEL: Record<
 		message: "Queued",
 	}),
 };
-
-function stopRowEvent(event: SyntheticEvent) {
-	event.stopPropagation();
-}
 
 interface DashboardSidebarExpandedWorkspaceRowProps
 	extends ComponentPropsWithoutRef<"div"> {
@@ -461,17 +457,9 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 								)}
 							</div>
 							{ports.length > 0 && (
-								// biome-ignore lint/a11y/noStaticElementInteractions: keeps the chip and its portaled card from starting a drag or activating the row
-								<span
-									className="flex shrink-0"
-									onMouseDown={stopRowEvent}
-									onTouchStart={stopRowEvent}
-									onClick={stopRowEvent}
-									onDoubleClick={stopRowEvent}
-									onKeyDown={stopRowEvent}
-								>
+								<DashboardSidebarRowEventBoundary>
 									<DashboardSidebarPortsChip ports={ports} />
-								</span>
+								</DashboardSidebarRowEventBoundary>
 							)}
 						</div>
 					</div>

@@ -16,7 +16,9 @@ export function useHoverCardSafeTriangle(
 	const cleanupRef = useRef<(() => void) | null>(null);
 	const closeDeferredRef = useRef(false);
 	const onOpenChangeRef = useRef(onOpenChange);
-	onOpenChangeRef.current = onOpenChange;
+	useEffect(() => {
+		onOpenChangeRef.current = onOpenChange;
+	}, [onOpenChange]);
 
 	const stopTracking = useCallback(() => {
 		cleanupRef.current?.();
