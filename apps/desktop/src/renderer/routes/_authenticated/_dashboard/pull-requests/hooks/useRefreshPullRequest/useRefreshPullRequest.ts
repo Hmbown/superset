@@ -1,5 +1,6 @@
 import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
+import { pullRequestRefFromUrl } from "renderer/lib/github/pullRequestRef";
 import {
 	pullRequestDiffQueryKey,
 	pullRequestThreadsQueryKey,
@@ -11,6 +12,8 @@ interface RefreshPullRequestInput {
 	hostUrl: string | null;
 	prNumber: number | null;
 	repoFullName: string | null;
+	/** The PR's own URL; the Code tab keys its diff on the repository in it. */
+	url: string | null | undefined;
 }
 
 export function useRefreshPullRequest({
@@ -18,6 +21,7 @@ export function useRefreshPullRequest({
 	hostUrl,
 	prNumber,
 	repoFullName,
+	url,
 }: RefreshPullRequestInput) {
 	const queryClient = useQueryClient();
 	const organizationId = useActiveOrganizationId();
@@ -32,7 +36,9 @@ export function useRefreshPullRequest({
 			queryKey: pullRequestDiffQueryKey({
 				...codeTabKey,
 				organizationId,
-				repoFullName,
+				repoFullName:
+					(url ? pullRequestRefFromUrl(url)?.repoFullName : null) ??
+					repoFullName,
 			}),
 		});
 		void queryClient.invalidateQueries({

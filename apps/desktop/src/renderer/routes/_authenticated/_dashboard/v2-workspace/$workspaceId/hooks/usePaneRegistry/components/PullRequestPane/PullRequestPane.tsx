@@ -45,6 +45,7 @@ export function PullRequestPane({
 		hostUrl: workspaceHostUrl,
 		prNumber: data.number,
 		repoFullName: data.repoFullName,
+		url: detail.data?.url,
 	});
 
 	// Review threads and the header's actions still go through the host that

@@ -47,6 +47,7 @@ function PullRequestDetailPage() {
 		hostUrl,
 		prNumber,
 		repoFullName: detail.repoFullName,
+		url: detail.data?.url,
 	});
 	const data = detail.data ?? null;
 	const diffStat =

@@ -108,7 +108,13 @@ export function PullRequestsContent({
 			enabled: !!target.hostUrl,
 			staleTime: 30_000,
 			gcTime: 10 * 60_000,
-			meta: { persist: page === 1 && !debouncedQuery.trim() },
+			meta: {
+				persist:
+					page === 1 &&
+					!debouncedQuery.trim() &&
+					!authorFilter &&
+					!reviewFilter,
+			},
 		}),
 		getRows: (data) => data.pullRequests,
 		getRowKey: (pullRequest) =>
