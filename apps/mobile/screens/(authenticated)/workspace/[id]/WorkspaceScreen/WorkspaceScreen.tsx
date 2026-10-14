@@ -43,6 +43,7 @@ import {
 	hostServiceUrl,
 } from "@/lib/host-service/client";
 import { posthog } from "@/lib/posthog";
+import { apiClient } from "@/lib/trpc/client";
 import { useVoiceActive } from "@/lib/voice/voiceStore";
 import {
 	getHostTerminalsQueryKey,
@@ -761,6 +762,13 @@ export function WorkspaceScreen() {
 			}
 			if (activeIsChat) {
 				if (!chatRef.current) throw new Error("Chat is not connected");
+				// A cloud box resolves only the files attached to it.
+				if (cloud && attachmentFileIds.length > 0) {
+					await apiClient.cloudWorkspace.attachFiles.mutate({
+						id,
+						fileIds: attachmentFileIds,
+					});
+				}
 				const imported =
 					attachmentFileIds.length > 0
 						? await getHostServiceClientByUrl(
@@ -786,7 +794,7 @@ export function WorkspaceScreen() {
 				text,
 			});
 		},
-		[hostUrl, activeTerminalId, id, activeIsChat],
+		[hostUrl, activeTerminalId, id, activeIsChat, cloud],
 	);
 
 	const handleQuickKey = useCallback(
