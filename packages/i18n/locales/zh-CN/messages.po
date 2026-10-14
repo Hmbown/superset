@@ -5820,6 +5820,9 @@ msgstr "已删除的用户"
 msgid "Deleted workspaces, but couldn’t finish updating the sidebar"
 msgstr "工作区已删除，但侧边栏没能更新完"
 
+msgid "Deletes <0>{currentScriptFile}</0>, which an earlier import created"
+msgstr "删除之前导入时创建的 <0>{currentScriptFile}</0>"
+
 #. placeholder {0}: account?.sourceLabel
 msgid "Deletes the {0} profile and its saved sign-in on this machine. The account itself is unaffected."
 msgstr "删除本机上的{0}配置文件及其已保存的登录。账户本身不受影响。"
@@ -7727,12 +7730,6 @@ msgstr "发现 {label} 初始化配置"
 msgid "Found 12 tooltip call sites"
 msgstr "找到12处tooltip调用"
 
-msgid "Found a {label} setup in <0>{file}</0>."
-msgstr "在 <0>{file}</0> 中发现 {label} 初始化配置。"
-
-msgid "Found setups from other tools in this project."
-msgstr "在此项目中发现了其他工具的初始化配置。"
-
 msgid "Founder & CEO, WowMakers"
 msgstr "创始人兼 CEO，WowMakers"
 
@@ -8475,6 +8472,12 @@ msgstr "导入失败"
 
 msgid "Import failed: {message}"
 msgstr "导入失败：{message}"
+
+msgid "Import from {label}"
+msgstr "从 {label} 导入"
+
+msgid "Import from another tool"
+msgstr "从其他工具导入"
 
 msgid "Import from file"
 msgstr "从文件导入"
@@ -18375,6 +18378,9 @@ msgstr "查看发布说明"
 
 msgid "View releases on GitHub"
 msgstr "在GitHub上查看发布"
+
+msgid "View scripts"
+msgstr "查看脚本"
 
 msgid "View Superset repository on GitHub"
 msgstr "在GitHub上查看Superset仓库"

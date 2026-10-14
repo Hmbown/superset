@@ -5820,6 +5820,9 @@ msgstr "삭제된 사용자"
 msgid "Deleted workspaces, but couldn’t finish updating the sidebar"
 msgstr "워크스페이스는 삭제했지만 사이드바 업데이트를 끝내지 못했습니다"
 
+msgid "Deletes <0>{currentScriptFile}</0>, which an earlier import created"
+msgstr "이전 가져오기에서 만든 <0>{currentScriptFile}</0>을(를) 삭제합니다"
+
 #. placeholder {0}: account?.sourceLabel
 msgid "Deletes the {0} profile and its saved sign-in on this machine. The account itself is unaffected."
 msgstr "이 머신에서 {0} 프로필과 저장된 로그인을 삭제합니다. 계정 자체에는 영향이 없습니다."
@@ -7727,12 +7730,6 @@ msgstr "{label} 설정을 찾았습니다"
 msgid "Found 12 tooltip call sites"
 msgstr "툴팁 호출 지점 12곳 발견"
 
-msgid "Found a {label} setup in <0>{file}</0>."
-msgstr "<0>{file}</0>에서 {label} 설정을 찾았습니다."
-
-msgid "Found setups from other tools in this project."
-msgstr "이 프로젝트에서 다른 도구의 설정을 찾았습니다."
-
 msgid "Founder & CEO, WowMakers"
 msgstr "창업자 겸 CEO, WowMakers"
 
@@ -8475,6 +8472,12 @@ msgstr "가져오기 실패"
 
 msgid "Import failed: {message}"
 msgstr "가져오기 실패: {message}"
+
+msgid "Import from {label}"
+msgstr "{label}에서 가져오기"
+
+msgid "Import from another tool"
+msgstr "다른 도구에서 가져오기"
 
 msgid "Import from file"
 msgstr "파일에서 가져오기"
@@ -18375,6 +18378,9 @@ msgstr "릴리스 노트 보기"
 
 msgid "View releases on GitHub"
 msgstr "GitHub에서 릴리스 보기"
+
+msgid "View scripts"
+msgstr "스크립트 보기"
 
 msgid "View Superset repository on GitHub"
 msgstr "GitHub에서 Superset 리포지토리 보기"

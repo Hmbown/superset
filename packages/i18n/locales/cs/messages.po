@@ -5820,6 +5820,9 @@ msgstr "Smazaný uživatel"
 msgid "Deleted workspaces, but couldn’t finish updating the sidebar"
 msgstr "Pracovní prostory byly smazány, ale postranní panel se nepodařilo dokončit aktualizovat"
 
+msgid "Deletes <0>{currentScriptFile}</0>, which an earlier import created"
+msgstr "Smaže <0>{currentScriptFile}</0>, který vytvořil dřívější import"
+
 #. placeholder {0}: account?.sourceLabel
 msgid "Deletes the {0} profile and its saved sign-in on this machine. The account itself is unaffected."
 msgstr "Smaže profil {0} a jeho uložené přihlášení na tomto počítači. Samotného účtu se to nedotkne."
@@ -7727,12 +7730,6 @@ msgstr "Nalezeno nastavení {label}"
 msgid "Found 12 tooltip call sites"
 msgstr "Nalezeno 12 volání tooltipu"
 
-msgid "Found a {label} setup in <0>{file}</0>."
-msgstr "Nalezeno nastavení {label} v <0>{file}</0>."
-
-msgid "Found setups from other tools in this project."
-msgstr "V tomto projektu byla nalezena nastavení z jiných nástrojů."
-
 msgid "Founder & CEO, WowMakers"
 msgstr "Zakladatel a CEO, WowMakers"
 
@@ -8475,6 +8472,12 @@ msgstr "Import selhal"
 
 msgid "Import failed: {message}"
 msgstr "Import selhal: {message}"
+
+msgid "Import from {label}"
+msgstr "Importovat z {label}"
+
+msgid "Import from another tool"
+msgstr "Importovat z jiného nástroje"
 
 msgid "Import from file"
 msgstr "Importovat ze souboru"
@@ -18375,6 +18378,9 @@ msgstr "Zobrazit poznámky k vydání"
 
 msgid "View releases on GitHub"
 msgstr "Zobrazit vydání na GitHubu"
+
+msgid "View scripts"
+msgstr "Zobrazit skripty"
 
 msgid "View Superset repository on GitHub"
 msgstr "Zobrazit repozitář Superset na GitHubu"

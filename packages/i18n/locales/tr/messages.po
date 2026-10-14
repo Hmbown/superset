@@ -5820,6 +5820,9 @@ msgstr "Silinmiş kullanıcı"
 msgid "Deleted workspaces, but couldn’t finish updating the sidebar"
 msgstr "Çalışma alanları silindi, ancak kenar çubuğu güncellenemedi"
 
+msgid "Deletes <0>{currentScriptFile}</0>, which an earlier import created"
+msgstr "Önceki bir içe aktarmanın oluşturduğu <0>{currentScriptFile}</0> dosyasını siler"
+
 #. placeholder {0}: account?.sourceLabel
 msgid "Deletes the {0} profile and its saved sign-in on this machine. The account itself is unaffected."
 msgstr "{0} profilini ve bu makinedeki kayıtlı oturumunu siler. Hesabın kendisi etkilenmez."
@@ -7727,12 +7730,6 @@ msgstr "{label} kurulumu bulundu"
 msgid "Found 12 tooltip call sites"
 msgstr "12 tooltip çağrı noktası bulundu"
 
-msgid "Found a {label} setup in <0>{file}</0>."
-msgstr "<0>{file}</0> içinde {label} kurulumu bulundu."
-
-msgid "Found setups from other tools in this project."
-msgstr "Bu projede başka araçların kurulumları bulundu."
-
 msgid "Founder & CEO, WowMakers"
 msgstr "Kurucu ve CEO, WowMakers"
 
@@ -8475,6 +8472,12 @@ msgstr "İçe aktarma başarısız"
 
 msgid "Import failed: {message}"
 msgstr "İçe aktarma başarısız: {message}"
+
+msgid "Import from {label}"
+msgstr "{label} içinden içe aktar"
+
+msgid "Import from another tool"
+msgstr "Başka bir araçtan içe aktar"
 
 msgid "Import from file"
 msgstr "Dosyadan içe aktar"
@@ -18375,6 +18378,9 @@ msgstr "Sürüm notlarını görüntüle"
 
 msgid "View releases on GitHub"
 msgstr "Sürümleri GitHub'da görüntüle"
+
+msgid "View scripts"
+msgstr "Betikleri görüntüle"
 
 msgid "View Superset repository on GitHub"
 msgstr "Superset deposunu GitHub'da görüntüle"

@@ -2,12 +2,13 @@ import { Trans } from "@lingui/react/macro";
 import { Skeleton } from "@superset/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@superset/ui/tabs";
 import { cn } from "@superset/ui/utils";
+import { invalidateHostServiceQuery } from "@superset/workspace-client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { HiCheckCircle } from "react-icons/hi2";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { ScriptField } from "./components/ScriptField";
-import { SetupImportBanner } from "./components/SetupImportBanner";
+import { SetupImportAction } from "./components/SetupImportAction";
 
 interface V2ScriptsEditorProps {
 	hostUrl: string;
@@ -175,6 +176,10 @@ export function V2ScriptsEditor({
 					projectId,
 				],
 			});
+			invalidateHostServiceQuery(hostUrl, [
+				"config",
+				"getWorkspaceRunDefinition",
+			]);
 		},
 	});
 
@@ -301,7 +306,6 @@ export function V2ScriptsEditor({
 
 	return (
 		<div className={cn("space-y-3", className)}>
-			<SetupImportBanner hostUrl={hostUrl} projectId={projectId} />
 			<Tabs defaultValue="setup">
 				<div className="flex items-center justify-between gap-2 border-b border-border">
 					<TabsList className="h-auto gap-0 rounded-none bg-transparent p-0">
@@ -324,18 +328,21 @@ export function V2ScriptsEditor({
 							<Trans>Run</Trans>
 						</TabsTrigger>
 					</TabsList>
-					<div className="flex h-5 items-center pb-1.5 text-xs text-muted-foreground">
-						{saveStatus === "saving" && (
-							<span>
-								<Trans>Saving…</Trans>
-							</span>
-						)}
-						{saveStatus === "saved" && (
-							<span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-								<HiCheckCircle className="h-3.5 w-3.5" />
-								<Trans>Saved</Trans>
-							</span>
-						)}
+					<div className="flex items-center gap-2 pb-1">
+						<SetupImportAction hostUrl={hostUrl} projectId={projectId} />
+						<div className="flex h-5 items-center text-xs text-muted-foreground">
+							{saveStatus === "saving" && (
+								<span>
+									<Trans>Saving…</Trans>
+								</span>
+							)}
+							{saveStatus === "saved" && (
+								<span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+									<HiCheckCircle className="h-3.5 w-3.5" />
+									<Trans>Saved</Trans>
+								</span>
+							)}
+						</div>
 					</div>
 				</div>
 				<TabsContent value="setup">

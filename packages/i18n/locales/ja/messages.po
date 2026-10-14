@@ -5820,6 +5820,9 @@ msgstr "削除されたユーザー"
 msgid "Deleted workspaces, but couldn’t finish updating the sidebar"
 msgstr "ワークスペースは削除しましたが、サイドバーの更新を完了できませんでした"
 
+msgid "Deletes <0>{currentScriptFile}</0>, which an earlier import created"
+msgstr "以前のインポートで作成された<0>{currentScriptFile}</0>を削除します"
+
 #. placeholder {0}: account?.sourceLabel
 msgid "Deletes the {0} profile and its saved sign-in on this machine. The account itself is unaffected."
 msgstr "このマシンの{0}プロファイルと保存済みサインインを削除します。アカウント自体は影響を受けません。"
@@ -7727,12 +7730,6 @@ msgstr "{label}のセットアップが見つかりました"
 msgid "Found 12 tooltip call sites"
 msgstr "tooltipの呼び出し元を12か所検出"
 
-msgid "Found a {label} setup in <0>{file}</0>."
-msgstr "<0>{file}</0>に{label}のセットアップが見つかりました。"
-
-msgid "Found setups from other tools in this project."
-msgstr "このプロジェクトに他のツールのセットアップが見つかりました。"
-
 msgid "Founder & CEO, WowMakers"
 msgstr "創業者兼CEO、WowMakers"
 
@@ -8475,6 +8472,12 @@ msgstr "インポートに失敗しました"
 
 msgid "Import failed: {message}"
 msgstr "インポートに失敗しました: {message}"
+
+msgid "Import from {label}"
+msgstr "{label}からインポート"
+
+msgid "Import from another tool"
+msgstr "他のツールからインポート"
 
 msgid "Import from file"
 msgstr "ファイルからインポート"
@@ -18375,6 +18378,9 @@ msgstr "リリースノートを見る"
 
 msgid "View releases on GitHub"
 msgstr "GitHubでリリースを見る"
+
+msgid "View scripts"
+msgstr "スクリプトを表示"
 
 msgid "View Superset repository on GitHub"
 msgstr "GitHubでSupersetのリポジトリを見る"

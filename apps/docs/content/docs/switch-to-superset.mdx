@@ -21,7 +21,7 @@ Superset looks for these files in the project's root checkout:
 
 When a project has no Superset scripts yet and one of these files exists, the sidebar shows **Found Conductor setup** (or the tool it found). Click **Import**.
 
-You can also import at any time from **Project settings → Scripts**: a banner shows when the import would change something.
+You can also import at any time from **Project settings → Project lifecycle scripts**: an **Import from Conductor** button (or **Import from another tool**, when there are several) shows while the import would change something.
 
 The import dialog shows, before anything is written:
 
@@ -58,7 +58,7 @@ A script with shell blocks (`if`/`fi`, loops, functions, line continuations, her
 { "setup": ["bash \"$SUPERSET_ROOT_PATH/.superset/setup.sh\""] }
 ```
 
-The script runs with `bash` and `set -e`, so it stops at the first failed command, as the `&&` chain does.
+The script runs with `bash` and `set -e`, so it stops at the first failed command, as the `&&` chain does. If a later import replaces it with plain commands, the dialog says so and the import deletes the file it wrote.
 
 ## Environment variables
 

@@ -74,6 +74,12 @@ export function getImportedScriptPath(key: ImportedScriptKey): string {
 	return `.superset/${key}.sh`;
 }
 
+export const IMPORTED_SCRIPT_MARKER = "# Imported by Superset from ";
+
+export function getImportedScriptCommand(key: ImportedScriptKey): string {
+	return `bash "$SUPERSET_ROOT_PATH/${getImportedScriptPath(key)}"`;
+}
+
 function buildScriptFile(
 	key: ImportedScriptKey,
 	chunks: string[],
@@ -85,7 +91,7 @@ function buildScriptFile(
 		.join("\n\n");
 	return {
 		path: getImportedScriptPath(key),
-		content: `#!/usr/bin/env bash\n# Imported by Superset from ${sourceFiles.join(", ")}.\nset -e\n\n${body}\n`,
+		content: `#!/usr/bin/env bash\n${IMPORTED_SCRIPT_MARKER}${sourceFiles.join(", ")}.\nset -e\n\n${body}\n`,
 	};
 }
 
@@ -97,10 +103,9 @@ export function planScript(
 	const lines = toCommandLines(chunks);
 	if (lines.length === 0) return null;
 	if (lines.every(isStandaloneCommand)) return { commands: lines };
-	const scriptFile = buildScriptFile(key, chunks, sourceFiles);
 	return {
-		commands: [`bash "$SUPERSET_ROOT_PATH/${scriptFile.path}"`],
-		scriptFile,
+		commands: [getImportedScriptCommand(key)],
+		scriptFile: buildScriptFile(key, chunks, sourceFiles),
 	};
 }
 

@@ -68,6 +68,7 @@ export function useV2SetupScriptCard({
 					hostUrl={hostUrl}
 					projectId={projectId}
 					candidates={importCandidates}
+					linkToSettings
 				/>
 			),
 		};

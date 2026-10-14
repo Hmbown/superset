@@ -2,7 +2,12 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { getProjectConfigPath } from "../config";
 import { createRepoFileReader, parseJsonObject } from "./limits";
-import { buildCandidate } from "./plan";
+import {
+	buildCandidate,
+	getImportedScriptCommand,
+	getImportedScriptPath,
+	IMPORTED_SCRIPT_MARKER,
+} from "./plan";
 import { parseCmux } from "./sources/cmux";
 import { parseCodex } from "./sources/codex";
 import { parseConductor } from "./sources/conductor";
@@ -28,6 +33,8 @@ export interface SetupImportConflict {
 	current: string[];
 	/** The `.superset/<key>.sh` the import replaces or shadows, if any. */
 	currentScriptFile: string | null;
+	/** True when that file came from an earlier import and the import deletes it. */
+	removesScriptFile: boolean;
 }
 
 /** Every importable setup in the repo root, in priority order. */
@@ -65,6 +72,10 @@ export interface SetupImportComparison {
 	conflicts: SetupImportConflict[];
 }
 
+function isImportedScript(content: string | null): boolean {
+	return content?.split("\n")[1]?.startsWith(IMPORTED_SCRIPT_MARKER) ?? false;
+}
+
 function sameCommands(a: string[], b: string[]): boolean {
 	return (
 		a.length === b.length && a.every((command, index) => command === b[index])
@@ -83,7 +94,7 @@ export function compareWithCurrentSetup(
 		const plan = candidate.scripts[key];
 		if (!plan) continue;
 		const current = readCurrentCommands(config, key);
-		const scriptFile = `.superset/${key}.sh`;
+		const scriptFile = getImportedScriptPath(key);
 		const scriptPath = join(repoPath, scriptFile);
 		const scriptExists = existsSync(scriptPath);
 		const scriptContent = scriptExists ? readText(scriptPath) : null;
@@ -106,6 +117,10 @@ export function compareWithCurrentSetup(
 				field: key,
 				current,
 				currentScriptFile: scriptExists ? scriptFile : null,
+				removesScriptFile:
+					!plan.scriptFile &&
+					sameCommands(current, [getImportedScriptCommand(key)]) &&
+					isImportedScript(scriptContent),
 			});
 		}
 	}
@@ -118,6 +133,7 @@ export function compareWithCurrentSetup(
 				field: "cwd",
 				current: [currentCwd],
 				currentScriptFile: null,
+				removesScriptFile: false,
 			});
 		}
 	}

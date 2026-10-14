@@ -1,4 +1,10 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import {
+	existsSync,
+	mkdirSync,
+	readFileSync,
+	rmSync,
+	writeFileSync,
+} from "node:fs";
 import { dirname, join } from "node:path";
 import { getProjectConfigPath } from "../config";
 import { compareWithCurrentSetup } from "./inspect";
@@ -69,5 +75,11 @@ export function applySetupImport(args: {
 
 	writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`, "utf-8");
 	written.push(".superset/config.json");
+
+	for (const conflict of conflicts) {
+		if (conflict.removesScriptFile && conflict.currentScriptFile) {
+			rmSync(join(repoPath, conflict.currentScriptFile), { force: true });
+		}
+	}
 	return written;
 }

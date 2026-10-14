@@ -5820,6 +5820,9 @@ msgstr "Utente eliminato"
 msgid "Deleted workspaces, but couldn’t finish updating the sidebar"
 msgstr "Workspace eliminati, ma non è stato possibile aggiornare la barra laterale"
 
+msgid "Deletes <0>{currentScriptFile}</0>, which an earlier import created"
+msgstr "Elimina <0>{currentScriptFile}</0>, creato da un'importazione precedente"
+
 #. placeholder {0}: account?.sourceLabel
 msgid "Deletes the {0} profile and its saved sign-in on this machine. The account itself is unaffected."
 msgstr "Elimina il profilo {0} e il suo accesso salvato su questa macchina. L'account in sé non viene toccato."
@@ -7727,12 +7730,6 @@ msgstr "Trovata configurazione di {label}"
 msgid "Found 12 tooltip call sites"
 msgstr "Trovati 12 punti di chiamata dei tooltip"
 
-msgid "Found a {label} setup in <0>{file}</0>."
-msgstr "Trovata una configurazione di {label} in <0>{file}</0>."
-
-msgid "Found setups from other tools in this project."
-msgstr "Trovate configurazioni di altri strumenti in questo progetto."
-
 msgid "Founder & CEO, WowMakers"
 msgstr "Fondatore e CEO, WowMakers"
 
@@ -8475,6 +8472,12 @@ msgstr "Importazione non riuscita"
 
 msgid "Import failed: {message}"
 msgstr "Importazione non riuscita: {message}"
+
+msgid "Import from {label}"
+msgstr "Importa da {label}"
+
+msgid "Import from another tool"
+msgstr "Importa da un altro strumento"
 
 msgid "Import from file"
 msgstr "Importa da file"
@@ -18375,6 +18378,9 @@ msgstr "Visualizza le note di rilascio"
 
 msgid "View releases on GitHub"
 msgstr "Vedi le release su GitHub"
+
+msgid "View scripts"
+msgstr "Visualizza script"
 
 msgid "View Superset repository on GitHub"
 msgstr "Vedi il repository Superset su GitHub"

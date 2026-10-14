@@ -58,6 +58,14 @@ export function ImportedScriptPreview({
 							</Trans>
 						</p>
 					)}
+					{removesScript && (
+						<p className="text-xs text-muted-foreground">
+							<Trans>
+								Deletes <code className="font-mono">{currentScriptFile}</code>,
+								which an earlier import created
+							</Trans>
+						</p>
+					)}
 					{shadowsScript && (
 						<p className="text-xs text-muted-foreground">
 							<Trans>

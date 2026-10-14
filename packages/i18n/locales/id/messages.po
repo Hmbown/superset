@@ -5820,6 +5820,9 @@ msgstr "Pengguna dihapus"
 msgid "Deleted workspaces, but couldn’t finish updating the sidebar"
 msgstr "Workspace terhapus, tapi tidak bisa menyelesaikan pembaruan sidebar"
 
+msgid "Deletes <0>{currentScriptFile}</0>, which an earlier import created"
+msgstr "Menghapus <0>{currentScriptFile}</0>, yang dibuat oleh impor sebelumnya"
+
 #. placeholder {0}: account?.sourceLabel
 msgid "Deletes the {0} profile and its saved sign-in on this machine. The account itself is unaffected."
 msgstr "Menghapus profil {0} dan sesi masuknya yang tersimpan di mesin ini. Akunnya sendiri tidak terpengaruh."
@@ -7727,12 +7730,6 @@ msgstr "Setup {label} ditemukan"
 msgid "Found 12 tooltip call sites"
 msgstr "Menemukan 12 call site tooltip"
 
-msgid "Found a {label} setup in <0>{file}</0>."
-msgstr "Setup {label} ditemukan di <0>{file}</0>."
-
-msgid "Found setups from other tools in this project."
-msgstr "Ditemukan setup dari alat lain di proyek ini."
-
 msgid "Founder & CEO, WowMakers"
 msgstr "Pendiri & CEO, WowMakers"
 
@@ -8475,6 +8472,12 @@ msgstr "Impor gagal"
 
 msgid "Import failed: {message}"
 msgstr "Impor gagal: {message}"
+
+msgid "Import from {label}"
+msgstr "Impor dari {label}"
+
+msgid "Import from another tool"
+msgstr "Impor dari alat lain"
 
 msgid "Import from file"
 msgstr "Impor dari file"
@@ -18375,6 +18378,9 @@ msgstr "Lihat catatan rilis"
 
 msgid "View releases on GitHub"
 msgstr "Lihat rilis di GitHub"
+
+msgid "View scripts"
+msgstr "Lihat skrip"
 
 msgid "View Superset repository on GitHub"
 msgstr "Lihat repositori Superset di GitHub"

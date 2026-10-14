@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import {
+	existsSync,
 	mkdirSync,
 	mkdtempSync,
 	readFileSync,
@@ -94,7 +95,12 @@ describe("applySetupImport", () => {
 		const candidate = onlyCandidate();
 
 		expect(compareWithCurrentSetup(repoPath, candidate).conflicts).toEqual([
-			{ field: "setup", current: ["npm ci"], currentScriptFile: null },
+			{
+				field: "setup",
+				current: ["npm ci"],
+				currentScriptFile: null,
+				removesScriptFile: false,
+			},
 		]);
 		expect(() =>
 			applySetupImport({ repoPath, candidate: candidate, overwrite: false }),
@@ -110,7 +116,12 @@ describe("applySetupImport", () => {
 		write("conductor.json", conductorJson);
 		const candidate = onlyCandidate();
 		expect(compareWithCurrentSetup(repoPath, candidate).conflicts).toEqual([
-			{ field: "setup", current: [], currentScriptFile: ".superset/setup.sh" },
+			{
+				field: "setup",
+				current: [],
+				currentScriptFile: ".superset/setup.sh",
+				removesScriptFile: false,
+			},
 		]);
 	});
 
@@ -136,5 +147,57 @@ describe("applySetupImport", () => {
 			changes: [],
 			conflicts: [],
 		});
+	});
+
+	it("deletes the script an earlier import wrote when a new import replaces it", () => {
+		write(
+			"conductor.json",
+			JSON.stringify({ scripts: { setup: "if [ -f x ]; then\n  echo x\nfi" } }),
+		);
+		applySetupImport({
+			repoPath,
+			candidate: onlyCandidate(),
+			overwrite: false,
+		});
+		rmSync(join(repoPath, "conductor.json"));
+		write(
+			"t3.json",
+			JSON.stringify({
+				scripts: [
+					{
+						name: "Install",
+						command: "bun install",
+						runOnWorktreeCreate: true,
+					},
+				],
+			}),
+		);
+
+		const candidate = onlyCandidate();
+		expect(
+			compareWithCurrentSetup(repoPath, candidate).conflicts[0]
+				?.removesScriptFile,
+		).toBe(true);
+		applySetupImport({ repoPath, candidate, overwrite: true });
+		expect(readConfig().setup).toEqual(["bun install"]);
+		expect(existsSync(join(repoPath, ".superset/setup.sh"))).toBe(false);
+	});
+
+	it("keeps a hand-written .superset/setup.sh", () => {
+		write(
+			".superset/config.json",
+			JSON.stringify({
+				setup: ['bash "$SUPERSET_ROOT_PATH/.superset/setup.sh"'],
+			}),
+		);
+		write(".superset/setup.sh", "#!/bin/bash\nnpm ci\n");
+		write("conductor.json", conductorJson);
+		const candidate = onlyCandidate();
+		expect(
+			compareWithCurrentSetup(repoPath, candidate).conflicts[0]
+				?.removesScriptFile,
+		).toBe(false);
+		applySetupImport({ repoPath, candidate, overwrite: true });
+		expect(existsSync(join(repoPath, ".superset/setup.sh"))).toBe(true);
 	});
 });

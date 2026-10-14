@@ -11,7 +11,9 @@ import {
 } from "@superset/ui/dialog";
 import { toast } from "@superset/ui/sonner";
 import { cn } from "@superset/ui/utils";
+import { invalidateHostServiceQuery } from "@superset/workspace-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import type { SetupImportCandidate } from "renderer/hooks/host-service/useSetupImportCandidates";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
@@ -26,6 +28,8 @@ interface ImportSetupDialogProps {
 	hostUrl: string;
 	projectId: string;
 	candidates: SetupImportCandidate[];
+	/** Adds a toast action that opens the project's scripts settings. */
+	linkToSettings?: boolean;
 }
 
 export function ImportSetupDialog({
@@ -34,9 +38,11 @@ export function ImportSetupDialog({
 	hostUrl,
 	projectId,
 	candidates,
+	linkToSettings = false,
 }: ImportSetupDialogProps) {
 	const { t } = useLingui();
 	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 	const [selectedSource, setSelectedSource] = useState<string | null>(null);
 	const candidate =
 		candidates.find((entry) => entry.source === selectedSource) ??
@@ -54,12 +60,28 @@ export function ImportSetupDialog({
 		onSuccess: (_, { source }) => {
 			const label =
 				candidates.find((entry) => entry.source === source)?.label ?? source;
-			toast.success(t`Imported setup from ${label}`);
+			toast.success(t`Imported setup from ${label}`, {
+				...(linkToSettings && {
+					action: {
+						label: t`View scripts`,
+						onClick: () =>
+							navigate({
+								to: "/settings/projects/$projectId",
+								params: { projectId },
+							}),
+					},
+				}),
+			});
 			onOpenChange(false);
 		},
 		onError: (error) => toast.error(errorMessage(error)),
-		onSettled: () =>
-			queryClient.invalidateQueries({ queryKey: ["host-config"] }),
+		onSettled: () => {
+			void queryClient.invalidateQueries({ queryKey: ["host-config"] });
+			invalidateHostServiceQuery(hostUrl, [
+				"config",
+				"getWorkspaceRunDefinition",
+			]);
+		},
 	});
 
 	if (!candidate) return null;
@@ -75,7 +97,7 @@ export function ImportSetupDialog({
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="flex max-h-[85vh] flex-col sm:max-w-2xl">
+			<DialogContent className="top-[8vh] flex max-h-[84vh] translate-y-0 flex-col sm:max-w-2xl">
 				<DialogHeader>
 					<DialogTitle>
 						<Trans>Import setup from {label}</Trans>
