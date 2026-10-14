@@ -47,7 +47,9 @@ export function billingFromCustomer(
 		.filter((invoice) => UNPAID_INVOICE.has(invoice.status))
 		.sort((a, b) => b.createdAt - a.createdAt)[0];
 	const status = !paid
-		? null
+		? tier === "free"
+			? null
+			: "active"
 		: paid.pastDue
 			? "past_due"
 			: paid.trialEndsAt && paid.trialEndsAt > now

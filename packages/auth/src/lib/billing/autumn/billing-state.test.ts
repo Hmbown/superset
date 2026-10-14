@@ -91,6 +91,12 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 		expect(billing.billingInterval).toBe("year");
 	});
 
+	test("a paid tier with no matching subscription still reads as active for released desktops", () => {
+		expect(billingFromCustomer(customer({ flags: pro }), NOW).status).toBe(
+			"active",
+		);
+	});
+
 	test("a pending cancel shows its end date as cancelAt", () => {
 		const billing = billingFromCustomer(
 			customer({ flags: pro, subscription: { expiresAt: NOW + 20 * DAY } }),

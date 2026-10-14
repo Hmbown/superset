@@ -1,5 +1,6 @@
 import type { PlanTier } from "@superset/shared/billing";
 import { Redis } from "@upstash/redis";
+import { AutumnError } from "autumn-js";
 import { env } from "../../../env";
 import { billingFromCustomer, type OrganizationBilling } from "./billing-state";
 import { getAutumnCustomer } from "./customer";
@@ -8,9 +9,20 @@ const MEMORY_TTL_MS = 10_000;
 const SHARED_TTL_SECONDS = 60;
 const LAST_KNOWN_TTL_SECONDS = 24 * 60 * 60;
 
+const FREE: OrganizationBilling = {
+	tier: "free",
+	status: null,
+	cancelAt: null,
+	periodStart: null,
+	periodEnd: null,
+	billingInterval: null,
+	lapsed: false,
+	paymentState: { kind: "ok" },
+};
+
 const FAIL_OPEN: OrganizationBilling = {
 	tier: "pro",
-	status: null,
+	status: "active",
 	cancelAt: null,
 	periodStart: null,
 	periodEnd: null,
@@ -45,6 +57,20 @@ async function readShared(key: string): Promise<OrganizationBilling | null> {
 	}
 }
 
+async function fetchBilling(
+	organizationId: string,
+): Promise<OrganizationBilling> {
+	try {
+		return billingFromCustomer(
+			await getAutumnCustomer(organizationId),
+			Date.now(),
+		);
+	} catch (error) {
+		if (error instanceof AutumnError && error.statusCode === 404) return FREE;
+		throw error;
+	}
+}
+
 export async function organizationBilling(
 	organizationId: string,
 ): Promise<OrganizationBilling> {
@@ -59,10 +85,7 @@ export async function organizationBilling(
 		return shared;
 	}
 	try {
-		const value = billingFromCustomer(
-			await getAutumnCustomer(organizationId),
-			Date.now(),
-		);
+		const value = await fetchBilling(organizationId);
 		memory.set(organizationId, {
 			value,
 			expiresAt: Date.now() + MEMORY_TTL_MS,

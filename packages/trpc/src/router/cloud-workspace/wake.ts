@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/core";
 import { db } from "@superset/db/client";
 import { cloudWorkspaces } from "@superset/db/schema";
 import { eq } from "drizzle-orm";
@@ -12,7 +13,6 @@ import {
 	attachBootSession,
 	authorizeBoot,
 	queueSettleWorkspace,
-	releaseBoot,
 } from "./meter";
 import { transitionCloudWorkspace } from "./transition";
 
@@ -41,14 +41,19 @@ export async function wakeCloudWorkspace(
 			}));
 		},
 	}).catch(async (error) => {
-		if (bootId) await releaseBoot(bootId);
+		if (bootId) {
+			await attachBootSession({
+				bootId,
+				providerSandboxId: row.providerSandboxId,
+			}).catch(() => {});
+		}
 		throw error;
 	});
 	if (bootId) {
 		await attachBootSession({
 			bootId,
 			providerSandboxId: row.providerSandboxId,
-		});
+		}).catch((error) => Sentry.captureException(error, { extra: { bootId } }));
 	}
 	const set: Partial<CloudWorkspaceRow> = {
 		...(hostTarget !== row.sandboxUrl ? { sandboxUrl: hostTarget } : {}),

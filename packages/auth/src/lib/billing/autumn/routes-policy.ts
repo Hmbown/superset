@@ -25,8 +25,10 @@ export const ADMIN_EXPAND = [
 	"balances.feature",
 ] as const;
 
+const SELF_SERVE_PLAN_IDS: ReadonlySet<string> = new Set(["pro", "pro_annual"]);
+
 export function selfServePlan(planId: string): boolean {
-	return !planId.startsWith("enterprise");
+	return SELF_SERVE_PLAN_IDS.has(planId);
 }
 
 export function checkoutSessionParams(args: {

@@ -69,6 +69,7 @@ export function useBillingActions() {
 					{
 						method: "POST",
 						body: {
+							organizationId: activeOrgId,
 							planId: autumnProPlanId({ annual }),
 							successUrl,
 							cancelUrl: env.NEXT_PUBLIC_WEB_URL,
@@ -127,6 +128,7 @@ export function useBillingActions() {
 				await authClient.$fetch("/autumn/updateSubscription", {
 					method: "POST",
 					body: {
+						organizationId: activeOrgId,
 						planId: currentAutumnPlanId(),
 						cancelAction: "cancel_end_of_cycle",
 					},
@@ -161,7 +163,11 @@ export function useBillingActions() {
 			if (await usesAutumn()) {
 				await authClient.$fetch("/autumn/updateSubscription", {
 					method: "POST",
-					body: { planId: currentAutumnPlanId(), cancelAction: "uncancel" },
+					body: {
+						organizationId: activeOrgId,
+						planId: currentAutumnPlanId(),
+						cancelAction: "uncancel",
+					},
 					onSuccess: () => {
 						toast.success(t({ message: "Plan restored" }));
 					},

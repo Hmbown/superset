@@ -29,6 +29,8 @@ describe("billing routes keep today's owner and admin rules", () => {
 
 	test("enterprise plans cannot be bought from the app", () => {
 		expect(selfServePlan("pro")).toBe(true);
+		expect(selfServePlan("pro_annual")).toBe(true);
+		expect(selfServePlan("pro_internal_discount")).toBe(false);
 		expect(selfServePlan("enterprise")).toBe(false);
 		expect(selfServePlan("enterprise_acme")).toBe(false);
 	});

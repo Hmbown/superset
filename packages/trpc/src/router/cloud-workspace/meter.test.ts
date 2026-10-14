@@ -24,6 +24,7 @@ let session: BoxSession | null;
 let renewalAllowed: boolean;
 let finalizeError: Error | null;
 let trackError: Error | null;
+let renewalError: Error | null;
 let writes: Record<string, unknown>[];
 let autumnCalls: { method: string; params: unknown; headers?: unknown }[];
 let stopped: string[];
@@ -56,6 +57,7 @@ stub(sandbox, {
 stub(autumnClient, {
 	check: async (params: unknown) => {
 		autumnCalls.push({ method: "check", params });
+		if (renewalError) throw renewalError;
 		return { allowed: renewalAllowed, balance: { remaining: 0 }, flag: null };
 	},
 	track: async (params: unknown, options?: { headers?: unknown }) => {
@@ -102,6 +104,7 @@ beforeEach(() => {
 	renewalAllowed = true;
 	finalizeError = null;
 	trackError = null;
+	renewalError = null;
 	writes = [];
 	autumnCalls = [];
 	stopped = [];
@@ -147,7 +150,10 @@ describe("settleBoot", () => {
 			value: 3,
 		});
 		expect(autumnCalls.some((call) => call.method === "check")).toBe(false);
-		expect(writes.at(-1)).toMatchObject({ lockOpen: false });
+		expect(writes).toContainEqual(expect.objectContaining({ lockOpen: false }));
+		expect(writes.at(-1)).toMatchObject({
+			stoppedAt: new Date(NOW - 4 * MINUTE),
+		});
 	});
 
 	test("a box whose next lock is refused at the spend cap is stopped", async () => {
@@ -165,7 +171,9 @@ describe("settleBoot", () => {
 				call.method === "track" &&
 				(call.params as { featureId: string }).featureId === "box_gb_minutes",
 		);
-		expect(track?.headers).toEqual({ "Idempotency-Key": "boot_1:0:track" });
+		expect(track?.headers).toEqual({
+			"Idempotency-Key": `boot_1:0:track:${NOW - 10 * MINUTE}`,
+		});
 	});
 
 	test("a track Autumn already recorded under that key counts as recorded", async () => {
@@ -193,6 +201,17 @@ describe("settleBoot", () => {
 		finalizeError = autumnError(503);
 		await expect(settleBoot("boot_1")).rejects.toThrow("status 503");
 		expect(autumnCalls.some((call) => call.method === "track")).toBe(false);
+	});
+
+	test("a settle whose next lock fails keeps the billed window, so a retry does not confirm it again", async () => {
+		renewalError = new Error("autumn down");
+		await expect(settleBoot("boot_1")).rejects.toThrow("autumn down");
+		expect(writes).toContainEqual(
+			expect.objectContaining({
+				lockOpen: false,
+				finalizedThrough: expect.any(Date),
+			}),
+		);
 	});
 
 	test("a boot another run is settling is left alone", async () => {

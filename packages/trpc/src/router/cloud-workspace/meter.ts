@@ -83,17 +83,37 @@ const OPEN_BOOT = or(
 	lt(cloudWorkspaceBoots.finalizedThrough, cloudWorkspaceBoots.stoppedAt),
 );
 
+async function checkOrFailOpen<T>(
+	organizationId: string,
+	check: () => Promise<T>,
+): Promise<T | null> {
+	try {
+		await ensureAutumnCustomer(organizationId);
+		return await check();
+	} catch (error) {
+		Sentry.captureException(error, { extra: { organizationId } });
+		return null;
+	}
+}
+
+function isUniqueViolation(error: unknown): boolean {
+	const { code, cause } = error as { code?: string; cause?: { code?: string } };
+	return code === "23505" || cause?.code === "23505";
+}
+
 export async function assertMayBoot(
 	organizationId: string,
 	box = DEFAULT_BOX,
 ): Promise<void> {
 	if (!billingUsesAutumn) return;
-	await ensureAutumnCustomer(organizationId);
-	const result = await autumnClient.check({
-		customerId: organizationId,
-		featureId: BOX_GB_MINUTES_FEATURE_ID,
-		requiredBalance: reservation(box.memoryMb),
-	});
+	const result = await checkOrFailOpen(organizationId, () =>
+		autumnClient.check({
+			customerId: organizationId,
+			featureId: BOX_GB_MINUTES_FEATURE_ID,
+			requiredBalance: reservation(box.memoryMb),
+		}),
+	);
+	if (!result) return;
 	const refusal = refusalFor(result);
 	if (refusal) throw refusalError(refusal);
 }
@@ -105,18 +125,20 @@ export async function authorizeBoot(args: {
 	vcpus: number;
 }): Promise<{ bootId: string | null }> {
 	if (!billingUsesAutumn) return { bootId: null };
-	await ensureAutumnCustomer(args.organizationId);
 	const bootId = `boot_${randomUUID()}`;
-	const result = await autumnClient.check({
-		customerId: args.organizationId,
-		featureId: BOX_GB_MINUTES_FEATURE_ID,
-		requiredBalance: reservation(args.memoryMb),
-		lock: {
-			enabled: true,
-			lockId: lockIdFor(bootId, 0),
-			expiresAt: Date.now() + LOCK_TTL_MS,
-		},
-	});
+	const result = await checkOrFailOpen(args.organizationId, () =>
+		autumnClient.check({
+			customerId: args.organizationId,
+			featureId: BOX_GB_MINUTES_FEATURE_ID,
+			requiredBalance: reservation(args.memoryMb),
+			lock: {
+				enabled: true,
+				lockId: lockIdFor(bootId, 0),
+				expiresAt: Date.now() + LOCK_TTL_MS,
+			},
+		}),
+	);
+	if (!result) return { bootId: null };
 	const refusal = refusalFor(result);
 	if (refusal) throw refusalError(refusal);
 	await db.insert(cloudWorkspaceBoots).values({
@@ -183,11 +205,19 @@ export async function attachBootSession(args: {
 				sql`not exists (select 1 from ${cloudWorkspaceBoots} other where other.vercel_session_id = ${session.id})`,
 			),
 		)
-		.returning({ id: cloudWorkspaceBoots.id });
+		.returning({ id: cloudWorkspaceBoots.id })
+		.catch((error) => {
+			if (isUniqueViolation(error)) return [];
+			throw error;
+		});
 	if (attached.length === 0) await releaseBoot(args.bootId);
 }
 
-async function recordUsage(boot: Boot, amount: number): Promise<void> {
+async function recordUsage(
+	boot: Boot,
+	window: { from: number; amount: number },
+): Promise<void> {
+	const { amount } = window;
 	const lockId = lockIdFor(boot.id, boot.lockSeq);
 	if (boot.lockOpen) {
 		try {
@@ -220,7 +250,7 @@ async function recordUsage(boot: Boot, amount: number): Promise<void> {
 				async: false,
 				properties: { bootId: boot.id, lockSeq: boot.lockSeq },
 			},
-			{ headers: { "Idempotency-Key": `${lockId}:track` } },
+			{ headers: { "Idempotency-Key": `${lockId}:track:${window.from}` } },
 		);
 	} catch (error) {
 		if (error instanceof AutumnError && error.statusCode === 409) return;
@@ -323,21 +353,20 @@ export async function settleBoot(
 		const from = (
 			boot.finalizedThrough ?? new Date(session.startedAt)
 		).getTime();
-		await recordUsage(
-			boot,
-			gbMinutes({ ms: end - from, memoryMb: session.memoryMb }),
-		);
+		await recordUsage(boot, {
+			from,
+			amount: gbMinutes({ ms: end - from, memoryMb: session.memoryMb }),
+		});
+		await db
+			.update(cloudWorkspaceBoots)
+			.set({ finalizedThrough: new Date(end), lockOpen: false })
+			.where(eq(cloudWorkspaceBoots.id, bootId));
 
 		if (session.endedAt !== null) {
 			if (session.activeCpuMs) await recordActiveCpu(boot, session.activeCpuMs);
 			await db
 				.update(cloudWorkspaceBoots)
-				.set({
-					finalizedThrough: new Date(end),
-					stoppedAt: new Date(end),
-					lockOpen: false,
-					settleLeaseUntil: null,
-				})
+				.set({ stoppedAt: new Date(end), settleLeaseUntil: null })
 				.where(eq(cloudWorkspaceBoots.id, bootId));
 			return "closed";
 		}
@@ -356,7 +385,6 @@ export async function settleBoot(
 		await db
 			.update(cloudWorkspaceBoots)
 			.set({
-				finalizedThrough: new Date(end),
 				lockSeq: nextSeq,
 				lockOpen: renewal.allowed,
 				settleLeaseUntil: null,
@@ -419,12 +447,24 @@ export async function settleOrganizationNow(
 	organizationId: string,
 ): Promise<void> {
 	const rows = await db
-		.select({ id: cloudWorkspaceBoots.id })
+		.select({
+			id: cloudWorkspaceBoots.id,
+			providerSandboxId: cloudWorkspaces.providerSandboxId,
+		})
 		.from(cloudWorkspaceBoots)
+		.leftJoin(
+			cloudWorkspaces,
+			eq(cloudWorkspaces.id, cloudWorkspaceBoots.cloudWorkspaceId),
+		)
 		.where(
 			and(eq(cloudWorkspaceBoots.organizationId, organizationId), OPEN_BOOT),
 		);
-	for (const { id } of rows) {
+	for (const { id, providerSandboxId } of rows) {
+		if (providerSandboxId) {
+			await stopSandbox(providerSandboxId).catch((error) =>
+				Sentry.captureException(error, { extra: { bootId: id } }),
+			);
+		}
 		await settleBoot(id);
 	}
 }

@@ -84,6 +84,7 @@ export function useBillingActions({
 					{
 						method: "POST",
 						body: {
+							organizationId: activeOrganizationId,
 							planId: autumnProPlanId({ annual }),
 							successUrl,
 							cancelUrl: billingUrl,
@@ -137,6 +138,7 @@ export function useBillingActions({
 				await authClient.$fetch("/autumn/updateSubscription", {
 					method: "POST",
 					body: {
+						organizationId: activeOrganizationId,
 						planId: currentAutumnPlanId,
 						cancelAction: "cancel_end_of_cycle",
 					},
@@ -168,7 +170,11 @@ export function useBillingActions({
 			if (usesAutumn) {
 				await authClient.$fetch("/autumn/updateSubscription", {
 					method: "POST",
-					body: { planId: currentAutumnPlanId, cancelAction: "uncancel" },
+					body: {
+						organizationId: activeOrganizationId,
+						planId: currentAutumnPlanId,
+						cancelAction: "uncancel",
+					},
 					onSuccess: () => {
 						toast.success(t({ message: "Plan restored" }));
 					},
@@ -206,7 +212,10 @@ export function useBillingActions({
 		try {
 			await authClient.$fetch<{ url: string }>("/autumn/openCustomerPortal", {
 				method: "POST",
-				body: { returnUrl: billingUrl },
+				body: {
+					organizationId: activeOrganizationId ?? undefined,
+					returnUrl: billingUrl,
+				},
 				onSuccess: (ctx) => window.location.assign(ctx.data.url),
 				onError: showPortalError,
 			});

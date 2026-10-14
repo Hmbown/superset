@@ -73,12 +73,20 @@ export async function setAutumnSeats(
 		);
 		return false;
 	}
-	await autumnClient.billing.update({
-		customerId: organizationId,
-		planId,
-		featureQuantities: [{ featureId: SEATS_FEATURE_ID, quantity }],
-	});
-	return true;
+	try {
+		await autumnClient.billing.update({
+			customerId: organizationId,
+			planId,
+			featureQuantities: [{ featureId: SEATS_FEATURE_ID, quantity }],
+		});
+		return true;
+	} catch (error) {
+		console.error(
+			`[billing/seats] ${organizationId} seats not set through Autumn; falling back to Stripe`,
+			error,
+		);
+		return false;
+	}
 }
 
 export async function organizationForStripeCustomer(

@@ -1,5 +1,5 @@
 import { db } from "@superset/db/client";
-import { members } from "@superset/db/schema";
+import { members, subscriptions } from "@superset/db/schema";
 import type { BetterAuthPlugin } from "better-auth";
 import {
 	APIError,
@@ -7,11 +7,11 @@ import {
 	originCheck,
 	sessionMiddleware,
 } from "better-auth/api";
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 import { autumnClient, billingUsesAutumn } from "../../../autumn";
 import { countBillableSeats } from "../../../utils/billing";
-import { ensureAutumnCustomer } from "./customer";
+import { ensureAutumnCustomer, paidAutumnPlanId } from "./customer";
 import {
 	ACTIVE_CPU_MINUTES_FEATURE_ID,
 	BOX_GB_MINUTES_FEATURE_ID,
@@ -37,13 +37,19 @@ interface SessionContext {
 	};
 }
 
+const organizationBody = { organizationId: z.string().uuid().optional() };
+
 async function billingCaller(
 	ctx: unknown,
 	route: keyof typeof ROUTE_ROLES,
 ): Promise<{ organizationId: string; userId: string; role: BillingRole }> {
 	if (!billingUsesAutumn) throw new APIError("NOT_FOUND");
-	const { session } = (ctx as SessionContext).context;
-	const organizationId = session.session.activeOrganizationId;
+	const { context, body } = ctx as SessionContext & {
+		body?: { organizationId?: string };
+	};
+	const { session } = context;
+	const organizationId =
+		body?.organizationId ?? session.session.activeOrganizationId;
 	if (!organizationId) {
 		throw new APIError("BAD_REQUEST", {
 			message: "No active organization selected",
@@ -94,6 +100,7 @@ export const autumnBillingRoutes = {
 			{
 				method: "POST",
 				body: z.object({
+					...organizationBody,
 					planId: z.string().min(1),
 					successUrl: z.string().min(1),
 					cancelUrl: z.string().optional(),
@@ -106,6 +113,28 @@ export const autumnBillingRoutes = {
 			async (ctx) => {
 				const caller = await billingCaller(ctx, "attach");
 				refuseEnterprise(ctx.body.planId);
+				const [stripeSubscription, autumnPlanId] = await Promise.all([
+					db.query.subscriptions.findFirst({
+						where: and(
+							eq(subscriptions.referenceId, caller.organizationId),
+							inArray(subscriptions.status, ["active", "trialing"]),
+						),
+						columns: { plan: true },
+					}),
+					paidAutumnPlanId(caller.organizationId).catch(() => null),
+				]);
+				if (
+					stripeSubscription?.plan === "enterprise" ||
+					(autumnPlanId && !selfServePlan(autumnPlanId))
+				) {
+					refuseEnterprise("enterprise");
+				}
+				if (stripeSubscription && !autumnPlanId) {
+					throw new APIError("BAD_REQUEST", {
+						message:
+							"This organization already has a subscription. Change it from the billing portal.",
+					});
+				}
 				await ensureAutumnCustomer(caller.organizationId);
 				const seats = Math.max(
 					1,
@@ -132,7 +161,7 @@ export const autumnBillingRoutes = {
 			"/autumn/previewAttach",
 			{
 				method: "POST",
-				body: z.object({ planId: z.string().min(1) }),
+				body: z.object({ ...organizationBody, planId: z.string().min(1) }),
 				use: [sessionMiddleware],
 			},
 			async (ctx) => {
@@ -158,6 +187,7 @@ export const autumnBillingRoutes = {
 			{
 				method: "POST",
 				body: z.object({
+					...organizationBody,
 					planId: z.string().min(1),
 					cancelAction: z.enum(["cancel_end_of_cycle", "uncancel"]),
 				}),
@@ -180,6 +210,7 @@ export const autumnBillingRoutes = {
 			{
 				method: "POST",
 				body: z.object({
+					...organizationBody,
 					planId: z.string().min(1),
 					cancelAction: z.enum(["cancel_end_of_cycle", "uncancel"]),
 				}),
@@ -201,7 +232,7 @@ export const autumnBillingRoutes = {
 			"/autumn/openCustomerPortal",
 			{
 				method: "POST",
-				body: z.object({ returnUrl: z.string().min(1) }),
+				body: z.object({ ...organizationBody, returnUrl: z.string().min(1) }),
 				use: [sessionMiddleware, originCheck((ctx) => ctx.body.returnUrl)],
 			},
 			async (ctx) => {
@@ -217,7 +248,11 @@ export const autumnBillingRoutes = {
 		),
 		autumnGetOrCreateCustomer: createAuthEndpoint(
 			"/autumn/getOrCreateCustomer",
-			{ method: "POST", use: [sessionMiddleware] },
+			{
+				method: "POST",
+				body: z.object(organizationBody).optional(),
+				use: [sessionMiddleware],
+			},
 			async (ctx) => {
 				const caller = await billingCaller(ctx, "getOrCreateCustomer");
 				await ensureAutumnCustomer(caller.organizationId);
@@ -233,7 +268,11 @@ export const autumnBillingRoutes = {
 		),
 		autumnListPlans: createAuthEndpoint(
 			"/autumn/listPlans",
-			{ method: "POST", use: [sessionMiddleware] },
+			{
+				method: "POST",
+				body: z.object(organizationBody).optional(),
+				use: [sessionMiddleware],
+			},
 			async (ctx) => {
 				const caller = await billingCaller(ctx, "listPlans");
 				const plans = await autumnClient.plans.list({
@@ -250,6 +289,7 @@ export const autumnBillingRoutes = {
 			{
 				method: "POST",
 				body: z.object({
+					...organizationBody,
 					featureId: z.enum([
 						BOX_GB_MINUTES_FEATURE_ID,
 						ACTIVE_CPU_MINUTES_FEATURE_ID,
