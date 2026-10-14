@@ -29,9 +29,11 @@ class FakeRecorder {
 		FakeRecorder.lastOptions = options;
 	}
 	start() {}
+	static deferStop = false;
 	stop() {
 		this.ondataavailable?.({ data: new Blob(["speech"]) });
-		this.onstop?.();
+		if (FakeRecorder.deferStop) setTimeout(() => this.onstop?.(), 0);
+		else this.onstop?.();
 	}
 }
 
@@ -55,6 +57,7 @@ const saved = {
 
 beforeEach(() => {
 	stoppedTracks.length = 0;
+	FakeRecorder.deferStop = false;
 	Object.assign(globalThis, {
 		MediaRecorder: FakeRecorder,
 		AudioContext: FakeAudioContext,
@@ -158,6 +161,24 @@ describe("useDictation", () => {
 			resolve("too late");
 			await finishing;
 		});
+		expect(transcripts).toEqual([]);
+		expect(hook.result.current.status).toBe("idle");
+	});
+
+	test("cancel while the recorder is still stopping drops the clip", async () => {
+		FakeRecorder.deferStop = true;
+		let calls = 0;
+		const { hook, transcripts } = setup(async () => {
+			calls += 1;
+			return "should not land";
+		});
+		await act(() => hook.result.current.start());
+		await act(async () => {
+			const finishing = hook.result.current.finish();
+			hook.result.current.cancel();
+			await finishing;
+		});
+		expect(calls).toBe(0);
 		expect(transcripts).toEqual([]);
 		expect(hook.result.current.status).toBe("idle");
 	});

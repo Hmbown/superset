@@ -222,7 +222,9 @@ export function BehaviorSettings({ visibleItems }: BehaviorSettingsProps) {
 							</Label>
 							<p className="text-xs text-muted-foreground">
 								<Trans>
-									Show a microphone in the chat composer to dictate prompts
+									Show a microphone in the chat composer. Speech is transcribed
+									by ChatGPT when Codex is signed in to it, otherwise on your
+									Mac when possible, and otherwise by Superset's servers.
 								</Trans>
 							</p>
 						</div>

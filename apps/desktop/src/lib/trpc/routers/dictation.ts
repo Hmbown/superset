@@ -41,10 +41,6 @@ export const createDictationRouter = () => {
 	});
 
 	return router({
-		available: publicProcedure.query(
-			async () => transcriberBinary() !== null || (await codex.signedIn()),
-		),
-
 		// A ChatGPT sign-in in Codex first, then the Mac's own transcriber. A
 		// failure here sends the renderer to the API.
 		transcribe: publicProcedure

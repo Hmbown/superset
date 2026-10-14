@@ -13,7 +13,6 @@ import { toast } from "@superset/ui/sonner";
 import { TRPCClientError } from "@trpc/client";
 import { useMemo } from "react";
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
-import { electronTrpc } from "renderer/lib/electron-trpc";
 import { electronTrpcClient } from "renderer/lib/trpc-client";
 import { useSettings } from "renderer/stores/settings";
 import { encodeWav } from "./utils/encodeWav";
@@ -157,20 +156,14 @@ export function createComposerDictation({
 
 export function useComposerDictation(): PromptInputDictation | undefined {
 	const enabled = useSettings((state) => state.dictationEnabled);
-	const { data: desktopAvailable } = electronTrpc.dictation.available.useQuery(
-		undefined,
-		{ staleTime: 5 * 60_000 },
-	);
 	const dictation = useMemo(
 		() =>
 			createComposerDictation({
 				request: (input) => apiTrpcClient.voice.transcribe.mutate(input),
 				notify: (message) => toast.error(message),
-				transcribeOnDesktop: desktopAvailable
-					? requestDesktopTranscription
-					: undefined,
+				transcribeOnDesktop: requestDesktopTranscription,
 			}),
-		[desktopAvailable],
+		[],
 	);
 	return enabled ? dictation : undefined;
 }

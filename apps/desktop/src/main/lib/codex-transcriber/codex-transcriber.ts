@@ -150,10 +150,6 @@ export function createCodexTranscriber({
 	};
 
 	return {
-		async signedIn() {
-			return (await token()) !== null;
-		},
-
 		/** Null when Codex has no ChatGPT sign-in. */
 		async transcribe(
 			wav: Uint8Array<ArrayBuffer>,

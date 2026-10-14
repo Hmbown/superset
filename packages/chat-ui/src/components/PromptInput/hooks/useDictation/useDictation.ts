@@ -318,12 +318,14 @@ export function useDictation({
 		sessionRef.current = null;
 		cancelAnimationFrame(session.frame);
 		clearTimeout(session.stopTimer);
+		const generation = transcriptionRef.current;
 		const audio = await new Promise<Blob>((resolve) => {
 			session.recorder.onstop = () =>
 				resolve(new Blob(session.chunks, { type: session.recorder.mimeType }));
 			session.recorder.stop();
 		});
 		releaseSession(session);
+		if (transcriptionRef.current !== generation) return;
 		if (audio.size === 0) {
 			setStatus("idle");
 			return;

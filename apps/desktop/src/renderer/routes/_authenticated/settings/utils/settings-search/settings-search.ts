@@ -916,7 +916,8 @@ export const SETTINGS_ITEMS: SettingsItem[] = [
 		id: SETTING_ITEM_ID.BEHAVIOR_DICTATION,
 		section: "behavior",
 		title: "Dictation",
-		description: "Show a microphone in the chat composer to dictate prompts",
+		description:
+			"Show a microphone in the chat composer. Speech is transcribed by ChatGPT when Codex is signed in to it, otherwise on your Mac when possible, and otherwise by Superset's servers.",
 		keywords: [
 			"dictation",
 			"dictate",

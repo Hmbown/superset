@@ -132,7 +132,7 @@ const config: Configuration = {
 				"Superset needs microphone access for dictation in the chat composer and for voice-enabled tools like Codex transcription.",
 			// Required for on-device dictation on macOS 15 and older
 			NSSpeechRecognitionUsageDescription:
-				"Superset transcribes your dictation on this Mac so it never leaves the device.",
+				"Superset uses on-device speech recognition to transcribe dictation in the chat composer.",
 			// Required for macOS local network permission prompt
 			NSLocalNetworkUsageDescription:
 				"Superset needs access to your local network to discover and connect to development servers running on your network.",

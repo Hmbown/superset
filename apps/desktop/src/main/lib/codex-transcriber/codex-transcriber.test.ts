@@ -111,7 +111,7 @@ describe("createCodexTranscriber", () => {
 			fetchImpl: (async () => new Response("{}")) as unknown as typeof fetch,
 		});
 		expect(await transcriber.transcribe(wav)).toBeNull();
-		expect(await transcriber.signedIn()).toBe(false);
+		expect(await transcriber.transcribe(wav)).toBeNull();
 		expect(reads).toBe(1);
 	});
 

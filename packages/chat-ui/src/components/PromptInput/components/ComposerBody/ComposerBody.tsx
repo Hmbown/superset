@@ -638,24 +638,19 @@ export function ComposerBody({
 
 	// While dictating, Escape aborts without inserting anything and Enter
 	// never sends: it stops and transcribes, or retries a failed transcript.
-	// Both outrank every other Escape/Enter behavior, including stopping the
-	// agent.
+	// Both outrank every other Escape/Enter behavior in the composer,
+	// including stopping the agent; other inputs keep their own keys.
 	useEffect(() => {
 		if (dictationSession.status === "idle") return;
 		const onKeyDown = (event: KeyboardEvent) => {
+			if (event.isComposing || !isFocusUnclaimed()) return;
 			if (event.key === "Escape") {
 				event.preventDefault();
 				event.stopPropagation();
 				dictationSession.cancel();
 				return;
 			}
-			if (
-				event.key !== "Enter" ||
-				event.shiftKey ||
-				event.isComposing ||
-				!isFocusUnclaimed()
-			)
-				return;
+			if (event.key !== "Enter" || event.shiftKey) return;
 			event.preventDefault();
 			event.stopPropagation();
 			if (dictationSession.status === "recording")
