@@ -52,10 +52,12 @@ export function PortsDropdown({ align = "end" }: PortsDropdownProps) {
 							aria-label={t({
 								message: `Ports — ${totalPortCount} live`,
 							})}
-							className="flex items-center gap-1.5 rounded-md px-2 py-1 text-muted-foreground text-xs transition-colors hover:bg-fill-hover hover:text-foreground data-[state=open]:bg-fill-hover data-[state=open]:text-foreground"
+							className="relative flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-fill-hover hover:text-foreground data-[state=open]:bg-fill-hover data-[state=open]:text-foreground"
 						>
-							<LuRadioTower className="size-3.5" strokeWidth={STROKE_WIDTH} />
-							<span className="font-medium tabular-nums">{totalPortCount}</span>
+							<LuRadioTower className="size-4" strokeWidth={STROKE_WIDTH} />
+							<span className="absolute top-0 right-0 flex h-3.5 min-w-3.5 items-center justify-center rounded-full bg-muted-foreground px-0.5 font-semibold text-[9px] text-background tabular-nums leading-none">
+								{totalPortCount > 99 ? "99+" : totalPortCount}
+							</span>
 						</button>
 					</PopoverTrigger>
 				</TooltipTrigger>
