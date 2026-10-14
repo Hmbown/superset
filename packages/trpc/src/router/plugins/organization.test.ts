@@ -1,6 +1,10 @@
 import { describe, expect, test } from "bun:test";
+import { packPluginBundle } from "@superset/shared/plugins/bundle";
 import type { PluginManifest } from "./manifest";
-import { organizationPluginProblem } from "./organization";
+import {
+	organizationPluginProblem,
+	readOrganizationBundle,
+} from "./organization";
 
 function manifest(extension: Record<string, unknown>): PluginManifest {
 	return {
@@ -47,5 +51,47 @@ describe("organizationPluginProblem", () => {
 		expect(
 			organizationPluginProblem(manifest(mcp("https://tools.test/mcp"))),
 		).toBeNull();
+	});
+});
+
+describe("readOrganizationBundle", () => {
+	const bundle = (files: Record<string, string>) =>
+		packPluginBundle(
+			new Map(
+				Object.entries(files).map(([path, text]) => [path, Buffer.from(text)]),
+			),
+		);
+	const pluginJson = JSON.stringify({
+		name: "team-tools",
+		version: "1.0.0",
+		extensions: {
+			superset: {
+				mcp: { type: "streamable-http", url: "https://tools.test/mcp" },
+			},
+		},
+	});
+
+	test("reads the manifest of a tree that carries skills", () => {
+		expect(
+			readOrganizationBundle(
+				bundle({ "plugin.json": pluginJson, "skills/triage/SKILL.md": "x" }),
+			).name,
+		).toBe("team-tools");
+	});
+
+	test("applies the organization rules to the manifest inside", () => {
+		expect(() =>
+			readOrganizationBundle(
+				bundle({
+					"plugin.json": JSON.stringify({ name: "neon", version: "1.0.0" }),
+				}),
+			),
+		).toThrow();
+	});
+
+	test("refuses bytes that are not a bundle", () => {
+		expect(() => readOrganizationBundle(Buffer.from("not gzip"))).toThrow(
+			"not a plugin bundle",
+		);
 	});
 });

@@ -20,9 +20,9 @@ import {
 	ensureDefaultMarketplace,
 	installPlugin,
 	listAvailable,
-	recordToolsOnlyPlugin,
 } from "../../../lib/plugins/install";
 import { syncPluginMcpServers } from "../../../lib/plugins/mcp-servers";
+import { installOrganizationPlugin } from "../../../lib/plugins/organization";
 
 const POLL_INTERVAL_MS = 2_000;
 const POLL_TIMEOUT_MS = 5 * 60_000;
@@ -127,19 +127,15 @@ export default command({
 			};
 		}
 
-		let local: Awaited<ReturnType<typeof recordToolsOnlyPlugin>>;
+		let local: Awaited<ReturnType<typeof installPlugin>>;
 		let accountError: string | null = null;
 
 		if (organization) {
-			const account = await ctx.api.plugins.install.mutate({
+			await ctx.api.plugins.install.mutate({
 				name,
 				marketplace: organization.marketplace,
 			});
-			local = await recordToolsOnlyPlugin({
-				name,
-				marketplace: organization.marketplace,
-				version: account.version,
-			});
+			local = await installOrganizationPlugin(ctx.api, name);
 		} else {
 			local = await installPlugin(name, marketplace, {
 				update: Boolean(options.update),
