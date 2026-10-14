@@ -38,6 +38,7 @@ function workspaceWithName(name: string): DashboardSidebarWorkspace {
 		isPinned: false,
 		pendingTransaction: null,
 		isMine: null,
+		sandboxStatus: null,
 	};
 }
 

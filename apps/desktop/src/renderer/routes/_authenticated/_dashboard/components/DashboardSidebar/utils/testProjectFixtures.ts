@@ -28,6 +28,7 @@ export function makeWorkspace(
 		isPinned: false,
 		pendingTransaction: null,
 		isMine: null,
+		sandboxStatus: null,
 		...overrides,
 	};
 }

@@ -424,10 +424,32 @@ export function useDashboardSidebarData({
 	const {
 		primaryRepositoryById: cloudRepoFullNameById,
 		isReady: cloudRepositoriesReady,
+		refetch: refetchCloudRepositories,
 	} = useCloudWorkspaceRepositories({
 		organizationId,
 		enabled: shownCloudRows.length > 0,
 	});
+	// The repo list is cached for minutes; a workspace created since then
+	// has no repo here and would file under the unknown-repo stand-in until
+	// the next fetch. Fetch once per unknown id, so a workspace that truly
+	// has no repo can't loop it.
+	const repoRefetchedForRef = useRef(new Set<string>());
+	useEffect(() => {
+		if (!cloudRepositoriesReady) return;
+		const unknown = shownCloudRows.filter(
+			(row) =>
+				!cloudRepoFullNameById.has(row.id) &&
+				!repoRefetchedForRef.current.has(row.id),
+		);
+		if (unknown.length === 0) return;
+		for (const row of unknown) repoRefetchedForRef.current.add(row.id);
+		void refetchCloudRepositories();
+	}, [
+		cloudRepositoriesReady,
+		shownCloudRows,
+		cloudRepoFullNameById,
+		refetchCloudRepositories,
+	]);
 	// Only the open workspace's sandbox is a host, and it alone knows the
 	// branch the agent has moved to; every other row shows its created branch.
 	const cloudBranchById = useMemo(

@@ -8,7 +8,7 @@ export function useCloudWorkspaceRepositories({
 	organizationId: string | null;
 	enabled?: boolean;
 }) {
-	const { data } = cloudTrpc.cloudWorkspace.repositories.useQuery(
+	const { data, refetch } = cloudTrpc.cloudWorkspace.repositories.useQuery(
 		{ organizationId: organizationId ?? "" },
 		{ enabled: enabled && organizationId !== null, staleTime: 5 * 60_000 },
 	);
@@ -29,6 +29,7 @@ export function useCloudWorkspaceRepositories({
 			repositoriesById,
 			primaryRepositoryById,
 			isReady: data !== undefined,
+			refetch,
 		};
-	}, [data]);
+	}, [data, refetch]);
 }

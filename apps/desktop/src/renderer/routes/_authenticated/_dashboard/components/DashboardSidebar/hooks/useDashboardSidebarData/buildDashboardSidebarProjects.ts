@@ -125,6 +125,7 @@ function decorateSidebarWorkspace(
 		isPinned: workspace.pinnedAt != null,
 		pendingTransaction: workspace.pendingTransaction,
 		isMine: null,
+		sandboxStatus: null,
 	};
 }
 

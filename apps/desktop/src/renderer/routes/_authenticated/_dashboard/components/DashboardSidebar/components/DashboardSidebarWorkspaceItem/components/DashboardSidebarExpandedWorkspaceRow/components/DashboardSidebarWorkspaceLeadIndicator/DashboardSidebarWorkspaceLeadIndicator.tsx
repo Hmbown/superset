@@ -3,7 +3,10 @@ import { cn } from "@superset/ui/utils";
 import { LuCircle } from "react-icons/lu";
 import { StatusIndicator } from "renderer/screens/main/components/StatusIndicator";
 import type { ActivePaneStatus } from "shared/tabs-types";
-import type { DashboardSidebarWorkspacePullRequest } from "../../../../../../types";
+import type {
+	DashboardSidebarWorkspace,
+	DashboardSidebarWorkspacePullRequest,
+} from "../../../../../../types";
 import {
 	PR_COLOR_BY_STATE,
 	PR_ICON_BY_STATE,
@@ -12,16 +15,24 @@ import {
 interface DashboardSidebarWorkspaceLeadIndicatorProps {
 	workspaceStatus: ActivePaneStatus | null;
 	isCreatePending: boolean;
+	sandboxStatus?: DashboardSidebarWorkspace["sandboxStatus"];
 	pullRequestState: DashboardSidebarWorkspacePullRequest["state"] | null;
 }
 
-/** One glyph by precedence: live agent state, then PR state, then idle. */
+/**
+ * One glyph by precedence: the sandbox's own state (nothing runs in a dead
+ * or unborn box), then live agent state, then PR state, then idle.
+ */
 export function DashboardSidebarWorkspaceLeadIndicator({
 	workspaceStatus,
 	isCreatePending,
+	sandboxStatus = null,
 	pullRequestState,
 }: DashboardSidebarWorkspaceLeadIndicatorProps) {
-	if (isCreatePending) {
+	if (sandboxStatus === "failed") {
+		return <StatusIndicator status="failed" />;
+	}
+	if (isCreatePending || sandboxStatus === "provisioning") {
 		return <WaveSpinner className="text-muted-foreground/60" />;
 	}
 	if (workspaceStatus === "working") {

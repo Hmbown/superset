@@ -59,6 +59,8 @@ export interface DashboardSidebarWorkspace {
 	pendingTransaction: WorkspaceTransactionSnapshot | null;
 	/** Whether the signed-in user created it; null when the host doesn't say. */
 	isMine: boolean | null;
+	/** A cloud sandbox still being made, or one that failed; null otherwise. */
+	sandboxStatus: "provisioning" | "failed" | null;
 }
 
 /**

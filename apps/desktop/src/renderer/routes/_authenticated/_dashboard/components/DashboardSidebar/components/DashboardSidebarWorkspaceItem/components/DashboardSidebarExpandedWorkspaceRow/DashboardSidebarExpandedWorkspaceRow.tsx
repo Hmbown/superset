@@ -154,14 +154,25 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 			? t({ message: "Archive workspace" })
 			: t({ message: "Delete workspace" });
 		const showsPullRequest =
-			!isPending && workspaceStatus === null && pullRequest !== null;
+			!isPending &&
+			workspace.sandboxStatus === null &&
+			workspaceStatus === null &&
+			pullRequest !== null;
 		const inlinePortsEnabled = useInlineWorkspacePortsEnabled();
 		const portGroup = useDashboardSidebarWorkspacePorts(workspace.id);
 		const ports = inlinePortsEnabled ? (portGroup?.ports ?? []) : [];
+		const sandboxStatus = workspace.sandboxStatus;
+		const sandboxLabel =
+			sandboxStatus === "failed"
+				? t({ message: "Sandbox stopped responding" })
+				: sandboxStatus === "provisioning"
+					? t({ message: "Creating the sandbox" })
+					: null;
 		const leadIndicator = (
 			<DashboardSidebarWorkspaceLeadIndicator
 				workspaceStatus={workspaceStatus}
 				isCreatePending={isPending}
+				sandboxStatus={sandboxStatus}
 				pullRequestState={pullRequest?.state ?? null}
 			/>
 		);
@@ -264,7 +275,7 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 								</p>
 							</TooltipContent>
 						</Tooltip>
-					) : workspaceStatus && !isPending ? (
+					) : sandboxLabel || (workspaceStatus && !isPending) ? (
 						<Tooltip delayDuration={500}>
 							<TooltipTrigger asChild>
 								<span className="mr-2 flex size-4 shrink-0 items-center justify-center">
@@ -273,7 +284,10 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 							</TooltipTrigger>
 							<TooltipContent side="right" sideOffset={8}>
 								<p className="text-xs font-medium">
-									{getStatusTooltip(workspaceStatus)}
+									{sandboxLabel ??
+										(workspaceStatus
+											? getStatusTooltip(workspaceStatus)
+											: null)}
 								</p>
 							</TooltipContent>
 						</Tooltip>
