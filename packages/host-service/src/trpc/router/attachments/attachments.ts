@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { closeSync, mkdirSync, openSync } from "node:fs";
+import { closeSync, mkdirSync, openSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
 	assignAttachmentFileName,
@@ -17,6 +17,7 @@ import {
 	type AttachmentMetadata,
 	deleteAttachment,
 	prepareAttachmentTarget,
+	resolveAttachmentPath,
 	writeAttachment,
 	writeAttachmentMetadata,
 } from "./storage";
@@ -190,6 +191,33 @@ export const attachmentsRouter = router({
 				paths.push(`${WORKSPACE_ATTACHMENTS_DIR}/${fileName}`);
 			}
 			return { paths };
+		}),
+
+	/**
+	 * An attachment's bytes, so a client can show what was sent. Capped like
+	 * an upload: the bytes cross the relay as base64.
+	 */
+	read: protectedProcedure
+		.input(z.object({ attachmentId: z.string().uuid() }))
+		.query(({ input }) => {
+			const resolved = resolveAttachmentPath(input.attachmentId);
+			if (!resolved) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Attachment not found",
+				});
+			}
+			const { path, metadata } = resolved;
+			if (metadata.sizeBytes > MAX_INLINE_ATTACHMENT_BYTES) {
+				throw new TRPCError({
+					code: "PAYLOAD_TOO_LARGE",
+					message: `Attachment exceeds ${MAX_INLINE_ATTACHMENT_BYTES} bytes`,
+				});
+			}
+			return {
+				mediaType: metadata.mediaType,
+				data: readFileSync(path).toString("base64"),
+			};
 		}),
 
 	/**

@@ -339,6 +339,7 @@ export const ChatSessionView = forwardRef<
 				<View className={endsGroup ? "pb-5" : "pb-2.5"}>
 					<ChatRowView
 						harness={harness}
+						hostUrl={hostUrl}
 						onDiscardPrompt={chat.discardPrompt}
 						onLongPressMessage={branchFrom}
 						onOpenActivity={openActivity}
@@ -357,7 +358,16 @@ export const ChatSessionView = forwardRef<
 				</View>
 			);
 		},
-		[harness, chat, onRespond, branchFrom, positions, replyEnds, openActivity],
+		[
+			harness,
+			hostUrl,
+			chat,
+			onRespond,
+			branchFrom,
+			positions,
+			replyEnds,
+			openActivity,
+		],
 	);
 
 	const onTapRef = useRef(onTap);
