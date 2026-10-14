@@ -6806,6 +6806,9 @@ msgstr "Externí editor"
 msgid "extra ${used} of ${limit}"
 msgstr "navíc {used} $ z {limit} $"
 
+msgid "Extra command; add it as a terminal script if you need it"
+msgstr "Další příkaz; v případě potřeby ho přidejte jako terminálový skript"
+
 msgid "Extra high"
 msgstr "Velmi vysoké"
 
@@ -7718,8 +7721,17 @@ msgstr "Prvky formuláře a skládání polí"
 msgid "Forward"
 msgstr "Vpřed"
 
+msgid "Found {label} setup"
+msgstr "Nalezeno nastavení {label}"
+
 msgid "Found 12 tooltip call sites"
 msgstr "Nalezeno 12 volání tooltipu"
+
+msgid "Found a {label} setup in <0>{file}</0>."
+msgstr "Nalezeno nastavení {label} v <0>{file}</0>."
+
+msgid "Found setups from other tools in this project."
+msgstr "V tomto projektu byla nalezena nastavení z jiných nástrojů."
 
 msgid "Founder & CEO, WowMakers"
 msgstr "Zakladatel a CEO, WowMakers"
@@ -8470,11 +8482,17 @@ msgstr "Importovat ze souboru"
 msgid "Import from v1"
 msgstr "Import z v1"
 
+msgid "Import its scripts to automate workspace setup for {projectName}"
+msgstr "Importujte jeho skripty a zautomatizujte nastavení pracovního prostoru pro {projectName}"
+
 msgid "Import puts a worktree on a new branch at its current commit, so it can come over. Your files do not change."
 msgstr "Import přepne worktree na novou větev na jeho aktuálním commitu, aby mohl být přenesen. Vaše soubory se nezmění."
 
 msgid "Import settings from another browser"
 msgstr "Importovat nastavení z jiného prohlížeče"
+
+msgid "Import setup from {label}"
+msgstr "Importovat nastavení z {label}"
 
 msgid "import the project"
 msgstr "importovat projekt"
@@ -8494,6 +8512,9 @@ msgstr "Importovat…"
 msgid "Important"
 msgstr "Důležité"
 
+msgid "Imported"
+msgstr "Po importu"
+
 #. placeholder {0}: untracked.length
 #. placeholder {1}: errors[0]
 msgid "Imported {imported} of {0} worktrees: {1}"
@@ -8504,6 +8525,9 @@ msgstr "Importováno: {joinedMessages}"
 
 msgid "Imported from Linear"
 msgstr "Importováno z Linearu"
+
+msgid "Imported setup from {label}"
+msgstr "Nastavení z {label} bylo importováno"
 
 msgid "Imported to tasks"
 msgstr "Importováno do úkolů"
@@ -11057,6 +11081,12 @@ msgstr "Ne tvrzení pro rok 2026"
 msgid "Not a member of this organization"
 msgstr "Nejste členem této organizace"
 
+msgid "Not a plain relative path"
+msgstr "Není to prostá relativní cesta"
+
+msgid "Not a value this file accepts"
+msgstr "Tento soubor takovou hodnotu nepřijímá"
+
 msgid "Not authenticated. Please sign in."
 msgstr "Nejste přihlášeni. Přihlaste se prosím."
 
@@ -11089,6 +11119,9 @@ msgstr "Nenalezeno"
 
 msgid "Not granted"
 msgstr "Nepovoleno"
+
+msgid "Not imported"
+msgstr "Neimportováno"
 
 msgid "Not included"
 msgstr "Není zahrnuto"
@@ -11999,6 +12032,9 @@ msgstr "Přehled"
 
 msgid "Overwrite file"
 msgstr "Přepsat soubor"
+
+msgid "Overwrites <0>{currentScriptFile}</0>"
+msgstr "Přepíše <0>{currentScriptFile}</0>"
 
 #. placeholder {0}: ownerName ?? t({ message: "a teammate", })
 msgid "Owned by {0} — only they can edit this automation."
@@ -13058,6 +13094,9 @@ msgstr "Čtení a odesílání pošty"
 msgid "Read deployment and build logs"
 msgstr "Čtení logů nasazení a buildů"
 
+msgid "Read from <0>{fileList}</0>"
+msgstr "Načteno z <0>{fileList}</0>"
+
 msgid "Read it on your phone"
 msgstr "Čtěte na telefonu"
 
@@ -13504,6 +13543,9 @@ msgstr "Nahradit"
 msgid "Replace All"
 msgstr "Nahradit vše"
 
+msgid "Replace and import"
+msgstr "Nahradit a importovat"
+
 msgid "Replace custom audio"
 msgstr "Nahradit vlastní zvuk"
 
@@ -13515,6 +13557,12 @@ msgstr "Nahrazeno {replaced} souborů v {where}"
 
 msgid "Replaced 1 file in {where}"
 msgstr "Nahrazen 1 soubor v {where}"
+
+msgid "Replaces <0>{currentCwd}</0> with <1>{importedCwd}</1>"
+msgstr "Nahradí <0>{currentCwd}</0> hodnotou <1>{importedCwd}</1>"
+
+msgid "Replaces current"
+msgstr "Nahradí aktuální"
 
 msgid "Reply"
 msgstr "Odpovědět"
@@ -14168,6 +14216,9 @@ msgstr "Běhy se zde objeví, jakmile se automatizace spustí."
 
 msgid "Runs inside the Superset app on that device, so updating it means updating the app there."
 msgstr "Běží uvnitř aplikace Superset na tom zařízení, takže aktualizace znamená aktualizovat tam aplikaci."
+
+msgid "Runs instead of <0>{currentScriptFile}</0>, which runs today"
+msgstr "Spustí se místo <0>{currentScriptFile}</0>, který se spouští nyní"
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Běhy skončí v pracovním prostoru. Projděte rozdíly a slučte, co je dobré."
@@ -16005,6 +16056,9 @@ msgstr "Design systém Superset"
 msgid "Superset desktop app"
 msgstr "Desktopová aplikace Superset"
 
+msgid "Superset does not set this variable"
+msgstr "Superset tuto proměnnou nenastavuje"
+
 msgid "Superset Enterprise is Superset for teams. Reach out to learn more about what's included and how it can work for your organization."
 msgstr "Superset Enterprise je Superset pro týmy. Ozvěte se a řekneme vám, co obsahuje a jak může fungovat ve vaší organizaci."
 
@@ -16022,6 +16076,9 @@ msgstr "Superset přesměruje porty, které vzdálený pracovní prostor otevře
 
 msgid "Superset has a free tier. The source code is available on GitHub under Elastic License 2.0 (ELv2), so you can inspect and self-host it subject to the license terms."
 msgstr "Superset má bezplatný tarif. Zdrojový kód je na GitHubu pod licencí Elastic License 2.0 (ELv2), takže si ho můžete prohlédnout a za podmínek licence provozovat sami."
+
+msgid "Superset has no matching setting"
+msgstr "Superset nemá odpovídající nastavení"
 
 msgid "Superset hit an unexpected error. Reload to try again."
 msgstr "V Superset došlo k neočekávané chybě. Zkuste to znovu načtením."
@@ -16161,6 +16218,9 @@ msgstr "Superset vs. alternativy"
 
 msgid "Superset works with any CLI-based coding agent, including Claude Code, OpenCode, OpenAI Codex, and more. Choose a different agent for every task without changing your workspace or review flow."
 msgstr "Superset funguje s libovolným kódovacím agentem v CLI, včetně Claude Code, OpenCode, OpenAI Codex a dalších. Pro každý úkol si zvolte jiného agenta, aniž byste měnili pracovní prostor nebo způsob revize."
+
+msgid "Superset writes these scripts to .superset/config.json in this project. Review them before you import."
+msgstr "Superset zapíše tyto skripty do .superset/config.json v tomto projektu. Před importem je zkontrolujte."
 
 msgid "superset.sh"
 msgstr "superset.sh"
@@ -17226,11 +17286,17 @@ msgstr "Tím se worktree odstraní z disku a pracovní prostor se zavře."
 msgid "This replaces its label, command, arguments, prompt and resume settings, environment variables, and icon with the current bundled configuration."
 msgstr "Nahradí to jeho popisek, příkaz, argumenty, nastavení promptu a pokračování, proměnné prostředí a ikonu aktuální dodávanou konfigurací."
 
+msgid "This replaces part of your current Superset setup."
+msgstr "Tímto nahradíte část svého aktuálního nastavení Superset."
+
 msgid "This repository does not allow merging from here."
 msgstr "Tento repozitář neumožňuje slučovat odsud."
 
 msgid "This screen doesn't exist"
 msgstr "Tato obrazovka neexistuje"
+
+msgid "This script has shell blocks that do not split into separate commands, so it is saved to <0>{scriptPath}</0>:"
+msgstr "Tento skript obsahuje bloky shellu, které nelze rozdělit na samostatné příkazy, proto se uloží do <0>{scriptPath}</0>:"
 
 msgid "This Slack workspace is already connected by {owner}. Ask them to disconnect first."
 msgstr "Tento Slack workspace už má připojený {owner}. Požádejte je, ať se nejdřív odpojí."
@@ -17466,6 +17532,9 @@ msgstr "tokenů na relaci, posledních 30 dní"
 
 msgid "Tokens stay off your machine"
 msgstr "Tokeny zůstávají mimo váš počítač"
+
+msgid "Too large to import"
+msgstr "Příliš velké pro import"
 
 msgid "Too many feedback submissions. Try again later."
 msgstr "Příliš mnoho odeslaných zpětných vazeb. Zkuste to později."
@@ -18698,6 +18767,9 @@ msgstr "Pracuje"
 msgctxt "agent status"
 msgid "Working"
 msgstr "Pracuje"
+
+msgid "Working directory"
+msgstr "Pracovní adresář"
 
 #. placeholder {0}: Math.floor(seconds / 60)
 #. placeholder {1}: seconds % 60

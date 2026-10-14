@@ -6806,6 +6806,9 @@ msgstr "外部エディタ"
 msgid "extra ${used} of ${limit}"
 msgstr "追加分 ${limit}中${used}"
 
+msgid "Extra command; add it as a terminal script if you need it"
+msgstr "追加のコマンドです。必要ならターミナルスクリプトとして追加してください"
+
 msgid "Extra high"
 msgstr "最高"
 
@@ -7718,8 +7721,17 @@ msgstr "フォームコントロールとフィールドの組み立て"
 msgid "Forward"
 msgstr "進む"
 
+msgid "Found {label} setup"
+msgstr "{label}のセットアップが見つかりました"
+
 msgid "Found 12 tooltip call sites"
 msgstr "tooltipの呼び出し元を12か所検出"
+
+msgid "Found a {label} setup in <0>{file}</0>."
+msgstr "<0>{file}</0>に{label}のセットアップが見つかりました。"
+
+msgid "Found setups from other tools in this project."
+msgstr "このプロジェクトに他のツールのセットアップが見つかりました。"
 
 msgid "Founder & CEO, WowMakers"
 msgstr "創業者兼CEO、WowMakers"
@@ -8470,11 +8482,17 @@ msgstr "ファイルからインポート"
 msgid "Import from v1"
 msgstr "v1からインポート"
 
+msgid "Import its scripts to automate workspace setup for {projectName}"
+msgstr "スクリプトをインポートして{projectName}のワークスペースのセットアップを自動化"
+
 msgid "Import puts a worktree on a new branch at its current commit, so it can come over. Your files do not change."
 msgstr "インポートすると、ワークツリーを現在のコミットで新しいブランチに切り替え、移行できるようにします。ファイルは変更されません。"
 
 msgid "Import settings from another browser"
 msgstr "別のブラウザから設定をインポート"
+
+msgid "Import setup from {label}"
+msgstr "{label}からセットアップをインポート"
 
 msgid "import the project"
 msgstr "プロジェクトをインポートする"
@@ -8494,6 +8512,9 @@ msgstr "インポート…"
 msgid "Important"
 msgstr "重要"
 
+msgid "Imported"
+msgstr "インポート後"
+
 #. placeholder {0}: untracked.length
 #. placeholder {1}: errors[0]
 msgid "Imported {imported} of {0} worktrees: {1}"
@@ -8504,6 +8525,9 @@ msgstr "{joinedMessages}をインポートしました"
 
 msgid "Imported from Linear"
 msgstr "Linear からインポート"
+
+msgid "Imported setup from {label}"
+msgstr "{label}からセットアップをインポートしました"
 
 msgid "Imported to tasks"
 msgstr "タスクにインポートしました"
@@ -11057,6 +11081,12 @@ msgstr "2026年の話ではない"
 msgid "Not a member of this organization"
 msgstr "この組織のメンバーではありません"
 
+msgid "Not a plain relative path"
+msgstr "単純な相対パスではありません"
+
+msgid "Not a value this file accepts"
+msgstr "このファイルで使える値ではありません"
+
 msgid "Not authenticated. Please sign in."
 msgstr "認証されていません。サインインしてください。"
 
@@ -11089,6 +11119,9 @@ msgstr "見つかりません"
 
 msgid "Not granted"
 msgstr "未許可"
+
+msgid "Not imported"
+msgstr "インポートされない項目"
 
 msgid "Not included"
 msgstr "含まれない"
@@ -11999,6 +12032,9 @@ msgstr "概要"
 
 msgid "Overwrite file"
 msgstr "ファイルを上書き"
+
+msgid "Overwrites <0>{currentScriptFile}</0>"
+msgstr "<0>{currentScriptFile}</0>を上書きします"
 
 #. placeholder {0}: ownerName ?? t({ message: "a teammate", })
 msgid "Owned by {0} — only they can edit this automation."
@@ -13058,6 +13094,9 @@ msgstr "メールの閲覧と送信"
 msgid "Read deployment and build logs"
 msgstr "デプロイとビルドのログを確認"
 
+msgid "Read from <0>{fileList}</0>"
+msgstr "読み込み元: <0>{fileList}</0>"
+
 msgid "Read it on your phone"
 msgstr "スマートフォンで読める"
 
@@ -13504,6 +13543,9 @@ msgstr "置き換える"
 msgid "Replace All"
 msgstr "すべて置き換える"
 
+msgid "Replace and import"
+msgstr "置き換えてインポート"
+
 msgid "Replace custom audio"
 msgstr "カスタム音声を置き換え"
 
@@ -13515,6 +13557,12 @@ msgstr "{replaced}件のファイルを{where}で置き換えました"
 
 msgid "Replaced 1 file in {where}"
 msgstr "1件のファイルを{where}で置き換えました"
+
+msgid "Replaces <0>{currentCwd}</0> with <1>{importedCwd}</1>"
+msgstr "<0>{currentCwd}</0>を<1>{importedCwd}</1>に置き換えます"
+
+msgid "Replaces current"
+msgstr "現在の内容を置き換え"
 
 msgid "Reply"
 msgstr "返信"
@@ -14168,6 +14216,9 @@ msgstr "オートメーションが起動すると、ここに実行が表示さ
 
 msgid "Runs inside the Superset app on that device, so updating it means updating the app there."
 msgstr "そのデバイスのSupersetアプリ内で動作しているため、更新するにはそのデバイスのアプリを更新する必要があります。"
+
+msgid "Runs instead of <0>{currentScriptFile}</0>, which runs today"
+msgstr "現在実行される<0>{currentScriptFile}</0>の代わりに実行されます"
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "実行結果はワークスペースに入ります。差分を確認し、良いものをマージしてください。"
@@ -16005,6 +16056,9 @@ msgstr "Supersetデザインシステム"
 msgid "Superset desktop app"
 msgstr "Superset デスクトップアプリ"
 
+msgid "Superset does not set this variable"
+msgstr "Supersetはこの変数を設定しません"
+
 msgid "Superset Enterprise is Superset for teams. Reach out to learn more about what's included and how it can work for your organization."
 msgstr "Superset Enterpriseは、チーム向けのSupersetです。含まれる内容や組織での活用方法については、お問い合わせください。"
 
@@ -16022,6 +16076,9 @@ msgstr "リモートワークスペースを選択している間、Supersetは�
 
 msgid "Superset has a free tier. The source code is available on GitHub under Elastic License 2.0 (ELv2), so you can inspect and self-host it subject to the license terms."
 msgstr "Supersetには無料プランがあります。ソースコードはElastic License 2.0(ELv2)のもとGitHubで公開されており、ライセンス条件の範囲で内容を確認したりセルフホストしたりできます。"
+
+msgid "Superset has no matching setting"
+msgstr "Supersetに対応する設定はありません"
 
 msgid "Superset hit an unexpected error. Reload to try again."
 msgstr "Supersetで予期しないエラーが発生しました。再読み込みしてお試しください。"
@@ -16161,6 +16218,9 @@ msgstr "Supersetと他ツールの比較"
 
 msgid "Superset works with any CLI-based coding agent, including Claude Code, OpenCode, OpenAI Codex, and more. Choose a different agent for every task without changing your workspace or review flow."
 msgstr "SupersetはClaude Code、OpenCode、OpenAI Codexなど、CLIベースのコーディングエージェントであれば何でも使えます。ワークスペースやレビューの流れを変えずに、タスクごとに違うエージェントを選べます。"
+
+msgid "Superset writes these scripts to .superset/config.json in this project. Review them before you import."
+msgstr "Supersetはこれらのスクリプトをこのプロジェクトの.superset/config.jsonに書き込みます。インポートする前に内容を確認してください。"
 
 msgid "superset.sh"
 msgstr "superset.sh"
@@ -17226,11 +17286,17 @@ msgstr "ワークツリーをディスクから削除し、ワークスペース
 msgid "This replaces its label, command, arguments, prompt and resume settings, environment variables, and icon with the current bundled configuration."
 msgstr "ラベル、コマンド、引数、プロンプトと再開設定、環境変数、アイコンが現在のバンドル構成に置き換えられます。"
 
+msgid "This replaces part of your current Superset setup."
+msgstr "現在のSupersetのセットアップの一部が置き換わります。"
+
 msgid "This repository does not allow merging from here."
 msgstr "このリポジトリはここからのマージを許可していません。"
 
 msgid "This screen doesn't exist"
 msgstr "この画面は存在しません"
+
+msgid "This script has shell blocks that do not split into separate commands, so it is saved to <0>{scriptPath}</0>:"
+msgstr "このスクリプトには個別のコマンドに分割できないシェルブロックがあるため、<0>{scriptPath}</0>に保存されます:"
 
 msgid "This Slack workspace is already connected by {owner}. Ask them to disconnect first."
 msgstr "このSlackワークスペースは{owner}がすでに接続しています。先に接続を解除してもらってください。"
@@ -17466,6 +17532,9 @@ msgstr "直近30日のセッションあたりトークン"
 
 msgid "Tokens stay off your machine"
 msgstr "トークンはマシンに残らない"
+
+msgid "Too large to import"
+msgstr "大きすぎてインポートできません"
 
 msgid "Too many feedback submissions. Try again later."
 msgstr "フィードバックの送信が多すぎます。しばらくしてからお試しください。"
@@ -18698,6 +18767,9 @@ msgstr "作業中"
 msgctxt "agent status"
 msgid "Working"
 msgstr "実行中"
+
+msgid "Working directory"
+msgstr "作業ディレクトリ"
 
 #. placeholder {0}: Math.floor(seconds / 60)
 #. placeholder {1}: seconds % 60

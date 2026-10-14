@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { HiCheckCircle } from "react-icons/hi2";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { ScriptField } from "./components/ScriptField";
+import { SetupImportBanner } from "./components/SetupImportBanner";
 
 interface V2ScriptsEditorProps {
 	hostUrl: string;
@@ -166,6 +167,14 @@ export function V2ScriptsEditor({
 		}) => getHostServiceClientByUrl(hostUrl).config.updateConfig.mutate(input),
 		onSuccess: () => {
 			void queryClient.invalidateQueries({ queryKey: configQueryKey });
+			void queryClient.invalidateQueries({
+				queryKey: [
+					"host-config",
+					"getSetupImportCandidates",
+					hostUrl,
+					projectId,
+				],
+			});
 		},
 	});
 
@@ -292,6 +301,7 @@ export function V2ScriptsEditor({
 
 	return (
 		<div className={cn("space-y-3", className)}>
+			<SetupImportBanner hostUrl={hostUrl} projectId={projectId} />
 			<Tabs defaultValue="setup">
 				<div className="flex items-center justify-between gap-2 border-b border-border">
 					<TabsList className="h-auto gap-0 rounded-none bg-transparent p-0">

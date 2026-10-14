@@ -6806,6 +6806,9 @@ msgstr "외부 편집기"
 msgid "extra ${used} of ${limit}"
 msgstr "${limit} 중 추가 ${used}"
 
+msgid "Extra command; add it as a terminal script if you need it"
+msgstr "추가 명령입니다. 필요하면 터미널 스크립트로 추가하세요"
+
 msgid "Extra high"
 msgstr "매우 높음"
 
@@ -7718,8 +7721,17 @@ msgstr "폼 컨트롤과 필드 구성"
 msgid "Forward"
 msgstr "앞으로"
 
+msgid "Found {label} setup"
+msgstr "{label} 설정을 찾았습니다"
+
 msgid "Found 12 tooltip call sites"
 msgstr "툴팁 호출 지점 12곳 발견"
+
+msgid "Found a {label} setup in <0>{file}</0>."
+msgstr "<0>{file}</0>에서 {label} 설정을 찾았습니다."
+
+msgid "Found setups from other tools in this project."
+msgstr "이 프로젝트에서 다른 도구의 설정을 찾았습니다."
 
 msgid "Founder & CEO, WowMakers"
 msgstr "창업자 겸 CEO, WowMakers"
@@ -8470,11 +8482,17 @@ msgstr "파일에서 가져오기"
 msgid "Import from v1"
 msgstr "v1에서 가져오기"
 
+msgid "Import its scripts to automate workspace setup for {projectName}"
+msgstr "스크립트를 가져와 {projectName}의 워크스페이스 설정을 자동화하세요"
+
 msgid "Import puts a worktree on a new branch at its current commit, so it can come over. Your files do not change."
 msgstr "가져오기는 worktree를 현재 커밋의 새 브랜치로 전환해 옮길 수 있게 합니다. 파일은 바뀌지 않습니다."
 
 msgid "Import settings from another browser"
 msgstr "다른 브라우저에서 설정 가져오기"
+
+msgid "Import setup from {label}"
+msgstr "{label}에서 설정 가져오기"
 
 msgid "import the project"
 msgstr "프로젝트를 가져올"
@@ -8494,6 +8512,9 @@ msgstr "가져오기…"
 msgid "Important"
 msgstr "중요"
 
+msgid "Imported"
+msgstr "가져온 내용"
+
 #. placeholder {0}: untracked.length
 #. placeholder {1}: errors[0]
 msgid "Imported {imported} of {0} worktrees: {1}"
@@ -8504,6 +8525,9 @@ msgstr "{joinedMessages} 가져옴"
 
 msgid "Imported from Linear"
 msgstr "Linear에서 가져옴"
+
+msgid "Imported setup from {label}"
+msgstr "{label}에서 설정을 가져왔습니다"
 
 msgid "Imported to tasks"
 msgstr "작업으로 가져왔습니다"
@@ -11057,6 +11081,12 @@ msgstr "2026년에 대한 전망은 아님"
 msgid "Not a member of this organization"
 msgstr "이 조직의 멤버가 아닙니다"
 
+msgid "Not a plain relative path"
+msgstr "단순한 상대 경로가 아닙니다"
+
+msgid "Not a value this file accepts"
+msgstr "이 파일에서 허용하는 값이 아닙니다"
+
 msgid "Not authenticated. Please sign in."
 msgstr "인증되지 않았습니다. 로그인해 주세요."
 
@@ -11089,6 +11119,9 @@ msgstr "찾을 수 없습니다"
 
 msgid "Not granted"
 msgstr "허용 안 됨"
+
+msgid "Not imported"
+msgstr "가져오지 않은 항목"
 
 msgid "Not included"
 msgstr "미포함"
@@ -11999,6 +12032,9 @@ msgstr "개요"
 
 msgid "Overwrite file"
 msgstr "파일 덮어쓰기"
+
+msgid "Overwrites <0>{currentScriptFile}</0>"
+msgstr "<0>{currentScriptFile}</0>을(를) 덮어씁니다"
 
 #. placeholder {0}: ownerName ?? t({ message: "a teammate", })
 msgid "Owned by {0} — only they can edit this automation."
@@ -13058,6 +13094,9 @@ msgstr "메일 읽기 및 보내기"
 msgid "Read deployment and build logs"
 msgstr "배포 및 빌드 로그 확인"
 
+msgid "Read from <0>{fileList}</0>"
+msgstr "읽은 파일: <0>{fileList}</0>"
+
 msgid "Read it on your phone"
 msgstr "휴대폰으로 읽기"
 
@@ -13504,6 +13543,9 @@ msgstr "바꾸기"
 msgid "Replace All"
 msgstr "모두 바꾸기"
 
+msgid "Replace and import"
+msgstr "바꾸고 가져오기"
+
 msgid "Replace custom audio"
 msgstr "사용자 지정 오디오 교체"
 
@@ -13515,6 +13557,12 @@ msgstr "{where}에서 파일 {replaced}개를 바꿨습니다"
 
 msgid "Replaced 1 file in {where}"
 msgstr "{where}에서 파일 1개를 바꿨습니다"
+
+msgid "Replaces <0>{currentCwd}</0> with <1>{importedCwd}</1>"
+msgstr "<0>{currentCwd}</0>을(를) <1>{importedCwd}</1>(으)로 바꿉니다"
+
+msgid "Replaces current"
+msgstr "현재 내용 대체"
 
 msgid "Reply"
 msgstr "답글"
@@ -14168,6 +14216,9 @@ msgstr "자동화가 실행되면 여기에 표시됩니다."
 
 msgid "Runs inside the Superset app on that device, so updating it means updating the app there."
 msgstr "해당 기기의 Superset 앱 안에서 실행되므로, 업데이트하려면 그 기기의 앱을 업데이트해야 합니다."
+
+msgid "Runs instead of <0>{currentScriptFile}</0>, which runs today"
+msgstr "현재 실행되는 <0>{currentScriptFile}</0> 대신 실행됩니다"
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "실행 결과는 워크스페이스에 도착합니다. 차이를 검토하고 괜찮은 것만 머지하세요."
@@ -16005,6 +16056,9 @@ msgstr "Superset 디자인 시스템"
 msgid "Superset desktop app"
 msgstr "Superset 데스크톱 앱"
 
+msgid "Superset does not set this variable"
+msgstr "Superset은 이 변수를 설정하지 않습니다"
+
 msgid "Superset Enterprise is Superset for teams. Reach out to learn more about what's included and how it can work for your organization."
 msgstr "Superset Enterprise는 팀을 위한 Superset입니다. 어떤 기능이 포함되고 조직에 어떻게 적용할 수 있는지 문의해 주세요."
 
@@ -16022,6 +16076,9 @@ msgstr "원격 워크스페이스를 선택해 두면 Superset이 그 워크스�
 
 msgid "Superset has a free tier. The source code is available on GitHub under Elastic License 2.0 (ELv2), so you can inspect and self-host it subject to the license terms."
 msgstr "Superset에는 무료 플랜이 있습니다. 소스 코드는 Elastic License 2.0(ELv2)으로 GitHub에 공개되어 있어, 라이선스 조건에 따라 직접 확인하고 셀프 호스팅할 수 있습니다."
+
+msgid "Superset has no matching setting"
+msgstr "Superset에는 해당하는 설정이 없습니다"
 
 msgid "Superset hit an unexpected error. Reload to try again."
 msgstr "Superset에서 예기치 않은 오류가 발생했습니다. 다시 로드해 보세요."
@@ -16161,6 +16218,9 @@ msgstr "Superset과 대안 비교"
 
 msgid "Superset works with any CLI-based coding agent, including Claude Code, OpenCode, OpenAI Codex, and more. Choose a different agent for every task without changing your workspace or review flow."
 msgstr "Superset은 Claude Code, OpenCode, OpenAI Codex 등 CLI 기반 코딩 에이전트라면 무엇이든 함께 씁니다. 워크스페이스나 리뷰 흐름을 바꾸지 않고 작업마다 다른 에이전트를 고르세요."
+
+msgid "Superset writes these scripts to .superset/config.json in this project. Review them before you import."
+msgstr "Superset은 이 스크립트를 이 프로젝트의 .superset/config.json에 씁니다. 가져오기 전에 검토하세요."
 
 msgid "superset.sh"
 msgstr "superset.sh"
@@ -17226,11 +17286,17 @@ msgstr "worktree를 디스크에서 제거하고 워크스페이스를 닫습니
 msgid "This replaces its label, command, arguments, prompt and resume settings, environment variables, and icon with the current bundled configuration."
 msgstr "레이블, 명령, 인수, 프롬프트 및 재개 설정, 환경 변수, 아이콘이 현재 번들된 구성으로 바뀝니다."
 
+msgid "This replaces part of your current Superset setup."
+msgstr "현재 Superset 설정의 일부가 바뀝니다."
+
 msgid "This repository does not allow merging from here."
 msgstr "이 리포지토리는 여기에서 머지하는 것을 허용하지 않습니다."
 
 msgid "This screen doesn't exist"
 msgstr "이 화면은 존재하지 않습니다"
+
+msgid "This script has shell blocks that do not split into separate commands, so it is saved to <0>{scriptPath}</0>:"
+msgstr "이 스크립트에는 개별 명령으로 나눌 수 없는 셸 블록이 있어 <0>{scriptPath}</0>에 저장됩니다:"
 
 msgid "This Slack workspace is already connected by {owner}. Ask them to disconnect first."
 msgstr "이 Slack 워크스페이스는 이미 {owner}이(가) 연결했습니다. 먼저 연결을 해제해 달라고 요청하세요."
@@ -17466,6 +17532,9 @@ msgstr "세션당 토큰, 최근 30일"
 
 msgid "Tokens stay off your machine"
 msgstr "토큰은 내 머신에 남지 않습니다"
+
+msgid "Too large to import"
+msgstr "너무 커서 가져올 수 없습니다"
 
 msgid "Too many feedback submissions. Try again later."
 msgstr "피드백 제출이 너무 많습니다. 나중에 다시 시도하세요."
@@ -18698,6 +18767,9 @@ msgstr "작업 중"
 msgctxt "agent status"
 msgid "Working"
 msgstr "작업 중"
+
+msgid "Working directory"
+msgstr "작업 디렉터리"
 
 #. placeholder {0}: Math.floor(seconds / 60)
 #. placeholder {1}: seconds % 60

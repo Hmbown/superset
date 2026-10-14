@@ -6806,6 +6806,9 @@ msgstr "Editor eksternal"
 msgid "extra ${used} of ${limit}"
 msgstr "tambahan ${used} dari ${limit}"
 
+msgid "Extra command; add it as a terminal script if you need it"
+msgstr "Perintah tambahan; tambahkan sebagai skrip terminal jika Anda membutuhkannya"
+
 msgid "Extra high"
 msgstr "Sangat tinggi"
 
@@ -7718,8 +7721,17 @@ msgstr "Kontrol form dan komposisi field"
 msgid "Forward"
 msgstr "Maju"
 
+msgid "Found {label} setup"
+msgstr "Setup {label} ditemukan"
+
 msgid "Found 12 tooltip call sites"
 msgstr "Menemukan 12 call site tooltip"
+
+msgid "Found a {label} setup in <0>{file}</0>."
+msgstr "Setup {label} ditemukan di <0>{file}</0>."
+
+msgid "Found setups from other tools in this project."
+msgstr "Ditemukan setup dari alat lain di proyek ini."
 
 msgid "Founder & CEO, WowMakers"
 msgstr "Pendiri & CEO, WowMakers"
@@ -8470,11 +8482,17 @@ msgstr "Impor dari file"
 msgid "Import from v1"
 msgstr "Impor dari v1"
 
+msgid "Import its scripts to automate workspace setup for {projectName}"
+msgstr "Impor skripnya untuk mengotomatiskan penyiapan workspace untuk {projectName}"
+
 msgid "Import puts a worktree on a new branch at its current commit, so it can come over. Your files do not change."
 msgstr "Impor menempatkan worktree pada branch baru di commit saat ini agar dapat dipindahkan. File Anda tidak berubah."
 
 msgid "Import settings from another browser"
 msgstr "Impor pengaturan dari browser lain"
+
+msgid "Import setup from {label}"
+msgstr "Impor setup dari {label}"
 
 msgid "import the project"
 msgstr "mengimpor proyek"
@@ -8494,6 +8512,9 @@ msgstr "Impor…"
 msgid "Important"
 msgstr "Penting"
 
+msgid "Imported"
+msgstr "Diimpor"
+
 #. placeholder {0}: untracked.length
 #. placeholder {1}: errors[0]
 msgid "Imported {imported} of {0} worktrees: {1}"
@@ -8504,6 +8525,9 @@ msgstr "Mengimpor {joinedMessages}"
 
 msgid "Imported from Linear"
 msgstr "Diimpor dari Linear"
+
+msgid "Imported setup from {label}"
+msgstr "Setup dari {label} berhasil diimpor"
 
 msgid "Imported to tasks"
 msgstr "Diimpor ke tugas"
@@ -11057,6 +11081,12 @@ msgstr "Bukan klaim 2026"
 msgid "Not a member of this organization"
 msgstr "Bukan anggota organisasi ini"
 
+msgid "Not a plain relative path"
+msgstr "Bukan path relatif sederhana"
+
+msgid "Not a value this file accepts"
+msgstr "Bukan nilai yang diterima file ini"
+
 msgid "Not authenticated. Please sign in."
 msgstr "Belum terautentikasi. Silakan masuk."
 
@@ -11089,6 +11119,9 @@ msgstr "Tidak ditemukan"
 
 msgid "Not granted"
 msgstr "Belum diberikan"
+
+msgid "Not imported"
+msgstr "Tidak diimpor"
 
 msgid "Not included"
 msgstr "Tidak termasuk"
@@ -11999,6 +12032,9 @@ msgstr "Ikhtisar"
 
 msgid "Overwrite file"
 msgstr "Timpa file"
+
+msgid "Overwrites <0>{currentScriptFile}</0>"
+msgstr "Menimpa <0>{currentScriptFile}</0>"
 
 #. placeholder {0}: ownerName ?? t({ message: "a teammate", })
 msgid "Owned by {0} — only they can edit this automation."
@@ -13058,6 +13094,9 @@ msgstr "Baca dan kirim email"
 msgid "Read deployment and build logs"
 msgstr "Baca log deployment dan build"
 
+msgid "Read from <0>{fileList}</0>"
+msgstr "Dibaca dari <0>{fileList}</0>"
+
 msgid "Read it on your phone"
 msgstr "Baca di ponsel Anda"
 
@@ -13504,6 +13543,9 @@ msgstr "Ganti"
 msgid "Replace All"
 msgstr "Ganti Semua"
 
+msgid "Replace and import"
+msgstr "Ganti dan impor"
+
 msgid "Replace custom audio"
 msgstr "Ganti audio kustom"
 
@@ -13515,6 +13557,12 @@ msgstr "Mengganti {replaced} file di {where}"
 
 msgid "Replaced 1 file in {where}"
 msgstr "Mengganti 1 file di {where}"
+
+msgid "Replaces <0>{currentCwd}</0> with <1>{importedCwd}</1>"
+msgstr "Mengganti <0>{currentCwd}</0> dengan <1>{importedCwd}</1>"
+
+msgid "Replaces current"
+msgstr "Mengganti yang sekarang"
 
 msgid "Reply"
 msgstr "Balas"
@@ -14168,6 +14216,9 @@ msgstr "Run muncul di sini setelah otomatisasi terpicu."
 
 msgid "Runs inside the Superset app on that device, so updating it means updating the app there."
 msgstr "Berjalan di dalam aplikasi Superset di perangkat itu, jadi memperbaruinya berarti memperbarui aplikasi di sana."
+
+msgid "Runs instead of <0>{currentScriptFile}</0>, which runs today"
+msgstr "Berjalan sebagai pengganti <0>{currentScriptFile}</0>, yang berjalan saat ini"
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Run mendarat di sebuah workspace. Review diff-nya, merge yang bagus."
@@ -16005,6 +16056,9 @@ msgstr "Design System Superset"
 msgid "Superset desktop app"
 msgstr "Aplikasi desktop Superset"
 
+msgid "Superset does not set this variable"
+msgstr "Superset tidak mengatur variabel ini"
+
 msgid "Superset Enterprise is Superset for teams. Reach out to learn more about what's included and how it can work for your organization."
 msgstr "Superset Enterprise adalah Superset untuk tim. Hubungi kami untuk tahu lebih banyak soal apa saja yang termasuk dan bagaimana cocoknya untuk organisasi Anda."
 
@@ -16022,6 +16076,9 @@ msgstr "Superset meneruskan port yang dibuka workspace jarak jauh selama workspa
 
 msgid "Superset has a free tier. The source code is available on GitHub under Elastic License 2.0 (ELv2), so you can inspect and self-host it subject to the license terms."
 msgstr "Superset punya paket gratis. Kode sumbernya tersedia di GitHub dengan Elastic License 2.0 (ELv2), jadi Anda bisa memeriksanya dan meng-host sendiri sesuai ketentuan lisensinya."
+
+msgid "Superset has no matching setting"
+msgstr "Superset tidak memiliki pengaturan yang sesuai"
 
 msgid "Superset hit an unexpected error. Reload to try again."
 msgstr "Superset mengalami kesalahan tak terduga. Muat ulang untuk mencoba lagi."
@@ -16161,6 +16218,9 @@ msgstr "Superset vs Alternatifnya"
 
 msgid "Superset works with any CLI-based coding agent, including Claude Code, OpenCode, OpenAI Codex, and more. Choose a different agent for every task without changing your workspace or review flow."
 msgstr "Superset bekerja dengan agen coding berbasis CLI mana pun, termasuk Claude Code, OpenCode, OpenAI Codex, dan lainnya. Pilih agen berbeda untuk tiap tugas tanpa mengubah workspace atau alur review Anda."
+
+msgid "Superset writes these scripts to .superset/config.json in this project. Review them before you import."
+msgstr "Superset menulis skrip ini ke .superset/config.json di proyek ini. Periksa sebelum Anda mengimpor."
 
 msgid "superset.sh"
 msgstr "superset.sh"
@@ -17226,11 +17286,17 @@ msgstr "Ini menghapus worktree dari disk dan menutup workspace."
 msgid "This replaces its label, command, arguments, prompt and resume settings, environment variables, and icon with the current bundled configuration."
 msgstr "Ini mengganti label, perintah, argumen, pengaturan prompt dan resume, variabel environment, serta ikonnya dengan konfigurasi bawaan yang berlaku sekarang."
 
+msgid "This replaces part of your current Superset setup."
+msgstr "Ini mengganti sebagian setup Superset Anda saat ini."
+
 msgid "This repository does not allow merging from here."
 msgstr "Repositori ini tidak mengizinkan merge dari sini."
 
 msgid "This screen doesn't exist"
 msgstr "Layar ini tidak ada"
+
+msgid "This script has shell blocks that do not split into separate commands, so it is saved to <0>{scriptPath}</0>:"
+msgstr "Skrip ini berisi blok shell yang tidak dapat dipecah menjadi perintah terpisah, jadi disimpan ke <0>{scriptPath}</0>:"
 
 msgid "This Slack workspace is already connected by {owner}. Ask them to disconnect first."
 msgstr "Workspace Slack ini sudah terhubung oleh {owner}. Minta mereka memutuskannya dulu."
@@ -17466,6 +17532,9 @@ msgstr "token per sesi, 30 hari terakhir"
 
 msgid "Tokens stay off your machine"
 msgstr "Token tidak tersimpan di mesin Anda"
+
+msgid "Too large to import"
+msgstr "Terlalu besar untuk diimpor"
 
 msgid "Too many feedback submissions. Try again later."
 msgstr "Terlalu banyak masukan yang dikirim. Coba lagi nanti."
@@ -18698,6 +18767,9 @@ msgstr "Bekerja"
 msgctxt "agent status"
 msgid "Working"
 msgstr "Bekerja"
+
+msgid "Working directory"
+msgstr "Direktori kerja"
 
 #. placeholder {0}: Math.floor(seconds / 60)
 #. placeholder {1}: seconds % 60

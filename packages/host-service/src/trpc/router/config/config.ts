@@ -12,6 +12,14 @@ import {
 	type SetupConfig,
 	shellSingleQuote,
 } from "../../../runtime/setup/config";
+import {
+	applySetupImport,
+	compareWithCurrentSetup,
+	InvalidProjectConfigError,
+	inspectSetupImports,
+	SETUP_IMPORT_SOURCES,
+	SetupImportConflictError,
+} from "../../../runtime/setup/import";
 import type { HostServiceContext } from "../../../types";
 import { protectedProcedure, router } from "../../index";
 
@@ -126,6 +134,68 @@ export const configRouter = router({
 				});
 			}
 			return { success: true as const };
+		}),
+
+	/**
+	 * Setups from other tools (Conductor, Orca, Codex, cmux, T3 Code) found in
+	 * the repo root, with what each would write, which fields it would change,
+	 * and which of those replace an existing Superset setup.
+	 */
+	getSetupImportCandidates: protectedProcedure
+		.input(projectIdInput)
+		.query(({ ctx, input }) => {
+			const project = requireProject(ctx, input.projectId);
+			return {
+				candidates: inspectSetupImports(project.repoPath).map((candidate) => ({
+					...candidate,
+					...compareWithCurrentSetup(project.repoPath, candidate),
+				})),
+			};
+		}),
+
+	/**
+	 * Re-reads the source and writes it into `.superset/`. Throws CONFLICT
+	 * when it would replace an existing field and `overwrite` is not set.
+	 */
+	importSetup: protectedProcedure
+		.input(
+			z.object({
+				projectId: z.string().uuid(),
+				source: z.enum(SETUP_IMPORT_SOURCES),
+				overwrite: z.boolean().optional(),
+			}),
+		)
+		.mutation(({ ctx, input }) => {
+			const project = requireProject(ctx, input.projectId);
+			const candidate = inspectSetupImports(project.repoPath).find(
+				(entry) => entry.source === input.source,
+			);
+			if (!candidate) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: `No ${input.source} setup found in ${project.repoPath}`,
+				});
+			}
+			try {
+				return {
+					written: applySetupImport({
+						repoPath: project.repoPath,
+						candidate,
+						overwrite: input.overwrite ?? false,
+					}),
+				};
+			} catch (error) {
+				if (error instanceof SetupImportConflictError) {
+					throw new TRPCError({ code: "CONFLICT", message: error.message });
+				}
+				if (error instanceof InvalidProjectConfigError) {
+					throw new TRPCError({ code: "BAD_REQUEST", message: error.message });
+				}
+				throw new TRPCError({
+					code: "INTERNAL_SERVER_ERROR",
+					message: `Failed to import setup: ${error instanceof Error ? error.message : String(error)}`,
+				});
+			}
 		}),
 
 	getWorkspaceRunDefinition: protectedProcedure

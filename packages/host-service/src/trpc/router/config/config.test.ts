@@ -274,6 +274,51 @@ describe("configRouter", () => {
 		});
 	});
 
+	describe("importSetup", () => {
+		it("lists candidates with conflicts and imports only after overwrite", async () => {
+			const caller = createCaller(sandbox.repoPath);
+			mkdirSync(join(sandbox.repoPath, ".superset"), { recursive: true });
+			writeFileSync(
+				join(sandbox.repoPath, ".superset", "config.json"),
+				`{"setup":["npm ci"]}`,
+			);
+			writeFileSync(
+				join(sandbox.repoPath, "conductor.json"),
+				`{"scripts":{"setup":"bun install"}}`,
+			);
+
+			const { candidates } = await caller.getSetupImportCandidates({
+				projectId: PROJECT_ID,
+			});
+			expect(candidates.map((c) => [c.source, c.conflicts.length])).toEqual([
+				["conductor", 1],
+			]);
+			await expect(
+				caller.importSetup({ projectId: PROJECT_ID, source: "conductor" }),
+			).rejects.toMatchObject({ code: "CONFLICT" });
+
+			await caller.importSetup({
+				projectId: PROJECT_ID,
+				source: "conductor",
+				overwrite: true,
+			});
+			const config = JSON.parse(
+				readFileSync(
+					join(sandbox.repoPath, ".superset", "config.json"),
+					"utf-8",
+				),
+			);
+			expect(config.setup).toEqual(["bun install"]);
+		});
+
+		it("throws NOT_FOUND when the source is gone", async () => {
+			const caller = createCaller(sandbox.repoPath);
+			await expect(
+				caller.importSetup({ projectId: PROJECT_ID, source: "orca" }),
+			).rejects.toMatchObject({ code: "NOT_FOUND" });
+		});
+	});
+
 	describe("getWorkspaceRunDefinition", () => {
 		it("returns null when run is not configured", async () => {
 			const caller = createCaller(sandbox.repoPath);
