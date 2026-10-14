@@ -1,5 +1,6 @@
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import fs from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
 /**
@@ -123,14 +124,28 @@ export async function refreshStoredAuth<C extends OAuthConfig>(
 			throw new SessionExpiredError();
 		};
 
-		const startedAt = auth.refreshStartedAt ?? deps.now();
-		if (deps.now() - startedAt > deps.retryWindowMs) {
+		const now = deps.now();
+		const startedAt = auth.refreshStartedAt ?? now;
+		// A marker from the future (a clock moved back, a hand edit) is as
+		// unknown as an old one: the server may have rotated long ago.
+		if (
+			!Number.isFinite(startedAt) ||
+			Math.abs(now - startedAt) > deps.retryWindowMs
+		) {
 			return await dropRefreshToken();
 		}
 		await deps.writeConfig({
 			...latest,
 			auth: { ...auth, refreshStartedAt: startedAt },
 		});
+
+		// A holder paused long enough to lose its lock must not send: the new
+		// holder may already have rotated this token.
+		if (!lock.stillHeld()) {
+			const current = await deps.readConfig();
+			if (renewed(current)) return current;
+			throw new RefreshInProgressError();
+		}
 
 		let refreshed: Awaited<ReturnType<RefreshDeps<C>["refresh"]>>;
 		try {
@@ -203,57 +218,79 @@ function classifyFailure(error: unknown): "unsent" | "rejected" | "unknown" {
 type AcquiredLock = {
 	/** "unlockable": the filesystem refuses locks, so no process can hold one. */
 	state: "held" | "unlockable" | "timed-out";
+	stillHeld: () => boolean;
 	release: () => void;
 };
+
+/**
+ * The lock lives next to the config. When that directory is not writable
+ * (a read-only home with config.json linked elsewhere), every process falls
+ * back to the same lock in the temp directory instead of running unlocked.
+ */
+function usableLockPath(preferred: string): string {
+	try {
+		fs.accessSync(dirname(preferred), fs.constants.W_OK | fs.constants.X_OK);
+		return preferred;
+	} catch {
+		const key = createHash("sha256").update(preferred).digest("hex");
+		return join(tmpdir(), `superset-auth-refresh-${key.slice(0, 16)}.lock`);
+	}
+}
 
 async function acquireLock<C extends OAuthConfig>(
 	deps: RefreshDeps<C>,
 ): Promise<AcquiredLock> {
+	const lockPath = usableLockPath(deps.lockPath);
 	const token = `${process.pid} ${randomUUID()}`;
 	const deadline = deps.now() + deps.lockTimeoutMs;
 	const ownsLock = () => {
 		try {
-			return fs.readFileSync(deps.lockPath, "utf-8") === token;
+			return fs.readFileSync(lockPath, "utf-8") === token;
 		} catch {
 			return false;
 		}
 	};
 	for (;;) {
 		try {
-			const fd = fs.openSync(deps.lockPath, "wx");
+			const fd = fs.openSync(lockPath, "wx");
 			fs.writeSync(fd, token);
 			fs.closeSync(fd);
 			const heartbeat = setInterval(() => {
 				if (!ownsLock()) return;
 				try {
 					const now = new Date();
-					fs.utimesSync(deps.lockPath, now, now);
+					fs.utimesSync(lockPath, now, now);
 				} catch {}
 			}, deps.lockHeartbeatMs);
 			heartbeat.unref?.();
 			return {
 				state: "held",
+				stillHeld: ownsLock,
 				release: () => {
 					clearInterval(heartbeat);
 					try {
-						if (ownsLock()) fs.unlinkSync(deps.lockPath);
+						if (ownsLock()) fs.unlinkSync(lockPath);
 					} catch {}
 				},
 			};
 		} catch (error) {
 			if ((error as NodeJS.ErrnoException).code !== "EEXIST") {
-				return { state: "unlockable", release: () => {} };
+				return {
+					state: "unlockable",
+					stillHeld: () => true,
+					release: () => {},
+				};
 			}
 		}
 		if (deps.now() >= deadline) {
-			return { state: "timed-out", release: () => {} };
+			return { state: "timed-out", stillHeld: () => false, release: () => {} };
 		}
 		try {
-			const observed = fs.readFileSync(deps.lockPath, "utf-8");
-			const age = Date.now() - fs.statSync(deps.lockPath).mtimeMs;
+			const observed = fs.readFileSync(lockPath, "utf-8");
+			const age = Date.now() - fs.statSync(lockPath).mtimeMs;
 			if (age > deps.lockStaleMs) {
-				const corpse = `${deps.lockPath}.${randomUUID()}.stale`;
-				fs.renameSync(deps.lockPath, corpse);
+				const corpse = `${lockPath}.${randomUUID()}.stale`;
+				fs.renameSync(lockPath, corpse);
 				if (fs.readFileSync(corpse, "utf-8") === observed) {
 					fs.unlinkSync(corpse);
 					continue;
@@ -261,7 +298,7 @@ async function acquireLock<C extends OAuthConfig>(
 				// Changed hands between the read and the rename: give it back.
 				// A hard link cannot replace a lock created at the path since.
 				try {
-					fs.linkSync(corpse, deps.lockPath);
+					fs.linkSync(corpse, lockPath);
 				} catch {}
 				try {
 					fs.unlinkSync(corpse);

@@ -6,6 +6,7 @@ import {
 	isAuthFresh,
 	type OAuthConfig,
 	type RefreshDeps,
+	RefreshInProgressError,
 	refreshStoredAuth,
 	ServerUnreachableError,
 	SessionExpiredError,
@@ -246,6 +247,56 @@ describe("refreshStoredAuth", () => {
 			expect(h.refreshCalls).toBe(0);
 			expect(h.stored.auth?.refreshToken).toBeUndefined();
 		} finally {
+			h.cleanup();
+		}
+	});
+
+	it("drops the token instead of sending it when the marker is from the future", async () => {
+		const h = makeHarness({
+			...staleAuth(),
+			refreshStartedAt: Date.now() + 61_000,
+		});
+		try {
+			await expect(refreshStoredAuth(h.deps)).rejects.toBeInstanceOf(
+				SessionExpiredError,
+			);
+			expect(h.refreshCalls).toBe(0);
+			expect(h.stored.auth?.refreshToken).toBeUndefined();
+		} finally {
+			h.cleanup();
+		}
+	});
+
+	it("does not send after another process took the lock while it was paused", async () => {
+		const h = makeHarness(staleAuth());
+		const writeConfig = h.deps.writeConfig;
+		h.deps.writeConfig = (config) => {
+			writeConfig(config);
+			if (config.auth?.refreshStartedAt) {
+				fs.writeFileSync(h.deps.lockPath, "new-holder");
+			}
+		};
+		try {
+			await expect(refreshStoredAuth(h.deps)).rejects.toBeInstanceOf(
+				RefreshInProgressError,
+			);
+			expect(h.refreshCalls).toBe(0);
+		} finally {
+			h.cleanup();
+		}
+	});
+
+	it("still serializes callers when the config directory is not writable", async () => {
+		const h = makeHarness(staleAuth());
+		const readOnly = path.join(h.dir, "read-only");
+		fs.mkdirSync(readOnly);
+		fs.chmodSync(readOnly, 0o500);
+		h.deps.lockPath = path.join(readOnly, "auth-refresh.lock");
+		try {
+			await Promise.all([refreshStoredAuth(h.deps), refreshStoredAuth(h.deps)]);
+			expect(h.refreshCalls).toBe(1);
+		} finally {
+			fs.chmodSync(readOnly, 0o700);
 			h.cleanup();
 		}
 	});
