@@ -2,6 +2,7 @@ import { db } from "@superset/db/client";
 import { subscriptions } from "@superset/db/schema";
 import * as authSchema from "@superset/db/schema/auth";
 import { ACTIVE_SUBSCRIPTION_STATUSES } from "@superset/shared/billing";
+import { AutumnError } from "autumn-js";
 import { desc, eq, inArray } from "drizzle-orm";
 import type Stripe from "stripe";
 import { autumnClient } from "../src/autumn";
@@ -30,6 +31,11 @@ const SEAT_INTERVALS = new Set(["month", "year"]);
 const apply = process.argv.includes("--apply");
 
 type AutumnPlan = Awaited<ReturnType<typeof autumnClient.plans.get>>;
+
+function nullWhenMissing(error: unknown): null {
+	if (error instanceof AutumnError && error.statusCode === 404) return null;
+	throw error;
+}
 
 function dealPlanId(price: Stripe.Price): string {
 	return `enterprise_${price.id.replace(/^price_/, "").toLowerCase()}`;
@@ -74,7 +80,9 @@ async function ensureDealPlan(
 ): Promise<string> {
 	const planId = dealPlanId(price);
 	if (created.has(planId)) return planId;
-	const existing = await autumnClient.plans.get({ planId }).catch(() => null);
+	const existing = await autumnClient.plans
+		.get({ planId })
+		.catch(nullWhenMissing);
 	if (existing) {
 		created.set(planId, existing.name);
 		return planId;
@@ -141,6 +149,7 @@ async function ensureDealPlan(
 
 async function main() {
 	const autumn = autumnClient;
+	await autumn.plans.list({});
 	const rows = await db
 		.select({
 			organizationId: subscriptions.referenceId,
@@ -182,12 +191,14 @@ async function main() {
 		try {
 			if (!row.stripeSubscriptionId || !row.stripeCustomerId) {
 				counts.skipped += 1;
-				console.log(`[autumn-import] skip ${label}: no Stripe ids`);
+				console.log(
+					`[autumn-import] skip ${label} "${row.name}" plan=${row.plan}: missing ${row.stripeSubscriptionId ? "" : "subscription id "}${row.stripeCustomerId ? "" : "customer id"}`,
+				);
 				continue;
 			}
 			const existing = await autumn.customers
 				.get({ customerId: row.organizationId, expand: ["flags.feature"] })
-				.catch(() => null);
+				.catch(nullWhenMissing);
 			if (existing && paidPlanIdFromFlags(existing.flags)) {
 				counts.alreadyLinked += 1;
 				await verify(row.organizationId);
@@ -212,7 +223,10 @@ async function main() {
 				);
 				continue;
 			}
-			if (!apply && !(await autumn.plans.get({ planId }).catch(() => null))) {
+			if (
+				!apply &&
+				!(await autumn.plans.get({ planId }).catch(nullWhenMissing))
+			) {
 				counts.imported += 1;
 				console.log(
 					`[autumn-import] would import ${label} onto new plan ${planId}`,
