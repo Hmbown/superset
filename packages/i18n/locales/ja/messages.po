@@ -1239,6 +1239,9 @@ msgstr "<0>Nerd Fonts</0>を推奨します。"
 msgid "<0>vs</0> <1/>"
 msgstr "<0>vs</0> <1/>"
 
+msgid "~{secondsLeft}s"
+msgstr "約{secondsLeft}秒"
+
 msgid "~{stars} projected this week"
 msgstr "今週は約{stars}の見込み"
 
@@ -7738,9 +7741,6 @@ msgstr "Free"
 
 msgid "Free for everyone"
 msgstr "誰でも無料"
-
-msgid "Free to start · No credit card required"
-msgstr "無料で始められます · クレジットカード不要"
 
 msgid "Frequently<0/>asked questions"
 msgstr "よくある<0/>ご質問"
@@ -15835,6 +15835,9 @@ msgstr "ホストにまだ接続できません。"
 msgid "Still trying. If it keeps failing, archive it and create a new one."
 msgstr "再試行しています。失敗が続く場合は、アーカイブして新しく作成してください。"
 
+msgid "Still waking up…"
+msgstr "まだ起動中…"
+
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "処理を続けています — 大きなリポジトリでは数分かかることがあります。画面を離れても構いません。準備ができるとホームに表示されます。"
 
@@ -15981,8 +15984,8 @@ msgstr "superset"
 msgid "Superset"
 msgstr "Superset"
 
-msgid "Superset (YC S26) is the open-source IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
-msgstr "Superset（YC S26）は、AI エージェント時代のためのオープンソース IDE です。エンジニアは Claude Code や Codex などのコーディングエージェントを数百単位で並行して実行できます。"
+msgid "Superset (YC S26) is the source-available IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
+msgstr "Superset（YC S26）は、AI エージェント時代のためのソースコード公開型 IDE です。エンジニアは Claude Code や Codex などのコーディングエージェントを数百単位で並行して実行できます。"
 
 msgid "Superset Agent"
 msgstr "Supersetエージェント"
@@ -18383,6 +18386,9 @@ msgstr "サブエージェントの最初のメッセージを待っています
 
 msgid "Waiting for your input"
 msgstr "入力を待っています"
+
+msgid "Waking up workspace"
+msgstr "ワークスペースを起動中"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "もっと早く欲しいものがありますか?<0>Discordで教えてください</0>。ここにあるものの多くは、ユーザーの要望から始まりました。"

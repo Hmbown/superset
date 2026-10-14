@@ -1,6 +1,5 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { Badge } from "@superset/ui/badge";
 import {
 	HoverCard,
 	HoverCardContent,
@@ -8,10 +7,11 @@ import {
 } from "@superset/ui/hover-card";
 import { Separator } from "@superset/ui/separator";
 import { toast } from "@superset/ui/sonner";
-import { cn } from "@superset/ui/utils";
-import { LuLoaderCircle, LuRadioTower, LuX } from "react-icons/lu";
+import { LuLoaderCircle, LuX } from "react-icons/lu";
 import { useDashboardSidebarPortKill } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/hooks/useDashboardSidebarPortKill";
 import type { DashboardSidebarPort } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/hooks/useDashboardSidebarPortsData";
+import { useHoverCardSafeTriangle } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/hooks/useHoverCardSafeTriangle";
+import { PortsCountIcon } from "renderer/routes/_authenticated/_dashboard/components/PortsCountIcon";
 import { STROKE_WIDTH } from "renderer/screens/main/components/WorkspaceSidebar/constants";
 import { useDashboardSidebarChipHoverSuppression } from "../../hooks/useDashboardSidebarChipHoverSuppression";
 import { DashboardSidebarPortHoverRow } from "./components/DashboardSidebarPortHoverRow";
@@ -32,6 +32,7 @@ export function DashboardSidebarPortsChip({
 	const { isPending, killPorts } = useDashboardSidebarPortKill();
 	const { isOpen, onOpenChange, onPointerEnter, onPointerLeave, toggleOpen } =
 		useDashboardSidebarChipHoverSuppression();
+	const safeTriangle = useHoverCardSafeTriangle(isOpen, onOpenChange);
 
 	const handleCloseAll = async () => {
 		if (isPending) return;
@@ -54,65 +55,61 @@ export function DashboardSidebarPortsChip({
 			open={isOpen}
 			openDelay={150}
 			closeDelay={120}
-			onOpenChange={onOpenChange}
+			onOpenChange={safeTriangle.onOpenChange}
 		>
 			<HoverCardTrigger asChild>
-				<Badge asChild variant="secondary">
-					<button
-						type="button"
-						onPointerEnter={onPointerEnter}
-						onPointerLeave={onPointerLeave}
-						onPointerDown={(event) => {
+				<button
+					type="button"
+					onPointerEnter={onPointerEnter}
+					onPointerLeave={(event) => {
+						onPointerLeave();
+						safeTriangle.onTriggerPointerLeave(event);
+					}}
+					onPointerDown={(event) => {
+						event.stopPropagation();
+					}}
+					onClick={(event) => {
+						event.stopPropagation();
+						toggleOpen();
+					}}
+					onKeyDown={(event) => {
+						if (event.key === "Enter" || event.key === " ") {
 							event.stopPropagation();
-						}}
-						onClick={(event) => {
-							event.stopPropagation();
-							toggleOpen();
-						}}
-						onKeyDown={(event) => {
-							if (event.key === "Enter" || event.key === " ") {
-								event.stopPropagation();
-							}
-						}}
-						disabled={isPending}
-						aria-busy={isPending}
-						aria-expanded={isOpen}
-						aria-label={
-							isOpen
-								? t({
-										message: plural(ports.length, {
-											one: "# active port — hide details",
-											other: "# active ports — hide details",
-										}),
-									})
-								: t({
-										message: plural(ports.length, {
-											one: "# active port — show details",
-											other: "# active ports — show details",
-										}),
-									})
 						}
-						className={cn(
-							"group/chip h-[18px] bg-muted/60 px-1.5 py-0 text-[9px] font-medium tabular-nums text-muted-foreground",
-							"[&>svg]:size-2.5 hover:bg-muted hover:text-foreground disabled:opacity-70",
-						)}
-					>
-						<LuRadioTower
-							className="size-2.5 shrink-0"
+					}}
+					disabled={isPending}
+					aria-busy={isPending}
+					aria-expanded={isOpen}
+					aria-label={
+						isOpen
+							? t({
+									message: plural(ports.length, {
+										one: "# active port — hide details",
+										other: "# active ports — hide details",
+									}),
+								})
+							: t({
+									message: plural(ports.length, {
+										one: "# active port — show details",
+										other: "# active ports — show details",
+									}),
+								})
+					}
+					className="flex size-[18px] items-center justify-center rounded text-muted-foreground hover:bg-foreground/10 hover:text-foreground disabled:opacity-70"
+				>
+					{isPending ? (
+						<LuLoaderCircle
+							className="size-3 animate-spin"
 							strokeWidth={STROKE_WIDTH}
 						/>
-						{isPending ? (
-							<LuLoaderCircle
-								className="size-2.5 shrink-0 animate-spin"
-								strokeWidth={STROKE_WIDTH}
-							/>
-						) : (
-							<span className="shrink-0">{ports.length}</span>
-						)}
-					</button>
-				</Badge>
+					) : (
+						<PortsCountIcon count={ports.length} size="sm" />
+					)}
+				</button>
 			</HoverCardTrigger>
 			<HoverCardContent
+				ref={safeTriangle.setCardElement}
+				onPointerEnter={safeTriangle.onCardPointerEnter}
 				side="right"
 				align="start"
 				sideOffset={8}
