@@ -140,8 +140,7 @@ export async function authorizeBoot(args: {
 			},
 		}),
 	);
-	if (!result) return { bootId: null };
-	const refusal = refusalFor(result);
+	const refusal = result && refusalFor(result);
 	if (refusal) throw refusalError(refusal);
 	await db.insert(cloudWorkspaceBoots).values({
 		id: bootId,
@@ -150,6 +149,7 @@ export async function authorizeBoot(args: {
 		memoryMb: args.memoryMb,
 		vcpus: args.vcpus,
 		startedAt: new Date(),
+		lockOpen: result !== null,
 	});
 	return { bootId };
 }
@@ -380,7 +380,9 @@ export async function settleBoot(
 				.update(cloudWorkspaceBoots)
 				.set({ stoppedAt: new Date(end), settleLeaseUntil: null })
 				.where(eq(cloudWorkspaceBoots.id, bootId));
-			if (workspace?.usageStopAt) await setUsageStopAt(boot, null);
+			if (workspace?.usageStopAt && !(await otherOpenBoot(boot))) {
+				await setUsageStopAt(boot, null);
+			}
 			return "closed";
 		}
 
@@ -441,6 +443,22 @@ async function openBootIds(cloudWorkspaceId?: string): Promise<string[]> {
 	return rows.map((row) => row.id);
 }
 
+async function otherOpenBoot(boot: Boot): Promise<boolean> {
+	if (!boot.cloudWorkspaceId) return false;
+	const [other] = await db
+		.select({ id: cloudWorkspaceBoots.id })
+		.from(cloudWorkspaceBoots)
+		.where(
+			and(
+				eq(cloudWorkspaceBoots.cloudWorkspaceId, boot.cloudWorkspaceId),
+				ne(cloudWorkspaceBoots.id, boot.id),
+				isNull(cloudWorkspaceBoots.stoppedAt),
+			),
+		)
+		.limit(1);
+	return Boolean(other);
+}
+
 async function setUsageStopAt(boot: Boot, at: Date | null): Promise<void> {
 	if (!boot.cloudWorkspaceId) return;
 	await db
@@ -494,13 +512,24 @@ export async function settleOrganizationNow(
 		.where(
 			and(eq(cloudWorkspaceBoots.organizationId, organizationId), OPEN_BOOT),
 		);
-	for (const { id, providerSandboxId } of rows) {
-		if (providerSandboxId) {
-			await stopSandbox(providerSandboxId).catch((error) =>
-				Sentry.captureException(error, { extra: { bootId: id } }),
-			);
-		}
-		await settleBoot(id);
+	await Promise.all(
+		rows.map(({ id, providerSandboxId }) =>
+			providerSandboxId
+				? stopSandbox(providerSandboxId).catch((error) =>
+						Sentry.captureException(error, { extra: { bootId: id } }),
+					)
+				: undefined,
+		),
+	);
+	const failures: unknown[] = [];
+	for (const { id } of rows) {
+		await settleBoot(id).catch((error) => failures.push(error));
+	}
+	if (failures.length > 0) {
+		throw new AggregateError(
+			failures,
+			`${failures.length} of ${rows.length} boots of ${organizationId} not settled`,
+		);
 	}
 }
 

@@ -43,6 +43,7 @@ function chain(rows: () => unknown[]) {
 		where: () =>
 			Object.assign(Promise.resolve().then(rows), {
 				returning: async () => rows(),
+				limit: async () => rows(),
 			}),
 	};
 	return link;
@@ -201,6 +202,13 @@ describe("settleBoot", () => {
 		expect(await settleBoot("boot_1")).toBe("renewed");
 		expect(stopped).toEqual([]);
 		expect(writes.at(-1)).toEqual({ usageStopAt: null });
+	});
+
+	test("an old boot closing after a restart leaves the new boot's stop deadline alone", async () => {
+		usageStopAt = new Date(NOW + 5 * MINUTE);
+		session = { ...(session as BoxSession), endedAt: NOW - MINUTE };
+		expect(await settleBoot("boot_1")).toBe("closed");
+		expect(writes).not.toContainEqual({ usageStopAt: null });
 	});
 
 	test("usage is reported with the user who made the box", async () => {
