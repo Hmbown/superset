@@ -90,15 +90,15 @@ export function DashboardSidebarPortsChip({
 									}),
 								})
 					}
-					className="flex size-5 items-center justify-center rounded text-muted-foreground hover:bg-foreground/10 hover:text-foreground disabled:opacity-70"
+					className="flex size-[18px] items-center justify-center rounded text-muted-foreground hover:bg-foreground/10 hover:text-foreground disabled:opacity-70"
 				>
 					{isPending ? (
 						<LuLoaderCircle
-							className="size-3.5 animate-spin"
+							className="size-3 animate-spin"
 							strokeWidth={STROKE_WIDTH}
 						/>
 					) : (
-						<PortsCountIcon count={ports.length} />
+						<PortsCountIcon count={ports.length} size="sm" />
 					)}
 				</button>
 			</HoverCardTrigger>
