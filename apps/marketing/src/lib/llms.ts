@@ -4,6 +4,7 @@ import { COMPANY } from "@superset/shared/constants";
 import { API_URL, MCP_SERVER_URL } from "./api-url";
 import { getBlogPosts } from "./blog";
 import { getCategoryPages } from "./category";
+import { getChangelogEntries } from "./changelog";
 import { getComparisonPages } from "./compare";
 import {
 	PRODUCT_DISAMBIGUATION,
@@ -131,6 +132,7 @@ export function buildLlmsTxt(): string {
 	const posts = getBlogPosts();
 	const comparisons = getComparisonPages();
 	const categories = getCategoryPages();
+	const changelog = getChangelogEntries().slice(0, 8);
 	const baseUrl = COMPANY.MARKETING_URL;
 	const docsUrl = COMPANY.DOCS_URL;
 
@@ -153,6 +155,14 @@ export function buildLlmsTxt(): string {
 		"## Blog",
 		"",
 		...posts.map((post) => `- [${post.title}](${baseUrl}/blog/${post.slug})`),
+		"",
+		"## Changelog",
+		"",
+		`- [Changelog](${baseUrl}/changelog): every release, newest first`,
+		`- [Changelog feed](${baseUrl}/changelog.xml): RSS`,
+		...changelog.map(
+			(entry) => `- [${entry.title}](${baseUrl}${entry.url}): ${entry.date}`,
+		),
 		"",
 		"## Guides",
 		"",
