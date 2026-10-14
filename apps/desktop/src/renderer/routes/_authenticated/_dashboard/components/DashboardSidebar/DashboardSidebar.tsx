@@ -73,6 +73,7 @@ import type {
 	DashboardSidebarWorkspace,
 } from "./types";
 import { filterDashboardSidebarProjects } from "./utils/filterDashboardSidebarProjects";
+import { filterDashboardSidebarProjectsByHost } from "./utils/filterDashboardSidebarProjectsByHost";
 import { getProjectChildrenWorkspaces } from "./utils/projectChildren";
 import { sortDashboardSidebarProjects } from "./utils/sortDashboardSidebarProjects";
 
@@ -192,8 +193,17 @@ export function DashboardSidebar({
 	const workspacesListCollapsed = useSidebarSectionsCollapseStore(
 		(s) => s.collapsed.workspaces,
 	);
-	const { preferences, setSidebarProjectSortMode } = useV2UserPreferences();
+	const {
+		preferences,
+		setSidebarProjectSortMode,
+		setSidebarProjectHostFilter,
+	} = useV2UserPreferences();
 	const sortMode = preferences.sidebarProjectSortMode;
+	// Only meaningful once cloud rows sit inside projects; with them in their
+	// own section a stored "cloud" filter would empty every project.
+	const hostFilter = inlineCloudWorkspaces
+		? preferences.sidebarProjectHostFilter
+		: "all";
 	const [projectFilterQuery, setProjectFilterQuery] = useState("");
 	// The icon rail hides the Projects header (and its filter input); a
 	// filter left active there would invisibly hide projects.
@@ -225,16 +235,21 @@ export function DashboardSidebar({
 				: sortDashboardSidebarProjects(orderedGroups, sortMode),
 		[sortMode, orderedGroups],
 	);
+	const hostFilteredGroups = useMemo(
+		() => filterDashboardSidebarProjectsByHost(sortedGroups, hostFilter),
+		[sortedGroups, hostFilter],
+	);
 	const displayedGroups = useMemo(
-		() => filterDashboardSidebarProjects(sortedGroups, projectFilterQuery),
-		[sortedGroups, projectFilterQuery],
+		() =>
+			filterDashboardSidebarProjects(hostFilteredGroups, projectFilterQuery),
+		[hostFilteredGroups, projectFilterQuery],
 	);
 	const displayedProjectIds = useMemo(
 		() => displayedGroups.map((project) => project.id),
 		[displayedGroups],
 	);
 	const trimmedFilterQuery = projectFilterQuery.trim();
-	const isFilterActive = trimmedFilterQuery !== "";
+	const isFilterActive = trimmedFilterQuery !== "" || hostFilter !== "all";
 	// The sort modes only reorder rows inside a project, so the project list
 	// is still the manual order and stays draggable; only a filter, which
 	// hides projects outright, makes a project drop unsafe to commit.
@@ -243,7 +258,10 @@ export function DashboardSidebar({
 	useBlockedDragNotice({
 		reason: isFilterActive ? "filter" : sortMode !== "manual" ? "sort" : null,
 		onSwitchToManualOrder: () => setSidebarProjectSortMode("manual"),
-		onClearFilter: () => setProjectFilterQuery(""),
+		onClearFilter: () => {
+			setProjectFilterQuery("");
+			setSidebarProjectHostFilter("all");
+		},
 	});
 
 	// Sorted but unfiltered, so ⌘1–⌘9 targets stay put while typing a query.
@@ -488,6 +506,10 @@ export function DashboardSidebar({
 													<DashboardSidebarWorkspacesHeader
 														sortMode={sortMode}
 														onSortModeChange={setSidebarProjectSortMode}
+														hostFilter={
+															inlineCloudWorkspaces ? hostFilter : null
+														}
+														onHostFilterChange={setSidebarProjectHostFilter}
 														filterQuery={projectFilterQuery}
 														onFilterQueryChange={setProjectFilterQuery}
 													/>
