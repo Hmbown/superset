@@ -23,14 +23,25 @@ After a restart, you can often pick up an interrupted agent where it left off. S
 
 ## Keep a Machine Reachable While You're Away
 
-To check on agents from your phone, or to let automations run on a machine while the desktop app is closed, run the host server from the CLI instead of relying on the app:
+The desktop app starts its own host service and stops it when you quit. To keep a machine reachable from your phone, and by automations, while the desktop app is closed, run the host service from the standalone CLI instead:
 
-```bash
-superset auth login
-superset start --daemon
-```
+1. Install the standalone CLI. The CLI that comes with the desktop app depends on the app, so it can't keep the host running after you quit.
 
-The CLI host runs on its own, picks up terminals that are already running, and stays registered with the relay. On a dedicated machine, such as a Mac mini or a Linux server, this is the recommended setup. See [Host Server](/cli/host-server) and [Remote Access](/remote-access).
+   ```bash
+   curl -fsSL https://superset.sh/cli/install.sh | sh
+   ```
+
+2. Quit the Superset desktop app. While the app is running, the host belongs to it, and `superset start` only reports that a host is already running.
+3. Sign in and start the host service:
+
+   ```bash
+   superset auth login
+   superset start --daemon
+   ```
+
+4. Run `superset status` and check that the host is running before you leave.
+
+The CLI host picks up terminals that are already running and stays registered with the relay. On a dedicated machine, such as a Mac mini or a Linux server, this is the recommended setup. See [Getting Started](/cli/getting-started), [Host Server](/cli/host-server), and [Remote Access](/remote-access).
 
 Keep the machine awake and online. A machine that sleeps or loses its network connection shows as offline until it comes back.
 
@@ -47,4 +58,4 @@ They pause while the computer sleeps, like any other process, and continue when 
 
 ### Why does my Mac show as offline in the mobile app after I quit Superset?
 
-Quitting the desktop app stops its host service, which is what the relay talks to. Your agents are still running. Open Superset again, or run `superset start --daemon`, and the machine comes back online.
+Quitting the desktop app stops its host service, which is what the relay talks to. Your agents are still running. Open Superset again, or start the host service from the standalone CLI as described above, and the machine comes back online.

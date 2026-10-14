@@ -29,7 +29,9 @@ tells plugin authors how to get listed.
    - Validate against the existing manifest schema; skip invalid repos and record why.
    - Store name, description, author, category, icon, stars, latest tag, repo URL, last seen.
 2. **Directory page** in `apps/marketing` next to `/marketplace/themes`: search, category filter,
-   sort by stars or recent, a card per plugin with `superset plugins install <repo>@<tag>`.
+   sort by stars or recent, and a card per plugin with install steps. Today `plugins install` reads
+   `name@marketplace`, not a repo and tag, and installs only from registered marketplaces, so the
+   card must either add the plugin's repo as a marketplace first or the CLI needs a direct install.
    Each plugin gets an indexable detail page (SEO).
 3. **Docs**: "Publish a plugin to the community directory" in `apps/docs`, covering the topic, the
    manifest, tags as releases, and what the listing shows.
@@ -42,7 +44,9 @@ Community plugins ship skills and, optionally, a vendor MCP server URL. They are
 - Label every community listing as unreviewed, and show the repo and author before install.
 - Never resolve credentials or `token_url` from a community manifest; the API resolves those only
   for first-party manifests (`manifests.generated.ts`), and that rule must not change.
-- Install by tag, never by branch, so a listing cannot change under a user.
+- Pin each listing to the commit SHA its tag resolved to when indexed, and install that SHA (or
+  refuse if the tag now resolves elsewhere). Tags can be moved, so a tag alone does not stop a
+  listing from changing under a user.
 - Add a report link and a server-side denylist.
 
 ## Open questions

@@ -55,7 +55,7 @@ See Anthropic's [Claude Code docs](https://code.claude.com/docs/en/agents) for t
 
 [Superset](/) is a desktop workspace that creates a worktree, branch, and terminal for every new local branch-based workspace, and runs Claude Code in it. You can run as many sessions as you like on the same repository, next to Codex or other agents, and:
 
-- **Setup runs for you.** A setup script in `.superset/config.json` installs dependencies and copies `.env` files into each new worktree. See [Project Lifecycle Scripts](https://docs.superset.sh/setup-teardown-scripts).
+- **Configured setup runs automatically.** If you add a `setup` command to `.superset/config.json`, Superset runs it for each new worktree. Configure it to install dependencies and copy `.env` files. See [Project Lifecycle Scripts](https://docs.superset.sh/setup-teardown-scripts).
 - **Review is built in.** Each workspace's Changes pane shows the diff, and you can commit, push, and open a pull request from it.
 - **Sessions survive restarts.** Terminals run in a background daemon, so closing or updating the app does not stop Claude Code.
 - **You can check on it from your phone** with the [iPhone and iPad app](/mobile).
@@ -82,7 +82,7 @@ As many as your plan's limits and your machine allow. Each session uses tokens, 
 
 ### How do I get my .env file into a new worktree?
 
-Ignored files are not copied into new worktrees. Copy them in a setup step. In Superset, a setup script runs automatically for each new workspace; use `$SUPERSET_ROOT_PATH` to reach the main checkout.
+Ignored files are not copied into new worktrees. Add a setup command that copies them. Superset runs that command automatically for each new workspace; use `$SUPERSET_ROOT_PATH` to reach the main checkout.
 
 ### Can I run Claude Code and Codex in worktrees at the same time?
 
