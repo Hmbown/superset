@@ -59,8 +59,6 @@ const hostServiceSentryPlugin = process.env.SENTRY_AUTH_TOKEN
 		})
 	: null;
 
-const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || "superset.sh";
-
 export default defineConfig({
 	main: {
 		plugins: [tsconfigPaths, linguiMacroPlugin(), copyResourcesPlugin()],
@@ -73,27 +71,27 @@ export default defineConfig({
 			),
 			"process.env.NEXT_PUBLIC_API_URL": defineEnv(
 				process.env.NEXT_PUBLIC_API_URL,
-				`https://api.${rootDomain}`,
+				"https://api.superset.sh",
 			),
 			"process.env.NEXT_PUBLIC_STREAMS_URL": defineEnv(
 				process.env.NEXT_PUBLIC_STREAMS_URL,
-				`https://streams.${rootDomain}`,
+				"https://streams.superset.sh",
 			),
 			"process.env.NEXT_PUBLIC_WEB_URL": defineEnv(
 				process.env.NEXT_PUBLIC_WEB_URL,
-				`https://app.${rootDomain}`,
+				"https://app.superset.sh",
 			),
 			"process.env.NEXT_PUBLIC_MARKETING_URL": defineEnv(
 				process.env.NEXT_PUBLIC_MARKETING_URL,
-				`https://${rootDomain}`,
+				"https://superset.sh",
 			),
 			"process.env.NEXT_PUBLIC_DOCS_URL": defineEnv(
 				process.env.NEXT_PUBLIC_DOCS_URL,
-				`https://docs.${rootDomain}`,
+				"https://docs.superset.sh",
 			),
 			"process.env.NEXT_PUBLIC_ROOT_DOMAIN": defineEnv(
 				process.env.NEXT_PUBLIC_ROOT_DOMAIN,
-				rootDomain,
+				"superset.sh",
 			),
 			"process.env.SENTRY_DSN_DESKTOP": defineEnv(
 				process.env.SENTRY_DSN_DESKTOP,
@@ -200,23 +198,23 @@ export default defineConfig({
 			"process.platform": defineEnv(process.platform),
 			"process.env.NEXT_PUBLIC_API_URL": defineEnv(
 				process.env.NEXT_PUBLIC_API_URL,
-				`https://api.${rootDomain}`,
+				"https://api.superset.sh",
 			),
 			"process.env.NEXT_PUBLIC_WEB_URL": defineEnv(
 				process.env.NEXT_PUBLIC_WEB_URL,
-				`https://app.${rootDomain}`,
+				"https://app.superset.sh",
 			),
 			"process.env.NEXT_PUBLIC_MARKETING_URL": defineEnv(
 				process.env.NEXT_PUBLIC_MARKETING_URL,
-				`https://${rootDomain}`,
+				"https://superset.sh",
 			),
 			"process.env.NEXT_PUBLIC_DOCS_URL": defineEnv(
 				process.env.NEXT_PUBLIC_DOCS_URL,
-				`https://docs.${rootDomain}`,
+				"https://docs.superset.sh",
 			),
 			"process.env.NEXT_PUBLIC_ROOT_DOMAIN": defineEnv(
 				process.env.NEXT_PUBLIC_ROOT_DOMAIN,
-				rootDomain,
+				"superset.sh",
 			),
 			"import.meta.env.DEV_SERVER_PORT": defineEnv(String(DEV_SERVER_PORT)),
 			"import.meta.env.NEXT_PUBLIC_POSTHOG_KEY": defineEnv(
