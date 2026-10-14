@@ -57,6 +57,7 @@ import {
 	joinSchema,
 	MAX_HOSTS_PER_USER,
 	meSchema,
+	orgBoardsSchema,
 	orgStandingsSchema,
 	orgStatsSchema,
 	participantSchema,
@@ -755,6 +756,17 @@ export const leaderboardRouter = createTRPCRouter({
 			return { success: true };
 		}),
 
+	setShowOnOrgBoards: protectedProcedure
+		.input(orgBoardsSchema)
+		.mutation(async ({ ctx, input }) => {
+			await requireParticipant(ctx.session.user.id);
+			await db
+				.update(publicProfiles)
+				.set({ showOnOrgBoards: input.enabled })
+				.where(eq(publicProfiles.userId, ctx.session.user.id));
+			return { success: true };
+		}),
+
 	leave: protectedProcedure.mutation(async ({ ctx }) => {
 		const userId = ctx.session.user.id;
 		await dbWs.transaction(async (tx) => {
@@ -1002,6 +1014,7 @@ export const leaderboardRouter = createTRPCRouter({
 			.select({
 				handle: publicProfiles.handle,
 				visibility: publicProfiles.visibility,
+				showOnOrgBoards: publicProfiles.showOnOrgBoards,
 				revokedAt: publicProfiles.revokedAt,
 				lastPublishedAt: publicProfiles.lastPublishedAt,
 				tokens: sql<string>`${publicProfiles.tokens}::text`,
@@ -1044,6 +1057,7 @@ export const leaderboardRouter = createTRPCRouter({
 		return {
 			handle: row.handle,
 			visibility: row.visibility,
+			showOnOrgBoards: row.showOnOrgBoards,
 			lastPublishedAt: row.lastPublishedAt,
 			period: input.period,
 			range,

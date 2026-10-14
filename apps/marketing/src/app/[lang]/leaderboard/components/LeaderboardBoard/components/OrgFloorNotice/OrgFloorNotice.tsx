@@ -15,7 +15,10 @@ export function OrgFloorNotice({ members, minMembers }: OrgFloorNoticeProps) {
 				</Trans>
 			</p>
 			<p className="text-xs text-muted-foreground mt-2">
-				<Trans>Opt in from Superset under Settings → Account.</Trans>
+				<Trans>
+					Members appear here after turning on "Show me on my organizations'
+					boards" in Superset under Settings → Account.
+				</Trans>
 			</p>
 		</div>
 	);

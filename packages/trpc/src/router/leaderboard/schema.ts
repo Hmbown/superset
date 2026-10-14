@@ -132,6 +132,8 @@ export const orgStandingsSchema = standingsSchema.extend({
 	organizationId: z.string().uuid(),
 });
 
+export const orgBoardsSchema = z.object({ enabled: z.boolean() });
+
 export const orgStatsSchema = windowSchema.extend({
 	organizationId: z.string().uuid(),
 });

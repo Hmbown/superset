@@ -53,9 +53,9 @@ function toAxes(row: AxisColumns): StandingRow["axes"] {
 	};
 }
 
-function memberOf(organizationId: string | undefined) {
+function onOrgBoard(organizationId: string | undefined) {
 	return organizationId
-		? sql`exists (select 1 from auth.members m where m.organization_id = ${organizationId} and m.user_id = ${publicProfiles.userId})`
+		? sql`${publicProfiles.showOnOrgBoards} and exists (select 1 from auth.members m where m.organization_id = ${organizationId} and m.user_id = ${publicProfiles.userId})`
 		: undefined;
 }
 
@@ -69,7 +69,7 @@ export async function getStandings(
 ): Promise<StandingsResult> {
 	const range = resolveWindow(opts);
 	const byCost = opts.metric === "cost";
-	const inOrg = memberOf(opts.organizationId);
+	const inOrg = onOrgBoard(opts.organizationId);
 
 	if (!range) {
 		const rows = await db
@@ -361,6 +361,7 @@ export async function getViewerOrganizations(
 					and p.flagged_at is null
 					and u.deleted_at is null
 					and p.tokens > 0
+					and p.show_on_org_boards
 					and exists (
 						select 1 from auth.members m
 						where m.organization_id = o.id and m.user_id = p.user_id
@@ -588,7 +589,7 @@ async function getTierDistribution(
 		})
 		.from(publicProfiles)
 		.innerJoin(users, eq(users.id, publicProfiles.userId))
-		.where(and(onTheBoard, isNull(users.deletedAt), memberOf(organizationId)))
+		.where(and(onTheBoard, isNull(users.deletedAt), onOrgBoard(organizationId)))
 		.groupBy(publicProfiles.tier);
 
 	const distribution = [0, 0, 0, 0, 0];
@@ -630,7 +631,7 @@ export async function getStats(
 	const active = and(
 		onTheBoard,
 		isNull(users.deletedAt),
-		memberOf(organizationId),
+		onOrgBoard(organizationId),
 	);
 	const window = range
 		? and(
