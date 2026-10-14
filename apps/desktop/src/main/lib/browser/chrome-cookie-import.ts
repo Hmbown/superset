@@ -327,7 +327,10 @@ export function isProtectedCookieHost(
 		bare.endsWith(".localhost") ||
 		bare === "127.0.0.1" ||
 		bare === "::1" ||
-		ownDomains.some((domain) => bare === domain || bare.endsWith(`.${domain}`))
+		ownDomains.some((domain) => {
+			const own = domain.toLowerCase();
+			return bare === own || bare.endsWith(`.${own}`);
+		})
 	);
 }
 

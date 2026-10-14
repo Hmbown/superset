@@ -58,6 +58,14 @@ describe("isProtectedCookieHost", () => {
 		expect(isProtectedCookieHost("notexample.org", domains)).toBe(false);
 		expect(isProtectedCookieHost("example.com", domains)).toBe(false);
 	});
+
+	it("compares hosts and configured domains case-insensitively", () => {
+		const domains = ["Example.ORG"];
+		expect(isProtectedCookieHost("example.org", domains)).toBe(true);
+		expect(isProtectedCookieHost(".APP.example.org", domains)).toBe(true);
+		expect(isProtectedCookieHost("App.Example.Org", domains)).toBe(true);
+		expect(isProtectedCookieHost("notexample.org", domains)).toBe(false);
+	});
 });
 
 describe("safeStorageServiceFor", () => {

@@ -13,10 +13,15 @@ export const IOS_APP = {
 // Mobile bundles inline only EXPO_PUBLIC_*. The desktop renderer has no
 // process global; its build defines NEXT_PUBLIC_ROOT_DOMAIN non-empty, so the
 // second read never runs there.
-export const ROOT_DOMAIN =
-	process.env.NEXT_PUBLIC_ROOT_DOMAIN ||
-	process.env.EXPO_PUBLIC_ROOT_DOMAIN ||
-	"superset.sh";
+export function readRootDomain(): string {
+	return (
+		process.env.NEXT_PUBLIC_ROOT_DOMAIN ||
+		process.env.EXPO_PUBLIC_ROOT_DOMAIN ||
+		"superset.sh"
+	);
+}
+
+export const ROOT_DOMAIN = readRootDomain();
 
 // Production hosts. Unlike COMPANY.MARKETING_URL/DOCS_URL, they ignore per-deployment URL overrides.
 export const CANONICAL_URLS = {

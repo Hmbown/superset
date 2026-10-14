@@ -287,7 +287,10 @@ export function createApplicationMenu() {
 		template.unshift({
 			label: displayName,
 			submenu: [
-				{ role: "about", label: `About ${displayName}` },
+				{
+					role: "about",
+					label: i18n._(msg({ message: `About ${displayName}` })),
+				},
 				{ type: "separator" },
 				{
 					label: i18n._(
@@ -313,11 +316,17 @@ export function createApplicationMenu() {
 				{ type: "separator" },
 				{ role: "services" },
 				{ type: "separator" },
-				{ role: "hide", label: `Hide ${displayName}` },
+				{
+					role: "hide",
+					label: i18n._(msg({ message: `Hide ${displayName}` })),
+				},
 				{ role: "hideOthers" },
 				{ role: "unhide" },
 				{ type: "separator" },
-				{ role: "quit", label: `Quit ${displayName}` },
+				{
+					role: "quit",
+					label: i18n._(msg({ message: `Quit ${displayName}` })),
+				},
 				{
 					label: i18n._(
 						msg({
