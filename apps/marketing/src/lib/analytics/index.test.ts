@@ -21,6 +21,18 @@ describe("track", () => {
 		expect(properties).toMatchObject({ source: "compare", slug: "cursor" });
 	});
 
+	test("does not send a download click to Reddit after the visitor declines analytics", () => {
+		const rdt = mock();
+		globalWithWindow.window = {
+			rdt,
+			localStorage: { getItem: () => "declined" },
+		};
+
+		track("download_clicked", { source: "compare" });
+
+		expect(rdt).not.toHaveBeenCalled();
+	});
+
 	test("does not send other CTA events to the Reddit Pixel", () => {
 		const rdt = mock();
 		globalWithWindow.window = { rdt };

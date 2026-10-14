@@ -147,7 +147,11 @@ export function HeroSection() {
 								className="flex size-11 shrink-0 items-center justify-center border border-border bg-background text-foreground transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:size-12"
 								onClick={() => {
 									track("github_clicked", { source: "hero" });
-									window.open(COMPANY.GITHUB_URL, "_blank");
+									window.open(
+										COMPANY.GITHUB_URL,
+										"_blank",
+										"noopener,noreferrer",
+									);
 								}}
 								aria-label={t({
 									message: "View on GitHub",

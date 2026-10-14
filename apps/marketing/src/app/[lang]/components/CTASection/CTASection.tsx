@@ -34,7 +34,11 @@ export function CTASection({ showInstallCommand = true }: CTASectionProps) {
 							className="px-4 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base font-normal bg-background border border-border text-foreground hover:bg-muted transition-colors flex items-center gap-2"
 							onClick={() => {
 								track("github_clicked", { source: "cta_section" });
-								window.open(COMPANY.GITHUB_URL, "_blank");
+								window.open(
+									COMPANY.GITHUB_URL,
+									"_blank",
+									"noopener,noreferrer",
+								);
 							}}
 							aria-label={t({
 								message: "Star on GitHub",
