@@ -289,4 +289,17 @@ describe("applySetupImport", () => {
 			rmSync(outside, { recursive: true, force: true });
 		}
 	});
+
+	it("treats every destination as unsafe when the project root cannot be resolved", () => {
+		write("conductor.json", conductorJson);
+		const candidate = onlyCandidate();
+		expect(
+			findUnsafeImportPaths(join(repoPath, "missing-root"), candidate),
+		).toEqual([
+			".superset",
+			".superset/config.json",
+			".superset/setup.sh",
+			".superset/run.sh",
+		]);
+	});
 });

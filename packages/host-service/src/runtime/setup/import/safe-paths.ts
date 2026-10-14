@@ -52,7 +52,8 @@ export function findUnsafeImportPaths(
 	try {
 		realRoot = realpathSync(repoPath);
 	} catch {
-		return [];
+		// Without a resolvable root nothing can be proven inside it.
+		return getImportDestinations(candidate);
 	}
 	return getImportDestinations(candidate).filter((relativePath) => {
 		const absolutePath = join(repoPath, relativePath);
