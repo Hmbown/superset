@@ -93,7 +93,6 @@ export function readCodexChatGptToken({
 	});
 }
 
-/** The `exp` of a JWT session token, in ms; null when it has none. */
 export function tokenExpiresAt(token: string): number | null {
 	const payload = token.split(".")[1];
 	if (!payload) return null;

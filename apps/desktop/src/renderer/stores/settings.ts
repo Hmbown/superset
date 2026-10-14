@@ -10,7 +10,6 @@ interface Settings {
 	/** How the top-bar Changes button (and ⌘⇧L) opens the Changes surface:
 	 * split the current tab, or focus/create a dedicated tab. */
 	changesOpenTarget: ChangesOpenTarget;
-	/** Shows the mic in the agent composers. */
 	dictationEnabled: boolean;
 }
 

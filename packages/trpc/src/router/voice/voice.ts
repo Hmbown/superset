@@ -154,7 +154,6 @@ export const voiceRouter = {
 			}
 		}),
 
-	/** Speech-to-text for one recorded clip, e.g. composer dictation. */
 	transcribe: protectedProcedure
 		.input(transcribeSchema)
 		.mutation(async ({ ctx, input }) => {
