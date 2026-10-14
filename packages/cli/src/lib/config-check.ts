@@ -72,6 +72,15 @@ function checkAuth(value: unknown, now: number): FieldCheck {
 				"`auth.refreshStartedAt` must be a finite number (ms since the epoch)",
 			),
 		);
+	} else if (
+		typeof value.refreshStartedAt === "number" &&
+		value.refreshStartedAt > now
+	) {
+		issues.push(
+			warning(
+				"`auth.refreshStartedAt` is in the future: if it is more than 5 minutes ahead, the next command drops the refresh token (run: superset auth login)",
+			),
+		);
 	}
 	for (const key of Object.keys(value)) {
 		if (!Object.hasOwn(AUTH_KEYS, key)) {

@@ -120,6 +120,20 @@ describe("checkConfig", () => {
 		]);
 	});
 
+	it("warns about a refreshStartedAt in the future", () => {
+		const result = check({
+			auth: {
+				accessToken: "tok",
+				refreshToken: "r",
+				expiresAt: NOW + 3_600_000,
+				refreshStartedAt: NOW + 60_000,
+			},
+		});
+		expect(result.issues.map((i) => i.message)).toEqual([
+			"`auth.refreshStartedAt` is in the future: if it is more than 5 minutes ahead, the next command drops the refresh token (run: superset auth login)",
+		]);
+	});
+
 	it("rejects a non-finite expiresAt, which JSON can spell as 1e400", () => {
 		const result = checkConfig(
 			'{"auth":{"accessToken":"tok","expiresAt":1e400}}',
