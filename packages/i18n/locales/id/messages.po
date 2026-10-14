@@ -1520,6 +1520,9 @@ msgstr "Aa"
 msgid "About"
 msgstr "Tentang"
 
+msgid "About {displayName}"
+msgstr "Tentang {displayName}"
+
 msgid "About Superset"
 msgstr "Tentang Superset"
 
@@ -2044,6 +2047,9 @@ msgstr "Semua di tab saat ini"
 
 msgid "All in current tab (split panes)"
 msgstr "Semua di tab saat ini (panel terbagi)"
+
+msgid "All labels"
+msgstr "Semua label"
 
 msgid "All models"
 msgstr "Semua model"
@@ -4923,9 +4929,6 @@ msgstr "Tidak bisa dihentikan"
 
 msgid "Could not stop the agent"
 msgstr "Tidak dapat menghentikan agen"
-
-msgid "Could not stop the task"
-msgstr "Tidak dapat menghentikan tugas"
 
 msgid "Could not stop watching"
 msgstr "Tidak bisa berhenti memantau"
@@ -8100,6 +8103,9 @@ msgstr "Tersembunyi sampai Anda bergabung"
 msgid "Hide"
 msgstr "Sembunyikan"
 
+msgid "Hide {displayName}"
+msgstr "Sembunyikan {displayName}"
+
 msgid "Hide checks"
 msgstr "Sembunyikan check"
 
@@ -9061,6 +9067,10 @@ msgstr "Beresin beberapa TODO"
 msgid "Knowledge"
 msgstr "Pengetahuan"
 
+msgid "Label"
+msgstr "Label"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "Label"
 
@@ -10697,6 +10707,9 @@ msgstr "Tidak ada pembuat yang diketahui"
 
 msgid "No labels"
 msgstr "Tanpa label"
+
+msgid "No labels found."
+msgstr "Label tidak ditemukan."
 
 msgid "No lead"
 msgstr "Tanpa pemimpin"
@@ -12957,6 +12970,9 @@ msgstr "Antrekan pekerjaan untuk agen"
 msgid "Queued"
 msgstr "Antre"
 
+msgid "Queued messages"
+msgstr "Pesan dalam antrean"
+
 msgid "Queued to Merge"
 msgstr "Diantrekan untuk Merge"
 
@@ -12984,6 +13000,9 @@ msgstr "Pelan"
 
 msgid "Quit"
 msgstr "Keluar"
+
+msgid "Quit {displayName}"
+msgstr "Keluar dari {displayName}"
 
 msgid "Quit Completely"
 msgstr "Keluar Sepenuhnya"
@@ -14147,9 +14166,6 @@ msgstr "Agen yang berjalan di profil ini kehilangan akses."
 msgid "Running bun test…"
 msgstr "Menjalankan bun test…"
 
-msgid "Running in the background"
-msgstr "Berjalan di latar belakang"
-
 msgid "Running now"
 msgstr "Berjalan sekarang"
 
@@ -14422,6 +14438,9 @@ msgstr "Cari di {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Cari issue..."
+
+msgid "Search labels..."
+msgstr "Cari label..."
 
 msgid "Search Linear"
 msgstr "Cari di Linear"
@@ -14758,6 +14777,9 @@ msgstr "Mengirim ketukan tombol, mengelola jendela, dan mengendalikan aplikasi l
 
 msgid "Send message"
 msgstr "Kirim pesan"
+
+msgid "Send now"
+msgstr "Kirim sekarang"
 
 msgid "Send reply"
 msgstr "Kirim balasan"
@@ -15859,6 +15881,9 @@ msgstr "Dihentikan"
 
 msgid "Stopping the agent in {what}"
 msgstr "Menghentikan agen di {what}"
+
+msgid "Stops the agent and sends this now"
+msgstr "Menghentikan agen dan mengirim ini sekarang"
 
 msgid "Strikethrough"
 msgstr "Coret"

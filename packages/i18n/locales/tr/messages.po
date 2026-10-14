@@ -1520,6 +1520,9 @@ msgstr "Aa"
 msgid "About"
 msgstr "Hakkımızda"
 
+msgid "About {displayName}"
+msgstr "{displayName} Hakkında"
+
 msgid "About Superset"
 msgstr "Superset hakkında"
 
@@ -2044,6 +2047,9 @@ msgstr "Tümü geçerli sekmede"
 
 msgid "All in current tab (split panes)"
 msgstr "Tümü geçerli sekmede (bölünmüş bölmeler)"
+
+msgid "All labels"
+msgstr "Tüm etiketler"
 
 msgid "All models"
 msgstr "Tüm modeller"
@@ -4923,9 +4929,6 @@ msgstr "Durdurulamadı"
 
 msgid "Could not stop the agent"
 msgstr "Ajan durdurulamadı"
-
-msgid "Could not stop the task"
-msgstr "Görev durdurulamadı"
 
 msgid "Could not stop watching"
 msgstr "İzleme durdurulamadı"
@@ -8100,6 +8103,9 @@ msgstr "Katılana kadar gizli"
 msgid "Hide"
 msgstr "Gizle"
 
+msgid "Hide {displayName}"
+msgstr "{displayName} Uygulamasını Gizle"
+
 msgid "Hide checks"
 msgstr "Kontrolleri gizle"
 
@@ -9061,6 +9067,10 @@ msgstr "Birkaç TODO'yu bitir"
 msgid "Knowledge"
 msgstr "Bilgi"
 
+msgid "Label"
+msgstr "Etiket"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "Etiket"
 
@@ -10697,6 +10707,9 @@ msgstr "Bilinen oluşturan yok"
 
 msgid "No labels"
 msgstr "Etiket yok"
+
+msgid "No labels found."
+msgstr "Etiket bulunamadı."
 
 msgid "No lead"
 msgstr "Lider yok"
@@ -12957,6 +12970,9 @@ msgstr "Ajanlar için işi kuyruğa alın"
 msgid "Queued"
 msgstr "Sırada"
 
+msgid "Queued messages"
+msgstr "Kuyruktaki mesajlar"
+
 msgid "Queued to Merge"
 msgstr "Birleştirme kuyruğunda"
 
@@ -12984,6 +13000,9 @@ msgstr "Sessiz"
 
 msgid "Quit"
 msgstr "Çık"
+
+msgid "Quit {displayName}"
+msgstr "{displayName} Uygulamasından Çık"
 
 msgid "Quit Completely"
 msgstr "Tamamen çık"
@@ -14147,9 +14166,6 @@ msgstr "Bu profildeki çalışan ajanlar erişimini kaybeder."
 msgid "Running bun test…"
 msgstr "bun test çalışıyor…"
 
-msgid "Running in the background"
-msgstr "Arka planda çalışıyor"
-
 msgid "Running now"
 msgstr "Şimdi çalıştırılıyor"
 
@@ -14422,6 +14438,9 @@ msgstr "Şurada ara: {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Issue ara..."
+
+msgid "Search labels..."
+msgstr "Etiket ara..."
 
 msgid "Search Linear"
 msgstr "Linear'da ara"
@@ -14758,6 +14777,9 @@ msgstr "Tuş vuruşları gönderin, pencereleri yönetin ve diğer uygulamaları
 
 msgid "Send message"
 msgstr "Mesaj gönder"
+
+msgid "Send now"
+msgstr "Şimdi gönder"
 
 msgid "Send reply"
 msgstr "Yanıt gönder"
@@ -15859,6 +15881,9 @@ msgstr "Durduruldu"
 
 msgid "Stopping the agent in {what}"
 msgstr "{what} içindeki ajan durduruluyor"
+
+msgid "Stops the agent and sends this now"
+msgstr "Ajanı durdurur ve bunu hemen gönderir"
 
 msgid "Strikethrough"
 msgstr "Üstü çizili"

@@ -1520,6 +1520,9 @@ msgstr "Aa"
 msgid "About"
 msgstr "Over ons"
 
+msgid "About {displayName}"
+msgstr "Over {displayName}"
+
 msgid "About Superset"
 msgstr "Over Superset"
 
@@ -2044,6 +2047,9 @@ msgstr "Alles in huidig tabblad"
 
 msgid "All in current tab (split panes)"
 msgstr "Alles in huidig tabblad (gesplitste panelen)"
+
+msgid "All labels"
+msgstr "Alle labels"
 
 msgid "All models"
 msgstr "Alle modellen"
@@ -4923,9 +4929,6 @@ msgstr "Kon niet worden gestopt"
 
 msgid "Could not stop the agent"
 msgstr "Kan de agent niet stoppen"
-
-msgid "Could not stop the task"
-msgstr "Kan de taak niet stoppen"
 
 msgid "Could not stop watching"
 msgstr "Kon niet stoppen met volgen"
@@ -8100,6 +8103,9 @@ msgstr "Verborgen tot je meedoet"
 msgid "Hide"
 msgstr "Verbergen"
 
+msgid "Hide {displayName}"
+msgstr "Verberg {displayName}"
+
 msgid "Hide checks"
 msgstr "Checks verbergen"
 
@@ -9061,6 +9067,10 @@ msgstr "Een paar TODO's wegwerken"
 msgid "Knowledge"
 msgstr "Kennis"
 
+msgid "Label"
+msgstr "Label"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "Label"
 
@@ -10697,6 +10707,9 @@ msgstr "Geen bekende makers"
 
 msgid "No labels"
 msgstr "Geen labels"
+
+msgid "No labels found."
+msgstr "Geen labels gevonden."
 
 msgid "No lead"
 msgstr "Geen leider"
@@ -12957,6 +12970,9 @@ msgstr "Werk in de wachtrij zetten voor agents"
 msgid "Queued"
 msgstr "In wachtrij"
 
+msgid "Queued messages"
+msgstr "Berichten in wachtrij"
+
 msgid "Queued to Merge"
 msgstr "In wachtrij om te mergen"
 
@@ -12984,6 +13000,9 @@ msgstr "Zacht"
 
 msgid "Quit"
 msgstr "Afsluiten"
+
+msgid "Quit {displayName}"
+msgstr "Stop {displayName}"
 
 msgid "Quit Completely"
 msgstr "Volledig afsluiten"
@@ -14147,9 +14166,6 @@ msgstr "Draaiende agents op dit profiel verliezen toegang."
 msgid "Running bun test…"
 msgstr "bun test uitvoeren…"
 
-msgid "Running in the background"
-msgstr "Draait op de achtergrond"
-
 msgid "Running now"
 msgstr "Wordt nu uitgevoerd"
 
@@ -14422,6 +14438,9 @@ msgstr "Zoeken in {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Issues zoeken..."
+
+msgid "Search labels..."
+msgstr "Labels zoeken..."
 
 msgid "Search Linear"
 msgstr "Linear doorzoeken"
@@ -14758,6 +14777,9 @@ msgstr "Toetsaanslagen versturen, vensters beheren en andere applicaties bediene
 
 msgid "Send message"
 msgstr "Bericht versturen"
+
+msgid "Send now"
+msgstr "Nu verzenden"
 
 msgid "Send reply"
 msgstr "Antwoord versturen"
@@ -15859,6 +15881,9 @@ msgstr "Gestopt"
 
 msgid "Stopping the agent in {what}"
 msgstr "Agent in {what} wordt gestopt"
+
+msgid "Stops the agent and sends this now"
+msgstr "Stopt de agent en verzendt dit nu"
 
 msgid "Strikethrough"
 msgstr "Doorhalen"

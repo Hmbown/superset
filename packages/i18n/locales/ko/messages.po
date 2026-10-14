@@ -1520,6 +1520,9 @@ msgstr "Aa"
 msgid "About"
 msgstr "회사 소개"
 
+msgid "About {displayName}"
+msgstr "{displayName}에 관하여"
+
 msgid "About Superset"
 msgstr "Superset 소개"
 
@@ -2044,6 +2047,9 @@ msgstr "모두 현재 탭에서"
 
 msgid "All in current tab (split panes)"
 msgstr "모두 현재 탭에서 (분할 패널)"
+
+msgid "All labels"
+msgstr "모든 레이블"
 
 msgid "All models"
 msgstr "모든 모델"
@@ -4923,9 +4929,6 @@ msgstr "중지할 수 없습니다"
 
 msgid "Could not stop the agent"
 msgstr "에이전트를 중지할 수 없습니다"
-
-msgid "Could not stop the task"
-msgstr "작업을 중지할 수 없습니다"
 
 msgid "Could not stop watching"
 msgstr "감시를 중지할 수 없습니다"
@@ -8100,6 +8103,9 @@ msgstr "참여 전까지 숨김"
 msgid "Hide"
 msgstr "숨기기"
 
+msgid "Hide {displayName}"
+msgstr "{displayName} 가리기"
+
 msgid "Hide checks"
 msgstr "검사 숨기기"
 
@@ -9061,6 +9067,10 @@ msgstr "TODO 몇 개 해치우기"
 msgid "Knowledge"
 msgstr "지식"
 
+msgid "Label"
+msgstr "레이블"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "레이블"
 
@@ -10697,6 +10707,9 @@ msgstr "알려진 만든 사람이 없습니다"
 
 msgid "No labels"
 msgstr "레이블 없음"
+
+msgid "No labels found."
+msgstr "레이블을 찾을 수 없습니다."
 
 msgid "No lead"
 msgstr "리드 없음"
@@ -12957,6 +12970,9 @@ msgstr "에이전트 작업 대기열에 추가"
 msgid "Queued"
 msgstr "대기열"
 
+msgid "Queued messages"
+msgstr "대기 중인 메시지"
+
 msgid "Queued to Merge"
 msgstr "머지 대기열에 있음"
 
@@ -12984,6 +13000,9 @@ msgstr "조용함"
 
 msgid "Quit"
 msgstr "종료"
+
+msgid "Quit {displayName}"
+msgstr "{displayName} 종료"
 
 msgid "Quit Completely"
 msgstr "완전히 종료"
@@ -14147,9 +14166,6 @@ msgstr "이 프로필에서 실행 중인 에이전트는 접근 권한을 잃�
 msgid "Running bun test…"
 msgstr "bun test 실행 중…"
 
-msgid "Running in the background"
-msgstr "백그라운드에서 실행 중"
-
 msgid "Running now"
 msgstr "지금 실행 중"
 
@@ -14422,6 +14438,9 @@ msgstr "{frameTitle}에서 검색…"
 
 msgid "Search issues..."
 msgstr "이슈 검색..."
+
+msgid "Search labels..."
+msgstr "레이블 검색..."
 
 msgid "Search Linear"
 msgstr "Linear 검색"
@@ -14758,6 +14777,9 @@ msgstr "키 입력을 보내고, 창을 관리하고, 다른 애플리케이션�
 
 msgid "Send message"
 msgstr "메시지 보내기"
+
+msgid "Send now"
+msgstr "지금 보내기"
 
 msgid "Send reply"
 msgstr "답글 보내기"
@@ -15859,6 +15881,9 @@ msgstr "중지됨"
 
 msgid "Stopping the agent in {what}"
 msgstr "{what}의 에이전트 중지 중"
+
+msgid "Stops the agent and sends this now"
+msgstr "에이전트를 중지하고 지금 이 메시지를 보냅니다"
 
 msgid "Strikethrough"
 msgstr "취소선"

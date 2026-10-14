@@ -1520,6 +1520,9 @@ msgstr "Aa"
 msgid "About"
 msgstr "Chi siamo"
 
+msgid "About {displayName}"
+msgstr "Informazioni su {displayName}"
+
 msgid "About Superset"
 msgstr "Chi è Superset"
 
@@ -2044,6 +2047,9 @@ msgstr "Tutti nella scheda corrente"
 
 msgid "All in current tab (split panes)"
 msgstr "Tutti nella scheda corrente (pannelli divisi)"
+
+msgid "All labels"
+msgstr "Tutte le etichette"
 
 msgid "All models"
 msgstr "Tutti i modelli"
@@ -4923,9 +4929,6 @@ msgstr "Impossibile arrestarlo"
 
 msgid "Could not stop the agent"
 msgstr "Impossibile fermare l'agente"
-
-msgid "Could not stop the task"
-msgstr "Impossibile fermare l'attività"
 
 msgid "Could not stop watching"
 msgstr "Impossibile smettere di osservare"
@@ -8100,6 +8103,9 @@ msgstr "Nascosta finché non partecipi"
 msgid "Hide"
 msgstr "Nascondi"
 
+msgid "Hide {displayName}"
+msgstr "Nascondi {displayName}"
+
 msgid "Hide checks"
 msgstr "Nascondi i controlli"
 
@@ -9061,6 +9067,10 @@ msgstr "Elimina qualche TODO"
 msgid "Knowledge"
 msgstr "Conoscenza"
 
+msgid "Label"
+msgstr "Etichetta"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "Etichetta"
 
@@ -10697,6 +10707,9 @@ msgstr "Nessun creatore noto"
 
 msgid "No labels"
 msgstr "Nessuna etichetta"
+
+msgid "No labels found."
+msgstr "Nessuna etichetta trovata."
 
 msgid "No lead"
 msgstr "Nessun responsabile"
@@ -12957,6 +12970,9 @@ msgstr "Metti in coda il lavoro per gli agenti"
 msgid "Queued"
 msgstr "In coda"
 
+msgid "Queued messages"
+msgstr "Messaggi in coda"
+
 msgid "Queued to Merge"
 msgstr "In coda per il merge"
 
@@ -12984,6 +13000,9 @@ msgstr "Silenzioso"
 
 msgid "Quit"
 msgstr "Esci"
+
+msgid "Quit {displayName}"
+msgstr "Esci da {displayName}"
 
 msgid "Quit Completely"
 msgstr "Esci completamente"
@@ -14147,9 +14166,6 @@ msgstr "Gli agenti in esecuzione su questo profilo perdono l'accesso."
 msgid "Running bun test…"
 msgstr "Esecuzione di bun test…"
 
-msgid "Running in the background"
-msgstr "In esecuzione in background"
-
 msgid "Running now"
 msgstr "Esecuzione in corso"
 
@@ -14422,6 +14438,9 @@ msgstr "Cerca in {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Cerca nelle issue..."
+
+msgid "Search labels..."
+msgstr "Cerca etichette..."
 
 msgid "Search Linear"
 msgstr "Cerca in Linear"
@@ -14758,6 +14777,9 @@ msgstr "Inviare sequenze di tasti, gestire le finestre e controllare altre appli
 
 msgid "Send message"
 msgstr "Invia messaggio"
+
+msgid "Send now"
+msgstr "Invia ora"
 
 msgid "Send reply"
 msgstr "Invia la risposta"
@@ -15859,6 +15881,9 @@ msgstr "Interrotto"
 
 msgid "Stopping the agent in {what}"
 msgstr "Arresto dell’agente in {what}"
+
+msgid "Stops the agent and sends this now"
+msgstr "Ferma l'agente e invia subito questo messaggio"
 
 msgid "Strikethrough"
 msgstr "Barrato"

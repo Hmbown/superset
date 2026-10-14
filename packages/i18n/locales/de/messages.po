@@ -1520,6 +1520,9 @@ msgstr "Aa"
 msgid "About"
 msgstr "Über uns"
 
+msgid "About {displayName}"
+msgstr "Über {displayName}"
+
 msgid "About Superset"
 msgstr "Über Superset"
 
@@ -2044,6 +2047,9 @@ msgstr "Alle im aktuellen Tab"
 
 msgid "All in current tab (split panes)"
 msgstr "Alle im aktuellen Tab (geteilte Bereiche)"
+
+msgid "All labels"
+msgstr "Alle Labels"
 
 msgid "All models"
 msgstr "Alle Modelle"
@@ -4923,9 +4929,6 @@ msgstr "Konnte nicht beendet werden"
 
 msgid "Could not stop the agent"
 msgstr "Agent konnte nicht gestoppt werden"
-
-msgid "Could not stop the task"
-msgstr "Die Aufgabe konnte nicht gestoppt werden"
 
 msgid "Could not stop watching"
 msgstr "Beobachten ließ sich nicht beenden"
@@ -8100,6 +8103,9 @@ msgstr "Verborgen bis zur Teilnahme"
 msgid "Hide"
 msgstr "Ausblenden"
 
+msgid "Hide {displayName}"
+msgstr "{displayName} ausblenden"
+
 msgid "Hide checks"
 msgstr "Prüfungen ausblenden"
 
@@ -9063,6 +9069,10 @@ msgstr "Wissen"
 
 msgid "Label"
 msgstr "Bezeichnung"
+
+msgctxt "task label filter"
+msgid "Label"
+msgstr "Label"
 
 msgid "Label change"
 msgstr "Label-Änderung"
@@ -10697,6 +10707,9 @@ msgstr "Keine bekannten Ersteller"
 
 msgid "No labels"
 msgstr "Keine Labels"
+
+msgid "No labels found."
+msgstr "Keine Labels gefunden."
 
 msgid "No lead"
 msgstr "Keine Leitung"
@@ -12957,6 +12970,9 @@ msgstr "Arbeit für Agenten einreihen"
 msgid "Queued"
 msgstr "In Warteschlange"
 
+msgid "Queued messages"
+msgstr "Nachrichten in Warteschlange"
+
 msgid "Queued to Merge"
 msgstr "Zum Zusammenführen eingereiht"
 
@@ -12984,6 +13000,9 @@ msgstr "Leise"
 
 msgid "Quit"
 msgstr "Beenden"
+
+msgid "Quit {displayName}"
+msgstr "{displayName} beenden"
 
 msgid "Quit Completely"
 msgstr "Vollständig beenden"
@@ -14147,9 +14166,6 @@ msgstr "Laufende Agenten dieses Profils verlieren den Zugriff."
 msgid "Running bun test…"
 msgstr "bun test läuft…"
 
-msgid "Running in the background"
-msgstr "Läuft im Hintergrund"
-
 msgid "Running now"
 msgstr "Läuft jetzt"
 
@@ -14422,6 +14438,9 @@ msgstr "In {frameTitle} suchen…"
 
 msgid "Search issues..."
 msgstr "Issues suchen..."
+
+msgid "Search labels..."
+msgstr "Labels suchen..."
 
 msgid "Search Linear"
 msgstr "Linear durchsuchen"
@@ -14758,6 +14777,9 @@ msgstr "Tastatureingaben senden, Fenster verwalten und andere Anwendungen steuer
 
 msgid "Send message"
 msgstr "Nachricht senden"
+
+msgid "Send now"
+msgstr "Jetzt senden"
 
 msgid "Send reply"
 msgstr "Antwort senden"
@@ -15859,6 +15881,9 @@ msgstr "Gestoppt"
 
 msgid "Stopping the agent in {what}"
 msgstr "Agent in {what} wird gestoppt"
+
+msgid "Stops the agent and sends this now"
+msgstr "Stoppt den Agenten und sendet dies sofort"
 
 msgid "Strikethrough"
 msgstr "Durchgestrichen"

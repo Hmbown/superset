@@ -1520,6 +1520,9 @@ msgstr "Aa"
 msgid "About"
 msgstr "关于"
 
+msgid "About {displayName}"
+msgstr "关于 {displayName}"
+
 msgid "About Superset"
 msgstr "关于Superset"
 
@@ -2044,6 +2047,9 @@ msgstr "全部在当前标签页"
 
 msgid "All in current tab (split panes)"
 msgstr "全部在当前标签页（分屏窗格）"
+
+msgid "All labels"
+msgstr "所有标签"
 
 msgid "All models"
 msgstr "所有模型"
@@ -4923,9 +4929,6 @@ msgstr "无法停止"
 
 msgid "Could not stop the agent"
 msgstr "无法停止智能体"
-
-msgid "Could not stop the task"
-msgstr "无法停止任务"
 
 msgid "Could not stop watching"
 msgstr "无法停止关注"
@@ -8100,6 +8103,9 @@ msgstr "加入后才会显示"
 msgid "Hide"
 msgstr "隐藏"
 
+msgid "Hide {displayName}"
+msgstr "隐藏 {displayName}"
+
 msgid "Hide checks"
 msgstr "隐藏检查"
 
@@ -9063,6 +9069,10 @@ msgstr "知识"
 
 msgid "Label"
 msgstr "名称"
+
+msgctxt "task label filter"
+msgid "Label"
+msgstr "标签"
 
 msgid "Label change"
 msgstr "标签变更"
@@ -10697,6 +10707,9 @@ msgstr "没有已知的创建者"
 
 msgid "No labels"
 msgstr "无标签"
+
+msgid "No labels found."
+msgstr "未找到标签。"
 
 msgid "No lead"
 msgstr "无负责人"
@@ -12957,6 +12970,9 @@ msgstr "为智能体排队安排工作"
 msgid "Queued"
 msgstr "排队中"
 
+msgid "Queued messages"
+msgstr "排队中的消息"
+
 msgid "Queued to Merge"
 msgstr "排队等待合并"
 
@@ -12984,6 +13000,9 @@ msgstr "轻"
 
 msgid "Quit"
 msgstr "退出"
+
+msgid "Quit {displayName}"
+msgstr "退出 {displayName}"
 
 msgid "Quit Completely"
 msgstr "完全退出"
@@ -14147,9 +14166,6 @@ msgstr "使用此配置文件运行中的智能体将失去访问权限。"
 msgid "Running bun test…"
 msgstr "正在运行bun test…"
 
-msgid "Running in the background"
-msgstr "正在后台运行"
-
 msgid "Running now"
 msgstr "正在运行"
 
@@ -14422,6 +14438,9 @@ msgstr "在{frameTitle}中搜索…"
 
 msgid "Search issues..."
 msgstr "搜索议题..."
+
+msgid "Search labels..."
+msgstr "搜索标签..."
 
 msgid "Search Linear"
 msgstr "搜索Linear"
@@ -14758,6 +14777,9 @@ msgstr "发送按键、管理窗口并控制其他应用程序。"
 
 msgid "Send message"
 msgstr "发送消息"
+
+msgid "Send now"
+msgstr "立即发送"
 
 msgid "Send reply"
 msgstr "发送回复"
@@ -15859,6 +15881,9 @@ msgstr "已停止"
 
 msgid "Stopping the agent in {what}"
 msgstr "正在停止 {what} 中的代理"
+
+msgid "Stops the agent and sends this now"
+msgstr "停止智能体并立即发送此消息"
 
 msgid "Strikethrough"
 msgstr "删除线"
