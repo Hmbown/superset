@@ -5,11 +5,17 @@ import {
 	organizationMarketplace,
 	PLUGIN_CATALOG,
 } from "@superset/shared/plugins";
+import {
+	PluginBundleError,
+	pluginBundleHash,
+	unpackPluginBundle,
+} from "@superset/shared/plugins/bundle";
 import { pluginManifestSchema } from "@superset/shared/plugins/manifest-schema";
 import type { TRPCRouterRecord } from "@trpc/server";
 import { and, asc, eq, isNotNull } from "drizzle-orm";
 import { z } from "zod";
 import { userError } from "../../i18n-error";
+import { getObject, putObject } from "../../lib/r2";
 import { protectedProcedure } from "../../trpc";
 import { verifyOrgAdmin } from "../integration/utils";
 import { requireActiveOrgId } from "../utils/active-org";
@@ -63,6 +69,36 @@ export function organizationPluginProblem(
 	return null;
 }
 
+function bundleKey(organizationId: string, contentHash: string): string {
+	return `organization-plugins/${organizationId}/${contentHash}.json.gz`;
+}
+
+/** The manifest a bundle carries, after every rule an organization plugin must pass. */
+export function readOrganizationBundle(bundle: Uint8Array): PluginManifest {
+	let raw: unknown;
+	try {
+		raw = JSON.parse(
+			unpackPluginBundle(bundle).get("plugin.json")?.toString("utf8") ?? "",
+		);
+	} catch (error) {
+		throw invalid(
+			error instanceof PluginBundleError
+				? error.message
+				: "its plugin.json is not valid JSON",
+		);
+	}
+	const parsed = pluginManifestSchema.safeParse(raw);
+	if (!parsed.success) {
+		throw invalid(
+			parsed.error.issues[0]?.message ?? "plugin.json is not valid",
+		);
+	}
+	const manifest = parsed.data as PluginManifest;
+	const problem = organizationPluginProblem(manifest);
+	if (problem) throw invalid(problem);
+	return manifest;
+}
+
 async function requireAdmin(ctx: Parameters<typeof requireActiveOrgId>[0]) {
 	const organizationId = requireActiveOrgId(ctx);
 	await verifyOrgAdmin(ctx.session.user.id, organizationId);
@@ -105,23 +141,17 @@ export const organizationPluginsRouter = {
 	upload: protectedProcedure
 		.input(
 			z.object({
-				manifest: z.unknown(),
+				/** The plugin tree, packed by `packPluginBundle` and base64-encoded. */
+				bundle: z.string().min(1),
 				/** The version this upload expects to replace; refused if another upload landed first. */
 				replaces: z.string().min(1).optional(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
 			const organizationId = await requireAdmin(ctx);
-
-			const parsed = pluginManifestSchema.safeParse(input.manifest);
-			if (!parsed.success) {
-				throw invalid(
-					parsed.error.issues[0]?.message ?? "plugin.json is not valid",
-				);
-			}
-			const manifest = parsed.data as PluginManifest;
-			const problem = organizationPluginProblem(manifest);
-			if (problem) throw invalid(problem);
+			const bundle = Buffer.from(input.bundle, "base64");
+			const manifest = readOrganizationBundle(bundle);
+			const contentHash = pluginBundleHash(bundle);
 
 			const [existing] = await db
 				.select({
@@ -146,6 +176,13 @@ export const organizationPluginsRouter = {
 				);
 			}
 
+			await putObject({
+				key: bundleKey(organizationId, contentHash),
+				body: bundle,
+				contentType: "application/gzip",
+				bucket: "private",
+			});
+
 			const [row] = await db
 				.insert(organizationPlugins)
 				.values({
@@ -153,6 +190,7 @@ export const organizationPluginsRouter = {
 					name: manifest.name,
 					version: manifest.version,
 					manifest,
+					contentHash,
 					uploadedByUserId: ctx.session.user.id,
 				})
 				.onConflictDoUpdate({
@@ -163,6 +201,7 @@ export const organizationPluginsRouter = {
 					set: {
 						version: manifest.version,
 						manifest,
+						contentHash,
 						uploadedByUserId: ctx.session.user.id,
 					},
 				})
@@ -174,6 +213,38 @@ export const organizationPluginsRouter = {
 				marketplace: organizationMarketplace(organizationId),
 				publishedAt: row?.publishedAt ?? null,
 				replaced: existing?.version ?? null,
+			};
+		}),
+
+	bundle: protectedProcedure
+		.input(z.object({ name: z.string().min(1) }))
+		.query(async ({ ctx, input }) => {
+			const organizationId = requireActiveOrgId(ctx);
+			const [row] = await db
+				.select({
+					name: organizationPlugins.name,
+					version: organizationPlugins.version,
+					contentHash: organizationPlugins.contentHash,
+				})
+				.from(organizationPlugins)
+				.where(
+					and(
+						eq(organizationPlugins.organizationId, organizationId),
+						eq(organizationPlugins.name, input.name),
+						isNotNull(organizationPlugins.publishedAt),
+					),
+				)
+				.limit(1);
+			if (!row) throw unknown(input.name);
+
+			const object = await getObject(
+				bundleKey(organizationId, row.contentHash),
+			);
+			if (!object) throw unknown(input.name);
+			return {
+				...row,
+				marketplace: organizationMarketplace(organizationId),
+				bundle: Buffer.from(await object.arrayBuffer()).toString("base64"),
 			};
 		}),
 
