@@ -1,6 +1,7 @@
 "use client";
 
 import type { ComponentProps } from "react";
+import type { DownloadSource } from "@/lib/analytics";
 import { usePlatform } from "../../hooks/useOS";
 import { TrackedLink } from "../TrackedLink";
 
@@ -8,7 +9,7 @@ type DownloadLinkProps = Omit<
 	ComponentProps<typeof TrackedLink>,
 	"href" | "event" | "properties"
 > & {
-	source: string;
+	source: DownloadSource;
 	properties?: Record<string, unknown>;
 };
 

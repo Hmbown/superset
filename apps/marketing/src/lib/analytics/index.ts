@@ -1,11 +1,21 @@
 import { withPosthog } from "./lazy";
 import { trackReddit } from "./reddit";
 
-/**
- * PostHog events that also go to the Reddit Pixel, keyed by PostHog event name
- * → Reddit standard event. A download click shows intent, not a sale, so it is
- * a Lead and not a Purchase.
- */
+export type DownloadSource =
+	| "header"
+	| "hero"
+	| "footer"
+	| "pages"
+	| "automations"
+	| "browser"
+	| "plugins"
+	| "pricing"
+	| "compare"
+	| "careers"
+	| "factory_2026"
+	| "production_run";
+
+/** PostHog event name → Reddit Pixel standard event. */
 const REDDIT_EVENT_MAP: Record<string, string> = {
 	download_clicked: "Lead",
 };
