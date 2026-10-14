@@ -28,8 +28,12 @@ export function ImportedScriptPreview({
 	const currentScriptFile = conflict?.currentScriptFile;
 	const overwritesScript =
 		!!currentScriptFile && currentScriptFile === scriptPath;
+	const removesScript = !!conflict?.removesScriptFile;
 	const shadowsScript =
-		!!currentScriptFile && !scriptPath && conflict?.current.length === 0;
+		!!currentScriptFile &&
+		!scriptPath &&
+		!removesScript &&
+		conflict?.current.length === 0;
 
 	return (
 		<div className="space-y-1.5">
