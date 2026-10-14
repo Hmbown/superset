@@ -97,15 +97,17 @@ Channels: `preview` for internal builds, `production` for the store build.
 
 | Change | Lane |
 |---|---|
-| JS merged to main | `deploy.yml` publishes to `preview` and `production` |
+| JS merged to main, under the `deploy.yml` trigger paths | `deploy.yml` publishes to `preview` and `production` |
 | Native merged to main | `deploy.yml` builds and uploads to App Store Connect; App Review stays manual |
 | JS on a pull request | `pr-preview.yml` publishes to a branch named after the git branch and comments a QR code, when a development build matches the fingerprint |
 | Native on a pull request | Add the `mobile-build` label; `build-pr.yml` builds a development client |
 
 ### Production
 
-Every merge to main publishes to everyone on the production channel, TestFlight
-and App Store alike — one binary, one channel. Installed builds have to track
+Every merge to main that touches the app or a package it imports (the
+`deploy.yml` trigger paths) publishes to everyone on the production channel,
+TestFlight and App Store alike — one binary, one channel. A new workspace
+dependency of the app goes in those paths, or its fixes never publish. Installed builds have to track
 main: the API and host-service move with every merge, and a build left on old
 JS meets them without the client half of each change. The runtime version
 keeps an update off any binary whose native layer it does not match.
