@@ -76,6 +76,41 @@ describe("createComposerDictation", () => {
 		expect((await failure(dictation.transcribe(clip))).canRetry).toBe(false);
 	});
 
+	test("uses the on-device result without calling the API", async () => {
+		let called = false;
+		const dictation = createComposerDictation({
+			request: async () => {
+				called = true;
+				return { text: "from the API" };
+			},
+			notify: () => {},
+			transcribeLocally: async () => ({ ok: true, text: "from the Mac" }),
+		});
+		expect(await dictation.transcribe(clip)).toBe("from the Mac");
+		expect(called).toBe(false);
+	});
+
+	test("falls back to the API when on-device transcription fails", async () => {
+		const dictation = createComposerDictation({
+			request: async () => ({ text: "from the API" }),
+			notify: () => {},
+			transcribeLocally: async () => ({
+				ok: false,
+				error: "unsupported-locale",
+				message: "no model",
+			}),
+		});
+		expect(await dictation.transcribe(clip)).toBe("from the API");
+		const throwing = createComposerDictation({
+			request: async () => ({ text: "from the API" }),
+			notify: () => {},
+			transcribeLocally: async () => {
+				throw new Error("decode failed");
+			},
+		});
+		expect(await throwing.transcribe(clip)).toBe("from the API");
+	});
+
 	test("refuses a clip over the size cap without calling the API", async () => {
 		let called = false;
 		const { dictation } = setup(async () => {
