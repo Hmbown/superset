@@ -2045,6 +2045,9 @@ msgstr "すべて現在のタブで"
 msgid "All in current tab (split panes)"
 msgstr "すべて現在のタブで(ペイン分割)"
 
+msgid "All labels"
+msgstr "すべてのラベル"
+
 msgid "All models"
 msgstr "すべてのモデル"
 
@@ -3728,6 +3731,12 @@ msgstr "リダイレクトされない場合はこちらをクリック"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "「↑ update」ボタンをクリックすると更新前の確認が表示されます"
 
+msgid "Click the chip to open the issue"
+msgstr "チップをクリックするとIssueを開きます"
+
+msgid "Click the chip to open the pull request"
+msgstr "チップをクリックするとプルリクエストを開きます"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "クリックでセッションIDをコピーします(`claude --resume <id>`で再開)。"
 
@@ -3901,6 +3910,10 @@ msgstr "ワークスペースを閉じる"
 msgid "Close Workspace"
 msgstr "ワークスペースを閉じる"
 
+msgid "Closed"
+msgstr "クローズ済み"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "クローズ済み"
 
@@ -5926,6 +5939,9 @@ msgstr "切断中"
 msgid "Details"
 msgstr "詳細"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "ここでは詳細を表示できませんが、リンクは開けます。"
+
 msgid "Dev"
 msgstr "開発"
 
@@ -6257,6 +6273,10 @@ msgstr "ダウンロード中..."
 msgid "Downloads"
 msgstr "ダウンロード"
 
+msgid "Draft"
+msgstr "ドラフト"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "ドラフト"
 
@@ -8833,6 +8853,13 @@ msgstr "無料プランはありますか?"
 msgid "Isolation"
 msgstr "分離"
 
+msgid "Issue"
+msgstr "Issue"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Issue #{0}"
+
 msgid "Issue archived"
 msgstr "Issueをアーカイブ"
 
@@ -9037,6 +9064,10 @@ msgstr "TODOを片付ける"
 msgid "Knowledge"
 msgstr "ナレッジ"
 
+msgid "Label"
+msgstr "ラベル"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "ラベル"
 
@@ -9461,6 +9492,9 @@ msgstr "ファイルを読み込み中..."
 msgid "Loading fonts..."
 msgstr "フォントを読み込み中..."
 
+msgid "Loading GitHub details"
+msgstr "GitHubの詳細を読み込み中"
+
 msgid "Loading groups…"
 msgstr "グループを読み込み中…"
 
@@ -9874,6 +9908,10 @@ msgstr "マージ状態"
 msgid "Merge status unknown"
 msgstr "マージ状態は不明です"
 
+msgid "Merged"
+msgstr "マージ済み"
+
+msgctxt "pull request state"
 msgid "Merged"
 msgstr "マージ済み"
 
@@ -10667,6 +10705,9 @@ msgstr "既知の作成者はいません"
 msgid "No labels"
 msgstr "ラベルなし"
 
+msgid "No labels found."
+msgstr "ラベルが見つかりません。"
+
 msgid "No lead"
 msgstr "リードなし"
 
@@ -11365,6 +11406,10 @@ msgstr "開く"
 
 msgid "Open"
 msgstr "開く"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "オープン"
 
 msgctxt "status"
 msgid "Open"
@@ -12430,6 +12475,10 @@ msgstr "返信を投稿"
 
 msgid "PR"
 msgstr "PR"
+
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
 
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
@@ -14380,6 +14429,9 @@ msgstr "{frameTitle}内を検索…"
 
 msgid "Search issues..."
 msgstr "Issueを検索..."
+
+msgid "Search labels..."
+msgstr "ラベルを検索..."
 
 msgid "Search Linear"
 msgstr "Linearを検索"
@@ -17966,6 +18018,10 @@ msgstr "ブランチのプレフィックスを更新する"
 
 msgid "Updated"
 msgstr "更新済み"
+
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "更新: {0}"
 
 msgid "Updated {date}"
 msgstr "{date}に更新"

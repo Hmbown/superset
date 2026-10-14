@@ -2045,6 +2045,9 @@ msgstr "Tümü geçerli sekmede"
 msgid "All in current tab (split panes)"
 msgstr "Tümü geçerli sekmede (bölünmüş bölmeler)"
 
+msgid "All labels"
+msgstr "Tüm etiketler"
+
 msgid "All models"
 msgstr "Tüm modeller"
 
@@ -3728,6 +3731,12 @@ msgstr "Yönlendirilmediyseniz buraya tıklayın"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Güncelleme öncesi onayı görmek için “↑ update” düğmesine tıklayın"
 
+msgid "Click the chip to open the issue"
+msgstr "Issue'yu açmak için etikete tıklayın"
+
+msgid "Click the chip to open the pull request"
+msgstr "Pull request'i açmak için etikete tıklayın"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Oturum kimliğini kopyalamak için tıklayın (`claude --resume <id>` ile sürdürün)."
 
@@ -3901,6 +3910,10 @@ msgstr "Çalışma alanını kapat"
 msgid "Close Workspace"
 msgstr "Çalışma alanını kapat"
 
+msgid "Closed"
+msgstr "Kapalı"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Kapalı"
 
@@ -5926,6 +5939,9 @@ msgstr "Ayrılmış"
 msgid "Details"
 msgstr "Ayrıntılar"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Ayrıntılar burada görüntülenemiyor, ancak bağlantı yine de açılır."
+
 msgid "Dev"
 msgstr "Geliştirme"
 
@@ -6257,6 +6273,10 @@ msgstr "İndiriliyor..."
 msgid "Downloads"
 msgstr "İndirilenler"
 
+msgid "Draft"
+msgstr "Taslak"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Taslak"
 
@@ -8833,6 +8853,13 @@ msgstr "Ücretsiz plan var mı?"
 msgid "Isolation"
 msgstr "Yalıtım"
 
+msgid "Issue"
+msgstr "Issue"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Issue #{0}"
+
 msgid "Issue archived"
 msgstr "Issue arşivlendi"
 
@@ -9037,6 +9064,10 @@ msgstr "Birkaç TODO'yu bitir"
 msgid "Knowledge"
 msgstr "Bilgi"
 
+msgid "Label"
+msgstr "Etiket"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "Etiket"
 
@@ -9461,6 +9492,9 @@ msgstr "Dosyalar yükleniyor..."
 msgid "Loading fonts..."
 msgstr "Yazı tipleri yükleniyor..."
 
+msgid "Loading GitHub details"
+msgstr "GitHub ayrıntıları yükleniyor"
+
 msgid "Loading groups…"
 msgstr "Gruplar yükleniyor…"
 
@@ -9874,6 +9908,10 @@ msgstr "Birleştirme durumu"
 msgid "Merge status unknown"
 msgstr "Birleştirme durumu bilinmiyor"
 
+msgid "Merged"
+msgstr "Birleştirildi"
+
+msgctxt "pull request state"
 msgid "Merged"
 msgstr "Birleştirildi"
 
@@ -10667,6 +10705,9 @@ msgstr "Bilinen oluşturan yok"
 msgid "No labels"
 msgstr "Etiket yok"
 
+msgid "No labels found."
+msgstr "Etiket bulunamadı."
+
 msgid "No lead"
 msgstr "Lider yok"
 
@@ -11365,6 +11406,10 @@ msgstr "aç"
 
 msgid "Open"
 msgstr "Aç"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Açık"
 
 msgctxt "status"
 msgid "Open"
@@ -12430,6 +12475,10 @@ msgstr "Yanıt gönder"
 
 msgid "PR"
 msgstr "PR"
+
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
 
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
@@ -14380,6 +14429,9 @@ msgstr "Şurada ara: {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Issue ara..."
+
+msgid "Search labels..."
+msgstr "Etiket ara..."
 
 msgid "Search Linear"
 msgstr "Linear'da ara"
@@ -17966,6 +18018,10 @@ msgstr "dal ön ekini güncelleme"
 
 msgid "Updated"
 msgstr "Güncellendi"
+
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "{0} güncellendi"
 
 msgid "Updated {date}"
 msgstr "Güncelleme: {date}"

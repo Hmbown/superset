@@ -2045,6 +2045,9 @@ msgstr "Alles in huidig tabblad"
 msgid "All in current tab (split panes)"
 msgstr "Alles in huidig tabblad (gesplitste panelen)"
 
+msgid "All labels"
+msgstr "Alle labels"
+
 msgid "All models"
 msgstr "Alle modellen"
 
@@ -3728,6 +3731,12 @@ msgstr "Klik hier als je niet wordt doorgestuurd"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Klik op ‘↑ update’ om de bevestiging vóór de update te bekijken"
 
+msgid "Click the chip to open the issue"
+msgstr "Klik op de chip om de issue te openen"
+
+msgid "Click the chip to open the pull request"
+msgstr "Klik op de chip om de pull request te openen"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Klik om de sessie-ID te kopiëren (hervatten met `claude --resume <id>`)."
 
@@ -3901,6 +3910,10 @@ msgstr "Werkruimte sluiten"
 msgid "Close Workspace"
 msgstr "Werkruimte sluiten"
 
+msgid "Closed"
+msgstr "Gesloten"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Gesloten"
 
@@ -5926,6 +5939,9 @@ msgstr "Losgekoppeld"
 msgid "Details"
 msgstr "Details"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Details zijn hier niet beschikbaar, maar de link opent nog steeds."
+
 msgid "Dev"
 msgstr "Dev"
 
@@ -6257,6 +6273,10 @@ msgstr "Downloaden..."
 msgid "Downloads"
 msgstr "Downloads"
 
+msgid "Draft"
+msgstr "Draft"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Draft"
 
@@ -8833,6 +8853,13 @@ msgstr "Is er een gratis plan?"
 msgid "Isolation"
 msgstr "Isolatie"
 
+msgid "Issue"
+msgstr "Issue"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Issue #{0}"
+
 msgid "Issue archived"
 msgstr "Issue gearchiveerd"
 
@@ -9037,6 +9064,10 @@ msgstr "Een paar TODO's wegwerken"
 msgid "Knowledge"
 msgstr "Kennis"
 
+msgid "Label"
+msgstr "Label"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "Label"
 
@@ -9461,6 +9492,9 @@ msgstr "Bestanden laden..."
 msgid "Loading fonts..."
 msgstr "Lettertypen laden..."
 
+msgid "Loading GitHub details"
+msgstr "GitHub-details laden"
+
 msgid "Loading groups…"
 msgstr "Groepen laden…"
 
@@ -9874,6 +9908,10 @@ msgstr "Mergestatus"
 msgid "Merge status unknown"
 msgstr "Mergestatus onbekend"
 
+msgid "Merged"
+msgstr "Gemerged"
+
+msgctxt "pull request state"
 msgid "Merged"
 msgstr "Gemerged"
 
@@ -10667,6 +10705,9 @@ msgstr "Geen bekende makers"
 msgid "No labels"
 msgstr "Geen labels"
 
+msgid "No labels found."
+msgstr "Geen labels gevonden."
+
 msgid "No lead"
 msgstr "Geen leider"
 
@@ -11365,6 +11406,10 @@ msgstr "openen"
 
 msgid "Open"
 msgstr "Openen"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Open"
 
 msgctxt "status"
 msgid "Open"
@@ -12430,6 +12475,10 @@ msgstr "Antwoord plaatsen"
 
 msgid "PR"
 msgstr "PR"
+
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
 
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
@@ -14380,6 +14429,9 @@ msgstr "Zoeken in {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Issues zoeken..."
+
+msgid "Search labels..."
+msgstr "Labels zoeken..."
 
 msgid "Search Linear"
 msgstr "Linear doorzoeken"
@@ -17966,6 +18018,10 @@ msgstr "de branchprefix bijwerken"
 
 msgid "Updated"
 msgstr "Bijgewerkt"
+
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "Bijgewerkt {0}"
 
 msgid "Updated {date}"
 msgstr "Bijgewerkt {date}"

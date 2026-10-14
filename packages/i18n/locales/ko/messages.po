@@ -2045,6 +2045,9 @@ msgstr "모두 현재 탭에서"
 msgid "All in current tab (split panes)"
 msgstr "모두 현재 탭에서 (분할 패널)"
 
+msgid "All labels"
+msgstr "모든 레이블"
+
 msgid "All models"
 msgstr "모든 모델"
 
@@ -3728,6 +3731,12 @@ msgstr "이동하지 않으면 여기를 클릭하세요"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "“↑ update” 버튼을 클릭하면 업데이트 전 확인 창이 표시됩니다"
 
+msgid "Click the chip to open the issue"
+msgstr "칩을 클릭하면 이슈가 열립니다"
+
+msgid "Click the chip to open the pull request"
+msgstr "칩을 클릭하면 풀 리퀘스트가 열립니다"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "클릭하면 세션 ID를 복사합니다(`claude --resume <id>`로 이어서 진행)."
 
@@ -3901,6 +3910,10 @@ msgstr "워크스페이스 닫기"
 msgid "Close Workspace"
 msgstr "워크스페이스 닫기"
 
+msgid "Closed"
+msgstr "닫힘"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "닫힘"
 
@@ -5926,6 +5939,9 @@ msgstr "분리됨"
 msgid "Details"
 msgstr "세부 정보"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "여기서는 세부 정보를 볼 수 없지만 링크는 열립니다."
+
 msgid "Dev"
 msgstr "개발"
 
@@ -6257,6 +6273,10 @@ msgstr "다운로드 중..."
 msgid "Downloads"
 msgstr "다운로드"
 
+msgid "Draft"
+msgstr "초안"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "초안"
 
@@ -8833,6 +8853,13 @@ msgstr "무료 플랜이 있나요?"
 msgid "Isolation"
 msgstr "격리"
 
+msgid "Issue"
+msgstr "이슈"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "이슈 #{0}"
+
 msgid "Issue archived"
 msgstr "이슈 보관됨"
 
@@ -9037,6 +9064,10 @@ msgstr "TODO 몇 개 해치우기"
 msgid "Knowledge"
 msgstr "지식"
 
+msgid "Label"
+msgstr "레이블"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "레이블"
 
@@ -9461,6 +9492,9 @@ msgstr "파일을 불러오는 중..."
 msgid "Loading fonts..."
 msgstr "글꼴 불러오는 중..."
 
+msgid "Loading GitHub details"
+msgstr "GitHub 세부 정보 불러오는 중"
+
 msgid "Loading groups…"
 msgstr "그룹 불러오는 중…"
 
@@ -9874,6 +9908,10 @@ msgstr "머지 상태"
 msgid "Merge status unknown"
 msgstr "머지 상태 알 수 없음"
 
+msgid "Merged"
+msgstr "머지됨"
+
+msgctxt "pull request state"
 msgid "Merged"
 msgstr "머지됨"
 
@@ -10667,6 +10705,9 @@ msgstr "알려진 만든 사람이 없습니다"
 msgid "No labels"
 msgstr "레이블 없음"
 
+msgid "No labels found."
+msgstr "레이블을 찾을 수 없습니다."
+
 msgid "No lead"
 msgstr "리드 없음"
 
@@ -11365,6 +11406,10 @@ msgstr "열기"
 
 msgid "Open"
 msgstr "열기"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "열림"
 
 msgctxt "status"
 msgid "Open"
@@ -12430,6 +12475,10 @@ msgstr "답글 게시"
 
 msgid "PR"
 msgstr "PR"
+
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
 
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
@@ -14380,6 +14429,9 @@ msgstr "{frameTitle}에서 검색…"
 
 msgid "Search issues..."
 msgstr "이슈 검색..."
+
+msgid "Search labels..."
+msgstr "레이블 검색..."
 
 msgid "Search Linear"
 msgstr "Linear 검색"
@@ -17966,6 +18018,10 @@ msgstr "브랜치 접두사를 업데이트할"
 
 msgid "Updated"
 msgstr "업데이트됨"
+
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "{0} 업데이트됨"
 
 msgid "Updated {date}"
 msgstr "{date} 업데이트"

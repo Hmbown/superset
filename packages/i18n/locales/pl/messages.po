@@ -2045,6 +2045,9 @@ msgstr "Wszystkie w bieżącej karcie"
 msgid "All in current tab (split panes)"
 msgstr "Wszystkie w bieżącej karcie (podzielone panele)"
 
+msgid "All labels"
+msgstr "Wszystkie etykiety"
+
 msgid "All models"
 msgstr "Wszystkie modele"
 
@@ -3728,6 +3731,12 @@ msgstr "Kliknij tutaj, jeśli przekierowanie nie nastąpi"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Kliknij „↑ update”, aby zobaczyć potwierdzenie przed aktualizacją"
 
+msgid "Click the chip to open the issue"
+msgstr "Kliknij chip, aby otworzyć zgłoszenie"
+
+msgid "Click the chip to open the pull request"
+msgstr "Kliknij chip, aby otworzyć pull request"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Kliknij, aby skopiować ID sesji (wznów przez `claude --resume <id>`)."
 
@@ -3903,6 +3912,10 @@ msgstr "Zamknij obszar roboczy"
 
 msgid "Closed"
 msgstr "Zamknięty"
+
+msgctxt "pull request or issue state"
+msgid "Closed"
+msgstr "Zamknięte"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Zamknięcie tych portów zakończy procesy, które ich używają."
@@ -5926,6 +5939,9 @@ msgstr "Odłączona"
 msgid "Details"
 msgstr "Szczegóły"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Szczegóły nie są tu dostępne, ale link nadal się otwiera."
+
 msgid "Dev"
 msgstr "Dev"
 
@@ -6257,6 +6273,10 @@ msgstr "Pobieranie..."
 msgid "Downloads"
 msgstr "Pobrane"
 
+msgid "Draft"
+msgstr "Szkic"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Szkic"
 
@@ -8833,6 +8853,13 @@ msgstr "Czy jest plan darmowy?"
 msgid "Isolation"
 msgstr "Izolacja"
 
+msgid "Issue"
+msgstr "Zgłoszenie"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Zgłoszenie #{0}"
+
 msgid "Issue archived"
 msgstr "Zgłoszenie zarchiwizowane"
 
@@ -9037,6 +9064,10 @@ msgstr "Uporaj się z kilkoma TODO"
 msgid "Knowledge"
 msgstr "Wiedza"
 
+msgid "Label"
+msgstr "Etykieta"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "Etykieta"
 
@@ -9461,6 +9492,9 @@ msgstr "Wczytywanie plików..."
 msgid "Loading fonts..."
 msgstr "Wczytywanie czcionek..."
 
+msgid "Loading GitHub details"
+msgstr "Wczytywanie szczegółów z GitHub"
+
 msgid "Loading groups…"
 msgstr "Wczytywanie grup…"
 
@@ -9876,6 +9910,10 @@ msgstr "Stan scalania nieznany"
 
 msgid "Merged"
 msgstr "Scalony"
+
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Scalone"
 
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
@@ -10667,6 +10705,9 @@ msgstr "Brak znanych twórców"
 msgid "No labels"
 msgstr "Brak etykiet"
 
+msgid "No labels found."
+msgstr "Nie znaleziono etykiet."
+
 msgid "No lead"
 msgstr "Bez lidera"
 
@@ -11365,6 +11406,10 @@ msgstr "otwórz"
 
 msgid "Open"
 msgstr "Otwórz"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Otwarte"
 
 msgctxt "status"
 msgid "Open"
@@ -12430,6 +12475,10 @@ msgstr "Opublikuj odpowiedź"
 
 msgid "PR"
 msgstr "PR"
+
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
 
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
@@ -14380,6 +14429,9 @@ msgstr "Szukaj w {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Szukaj zgłoszeń..."
+
+msgid "Search labels..."
+msgstr "Szukaj etykiet..."
 
 msgid "Search Linear"
 msgstr "Szukaj w Linear"
@@ -17966,6 +18018,10 @@ msgstr "zaktualizować prefiksu gałęzi"
 
 msgid "Updated"
 msgstr "Zaktualizowano"
+
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "Zaktualizowano {0}"
 
 msgid "Updated {date}"
 msgstr "Zaktualizowano {date}"

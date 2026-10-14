@@ -2045,6 +2045,9 @@ msgstr "Tất cả trong tab hiện tại"
 msgid "All in current tab (split panes)"
 msgstr "Tất cả trong tab hiện tại (chia khung)"
 
+msgid "All labels"
+msgstr "Tất cả nhãn"
+
 msgid "All models"
 msgstr "Tất cả mô hình"
 
@@ -3728,6 +3731,12 @@ msgstr "Nhấp vào đây nếu không được chuyển hướng"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Nhấp vào nút “↑ update” để xem xác nhận trước khi cập nhật"
 
+msgid "Click the chip to open the issue"
+msgstr "Nhấp vào thẻ để mở issue"
+
+msgid "Click the chip to open the pull request"
+msgstr "Nhấp vào thẻ để mở pull request"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Nhấp để sao chép ID phiên (resume bằng `claude --resume <id>`)."
 
@@ -3901,6 +3910,10 @@ msgstr "Đóng workspace"
 msgid "Close Workspace"
 msgstr "Đóng workspace"
 
+msgid "Closed"
+msgstr "Đã đóng"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Đã đóng"
 
@@ -5926,6 +5939,9 @@ msgstr "Đã tách"
 msgid "Details"
 msgstr "Chi tiết"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Không có chi tiết ở đây, nhưng liên kết vẫn mở được."
+
 msgid "Dev"
 msgstr "Dev"
 
@@ -6257,6 +6273,10 @@ msgstr "Đang tải xuống..."
 msgid "Downloads"
 msgstr "Tải xuống"
 
+msgid "Draft"
+msgstr "Nháp"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Nháp"
 
@@ -8833,6 +8853,13 @@ msgstr "Có gói miễn phí không?"
 msgid "Isolation"
 msgstr "Tách biệt"
 
+msgid "Issue"
+msgstr "Issue"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Issue #{0}"
+
 msgid "Issue archived"
 msgstr "Issue được lưu trữ"
 
@@ -9037,6 +9064,10 @@ msgstr "Xử lý bớt vài TODO"
 msgid "Knowledge"
 msgstr "Tri thức"
 
+msgid "Label"
+msgstr "Nhãn"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "Nhãn"
 
@@ -9461,6 +9492,9 @@ msgstr "Đang tải tệp..."
 msgid "Loading fonts..."
 msgstr "Đang tải font..."
 
+msgid "Loading GitHub details"
+msgstr "Đang tải chi tiết từ GitHub"
+
 msgid "Loading groups…"
 msgstr "Đang tải nhóm…"
 
@@ -9874,6 +9908,10 @@ msgstr "Trạng thái merge"
 msgid "Merge status unknown"
 msgstr "Trạng thái merge không xác định"
 
+msgid "Merged"
+msgstr "Đã merge"
+
+msgctxt "pull request state"
 msgid "Merged"
 msgstr "Đã merge"
 
@@ -10667,6 +10705,9 @@ msgstr "Không có người tạo nào được biết"
 msgid "No labels"
 msgstr "Không có nhãn"
 
+msgid "No labels found."
+msgstr "Không tìm thấy nhãn."
+
 msgid "No lead"
 msgstr "Không có người phụ trách"
 
@@ -11365,6 +11406,10 @@ msgstr "mở"
 
 msgid "Open"
 msgstr "Mở"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Đang mở"
 
 msgctxt "status"
 msgid "Open"
@@ -12430,6 +12475,10 @@ msgstr "Đăng trả lời"
 
 msgid "PR"
 msgstr "PR"
+
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
 
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
@@ -14380,6 +14429,9 @@ msgstr "Tìm trong {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Tìm issue..."
+
+msgid "Search labels..."
+msgstr "Tìm kiếm nhãn..."
 
 msgid "Search Linear"
 msgstr "Tìm trong Linear"
@@ -17966,6 +18018,10 @@ msgstr "cập nhật tiền tố nhánh"
 
 msgid "Updated"
 msgstr "Đã cập nhật"
+
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "Đã cập nhật {0}"
 
 msgid "Updated {date}"
 msgstr "Cập nhật {date}"

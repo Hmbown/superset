@@ -2045,6 +2045,9 @@ msgstr "Semua di tab saat ini"
 msgid "All in current tab (split panes)"
 msgstr "Semua di tab saat ini (panel terbagi)"
 
+msgid "All labels"
+msgstr "Semua label"
+
 msgid "All models"
 msgstr "Semua model"
 
@@ -3728,6 +3731,12 @@ msgstr "Klik di sini kalau tidak dialihkan"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Klik tombol “↑ update” untuk melihat konfirmasi sebelum pembaruan"
 
+msgid "Click the chip to open the issue"
+msgstr "Klik chip untuk membuka issue"
+
+msgid "Click the chip to open the pull request"
+msgstr "Klik chip untuk membuka pull request"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Klik untuk menyalin ID sesi (lanjutkan dengan `claude --resume <id>`)."
 
@@ -3901,6 +3910,10 @@ msgstr "Tutup workspace"
 msgid "Close Workspace"
 msgstr "Tutup Workspace"
 
+msgid "Closed"
+msgstr "Ditutup"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Ditutup"
 
@@ -5926,6 +5939,9 @@ msgstr "Terlepas"
 msgid "Details"
 msgstr "Detail"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Detail tidak tersedia di sini, tetapi tautan tetap bisa dibuka."
+
 msgid "Dev"
 msgstr "Dev"
 
@@ -6257,6 +6273,10 @@ msgstr "Mengunduh..."
 msgid "Downloads"
 msgstr "Unduhan"
 
+msgid "Draft"
+msgstr "Draf"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Draf"
 
@@ -8833,6 +8853,13 @@ msgstr "Apakah ada paket gratis?"
 msgid "Isolation"
 msgstr "Isolasi"
 
+msgid "Issue"
+msgstr "Issue"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Issue #{0}"
+
 msgid "Issue archived"
 msgstr "Issue diarsipkan"
 
@@ -9037,6 +9064,10 @@ msgstr "Beresin beberapa TODO"
 msgid "Knowledge"
 msgstr "Pengetahuan"
 
+msgid "Label"
+msgstr "Label"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "Label"
 
@@ -9461,6 +9492,9 @@ msgstr "Memuat file..."
 msgid "Loading fonts..."
 msgstr "Memuat font..."
 
+msgid "Loading GitHub details"
+msgstr "Memuat detail GitHub"
+
 msgid "Loading groups…"
 msgstr "Memuat grup…"
 
@@ -9874,6 +9908,10 @@ msgstr "Status merge"
 msgid "Merge status unknown"
 msgstr "Status merge tidak diketahui"
 
+msgid "Merged"
+msgstr "Di-merge"
+
+msgctxt "pull request state"
 msgid "Merged"
 msgstr "Di-merge"
 
@@ -10667,6 +10705,9 @@ msgstr "Tidak ada pembuat yang diketahui"
 msgid "No labels"
 msgstr "Tanpa label"
 
+msgid "No labels found."
+msgstr "Label tidak ditemukan."
+
 msgid "No lead"
 msgstr "Tanpa pemimpin"
 
@@ -11365,6 +11406,10 @@ msgstr "buka"
 
 msgid "Open"
 msgstr "Buka"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Terbuka"
 
 msgctxt "status"
 msgid "Open"
@@ -12430,6 +12475,10 @@ msgstr "Kirim balasan"
 
 msgid "PR"
 msgstr "PR"
+
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
 
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
@@ -14380,6 +14429,9 @@ msgstr "Cari di {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Cari issue..."
+
+msgid "Search labels..."
+msgstr "Cari label..."
 
 msgid "Search Linear"
 msgstr "Cari di Linear"
@@ -17966,6 +18018,10 @@ msgstr "memperbarui prefix branch"
 
 msgid "Updated"
 msgstr "Diperbarui"
+
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "Diperbarui {0}"
 
 msgid "Updated {date}"
 msgstr "Diperbarui {date}"

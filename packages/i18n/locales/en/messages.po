@@ -2045,6 +2045,9 @@ msgstr "All in current tab"
 msgid "All in current tab (split panes)"
 msgstr "All in current tab (split panes)"
 
+msgid "All labels"
+msgstr "All labels"
+
 msgid "All models"
 msgstr "All models"
 
@@ -3728,6 +3731,12 @@ msgstr "Click here if not redirected"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Click the “↑ update” pill to see the pre-update confirm"
 
+msgid "Click the chip to open the issue"
+msgstr "Click the chip to open the issue"
+
+msgid "Click the chip to open the pull request"
+msgstr "Click the chip to open the pull request"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Click to copy the session ID (resume with `claude --resume <id>`)."
 
@@ -3901,6 +3910,10 @@ msgstr "Close workspace"
 msgid "Close Workspace"
 msgstr "Close Workspace"
 
+msgid "Closed"
+msgstr "Closed"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Closed"
 
@@ -5926,6 +5939,9 @@ msgstr "Detached"
 msgid "Details"
 msgstr "Details"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Details are not available here, but the link still opens."
+
 msgid "Dev"
 msgstr "Dev"
 
@@ -6257,6 +6273,10 @@ msgstr "Downloading..."
 msgid "Downloads"
 msgstr "Downloads"
 
+msgid "Draft"
+msgstr "Draft"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Draft"
 
@@ -8833,6 +8853,13 @@ msgstr "Is there a free plan?"
 msgid "Isolation"
 msgstr "Isolation"
 
+msgid "Issue"
+msgstr "Issue"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Issue #{0}"
+
 msgid "Issue archived"
 msgstr "Issue archived"
 
@@ -9037,6 +9064,10 @@ msgstr "Knock out some TODOs"
 msgid "Knowledge"
 msgstr "Knowledge"
 
+msgid "Label"
+msgstr "Label"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "Label"
 
@@ -9461,6 +9492,9 @@ msgstr "Loading files..."
 msgid "Loading fonts..."
 msgstr "Loading fonts..."
 
+msgid "Loading GitHub details"
+msgstr "Loading GitHub details"
+
 msgid "Loading groups…"
 msgstr "Loading groups…"
 
@@ -9874,6 +9908,10 @@ msgstr "Merge status"
 msgid "Merge status unknown"
 msgstr "Merge status unknown"
 
+msgid "Merged"
+msgstr "Merged"
+
+msgctxt "pull request state"
 msgid "Merged"
 msgstr "Merged"
 
@@ -10667,6 +10705,9 @@ msgstr "No known creators"
 msgid "No labels"
 msgstr "No labels"
 
+msgid "No labels found."
+msgstr "No labels found."
+
 msgid "No lead"
 msgstr "No lead"
 
@@ -11363,6 +11404,10 @@ msgstr "Only you can see this page"
 msgid "open"
 msgstr "open"
 
+msgid "Open"
+msgstr "Open"
+
+msgctxt "pull request or issue state"
 msgid "Open"
 msgstr "Open"
 
@@ -12430,6 +12475,10 @@ msgstr "Post reply"
 
 msgid "PR"
 msgstr "PR"
+
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
 
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
@@ -14380,6 +14429,9 @@ msgstr "Search in {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Search issues..."
+
+msgid "Search labels..."
+msgstr "Search labels..."
 
 msgid "Search Linear"
 msgstr "Search Linear"
@@ -17966,6 +18018,10 @@ msgstr "update the branch prefix"
 
 msgid "Updated"
 msgstr "Updated"
+
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "Updated {0}"
 
 msgid "Updated {date}"
 msgstr "Updated {date}"

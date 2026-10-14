@@ -2045,6 +2045,9 @@ msgstr "全部在目前分頁"
 msgid "All in current tab (split panes)"
 msgstr "全部在目前分頁（分屏窗格）"
 
+msgid "All labels"
+msgstr "所有標籤"
+
 msgid "All models"
 msgstr "所有模型"
 
@@ -3728,6 +3731,12 @@ msgstr "如果沒有自動跳轉，請點選這裡"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "點擊「↑ update」按鈕查看更新前的確認提示"
 
+msgid "Click the chip to open the issue"
+msgstr "點擊開啟議題"
+
+msgid "Click the chip to open the pull request"
+msgstr "點擊開啟拉取請求"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "點選複製會話ID（使用`claude --resume <id>`恢復）。"
 
@@ -3901,6 +3910,10 @@ msgstr "關閉工作區"
 msgid "Close Workspace"
 msgstr "關閉工作區"
 
+msgid "Closed"
+msgstr "已關閉"
+
+msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "已關閉"
 
@@ -5926,6 +5939,9 @@ msgstr "已分離"
 msgid "Details"
 msgstr "詳情"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "此處無法顯示詳細資料，但連結仍可開啟。"
+
 msgid "Dev"
 msgstr "開發"
 
@@ -6257,6 +6273,10 @@ msgstr "正在下載..."
 msgid "Downloads"
 msgstr "下載"
 
+msgid "Draft"
+msgstr "草稿"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "草稿"
 
@@ -8833,6 +8853,13 @@ msgstr "有免費方案嗎？"
 msgid "Isolation"
 msgstr "隔離"
 
+msgid "Issue"
+msgstr "議題"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "議題 #{0}"
+
 msgid "Issue archived"
 msgstr "問題已歸檔"
 
@@ -9039,6 +9066,10 @@ msgstr "知識"
 
 msgid "Label"
 msgstr "名稱"
+
+msgctxt "task label filter"
+msgid "Label"
+msgstr "標籤"
 
 msgid "Label change"
 msgstr "標籤變更"
@@ -9461,6 +9492,9 @@ msgstr "正在載入檔案..."
 msgid "Loading fonts..."
 msgstr "正在載入字型..."
 
+msgid "Loading GitHub details"
+msgstr "正在載入 GitHub 詳細資料"
+
 msgid "Loading groups…"
 msgstr "正在載入群組…"
 
@@ -9874,6 +9908,10 @@ msgstr "合併狀態"
 msgid "Merge status unknown"
 msgstr "合併狀態不明"
 
+msgid "Merged"
+msgstr "已合併"
+
+msgctxt "pull request state"
 msgid "Merged"
 msgstr "已合併"
 
@@ -10667,6 +10705,9 @@ msgstr "沒有已知的建立者"
 msgid "No labels"
 msgstr "無標籤"
 
+msgid "No labels found."
+msgstr "找不到標籤。"
+
 msgid "No lead"
 msgstr "無負責人"
 
@@ -11365,6 +11406,10 @@ msgstr "開啟"
 
 msgid "Open"
 msgstr "開啟"
+
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "開放"
 
 msgctxt "status"
 msgid "Open"
@@ -12430,6 +12475,10 @@ msgstr "發表回覆"
 
 msgid "PR"
 msgstr "PR"
+
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
 
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
@@ -14380,6 +14429,9 @@ msgstr "在{frameTitle}中搜尋…"
 
 msgid "Search issues..."
 msgstr "搜尋議題..."
+
+msgid "Search labels..."
+msgstr "搜尋標籤..."
 
 msgid "Search Linear"
 msgstr "搜尋Linear"
@@ -17966,6 +18018,10 @@ msgstr "更新分支字首"
 
 msgid "Updated"
 msgstr "已更新"
+
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "更新於{0}"
 
 msgid "Updated {date}"
 msgstr "更新於{date}"
