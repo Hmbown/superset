@@ -34,7 +34,7 @@ public final class ComposerModule: Module {
         let png = image.pngData()
       else { return nil }
       let target = fileURL.appendingPathExtension("thumbnail.png")
-      try? png.write(to: target, options: .atomic)
+      guard (try? png.write(to: target, options: .atomic)) != nil else { return nil }
       return target.absoluteString
     }
 

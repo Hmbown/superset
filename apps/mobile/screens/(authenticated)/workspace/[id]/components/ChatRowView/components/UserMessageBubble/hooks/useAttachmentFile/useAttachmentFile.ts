@@ -25,7 +25,6 @@ export function useAttachmentFile({
 	return useQuery({
 		queryKey: ["attachment-file", hostUrl, attachmentId],
 		enabled: hostUrl !== undefined,
-		staleTime: Number.POSITIVE_INFINITY,
 		retry: 1,
 		networkMode: "always" as const,
 		queryFn: async () => {

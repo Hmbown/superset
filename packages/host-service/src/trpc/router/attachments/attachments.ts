@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
-import { closeSync, mkdirSync, openSync, readFileSync } from "node:fs";
+import { closeSync, mkdirSync, openSync } from "node:fs";
+import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import {
 	assignAttachmentFileName,
@@ -199,7 +200,7 @@ export const attachmentsRouter = router({
 	 */
 	read: protectedProcedure
 		.input(z.object({ attachmentId: z.string().uuid() }))
-		.query(({ input }) => {
+		.query(async ({ input }) => {
 			const resolved = resolveAttachmentPath(input.attachmentId);
 			if (!resolved) {
 				throw new TRPCError({
@@ -216,7 +217,7 @@ export const attachmentsRouter = router({
 			}
 			return {
 				mediaType: metadata.mediaType,
-				data: readFileSync(path).toString("base64"),
+				data: (await readFile(path)).toString("base64"),
 			};
 		}),
 

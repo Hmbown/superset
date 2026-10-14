@@ -10,6 +10,11 @@ import { AttachmentFileCard } from "./components/AttachmentFileCard";
 import { AttachmentThumbnail } from "./components/AttachmentThumbnail";
 import { OutgoingBubble } from "./components/OutgoingBubble";
 
+/** What the composer's native viewer can decode; UIImage has no SVG. */
+function isViewableImage(mimeType: string): boolean {
+	return mimeType.startsWith("image/") && mimeType !== "image/svg+xml";
+}
+
 interface UserMessageBubbleProps {
 	content: UserContent[];
 	harness: string | undefined;
@@ -62,7 +67,7 @@ export function UserMessageBubble({
 							showsHorizontalScrollIndicator={false}
 						>
 							{attachments.map((attachment) =>
-								attachment.mimeType.startsWith("image/") ? (
+								isViewableImage(attachment.mimeType) ? (
 									<AttachmentThumbnail
 										attachmentId={attachment.attachmentId}
 										hostUrl={hostUrl}
