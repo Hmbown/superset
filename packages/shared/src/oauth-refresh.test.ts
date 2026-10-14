@@ -2,15 +2,19 @@ import { describe, expect, it } from "bun:test";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { TokenRefreshHttpError } from "./auth";
-import type { SupersetConfig } from "./config";
 import {
 	isAuthFresh,
+	type OAuthConfig,
 	type RefreshDeps,
 	refreshStoredAuth,
 	ServerUnreachableError,
 	SessionExpiredError,
 } from "./oauth-refresh";
+
+type SupersetConfig = OAuthConfig & { organizationId?: string };
+
+const httpError = (status: number) =>
+	Object.assign(new Error(`Token refresh failed: ${status}`), { status });
 
 /**
  * The token endpoint rotates the refresh token on every call and treats a
@@ -24,7 +28,7 @@ function makeHarness(initialAuth: SupersetConfig["auth"]) {
 	let stored: SupersetConfig = { auth: initialAuth };
 	let refreshCalls = 0;
 	let sleepCalls = 0;
-	const deps: RefreshDeps = {
+	const deps: RefreshDeps<SupersetConfig> = {
 		refresh: async () => {
 			refreshCalls += 1;
 			await new Promise((resolve) => setTimeout(resolve, 20));
@@ -217,7 +221,7 @@ describe("refreshStoredAuth", () => {
 		const h = makeHarness(staleAuth());
 		const realRefresh = h.deps.refresh;
 		h.deps.refresh = async () => {
-			throw new TokenRefreshHttpError(500);
+			throw httpError(500);
 		};
 		try {
 			await expect(refreshStoredAuth(h.deps)).rejects.toThrow(/500/);
@@ -249,13 +253,35 @@ describe("refreshStoredAuth", () => {
 	it("drops the token when the server rejects it", async () => {
 		const h = makeHarness(staleAuth());
 		h.deps.refresh = async () => {
-			throw new TokenRefreshHttpError(400);
+			throw httpError(400);
 		};
 		try {
 			await expect(refreshStoredAuth(h.deps)).rejects.toBeInstanceOf(
 				SessionExpiredError,
 			);
 			expect(h.stored.auth?.refreshToken).toBeUndefined();
+		} finally {
+			h.cleanup();
+		}
+	});
+
+	it("does not overwrite tokens another refresher stored after its own refresh was rejected", async () => {
+		const h = makeHarness(staleAuth());
+		h.deps.refresh = async () => {
+			h.deps.writeConfig({
+				auth: {
+					accessToken: "other-access",
+					refreshToken: "other-refresh",
+					expiresAt: Date.now() - 1000,
+				},
+			});
+			throw httpError(400);
+		};
+		try {
+			await expect(refreshStoredAuth(h.deps)).rejects.toBeInstanceOf(
+				SessionExpiredError,
+			);
+			expect(h.stored.auth?.refreshToken).toBe("other-refresh");
 		} finally {
 			h.cleanup();
 		}
