@@ -2,13 +2,12 @@ import { withPosthog } from "./lazy";
 import { trackReddit } from "./reddit";
 
 /**
- * PostHog events that should also be forwarded to the Reddit Pixel as
- * conversion events. Keyed by PostHog event name → Reddit standard event.
- * `download_clicked` fires whenever a visitor hits a download CTA (across all
- * platforms), which is the conversion we optimize Reddit ads toward.
+ * PostHog events that also go to the Reddit Pixel, keyed by PostHog event name
+ * → Reddit standard event. A download click shows intent, not a sale, so it is
+ * a Lead and not a Purchase.
  */
 const REDDIT_EVENT_MAP: Record<string, string> = {
-	download_clicked: "Purchase",
+	download_clicked: "Lead",
 };
 
 export function track(
