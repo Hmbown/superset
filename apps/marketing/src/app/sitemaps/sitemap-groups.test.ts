@@ -9,10 +9,15 @@ mock.module("@/app/[lang]/utils/fetchLeaderboard", () => ({
 	fetchPublicHandles: async () => [
 		{ handle: "example-engineer", lastPublishedAt: new Date("2026-09-01") },
 		{ handle: "undated-engineer", lastPublishedAt: null },
+		{ handle: "openai", lastPublishedAt: null },
 	],
 }));
 
-const { default: sitemap } = await import("./sitemap");
+const {
+	buildSitemapEntries: sitemap,
+	buildSitemapGroups,
+	SITEMAP_GROUPS,
+} = await import("./sitemap-groups");
 
 describe("marketing sitemap", () => {
 	test("uses recorded modification dates and omits unknown dates", async () => {
@@ -106,5 +111,29 @@ describe("marketing sitemap", () => {
 		const urls = (await sitemap()).map((entry) => entry.url);
 		expect(urls).toContain(`${COMPANY.MARKETING_URL}/mobile`);
 		expect(urls).toContain(`${COMPANY.MARKETING_URL}/fr/mobile`);
+	});
+});
+
+describe("marketing sitemap groups", () => {
+	test("omits reserved handles the site does not serve", async () => {
+		const { profiles } = await buildSitemapGroups();
+		expect(profiles.map((entry) => entry.url)).not.toContain(
+			`${COMPANY.MARKETING_URL}/openai`,
+		);
+	});
+
+	test("puts every URL in exactly one non-empty group", async () => {
+		const groups = await buildSitemapGroups();
+		expect(Object.keys(groups).sort()).toEqual([...SITEMAP_GROUPS].sort());
+		const urls = Object.values(groups).flatMap((entries) =>
+			entries.map((entry) => entry.url),
+		);
+		expect(new Set(urls).size).toBe(urls.length);
+		for (const group of SITEMAP_GROUPS) {
+			expect(groups[group].length).toBeGreaterThan(0);
+		}
+		expect(
+			groups.compare.every((entry) => entry.url.includes("/compare/")),
+		).toBe(true);
 	});
 });

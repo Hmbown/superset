@@ -1,5 +1,6 @@
 import { SUPPORTED_LOCALES } from "@superset/i18n";
 import { COMPANY } from "@superset/shared/constants";
+import { isProfileHandle } from "@superset/trpc/leaderboard-reserved-handles";
 import type { MetadataRoute } from "next";
 import { hasLocalizedContent, localeUrl } from "@/app/[lang]/metadata";
 import { fetchPublicHandles } from "@/app/[lang]/utils/fetchLeaderboard";
@@ -16,7 +17,25 @@ async function listProfileHandles() {
 	return fetchPublicHandles();
 }
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+export const SITEMAP_GROUPS = [
+	"pages",
+	"compare",
+	"blog",
+	"changelog",
+	"team",
+	"marketplace",
+	"profiles",
+] as const;
+
+export type SitemapGroup = (typeof SITEMAP_GROUPS)[number];
+
+export function isSitemapGroup(value: string): value is SitemapGroup {
+	return (SITEMAP_GROUPS as readonly string[]).includes(value);
+}
+
+export async function buildSitemapGroups(): Promise<
+	Record<SitemapGroup, MetadataRoute.Sitemap>
+> {
 	const baseUrl = COMPANY.MARKETING_URL;
 
 	const staticPages: MetadataRoute.Sitemap = [
@@ -201,17 +220,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		priority: 0.6,
 	}));
 
-	const pages = [
-		...staticPages,
-		...blogPages,
-		...changelogPages,
-		...teamPages,
-		...categoryPages,
-		...comparisonPages,
-		...legalPages,
-		...themePages,
-	];
-
 	// Only translated content has independently indexable locale variants.
 	// English-only articles remain accessible with translated navigation, but
 	// their canonical URL is the bare English path.
@@ -238,12 +246,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		console.error("[marketing/sitemap] handles error:", error);
 		return [];
 	});
-	const profilePages: MetadataRoute.Sitemap = handles.map((profile) => ({
-		url: `${baseUrl}/${profile.handle}`,
-		lastModified: profile.lastPublishedAt ?? undefined,
-		changeFrequency: "daily" as const,
-		priority: 0.6,
-	}));
+	// A handle claimed before it was reserved has no page: the proxy only
+	// routes handles that pass isProfileHandle.
+	const profilePages: MetadataRoute.Sitemap = handles
+		.filter((profile) => isProfileHandle(profile.handle))
+		.map((profile) => ({
+			url: `${baseUrl}/${profile.handle}`,
+			lastModified: profile.lastPublishedAt ?? undefined,
+			changeFrequency: "daily" as const,
+			priority: 0.6,
+		}));
 
-	return [...pages.flatMap(expand), ...profilePages];
+	return {
+		pages: [...staticPages, ...categoryPages, ...legalPages].flatMap(expand),
+		compare: comparisonPages.flatMap(expand),
+		blog: blogPages.flatMap(expand),
+		changelog: changelogPages.flatMap(expand),
+		team: teamPages.flatMap(expand),
+		marketplace: themePages.flatMap(expand),
+		profiles: profilePages,
+	};
+}
+
+export async function buildSitemapEntries(): Promise<MetadataRoute.Sitemap> {
+	return Object.values(await buildSitemapGroups()).flat();
 }
