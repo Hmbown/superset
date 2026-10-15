@@ -17,7 +17,7 @@ export function ToolsPanel({ client, onClose }: ToolsPanelProps) {
 	const { t } = useLingui();
 
 	return (
-		<aside className="absolute top-3 right-3 bottom-3 z-20 flex w-80 max-w-[calc(100%-1.5rem)] flex-col overflow-hidden rounded-lg border bg-popover text-popover-foreground shadow-md">
+		<aside className="absolute top-3 right-3 bottom-16 z-20 flex w-80 max-w-[calc(100%-1.5rem)] flex-col overflow-hidden rounded-lg border bg-popover text-popover-foreground shadow-md">
 			<header className="flex h-9 shrink-0 items-center justify-between pr-1 pl-3">
 				<span className="text-xs font-medium">
 					<Trans>Tools</Trans>

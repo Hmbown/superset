@@ -132,7 +132,7 @@ const LOCAL_SERVER_START_TIMEOUT_MS = 120_000;
 
 /** Expo's browser UI over every iOS simulator and Android emulator on this
  * machine (github.com/expo/expo-device-hub). */
-const DEVICE_HUB_PACKAGE = "expo-device-hub@0.14.0";
+const DEVICE_HUB_PACKAGE = "expo-device-hub@0.17.0";
 
 async function waitForHttp(
 	url: string,
@@ -172,14 +172,9 @@ interface LocalServer {
  * Not persisted: a host-service restart starts fresh, like its other processes. */
 let localServer: LocalServer | null = null;
 
-/** The hub keeps serving a frozen frame for an iOS simulator it has seen
- * shut down, even after that simulator boots again. Only a new hub recovers. */
-const simulatorsShutDownUnderHub = new Set<string>();
-
 export function stopLocalServer(): void {
 	localServer?.stop();
 	localServer = null;
-	simulatorsShutDownUnderHub.clear();
 }
 
 function startLocalServer(): LocalServer {
@@ -374,7 +369,6 @@ export const mobileRouter = router({
 	bootLocalDevice: protectedProcedure
 		.input(deviceActionSchema)
 		.mutation(async ({ input }) => {
-			if (simulatorsShutDownUnderHub.has(input.id)) stopLocalServer();
 			await hubRequest("/api/devices/boot", input);
 		}),
 
@@ -382,7 +376,6 @@ export const mobileRouter = router({
 		.input(deviceActionSchema)
 		.mutation(async ({ input }) => {
 			await hubRequest("/api/devices/shutdown", input);
-			if (input.platform === "ios") simulatorsShutDownUnderHub.add(input.id);
 		}),
 
 	restartLocalHub: protectedProcedure.mutation(async () => {
