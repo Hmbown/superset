@@ -2180,6 +2180,9 @@ msgstr "エージェントが関数やファイルをまるごと書き、人間
 msgid "An automation can only use a cloud workspace you created"
 msgstr "オートメーションで使用できるのは、自分が作成したクラウドワークスペースのみです"
 
+msgid "An environment tells a cloud workspace which repositories to check out and how to install them."
+msgstr "環境は、クラウドワークスペースがチェックアウトするリポジトリとそのインストール方法を指定します。"
+
 msgid "An error occurred"
 msgstr "エラーが発生しました"
 
@@ -5171,6 +5174,9 @@ msgstr "もう一度作成"
 
 msgid "Create an account"
 msgstr "アカウントを作成"
+
+msgid "Create environment"
+msgstr "環境を作成"
 
 msgid "Create failed: {message}"
 msgstr "作成に失敗しました: {message}"
@@ -10517,9 +10523,6 @@ msgstr "絵文字が見つかりません"
 msgid "No environments available"
 msgstr "利用可能な環境はありません"
 
-msgid "No environments for {repositoryFullName}."
-msgstr "{repositoryFullName} の環境がありません。"
-
 msgid "No environments found."
 msgstr "環境が見つかりません。"
 
@@ -14761,8 +14764,17 @@ msgstr "設定する"
 msgid "Set up {0}"
 msgstr "{0} をセットアップ"
 
+msgid "Set up {repositoryFullName} for the cloud"
+msgstr "{repositoryFullName} をクラウド用にセットアップ"
+
 msgid "Set up an automation"
 msgstr "自動化を設定する"
+
+msgid "Set up an environment"
+msgstr "環境をセットアップ"
+
+msgid "Set up environment"
+msgstr "環境をセットアップ"
 
 msgid "Set up project on {hostName}"
 msgstr "{hostName}でプロジェクトをセットアップ"

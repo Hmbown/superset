@@ -2180,6 +2180,9 @@ msgstr "Un agente scrive intere funzioni e interi file mentre un umano osserva o
 msgid "An automation can only use a cloud workspace you created"
 msgstr "Un'automazione può usare solo un workspace cloud che hai creato tu"
 
+msgid "An environment tells a cloud workspace which repositories to check out and how to install them."
+msgstr "Un ambiente indica a un workspace cloud quali repository scaricare e come installarli."
+
 msgid "An error occurred"
 msgstr "Si è verificato un errore"
 
@@ -5171,6 +5174,9 @@ msgstr "Crea di nuovo"
 
 msgid "Create an account"
 msgstr "Crea un account"
+
+msgid "Create environment"
+msgstr "Crea ambiente"
 
 msgid "Create failed: {message}"
 msgstr "Creazione non riuscita: {message}"
@@ -10517,9 +10523,6 @@ msgstr "Nessuna emoji trovata"
 msgid "No environments available"
 msgstr "Nessun ambiente disponibile"
 
-msgid "No environments for {repositoryFullName}."
-msgstr "Nessun ambiente per {repositoryFullName}."
-
 msgid "No environments found."
 msgstr "Nessun ambiente trovato."
 
@@ -14761,8 +14764,17 @@ msgstr "Configura"
 msgid "Set up {0}"
 msgstr "Configura {0}"
 
+msgid "Set up {repositoryFullName} for the cloud"
+msgstr "Prepara {repositoryFullName} per il cloud"
+
 msgid "Set up an automation"
 msgstr "Configura un’automazione"
+
+msgid "Set up an environment"
+msgstr "Configura un ambiente"
+
+msgid "Set up environment"
+msgstr "Configura ambiente"
 
 msgid "Set up project on {hostName}"
 msgstr "Configura il progetto su {hostName}"

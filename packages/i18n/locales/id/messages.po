@@ -2180,6 +2180,9 @@ msgstr "Agen menulis fungsi dan file utuh sementara manusia mengawasi tiap langk
 msgid "An automation can only use a cloud workspace you created"
 msgstr "Otomatisasi hanya bisa menggunakan workspace cloud yang kamu buat"
 
+msgid "An environment tells a cloud workspace which repositories to check out and how to install them."
+msgstr "Lingkungan memberi tahu workspace cloud repositori mana yang di-checkout dan cara memasangnya."
+
 msgid "An error occurred"
 msgstr "Terjadi kesalahan"
 
@@ -5171,6 +5174,9 @@ msgstr "Buat lagi"
 
 msgid "Create an account"
 msgstr "Buat akun"
+
+msgid "Create environment"
+msgstr "Buat lingkungan"
 
 msgid "Create failed: {message}"
 msgstr "Gagal membuat: {message}"
@@ -10517,9 +10523,6 @@ msgstr "Emoji tidak ditemukan"
 msgid "No environments available"
 msgstr "Tidak ada environment yang tersedia"
 
-msgid "No environments for {repositoryFullName}."
-msgstr "Tidak ada lingkungan untuk {repositoryFullName}."
-
 msgid "No environments found."
 msgstr "Environment tidak ditemukan."
 
@@ -14761,8 +14764,17 @@ msgstr "Siapkan"
 msgid "Set up {0}"
 msgstr "Siapkan {0}"
 
+msgid "Set up {repositoryFullName} for the cloud"
+msgstr "Siapkan {repositoryFullName} untuk cloud"
+
 msgid "Set up an automation"
 msgstr "Siapkan otomatisasi"
+
+msgid "Set up an environment"
+msgstr "Siapkan lingkungan"
+
+msgid "Set up environment"
+msgstr "Siapkan lingkungan"
 
 msgid "Set up project on {hostName}"
 msgstr "Siapkan proyek di {hostName}"

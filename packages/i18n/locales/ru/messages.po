@@ -2180,6 +2180,9 @@ msgstr "Агент пишет целые функции и файлы, а чел
 msgid "An automation can only use a cloud workspace you created"
 msgstr "Автоматизация может использовать только облачную рабочую область, которую создали вы"
 
+msgid "An environment tells a cloud workspace which repositories to check out and how to install them."
+msgstr "Окружение определяет, какие репозитории облачное рабочее пространство загружает и как их устанавливать."
+
 msgid "An error occurred"
 msgstr "Произошла ошибка"
 
@@ -5171,6 +5174,9 @@ msgstr "Создать заново"
 
 msgid "Create an account"
 msgstr "Создать аккаунт"
+
+msgid "Create environment"
+msgstr "Создать окружение"
 
 msgid "Create failed: {message}"
 msgstr "Не удалось создать: {message}"
@@ -10517,9 +10523,6 @@ msgstr "Эмодзи не найдены"
 msgid "No environments available"
 msgstr "Нет доступных окружений"
 
-msgid "No environments for {repositoryFullName}."
-msgstr "Нет окружений для {repositoryFullName}."
-
 msgid "No environments found."
 msgstr "Окружения не найдены."
 
@@ -14761,8 +14764,17 @@ msgstr "Настроить"
 msgid "Set up {0}"
 msgstr "Настроить {0}"
 
+msgid "Set up {repositoryFullName} for the cloud"
+msgstr "Подготовить {repositoryFullName} для облака"
+
 msgid "Set up an automation"
 msgstr "Настройте автоматизацию"
+
+msgid "Set up an environment"
+msgstr "Настройте окружение"
+
+msgid "Set up environment"
+msgstr "Настроить окружение"
 
 msgid "Set up project on {hostName}"
 msgstr "Настроить проект на {hostName}"

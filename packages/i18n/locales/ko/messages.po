@@ -2180,6 +2180,9 @@ msgstr "에이전트가 함수와 파일 전체를 작성하는 동안 사람이
 msgid "An automation can only use a cloud workspace you created"
 msgstr "자동화는 내가 만든 클라우드 워크스페이스만 사용할 수 있습니다"
 
+msgid "An environment tells a cloud workspace which repositories to check out and how to install them."
+msgstr "환경은 클라우드 워크스페이스가 체크아웃할 저장소와 설치 방법을 정합니다."
+
 msgid "An error occurred"
 msgstr "오류가 발생했습니다"
 
@@ -5171,6 +5174,9 @@ msgstr "다시 생성"
 
 msgid "Create an account"
 msgstr "계정 만들기"
+
+msgid "Create environment"
+msgstr "환경 만들기"
 
 msgid "Create failed: {message}"
 msgstr "생성 실패: {message}"
@@ -10517,9 +10523,6 @@ msgstr "이모지를 찾을 수 없음"
 msgid "No environments available"
 msgstr "사용 가능한 환경 없음"
 
-msgid "No environments for {repositoryFullName}."
-msgstr "{repositoryFullName}에 대한 환경이 없습니다."
-
 msgid "No environments found."
 msgstr "환경을 찾을 수 없습니다."
 
@@ -14761,8 +14764,17 @@ msgstr "설정"
 msgid "Set up {0}"
 msgstr "{0} 설정"
 
+msgid "Set up {repositoryFullName} for the cloud"
+msgstr "{repositoryFullName}을(를) 클라우드용으로 설정"
+
 msgid "Set up an automation"
 msgstr "자동화 설정하기"
+
+msgid "Set up an environment"
+msgstr "환경 설정하기"
+
+msgid "Set up environment"
+msgstr "환경 설정"
 
 msgid "Set up project on {hostName}"
 msgstr "{hostName}에 프로젝트 설정"

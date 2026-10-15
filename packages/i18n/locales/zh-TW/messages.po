@@ -2180,6 +2180,9 @@ msgstr "代理程式寫出完整的函式和檔案，人類盯著每一步、批
 msgid "An automation can only use a cloud workspace you created"
 msgstr "自動化只能使用你建立的雲端工作區"
 
+msgid "An environment tells a cloud workspace which repositories to check out and how to install them."
+msgstr "環境決定雲端工作區要簽出哪些儲存庫，以及如何安裝它們。"
+
 msgid "An error occurred"
 msgstr "發生錯誤"
 
@@ -5171,6 +5174,9 @@ msgstr "再次建立"
 
 msgid "Create an account"
 msgstr "建立帳戶"
+
+msgid "Create environment"
+msgstr "建立環境"
 
 msgid "Create failed: {message}"
 msgstr "建立失敗：{message}"
@@ -10517,9 +10523,6 @@ msgstr "未找到表情"
 msgid "No environments available"
 msgstr "沒有可用的環境"
 
-msgid "No environments for {repositoryFullName}."
-msgstr "{repositoryFullName} 沒有環境。"
-
 msgid "No environments found."
 msgstr "找不到環境。"
 
@@ -14761,8 +14764,17 @@ msgstr "設定"
 msgid "Set up {0}"
 msgstr "設定 {0}"
 
+msgid "Set up {repositoryFullName} for the cloud"
+msgstr "為雲端設定 {repositoryFullName}"
+
 msgid "Set up an automation"
 msgstr "設定自動化"
+
+msgid "Set up an environment"
+msgstr "設定環境"
+
+msgid "Set up environment"
+msgstr "設定環境"
 
 msgid "Set up project on {hostName}"
 msgstr "在{hostName}上設定專案"

@@ -1113,6 +1113,7 @@ export function NewWorkspaceScreen({
 										updateDraft({ environmentId: next })
 									}
 									onCreateEnvironment={() => setIsCreatingEnvironment(true)}
+									isLoading={!areEnvironmentsLoaded}
 								/>
 							)}
 							{isCreatingEnvironment && activeOrganizationId && (

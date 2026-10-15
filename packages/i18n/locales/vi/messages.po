@@ -2180,6 +2180,9 @@ msgstr "Agent viết nguyên hàm và nguyên tệp trong khi con người theo 
 msgid "An automation can only use a cloud workspace you created"
 msgstr "Tự động hóa chỉ có thể dùng workspace cloud do bạn tạo"
 
+msgid "An environment tells a cloud workspace which repositories to check out and how to install them."
+msgstr "Môi trường cho workspace đám mây biết cần checkout repository nào và cài đặt chúng ra sao."
+
 msgid "An error occurred"
 msgstr "Đã xảy ra lỗi"
 
@@ -5171,6 +5174,9 @@ msgstr "Tạo lại"
 
 msgid "Create an account"
 msgstr "Tạo tài khoản"
+
+msgid "Create environment"
+msgstr "Tạo môi trường"
 
 msgid "Create failed: {message}"
 msgstr "Tạo thất bại: {message}"
@@ -10517,9 +10523,6 @@ msgstr "Không tìm thấy emoji"
 msgid "No environments available"
 msgstr "Không có environment nào"
 
-msgid "No environments for {repositoryFullName}."
-msgstr "Không có môi trường nào cho {repositoryFullName}."
-
 msgid "No environments found."
 msgstr "Không tìm thấy environment nào."
 
@@ -14761,8 +14764,17 @@ msgstr "Thiết lập"
 msgid "Set up {0}"
 msgstr "Thiết lập {0}"
 
+msgid "Set up {repositoryFullName} for the cloud"
+msgstr "Thiết lập {repositoryFullName} cho đám mây"
+
 msgid "Set up an automation"
 msgstr "Thiết lập tự động hóa"
+
+msgid "Set up an environment"
+msgstr "Thiết lập môi trường"
+
+msgid "Set up environment"
+msgstr "Thiết lập môi trường"
 
 msgid "Set up project on {hostName}"
 msgstr "Thiết lập dự án trên {hostName}"

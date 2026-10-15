@@ -13,6 +13,7 @@ import { useState } from "react";
 import { HiCheck, HiChevronUpDown, HiMiniPlus } from "react-icons/hi2";
 import { LuLayers } from "react-icons/lu";
 import { FormPickerTrigger } from "../FormPickerTrigger";
+import { EnvironmentPickerEmptyState } from "./components/EnvironmentPickerEmptyState";
 
 export interface EnvironmentOption {
 	id: string;
@@ -26,6 +27,7 @@ interface EnvironmentPickerPillProps {
 	onCreateEnvironment: () => void;
 	/** Shown when no environment carries the selected project's repository. */
 	repositoryFullName?: string;
+	isLoading?: boolean;
 }
 
 export function EnvironmentPickerPill({
@@ -34,76 +36,83 @@ export function EnvironmentPickerPill({
 	onSelectEnvironment,
 	onCreateEnvironment,
 	repositoryFullName,
+	isLoading = false,
 }: EnvironmentPickerPillProps) {
 	const { t } = useLingui();
 	const [open, setOpen] = useState(false);
+	const isEmpty = !isLoading && environments.length === 0;
+	const createEnvironment = () => {
+		setOpen(false);
+		onCreateEnvironment();
+	};
 
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
 				<FormPickerTrigger className="max-w-[140px]">
-					<LuLayers className="size-4 shrink-0 text-muted-foreground" />
+					{isEmpty ? (
+						<HiMiniPlus className="size-4 shrink-0 text-muted-foreground" />
+					) : (
+						<LuLayers className="size-4 shrink-0 text-muted-foreground" />
+					)}
 					<span className="truncate">
 						{selectedEnvironment?.name ??
-							t({
-								message: "Select environment",
-							})}
+							(isEmpty
+								? t({ message: "Set up environment" })
+								: t({ message: "Select environment" }))}
 					</span>
 					<HiChevronUpDown className="size-3 shrink-0" />
 				</FormPickerTrigger>
 			</PopoverTrigger>
 			<PopoverContent
 				align="start"
-				className="w-60 p-0"
+				className={isEmpty ? "w-64 p-0" : "w-60 p-0"}
 				onWheel={(event) => event.stopPropagation()}
 			>
-				<Command>
-					<CommandInput
-						placeholder={t({
-							message: "Search environments...",
-						})}
+				{isEmpty ? (
+					<EnvironmentPickerEmptyState
+						repositoryFullName={repositoryFullName}
+						onCreate={createEnvironment}
 					/>
-					<CommandList className="max-h-[min(280px,var(--radix-popover-content-available-height))]">
-						<CommandEmpty className="px-3">
-							{repositoryFullName ? (
-								<Trans>No environments for {repositoryFullName}.</Trans>
-							) : (
+				) : (
+					<Command>
+						<CommandInput
+							placeholder={t({
+								message: "Search environments...",
+							})}
+						/>
+						<CommandList className="max-h-[min(280px,var(--radix-popover-content-available-height))]">
+							<CommandEmpty>
 								<Trans>No environments found.</Trans>
-							)}
-						</CommandEmpty>
-						<CommandGroup>
-							{environments.map((environment) => (
-								<CommandItem
-									key={environment.id}
-									value={environment.name}
-									onSelect={() => {
-										onSelectEnvironment(environment.id);
-										setOpen(false);
-									}}
-								>
-									<LuLayers className="size-4 text-muted-foreground" />
-									<span className="flex-1 truncate">{environment.name}</span>
-									{environment.id === selectedEnvironment?.id && (
-										<HiCheck className="size-4 shrink-0" />
-									)}
+							</CommandEmpty>
+							<CommandGroup>
+								{environments.map((environment) => (
+									<CommandItem
+										key={environment.id}
+										value={environment.name}
+										onSelect={() => {
+											onSelectEnvironment(environment.id);
+											setOpen(false);
+										}}
+									>
+										<LuLayers className="size-4 text-muted-foreground" />
+										<span className="flex-1 truncate">{environment.name}</span>
+										{environment.id === selectedEnvironment?.id && (
+											<HiCheck className="size-4 shrink-0" />
+										)}
+									</CommandItem>
+								))}
+							</CommandGroup>
+							<CommandSeparator alwaysRender />
+							<CommandGroup forceMount>
+								<CommandItem forceMount onSelect={createEnvironment}>
+									<HiMiniPlus className="size-4" />
+									<Trans>New environment</Trans>
 								</CommandItem>
-							))}
-						</CommandGroup>
-						<CommandSeparator alwaysRender />
-						<CommandGroup forceMount>
-							<CommandItem
-								forceMount
-								onSelect={() => {
-									setOpen(false);
-									onCreateEnvironment();
-								}}
-							>
-								<HiMiniPlus className="size-4" />
-								<Trans>New environment</Trans>
-							</CommandItem>
-						</CommandGroup>
-					</CommandList>
-				</Command>
+							</CommandGroup>
+						</CommandList>
+					</Command>
+				)}
 			</PopoverContent>
 		</Popover>
 	);
