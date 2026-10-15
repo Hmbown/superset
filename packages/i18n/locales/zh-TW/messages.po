@@ -3752,6 +3752,9 @@ msgstr "點擊開啟拉取請求"
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "點選複製會話ID（使用`claude --resume <id>`恢復）。"
 
+msgid "Click to open on GitHub"
+msgstr "點選在GitHub上開啟"
+
 msgid "Click to open the pull request"
 msgstr "點擊開啟拉取請求"
 
@@ -3965,6 +3968,9 @@ msgstr "雲端工作區會忽略此變數。代理程式改為在「設定 › �
 
 msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
 msgstr "雲端工作區需要付費方案。請在「設定」中的「帳單」升級後啟動。"
+
+msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
+msgstr "雲端工作區顯示在所屬專案下，提供本機與雲端篩選，以及重新設計的工作區列。"
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "雲端工作區將不再用它執行{agentLabel}。"
@@ -8264,6 +8270,9 @@ msgstr "主機不可用"
 msgid "Host unavailable: {hostName}"
 msgstr "主機不可用：{hostName}"
 
+msgid "Hosted in the cloud"
+msgstr "託管在雲端"
+
 msgid "Hosts"
 msgstr "主機"
 
@@ -10359,6 +10368,9 @@ msgstr "新建會話"
 
 msgid "New shell"
 msgstr "新增 Shell"
+
+msgid "New sidebar"
+msgstr "新側邊欄"
 
 msgid "New stars"
 msgstr "新增星標"
@@ -14190,6 +14202,12 @@ msgstr "正在執行bun test…"
 msgid "Running now"
 msgstr "正在執行"
 
+msgid "Running on a paired device"
+msgstr "在已配對的裝置上執行"
+
+msgid "Running on this device"
+msgstr "在此裝置上執行"
+
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "執行中的終端處理程序會繼續，但重啟應用後可能無法再看到較早的輸出。"
 
@@ -15034,6 +15052,9 @@ msgstr "分享的版本"
 
 msgid "Shared with everyone"
 msgstr "已與所有人分享"
+
+msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
+msgstr "與該專案的其他本地工作區共用專案的簽出（檔案、git 索引和分支）"
 
 msgid "Sheet"
 msgstr "側邊面板"
@@ -16687,6 +16708,9 @@ msgstr "此 App 可免費下載。需要 iOS 26 或更新版本以及 Superset P
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "應用程式版本為 {appVersion}，但連接的是由其他程式（可能是舊版 CLI 或另一個 Superset 版本）啟動的主機服務。重新啟動會將其替換為此應用程式自帶的副本。"
+
+msgid "The associated device isn't reachable right now"
+msgstr "關聯的裝置現在連不上"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "此自動化的擁有者已無法在此組織中使用雲端工作區。請對方檢查存取權限，或在裝置上執行此自動化。"
@@ -18880,6 +18904,9 @@ msgstr "已更新worktree位置"
 
 msgid "Worktree missing"
 msgstr "worktree缺失"
+
+msgid "Worktree on this device"
+msgstr "此裝置上的 worktree"
 
 msgid "Worktree opened"
 msgstr "worktree已開啟"

@@ -3752,6 +3752,9 @@ msgstr "Klik chip untuk membuka pull request"
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Klik untuk menyalin ID sesi (lanjutkan dengan `claude --resume <id>`)."
 
+msgid "Click to open on GitHub"
+msgstr "Klik untuk membuka di GitHub"
+
 msgid "Click to open the pull request"
 msgstr "Klik untuk membuka pull request"
 
@@ -3965,6 +3968,9 @@ msgstr "Workspace cloud mengabaikan variabel ini. Agen masuk melalui Pengaturan 
 
 msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
 msgstr "Workspace cloud memerlukan paket berbayar. Upgrade di Pengaturan, Penagihan untuk memulainya."
+
+msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
+msgstr "Workspace cloud di bawah proyeknya, filter lokal dan cloud, dan baris workspace yang didesain ulang."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Workspace cloud tidak lagi menjalankan {agentLabel} dengannya."
@@ -8264,6 +8270,9 @@ msgstr "Host tidak tersedia"
 msgid "Host unavailable: {hostName}"
 msgstr "Host tidak tersedia: {hostName}"
 
+msgid "Hosted in the cloud"
+msgstr "Dihosting di cloud"
+
 msgid "Hosts"
 msgstr "Host"
 
@@ -10359,6 +10368,9 @@ msgstr "Sesi baru"
 
 msgid "New shell"
 msgstr "Shell baru"
+
+msgid "New sidebar"
+msgstr "Sidebar baru"
 
 msgid "New stars"
 msgstr "Star baru"
@@ -14190,6 +14202,12 @@ msgstr "Menjalankan bun test…"
 msgid "Running now"
 msgstr "Berjalan sekarang"
 
+msgid "Running on a paired device"
+msgstr "Berjalan di perangkat yang dipasangkan"
+
+msgid "Running on this device"
+msgstr "Berjalan di perangkat ini"
+
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Proses terminal yang berjalan tetap lanjut, tapi output lama mungkin tidak tersedia lagi setelah aplikasi dimulai ulang."
 
@@ -15034,6 +15052,9 @@ msgstr "Versi yang dibagikan"
 
 msgid "Shared with everyone"
 msgstr "Dibagikan ke semua orang"
+
+msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
+msgstr "Berbagi checkout proyek — file, indeks git, dan branch — dengan workspace lokal lainnya"
 
 msgid "Sheet"
 msgstr "Sheet"
@@ -16687,6 +16708,9 @@ msgstr "Aplikasi ini gratis untuk diunduh. Memerlukan iOS 26 atau lebih baru dan
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "Aplikasi berada di {appVersion} tetapi terhubung ke layanan host yang dimulai oleh hal lain, kemungkinan CLI lama atau build Superset lain. Memulai ulang akan menggantinya dengan salinan dari aplikasi ini."
+
+msgid "The associated device isn't reachable right now"
+msgstr "Perangkat terkait tidak bisa dijangkau saat ini"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "Pemilik otomatisasi ini tidak bisa lagi menggunakan workspace cloud di organisasi ini. Minta mereka memeriksa aksesnya, atau jalankan otomatisasi di perangkat."
@@ -18880,6 +18904,9 @@ msgstr "Lokasi worktree diperbarui"
 
 msgid "Worktree missing"
 msgstr "Worktree hilang"
+
+msgid "Worktree on this device"
+msgstr "Worktree di perangkat ini"
 
 msgid "Worktree opened"
 msgstr "Worktree dibuka"

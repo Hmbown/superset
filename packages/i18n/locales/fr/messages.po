@@ -3752,6 +3752,9 @@ msgstr "Cliquez sur la pastille pour ouvrir la pull request"
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Cliquez pour copier l'ID de session (reprenez avec `claude --resume <id>`)."
 
+msgid "Click to open on GitHub"
+msgstr "Cliquer pour ouvrir sur GitHub"
+
 msgid "Click to open the pull request"
 msgstr "Cliquez pour ouvrir la pull request"
 
@@ -3965,6 +3968,9 @@ msgstr "Les espaces de travail cloud ignorent cette variable. Les agents se conn
 
 msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
 msgstr "Les espaces de travail cloud nécessitent un forfait payant. Passez à un forfait supérieur dans Paramètres, Facturation pour en démarrer un."
+
+msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
+msgstr "Les espaces de travail cloud sous leurs projets, un filtre local et cloud, et la ligne d'espace de travail repensée."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Les espaces de travail cloud cesseront d'exécuter {agentLabel} avec."
@@ -8264,6 +8270,9 @@ msgstr "Hôte indisponible"
 msgid "Host unavailable: {hostName}"
 msgstr "Hôte indisponible : {hostName}"
 
+msgid "Hosted in the cloud"
+msgstr "Hébergé dans le cloud"
+
 msgid "Hosts"
 msgstr "Hôtes"
 
@@ -10359,6 +10368,9 @@ msgstr "Nouvelle session"
 
 msgid "New shell"
 msgstr "Nouveau shell"
+
+msgid "New sidebar"
+msgstr "Nouvelle barre latérale"
 
 msgid "New stars"
 msgstr "Nouvelles étoiles"
@@ -14190,6 +14202,12 @@ msgstr "Exécution de bun test…"
 msgid "Running now"
 msgstr "Exécution en cours"
 
+msgid "Running on a paired device"
+msgstr "S'exécute sur un appareil associé"
+
+msgid "Running on this device"
+msgstr "S'exécute sur cet appareil"
+
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Les processus de terminal en cours continuent, mais les sorties plus anciennes pourraient ne plus être disponibles après un redémarrage de l'application."
 
@@ -15034,6 +15052,9 @@ msgstr "Version partagée"
 
 msgid "Shared with everyone"
 msgstr "Partagée avec tout le monde"
+
+msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
+msgstr "Partage le checkout du projet — fichiers, index git et branche — avec ses autres espaces de travail locaux"
 
 msgid "Sheet"
 msgstr "Sheet"
@@ -16687,6 +16708,9 @@ msgstr "L’app est gratuite à télécharger. Elle nécessite iOS 26 ou version
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "L'application est en {appVersion} mais reliée à un service d'hôte lancé par autre chose, probablement une ancienne CLI ou une autre version de Superset. Le redémarrage le remplace par la copie de cette application."
+
+msgid "The associated device isn't reachable right now"
+msgstr "L'appareil associé n'est pas joignable pour le moment"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "Le propriétaire de l'automatisation ne peut plus utiliser d'espaces de travail cloud dans cette organisation. Demandez-lui de vérifier son accès, ou exécutez l'automatisation sur un appareil."
@@ -18880,6 +18904,9 @@ msgstr "Emplacement des worktrees mis à jour"
 
 msgid "Worktree missing"
 msgstr "Worktree manquant"
+
+msgid "Worktree on this device"
+msgstr "Worktree sur cet appareil"
 
 msgid "Worktree opened"
 msgstr "Worktree ouvert"

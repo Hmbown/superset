@@ -3752,6 +3752,9 @@ msgstr "칩을 클릭하면 풀 리퀘스트가 열립니다"
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "클릭하면 세션 ID를 복사합니다(`claude --resume <id>`로 이어서 진행)."
 
+msgid "Click to open on GitHub"
+msgstr "클릭하여 GitHub에서 열기"
+
 msgid "Click to open the pull request"
 msgstr "클릭하여 풀 리퀘스트 열기"
 
@@ -3965,6 +3968,9 @@ msgstr "클라우드 워크스페이스는 이 변수를 무시합니다. 에이
 
 msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
 msgstr "클라우드 워크스페이스에는 유료 플랜이 필요합니다. 설정의 결제에서 업그레이드하면 시작할 수 있습니다."
+
+msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
+msgstr "클라우드 워크스페이스를 프로젝트 아래에 표시하고, 로컬/클라우드 필터와 새로 디자인한 워크스페이스 행을 제공합니다."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "클라우드 워크스페이스에서 더 이상 이것으로 {agentLabel}을(를) 실행하지 않습니다."
@@ -8264,6 +8270,9 @@ msgstr "호스트를 사용할 수 없음"
 msgid "Host unavailable: {hostName}"
 msgstr "호스트를 사용할 수 없음: {hostName}"
 
+msgid "Hosted in the cloud"
+msgstr "클라우드에서 호스팅됨"
+
 msgid "Hosts"
 msgstr "호스트"
 
@@ -10359,6 +10368,9 @@ msgstr "새 세션"
 
 msgid "New shell"
 msgstr "새 셸"
+
+msgid "New sidebar"
+msgstr "새 사이드바"
 
 msgid "New stars"
 msgstr "신규 스타"
@@ -14190,6 +14202,12 @@ msgstr "bun test 실행 중…"
 msgid "Running now"
 msgstr "지금 실행 중"
 
+msgid "Running on a paired device"
+msgstr "페어링된 기기에서 실행 중"
+
+msgid "Running on this device"
+msgstr "이 기기에서 실행 중"
+
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "실행 중인 터미널 프로세스는 계속되지만, 앱을 다시 시작한 뒤에는 이전 출력을 볼 수 없을 수 있습니다."
 
@@ -15034,6 +15052,9 @@ msgstr "공유 버전"
 
 msgid "Shared with everyone"
 msgstr "전체 공개로 공유됨"
+
+msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
+msgstr "프로젝트의 체크아웃(파일, git 인덱스, 브랜치)을 다른 로컬 워크스페이스와 공유합니다"
 
 msgid "Sheet"
 msgstr "시트"
@@ -16687,6 +16708,9 @@ msgstr "앱은 무료로 다운로드할 수 있습니다. iOS 26 이상과 Supe
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "앱은 {appVersion}이지만 다른 것(오래된 CLI나 다른 Superset 빌드일 가능성)이 시작한 호스트 서비스에 연결되어 있습니다. 다시 시작하면 이 앱의 복사본으로 교체됩니다."
+
+msgid "The associated device isn't reachable right now"
+msgstr "연결된 기기에 지금 접근할 수 없습니다"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "자동화 소유자가 더 이상 이 조직에서 클라우드 워크스페이스를 사용할 수 없습니다. 소유자에게 액세스 권한을 확인해 달라고 요청하거나, 기기에서 자동화를 실행하세요."
@@ -18880,6 +18904,9 @@ msgstr "worktree 위치를 업데이트했습니다"
 
 msgid "Worktree missing"
 msgstr "worktree 없음"
+
+msgid "Worktree on this device"
+msgstr "이 기기의 worktree"
 
 msgid "Worktree opened"
 msgstr "worktree를 열었습니다"

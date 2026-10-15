@@ -3752,6 +3752,9 @@ msgstr "Kliknutím na štítek otevřete pull request"
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Kliknutím zkopírujete ID relace (pokračování přes `claude --resume <id>`)."
 
+msgid "Click to open on GitHub"
+msgstr "Kliknutím otevřete na GitHubu"
+
 msgid "Click to open the pull request"
 msgstr "Kliknutím otevřete pull request"
 
@@ -3965,6 +3968,9 @@ msgstr "Cloudové pracovní prostory tuto proměnnou ignorují. Agenti se místo
 
 msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
 msgstr "Cloudové pracovní prostory vyžadují placený tarif. Pro spuštění přejděte na vyšší tarif v Nastavení, Fakturace."
+
+msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
+msgstr "Cloudové pracovní prostory pod jejich projekty, filtr místní a cloud a přepracovaný řádek pracovního prostoru."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Cloudové workspacy s tím přestanou spouštět {agentLabel}."
@@ -8264,6 +8270,9 @@ msgstr "Host není dostupný"
 msgid "Host unavailable: {hostName}"
 msgstr "Host není dostupný: {hostName}"
 
+msgid "Hosted in the cloud"
+msgstr "Hostováno v cloudu"
+
 msgid "Hosts"
 msgstr "Hosty"
 
@@ -10359,6 +10368,9 @@ msgstr "Nová relace"
 
 msgid "New shell"
 msgstr "Nový shell"
+
+msgid "New sidebar"
+msgstr "Nový postranní panel"
 
 msgid "New stars"
 msgstr "Nové hvězdy"
@@ -14190,6 +14202,12 @@ msgstr "Spouštím bun test…"
 msgid "Running now"
 msgstr "Spouštím"
 
+msgid "Running on a paired device"
+msgstr "Běží na spárovaném zařízení"
+
+msgid "Running on this device"
+msgstr "Běží na tomto zařízení"
+
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Běžící procesy v terminálu poběží dál, ale starší výstup po restartu aplikace už nemusí být k dispozici."
 
@@ -15034,6 +15052,9 @@ msgstr "Sdílená verze"
 
 msgid "Shared with everyone"
 msgstr "Sdíleno se všemi"
+
+msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
+msgstr "Sdílí checkout projektu — soubory, git index a větev — s ostatními lokálními pracovními prostory"
 
 msgid "Sheet"
 msgstr "Sheet"
@@ -16687,6 +16708,9 @@ msgstr "Aplikaci lze stáhnout zdarma. Vyžaduje iOS 26 nebo novější a Supers
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "Aplikace je ve verzi {appVersion}, ale připojená ke službě hostitele spuštěné něčím jiným, pravděpodobně starší CLI nebo jiným sestavením Superset. Restart ji nahradí kopií této aplikace."
+
+msgid "The associated device isn't reachable right now"
+msgstr "Přidružené zařízení teď není dostupné"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "Vlastník automatizace už v této organizaci nemůže používat cloudové pracovní prostory. Požádejte ho, aby si zkontroloval přístup, nebo automatizaci spusťte na zařízení."
@@ -18880,6 +18904,9 @@ msgstr "Umístění worktree změněno"
 
 msgid "Worktree missing"
 msgstr "Chybí worktree"
+
+msgid "Worktree on this device"
+msgstr "Worktree na tomto zařízení"
 
 msgid "Worktree opened"
 msgstr "Worktree otevřen"
