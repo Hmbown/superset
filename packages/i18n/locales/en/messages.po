@@ -944,12 +944,6 @@ msgstr "{minutes}m"
 msgid "{minutes}m ago"
 msgstr "{minutes}m ago"
 
-msgid "{missingRepositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
-msgstr "{missingRepositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
-
-msgid "{missingRepositoryFullName} isn't shared with the Superset GitHub App yet."
-msgstr "{missingRepositoryFullName} isn't shared with the Superset GitHub App yet."
-
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵ to create"
 
@@ -1058,6 +1052,18 @@ msgstr "{reason}"
 
 msgid "{received} of {total}"
 msgstr "{received} of {total}"
+
+msgid "{regionCity} · Only you"
+msgstr "{regionCity} · Only you"
+
+msgid "{regionCity} · Shared with your organization"
+msgstr "{regionCity} · Shared with your organization"
+
+msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+
+msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{repositoryFullName} isn't shared with the Superset GitHub App yet."
 
 msgid "{seconds}s ago"
 msgstr "{seconds}s ago"
@@ -3584,6 +3590,9 @@ msgstr "Choose a preset such as Weekdays or write a custom RRule. One automation
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Choose a project from GitHub issues before opening an issue."
 
+msgid "Choose a repository"
+msgstr "Choose a repository"
+
 msgid "Choose a section."
 msgstr "Choose a section."
 
@@ -4267,8 +4276,8 @@ msgstr "Connect external services to sync data with your organization."
 msgid "Connect external services to sync data."
 msgstr "Connect external services to sync data."
 
-msgid "Connect GitHub in Integrations to add {missingRepositoryFullName}."
-msgstr "Connect GitHub in Integrations to add {missingRepositoryFullName}."
+msgid "Connect GitHub in Integrations to add {repositoryFullName}."
+msgstr "Connect GitHub in Integrations to add {repositoryFullName}."
 
 msgid "Connect Google"
 msgstr "Connect Google"
@@ -5257,6 +5266,9 @@ msgstr "Create again"
 msgid "Create an account"
 msgstr "Create an account"
 
+msgid "Create environment"
+msgstr "Create environment"
+
 msgid "Create failed: {message}"
 msgstr "Create failed: {message}"
 
@@ -5535,6 +5547,9 @@ msgstr "Custom terminal agents"
 
 msgid "Custom themes"
 msgstr "Custom themes"
+
+msgid "Customize"
+msgstr "Customize"
 
 msgid "Customize commands"
 msgstr "Customize commands"
@@ -10234,9 +10249,6 @@ msgstr "Navigation"
 
 msgid "Navigation Menu"
 msgstr "Navigation Menu"
-
-msgid "Nearest to you."
-msgstr "Nearest to you."
 
 msgid "Need app-level wiring (form state, chart data, app shell)"
 msgstr "Need app-level wiring (form state, chart data, app shell)"
@@ -14939,6 +14951,9 @@ msgstr "Set up project…"
 msgid "Set up this project for Superset"
 msgstr "Set up this project for Superset"
 
+msgid "Set up with an agent"
+msgstr "Set up with an agent"
+
 msgid "Set up your organization to get started"
 msgstr "Set up your organization to get started"
 
@@ -15371,9 +15386,6 @@ msgstr "Skills ship with the Superset plugin and are kept up to date automatical
 msgid "Skip"
 msgstr "Skip"
 
-msgid "Skip & save"
-msgstr "Skip & save"
-
 msgid "Skip All"
 msgstr "Skip All"
 
@@ -15718,9 +15730,6 @@ msgstr "Start a session"
 
 msgid "Start a workspace straight from a Linear ticket. The agent picks it up and reports back with a PR."
 msgstr "Start a workspace straight from a Linear ticket. The agent picks it up and reports back with a PR."
-
-msgid "Start agent"
-msgstr "Start agent"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
@@ -16649,6 +16658,9 @@ msgstr "That machine is no longer available"
 msgid "That name isn't allowed."
 msgstr "That name isn't allowed."
 
+msgid "The .superset/config.json the workspace reads, and the repository it opens on."
+msgstr "The .superset/config.json the workspace reads, and the repository it opens on."
+
 msgid "The 2026 bet"
 msgstr "The 2026 bet"
 
@@ -16890,9 +16902,6 @@ msgstr "The recovery period has ended. Contact support@superset.sh."
 
 msgid "The remote branch has diverged. Pull before continuing."
 msgstr "The remote branch has diverged. Pull before continuing."
-
-msgid "The repositories a cloud workspace checks out, and which one's .superset/config.json it acts on. The workspace opens on the config location, or on the first repository by name."
-msgstr "The repositories a cloud workspace checks out, and which one's .superset/config.json it acts on. The workspace opens on the config location, or on the first repository by name."
 
 msgid "The request failed."
 msgstr "The request failed."
@@ -18358,6 +18367,9 @@ msgstr "View usage"
 msgid "Violence or harassment"
 msgstr "Violence or harassment"
 
+msgid "Visible to"
+msgstr "Visible to"
+
 msgid "Voice"
 msgstr "Voice"
 
@@ -18551,6 +18563,9 @@ msgstr "Welcome to Superset"
 
 msgid "Welcome to the new Superset"
 msgstr "Welcome to the new Superset"
+
+msgid "What a cloud workspace checks out, and where it runs."
+msgstr "What a cloud workspace checks out, and where it runs."
 
 msgid "What are the benefits?"
 msgstr "What are the benefits?"

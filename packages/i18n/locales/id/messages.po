@@ -944,12 +944,6 @@ msgstr "{minutes}m"
 msgid "{minutes}m ago"
 msgstr "{minutes}m lalu"
 
-msgid "{missingRepositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
-msgstr "{missingRepositoryFullName} tidak ada di {installedAccountLogin}, tempat GitHub App organisasi ini dipasang."
-
-msgid "{missingRepositoryFullName} isn't shared with the Superset GitHub App yet."
-msgstr "{missingRepositoryFullName} belum dibagikan ke GitHub App Superset."
-
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵ untuk membuat"
 
@@ -1058,6 +1052,18 @@ msgstr "{reason}"
 
 msgid "{received} of {total}"
 msgstr "{received} dari {total}"
+
+msgid "{regionCity} · Only you"
+msgstr "{regionCity} · Hanya Anda"
+
+msgid "{regionCity} · Shared with your organization"
+msgstr "{regionCity} · Dibagikan dengan organisasi Anda"
+
+msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{repositoryFullName} tidak ada di {installedAccountLogin}, tempat GitHub App organisasi ini dipasang."
+
+msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{repositoryFullName} belum dibagikan ke GitHub App Superset."
 
 msgid "{seconds}s ago"
 msgstr "{seconds}d lalu"
@@ -3584,6 +3590,9 @@ msgstr "Pilih preset seperti Hari kerja atau tulis RRule kustom. Satu otomatisas
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Pilih proyek dari issue GitHub sebelum membuka sebuah issue."
 
+msgid "Choose a repository"
+msgstr "Pilih repositori"
+
 msgid "Choose a section."
 msgstr "Pilih sebuah bagian."
 
@@ -4267,8 +4276,8 @@ msgstr "Hubungkan layanan eksternal untuk menyinkronkan data dengan organisasi A
 msgid "Connect external services to sync data."
 msgstr "Hubungkan layanan eksternal untuk menyinkronkan data."
 
-msgid "Connect GitHub in Integrations to add {missingRepositoryFullName}."
-msgstr "Hubungkan GitHub di Integrasi untuk menambahkan {missingRepositoryFullName}."
+msgid "Connect GitHub in Integrations to add {repositoryFullName}."
+msgstr "Hubungkan GitHub di Integrasi untuk menambahkan {repositoryFullName}."
 
 msgid "Connect Google"
 msgstr "Hubungkan Google"
@@ -5257,6 +5266,9 @@ msgstr "Buat lagi"
 msgid "Create an account"
 msgstr "Buat akun"
 
+msgid "Create environment"
+msgstr "Buat lingkungan"
+
 msgid "Create failed: {message}"
 msgstr "Gagal membuat: {message}"
 
@@ -5535,6 +5547,9 @@ msgstr "Agen terminal kustom"
 
 msgid "Custom themes"
 msgstr "Tema kustom"
+
+msgid "Customize"
+msgstr "Sesuaikan"
 
 msgid "Customize commands"
 msgstr "Sesuaikan perintah"
@@ -10234,9 +10249,6 @@ msgstr "Navigasi"
 
 msgid "Navigation Menu"
 msgstr "Menu Navigasi"
-
-msgid "Nearest to you."
-msgstr "Terdekat dengan Anda."
 
 msgid "Need app-level wiring (form state, chart data, app shell)"
 msgstr "Butuh perangkaian di level aplikasi (state form, data grafik, app shell)"
@@ -14939,6 +14951,9 @@ msgstr "Siapkan proyek…"
 msgid "Set up this project for Superset"
 msgstr "Siapkan proyek ini untuk Superset"
 
+msgid "Set up with an agent"
+msgstr "Siapkan dengan agen"
+
 msgid "Set up your organization to get started"
 msgstr "Siapkan organisasi Anda untuk memulai"
 
@@ -15371,9 +15386,6 @@ msgstr "Skill hadir bersama plugin Superset dan selalu diperbarui otomatis di se
 msgid "Skip"
 msgstr "Lewati"
 
-msgid "Skip & save"
-msgstr "Lewati & simpan"
-
 msgid "Skip All"
 msgstr "Lewati Semua"
 
@@ -15718,9 +15730,6 @@ msgstr "Mulai sesi"
 
 msgid "Start a workspace straight from a Linear ticket. The agent picks it up and reports back with a PR."
 msgstr "Mulai workspace langsung dari tiket Linear. Agen mengambilnya dan melapor kembali dengan sebuah PR."
-
-msgid "Start agent"
-msgstr "Mulai agen"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "Mulai agen, ikuti secara langsung, dan tinjau diff dari iPhone atau iPad Anda. Kode Anda tetap di mesin Anda."
@@ -16649,6 +16658,9 @@ msgstr "Mesin itu sudah tidak tersedia"
 msgid "That name isn't allowed."
 msgstr "Nama itu tidak diizinkan."
 
+msgid "The .superset/config.json the workspace reads, and the repository it opens on."
+msgstr "File .superset/config.json yang dibaca workspace, dan repositori tempat workspace dibuka."
+
 msgid "The 2026 bet"
 msgstr "Taruhan 2026"
 
@@ -16890,9 +16902,6 @@ msgstr "Masa pemulihan sudah berakhir. Hubungi support@superset.sh."
 
 msgid "The remote branch has diverged. Pull before continuing."
 msgstr "Branch remote sudah menyimpang. Lakukan pull sebelum melanjutkan."
-
-msgid "The repositories a cloud workspace checks out, and which one's .superset/config.json it acts on. The workspace opens on the config location, or on the first repository by name."
-msgstr "Repositori yang di-checkout oleh workspace cloud, dan .superset/config.json milik repositori mana yang diterapkan. Workspace dibuka di lokasi konfigurasi, atau di repositori pertama menurut nama."
 
 msgid "The request failed."
 msgstr "Permintaan gagal."
@@ -18358,6 +18367,9 @@ msgstr "Lihat penggunaan"
 msgid "Violence or harassment"
 msgstr "Kekerasan atau pelecehan"
 
+msgid "Visible to"
+msgstr "Terlihat oleh"
+
 msgid "Voice"
 msgstr "Suara"
 
@@ -18551,6 +18563,9 @@ msgstr "Selamat datang di Superset"
 
 msgid "Welcome to the new Superset"
 msgstr "Selamat datang di Superset baru"
+
+msgid "What a cloud workspace checks out, and where it runs."
+msgstr "Apa yang di-checkout workspace cloud, dan di mana ia berjalan."
 
 msgid "What are the benefits?"
 msgstr "Apa saja tunjangannya?"

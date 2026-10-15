@@ -944,12 +944,6 @@ msgstr "{minutes}분"
 msgid "{minutes}m ago"
 msgstr "{minutes}분 전"
 
-msgid "{missingRepositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
-msgstr "{missingRepositoryFullName}은(는) 이 조직의 GitHub App이 설치된 {installedAccountLogin}에 없습니다."
-
-msgid "{missingRepositoryFullName} isn't shared with the Superset GitHub App yet."
-msgstr "{missingRepositoryFullName}은(는) 아직 Superset GitHub App과 공유되지 않았습니다."
-
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵로 만들기"
 
@@ -1058,6 +1052,18 @@ msgstr "{reason}"
 
 msgid "{received} of {total}"
 msgstr "{total} 중 {received}"
+
+msgid "{regionCity} · Only you"
+msgstr "{regionCity} · 나만"
+
+msgid "{regionCity} · Shared with your organization"
+msgstr "{regionCity} · 조직과 공유"
+
+msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{repositoryFullName}은(는) 이 조직의 GitHub App이 설치된 {installedAccountLogin}에 없습니다."
+
+msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{repositoryFullName}은(는) 아직 Superset GitHub App과 공유되지 않았습니다."
 
 msgid "{seconds}s ago"
 msgstr "{seconds}초 전"
@@ -3584,6 +3590,9 @@ msgstr "'평일' 같은 프리셋을 고르거나 직접 RRule을 작성하세�
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "이슈를 열기 전에 GitHub 이슈 화면에서 프로젝트를 선택하세요."
 
+msgid "Choose a repository"
+msgstr "저장소 선택"
+
 msgid "Choose a section."
 msgstr "섹션을 선택하세요."
 
@@ -4267,8 +4276,8 @@ msgstr "외부 서비스를 연결해 조직과 데이터를 동기화합니다.
 msgid "Connect external services to sync data."
 msgstr "외부 서비스를 연결해 데이터를 동기화합니다."
 
-msgid "Connect GitHub in Integrations to add {missingRepositoryFullName}."
-msgstr "{missingRepositoryFullName}을(를) 추가하려면 통합에서 GitHub를 연결하세요."
+msgid "Connect GitHub in Integrations to add {repositoryFullName}."
+msgstr "{repositoryFullName}을(를) 추가하려면 통합에서 GitHub를 연결하세요."
 
 msgid "Connect Google"
 msgstr "Google 연결"
@@ -5257,6 +5266,9 @@ msgstr "다시 생성"
 msgid "Create an account"
 msgstr "계정 만들기"
 
+msgid "Create environment"
+msgstr "환경 만들기"
+
 msgid "Create failed: {message}"
 msgstr "생성 실패: {message}"
 
@@ -5535,6 +5547,9 @@ msgstr "커스텀 터미널 에이전트"
 
 msgid "Custom themes"
 msgstr "사용자 지정 테마"
+
+msgid "Customize"
+msgstr "사용자 지정"
 
 msgid "Customize commands"
 msgstr "명령 사용자 지정"
@@ -10234,9 +10249,6 @@ msgstr "탐색"
 
 msgid "Navigation Menu"
 msgstr "탐색 메뉴"
-
-msgid "Nearest to you."
-msgstr "가장 가까운 리전입니다."
 
 msgid "Need app-level wiring (form state, chart data, app shell)"
 msgstr "앱 수준 연결이 필요합니다(폼 상태, 차트 데이터, 앱 셸)"
@@ -14939,6 +14951,9 @@ msgstr "프로젝트 설정…"
 msgid "Set up this project for Superset"
 msgstr "이 프로젝트를 Superset에 맞게 설정하기"
 
+msgid "Set up with an agent"
+msgstr "에이전트로 설정"
+
 msgid "Set up your organization to get started"
 msgstr "조직을 설정하고 시작하세요"
 
@@ -15371,9 +15386,6 @@ msgstr "스킬은 Superset 플러그인에 포함되어 있으며 사용하는 �
 msgid "Skip"
 msgstr "건너뛰기"
 
-msgid "Skip & save"
-msgstr "건너뛰고 저장"
-
 msgid "Skip All"
 msgstr "모두 건너뛰기"
 
@@ -15718,9 +15730,6 @@ msgstr "세션 시작"
 
 msgid "Start a workspace straight from a Linear ticket. The agent picks it up and reports back with a PR."
 msgstr "Linear 티켓에서 바로 워크스페이스를 시작하세요. 에이전트가 이어받아 PR로 결과를 알려 줍니다."
-
-msgid "Start agent"
-msgstr "에이전트 시작"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "iPhone이나 iPad에서 에이전트를 시작하고, 실시간으로 따라가고, diff를 리뷰하세요. 코드는 내 머신에 그대로 남습니다."
@@ -16649,6 +16658,9 @@ msgstr "해당 머신을 더 이상 사용할 수 없습니다"
 msgid "That name isn't allowed."
 msgstr "사용할 수 없는 이름입니다."
 
+msgid "The .superset/config.json the workspace reads, and the repository it opens on."
+msgstr "워크스페이스가 읽는 .superset/config.json과 워크스페이스가 열리는 저장소입니다."
+
 msgid "The 2026 bet"
 msgstr "2026년의 베팅"
 
@@ -16890,9 +16902,6 @@ msgstr "복구 기간이 끝났습니다. support@superset.sh로 문의하세요
 
 msgid "The remote branch has diverged. Pull before continuing."
 msgstr "원격 브랜치가 갈라졌습니다. 계속하기 전에 pull하세요."
-
-msgid "The repositories a cloud workspace checks out, and which one's .superset/config.json it acts on. The workspace opens on the config location, or on the first repository by name."
-msgstr "클라우드 워크스페이스가 체크아웃하는 리포지토리와 어느 리포지토리의 .superset/config.json을 적용할지 정합니다. 워크스페이스는 구성 위치에서, 없으면 이름순 첫 번째 리포지토리에서 열립니다."
 
 msgid "The request failed."
 msgstr "요청이 실패했습니다."
@@ -18358,6 +18367,9 @@ msgstr "사용량 보기"
 msgid "Violence or harassment"
 msgstr "폭력 또는 괴롭힘"
 
+msgid "Visible to"
+msgstr "공개 대상"
+
 msgid "Voice"
 msgstr "음성"
 
@@ -18551,6 +18563,9 @@ msgstr "Superset에 오신 것을 환영합니다"
 
 msgid "Welcome to the new Superset"
 msgstr "새로운 Superset에 오신 것을 환영합니다"
+
+msgid "What a cloud workspace checks out, and where it runs."
+msgstr "클라우드 워크스페이스가 체크아웃하는 항목과 실행 위치입니다."
 
 msgid "What are the benefits?"
 msgstr "복리후생은 어떤가요?"

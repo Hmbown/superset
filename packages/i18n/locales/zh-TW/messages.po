@@ -944,12 +944,6 @@ msgstr "{minutes}分"
 msgid "{minutes}m ago"
 msgstr "{minutes}分鐘前"
 
-msgid "{missingRepositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
-msgstr "{missingRepositoryFullName} 不在 {installedAccountLogin} 上，而本組織的 GitHub App 安裝在那裡。"
-
-msgid "{missingRepositoryFullName} isn't shared with the Superset GitHub App yet."
-msgstr "{missingRepositoryFullName} 尚未與 Superset GitHub App 共用。"
-
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵建立"
 
@@ -1058,6 +1052,18 @@ msgstr "{reason}"
 
 msgid "{received} of {total}"
 msgstr "{received}/{total}"
+
+msgid "{regionCity} · Only you"
+msgstr "{regionCity} · 僅自己"
+
+msgid "{regionCity} · Shared with your organization"
+msgstr "{regionCity} · 與你的組織共用"
+
+msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{repositoryFullName} 不在 {installedAccountLogin} 上，而本組織的 GitHub App 安裝在那裡。"
+
+msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{repositoryFullName} 尚未與 Superset GitHub App 共用。"
 
 msgid "{seconds}s ago"
 msgstr "{seconds}秒前"
@@ -3584,6 +3590,9 @@ msgstr "選擇「平日」等預設，或自行撰寫 RRule。一個自動化可
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "開啟議題前，請先在GitHub議題中選擇一個專案。"
 
+msgid "Choose a repository"
+msgstr "選擇儲存庫"
+
 msgid "Choose a section."
 msgstr "選擇一個分區。"
 
@@ -4267,8 +4276,8 @@ msgstr "連線外部服務，與你的組織同步資料。"
 msgid "Connect external services to sync data."
 msgstr "連線外部服務以同步資料。"
 
-msgid "Connect GitHub in Integrations to add {missingRepositoryFullName}."
-msgstr "在整合中連結 GitHub 以新增 {missingRepositoryFullName}。"
+msgid "Connect GitHub in Integrations to add {repositoryFullName}."
+msgstr "在整合中連結 GitHub 以新增 {repositoryFullName}。"
 
 msgid "Connect Google"
 msgstr "連線Google"
@@ -5257,6 +5266,9 @@ msgstr "再次建立"
 msgid "Create an account"
 msgstr "建立帳戶"
 
+msgid "Create environment"
+msgstr "建立環境"
+
 msgid "Create failed: {message}"
 msgstr "建立失敗：{message}"
 
@@ -5535,6 +5547,9 @@ msgstr "自訂終端代理程式"
 
 msgid "Custom themes"
 msgstr "自訂主題"
+
+msgid "Customize"
+msgstr "自訂"
 
 msgid "Customize commands"
 msgstr "自訂命令"
@@ -10234,9 +10249,6 @@ msgstr "導航"
 
 msgid "Navigation Menu"
 msgstr "導航選單"
-
-msgid "Nearest to you."
-msgstr "離你最近的區域。"
 
 msgid "Need app-level wiring (form state, chart data, app shell)"
 msgstr "需要應用層的接線（表單狀態、圖表資料、應用程式外殼）"
@@ -14939,6 +14951,9 @@ msgstr "配置專案…"
 msgid "Set up this project for Superset"
 msgstr "為Superset配置這個專案"
 
+msgid "Set up with an agent"
+msgstr "用代理程式設定"
+
 msgid "Set up your organization to get started"
 msgstr "設定你的組織即可開始"
 
@@ -15371,9 +15386,6 @@ msgstr "技能隨Superset外掛一起提供，並會在你使用的每個代理�
 msgid "Skip"
 msgstr "跳過"
 
-msgid "Skip & save"
-msgstr "略過並儲存"
-
 msgid "Skip All"
 msgstr "全部跳過"
 
@@ -15718,9 +15730,6 @@ msgstr "開始一個會話"
 
 msgid "Start a workspace straight from a Linear ticket. The agent picks it up and reports back with a PR."
 msgstr "直接從Linear工單啟動工作區。代理程式接手，並以一個PR回報結果。"
-
-msgid "Start agent"
-msgstr "啟動代理"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "在 iPhone 或 iPad 上啟動 agent、即時追蹤並審查差異。你的程式碼始終留在你的機器上。"
@@ -16649,6 +16658,9 @@ msgstr "該機器已不可用"
 msgid "That name isn't allowed."
 msgstr "該名稱不被允許。"
 
+msgid "The .superset/config.json the workspace reads, and the repository it opens on."
+msgstr "工作區讀取的 .superset/config.json，以及它開啟的儲存庫。"
+
 msgid "The 2026 bet"
 msgstr "2026年的賭注"
 
@@ -16890,9 +16902,6 @@ msgstr "恢復期已結束。請聯絡support@superset.sh。"
 
 msgid "The remote branch has diverged. Pull before continuing."
 msgstr "遠端分支已分叉。請先拉取再繼續。"
-
-msgid "The repositories a cloud workspace checks out, and which one's .superset/config.json it acts on. The workspace opens on the config location, or on the first repository by name."
-msgstr "雲端工作區簽出的儲存庫，以及它套用哪個儲存庫的 .superset/config.json。工作區會在設定位置開啟，否則在依名稱排序的第一個儲存庫開啟。"
 
 msgid "The request failed."
 msgstr "請求失敗。"
@@ -18358,6 +18367,9 @@ msgstr "檢視用量"
 msgid "Violence or harassment"
 msgstr "暴力或騷擾"
 
+msgid "Visible to"
+msgstr "可見範圍"
+
 msgid "Voice"
 msgstr "語音"
 
@@ -18551,6 +18563,9 @@ msgstr "歡迎使用Superset"
 
 msgid "Welcome to the new Superset"
 msgstr "歡迎使用全新的 Superset"
+
+msgid "What a cloud workspace checks out, and where it runs."
+msgstr "雲端工作區簽出的內容，以及執行位置。"
 
 msgid "What are the benefits?"
 msgstr "有哪些福利？"
