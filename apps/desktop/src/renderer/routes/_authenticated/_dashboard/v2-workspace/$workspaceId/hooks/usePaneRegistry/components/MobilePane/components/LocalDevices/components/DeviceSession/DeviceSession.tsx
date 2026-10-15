@@ -6,11 +6,17 @@ import type { LocalDevice } from "../DevicePicker";
 
 interface DeviceSessionProps {
 	hubUrl: string;
+	hubToken: string;
 	device: LocalDevice;
 	picker: ReactNode;
 }
 
-export function DeviceSession({ hubUrl, device, picker }: DeviceSessionProps) {
+export function DeviceSession({
+	hubUrl,
+	hubToken,
+	device,
+	picker,
+}: DeviceSessionProps) {
 	const client = useActiveDeviceClient(
 		{
 			platform: device.platform,
@@ -18,24 +24,32 @@ export function DeviceSession({ hubUrl, device, picker }: DeviceSessionProps) {
 			streamMode: device.platform === "ios" ? "mjpeg" : "h264",
 		},
 		hubUrl,
+		{ token: hubToken },
 	);
 	const rotateDevice = workspaceTrpc.mobile.rotateLocalDevice.useMutation();
 	const utils = workspaceTrpc.useUtils();
 	const restartHub = workspaceTrpc.mobile.restartLocalHub.useMutation({
 		onSettled: () => utils.mobile.localDevices.invalidate(),
 	});
-	const deviceQuery = `device=${encodeURIComponent(device.id)}`;
 
 	return (
 		<DeviceView
 			client={client}
 			deviceName={device.name}
 			picker={picker}
-			logStreamUrl={(scope) =>
-				device.platform === "ios"
-					? `${hubUrl}/vendor/serve-sim/logs?${deviceQuery}${scope === "app" ? "&scope=user-apps" : ""}`
-					: `${hubUrl}/vendor/serve-emu/api/logcat?${deviceQuery}`
-			}
+			logStreamUrl={(scope) => {
+				const url = new URL(
+					device.platform === "ios"
+						? `${hubUrl}/vendor/serve-sim/logs`
+						: `${hubUrl}/vendor/serve-emu/api/logcat`,
+				);
+				url.searchParams.set("device", device.id);
+				url.searchParams.set("token", hubToken);
+				if (device.platform === "ios" && scope === "app") {
+					url.searchParams.set("scope", "user-apps");
+				}
+				return url.toString();
+			}}
 			onRotate={(orientation) =>
 				rotateDevice.mutate({
 					platform: device.platform,

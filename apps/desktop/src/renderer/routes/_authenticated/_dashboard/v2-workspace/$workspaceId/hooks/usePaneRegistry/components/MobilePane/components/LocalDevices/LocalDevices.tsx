@@ -7,7 +7,12 @@ import { PaneMessage } from "../PaneMessage";
 import { DevicePicker, type LocalDevice } from "./components/DevicePicker";
 import { DeviceSession } from "./components/DeviceSession";
 
-const deviceKey = (device: LocalDevice) => `${device.platform}:${device.name}`;
+// Simulators on different iOS runtimes can share a name. An emulator's id
+// is its serial, which only exists while it runs, so it is keyed by name.
+const deviceKey = (device: LocalDevice) =>
+	device.platform === "ios"
+		? `ios:${device.id}`
+		: `${device.platform}:${device.name}`;
 
 export function LocalDevices() {
 	const devicesQuery = workspaceTrpc.mobile.localDevices.useQuery(undefined, {
@@ -47,7 +52,7 @@ export function LocalDevices() {
 		);
 	}
 
-	const { hubUrl, devices } = devicesQuery.data;
+	const { hubUrl, hubToken, devices } = devicesQuery.data;
 	const selected =
 		devices.find((device) => deviceKey(device) === selectedKey) ??
 		devices.find((device) => device.booted) ??
@@ -76,6 +81,7 @@ export function LocalDevices() {
 			<DeviceSession
 				key={`${deviceKey(selected)}:${selected.id}`}
 				hubUrl={hubUrl}
+				hubToken={hubToken}
 				device={selected}
 				picker={picker}
 			/>

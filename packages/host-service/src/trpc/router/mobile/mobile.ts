@@ -117,8 +117,13 @@ function hubStateDir(): string {
 	return dir;
 }
 
+interface LocalHub {
+	port: number;
+	token: string;
+}
+
 interface LocalServer {
-	port: Promise<number>;
+	ready: Promise<LocalHub>;
 	stop: () => void;
 }
 
@@ -135,7 +140,7 @@ function startLocalServer(): LocalServer {
 	const abort = new AbortController();
 	let child: ChildProcess | undefined;
 
-	const start = async (): Promise<number> => {
+	const start = async (): Promise<LocalHub> => {
 		const port = await getFreePort();
 		abort.signal.throwIfAborted();
 		const androidSdk = findAndroidSdk();
@@ -146,12 +151,15 @@ function startLocalServer(): LocalServer {
 				DEVICE_HUB_PACKAGE,
 				"--port",
 				String(port),
+				// Without it any local process, or a page in a browser pane, can
+				// drive the devices and run commands through the hub.
+				"--require-token",
 				// The default source keeps a portrait frame when the device rotates.
 				"--stream-source",
 				"scrcpy",
 			],
 			{
-				stdio: ["ignore", "ignore", "pipe"],
+				stdio: ["ignore", "pipe", "pipe"],
 				env: {
 					...process.env,
 					TMPDIR: hubStateDir(),
@@ -166,6 +174,15 @@ function startLocalServer(): LocalServer {
 		let stderr = "";
 		spawned.stderr?.on("data", (chunk) => {
 			stderr = `${stderr}${chunk}`.slice(-2000);
+		});
+		// The hub mints its token and prints it only in its startup link.
+		const token = new Promise<string>((resolve) => {
+			let stdout = "";
+			spawned.stdout?.on("data", (chunk) => {
+				stdout = `${stdout}${chunk}`.slice(-4000);
+				const match = /[?&]token=([A-Za-z0-9._~-]+)/.exec(stdout);
+				if (match?.[1]) resolve(match[1]);
+			});
 		});
 		const exited = new Promise<never>((_, reject) => {
 			spawned.on("error", reject);
@@ -186,34 +203,37 @@ function startLocalServer(): LocalServer {
 		});
 		exited.catch(() => {});
 
-		await Promise.race([
-			waitForHttp(
-				`http://127.0.0.1:${port}`,
-				LOCAL_SERVER_START_TIMEOUT_MS,
-				abort.signal,
-			),
+		const [, hubToken] = await Promise.race([
+			Promise.all([
+				waitForHttp(
+					`http://127.0.0.1:${port}/healthz`,
+					LOCAL_SERVER_START_TIMEOUT_MS,
+					abort.signal,
+				),
+				token,
+			]),
 			exited,
 		]);
-		return port;
+		return { port, token: hubToken };
 	};
 
 	const server: LocalServer = {
-		port: start(),
+		ready: start(),
 		stop: () => {
 			abort.abort();
 			child?.kill();
 		},
 	};
-	server.port.catch(() => {
+	server.ready.catch(() => {
 		server.stop();
 		if (localServer === server) localServer = null;
 	});
 	return server;
 }
 
-async function ensureLocalServer(): Promise<{ port: number }> {
+async function ensureLocalServer(): Promise<LocalHub> {
 	localServer ??= startLocalServer();
-	return { port: await localServer.port };
+	return await localServer.ready;
 }
 
 const hubDeviceSchema = z.object({
@@ -236,13 +256,22 @@ const deviceActionSchema = z.object({
 });
 
 async function hubRequest(path: string, body?: unknown): Promise<unknown> {
-	const { port } = await ensureLocalServer();
+	const { port, token } = await ensureLocalServer();
 	const response = await fetch(`http://127.0.0.1:${port}${path}`, {
 		method: body ? "POST" : "GET",
-		headers: body ? { "Content-Type": "application/json" } : undefined,
+		headers: {
+			Authorization: `Bearer ${token}`,
+			...(body ? { "Content-Type": "application/json" } : {}),
+		},
 		body: body ? JSON.stringify(body) : undefined,
 	});
-	const result = (await response.json()) as { ok?: boolean; error?: string };
+	const text = await response.text();
+	let result: { ok?: boolean; error?: string } = {};
+	try {
+		result = JSON.parse(text);
+	} catch {
+		// an error page; the status says what happened
+	}
 	if (!response.ok || result.ok === false) {
 		throw new TRPCError({
 			code: "INTERNAL_SERVER_ERROR",
@@ -253,6 +282,7 @@ async function hubRequest(path: string, body?: unknown): Promise<unknown> {
 }
 
 const IOS_ORIENTATION_MESSAGE_TAG = 7;
+const ROTATE_CONNECT_TIMEOUT_MS = 10_000;
 
 /** serve-sim takes an explicit orientation as one tagged frame on the
  * simulator's input socket; it has no HTTP route for it. */
@@ -260,25 +290,43 @@ async function rotateIosSimulator(
 	udid: string,
 	orientation: "portrait" | "landscape_left",
 ): Promise<void> {
-	const { port } = await ensureLocalServer();
+	const { port, token } = await ensureLocalServer();
 	const socket = new WebSocket(
 		`ws://127.0.0.1:${port}/vendor/serve-sim/helper/ws?device=${encodeURIComponent(udid)}`,
+		[`serve-sim.token.${token}`],
 	);
 	socket.binaryType = "arraybuffer";
-	await new Promise<void>((resolve, reject) => {
-		socket.addEventListener("open", () => resolve(), { once: true });
-		socket.addEventListener(
-			"error",
-			() =>
+	try {
+		await new Promise<void>((resolve, reject) => {
+			const unreachable = () =>
 				reject(
 					new TRPCError({
 						code: "INTERNAL_SERVER_ERROR",
 						message: "Could not reach the simulator input socket",
 					}),
-				),
-			{ once: true },
-		);
-	});
+				);
+			const timer = setTimeout(unreachable, ROTATE_CONNECT_TIMEOUT_MS);
+			socket.addEventListener(
+				"open",
+				() => {
+					clearTimeout(timer);
+					resolve();
+				},
+				{ once: true },
+			);
+			socket.addEventListener(
+				"error",
+				() => {
+					clearTimeout(timer);
+					unreachable();
+				},
+				{ once: true },
+			);
+		});
+	} catch (error) {
+		socket.close();
+		throw error;
+	}
 	const payload = new TextEncoder().encode(JSON.stringify({ orientation }));
 	const frame = new Uint8Array(1 + payload.length);
 	frame[0] = IOS_ORIENTATION_MESSAGE_TAG;
@@ -301,17 +349,18 @@ export const mobileRouter = router({
 	localSession: protectedProcedure
 		.input(z.object({ platform: z.enum(["local-ios", "local-android"]) }))
 		.mutation(async () => {
-			const { port } = await ensureLocalServer();
-			return { url: `http://127.0.0.1:${port}` };
+			const { port, token } = await ensureLocalServer();
+			return { url: `http://127.0.0.1:${port}/?token=${token}` };
 		}),
 
 	/** The hub answers no cross-origin requests for its device API, so the
 	 * renderer reaches it through here. */
 	localDevices: protectedProcedure.query(async () => {
-		const { port } = await ensureLocalServer();
+		const { port, token } = await ensureLocalServer();
 		const devices = hubDevicesSchema.parse(await hubRequest("/api/devices"));
 		return {
 			hubUrl: `http://127.0.0.1:${port}`,
+			hubToken: token,
 			devices: [...devices.simulators, ...devices.emulators],
 		};
 	}),

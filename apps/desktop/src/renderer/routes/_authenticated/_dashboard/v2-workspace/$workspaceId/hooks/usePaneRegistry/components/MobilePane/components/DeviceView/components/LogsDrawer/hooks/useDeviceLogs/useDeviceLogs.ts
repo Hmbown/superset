@@ -29,6 +29,13 @@ export function useDeviceLogs({ url, paused }: UseDeviceLogsOptions) {
 	useEffect(() => {
 		setLogs([]);
 		const source = new EventSource(url);
+		const parse = <T>(data: string): T | null => {
+			try {
+				return JSON.parse(data) as T;
+			} catch {
+				return null;
+			}
+		};
 		const append = (entries: LogEntry[]) => {
 			if (pausedRef.current || entries.length === 0) return;
 			setLogs((current) => [...current, ...entries].slice(-MAX_LINES));
@@ -42,11 +49,13 @@ export function useDeviceLogs({ url, paused }: UseDeviceLogsOptions) {
 			if (entry) append([entry]);
 		};
 		source.addEventListener("logs", (event) => {
-			const batch = JSON.parse((event as MessageEvent<string>).data) as {
-				lines?: Array<{ line: string }>;
-			};
+			const batch = parse<{ lines?: Array<{ line: string }> }>(
+				(event as MessageEvent<string>).data,
+			);
 			append(
-				(batch.lines ?? []).map(({ line }) => parseAndroidLine(line, nextId())),
+				(batch?.lines ?? []).map(({ line }) =>
+					parseAndroidLine(line, nextId()),
+				),
 			);
 		});
 		return () => {

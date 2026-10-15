@@ -2,8 +2,9 @@ import { session } from "electron";
 
 /**
  * The Mobile pane talks to a device hub on a loopback port. The hub answers
- * cross-origin HTTP, but accepts the iOS simulator's control socket only from
- * its own origin, so those upgrades are presented as same-origin.
+ * cross-origin HTTP, but accepts the iOS simulator's command socket only from
+ * its own origin, so the app window's upgrades are presented as same-origin.
+ * Pages in browser panes share this session and are left alone.
  */
 export function allowRendererToReachDeviceHub(partition: string): void {
 	session
@@ -11,6 +12,10 @@ export function allowRendererToReachDeviceHub(partition: string): void {
 		.webRequest.onBeforeSendHeaders(
 			{ urls: ["ws://127.0.0.1:*/vendor/serve-sim/*"] },
 			(details, callback) => {
+				if (details.webContents?.getType() !== "window") {
+					callback({});
+					return;
+				}
 				callback({
 					requestHeaders: {
 						...details.requestHeaders,
