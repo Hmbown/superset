@@ -19,9 +19,11 @@ import type { DiffStats } from "renderer/hooks/host-service/useDiffStats";
 import { useFocusVisible } from "renderer/hooks/useFocusVisible";
 import { HotkeyLabel } from "renderer/hotkeys";
 import { pullRequestRefFromUrl } from "renderer/lib/github/pullRequestRef";
+import { useDashboardSidebarWorkspacePorts } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/providers/DashboardSidebarPortsProvider";
 import { navigateToV2Workspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import { ProjectThumbnail } from "renderer/routes/_authenticated/components/ProjectThumbnail";
 import { RenameInput } from "renderer/screens/main/components/WorkspaceSidebar/RenameInput";
+import { useInlineWorkspacePortsEnabled } from "renderer/stores/inline-workspace-ports";
 import { usePullRequestPaneIntent } from "renderer/stores/pull-request-pane-intent";
 import type { ActivePaneStatus } from "shared/tabs-types";
 import type {
@@ -32,6 +34,8 @@ import type {
 import { DashboardSidebarWorkspaceDiffStats } from "../DashboardSidebarWorkspaceDiffStats";
 import { DashboardSidebarWorkspaceIcon } from "../DashboardSidebarWorkspaceIcon";
 import { DashboardSidebarWorkspaceQueuedBadge } from "../DashboardSidebarWorkspaceQueuedBadge";
+import { DashboardSidebarPortsChip } from "./components/DashboardSidebarPortsChip";
+import { DashboardSidebarRowEventBoundary } from "./components/DashboardSidebarRowEventBoundary";
 import { DashboardSidebarWorkspaceChips } from "./components/DashboardSidebarWorkspaceChips";
 
 const PR_STATE_LABEL: Record<
@@ -145,6 +149,11 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 				});
 			}
 		}, [isActive]);
+
+		const inlineWorkspacePortsEnabled = useInlineWorkspacePortsEnabled();
+		const portGroup = useDashboardSidebarWorkspacePorts(workspace.id);
+		const ports =
+			inlineWorkspacePortsEnabled && !isPending ? (portGroup?.ports ?? []) : [];
 
 		const creationStatusText = isPending ? "Creating…" : null;
 		const isLocalWorkspace = workspace.type === "local";
@@ -379,71 +388,78 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 							</>
 						)}
 
-						<div className="col-start-2 row-start-1 grid h-5 shrink-0 items-center justify-items-end [&>*]:col-start-1 [&>*]:row-start-1">
-							{creationStatusText ? (
-								<span className="text-[11px] text-muted-foreground">
-									{creationStatusText}
-								</span>
-							) : (
-								<div className="flex items-center gap-1.5">
-									<DashboardSidebarWorkspaceQueuedBadge
-										workspaceId={workspace.id}
-									/>
-									{isActive &&
-										diffStats &&
-										(diffStats.additions > 0 || diffStats.deletions > 0) && (
-											<DashboardSidebarWorkspaceDiffStats
-												additions={diffStats.additions}
-												deletions={diffStats.deletions}
-												isActive={isActive}
-											/>
-										)}
-								</div>
-							)}
-							{!isPending && !isSelected && (
-								<div className="hidden items-center justify-end gap-1.5 group-hover:flex group-focus-within:flex">
-									{shortcutLabel && (
-										<span className="shrink-0 font-mono text-[10px] tabular-nums text-muted-foreground">
-											{shortcutLabel}
-										</span>
-									)}
-									{
-										<Tooltip delayDuration={300}>
-											<TooltipTrigger asChild>
-												<button
-													type="button"
-													onClick={(event) => {
-														event.stopPropagation();
-														onCloseWorkspaceClick();
-													}}
-													onKeyDown={(event) => {
-														if (
-															event.key === "Enter" ||
-															event.key === " " ||
-															event.key === "Spacebar"
-														) {
-															event.stopPropagation();
-														}
-													}}
-													className="flex items-center justify-center text-muted-foreground hover:text-foreground"
-													aria-label={t({
-														message: "Delete workspace",
-													})}
-												>
-													<HiMiniXMark className="size-3.5" />
-												</button>
-											</TooltipTrigger>
-											<TooltipContent side="top">
-												<HotkeyLabel
-													label={t({
-														message: "Delete workspace",
-													})}
-													id={isActive ? "CLOSE_WORKSPACE" : undefined}
+						<div className="col-start-2 row-start-1 flex items-center gap-1.5">
+							<div className="grid h-5 shrink-0 items-center justify-items-end [&>*]:col-start-1 [&>*]:row-start-1">
+								{creationStatusText ? (
+									<span className="text-[11px] text-muted-foreground">
+										{creationStatusText}
+									</span>
+								) : (
+									<div className="flex items-center gap-1.5">
+										<DashboardSidebarWorkspaceQueuedBadge
+											workspaceId={workspace.id}
+										/>
+										{isActive &&
+											diffStats &&
+											(diffStats.additions > 0 || diffStats.deletions > 0) && (
+												<DashboardSidebarWorkspaceDiffStats
+													additions={diffStats.additions}
+													deletions={diffStats.deletions}
+													isActive={isActive}
 												/>
-											</TooltipContent>
-										</Tooltip>
-									}
-								</div>
+											)}
+									</div>
+								)}
+								{!isPending && !isSelected && (
+									<div className="hidden items-center justify-end gap-1.5 group-hover:flex group-focus-within:flex">
+										{shortcutLabel && (
+											<span className="shrink-0 font-mono text-[10px] tabular-nums text-muted-foreground">
+												{shortcutLabel}
+											</span>
+										)}
+										{
+											<Tooltip delayDuration={300}>
+												<TooltipTrigger asChild>
+													<button
+														type="button"
+														onClick={(event) => {
+															event.stopPropagation();
+															onCloseWorkspaceClick();
+														}}
+														onKeyDown={(event) => {
+															if (
+																event.key === "Enter" ||
+																event.key === " " ||
+																event.key === "Spacebar"
+															) {
+																event.stopPropagation();
+															}
+														}}
+														className="flex items-center justify-center text-muted-foreground hover:text-foreground"
+														aria-label={t({
+															message: "Delete workspace",
+														})}
+													>
+														<HiMiniXMark className="size-3.5" />
+													</button>
+												</TooltipTrigger>
+												<TooltipContent side="top">
+													<HotkeyLabel
+														label={t({
+															message: "Delete workspace",
+														})}
+														id={isActive ? "CLOSE_WORKSPACE" : undefined}
+													/>
+												</TooltipContent>
+											</Tooltip>
+										}
+									</div>
+								)}
+							</div>
+							{ports.length > 0 && (
+								<DashboardSidebarRowEventBoundary>
+									<DashboardSidebarPortsChip ports={ports} />
+								</DashboardSidebarRowEventBoundary>
 							)}
 						</div>
 					</div>

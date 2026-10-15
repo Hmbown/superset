@@ -1,5 +1,4 @@
 import {
-	afterAll,
 	afterEach,
 	beforeEach,
 	describe,
@@ -9,8 +8,16 @@ import {
 	setSystemTime,
 	test,
 } from "bun:test";
-import * as relaySocketModule from "@superset/workspace-client/relay-socket";
+import type { createRelaySocket } from "@superset/workspace-client/relay-socket";
 import type { Terminal as XTerm } from "@xterm/xterm";
+import {
+	connect,
+	createTransport as createRealTransport,
+	disconnect,
+	park,
+	reconnect,
+	sendColors,
+} from "./terminal-ws-transport";
 
 // The transport builds on createRelaySocket (partysocket) — reconnection,
 // backoff, and the relay preflight live inside the shared socket. We inject a
@@ -106,26 +113,12 @@ class FakeRelaySocket {
 	}
 }
 
-// mock.module affects later suites too. Snapshot the real exports before the
-// mock rewrites their live bindings, then restore them when this suite ends.
-// (auth-client / posthog are deliberately NOT mocked: with a
-// faked socket getToken/ensureFreshJwt never runs, and posthog.capture before
-// init is a harmless no-op — the real modules load fine, as the prior test did.)
-const realRelaySocketModule = { ...relaySocketModule };
-mock.module("@superset/workspace-client/relay-socket", () => ({
-	...realRelaySocketModule,
-	createRelaySocket: (options: Record<string, unknown>) =>
-		new FakeRelaySocket(options),
-}));
-afterAll(() => {
-	mock.module(
-		"@superset/workspace-client/relay-socket",
-		() => realRelaySocketModule,
-	);
-});
+const createSocket = ((options: Record<string, unknown>) =>
+	new FakeRelaySocket(options)) as unknown as typeof createRelaySocket;
 
-const { connect, createTransport, disconnect, park, reconnect, sendColors } =
-	await import("./terminal-ws-transport");
+function createTransport(options: { onSessionEnded?: () => void } = {}) {
+	return createRealTransport({ ...options, createSocket });
+}
 
 // `window` is aliased to `globalThis` by the xterm-env-polyfill preload, and
 // `globalThis.addEventListener` is absent on Linux CI runtimes, so the transport's
@@ -447,12 +440,14 @@ describe("terminal-ws-transport", () => {
 		expect(sentMessages()).toEqual([
 			{ type: "visible", visible: true },
 			{ type: "resize", cols: 101, rows: 27 },
+			{ type: "input", data: "a" },
 		]);
 
 		terminal.emitData("b");
 		expect(sentMessages()).toEqual([
 			{ type: "visible", visible: true },
 			{ type: "resize", cols: 101, rows: 27 },
+			{ type: "input", data: "a" },
 			{ type: "input", data: "b" },
 		]);
 	});
@@ -924,4 +919,59 @@ test("a disconnected appearance reset is sent once on reconnect even with unchan
 		resetOverrides: false,
 	});
 	disconnect(transport);
+});
+
+describe("input typed while attaching", () => {
+	function connectPending(now: () => number) {
+		const transport = createRealTransport({ createSocket, now });
+		const terminal = createMockTerminal();
+		connect(transport, terminal, "ws://host/terminal/t1");
+		const socket = FakeRelaySocket.instances.at(-1);
+		if (!socket) throw new Error("expected relay socket instance");
+		return { transport, terminal, socket };
+	}
+
+	const inputs = (socket: FakeRelaySocket) =>
+		socket.sent
+			.map((payload) => JSON.parse(payload))
+			.filter((message) => message.type === "input")
+			.map((message) => message.data);
+
+	test("is sent once the pane attaches", () => {
+		const { transport, terminal, socket } = connectPending(() => 0);
+		terminal.emitData("ls");
+		socket.open();
+		terminal.emitData(" -la");
+		expect(inputs(socket)).toEqual([]);
+
+		socket.message(JSON.stringify({ type: "attached", terminalId: "t1" }));
+		terminal.emitData("\r");
+		expect(inputs(socket)).toEqual(["ls -la", "\r"]);
+		disconnect(transport);
+	});
+
+	test("is dropped when the attach takes too long", () => {
+		let clock = 0;
+		const { transport, terminal, socket } = connectPending(() => clock);
+		terminal.emitData("rm -rf build\r");
+		clock = 60_000;
+		socket.open();
+		socket.message(JSON.stringify({ type: "attached", terminalId: "t1" }));
+		expect(inputs(socket)).toEqual([]);
+		disconnect(transport);
+	});
+
+	test("is dropped when the pane parks before attaching", () => {
+		const { transport, terminal, socket } = connectPending(() => 0);
+		terminal.emitData("echo hi");
+		park(transport);
+		connect(transport, terminal, "ws://host/terminal/t1");
+		const resumed = FakeRelaySocket.instances.at(-1);
+		if (!resumed) throw new Error("expected relay socket instance");
+		resumed.open();
+		resumed.message(JSON.stringify({ type: "attached", terminalId: "t1" }));
+		expect(inputs(socket)).toEqual([]);
+		expect(inputs(resumed)).toEqual([]);
+		disconnect(transport);
+	});
 });

@@ -3,6 +3,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 import { SUPPORTED_LOCALES } from "@superset/i18n/locales";
 import { config as dotenvConfig } from "dotenv";
 import type { NextConfig } from "next";
+import { buildLegacyRedirects } from "./src/lib/legacy-redirects";
 
 // Load .env from monorepo root during development
 if (process.env.NODE_ENV !== "production") {
@@ -67,6 +68,7 @@ const contentSecurityPolicy = [
 		"frame-src",
 		"https://td.doubleclick.net",
 		"https://www.googletagmanager.com",
+		"https://www.youtube-nocookie.com",
 		...hcaptcha,
 	].join(" "),
 	"img-src 'self' data: blob: https:",
@@ -168,12 +170,12 @@ const config: NextConfig = {
 				permanent: true,
 			},
 			{
-				source: "/:lang(en)?/join-us",
+				source: "/:lang(en)?/:page(join-us|career)",
 				destination: "/careers",
 				permanent: true,
 			},
 			{
-				source: `/:lang(${SUPPORTED_LOCALES.join("|")})/join-us`,
+				source: `/:lang(${SUPPORTED_LOCALES.join("|")})/:page(join-us|career)`,
 				destination: "/:lang/careers",
 				permanent: true,
 			},
@@ -192,6 +194,7 @@ const config: NextConfig = {
 				destination: `${docsUrl}/:path*`,
 				permanent: false,
 			},
+			...buildLegacyRedirects({ locales: SUPPORTED_LOCALES, docsUrl }),
 		];
 	},
 

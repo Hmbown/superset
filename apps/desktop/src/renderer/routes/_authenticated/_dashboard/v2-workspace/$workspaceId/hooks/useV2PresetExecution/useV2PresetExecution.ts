@@ -183,6 +183,7 @@ export function useV2PresetExecution({
 			) {
 				const chat = await openAgentChat({
 					configId: linkedAgent.id,
+					presetId: linkedAgent.presetId,
 					placement: plan === "active-tab-single" ? "split-pane" : "new-tab",
 				});
 				if (chat) return;

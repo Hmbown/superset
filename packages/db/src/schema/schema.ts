@@ -239,29 +239,6 @@ export const tasks = pgTable(
 		branch: text(),
 		prUrl: text("pr_url"),
 
-		// External sync (null if local-only task)
-		externalProvider: integrationProvider("external_provider"),
-		externalId: text("external_id"),
-		externalKey: text("external_key"), // "SUPER-172", "#123"
-		externalUrl: text("external_url"),
-		lastSyncedAt: timestamp("last_synced_at"),
-		syncError: text("sync_error"),
-		// The provider's own updatedAt, recorded on every write in either
-		// direction. An inbound event no newer than this is our own echo or a
-		// redelivery that arrived late, and is not applied.
-		externalUpdatedAt: timestamp("external_updated_at"),
-
-		// External project/cycle snapshot (from Linear)
-		externalProjectId: text("external_project_id"),
-		externalProjectName: text("external_project_name"),
-		externalCycleId: text("external_cycle_id"),
-		externalCycleName: text("external_cycle_name"),
-
-		// External assignee snapshot (for unmatched Linear users)
-		assigneeExternalId: text("assignee_external_id"),
-		assigneeDisplayName: text("assignee_display_name"),
-		assigneeAvatarUrl: text("assignee_avatar_url"),
-
 		startedAt: timestamp("started_at"),
 		completedAt: timestamp("completed_at"),
 		deletedAt: timestamp("deleted_at"),
@@ -280,16 +257,6 @@ export const tasks = pgTable(
 		index("tasks_creator_id_idx").on(table.creatorId),
 		index("tasks_status_id_idx").on(table.statusId),
 		index("tasks_created_at_idx").on(table.createdAt),
-		index("tasks_external_provider_idx").on(table.externalProvider),
-		index("tasks_external_project_id_idx").on(table.externalProjectId),
-		index("tasks_external_project_name_idx").on(table.externalProjectName),
-		index("tasks_external_cycle_id_idx").on(table.externalCycleId),
-		index("tasks_assignee_external_id_idx").on(table.assigneeExternalId),
-		unique("tasks_external_unique").on(
-			table.organizationId,
-			table.externalProvider,
-			table.externalId,
-		),
 		unique("tasks_org_slug_unique").on(table.organizationId, table.slug),
 		unique("tasks_team_number_unique").on(table.teamId, table.number),
 	],
@@ -509,9 +476,6 @@ export const connections = pgTable(
 		externalUserId: text("external_user_id"),
 		externalUserLabel: text("external_user_label"),
 
-		// What the person calls this account. Two accounts on one connector are
-		// told apart by the provider's own labels otherwise, and those are often
-		// the same word twice — "harshith@tegon.ai · harshith@tegon.ai".
 		nickname: text(),
 
 		config: jsonb().$type<Record<string, string | null>>(),
@@ -964,6 +928,8 @@ export const cloudWorkspaces = pgTable(
 			onDelete: "set null",
 		}),
 		deletedAt: timestamp("deleted_at", { withTimezone: true }),
+		/** When the box stops because its organization reached its usage limit; null otherwise. */
+		usageStopAt: timestamp("usage_stop_at", { withTimezone: true }),
 		createdByUserId: uuid("created_by_user_id").references(() => users.id, {
 			onDelete: "set null",
 		}),
@@ -1032,6 +998,45 @@ export const cloudWorkspacePresence = pgTable(
 	(table) => [
 		primaryKey({ columns: [table.cloudWorkspaceId, table.userId] }),
 		index("cloud_workspace_presence_user_id_idx").on(table.userId),
+	],
+);
+
+export const cloudWorkspaceBoots = pgTable(
+	"cloud_workspace_boots",
+	{
+		id: text().primaryKey(),
+		vercelSessionId: text("vercel_session_id").unique(),
+		organizationId: uuid("organization_id").notNull(),
+		cloudWorkspaceId: uuid("cloud_workspace_id").references(
+			() => cloudWorkspaces.id,
+			{ onDelete: "set null" },
+		),
+		memoryMb: integer("memory_mb").notNull(),
+		vcpus: integer().notNull(),
+		startedAt: timestamp("started_at", { withTimezone: true }).notNull(),
+		stoppedAt: timestamp("stopped_at", { withTimezone: true }),
+		lockSeq: integer("lock_seq").notNull().default(0),
+		lockOpen: boolean("lock_open").notNull().default(true),
+		finalizedThrough: timestamp("finalized_through", { withTimezone: true }),
+		settleLeaseUntil: timestamp("settle_lease_until", { withTimezone: true }),
+		createdAt: timestamp("created_at", { withTimezone: true })
+			.notNull()
+			.defaultNow(),
+		updatedAt: timestamp("updated_at", { withTimezone: true })
+			.notNull()
+			.defaultNow()
+			.$onUpdate(() => new Date()),
+	},
+	(table) => [
+		index("cloud_workspace_boots_cloud_workspace_id_idx").on(
+			table.cloudWorkspaceId,
+		),
+		index("cloud_workspace_boots_organization_id_idx").on(table.organizationId),
+		index("cloud_workspace_boots_open_idx")
+			.on(table.startedAt)
+			.where(
+				sql`${table.stoppedAt} is null or ${table.finalizedThrough} is null or ${table.finalizedThrough} < ${table.stoppedAt}`,
+			),
 	],
 );
 
@@ -2095,6 +2100,30 @@ export const workspacePages = pgTable(
 export type InsertWorkspacePage = typeof workspacePages.$inferInsert;
 export type SelectWorkspacePage = typeof workspacePages.$inferSelect;
 
+export const pageToolGrants = pgTable(
+	"page_tool_grants",
+	{
+		pageId: uuid("page_id")
+			.notNull()
+			.references(() => pages.id, { onDelete: "cascade" }),
+		userId: uuid("user_id")
+			.notNull()
+			.references(() => users.id, { onDelete: "cascade" }),
+		plugin: text().notNull(),
+		connectionId: uuid("connection_id"),
+		createdAt: timestamp("created_at", { withTimezone: true })
+			.notNull()
+			.defaultNow(),
+	},
+	(table) => [
+		primaryKey({ columns: [table.pageId, table.userId, table.plugin] }),
+		index("page_tool_grants_user_id_idx").on(table.userId),
+	],
+);
+
+export type InsertPageToolGrant = typeof pageToolGrants.$inferInsert;
+export type SelectPageToolGrant = typeof pageToolGrants.$inferSelect;
+
 export const fileStatus = pgEnum("file_status", ["pending", "ready"]);
 
 export const attachmentParentKind = pgEnum("attachment_parent_kind", [
@@ -2281,6 +2310,33 @@ export const pageComments = pgTable(
 
 export type InsertPageComment = typeof pageComments.$inferInsert;
 export type SelectPageComment = typeof pageComments.$inferSelect;
+
+/**
+ * The viewer's read watermark for a page's comments: everything on the page
+ * created at or before `lastSeenAt` counts as seen by that user. One row per
+ * (user, page), advanced whenever they view the page's comments.
+ */
+export const pageCommentReads = pgTable(
+	"page_comment_reads",
+	{
+		userId: uuid("user_id")
+			.notNull()
+			.references(() => users.id, { onDelete: "cascade" }),
+		pageId: uuid("page_id")
+			.notNull()
+			.references(() => pages.id, { onDelete: "cascade" }),
+		lastSeenAt: timestamp("last_seen_at", { withTimezone: true })
+			.notNull()
+			.defaultNow(),
+	},
+	(table) => [
+		primaryKey({ columns: [table.userId, table.pageId] }),
+		index("page_comment_reads_page_id_idx").on(table.pageId),
+	],
+);
+
+export type InsertPageCommentRead = typeof pageCommentReads.$inferInsert;
+export type SelectPageCommentRead = typeof pageCommentReads.$inferSelect;
 
 /**
  * A person's own agent sign-in, used when they start a cloud workspace. The

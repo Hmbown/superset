@@ -5,6 +5,7 @@ import {
 	cloudWorkspaces,
 	taskActivity,
 	taskComments,
+	taskImports,
 	taskLabelAssignments,
 	taskLabels,
 	taskProjects,
@@ -50,7 +51,6 @@ async function loadTask(ctx: { organizationIds: string[] }, taskId: string) {
 			organizationId: true,
 			createdAt: true,
 			creatorId: true,
-			externalProvider: true,
 		},
 	});
 	if (!task) throw notFound();
@@ -231,10 +231,16 @@ export const taskRecordRouter = {
 				.where(eq(taskComments.taskId, task.id))
 				.orderBy(asc(taskComments.createdAt));
 
+			const imports = await db
+				.select({ provider: taskImports.provider })
+				.from(taskImports)
+				.where(eq(taskImports.taskId, task.id))
+				.limit(1);
+
 			return {
 				created: {
 					at: task.createdAt,
-					importedFrom: task.externalProvider,
+					importedFrom: imports.at(0)?.provider ?? null,
 					actor: creator
 						? { userId: creator.id, name: creator.name, image: creator.image }
 						: null,
@@ -332,7 +338,9 @@ export const taskRecordRouter = {
 		.input(z.object({ taskId: z.string().uuid(), name: z.string() }))
 		.mutation(async ({ ctx, input }) => {
 			const task = await loadTask(ctx, input.taskId);
-			const [label] = await ensureLabels(db, task.organizationId, [input.name]);
+			const [label] = await dbWs.transaction((tx) =>
+				ensureLabels(tx, task.organizationId, [input.name]),
+			);
 			if (!label) {
 				throw userError({
 					code: "BAD_REQUEST",
