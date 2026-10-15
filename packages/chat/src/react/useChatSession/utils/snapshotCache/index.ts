@@ -1,1 +1,5 @@
-export { cachedSnapshot, cacheSnapshot } from "./snapshotCache";
+export {
+	cachedSnapshot,
+	cacheSnapshot,
+	forgetSnapshot,
+} from "./snapshotCache";

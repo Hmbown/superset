@@ -19,3 +19,7 @@ export function cacheSnapshot(
 		snapshots.delete(oldest);
 	}
 }
+
+export function forgetSnapshot(sessionId: string): void {
+	snapshots.delete(sessionId);
+}

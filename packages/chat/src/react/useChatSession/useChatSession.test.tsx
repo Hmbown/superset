@@ -748,4 +748,69 @@ describe("useChatSession", () => {
 		again.close();
 		await stack.runtime.dispose();
 	});
+
+	test("keeps loaded tool bodies when the fresh outline replaces the cached transcript", async () => {
+		const stack = await startStack();
+		const transport = withOmittedTool(stack.transport);
+		const first = stack.makeClient({ transport });
+		const firstView = render(<Probe client={first} />);
+		await domWaitFor(() => expect(session().status).toBe("ready"));
+		act(() => session().requestItemBodies(["tool-1"]));
+		await domWaitFor(() =>
+			expect(session().snapshot.items.get("tool-1")?.item.bodyOmitted).toBe(
+				undefined,
+			),
+		);
+		firstView.unmount();
+		first.close();
+
+		const host = heldUntilReleased(transport);
+		const again = stack.makeClient({ transport: host.transport });
+		const view = render(<Probe client={again} />);
+		host.release();
+		await domWaitFor(() => expect(session().status).toBe("ready"));
+		expect(session().snapshot.items.get("tool-1")?.item.bodyOmitted).toBe(
+			undefined,
+		);
+		view.unmount();
+		again.close();
+		await stack.runtime.dispose();
+	});
+
+	test("forgets the cached transcript of a session the host no longer has", async () => {
+		const stack = await startStack();
+		const first = stack.makeClient();
+		const firstView = render(<Probe client={first} />);
+		await domWaitFor(() => expect(session().status).toBe("ready"));
+		act(() => {
+			session().sendPrompt([{ type: "text", text: "hello" }]);
+		});
+		await domWaitFor(() =>
+			expect(session().snapshot.session?.status).toBe("idle"),
+		);
+		firstView.unmount();
+		first.close();
+
+		const gone: ChatTransport = new Proxy(stack.transport, {
+			get: (target, prop, receiver) =>
+				prop === "getOutline" || prop === "getItems"
+					? async () => ({ ok: false, reset: "session_not_found" })
+					: Reflect.get(target, prop, receiver),
+		});
+		const missing = stack.makeClient({ transport: gone });
+		const missingView = render(<Probe client={missing} />);
+		await domWaitFor(() => expect(session().status).toBe("ready"));
+		expect(session().snapshot.items.size).toBe(0);
+		missingView.unmount();
+		missing.close();
+
+		const host = heldUntilReleased(stack.transport);
+		const again = stack.makeClient({ transport: host.transport });
+		const view = render(<Probe client={again} />);
+		expect(session().snapshot.items.size).toBe(0);
+		host.release();
+		view.unmount();
+		again.close();
+		await stack.runtime.dispose();
+	});
 });

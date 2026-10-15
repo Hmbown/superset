@@ -21,10 +21,19 @@ import {
 import type { Cursor } from "../../protocol/cursor";
 import type { DeltaChannel, Envelope } from "../../protocol/envelope";
 import { isDurableEnvelope, isResetEnvelope } from "../../protocol/envelope";
-import type { Decision, UserContent, UserMessage } from "../../protocol/items";
+import type {
+	Decision,
+	ToolCall,
+	UserContent,
+	UserMessage,
+} from "../../protocol/items";
 
 import { newerThan } from "./utils/newerThan";
-import { cachedSnapshot, cacheSnapshot } from "./utils/snapshotCache";
+import {
+	cachedSnapshot,
+	cacheSnapshot,
+	forgetSnapshot,
+} from "./utils/snapshotCache";
 
 export type FrameScheduler = (flush: () => void) => () => void;
 
@@ -93,19 +102,22 @@ function fetchInitialLoad(
 	]);
 }
 
-type EarlyLoad = {
-	client: SessionClient;
-	pageSize: number | undefined;
-	request: Promise<InitialLoad>;
-};
-
-function startEarlyLoad(
-	client: SessionClient,
-	pageSize: number | undefined,
-): EarlyLoad {
-	const request = fetchInitialLoad(client, pageSize);
-	request.catch(() => {});
-	return { client, pageSize, request };
+function withCachedBodies(seed: Seed, cached: SessionSnapshot): Seed {
+	if (seed.kind !== "outline") return seed;
+	const bodies = [...cached.items.values()].filter(({ item }) => {
+		if (item.kind !== "tool_call" || hasOmittedBody(item)) return false;
+		const fresh = seed.snapshot.items.get(item.id)?.item;
+		return (
+			fresh?.kind === "tool_call" &&
+			(fresh as ToolCall).status !== "running" &&
+			(fresh as ToolCall).status === (item as ToolCall).status
+		);
+	});
+	if (bodies.length === 0) return seed;
+	return {
+		kind: "outline",
+		snapshot: withItemBodies(seed.snapshot, bodies),
+	};
 }
 
 export const DEFAULT_DELTAS: readonly DeltaChannel[] = [
@@ -170,8 +182,6 @@ export function useChatSession(options: UseChatSessionOptions): ChatSession {
 	);
 	const snapshotRef = useRef(snapshot);
 	snapshotRef.current = snapshot;
-	const [earlyLoad] = useState(() => startEarlyLoad(client, pageSize));
-	const earlyLoadUsedRef = useRef(false);
 	const [status, setStatus] = useState<ChatSessionStatus>("loading");
 	const [connection, setConnection] = useState<StreamStatus>("connecting");
 	const [unreachable, setUnreachable] = useState(false);
@@ -375,16 +385,10 @@ export function useChatSession(options: UseChatSessionOptions): ChatSession {
 		setStatus("loading");
 		setUnreachable(false);
 		setConnection("connecting");
-		setSnapshot(cachedSnapshot(client.sessionId) ?? emptySnapshot());
+		const cached = cachedSnapshot(client.sessionId);
+		setSnapshot(cached ?? emptySnapshot());
 		setHasOlder(false);
 		let loaded = false;
-		const early =
-			!earlyLoadUsedRef.current &&
-			earlyLoad.client === client &&
-			earlyLoad.pageSize === pageSize
-				? earlyLoad.request
-				: null;
-		earlyLoadUsedRef.current = true;
 		nextBeforeRef.current = null;
 		pendingRef.current = [];
 
@@ -422,10 +426,7 @@ export function useChatSession(options: UseChatSessionOptions): ChatSession {
 			let session: InitialLoad[0];
 			let seed: InitialLoad[1];
 			try {
-				[session, seed] =
-					attempt === 0 && early
-						? await timed(early)
-						: await fetchInitialLoad(client, pageSize, timed);
+				[session, seed] = await fetchInitialLoad(client, pageSize, timed);
 			} catch {
 				if (cancelled) return;
 				setUnreachable(true);
@@ -435,8 +436,15 @@ export function useChatSession(options: UseChatSessionOptions): ChatSession {
 			setUnreachable(false);
 			if (cancelled) return;
 			let seeded: SessionSnapshot | null = null;
-			if (seed) seeded = applySeed(seed, false);
-			else setSnapshot(emptySnapshot());
+			if (seed) {
+				seeded = applySeed(
+					cached ? withCachedBodies(seed, cached) : seed,
+					false,
+				);
+			} else {
+				forgetSnapshot(client.sessionId);
+				setSnapshot(emptySnapshot());
+			}
 			loaded = seed !== null;
 			setStatus("ready");
 			stream = client.subscribe({
@@ -465,7 +473,7 @@ export function useChatSession(options: UseChatSessionOptions): ChatSession {
 			pendingRef.current = [];
 			stream?.close();
 		};
-	}, [client, deltasKey, pageSize, enqueue, resync, applySeed, earlyLoad]);
+	}, [client, deltasKey, pageSize, enqueue, resync, applySeed]);
 
 	const sendPrompt = useCallback(
 		(content: UserContent[], steer?: { expectedTurnId: string }) => {

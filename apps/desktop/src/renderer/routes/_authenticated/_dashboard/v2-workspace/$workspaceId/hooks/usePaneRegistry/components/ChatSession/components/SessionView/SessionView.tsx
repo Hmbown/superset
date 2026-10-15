@@ -275,10 +275,12 @@ export function SessionView({
 		setConfigOption,
 		setMode,
 	} = session;
+	const loaded = session.status === "ready";
 	const onRespond = useCallback(
-		(approvalId: string, decision: Decision) =>
-			void respondToApproval(approvalId, decision),
-		[respondToApproval],
+		(approvalId: string, decision: Decision) => {
+			if (loaded) void respondToApproval(approvalId, decision);
+		},
+		[respondToApproval, loaded],
 	);
 	const onSetConfigOption = useCallback(
 		(configId: string, value: string) => void setConfigOption(configId, value),
@@ -295,23 +297,32 @@ export function SessionView({
 	const onSend = useCallback(
 		(content: UserContent[], { steer }: { steer: boolean }) => {
 			if (holdPrompt) return holdPrompt(content);
-			for (const approval of approvals) {
-				void respondToApproval(approval.id, { type: "cancel" });
+			if (loaded) {
+				for (const approval of approvals) {
+					void respondToApproval(approval.id, { type: "cancel" });
+				}
 			}
 			return sendPrompt(
 				content,
 				steer && runningTurnId ? { expectedTurnId: runningTurnId } : undefined,
 			);
 		},
-		[holdPrompt, approvals, respondToApproval, sendPrompt, runningTurnId],
+		[
+			holdPrompt,
+			loaded,
+			approvals,
+			respondToApproval,
+			sendPrompt,
+			runningTurnId,
+		],
 	);
 	const awaitingBackground = sessionState?.awaitingBackground === true;
 	const onCancelTurn = useMemo(
 		() =>
-			runningTurnId && !awaitingBackground && !held
+			loaded && runningTurnId && !awaitingBackground && !held
 				? () => void cancelTurn(runningTurnId, { pauseQueue: true })
 				: null,
-		[runningTurnId, awaitingBackground, cancelTurn, held],
+		[loaded, runningTurnId, awaitingBackground, cancelTurn, held],
 	);
 	const promptQueue = useMemo(
 		() => ({
