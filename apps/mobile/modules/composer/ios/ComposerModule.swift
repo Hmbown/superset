@@ -59,6 +59,7 @@ public final class ComposerModule: Module {
         "onPaste",
         "onDraftChange",
         "onHeightChange",
+        "onEdgeChange",
         "onRemoveAttachment",
         "onAttachmentPress",
         "onExpandedChange"
@@ -76,6 +77,10 @@ public final class ComposerModule: Module {
 
       Prop("backdrop") { (view: ComposerAnchorView, backdrop: String) in
         view.overlay.model.backdrop = ComposerBackdrop(rawValue: backdrop) ?? .dim
+      }
+
+      Prop("reportsEdge") { (view: ComposerAnchorView, reportsEdge: Bool) in
+        view.overlay.model.reportsEdge = reportsEdge
       }
 
       /// Wrapped in a transaction, not left to an `.animation(_:value:)` on
@@ -273,6 +278,7 @@ final class ComposerAnchorView: ExpoView {
   private let onPaste = EventDispatcher()
   private let onDraftChange = EventDispatcher()
   private let onHeightChange = EventDispatcher()
+  private let onEdgeChange = EventDispatcher()
   private let onRemoveAttachment = EventDispatcher()
   private let onAttachmentPress = EventDispatcher()
   private let onExpandedChange = EventDispatcher()
@@ -325,6 +331,9 @@ final class ComposerAnchorView: ExpoView {
     }
     overlay.model.onHeightChange = { [weak self] height in
       self?.onHeightChange(["height": height])
+    }
+    overlay.model.onEdgeChange = { [weak self] inset in
+      self?.onEdgeChange(["inset": inset])
     }
     overlay.model.onChipPress = { [weak self] id in self?.onChipPress(["id": id]) }
     overlay.model.onRemoveAttachment = { [weak self] id in

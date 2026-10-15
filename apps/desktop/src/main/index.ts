@@ -45,7 +45,10 @@ import { isUpdateReadyToInstall, setupAutoUpdater } from "./lib/auto-updater";
 import { startBrowserBridge } from "./lib/browser/browser-bridge";
 import { browserManager } from "./lib/browser/browser-manager";
 import { downloadManager } from "./lib/browser/download-manager";
-import { installBundledCliShim } from "./lib/bundled-cli";
+import {
+	installBundledCliShim,
+	installBundledPdevShim,
+} from "./lib/bundled-cli";
 import { installDevRunnerExit } from "./lib/dev-runner-exit";
 import { resolveDevWorkspaceName } from "./lib/dev-workspace-name";
 import { setWorkspaceDockIcon } from "./lib/dock-icon";
@@ -622,6 +625,11 @@ if (!gotTheLock) {
 			installBundledCliShim();
 		} catch (error) {
 			console.error("[main] Failed to install bundled CLI shim:", error);
+		}
+		try {
+			installBundledPdevShim();
+		} catch (error) {
+			console.error("[main] Failed to install bundled pdev shim:", error);
 		}
 
 		if (IS_DEV) {
