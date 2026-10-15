@@ -41,6 +41,14 @@
 			"types": "./src/page-storage-runtime.ts",
 			"default": "./src/page-storage-runtime.ts"
 		},
+		"./page-tools": {
+			"types": "./src/page-tools.ts",
+			"default": "./src/page-tools.ts"
+		},
+		"./page-tools-runtime": {
+			"types": "./src/page-tools-runtime.ts",
+			"default": "./src/page-tools-runtime.ts"
+		},
 		"./page-storage-hub": {
 			"types": "./src/page-storage-hub.ts",
 			"default": "./src/page-storage-hub.ts"
@@ -48,6 +56,10 @@
 		"./page-storage": {
 			"types": "./src/page-storage.ts",
 			"default": "./src/page-storage.ts"
+		},
+		"./page-storage-records": {
+			"types": "./src/page-storage-records.ts",
+			"default": "./src/page-storage-records.ts"
 		},
 		"./page-presence": {
 			"types": "./src/page-presence.ts",
@@ -424,7 +436,7 @@
 		"@types/culori": "4.0.1",
 		"@types/friendly-words": "1.2.2",
 		"@types/semver": "7.7.1",
-		"@xterm/xterm": "6.1.0-beta.302",
+		"@xterm/xterm": "6.1.0-beta.315",
 		"bun-types": "1.4.2",
 		"typescript": "7.0.2"
 	}

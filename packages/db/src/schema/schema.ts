@@ -928,6 +928,8 @@ export const cloudWorkspaces = pgTable(
 			onDelete: "set null",
 		}),
 		deletedAt: timestamp("deleted_at", { withTimezone: true }),
+		/** When the box stops because its organization reached its usage limit; null otherwise. */
+		usageStopAt: timestamp("usage_stop_at", { withTimezone: true }),
 		createdByUserId: uuid("created_by_user_id").references(() => users.id, {
 			onDelete: "set null",
 		}),
@@ -996,6 +998,45 @@ export const cloudWorkspacePresence = pgTable(
 	(table) => [
 		primaryKey({ columns: [table.cloudWorkspaceId, table.userId] }),
 		index("cloud_workspace_presence_user_id_idx").on(table.userId),
+	],
+);
+
+export const cloudWorkspaceBoots = pgTable(
+	"cloud_workspace_boots",
+	{
+		id: text().primaryKey(),
+		vercelSessionId: text("vercel_session_id").unique(),
+		organizationId: uuid("organization_id").notNull(),
+		cloudWorkspaceId: uuid("cloud_workspace_id").references(
+			() => cloudWorkspaces.id,
+			{ onDelete: "set null" },
+		),
+		memoryMb: integer("memory_mb").notNull(),
+		vcpus: integer().notNull(),
+		startedAt: timestamp("started_at", { withTimezone: true }).notNull(),
+		stoppedAt: timestamp("stopped_at", { withTimezone: true }),
+		lockSeq: integer("lock_seq").notNull().default(0),
+		lockOpen: boolean("lock_open").notNull().default(true),
+		finalizedThrough: timestamp("finalized_through", { withTimezone: true }),
+		settleLeaseUntil: timestamp("settle_lease_until", { withTimezone: true }),
+		createdAt: timestamp("created_at", { withTimezone: true })
+			.notNull()
+			.defaultNow(),
+		updatedAt: timestamp("updated_at", { withTimezone: true })
+			.notNull()
+			.defaultNow()
+			.$onUpdate(() => new Date()),
+	},
+	(table) => [
+		index("cloud_workspace_boots_cloud_workspace_id_idx").on(
+			table.cloudWorkspaceId,
+		),
+		index("cloud_workspace_boots_organization_id_idx").on(table.organizationId),
+		index("cloud_workspace_boots_open_idx")
+			.on(table.startedAt)
+			.where(
+				sql`${table.stoppedAt} is null or ${table.finalizedThrough} is null or ${table.finalizedThrough} < ${table.stoppedAt}`,
+			),
 	],
 );
 
@@ -2058,6 +2099,30 @@ export const workspacePages = pgTable(
 
 export type InsertWorkspacePage = typeof workspacePages.$inferInsert;
 export type SelectWorkspacePage = typeof workspacePages.$inferSelect;
+
+export const pageToolGrants = pgTable(
+	"page_tool_grants",
+	{
+		pageId: uuid("page_id")
+			.notNull()
+			.references(() => pages.id, { onDelete: "cascade" }),
+		userId: uuid("user_id")
+			.notNull()
+			.references(() => users.id, { onDelete: "cascade" }),
+		plugin: text().notNull(),
+		connectionId: uuid("connection_id"),
+		createdAt: timestamp("created_at", { withTimezone: true })
+			.notNull()
+			.defaultNow(),
+	},
+	(table) => [
+		primaryKey({ columns: [table.pageId, table.userId, table.plugin] }),
+		index("page_tool_grants_user_id_idx").on(table.userId),
+	],
+);
+
+export type InsertPageToolGrant = typeof pageToolGrants.$inferInsert;
+export type SelectPageToolGrant = typeof pageToolGrants.$inferSelect;
 
 export const fileStatus = pgEnum("file_status", ["pending", "ready"]);
 

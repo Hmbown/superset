@@ -690,6 +690,9 @@ msgstr "{actor} odłączył(a) obszar roboczy {workspace}"
 msgid "{actual} so far · ~{projected} projected"
 msgstr "{actual} dotąd · ~{projected} prognozowane"
 
+msgid "{agents} sessions resume when you open their workspace."
+msgstr "Sesje {agents} wznowią się po otwarciu ich obszaru roboczego."
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Za main o # commit, wymaga rebase} few {Za main o # commity, wymaga rebase} many {Za main o # commitów, wymaga rebase} other {Za main o # commita, wymaga rebase}}"
 
@@ -701,6 +704,9 @@ msgstr "{closedCount, plural, one {Zamknięto # port} few {Zamknięto # porty} m
 
 msgid "{closedCount} closed"
 msgstr "{closedCount} zamkniętych"
+
+msgid "{commitCount, plural, one {# commit} other {# commits}}"
+msgstr "{commitCount, plural, one {# commit} few {# commity} many {# commitów} other {# commita}}"
 
 #. placeholder {0}: relevant.length
 msgid "{completed} of {0} checks complete"
@@ -727,6 +733,9 @@ msgstr "{count, plural, one {# kontrola nie przeszła} few {# kontrole nie przes
 msgid "{count, plural, one {# Check Needs Action} other {# Checks Need Action}}"
 msgstr "{count, plural, one {# kontrola wymaga działania} few {# kontrole wymagają działania} many {# kontroli wymaga działania} other {# kontroli wymaga działania}}"
 
+msgid "{count, plural, one {# comment, new replies} other {# comments, new replies}}"
+msgstr "{count, plural, one {# komentarz, nowe odpowiedzi} few {# komentarze, nowe odpowiedzi} many {# komentarzy, nowe odpowiedzi} other {# komentarza, nowe odpowiedzi}}"
+
 msgid "{count, plural, one {# comment} other {# comments}}"
 msgstr "{count, plural, one {# komentarz} few {# komentarze} many {# komentarzy} other {# komentarza}}"
 
@@ -741,6 +750,9 @@ msgstr "{count, plural, one {# krok} few {# kroki} many {# kroków} other {# kro
 
 msgid "{count, plural, one {# worktree in this repository has no workspace. It will be imported as a workspace.} other {# worktrees in this repository have no workspace. They will be imported as workspaces.}}"
 msgstr "{count, plural, one {# worktree w tym repozytorium nie ma obszaru roboczego. Zostanie zaimportowany jako obszar roboczy.} few {# worktree w tym repozytorium nie mają obszaru roboczego. Zostaną zaimportowane jako obszary robocze.} many {# worktree w tym repozytorium nie ma obszaru roboczego. Zostaną zaimportowane jako obszary robocze.} other {# worktree w tym repozytorium nie ma obszaru roboczego. Zostaną zaimportowane jako obszary robocze.}}"
+
+msgid "{count, plural, one {added a commit} other {added # commits}}"
+msgstr "{count, plural, one {dodał(a) commit} few {dodał(a) # commity} many {dodał(a) # commitów} other {dodał(a) # commita}}"
 
 msgid "{count, plural, one {Created # workspace} other {Created # workspaces}}"
 msgstr "{count, plural, one {Utworzono # obszar roboczy} few {Utworzono # obszary robocze} many {Utworzono # obszarów roboczych} other {Utworzono # obszaru roboczego}}"
@@ -798,6 +810,9 @@ msgstr "{count} hostów działa na starszej usłudze hosta niż ta aplikacja"
 
 msgid "{count}/day"
 msgstr "{count}/dzień"
+
+msgid "{current} of {total}"
+msgstr "{current} z {total}"
 
 msgid "{currentPage} of {totalBranches}"
 msgstr "{currentPage} z {totalBranches}"
@@ -961,6 +976,18 @@ msgstr "{noun, select, repository {Podaj co najmniej jedno repozytorium.} channe
 
 msgid "{openCount} open"
 msgstr "{openCount} otwartych"
+
+msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
+msgstr "{pageTitle} może w Twoim imieniu odczytywać i zmieniać dane na Twoim koncie {pluginLabel}, także w przyszłych wersjach tej strony. To, co odczyta, może wysłać do innych witryn. Zezwalaj tylko stronom, którym ufasz."
+
+msgid "{pageTitle} can use {pluginLabel} as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
+msgstr "{pageTitle} może w Twoim imieniu używać {pluginLabel}, także w przyszłych wersjach tej strony. To, co odczyta, może wysłać do innych witryn. Zezwalaj tylko stronom, którym ufasz."
+
+msgid "{pageTitle} uses {pluginLabel}. Install it to continue."
+msgstr "{pageTitle} używa {pluginLabel}. Zainstaluj go, aby kontynuować."
+
+msgid "{pageTitle} will use this account."
+msgstr "{pageTitle} użyje tego konta."
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} częściowo"
@@ -1211,6 +1238,9 @@ msgstr "Zalecane są <0>Nerd Fonts</0>."
 
 msgid "<0>vs</0> <1/>"
 msgstr "<0>vs</0> <1/>"
+
+msgid "~{secondsLeft}s"
+msgstr "~{secondsLeft} s"
 
 msgid "~{stars} projected this week"
 msgstr "~{stars} prognozowanych w tym tygodniu"
@@ -2018,6 +2048,9 @@ msgstr "Wszystkie w bieżącej karcie"
 msgid "All in current tab (split panes)"
 msgstr "Wszystkie w bieżącej karcie (podzielone panele)"
 
+msgid "All labels"
+msgstr "Wszystkie etykiety"
+
 msgid "All models"
 msgstr "Wszystkie modele"
 
@@ -2119,6 +2152,9 @@ msgstr "Zezwól na zdalny dostęp do tego urządzenia przez przekaźnik"
 
 msgid "Allow this action?"
 msgstr "Zezwolić na tę akcję?"
+
+msgid "Allow this page to use {pluginLabel}?"
+msgstr "Zezwolić tej stronie na używanie {pluginLabel}?"
 
 msgid "Allowed"
 msgstr "Dozwolone"
@@ -2224,6 +2260,9 @@ msgstr "Anonimowy Monter"
 
 msgid "another device"
 msgstr "inne urządzenie"
+
+msgid "Answer any questions in the terminal below, such as a password."
+msgstr "Odpowiadaj na pytania w terminalu poniżej, na przykład podaj hasło."
 
 msgid "Answer this question on desktop, or skip it."
 msgstr "Odpowiedz na to pytanie na komputerze lub je pomiń."
@@ -2580,6 +2619,9 @@ msgstr "Załączniki wymagają hosta online"
 msgid "Attempt before checks pass"
 msgstr "Spróbuj przed przejściem kontroli"
 
+msgid "Attempted changes"
+msgstr "Próby wprowadzenia zmian"
+
 msgid "Attention queue"
 msgstr "Kolejka uwagi"
 
@@ -2758,9 +2800,6 @@ msgstr "Powrót do automatyzacji"
 msgid "Back to billing"
 msgstr "Wróć do rozliczeń"
 
-msgid "Back to Blog"
-msgstr "Wróć do bloga"
-
 msgid "Back to Changelog"
 msgstr "Wróć do changeloga"
 
@@ -2887,6 +2926,9 @@ msgstr "Rozliczenia"
 
 msgid "Billing details"
 msgstr "Dane rozliczeniowe"
+
+msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "Rozliczenia uniemożliwiły uruchomienie obszaru roboczego w chmurze: organizacja potrzebuje płatnego planu albo osiągnęła limit użycia chmury. Podnieś plan lub zwiększ limit w Ustawienia > Rozliczenia albo uruchom automatyzację na urządzeniu."
 
 msgid "Binary"
 msgstr "Binarny"
@@ -3023,8 +3065,8 @@ msgstr "Wdróż {companyName} w swoim zespole. Skontaktuj się z nami, aby dowie
 msgid "Bring a link to something you built recently."
 msgstr "Podeślij link do czegoś, co niedawno zbudowałeś."
 
-msgid "Bring Any Agent."
-msgstr "Przyprowadź dowolnego agenta."
+msgid "Bring Any Agent"
+msgstr "Przyprowadź dowolnego agenta"
 
 msgid "Bring over your projects"
 msgstr "Przenieś swoje projekty"
@@ -3243,6 +3285,9 @@ msgstr "Anuluj edycję"
 msgid "Cancel plan"
 msgstr "Anuluj plan"
 
+msgid "Cancel reply"
+msgstr "Anuluj odpowiedź"
+
 msgid "Canceled"
 msgstr "Anulowane"
 
@@ -3335,6 +3380,9 @@ msgstr "Zmień logo organizacji"
 
 msgid "Change organization slug"
 msgstr "Zmień slug organizacji"
+
+msgid "Change preview"
+msgstr "Podgląd zmian"
 
 msgid "Change priority"
 msgstr "Zmień priorytet"
@@ -3512,6 +3560,9 @@ msgstr "Kontrole przeszły"
 msgid "Checks Skipped"
 msgstr "Kontrole pominięte"
 
+msgid "Choose a {pluginLabel} account"
+msgstr "Wybierz konto {pluginLabel}"
+
 msgid "Choose a fighter"
 msgstr "Wybierz wojownika"
 
@@ -3686,6 +3737,12 @@ msgstr "Kliknij tutaj, jeśli przekierowanie nie nastąpi"
 msgid "Click the “↑ update” pill to see the pre-update confirm"
 msgstr "Kliknij „↑ update”, aby zobaczyć potwierdzenie przed aktualizacją"
 
+msgid "Click the chip to open the issue"
+msgstr "Kliknij chip, aby otworzyć zgłoszenie"
+
+msgid "Click the chip to open the pull request"
+msgstr "Kliknij chip, aby otworzyć pull request"
+
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Kliknij, aby skopiować ID sesji (wznów przez `claude --resume <id>`)."
 
@@ -3725,6 +3782,9 @@ msgstr "Klonowanie…"
 
 msgid "Close"
 msgstr "Zamknij"
+
+msgid "Close (Esc)"
+msgstr "Zamknij (Esc)"
 
 #. placeholder {0}: row.title
 msgid "Close {0}"
@@ -3859,6 +3919,10 @@ msgstr "Zamknij obszar roboczy"
 msgid "Closed"
 msgstr "Zamknięty"
 
+msgctxt "pull request or issue state"
+msgid "Closed"
+msgstr "Zamknięte"
+
 msgid "Closing these ports will end the processes using them."
 msgstr "Zamknięcie tych portów zakończy procesy, które ich używają."
 
@@ -3892,6 +3956,9 @@ msgstr "Chmurowe obszary robocze"
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Chmurowe przestrzenie robocze ignorują tę zmienną. Agenci logują się zamiast tego w Ustawienia › Agenci."
+
+msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
+msgstr "Obszary robocze w chmurze wymagają płatnego planu. Podnieś plan w Ustawienia, Rozliczenia, aby uruchomić obszar roboczy."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Workspace'y w chmurze przestaną uruchamiać {agentLabel} z tymi danymi."
@@ -4152,6 +4219,9 @@ msgstr "Połącz"
 msgid "Connect {name}"
 msgstr "Połącz {name}"
 
+msgid "Connect {pluginLabel}"
+msgstr "Połącz {pluginLabel}"
+
 msgid "Connect a device"
 msgstr "Podłącz urządzenie"
 
@@ -4214,6 +4284,9 @@ msgstr "Podłącz Slack, aby zarządzać zadaniami z rozmów. Wspomnij bota na d
 
 msgid "Connect this computer"
 msgstr "Połącz ten komputer"
+
+msgid "Connect your {pluginLabel} account, then reload this page."
+msgstr "Połącz swoje konto {pluginLabel}, a następnie odśwież tę stronę."
 
 msgid "Connect your coding agents to the apps your team already uses."
 msgstr "Połącz swoich agentów kodujących z aplikacjami, z których Twój zespół już korzysta."
@@ -4856,9 +4929,6 @@ msgstr "Nie udało się zatrzymać"
 
 msgid "Could not stop the agent"
 msgstr "Nie udało się zatrzymać agenta"
-
-msgid "Could not stop the task"
-msgstr "Nie udało się zatrzymać zadania"
 
 msgid "Could not stop watching"
 msgstr "Nie udało się przestać obserwować"
@@ -5878,6 +5948,9 @@ msgstr "Odłączona"
 msgid "Details"
 msgstr "Szczegóły"
 
+msgid "Details are not available here, but the link still opens."
+msgstr "Szczegóły nie są tu dostępne, ale link nadal się otwiera."
+
 msgid "Dev"
 msgstr "Dev"
 
@@ -6074,6 +6147,9 @@ msgstr "Ukryj sugestie"
 msgid "Dismissed"
 msgstr "Odrzucony"
 
+msgid "dismissed their review"
+msgstr "odrzucił(a) swoją recenzję"
+
 msgid "Display"
 msgstr "Wyświetlanie"
 
@@ -6111,6 +6187,9 @@ msgstr "Dokumentacja"
 
 msgid "Documentation"
 msgstr "Dokumentacja"
+
+msgid "Don't allow"
+msgstr "Nie zezwalaj"
 
 msgid "Don't ask again"
 msgstr "Nie pytaj ponownie"
@@ -6197,6 +6276,10 @@ msgstr "Pobieranie..."
 msgid "Downloads"
 msgstr "Pobrane"
 
+msgid "Draft"
+msgstr "Szkic"
+
+msgctxt "pull request state"
 msgid "Draft"
 msgstr "Szkic"
 
@@ -7659,9 +7742,6 @@ msgstr "Darmowy"
 msgid "Free for everyone"
 msgstr "Za darmo dla wszystkich"
 
-msgid "Free to start · No credit card required"
-msgstr "Zacznij za darmo · Karta kredytowa nie jest wymagana"
-
 msgid "Frequently<0/>asked questions"
 msgstr "Często<0/>zadawane pytania"
 
@@ -8580,6 +8660,9 @@ msgstr "Inspekcja {0}"
 msgid "Install"
 msgstr "Zainstaluj"
 
+msgid "Install {pluginLabel}?"
+msgstr "Zainstalować {pluginLabel}?"
+
 msgid "Install & restart"
 msgstr "Zainstaluj i uruchom ponownie"
 
@@ -8634,6 +8717,9 @@ msgstr "Zainstalowano przez"
 
 msgid "Installing..."
 msgstr "Instalowanie..."
+
+msgid "Installs Superset on a machine you can reach with ssh, signs Superset in to your account, and keeps it running as a service."
+msgstr "Instaluje Superset na maszynie dostępnej przez ssh, loguje Superset na Twoje konto i utrzymuje Superset uruchomiony jako usługę."
 
 msgid "Instructions"
 msgstr "Instrukcje"
@@ -8763,6 +8849,13 @@ msgstr "Czy jest plan darmowy?"
 
 msgid "Isolation"
 msgstr "Izolacja"
+
+msgid "Issue"
+msgstr "Zgłoszenie"
+
+#. placeholder {0}: link.number
+msgid "Issue #{0}"
+msgstr "Zgłoszenie #{0}"
 
 msgid "Issue archived"
 msgstr "Zgłoszenie zarchiwizowane"
@@ -8968,6 +9061,10 @@ msgstr "Uporaj się z kilkoma TODO"
 msgid "Knowledge"
 msgstr "Wiedza"
 
+msgid "Label"
+msgstr "Etykieta"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "Etykieta"
 
@@ -9392,6 +9489,9 @@ msgstr "Wczytywanie plików..."
 msgid "Loading fonts..."
 msgstr "Wczytywanie czcionek..."
 
+msgid "Loading GitHub details"
+msgstr "Wczytywanie szczegółów z GitHub"
+
 msgid "Loading groups…"
 msgstr "Wczytywanie grup…"
 
@@ -9807,6 +9907,10 @@ msgstr "Stan scalania nieznany"
 
 msgid "Merged"
 msgstr "Scalony"
+
+msgctxt "pull request state"
+msgid "Merged"
+msgstr "Scalone"
 
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
@@ -10301,6 +10405,9 @@ msgstr "Nowości, aktualizacje i spostrzeżenia zespołu Superset na temat równ
 msgid "Next"
 msgstr "Dalej"
 
+msgid "Next (Enter)"
+msgstr "Dalej (Enter)"
+
 msgid "Next branch"
 msgstr "Następna gałąź"
 
@@ -10601,6 +10708,9 @@ msgstr "Brak znanych twórców"
 msgid "No labels"
 msgstr "Brak etykiet"
 
+msgid "No labels found."
+msgstr "Nie znaleziono etykiet."
+
 msgid "No lead"
 msgstr "Bez lidera"
 
@@ -10781,9 +10891,6 @@ msgstr "Brak wyników dla „{query}”"
 
 msgid "No results found."
 msgstr "Nie znaleziono wyników."
-
-msgid "No review body."
-msgstr "Brak treści recenzji."
 
 msgid "No Reviewers Assigned"
 msgstr "Nie przypisano recenzentów"
@@ -11303,6 +11410,10 @@ msgstr "otwórz"
 msgid "Open"
 msgstr "Otwórz"
 
+msgctxt "pull request or issue state"
+msgid "Open"
+msgstr "Otwarte"
+
 msgctxt "status"
 msgid "Open"
 msgstr "Otwarty"
@@ -11350,6 +11461,9 @@ msgstr "Otwórz App Store"
 
 msgid "Open as comment pane"
 msgstr "Otwórz jako panel komentarzy"
+
+msgid "Open billing"
+msgstr "Otwórz rozliczenia"
 
 msgid "Open branch on GitHub"
 msgstr "Otwórz gałąź na GitHub"
@@ -11413,6 +11527,9 @@ msgstr "Otwórz z folderu"
 
 msgid "Open full screen"
 msgstr "Otwórz na pełnym ekranie"
+
+msgid "Open host"
+msgstr "Otwórz host"
 
 msgid "Open importer"
 msgstr "Otwórz importer"
@@ -11768,8 +11885,8 @@ msgstr "Pomarańczowy"
 msgid "Orchestrate Parallel Agents"
 msgstr "Orkiestruj równoległych agentów"
 
-msgid "Orchestrate Them All."
-msgstr "Zarządzaj nimi wszystkimi."
+msgid "Orchestrate Them All"
+msgstr "Zarządzaj nimi wszystkimi"
 
 msgid "Orchestrated"
 msgstr "Zorkiestrowany"
@@ -12240,6 +12357,9 @@ msgstr "Przypięte"
 msgid "PK"
 msgstr "PK"
 
+msgid "Plain text"
+msgstr "Zwykły tekst"
+
 msgid "Plan"
 msgstr "Plan"
 
@@ -12249,6 +12369,9 @@ msgstr "Plan"
 
 msgid "Plan restored"
 msgstr "Plan przywrócony"
+
+msgid "Plan updated"
+msgstr "Plan zaktualizowany"
 
 msgctxt "project state"
 msgid "Planned"
@@ -12356,8 +12479,15 @@ msgstr "Opublikuj"
 msgid "Post comment"
 msgstr "Opublikuj komentarz"
 
+msgid "Post reply"
+msgstr "Opublikuj odpowiedź"
+
 msgid "PR"
 msgstr "PR"
+
+#. placeholder {0}: link.number
+msgid "PR #{0}"
+msgstr "PR #{0}"
 
 #. placeholder {0}: pullRequest.number
 #. placeholder {1}: i18n._(PR_STATE_LABEL[pullRequest.state])
@@ -12478,6 +12608,9 @@ msgstr "Podgląd: przypomnienie o gwiazdce na GitHub"
 
 msgid "Previous"
 msgstr "Wstecz"
+
+msgid "Previous (Shift+Enter)"
+msgstr "Wstecz (Shift+Enter)"
 
 msgid "Previous branch"
 msgstr "Poprzednia gałąź"
@@ -12836,6 +12969,9 @@ msgstr "Kolejkuj pracę dla agentów"
 
 msgid "Queued"
 msgstr "W kolejce"
+
+msgid "Queued messages"
+msgstr "Wiadomości w kolejce"
 
 msgid "Queued to Merge"
 msgstr "W kolejce do scalenia"
@@ -13403,6 +13539,9 @@ msgstr "Odpowiedz"
 
 msgid "Reply to thread…"
 msgstr "Odpowiedz w wątku…"
+
+msgid "Replying to {replyingTo}"
+msgstr "Odpowiedź dla {replyingTo}"
 
 msgid "repo"
 msgstr "repo"
@@ -14024,17 +14163,11 @@ msgstr "Działający agenci na tym profilu stracą dostęp."
 msgid "Running bun test…"
 msgstr "Uruchamianie bun test…"
 
-msgid "Running in the background"
-msgstr "Działa w tle"
-
 msgid "Running now"
 msgstr "Uruchamianie teraz"
 
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Działające procesy terminala nie zostaną przerwane, ale starsze wyjście może być niedostępne po ponownym uruchomieniu aplikacji."
-
-msgid "Running terminals from v1 did not carry over. Each v1 workspace now has new terminals that open in the same folders."
-msgstr "Działające terminale z v1 nie zostały przeniesione. Każdy obszar roboczy v1 ma teraz nowe terminale, które otwierają się w tych samych folderach."
 
 msgid "Runs a local command on your machine"
 msgstr "Uruchamia lokalne polecenie na Twojej maszynie"
@@ -14296,6 +14429,9 @@ msgstr "Szukaj w {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Szukaj zgłoszeń..."
+
+msgid "Search labels..."
+msgstr "Szukaj etykiet..."
 
 msgid "Search Linear"
 msgstr "Szukaj w Linear"
@@ -14636,6 +14772,9 @@ msgstr "Wysyłanie naciśnięć klawiszy, zarządzanie oknami i sterowanie innym
 msgid "Send message"
 msgstr "Wyślij wiadomość"
 
+msgid "Send now"
+msgstr "Wyślij teraz"
+
 msgid "Send reply"
 msgstr "Wyślij odpowiedź"
 
@@ -14764,6 +14903,9 @@ msgstr "Skonfiguruj"
 msgid "Set up {0}"
 msgstr "Skonfiguruj {0}"
 
+msgid "Set up a host over SSH"
+msgstr "Skonfiguruj host przez SSH"
+
 msgid "Set up an automation"
 msgstr "Skonfiguruj automatyzację"
 
@@ -14808,6 +14950,9 @@ msgstr "Konfiguracja"
 
 msgid "Setup script"
 msgstr "Skrypt konfiguracyjny"
+
+msgid "Setup stopped. The reason is in the output below."
+msgstr "Konfiguracja została przerwana. Przyczyna jest w danych wyjściowych poniżej."
 
 msgid "Sexual content"
 msgstr "Treści seksualne"
@@ -15462,6 +15607,9 @@ msgstr "Squash i scal"
 msgid "SS"
 msgstr "SS"
 
+msgid "SSH destination"
+msgstr "Cel SSH"
+
 msgid "SSO/SAML"
 msgstr "SSO/SAML"
 
@@ -15684,6 +15832,9 @@ msgstr "Host nadal jest nieosiągalny."
 msgid "Still trying. If it keeps failing, archive it and create a new one."
 msgstr "Wciąż próbujemy. Jeśli nadal się nie uda, zarchiwizuj go i utwórz nowy."
 
+msgid "Still waking up…"
+msgstr "Nadal trwa wybudzanie…"
+
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "Wciąż trwa — duże repozytoria mogą zająć kilka minut. Możesz wyjść; obszar roboczy pojawi się na ekranie głównym, gdy będzie gotowy."
 
@@ -15730,6 +15881,9 @@ msgstr "Zatrzymano"
 
 msgid "Stopping the agent in {what}"
 msgstr "Zatrzymywanie agenta w {what}"
+
+msgid "Stops the agent and sends this now"
+msgstr "Zatrzymuje agenta i wysyła to teraz"
 
 msgid "Strikethrough"
 msgstr "Przekreślenie"
@@ -15827,8 +15981,8 @@ msgstr "superset"
 msgid "Superset"
 msgstr "Superset"
 
-msgid "Superset (YC S26) is the open-source IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
-msgstr "Superset (YC S26) to otwartoźródłowe IDE na erę agentów AI, w którym inżynierowie uruchamiają równolegle setki agentów programistycznych, takich jak Claude Code i Codex."
+msgid "Superset (YC S26) is the source-available IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
+msgstr "Superset (YC S26) to IDE z publicznie dostępnym kodem źródłowym na erę agentów AI, w którym inżynierowie uruchamiają równolegle setki agentów programistycznych, takich jak Claude Code i Codex."
 
 msgid "Superset Agent"
 msgstr "Superset Agent"
@@ -15920,6 +16074,9 @@ msgstr "Superset powstaje w Superset, więc sami jesteśmy jego głównymi użyt
 msgid "Superset is designed to work with your existing tool, we natively support deep-linking to IDEs like Cursor so you can open your workspaces and files in your IDE."
 msgstr "Superset jest zaprojektowany tak, aby działać z narzędziem, którego już używasz — natywnie obsługujemy głębokie linki do IDE takich jak Cursor, więc otworzysz swoje obszary robocze i pliki we własnym IDE."
 
+msgid "Superset is getting a new name soon"
+msgstr "Superset wkrótce zmieni nazwę"
+
 msgid "Superset is open source. If it's helped you today, a GitHub star helps other developers find it."
 msgstr "Superset jest open source. Jeśli pomógł Ci dzisiaj, gwiazdka na GitHub pomoże innym programistom go znaleźć."
 
@@ -15955,9 +16112,6 @@ msgstr "Diff kodu w Superset Mobile na iPhonie"
 
 msgid "Superset mobile gives me the power of my desktop anywhere I go."
 msgstr "Superset mobile daje mi moc mojego komputera, gdziekolwiek jestem."
-
-msgid "Superset Mobile is here"
-msgstr "Superset Mobile już jest"
 
 msgid "Superset Mobile is part of Pro"
 msgstr "Superset Mobile jest częścią planu Pro"
@@ -16009,9 +16163,6 @@ msgstr "Superset umieszcza umiejętności i narzędzia wtyczek tam, gdzie szukaj
 
 msgid "Superset raised an $11.5M seed round led by Union Square Ventures, with Y Combinator and Paul Graham. TechCrunch named it one of the standout startups from YC Demo Day."
 msgstr "Superset pozyskał 11,5 mln USD w rundzie seed prowadzonej przez Union Square Ventures, z udziałem Y Combinator i Paula Grahama. TechCrunch wymienił go wśród wyróżniających się startupów YC Demo Day."
-
-msgid "Superset resumes the agent sessions it recorded ({agents}) when you open their workspace."
-msgstr "Superset wznowi zapisane sesje agentów ({agents}), gdy otworzysz ich obszar roboczy."
 
 msgid "Superset runs locally on your developers' machines. We don't store your code or AI conversations, and Superset has completed a SOC 2 Type II audit with an independent auditor. Request the report and review our security documentation at trust.superset.sh."
 msgstr "Superset działa lokalnie na maszynach Twoich programistów. Nie przechowujemy Twojego kodu ani rozmów z AI, a Superset przeszedł audyt SOC 2 Type II u niezależnego audytora. Poproś o raport i zapoznaj się z dokumentacją bezpieczeństwa na trust.superset.sh."
@@ -16619,6 +16770,9 @@ msgstr "Host nie wrócił do działania w ciągu piętnastu minut."
 msgid "The host hasn't answered."
 msgstr "Host nie odpowiedział."
 
+msgid "The host is online. Pick it when you create a workspace."
+msgstr "Host jest online. Wybierz go podczas tworzenia obszaru roboczego."
+
 msgid "The host isn't connected to the Superset relay. If it's this device, turn on \"Allow remote access to this device via relay\" in Settings > Remote Access, then try again."
 msgstr "Host nie jest połączony z przekaźnikiem Superset. Jeśli chodzi o to urządzenie, włącz „Zezwól na zdalny dostęp do tego urządzenia przez przekaźnik” w Ustawienia > Dostęp zdalny i spróbuj ponownie."
 
@@ -16913,6 +17067,9 @@ msgstr "Spowoduje to zamknięcie wybranych obszarów roboczych i ich terminali. 
 msgid "This closes the workspace and its terminals. The project's files, branches and other workspaces stay as they are."
 msgstr "Spowoduje to zamknięcie obszaru roboczego i jego terminali. Pliki, gałęzie i pozostałe obszary robocze projektu pozostaną bez zmian."
 
+msgid "This cloud workspace can't start"
+msgstr "Nie można uruchomić tego obszaru roboczego w chmurze"
+
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "Ten obszar roboczy w chmurze jest wybudzany. Po okresie bezczynności może to potrwać do 30 sekund."
 
@@ -17126,6 +17283,9 @@ msgstr "Ten wątek nie ma komentarza, na który można odpowiedzieć."
 msgid "This thread is not open to agents. A person has to comment on it before an agent can reply."
 msgstr "Ten wątek nie został przekazany agentowi. Ktoś musi go najpierw przekazać ze strony."
 
+msgid "This update restarted your terminals once. New ones open in the same folders."
+msgstr "Ta aktualizacja jednorazowo uruchomiła ponownie Twoje terminale. Nowe otwierają się w tych samych folderach."
+
 msgid "This user runs the host service for this device and can't be removed."
 msgstr "Ten użytkownik uruchamia usługę hosta dla tego urządzenia i nie można go usunąć."
 
@@ -17235,11 +17395,11 @@ msgstr "Tytuł"
 msgid "To"
 msgstr "Do"
 
-msgid "To get back a different agent conversation, run this in a terminal in its folder:"
-msgstr "Aby odzyskać inną rozmowę z agentem, uruchom to w terminalu w jej folderze:"
+msgid "To resume an agent conversation, run this in its folder:"
+msgstr "Aby wznowić rozmowę z agentem, uruchom to w jej folderze:"
 
-msgid "To get back an agent conversation, run this in a terminal in its folder:"
-msgstr "Aby odzyskać rozmowę z agentem, uruchom to w terminalu w jej folderze:"
+msgid "To resume another agent conversation, run this in its folder:"
+msgstr "Aby wznowić inną rozmowę z agentem, uruchom to w jej folderze:"
 
 msgid "Toast (Sonner)"
 msgstr "Toast (Sonner)"
@@ -17853,6 +18013,10 @@ msgstr "zaktualizować prefiksu gałęzi"
 msgid "Updated"
 msgstr "Zaktualizowano"
 
+#. placeholder {0}: formatRelativeTime(new Date(item.updatedAt))
+msgid "Updated {0}"
+msgstr "Zaktualizowano {0}"
+
 msgid "Updated {date}"
 msgstr "Zaktualizowano {date}"
 
@@ -17975,6 +18139,9 @@ msgstr "Użyj aplikacji desktopowej, aby uruchamiać równoległych agentów kod
 msgid "Use the Superset tray menu > Host Service > Restart, then retry."
 msgstr "Użyj menu zasobnika Superset > Usługa hosta > Uruchom ponownie, a następnie ponów."
 
+msgid "Use this account"
+msgstr "Użyj tego konta"
+
 msgid "Use this folder"
 msgstr "Użyj tego folderu"
 
@@ -18025,6 +18192,9 @@ msgstr "Nie znaleziono użytkownika"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "user@host, ssh://user@host:2222, or an ssh config alias"
+msgstr "użytkownik@host, ssh://użytkownik@host:2222 lub alias z konfiguracji ssh"
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "Losowa nazwa gałęzi (przekroczono czas generowania AI)"
@@ -18210,6 +18380,9 @@ msgstr "Oczekiwanie na pierwszą wiadomość subagenta…"
 
 msgid "Waiting for your input"
 msgstr "Czeka na Twoją odpowiedź"
+
+msgid "Waking up workspace"
+msgstr "Wybudzanie obszaru roboczego"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Chcesz coś szybciej? <0>Napisz na Discordzie</0>. Wiele z tego, co tu jest, zaczęło się od prośby użytkownika."
@@ -18705,6 +18878,9 @@ msgstr "Worktree są usuwane z dysku; obszary robocze na checkoucie projektu są
 msgid "Would you like to reassign it?"
 msgstr "Czy przypisać ponownie?"
 
+msgid "Wrap lines"
+msgstr "Zawijaj wiersze"
+
 msgid "Write a comment"
 msgstr "Napisz komentarz"
 
@@ -18716,6 +18892,9 @@ msgstr "Napisz notatkę i wybierz agenta. Notatka dotrze razem z kodem elementu 
 
 msgid "Write a prompt and pick a schedule. Each run opens a workspace you can review and continue."
 msgstr "Napisz prompt i wybierz harmonogram. Każde uruchomienie otwiera obszar roboczy, który możesz przejrzeć i kontynuować."
+
+msgid "Write a reply"
+msgstr "Napisz odpowiedź"
 
 msgid "Write a reply…"
 msgstr "Napisz odpowiedź…"
@@ -18957,6 +19136,12 @@ msgstr "Twoje imię"
 
 msgid "Your name <0>(if we use your prompt, we'll credit you in the changelog)</0>"
 msgstr "Twoje imię <0>(jeśli użyjemy Twojego promptu, wymienimy Cię w changelogu)</0>"
+
+msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
+msgstr "Twoja organizacja osiągnęła limit użycia chmury. Zwiększ limit lub podnieś plan w Ustawienia, Rozliczenia, aby uruchomić ten obszar roboczy."
+
+msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
+msgstr "Twoja organizacja osiągnęła limit użycia chmury. Ten obszar roboczy zatrzyma się za kilka minut, jeśli limit nie zostanie zwiększony."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Twoje własne konta. Integracje twojej organizacji dają Supersetowi dostęp do jej narzędzi; po połączeniu twoich kont praca, którą Superset wykonuje dla ciebie, pojawia się pod twoim nazwiskiem."

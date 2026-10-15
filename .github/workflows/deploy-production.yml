@@ -180,6 +180,9 @@ jobs:
           VERCEL_SANDBOX_TOKEN: ${{ secrets.VERCEL_SANDBOX_TOKEN }}
           VERCEL_SANDBOX_TEAM_ID: ${{ secrets.VERCEL_SANDBOX_TEAM_ID }}
           VERCEL_SANDBOX_PROJECT_ID: ${{ secrets.VERCEL_SANDBOX_PROJECT_ID }}
+          AUTUMN_SECRET_KEY: ${{ secrets.AUTUMN_SECRET_KEY }}
+          AUTUMN_WEBHOOK_SECRET: ${{ secrets.AUTUMN_WEBHOOK_SECRET }}
+          BILLING_PROVIDER: ${{ secrets.BILLING_PROVIDER }}
           SANDBOX_GATE_SECRET: ${{ secrets.SANDBOX_GATE_SECRET }}
           SANDBOX_GATE_ORIGIN: ${{ secrets.SANDBOX_GATE_ORIGIN }}
           SENTRY_DSN_SANDBOX: ${{ secrets.SENTRY_DSN_SANDBOX }}
@@ -265,6 +268,9 @@ jobs:
             --env VERCEL_SANDBOX_TOKEN=$VERCEL_SANDBOX_TOKEN \
             --env VERCEL_SANDBOX_TEAM_ID=$VERCEL_SANDBOX_TEAM_ID \
             --env VERCEL_SANDBOX_PROJECT_ID=$VERCEL_SANDBOX_PROJECT_ID \
+            --env AUTUMN_SECRET_KEY=$AUTUMN_SECRET_KEY \
+            --env AUTUMN_WEBHOOK_SECRET=$AUTUMN_WEBHOOK_SECRET \
+            --env BILLING_PROVIDER=$BILLING_PROVIDER \
             --env SANDBOX_GATE_SECRET=$SANDBOX_GATE_SECRET \
             --env SANDBOX_GATE_ORIGIN=$SANDBOX_GATE_ORIGIN \
             --env SENTRY_DSN_SANDBOX=$SENTRY_DSN_SANDBOX \
@@ -558,6 +564,7 @@ jobs:
               - 'packages/shared/src/page-storage.ts'
               - 'packages/shared/src/page-storage-hub.ts'
               - 'packages/shared/src/page-storage-access.ts'
+              - 'packages/shared/src/page-storage-records.ts'
               - 'packages/shared/src/page-presence.ts'
               - 'packages/shared/src/usercontent/**'
               - '!packages/shared/src/usercontent/**/*.test.ts'
@@ -604,11 +611,19 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: bunx wrangler deploy
 
+  # The storage runtime served here needs the realtime hub from the same
+  # commit: never deploy it over a failed realtime deploy.
   deploy-content:
     name: Deploy Usercontent Worker to Cloudflare
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: production
+    needs: deploy-realtime
+    if: >-
+      !cancelled() && (
+        needs.deploy-realtime.result == 'success'
+        || needs.deploy-realtime.result == 'skipped'
+      )
 
     steps:
       - name: Checkout repository

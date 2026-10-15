@@ -22,11 +22,11 @@ import { devtools, persist } from "zustand/middleware";
  *   2. The mode select in `ExperimentalSettings` and its `settings-search`
  *      entry (`EXPERIMENTAL_INLINE_WORKSPACE_PORTS`).
  *   3. The mode branches in `DashboardSidebarExpandedWorkspaceRow` (the inline
- *      ports button), `TopBar`, and the v2 workspace page's tab-bar trailing
+ *      ports chip), `TopBar`, and the v2 workspace page's tab-bar trailing
  *      slot (`PortsDropdown`), plus the ports-provider gating in the
  *      dashboard layout.
  *   4. The components belonging to the losing layout:
- *      - inline: `DashboardSidebarWorkspacePortsButton` (under
+ *      - inline: `DashboardSidebarPortsChip` (under
  *        `DashboardSidebarExpandedWorkspaceRow`).
  *      - topbar: `PortsDropdown`.
  *

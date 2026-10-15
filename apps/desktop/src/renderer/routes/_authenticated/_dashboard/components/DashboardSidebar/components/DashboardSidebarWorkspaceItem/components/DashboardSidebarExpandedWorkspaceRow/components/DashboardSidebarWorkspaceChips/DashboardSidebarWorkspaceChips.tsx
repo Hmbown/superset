@@ -24,9 +24,8 @@ function stopChipDragStart(event: SyntheticEvent<HTMLDivElement>) {
 }
 
 /**
- * Activity line beneath a workspace row, left-aligned with the title: the
- * running-agents chip. It appears only when more than one
- * agent is running — a lone agent is the norm for a workspace and showing it
+ * Activity line beneath a workspace row, left-aligned with the title, for
+ * the agents chip. It appears only when more than one agent is running — a lone agent is the norm for a workspace and showing it
  * adds no signal.
  */
 export function DashboardSidebarWorkspaceChips({

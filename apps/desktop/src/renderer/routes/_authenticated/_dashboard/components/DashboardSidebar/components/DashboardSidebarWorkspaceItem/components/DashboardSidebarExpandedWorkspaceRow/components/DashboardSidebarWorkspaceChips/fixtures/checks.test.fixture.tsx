@@ -57,20 +57,18 @@ for (const eventType of ["mouseDown", "touchStart"] as const) {
 		expect(dragStart).not.toHaveBeenCalled();
 	});
 
-	for (const label of ["Agents"]) {
-		test(`${eventType} on ${label} content does not start dragging`, () => {
-			const { getByText, dragStart } = setup();
-			fireEvent[eventType](getByText(label));
-			expect(dragStart).not.toHaveBeenCalled();
-		});
-		test(`${eventType} on ${label} button does not start dragging`, () => {
-			const { getByText, dragStart } = setup();
-			fireEvent[eventType](
-				getByText(label).closest("button") as HTMLButtonElement,
-			);
-			expect(dragStart).not.toHaveBeenCalled();
-		});
-	}
+	test(`${eventType} on pill content does not start dragging`, () => {
+		const { getByText, dragStart } = setup();
+		fireEvent[eventType](getByText("Agents"));
+		expect(dragStart).not.toHaveBeenCalled();
+	});
+	test(`${eventType} on a pill button does not start dragging`, () => {
+		const { getByText, dragStart } = setup();
+		fireEvent[eventType](
+			getByText("Agents").closest("button") as HTMLButtonElement,
+		);
+		expect(dragStart).not.toHaveBeenCalled();
+	});
 }
 
 test("empty space still selects the workspace", () => {

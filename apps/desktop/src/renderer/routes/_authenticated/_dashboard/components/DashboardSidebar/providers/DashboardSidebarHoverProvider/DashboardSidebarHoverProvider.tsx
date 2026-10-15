@@ -12,11 +12,13 @@ import type { DashboardSidebarWorkspace } from "../../types";
 import {
 	isPointInsideCardCone,
 	type Point,
-	trackSafeTriangle,
-} from "../../utils/safeTriangle";
+} from "../../utils/isPointInsideCardCone";
 
 const OPEN_DELAY_MS = 400;
 const CLOSE_DELAY_MS = 100;
+// Cap how long we'll tolerate the pointer drifting inside the safe triangle
+// before giving up and closing anyway, in case it stalls mid-gap.
+const SAFE_TRIANGLE_MAX_TRACK_MS = 1000;
 // How long a row suppressed by another row's safe triangle waits before
 // opening anyway. Covers the case where the pointer settles on this row
 // instead of continuing on to the original card — without this, a
@@ -26,8 +28,7 @@ const SUPPRESSED_OPEN_DWELL_MS = 150;
 
 export interface DashboardSidebarHoverPayload {
 	workspace: DashboardSidebarWorkspace;
-	/** Absent when the branch can't be renamed from here (a cloud workspace). */
-	onEditBranchClick?: (branchName: string) => void;
+	onEditBranchClick: (branchName: string) => void;
 }
 
 interface HoverState {
@@ -310,11 +311,21 @@ export function DashboardSidebarHoverProvider({
 			// isPointInsideCardCone), not captured once here.
 			stopSafeTriangleTracking();
 			activeTriangleRef.current = { apex: leavePoint, forId: id };
-			triangleCleanupRef.current = trackSafeTriangle({
-				apex: leavePoint,
-				getCardElement: () => cardElementRef.current,
-				onAbandon: abandonCone,
-			});
+			const handlePointerMove = (event: MouseEvent) => {
+				const point = { x: event.clientX, y: event.clientY };
+				if (isPointInsideCardCone(point, leavePoint, cardElementRef.current)) {
+					return;
+				}
+				abandonCone();
+			};
+			document.addEventListener("mousemove", handlePointerMove);
+			// Backstop: if the pointer stops moving entirely (or events just don't
+			// arrive) while still "inside" the cone, don't stay open forever.
+			const deadlineTimer = setTimeout(abandonCone, SAFE_TRIANGLE_MAX_TRACK_MS);
+			triangleCleanupRef.current = () => {
+				document.removeEventListener("mousemove", handlePointerMove);
+				clearTimeout(deadlineTimer);
+			};
 		},
 		[
 			abandonCone,

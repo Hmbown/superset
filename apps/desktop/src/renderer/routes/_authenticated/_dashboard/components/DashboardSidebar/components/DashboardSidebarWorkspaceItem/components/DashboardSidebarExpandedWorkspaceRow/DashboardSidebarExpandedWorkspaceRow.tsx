@@ -19,6 +19,7 @@ import { WorkspaceNameMarquee } from "renderer/components/WorkspaceNameMarquee";
 import { useFocusVisible } from "renderer/hooks/useFocusVisible";
 import { HotkeyLabel } from "renderer/hotkeys";
 import { pullRequestRefFromUrl } from "renderer/lib/github/pullRequestRef";
+import { useDashboardSidebarWorkspacePorts } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/providers/DashboardSidebarPortsProvider";
 import { navigateToV2Workspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import { ProjectThumbnail } from "renderer/routes/_authenticated/components/ProjectThumbnail";
 import { getStatusTooltip } from "renderer/screens/main/components/StatusIndicator";
@@ -26,17 +27,17 @@ import { RenameInput } from "renderer/screens/main/components/WorkspaceSidebar/R
 import { useInlineWorkspacePortsEnabled } from "renderer/stores/inline-workspace-ports";
 import { usePullRequestPaneIntent } from "renderer/stores/pull-request-pane-intent";
 import type { ActivePaneStatus } from "shared/tabs-types";
-import { useDashboardSidebarWorkspacePorts } from "../../../../providers/DashboardSidebarPortsProvider";
 import type {
 	DashboardSidebarWorkspace,
 	DashboardSidebarWorkspaceIndentation,
 	DashboardSidebarWorkspacePullRequest,
 } from "../../../../types";
 import { DashboardSidebarWorkspaceQueuedBadge } from "../DashboardSidebarWorkspaceQueuedBadge";
+import { DashboardSidebarPortsChip } from "./components/DashboardSidebarPortsChip";
+import { DashboardSidebarRowEventBoundary } from "./components/DashboardSidebarRowEventBoundary";
 import { DashboardSidebarWorkspaceChips } from "./components/DashboardSidebarWorkspaceChips";
 import { DashboardSidebarWorkspaceHostGlyph } from "./components/DashboardSidebarWorkspaceHostGlyph";
 import { DashboardSidebarWorkspaceLeadIndicator } from "./components/DashboardSidebarWorkspaceLeadIndicator";
-import { DashboardSidebarWorkspacePortsButton } from "./components/DashboardSidebarWorkspacePortsButton";
 
 const PR_STATE_LABEL: Record<
 	DashboardSidebarWorkspacePullRequest["state"],
@@ -158,7 +159,8 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 		const showsPullRequest = !isPending && pullRequest !== null;
 		const inlinePortsEnabled = useInlineWorkspacePortsEnabled();
 		const portGroup = useDashboardSidebarWorkspacePorts(workspace.id);
-		const ports = inlinePortsEnabled ? (portGroup?.ports ?? []) : [];
+		const ports =
+			inlinePortsEnabled && !isPending ? (portGroup?.ports ?? []) : [];
 		const sandboxStatus = workspace.sandboxStatus;
 		const sandboxLabel =
 			sandboxStatus === "failed"
@@ -378,9 +380,6 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 									workspaceId={workspace.id}
 								/>
 							)}
-							{ports.length > 0 && (
-								<DashboardSidebarWorkspacePortsButton ports={ports} />
-							)}
 							<div className="grid items-center justify-items-end [&>*]:col-start-1 [&>*]:row-start-1">
 								<span
 									className={cn(
@@ -439,6 +438,11 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 									</div>
 								)}
 							</div>
+							{ports.length > 0 && (
+								<DashboardSidebarRowEventBoundary>
+									<DashboardSidebarPortsChip ports={ports} />
+								</DashboardSidebarRowEventBoundary>
+							)}
 						</div>
 					</div>
 				</div>
