@@ -24,6 +24,7 @@ import { isDurableEnvelope, isResetEnvelope } from "../../protocol/envelope";
 import type { Decision, UserContent, UserMessage } from "../../protocol/items";
 
 import { newerThan } from "./utils/newerThan";
+import { cachedSnapshot, cacheSnapshot } from "./utils/snapshotCache";
 
 export type FrameScheduler = (flush: () => void) => () => void;
 
@@ -74,6 +75,37 @@ async function fetchSeed(
 		envelopes: page.envelopes,
 		nextBefore: page.nextBefore,
 	};
+}
+
+type InitialLoad = [
+	session: Awaited<ReturnType<SessionClient["getSession"]>>,
+	seed: Seed | null,
+];
+
+function fetchInitialLoad(
+	client: SessionClient,
+	pageSize: number | undefined,
+	timed: <T>(request: Promise<T>) => Promise<T> = (request) => request,
+): Promise<InitialLoad> {
+	return Promise.all([
+		timed(client.getSession()),
+		fetchSeed(client, pageSize, timed),
+	]);
+}
+
+type EarlyLoad = {
+	client: SessionClient;
+	pageSize: number | undefined;
+	request: Promise<InitialLoad>;
+};
+
+function startEarlyLoad(
+	client: SessionClient,
+	pageSize: number | undefined,
+): EarlyLoad {
+	const request = fetchInitialLoad(client, pageSize);
+	request.catch(() => {});
+	return { client, pageSize, request };
 }
 
 export const DEFAULT_DELTAS: readonly DeltaChannel[] = [
@@ -133,7 +165,13 @@ export function useChatSession(options: UseChatSessionOptions): ChatSession {
 	const pageSize = options.pageSize;
 	const deltasKey = (options.deltas ?? DEFAULT_DELTAS).join(",");
 
-	const [snapshot, setSnapshot] = useState<SessionSnapshot>(emptySnapshot);
+	const [snapshot, setSnapshot] = useState<SessionSnapshot>(
+		() => cachedSnapshot(client.sessionId) ?? emptySnapshot(),
+	);
+	const snapshotRef = useRef(snapshot);
+	snapshotRef.current = snapshot;
+	const [earlyLoad] = useState(() => startEarlyLoad(client, pageSize));
+	const earlyLoadUsedRef = useRef(false);
 	const [status, setStatus] = useState<ChatSessionStatus>("loading");
 	const [connection, setConnection] = useState<StreamStatus>("connecting");
 	const [unreachable, setUnreachable] = useState(false);
@@ -337,8 +375,16 @@ export function useChatSession(options: UseChatSessionOptions): ChatSession {
 		setStatus("loading");
 		setUnreachable(false);
 		setConnection("connecting");
-		setSnapshot(emptySnapshot());
+		setSnapshot(cachedSnapshot(client.sessionId) ?? emptySnapshot());
 		setHasOlder(false);
+		let loaded = false;
+		const early =
+			!earlyLoadUsedRef.current &&
+			earlyLoad.client === client &&
+			earlyLoad.pageSize === pageSize
+				? earlyLoad.request
+				: null;
+		earlyLoadUsedRef.current = true;
 		nextBeforeRef.current = null;
 		pendingRef.current = [];
 
@@ -373,11 +419,13 @@ export function useChatSession(options: UseChatSessionOptions): ChatSession {
 			});
 
 		const seed = async (attempt: number) => {
-			let session: Awaited<ReturnType<SessionClient["getSession"]>>;
-			let seed: Seed | null;
+			let session: InitialLoad[0];
+			let seed: InitialLoad[1];
 			try {
-				session = await timed(client.getSession());
-				seed = await fetchSeed(client, pageSize, timed);
+				[session, seed] =
+					attempt === 0 && early
+						? await timed(early)
+						: await fetchInitialLoad(client, pageSize, timed);
 			} catch {
 				if (cancelled) return;
 				setUnreachable(true);
@@ -389,6 +437,7 @@ export function useChatSession(options: UseChatSessionOptions): ChatSession {
 			let seeded: SessionSnapshot | null = null;
 			if (seed) seeded = applySeed(seed, false);
 			else setSnapshot(emptySnapshot());
+			loaded = seed !== null;
 			setStatus("ready");
 			stream = client.subscribe({
 				deltas,
@@ -405,6 +454,9 @@ export function useChatSession(options: UseChatSessionOptions): ChatSession {
 		void seed(0);
 
 		return () => {
+			if (loaded && !snapshotRef.current.pendingReset) {
+				cacheSnapshot(client.sessionId, snapshotRef.current);
+			}
 			cancelled = true;
 			seedGenerationRef.current += 1;
 			cancelRetry?.();
@@ -413,7 +465,7 @@ export function useChatSession(options: UseChatSessionOptions): ChatSession {
 			pendingRef.current = [];
 			stream?.close();
 		};
-	}, [client, deltasKey, pageSize, enqueue, resync, applySeed]);
+	}, [client, deltasKey, pageSize, enqueue, resync, applySeed, earlyLoad]);
 
 	const sendPrompt = useCallback(
 		(content: UserContent[], steer?: { expectedTurnId: string }) => {
