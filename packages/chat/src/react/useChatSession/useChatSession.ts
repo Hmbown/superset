@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import type {
 	SessionClient,
 	SessionStream,
@@ -181,7 +188,9 @@ export function useChatSession(options: UseChatSessionOptions): ChatSession {
 		() => cachedSnapshot(client.sessionId) ?? emptySnapshot(),
 	);
 	const snapshotRef = useRef(snapshot);
-	snapshotRef.current = snapshot;
+	useLayoutEffect(() => {
+		snapshotRef.current = snapshot;
+	}, [snapshot]);
 	const [status, setStatus] = useState<ChatSessionStatus>("loading");
 	const [connection, setConnection] = useState<StreamStatus>("connecting");
 	const [unreachable, setUnreachable] = useState(false);
@@ -442,7 +451,7 @@ export function useChatSession(options: UseChatSessionOptions): ChatSession {
 					false,
 				);
 			} else {
-				forgetSnapshot(client.sessionId);
+				if (!session.session) forgetSnapshot(client.sessionId);
 				setSnapshot(emptySnapshot());
 			}
 			loaded = seed !== null;

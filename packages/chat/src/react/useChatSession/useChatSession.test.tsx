@@ -777,7 +777,9 @@ describe("useChatSession", () => {
 		await stack.runtime.dispose();
 	});
 
-	test("forgets the cached transcript of a session the host no longer has", async () => {
+	async function cacheAndFailLoad(
+		reset: "session_not_found" | "journal_missing",
+	): Promise<number> {
 		const stack = await startStack();
 		const first = stack.makeClient();
 		const firstView = render(<Probe client={first} />);
@@ -788,29 +790,48 @@ describe("useChatSession", () => {
 		await domWaitFor(() =>
 			expect(session().snapshot.session?.status).toBe("idle"),
 		);
+		const cachedItems = session().snapshot.items.size;
 		firstView.unmount();
 		first.close();
 
-		const gone: ChatTransport = new Proxy(stack.transport, {
-			get: (target, prop, receiver) =>
-				prop === "getOutline" || prop === "getItems"
-					? async () => ({ ok: false, reset: "session_not_found" })
-					: Reflect.get(target, prop, receiver),
+		const failing: ChatTransport = new Proxy(stack.transport, {
+			get: (target, prop, receiver) => {
+				if (prop === "getOutline" || prop === "getItems") {
+					return async () => ({ ok: false, reset });
+				}
+				if (prop === "getSession" && reset === "session_not_found") {
+					return async () => ({
+						live: false,
+						session: undefined,
+						cursor: null,
+					});
+				}
+				return Reflect.get(target, prop, receiver);
+			},
 		});
-		const missing = stack.makeClient({ transport: gone });
-		const missingView = render(<Probe client={missing} />);
+		const failed = stack.makeClient({ transport: failing });
+		const failedView = render(<Probe client={failed} />);
 		await domWaitFor(() => expect(session().status).toBe("ready"));
-		expect(session().snapshot.items.size).toBe(0);
-		missingView.unmount();
-		missing.close();
+		failedView.unmount();
+		failed.close();
 
 		const host = heldUntilReleased(stack.transport);
 		const again = stack.makeClient({ transport: host.transport });
 		const view = render(<Probe client={again} />);
-		expect(session().snapshot.items.size).toBe(0);
+		const shown = session().snapshot.items.size;
 		host.release();
 		view.unmount();
 		again.close();
 		await stack.runtime.dispose();
+		expect(cachedItems).toBeGreaterThan(0);
+		return shown;
+	}
+
+	test("forgets the cached transcript of a session the host no longer has", async () => {
+		expect(await cacheAndFailLoad("session_not_found")).toBe(0);
+	});
+
+	test("keeps the cached transcript when the journal cannot be read", async () => {
+		expect(await cacheAndFailLoad("journal_missing")).toBeGreaterThan(0);
 	});
 });

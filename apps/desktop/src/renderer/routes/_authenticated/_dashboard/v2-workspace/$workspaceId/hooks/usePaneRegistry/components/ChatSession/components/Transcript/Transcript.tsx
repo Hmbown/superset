@@ -330,7 +330,8 @@ export function Transcript({
 						recent ||
 						scrollAnchor ||
 						seenRowKeys.has(row.key) ||
-						row.key === find.currentRowKey
+						row.key === find.currentRowKey ||
+						row.key === revealRowKey
 					}
 					row={row}
 					rowRef={transcriptWindow.rowRef(row.key)}

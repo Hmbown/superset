@@ -53,14 +53,21 @@ export function useTranscriptWindow({
 	const [windowState, setWindowState] = useState<{
 		sessionId: string;
 		firstKey: string | null;
-	}>({ sessionId, firstKey: null });
+		startIndex: number | null;
+	}>({ sessionId, firstKey: null, startIndex: null });
 
 	const tailStart = Math.max(0, rows.length - INITIAL_ROWS);
-	const firstKey =
-		windowState.sessionId === sessionId ? windowState.firstKey : null;
+	const sameSession = windowState.sessionId === sessionId;
+	const firstKey = sameSession ? windowState.firstKey : null;
+	const lastStart = sameSession ? windowState.startIndex : null;
 	const firstIndex =
 		firstKey === null ? -1 : rows.findIndex((row) => row.key === firstKey);
-	let startIndex = firstIndex === -1 ? tailStart : firstIndex;
+	let startIndex =
+		firstIndex !== -1
+			? firstIndex
+			: lastStart === null
+				? tailStart
+				: Math.min(lastStart, tailStart);
 	for (const key of pinnedRowKeys) {
 		if (key === null) continue;
 		const index = rows.findIndex((row) => row.key === key);
@@ -69,9 +76,11 @@ export function useTranscriptWindow({
 	const startKey = rows[startIndex]?.key ?? null;
 	if (
 		startKey !== null &&
-		(windowState.sessionId !== sessionId || windowState.firstKey !== startKey)
+		(!sameSession ||
+			windowState.firstKey !== startKey ||
+			windowState.startIndex !== startIndex)
 	) {
-		setWindowState({ sessionId, firstKey: startKey });
+		setWindowState({ sessionId, firstKey: startKey, startIndex });
 	}
 
 	const rowsRef = useRef(rows);
@@ -83,7 +92,11 @@ export function useTranscriptWindow({
 		const nextKey = rowsRef.current[nextIndex]?.key;
 		if (!nextKey) return;
 		startTransition(() => {
-			setWindowState((previous) => ({ ...previous, firstKey: nextKey }));
+			setWindowState((previous) =>
+				previous.startIndex !== null && previous.startIndex <= nextIndex
+					? previous
+					: { ...previous, firstKey: nextKey, startIndex: nextIndex },
+			);
 		});
 	}, []);
 

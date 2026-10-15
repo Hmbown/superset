@@ -5,15 +5,15 @@ import { rowHeightsFor } from "./utils/rowHeights";
 (
 	globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
 ).IS_REACT_ACT_ENVIRONMENT = true;
-const { cleanup, renderHook } = await import("@testing-library/react");
+const { act, cleanup, renderHook } = await import("@testing-library/react");
 const { useTranscriptWindow } = await import("./useTranscriptWindow");
 
 afterEach(cleanup);
 
-function rows(count: number): TranscriptRow[] {
+function rows(count: number, prefix = "row"): TranscriptRow[] {
 	return Array.from({ length: count }, (_, index) => ({
 		kind: "item",
-		key: `row-${index}`,
+		key: `${prefix}-${index}`,
 		groupStart: true,
 		item: {
 			id: `item-${index}`,
@@ -30,12 +30,13 @@ const observeRow = () => () => {};
 function renderWindow(
 	initial: { rows: TranscriptRow[]; pinned?: (string | null)[] },
 	sessionId = crypto.randomUUID(),
+	viewport: HTMLElement | null = null,
 ) {
 	return renderHook(
 		({ rows, pinned }: { rows: TranscriptRow[]; pinned?: (string | null)[] }) =>
 			useTranscriptWindow({
 				rows,
-				viewport: null,
+				viewport,
 				sessionId,
 				pinnedRowKeys: pinned ?? [],
 				observeRow,
@@ -68,4 +69,83 @@ test("sizes the spacer from the heights measured for this session", () => {
 
 	const { result } = renderWindow({ rows: rows(100) }, sessionId);
 	expect(result.current.spacerHeight).toBe(60 * 50);
+});
+
+test("keeps revealed rows mounted when the first row's key changes", () => {
+	const { result, rerender } = renderWindow({ rows: rows(100) });
+	rerender({ rows: rows(100), pinned: ["row-0"] });
+	rerender({ rows: rows(100) });
+	expect(result.current.startIndex).toBe(0);
+
+	const rekeyed = [...rows(20, "older"), ...rows(100)];
+	rekeyed[20] = { ...rekeyed[20], key: "row-0-rekeyed" } as TranscriptRow;
+	rerender({ rows: rekeyed });
+	expect(result.current.startIndex).toBe(0);
+});
+
+type Fired = { callback: (entries: unknown[]) => void };
+
+function installObservers() {
+	const intersections: Fired[] = [];
+	const resizes: Fired[] = [];
+	const original = {
+		IntersectionObserver: globalThis.IntersectionObserver,
+		ResizeObserver: globalThis.ResizeObserver,
+	};
+	const fake = (list: Fired[]) =>
+		class {
+			constructor(callback: (entries: unknown[]) => void) {
+				list.push({ callback });
+			}
+			observe() {}
+			unobserve() {}
+			disconnect() {}
+		};
+	Object.assign(globalThis, {
+		IntersectionObserver: fake(intersections),
+		ResizeObserver: fake(resizes),
+	});
+	return {
+		intersections,
+		resizes,
+		restore: () => Object.assign(globalThis, original),
+	};
+}
+
+test("mounts 40 older rows when the spacer nears the viewport", () => {
+	const observers = installObservers();
+	try {
+		const viewport = document.createElement("div");
+		const { result } = renderWindow(
+			{ rows: rows(100) },
+			crypto.randomUUID(),
+			viewport,
+		);
+		expect(result.current.startIndex).toBe(60);
+		act(() => result.current.spacerRef(document.createElement("div")));
+		act(() => {
+			observers.intersections.at(-1)?.callback([{ isIntersecting: true }]);
+		});
+		expect(result.current.startIndex).toBe(20);
+	} finally {
+		observers.restore();
+	}
+});
+
+test("records the measured height of a mounted row for the session", () => {
+	const observers = installObservers();
+	try {
+		const sessionId = crypto.randomUUID();
+		const { result } = renderWindow({ rows: rows(100) }, sessionId);
+		const row = document.createElement("div");
+		act(() => result.current.rowRef("row-70")(row));
+		act(() => {
+			observers.resizes
+				.at(-1)
+				?.callback([{ target: row, borderBoxSize: [{ blockSize: 77 }] }]);
+		});
+		expect(rowHeightsFor(sessionId).get("row-70")).toBe(77);
+	} finally {
+		observers.restore();
+	}
 });
