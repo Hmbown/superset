@@ -39,10 +39,12 @@ export function useSubmitWorkspace(
 	 * resolved, else the project's GitHub repository, whose default
 	 * environment the API makes on first use.
 	 */
-	cloudTarget: { environmentId: string | null; repositoryId: string | null } = {
-		environmentId: null,
-		repositoryId: null,
-	},
+	cloudTarget: {
+		environmentId: string | null;
+		repositoryId: string | null;
+		/** The project's repository; a named environment must still open on it. */
+		repositoryFullName: string | null;
+	} = { environmentId: null, repositoryId: null, repositoryFullName: null },
 ) {
 	const { t } = useLingui();
 	const navigate = useNavigate();
@@ -130,13 +132,21 @@ export function useSubmitWorkspace(
 			try {
 				// A named pick is checked against the live list so a stale draft
 				// can't start a vanished environment; Default needs no list.
-				const environmentId = cloudTarget.environmentId
-					? (startableCloudEnvironments(
+				const liveEnvironment = cloudTarget.environmentId
+					? startableCloudEnvironments(
 							await cloudTrpcClient.environment.list.query({
 								organizationId: activeOrganizationId,
 							}),
-						).find((row) => row.id === cloudTarget.environmentId)?.id ?? null)
-					: null;
+						).find((row) => row.id === cloudTarget.environmentId)
+					: undefined;
+				// An environment edited since the form loaded may open on another
+				// repository now; Default (the repository target) is the safe fallback.
+				const opensOnProject =
+					!cloudTarget.repositoryFullName ||
+					liveEnvironment?.repositories?.[0]?.fullName.toLowerCase() ===
+						cloudTarget.repositoryFullName.toLowerCase();
+				const environmentId =
+					liveEnvironment && opensOnProject ? liveEnvironment.id : null;
 				if (!environmentId && !cloudTarget.repositoryId) {
 					toast.error(
 						t({
@@ -408,6 +418,7 @@ export function useSubmitWorkspace(
 		utils,
 		cloudTarget.environmentId,
 		cloudTarget.repositoryId,
+		cloudTarget.repositoryFullName,
 	]);
 
 	const submitWorkspace = useCallback(async () => {

@@ -648,6 +648,7 @@ export function NewWorkspaceScreen({
 		{
 			environmentId: resolvedEnvironment?.id ?? null,
 			repositoryId: defaultRepository?.id ?? null,
+			repositoryFullName: draft.isSession ? null : projectRepositoryFullName,
 		},
 	);
 
