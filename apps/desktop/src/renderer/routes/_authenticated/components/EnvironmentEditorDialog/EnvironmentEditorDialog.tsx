@@ -25,8 +25,10 @@ import {
 	SelectValue,
 } from "@superset/ui/select";
 import { toast } from "@superset/ui/sonner";
+import { cn } from "@superset/ui/utils";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { HiChevronRight } from "react-icons/hi2";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { EnvironmentMissingRepositoryNotice } from "./components/EnvironmentMissingRepositoryNotice";
@@ -104,6 +106,8 @@ export function EnvironmentEditorDialog({
 	);
 	const scope = scopeDraft ?? preview.data?.scope ?? "organization";
 	const [region, setRegion] = useState<SandboxRegionId | null>(null);
+	// Region and visibility are decided for a new environment; editing shows them.
+	const [isAdvanced, setIsAdvanced] = useState(!isCreating);
 	const suggestedRegion = cloudTrpc.environment.suggestRegion.useQuery(
 		undefined,
 		{ enabled: open && isCreating },
@@ -378,7 +382,7 @@ export function EnvironmentEditorDialog({
 							/>
 						</EnvironmentPropertyRow>
 
-						{showsConfigLocation && (
+						{isAdvanced && showsConfigLocation && (
 							<EnvironmentPropertyRow
 								htmlFor="environment-hooks"
 								label={<Trans>Opens on</Trans>}
@@ -407,50 +411,78 @@ export function EnvironmentEditorDialog({
 							</EnvironmentPropertyRow>
 						)}
 
-						<EnvironmentPropertyRow
-							htmlFor="environment-region"
-							label={<Trans>Region</Trans>}
-						>
-							<Select
-								disabled={!isCreating}
-								onValueChange={(value) => setRegion(value as SandboxRegionId)}
-								value={shownRegion}
-							>
-								<SelectTrigger className={rowControl} id="environment-region">
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent>
-									{SANDBOX_REGIONS.map((option) => (
-										<SelectItem key={option.id} value={option.id}>
-											{option.city}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						</EnvironmentPropertyRow>
+						{isAdvanced && (
+							<>
+								<EnvironmentPropertyRow
+									htmlFor="environment-region"
+									label={<Trans>Region</Trans>}
+								>
+									<Select
+										disabled={!isCreating}
+										onValueChange={(value) =>
+											setRegion(value as SandboxRegionId)
+										}
+										value={shownRegion}
+									>
+										<SelectTrigger
+											className={rowControl}
+											id="environment-region"
+										>
+											<SelectValue />
+										</SelectTrigger>
+										<SelectContent>
+											{SANDBOX_REGIONS.map((option) => (
+												<SelectItem key={option.id} value={option.id}>
+													{option.city}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+								</EnvironmentPropertyRow>
 
-						<EnvironmentPropertyRow
-							htmlFor="environment-scope"
-							label={<Trans>Visible to</Trans>}
-						>
-							<Select
-								onValueChange={(value) => setScope(value as EnvironmentScope)}
-								value={scope}
-							>
-								<SelectTrigger className={rowControl} id="environment-scope">
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectItem value="organization">
-										<Trans>Organization</Trans>
-									</SelectItem>
-									<SelectItem value="personal">
-										<Trans>Only you</Trans>
-									</SelectItem>
-								</SelectContent>
-							</Select>
-						</EnvironmentPropertyRow>
+								<EnvironmentPropertyRow
+									htmlFor="environment-scope"
+									label={<Trans>Visible to</Trans>}
+								>
+									<Select
+										onValueChange={(value) =>
+											setScope(value as EnvironmentScope)
+										}
+										value={scope}
+									>
+										<SelectTrigger
+											className={rowControl}
+											id="environment-scope"
+										>
+											<SelectValue />
+										</SelectTrigger>
+										<SelectContent>
+											<SelectItem value="organization">
+												<Trans>Organization</Trans>
+											</SelectItem>
+											<SelectItem value="personal">
+												<Trans>Only you</Trans>
+											</SelectItem>
+										</SelectContent>
+									</Select>
+								</EnvironmentPropertyRow>
+							</>
+						)}
 					</div>
+
+					<button
+						className="flex items-center gap-1 self-start px-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
+						onClick={() => setIsAdvanced((value) => !value)}
+						type="button"
+					>
+						<HiChevronRight
+							className={cn(
+								"size-3 transition-transform",
+								isAdvanced && "rotate-90",
+							)}
+						/>
+						<Trans>Advanced</Trans>
+					</button>
 
 					{missingRepositoryFullName && (
 						<EnvironmentMissingRepositoryNotice
