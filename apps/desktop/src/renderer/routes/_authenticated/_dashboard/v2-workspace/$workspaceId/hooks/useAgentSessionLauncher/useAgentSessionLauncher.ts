@@ -38,6 +38,7 @@ export type CreateNewAgentSession = (
 export type OpenAgentChat = (
 	input: Omit<CreateNewAgentSessionInput, "forkSessionId" | "prompt"> & {
 		prompt?: string;
+		presetId?: string;
 	},
 ) => Promise<{ terminalId: string } | null>;
 
@@ -68,7 +69,9 @@ export function useAgentSessionLauncher({
 			const configs = await queryClient
 				.ensureQueryData(v2AgentConfigsQueryOptions(hostUrl))
 				.catch(() => agentConfigs ?? []);
-			const config = configs.find((entry) => entry.id === input.configId);
+			const config =
+				configs.find((entry) => entry.id === input.configId) ??
+				configs.find((entry) => entry.presetId === input.presetId);
 			const presetId = config?.presetId;
 			if (!presetId || !acpHarnessForPreset(presetId)) return null;
 			const state = store.getState();

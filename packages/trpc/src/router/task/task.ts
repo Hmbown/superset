@@ -378,7 +378,7 @@ async function nativeStatusIdFor(
 
 async function findImportedTask(organizationId: string, externalId: string) {
 	const [row] = await db
-		.select({ task: tasks })
+		.select({ task: taskColumns })
 		.from(taskImports)
 		.innerJoin(tasks, eq(taskImports.taskId, tasks.id))
 		.where(
@@ -480,6 +480,7 @@ async function buildTaskListFilters(
 		assigneeId: input?.assigneeMe ? userId : (input?.assigneeId ?? undefined),
 		creatorId: input?.creatorMe ? userId : undefined,
 		search: input?.search ?? undefined,
+		labels: input?.labels ?? undefined,
 		externalProjectId: input?.externalProjectId ?? undefined,
 		externalProjectName: input?.externalProjectName ?? undefined,
 		externalCycleId: input?.externalCycleId ?? undefined,
@@ -803,24 +804,26 @@ export const taskRouter = {
 					);
 				}
 
-				if ("assigneeId" in data) {
+				if (data.assigneeId !== undefined) {
 					updateData.assigneeId = await getScopedAssigneeId(
 						tx,
 						taskAccess.organizationId,
-						data.assigneeId ?? null,
+						data.assigneeId,
 						"Assignee must belong to the task organization",
 					);
-					// Released desktop builds still show this snapshot. Drop with the columns.
-					updateData.assigneeExternalId = null;
-					updateData.assigneeDisplayName = null;
-					updateData.assigneeAvatarUrl = null;
 				}
 
 				const [updated] = await tx
 					.update(tasks)
 					.set({ ...updateData, updatedAt: new Date() })
 					.where(and(eq(tasks.id, id), isNull(tasks.deletedAt)))
-					.returning();
+					.returning({
+						title: tasks.title,
+						description: tasks.description,
+						statusId: tasks.statusId,
+						priority: tasks.priority,
+						assigneeId: tasks.assigneeId,
+					});
 
 				const labelChanges =
 					updated && labels

@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
 import type { PullRequestDetail } from "../../hooks/usePullRequestDetail";
 import {
-	type PullRequestCommentTarget,
-	PullRequestConversation,
-} from "../PullRequestConversation";
+	PullRequestActivity,
+	type PullRequestActivityThreads,
+} from "../PullRequestActivity";
+import type { PullRequestCommentTarget } from "../PullRequestConversationComposer";
 import { PullRequestInfo } from "../PullRequestInfo";
 import { PullRequestItemHeader } from "../PullRequestItemHeader";
 import { PullRequestMarkdown } from "../PullRequestMarkdown";
@@ -13,15 +14,17 @@ interface PullRequestSummaryContentProps {
 	data: PullRequestDetail;
 	/** Where a new conversation comment posts; null hides the composer. */
 	commentTarget?: PullRequestCommentTarget | null;
-	/** Rendered under the conversation (the workspace pane's review threads). */
-	children?: ReactNode;
+	/** The workspace pane's review threads, hung on the activity rail. */
+	threads?: PullRequestActivityThreads;
+	aside?: ReactNode;
 }
 
-/** The Summary tab: header, info rail, description, conversation, then whatever the host adds. */
+/** The Summary tab: header, info rail, description, then the Activity section. */
 export function PullRequestSummaryContent({
 	data,
 	commentTarget = null,
-	children,
+	threads,
+	aside,
 }: PullRequestSummaryContentProps) {
 	return (
 		<PullRequestPageBody
@@ -29,12 +32,16 @@ export function PullRequestSummaryContent({
 				<PullRequestItemHeader data={data} actionTarget={commentTarget} />
 			}
 			info={(variant) => <PullRequestInfo data={data} variant={variant} />}
+			aside={aside}
 		>
 			<PullRequestMarkdown body={data.body} />
-			<div className="mt-6">
-				<PullRequestConversation data={data} commentTarget={commentTarget} />
+			<div className="mt-8">
+				<PullRequestActivity
+					data={data}
+					commentTarget={commentTarget}
+					threads={threads}
+				/>
 			</div>
-			{children ? <div className="mt-8">{children}</div> : null}
 		</PullRequestPageBody>
 	);
 }

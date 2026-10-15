@@ -213,6 +213,21 @@ export const HOTKEYS_REGISTRY = {
 			message: "Navigate to the next workspace in the sidebar",
 		}),
 	},
+	OPEN_ACTIVE_WORKSPACE_SWITCHER: {
+		key: {
+			mac: L("meta+semicolon"),
+			windows: L("ctrl+alt+semicolon"),
+			linux: L("ctrl+alt+semicolon"),
+		},
+		label: msg({
+			message: "Switch to Active Workspace",
+		}),
+		category: "Workspace",
+		description: msg({
+			message:
+				"Pick a workspace whose agent is waiting for your input, has finished since you last looked, or is still running",
+		}),
+	},
 	CLOSE_WORKSPACE: {
 		key: {
 			mac: "meta+shift+backspace",
@@ -227,16 +242,16 @@ export const HOTKEYS_REGISTRY = {
 			message: "Close or delete the current workspace",
 		}),
 	},
-	UNDO_ARCHIVE_WORKSPACE: {
+	UNDO: {
 		key: {
 			mac: L("meta+z"),
 			windows: L("ctrl+z"),
 			linux: L("ctrl+z"),
 		},
-		label: msg({ message: "Undo Archive" }),
+		label: msg({ message: "Undo" }),
 		category: "Workspace",
 		description: msg({
-			message: "Restore the workspace you just archived",
+			message: "Undo the last archived workspace or closed chats",
 		}),
 	},
 	NEW_WORKSPACE: {
@@ -922,7 +937,7 @@ export const HOTKEYS_REGISTRY = {
 	},
 	SHOW_HOTKEYS: {
 		key: {
-			mac: L("meta+shift+slash"),
+			mac: L("meta+slash"),
 			windows: L("ctrl+shift+slash"),
 			linux: L("ctrl+shift+slash"),
 		},
