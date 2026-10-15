@@ -19,7 +19,14 @@ Superset looks for these files in the project's root checkout:
 
 ## Import a setup
 
-When a project has no Superset scripts yet and one of these files exists, the sidebar shows **Found Conductor setup** (or the tool it found). Click **Import**.
+When you add a repository that has one of these files and no Superset scripts, Superset asks right away: **Found Conductor setup** (or the tool it found). This happens however you add it: from a folder, by cloning, or with `superset projects create` or `superset projects setup`.
+
+- **Import** opens the import dialog.
+- **Not now** closes the prompt and hides the sidebar card for that project.
+
+Superset asks once, in the Superset window you used last. If you added the repository from a terminal outside Superset, the prompt waits until you switch back.
+
+If you don't answer the prompt, the sidebar keeps showing **Found Conductor setup** for that project. Click **Import** there.
 
 You can also import at any time from **Project settings → Project lifecycle scripts**: an **Import from Conductor** button (or **Import from another tool**, when there are several) shows while the import would change something.
 
