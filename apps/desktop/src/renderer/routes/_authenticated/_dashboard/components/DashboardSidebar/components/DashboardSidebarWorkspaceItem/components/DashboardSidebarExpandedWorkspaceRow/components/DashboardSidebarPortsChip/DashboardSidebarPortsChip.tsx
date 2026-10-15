@@ -31,7 +31,9 @@ export function DashboardSidebarPortsChip({
 	const { t } = useLingui();
 	const { isPending, killPorts } = useDashboardSidebarPortKill();
 	const { isOpen, onOpenChange, onPointerEnter, onPointerLeave, toggleOpen } =
-		useDashboardSidebarChipHoverSuppression();
+		useDashboardSidebarChipHoverSuppression({
+			suppressWorkspaceCardOn: "open",
+		});
 	const safeTriangle = useHoverCardSafeTriangle(isOpen, onOpenChange);
 
 	const handleCloseAll = async () => {
