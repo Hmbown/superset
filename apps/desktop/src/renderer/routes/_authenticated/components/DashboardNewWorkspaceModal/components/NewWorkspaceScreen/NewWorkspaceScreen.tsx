@@ -65,6 +65,7 @@ import { electronTrpc } from "renderer/lib/electron-trpc";
 import { showHostServiceUnavailableToast } from "renderer/lib/host-service-unavailable";
 import { PageHeader } from "renderer/routes/_authenticated/_dashboard/components/PageHeader";
 import { AgentComposer } from "renderer/routes/_authenticated/components/AgentComposer";
+import { EnvironmentEditorDialog } from "renderer/routes/_authenticated/components/EnvironmentEditorDialog";
 import { useHostWorkspaces } from "renderer/routes/_authenticated/providers/HostWorkspacesProvider";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import { newWorkspaceAttachmentPaths } from "renderer/stores/new-workspace-attachments";
@@ -117,6 +118,7 @@ import { PROMPT_PLACEHOLDERS } from "./components/SamplePrompts/constants";
 import { SupersetIcon } from "./components/SupersetIcon";
 import { useProjectPreselection } from "./hooks/useProjectPreselection";
 import { useSamplePromptSelection } from "./hooks/useSamplePromptSelection";
+import { environmentsForRepository } from "./utils/environmentsForRepository";
 
 /** Nested prefixes of one fixed pool — only the form factor varies by arm. */
 const PROMPT_COUNTS: Record<PromptCardsVariant, number> = {
@@ -181,27 +183,6 @@ export function NewWorkspaceScreen({
 	const relayUrl = useRelayUrl();
 	const activeOrganizationId = useActiveOrganizationId();
 
-	const environmentsQuery = cloudTrpc.environment.list.useQuery(
-		{ organizationId: activeOrganizationId ?? "" },
-		{ enabled: draft.hostId === CLOUD_HOST_ID && !!activeOrganizationId },
-	);
-	const environmentOptions = startableCloudEnvironments(
-		environmentsQuery.data ?? [],
-	);
-	const selectedEnvironment =
-		environmentOptions.find((row) => row.id === draft.environmentId) ??
-		environmentOptions[0];
-	const cloudRepository = useMemo(() => {
-		if (draft.hostId !== CLOUD_HOST_ID) return null;
-		const primary = selectedEnvironment?.repositories?.[0];
-		return primary
-			? {
-					owner: primary.owner,
-					name: primary.name,
-					defaultBranch: primary.defaultBranch,
-				}
-			: null;
-	}, [draft.hostId, selectedEnvironment]);
 	const setLastProjectId = useV2WorkspaceCreateDefaultsStore(
 		(state) => state.setLastProjectId,
 	);
@@ -364,7 +345,49 @@ export function NewWorkspaceScreen({
 
 	const projectId = draft.selectedProjectId;
 	const selectedProject = projects.find((project) => project.id === projectId);
-	const needsSetup = selectedProject?.needsSetup === true;
+	const isCloudHost = draft.hostId === CLOUD_HOST_ID;
+	const cloudProjects = useMemo(
+		() => projects.map((project) => ({ ...project, needsSetup: null })),
+		[projects],
+	);
+	const needsSetup = !isCloudHost && selectedProject?.needsSetup === true;
+
+	// ── Cloud environment ────────────────────────────────────────────
+	const environmentsQuery = cloudTrpc.environment.list.useQuery(
+		{ organizationId: activeOrganizationId ?? "" },
+		{ enabled: isCloudHost && !!activeOrganizationId },
+	);
+	const projectRepositoryFullName =
+		selectedProject?.githubOwner && selectedProject.githubRepoName
+			? `${selectedProject.githubOwner}/${selectedProject.githubRepoName}`
+			: null;
+	const environmentOptions = environmentsForRepository(
+		startableCloudEnvironments(environmentsQuery.data ?? []),
+		draft.isSession ? null : projectRepositoryFullName,
+	);
+	const areEnvironmentsLoaded = environmentsQuery.isSuccess;
+	const selectedEnvironment =
+		environmentOptions.find((row) => row.id === draft.environmentId) ??
+		environmentOptions[0];
+	// Submit falls back to the first environment of all; keep the draft on the
+	// one this project's list shows.
+	useEffect(() => {
+		if (!isCloudHost || !selectedEnvironment) return;
+		if (selectedEnvironment.id === draft.environmentId) return;
+		updateDraft({ environmentId: selectedEnvironment.id });
+	}, [isCloudHost, selectedEnvironment, draft.environmentId, updateDraft]);
+	const [isCreatingEnvironment, setIsCreatingEnvironment] = useState(false);
+	const cloudRepository = useMemo(() => {
+		if (!isCloudHost) return null;
+		const primary = selectedEnvironment?.repositories?.[0];
+		return primary
+			? {
+					owner: primary.owner,
+					name: primary.name,
+					defaultBranch: primary.defaultBranch,
+				}
+			: null;
+	}, [isCloudHost, selectedEnvironment]);
 	const isPromptEmpty = !draft.prompt.trim();
 	// The markdown editor is uncontrolled after mount, so programmatic prompt
 	// insertion bumps promptSeed to remount it with the new content.
@@ -599,10 +622,12 @@ export function NewWorkspaceScreen({
 	const { otherHosts } = useWorkspaceHostOptions();
 	const submitBlocker = useMemo<string | null>(() => {
 		const selectedHostId = draft.hostId ?? machineId;
-		// A cloud workspace is provisioned by the API from the one cloud repo:
-		// no host whose readiness could block it, and no project either — the
-		// picker is hidden for cloud, so requiring one is unanswerable.
-		if (selectedHostId === CLOUD_HOST_ID) return null;
+		// A cloud workspace is provisioned by the API from its environment: no
+		// host readiness to wait on, and the project only narrows the list.
+		if (selectedHostId === CLOUD_HOST_ID)
+			return areEnvironmentsLoaded && !selectedEnvironment
+				? t({ message: "Select an environment" })
+				: null;
 		if (isProjectPreselectionPending || (!selectedProject && !draft.isSession))
 			return t({
 				message: "Select a project",
@@ -631,6 +656,8 @@ export function NewWorkspaceScreen({
 		machineId,
 		activeHostUrl,
 		otherHosts,
+		areEnvironmentsLoaded,
+		selectedEnvironment,
 		t,
 	]);
 
@@ -1060,28 +1087,50 @@ export function NewWorkspaceScreen({
 									updateDraft({ hostId: next });
 								}}
 							/>
-							{draft.hostId !== CLOUD_HOST_ID && (
-								<ProjectPickerPill
-									selectedProject={selectedProject}
-									projects={projects}
-									isSessionSelected={draft.isSession}
-									onSelectProject={(selectedProjectId) => {
-										if (selectedProjectId === null) {
-											selectSession();
-											return;
-										}
-										setLastProjectId(selectedProjectId);
-										selectProject(selectedProjectId);
-									}}
-								/>
-							)}
-							{draft.hostId === CLOUD_HOST_ID && (
+							<ProjectPickerPill
+								selectedProject={selectedProject}
+								projects={isCloudHost ? cloudProjects : projects}
+								isSessionSelected={draft.isSession}
+								onSelectProject={(selectedProjectId) => {
+									if (selectedProjectId === null) {
+										selectSession();
+										return;
+									}
+									setLastProjectId(selectedProjectId);
+									selectProject(selectedProjectId);
+								}}
+							/>
+							{isCloudHost && (
 								<EnvironmentPickerPill
 									selectedEnvironment={selectedEnvironment}
 									environments={environmentOptions}
+									repositoryFullName={
+										draft.isSession
+											? undefined
+											: (projectRepositoryFullName ?? undefined)
+									}
 									onSelectEnvironment={(next) =>
 										updateDraft({ environmentId: next })
 									}
+									onCreateEnvironment={() => setIsCreatingEnvironment(true)}
+								/>
+							)}
+							{isCreatingEnvironment && activeOrganizationId && (
+								<EnvironmentEditorDialog
+									open
+									organizationId={activeOrganizationId}
+									initialName={
+										draft.isSession ? undefined : selectedProject?.name
+									}
+									initialRepositoryFullName={
+										draft.isSession
+											? undefined
+											: (projectRepositoryFullName ?? undefined)
+									}
+									onOpenChange={(open) => {
+										if (!open) setIsCreatingEnvironment(false);
+									}}
+									onCreated={(environmentId) => updateDraft({ environmentId })}
 								/>
 							)}
 							{draft.linkedPR ? (

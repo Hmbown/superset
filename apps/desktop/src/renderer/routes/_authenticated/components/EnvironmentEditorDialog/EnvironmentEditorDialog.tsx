@@ -59,8 +59,12 @@ interface EnvironmentEditorDialogProps {
 	environment?: EnvironmentEditorSeed;
 	/** Saves this cloud workspace as a new environment; its repositories and region come with it. */
 	fromWorkspaceId?: string;
+	/** Preselects this repository (`owner/name`) in a new environment once the list loads. */
+	initialRepositoryFullName?: string;
+	initialName?: string;
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
+	onCreated?: (environmentId: string) => void;
 }
 
 const NO_HOOKS = "none";
@@ -74,8 +78,11 @@ export function EnvironmentEditorDialog({
 	organizationId,
 	environment,
 	fromWorkspaceId,
+	initialRepositoryFullName,
+	initialName,
 	open,
 	onOpenChange,
+	onCreated,
 }: EnvironmentEditorDialogProps) {
 	const { t } = useLingui();
 	const navigate = useNavigate();
@@ -85,11 +92,11 @@ export function EnvironmentEditorDialog({
 		{ enabled: open && fromWorkspaceId !== undefined },
 	);
 	const [nameDraft, setName] = useState<string | null>(
-		environment?.name ?? null,
+		environment?.name ?? initialName ?? null,
 	);
 	const name = nameDraft ?? preview.data?.name ?? "";
-	const [repositoryIds, setRepositoryIds] = useState<string[]>(
-		environment?.repositoryIds ?? [],
+	const [repositoryIdsDraft, setRepositoryIds] = useState<string[] | null>(
+		environment?.repositoryIds ?? null,
 	);
 	const [hooksRepositoryId, setHooksRepositoryId] = useState<string | null>(
 		environment?.hooksRepositoryId ?? null,
@@ -115,6 +122,15 @@ export function EnvironmentEditorDialog({
 			{ enabled: open && !fromWorkspaceId },
 		);
 	const repositories = repositoriesQuery.data ?? [];
+	const seededRepositoryId = initialRepositoryFullName
+		? repositories.find(
+				(repo) =>
+					repo.fullName.toLowerCase() ===
+					initialRepositoryFullName.toLowerCase(),
+			)?.id
+		: undefined;
+	const repositoryIds =
+		repositoryIdsDraft ?? (seededRepositoryId ? [seededRepositoryId] : []);
 	const selectedRepositories: { id: string; fullName: string }[] = preview.data
 		? preview.data.repositories
 		: repositoryIds
@@ -171,13 +187,14 @@ export function EnvironmentEditorDialog({
 
 	const onSave = async () => {
 		try {
-			await save();
+			const environmentId = await save();
 			toast.success(
 				environment
 					? t({ message: "Environment saved" })
 					: t({ message: "Environment created" }),
 			);
 			await finish();
+			if (!environment) onCreated?.(environmentId);
 		} catch (error) {
 			toast.error(errorMessage(error));
 		}

@@ -6,10 +6,11 @@ import {
 	CommandInput,
 	CommandItem,
 	CommandList,
+	CommandSeparator,
 } from "@superset/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@superset/ui/popover";
 import { useState } from "react";
-import { HiCheck, HiChevronUpDown } from "react-icons/hi2";
+import { HiCheck, HiChevronUpDown, HiMiniPlus } from "react-icons/hi2";
 import { LuLayers } from "react-icons/lu";
 import { FormPickerTrigger } from "../FormPickerTrigger";
 
@@ -22,12 +23,17 @@ interface EnvironmentPickerPillProps {
 	selectedEnvironment: EnvironmentOption | undefined;
 	environments: EnvironmentOption[];
 	onSelectEnvironment: (environmentId: string) => void;
+	onCreateEnvironment: () => void;
+	/** Shown when no environment carries the selected project's repository. */
+	repositoryFullName?: string;
 }
 
 export function EnvironmentPickerPill({
 	selectedEnvironment,
 	environments,
 	onSelectEnvironment,
+	onCreateEnvironment,
+	repositoryFullName,
 }: EnvironmentPickerPillProps) {
 	const { t } = useLingui();
 	const [open, setOpen] = useState(false);
@@ -58,8 +64,12 @@ export function EnvironmentPickerPill({
 						})}
 					/>
 					<CommandList className="max-h-[min(280px,var(--radix-popover-content-available-height))]">
-						<CommandEmpty>
-							<Trans>No environments found.</Trans>
+						<CommandEmpty className="px-3">
+							{repositoryFullName ? (
+								<Trans>No environments for {repositoryFullName}.</Trans>
+							) : (
+								<Trans>No environments found.</Trans>
+							)}
 						</CommandEmpty>
 						<CommandGroup>
 							{environments.map((environment) => (
@@ -78,6 +88,19 @@ export function EnvironmentPickerPill({
 									)}
 								</CommandItem>
 							))}
+						</CommandGroup>
+						<CommandSeparator alwaysRender />
+						<CommandGroup forceMount>
+							<CommandItem
+								forceMount
+								onSelect={() => {
+									setOpen(false);
+									onCreateEnvironment();
+								}}
+							>
+								<HiMiniPlus className="size-4" />
+								<Trans>New environment</Trans>
+							</CommandItem>
 						</CommandGroup>
 					</CommandList>
 				</Command>
