@@ -13,7 +13,6 @@ import { useState } from "react";
 import { HiCheck, HiChevronUpDown, HiMiniPlus } from "react-icons/hi2";
 import { LuLayers } from "react-icons/lu";
 import { FormPickerTrigger } from "../FormPickerTrigger";
-import { EnvironmentPickerEmptyState } from "./components/EnvironmentPickerEmptyState";
 
 export interface EnvironmentOption {
 	id: string;
@@ -66,25 +65,26 @@ export function EnvironmentPickerPill({
 			</PopoverTrigger>
 			<PopoverContent
 				align="start"
-				className={isEmpty ? "w-64 p-0" : "w-60 p-0"}
+				className="w-60 p-0"
 				onWheel={(event) => event.stopPropagation()}
 			>
-				{isEmpty ? (
-					<EnvironmentPickerEmptyState
-						repositoryFullName={repositoryFullName}
-						onCreate={createEnvironment}
+				<Command>
+					<CommandInput
+						placeholder={t({
+							message: "Search environments...",
+						})}
 					/>
-				) : (
-					<Command>
-						<CommandInput
-							placeholder={t({
-								message: "Search environments...",
-							})}
-						/>
-						<CommandList className="max-h-[min(280px,var(--radix-popover-content-available-height))]">
-							<CommandEmpty>
+					<CommandList className="max-h-[min(280px,var(--radix-popover-content-available-height))]">
+						<CommandEmpty className="px-3 py-3 text-center text-xs text-muted-foreground">
+							{isEmpty && repositoryFullName ? (
+								<Trans>No environment for {repositoryFullName}</Trans>
+							) : isEmpty ? (
+								<Trans>No environments yet</Trans>
+							) : (
 								<Trans>No environments found.</Trans>
-							</CommandEmpty>
+							)}
+						</CommandEmpty>
+						{environments.length > 0 && (
 							<CommandGroup>
 								{environments.map((environment) => (
 									<CommandItem
@@ -103,16 +103,16 @@ export function EnvironmentPickerPill({
 									</CommandItem>
 								))}
 							</CommandGroup>
-							<CommandSeparator alwaysRender />
-							<CommandGroup forceMount>
-								<CommandItem forceMount onSelect={createEnvironment}>
-									<HiMiniPlus className="size-4" />
-									<Trans>New environment</Trans>
-								</CommandItem>
-							</CommandGroup>
-						</CommandList>
-					</Command>
-				)}
+						)}
+						<CommandSeparator alwaysRender />
+						<CommandGroup forceMount>
+							<CommandItem forceMount onSelect={createEnvironment}>
+								<HiMiniPlus className="size-4" />
+								<Trans>New environment</Trans>
+							</CommandItem>
+						</CommandGroup>
+					</CommandList>
+				</Command>
 			</PopoverContent>
 		</Popover>
 	);

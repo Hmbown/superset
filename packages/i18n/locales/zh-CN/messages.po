@@ -2180,9 +2180,6 @@ msgstr "智能体写出完整的函数和文件，人类盯着每一步、批准
 msgid "An automation can only use a cloud workspace you created"
 msgstr "自动化只能使用你创建的云端工作区"
 
-msgid "An environment tells a cloud workspace which repositories to check out and how to install them."
-msgstr "环境决定云工作区检出哪些仓库以及如何安装它们。"
-
 msgid "An error occurred"
 msgstr "发生错误"
 
@@ -5174,9 +5171,6 @@ msgstr "再次创建"
 
 msgid "Create an account"
 msgstr "创建账户"
-
-msgid "Create environment"
-msgstr "创建环境"
 
 msgid "Create failed: {message}"
 msgstr "创建失败：{message}"
@@ -10520,11 +10514,17 @@ msgstr "暂无下载"
 msgid "No emoji found"
 msgstr "未找到表情"
 
+msgid "No environment for {repositoryFullName}"
+msgstr "{repositoryFullName} 没有环境"
+
 msgid "No environments available"
 msgstr "没有可用的环境"
 
 msgid "No environments found."
 msgstr "未找到环境。"
+
+msgid "No environments yet"
+msgstr "还没有环境"
 
 msgid "No environments yet."
 msgstr "还没有环境。创建一个，以便基于它启动云端工作区。"
@@ -14764,14 +14764,8 @@ msgstr "设置"
 msgid "Set up {0}"
 msgstr "设置 {0}"
 
-msgid "Set up {repositoryFullName} for the cloud"
-msgstr "为云端设置 {repositoryFullName}"
-
 msgid "Set up an automation"
 msgstr "设置自动化"
-
-msgid "Set up an environment"
-msgstr "设置环境"
 
 msgid "Set up environment"
 msgstr "设置环境"

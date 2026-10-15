@@ -2180,9 +2180,6 @@ msgstr "Bir ajan tüm fonksiyonları ve dosyaları yazarken bir insan her adım�
 msgid "An automation can only use a cloud workspace you created"
 msgstr "Bir otomasyon yalnızca sizin oluşturduğunuz bir bulut çalışma alanını kullanabilir"
 
-msgid "An environment tells a cloud workspace which repositories to check out and how to install them."
-msgstr "Ortam, bir bulut çalışma alanının hangi depoları alacağını ve nasıl kuracağını belirler."
-
 msgid "An error occurred"
 msgstr "Bir hata oluştu"
 
@@ -5174,9 +5171,6 @@ msgstr "Yeniden oluştur"
 
 msgid "Create an account"
 msgstr "Hesap oluşturun"
-
-msgid "Create environment"
-msgstr "Ortam oluştur"
 
 msgid "Create failed: {message}"
 msgstr "Oluşturulamadı: {message}"
@@ -10520,11 +10514,17 @@ msgstr "Henüz indirme yok"
 msgid "No emoji found"
 msgstr "Emoji bulunamadı"
 
+msgid "No environment for {repositoryFullName}"
+msgstr "{repositoryFullName} için ortam yok"
+
 msgid "No environments available"
 msgstr "Kullanılabilir ortam yok"
 
 msgid "No environments found."
 msgstr "Ortam bulunamadı."
+
+msgid "No environments yet"
+msgstr "Henüz ortam yok"
 
 msgid "No environments yet."
 msgstr "Henüz ortam yok. Bir bulut çalışma alanını üzerinden başlatmak için bir ortam oluşturun."
@@ -14764,14 +14764,8 @@ msgstr "Kur"
 msgid "Set up {0}"
 msgstr "{0} kurulumu"
 
-msgid "Set up {repositoryFullName} for the cloud"
-msgstr "{repositoryFullName} deposunu buluta hazırla"
-
 msgid "Set up an automation"
 msgstr "Bir otomasyon kur"
-
-msgid "Set up an environment"
-msgstr "Bir ortam kurun"
 
 msgid "Set up environment"
 msgstr "Ortam kur"

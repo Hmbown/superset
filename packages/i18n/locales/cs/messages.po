@@ -2180,9 +2180,6 @@ msgstr "Agent píše celé funkce a soubory, zatímco člověk sleduje každý k
 msgid "An automation can only use a cloud workspace you created"
 msgstr "Automatizace může používat jen cloudový pracovní prostor, který jste vytvořili"
 
-msgid "An environment tells a cloud workspace which repositories to check out and how to install them."
-msgstr "Prostředí určuje, které repozitáře si cloudový pracovní prostor stáhne a jak je nainstaluje."
-
 msgid "An error occurred"
 msgstr "Došlo k chybě"
 
@@ -5174,9 +5171,6 @@ msgstr "Vytvořit znovu"
 
 msgid "Create an account"
 msgstr "Vytvořit účet"
-
-msgid "Create environment"
-msgstr "Vytvořit prostředí"
 
 msgid "Create failed: {message}"
 msgstr "Vytvoření selhalo: {message}"
@@ -10520,11 +10514,17 @@ msgstr "Zatím žádná stahování"
 msgid "No emoji found"
 msgstr "Žádné emoji nenalezeno"
 
+msgid "No environment for {repositoryFullName}"
+msgstr "Žádné prostředí pro {repositoryFullName}"
+
 msgid "No environments available"
 msgstr "Žádná dostupná prostředí"
 
 msgid "No environments found."
 msgstr "Nenalezena žádná prostředí."
+
+msgid "No environments yet"
+msgstr "Zatím žádná prostředí"
 
 msgid "No environments yet."
 msgstr "Zatím žádná prostředí. Vytvořte jedno a spusťte z něj cloudový pracovní prostor."
@@ -14764,14 +14764,8 @@ msgstr "Nastavit"
 msgid "Set up {0}"
 msgstr "Nastavit {0}"
 
-msgid "Set up {repositoryFullName} for the cloud"
-msgstr "Připravit {repositoryFullName} pro cloud"
-
 msgid "Set up an automation"
 msgstr "Nastavte automatizaci"
-
-msgid "Set up an environment"
-msgstr "Nastavit prostředí"
 
 msgid "Set up environment"
 msgstr "Nastavit prostředí"

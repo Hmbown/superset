@@ -2180,9 +2180,6 @@ msgstr "An agent writes whole functions and files while a human watches every st
 msgid "An automation can only use a cloud workspace you created"
 msgstr "An automation can only use a cloud workspace you created"
 
-msgid "An environment tells a cloud workspace which repositories to check out and how to install them."
-msgstr "An environment tells a cloud workspace which repositories to check out and how to install them."
-
 msgid "An error occurred"
 msgstr "An error occurred"
 
@@ -5174,9 +5171,6 @@ msgstr "Create again"
 
 msgid "Create an account"
 msgstr "Create an account"
-
-msgid "Create environment"
-msgstr "Create environment"
 
 msgid "Create failed: {message}"
 msgstr "Create failed: {message}"
@@ -10520,11 +10514,17 @@ msgstr "No downloads yet"
 msgid "No emoji found"
 msgstr "No emoji found"
 
+msgid "No environment for {repositoryFullName}"
+msgstr "No environment for {repositoryFullName}"
+
 msgid "No environments available"
 msgstr "No environments available"
 
 msgid "No environments found."
 msgstr "No environments found."
+
+msgid "No environments yet"
+msgstr "No environments yet"
 
 msgid "No environments yet."
 msgstr "No environments yet."
@@ -14764,14 +14764,8 @@ msgstr "Set up"
 msgid "Set up {0}"
 msgstr "Set up {0}"
 
-msgid "Set up {repositoryFullName} for the cloud"
-msgstr "Set up {repositoryFullName} for the cloud"
-
 msgid "Set up an automation"
 msgstr "Set up an automation"
-
-msgid "Set up an environment"
-msgstr "Set up an environment"
 
 msgid "Set up environment"
 msgstr "Set up environment"

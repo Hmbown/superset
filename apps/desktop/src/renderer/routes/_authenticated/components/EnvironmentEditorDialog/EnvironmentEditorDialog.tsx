@@ -64,6 +64,7 @@ interface EnvironmentEditorDialogProps {
 	initialName?: string;
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
+	/** The caller continues with the saved environment, so the editor offers no agent setup. */
 	onCreated?: (environmentId: string) => void;
 }
 
@@ -497,6 +498,10 @@ export function EnvironmentEditorDialog({
 					{environment ? (
 						<Button disabled={!valid || busy} onClick={onSave}>
 							<Trans>Save</Trans>
+						</Button>
+					) : onCreated ? (
+						<Button disabled={!valid || busy} onClick={onSave}>
+							<Trans>Save environment</Trans>
 						</Button>
 					) : fromWorkspaceId ? (
 						<Button

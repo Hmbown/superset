@@ -2180,9 +2180,6 @@ msgstr "Een agent schrijft hele functies en bestanden terwijl een mens elke stap
 msgid "An automation can only use a cloud workspace you created"
 msgstr "Een automatisering kan alleen een cloudwerkruimte gebruiken die je zelf hebt aangemaakt"
 
-msgid "An environment tells a cloud workspace which repositories to check out and how to install them."
-msgstr "Een omgeving bepaalt welke repository's een cloudwerkruimte uitcheckt en hoe ze worden geïnstalleerd."
-
 msgid "An error occurred"
 msgstr "Er is een fout opgetreden"
 
@@ -5174,9 +5171,6 @@ msgstr "Opnieuw aanmaken"
 
 msgid "Create an account"
 msgstr "Een account aanmaken"
-
-msgid "Create environment"
-msgstr "Omgeving maken"
 
 msgid "Create failed: {message}"
 msgstr "Aanmaken mislukt: {message}"
@@ -10520,11 +10514,17 @@ msgstr "Nog geen downloads"
 msgid "No emoji found"
 msgstr "Geen emoji gevonden"
 
+msgid "No environment for {repositoryFullName}"
+msgstr "Geen omgeving voor {repositoryFullName}"
+
 msgid "No environments available"
 msgstr "Geen omgevingen beschikbaar"
 
 msgid "No environments found."
 msgstr "Geen omgevingen gevonden."
+
+msgid "No environments yet"
+msgstr "Nog geen omgevingen"
 
 msgid "No environments yet."
 msgstr "Nog geen omgevingen. Maak er een aan om er een cloudwerkruimte vanaf te starten."
@@ -14764,14 +14764,8 @@ msgstr "Instellen"
 msgid "Set up {0}"
 msgstr "{0} instellen"
 
-msgid "Set up {repositoryFullName} for the cloud"
-msgstr "{repositoryFullName} klaarmaken voor de cloud"
-
 msgid "Set up an automation"
 msgstr "Stel een automatisering in"
-
-msgid "Set up an environment"
-msgstr "Stel een omgeving in"
 
 msgid "Set up environment"
 msgstr "Omgeving instellen"
