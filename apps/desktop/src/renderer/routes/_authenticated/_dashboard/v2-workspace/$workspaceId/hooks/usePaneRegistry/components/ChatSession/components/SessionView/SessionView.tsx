@@ -229,6 +229,7 @@ export function SessionView({
 		),
 	);
 
+	const focusComposer = useCallback(() => composerRef.current?.focus(), []);
 	const timelineRef = useRef(timeline);
 	timelineRef.current = timeline;
 	const snapshotRef = useRef(session.snapshot);
@@ -290,16 +291,17 @@ export function SessionView({
 	);
 	const holdPrompt = held?.onQueue;
 	const onSend = useCallback(
-		(content: UserContent[], { steer }: { steer: boolean }) =>
-			holdPrompt
-				? holdPrompt(content)
-				: sendPrompt(
-						content,
-						steer && runningTurnId
-							? { expectedTurnId: runningTurnId }
-							: undefined,
-					),
-		[holdPrompt, sendPrompt, runningTurnId],
+		(content: UserContent[], { steer }: { steer: boolean }) => {
+			if (holdPrompt) return holdPrompt(content);
+			for (const approval of approvals) {
+				void respondToApproval(approval.id, { type: "cancel" });
+			}
+			return sendPrompt(
+				content,
+				steer && runningTurnId ? { expectedTurnId: runningTurnId } : undefined,
+			);
+		},
+		[holdPrompt, approvals, respondToApproval, sendPrompt, runningTurnId],
 	);
 	const awaitingBackground = sessionState?.awaitingBackground === true;
 	const onCancelTurn = useMemo(
@@ -370,6 +372,8 @@ export function SessionView({
 							canForkToWorktree={canForkToWorktree}
 							groups={timeline}
 							hasOlder={session.hasOlder}
+							isActive={isActive}
+							onCloseFind={focusComposer}
 							onDiscardPrompt={session.discardPrompt}
 							onFork={onFork ? forkWithTranscript : undefined}
 							onLoadOlder={loadOlder}

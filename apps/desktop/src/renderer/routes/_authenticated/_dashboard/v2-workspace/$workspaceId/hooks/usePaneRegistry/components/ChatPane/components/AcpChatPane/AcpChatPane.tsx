@@ -3,6 +3,7 @@ import { acpHarnessForPreset } from "@superset/chat/core";
 import { AGENT_DEFAULT_MODE, type UserContent } from "@superset/chat/protocol";
 import { getAgentModelSupport } from "@superset/shared/agent-models";
 import { buildChatSessionHandoffPrompt } from "@superset/shared/terminal-session-handoff";
+import { alert } from "@superset/ui/atoms/Alert";
 import { toast } from "@superset/ui/sonner";
 import { useWorkspaceClient } from "@superset/workspace-client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -39,6 +40,14 @@ import {
 const MAX_RECOVERIES = 3;
 const REPLACEMENT_TIMEOUT_MS = 30_000;
 
+export interface AgentSwitchTarget {
+	presetId: string;
+	label: string;
+	model: { id: string; label: string } | null;
+	modeId: string | undefined;
+	handoffPrompt: string | null;
+}
+
 export function AcpChatPane({
 	agent,
 	isActive,
@@ -51,6 +60,7 @@ export function AcpChatPane({
 	onModeChange,
 	onSessionCreated,
 	onSwitchAgent,
+	onForkAgent,
 	pendingPrompts,
 	sessionId,
 	terminalId,
@@ -74,13 +84,8 @@ export function AcpChatPane({
 	onOpenFile?: OpenFile;
 	onOpenPage?: OpenPage;
 	onOpenLink?: OpenLink;
-	onSwitchAgent?: (target: {
-		presetId: string;
-		label: string;
-		model: { id: string; label: string } | null;
-		modeId: string | undefined;
-		handoffPrompt: string | null;
-	}) => void;
+	onSwitchAgent?: (target: AgentSwitchTarget) => void;
+	onForkAgent?: (target: AgentSwitchTarget & { handoffPrompt: string }) => void;
 	modelId?: string;
 	modelLabel?: string;
 	modeId?: string;
@@ -298,21 +303,15 @@ export function AcpChatPane({
 				transcript: string,
 				currentModeId: string | undefined,
 			) => {
-				if (sessionId) {
-					try {
-						await wiring.transport.closeSession({ sessionId });
-					} catch (error) {
-						console.warn("[acp-chat] could not stop the chat session", error);
-						toast.error(t({ message: "Couldn't stop the chat" }));
-						return;
-					}
-				}
-				if (!mounted.current) return;
-				onSwitchAgent({
+				const label =
+					agentConfigs?.find((config) => config.presetId === presetId)?.label ??
+					presetId;
+				const currentLabel =
+					agentConfigs?.find((config) => config.presetId === agent.id)?.label ??
+					agent.id;
+				const target: AgentSwitchTarget = {
 					presetId,
-					label:
-						agentConfigs?.find((config) => config.presetId === presetId)
-							?.label ?? presetId,
+					label,
 					model: nextModel,
 					// Never more access than the chat being left, unless the user
 					// already chose otherwise for the agent being switched to.
@@ -324,15 +323,50 @@ export function AcpChatPane({
 					handoffPrompt: transcript.trim()
 						? buildChatSessionHandoffPrompt({
 								transcript,
-								sourceAgentLabel: agentConfigs?.find(
-									(config) => config.presetId === agent.id,
-								)?.label,
+								sourceAgentLabel: currentLabel,
 							})
 						: null,
-				});
+				};
+				const { handoffPrompt } = target;
+				if (handoffPrompt && onForkAgent) {
+					alert({
+						title: t({ message: `Continue in a new ${label} chat?` }),
+						description: t({
+							message: `A chat can't switch to another provider partway through. Fork this conversation into a new ${label} chat instead. This ${currentLabel} chat stays open.`,
+						}),
+						actions: [
+							{
+								label: t({ message: "Fork to new chat" }),
+								variant: "default",
+								onClick: () => onForkAgent({ ...target, handoffPrompt }),
+							},
+							{ label: t({ message: "Cancel" }), variant: "ghost" },
+						],
+					});
+					return;
+				}
+				if (sessionId) {
+					try {
+						await wiring.transport.closeSession({ sessionId });
+					} catch (error) {
+						console.warn("[acp-chat] could not stop the chat session", error);
+						toast.error(t({ message: "Couldn't stop the chat" }));
+						return;
+					}
+				}
+				if (!mounted.current) return;
+				onSwitchAgent(target);
 			},
 		};
-	}, [agent, agentConfigs, onSwitchAgent, sessionId, t, wiring.transport]);
+	}, [
+		agent,
+		agentConfigs,
+		onSwitchAgent,
+		onForkAgent,
+		sessionId,
+		t,
+		wiring.transport,
+	]);
 
 	const sessionDead = stored?.session?.status === "dead";
 	const sessionStopped =

@@ -137,7 +137,12 @@ export function QuestionForm({
 	const submit = () => {
 		if (blocked) return;
 		const filled = Object.fromEntries(
-			Object.entries(values).filter(([, value]) => answerText(value) !== ""),
+			Object.entries(values)
+				.map(([key, value]) => [
+					key,
+					typeof value === "string" ? value.trim() : value,
+				])
+				.filter(([, value]) => answerText(value) !== ""),
 		);
 		onRespond(item.id, { type: "form", values: filled });
 	};
