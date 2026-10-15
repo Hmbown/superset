@@ -132,8 +132,7 @@ export function useSubmitWorkspace(
 			});
 			const startable = startableCloudEnvironments(environments);
 			const environment =
-				startable.find((row) => row.id === cloudTarget.environmentId) ??
-				(cloudTarget.repositoryId ? null : startable[0]);
+				startable.find((row) => row.id === cloudTarget.environmentId) ?? null;
 			if (!environment && !cloudTarget.repositoryId) {
 				toast.error(
 					t({

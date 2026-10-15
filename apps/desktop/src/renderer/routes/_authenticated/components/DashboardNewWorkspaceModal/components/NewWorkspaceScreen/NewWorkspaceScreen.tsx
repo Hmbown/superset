@@ -361,10 +361,14 @@ export function NewWorkspaceScreen({
 		selectedProject?.githubOwner && selectedProject.githubRepoName
 			? `${selectedProject.githubOwner}/${selectedProject.githubRepoName}`
 			: null;
-	const environmentOptions = environmentsForRepository(
-		startableCloudEnvironments(environmentsQuery.data ?? []),
-		draft.isSession ? null : projectRepositoryFullName,
-	);
+	// A cloud workspace without a project would be a session, which the cloud
+	// can't start yet; offer nothing rather than an unrelated repository.
+	const environmentOptions = draft.isSession
+		? []
+		: environmentsForRepository(
+				startableCloudEnvironments(environmentsQuery.data ?? []),
+				projectRepositoryFullName,
+			);
 	const areEnvironmentsLoaded = environmentsQuery.isSuccess;
 	// An explicit pick; otherwise Default, which resolves below.
 	const selectedEnvironment = environmentOptions.find(
@@ -642,6 +646,8 @@ export function NewWorkspaceScreen({
 		const selectedHostId = draft.hostId ?? machineId;
 		// A cloud workspace is provisioned by the API from its environment: no
 		// host readiness to wait on, and the project only narrows the list.
+		if (selectedHostId === CLOUD_HOST_ID && draft.isSession)
+			return t({ message: "Cloud workspaces need a project for now" });
 		if (selectedHostId === CLOUD_HOST_ID)
 			return areEnvironmentsLoaded && defaultHint === null
 				? t({ message: "Select an environment" })
@@ -1133,6 +1139,7 @@ export function NewWorkspaceScreen({
 									}
 									onCreateEnvironment={() => setIsCreatingEnvironment(true)}
 									isLoading={!areEnvironmentsLoaded}
+									isSessionUnavailable={draft.isSession}
 								/>
 							)}
 							{isCreatingEnvironment && activeOrganizationId && (

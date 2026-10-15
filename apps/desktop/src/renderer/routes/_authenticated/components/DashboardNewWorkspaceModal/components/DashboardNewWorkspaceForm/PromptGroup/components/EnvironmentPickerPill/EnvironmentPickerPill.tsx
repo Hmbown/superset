@@ -38,6 +38,8 @@ interface EnvironmentPickerPillProps {
 	/** Shown when no environment carries the selected project's repository. */
 	repositoryFullName?: string;
 	isLoading?: boolean;
+	/** No project is picked: Default would be a cloud session, which can't start yet. */
+	isSessionUnavailable?: boolean;
 }
 
 export function EnvironmentPickerPill({
@@ -48,12 +50,17 @@ export function EnvironmentPickerPill({
 	onCreateEnvironment,
 	repositoryFullName,
 	isLoading = false,
+	isSessionUnavailable = false,
 }: EnvironmentPickerPillProps) {
 	const { t } = useLingui();
 	const [open, setOpen] = useState(false);
 	const offersDefault = defaultHint !== null;
 	const isDefault = offersDefault && selectedEnvironment === undefined;
-	const needsSetup = !isLoading && !offersDefault && environments.length === 0;
+	const needsSetup =
+		!isSessionUnavailable &&
+		!isLoading &&
+		!offersDefault &&
+		environments.length === 0;
 	const pick = (environmentId: string | null) => {
 		onSelectEnvironment(environmentId);
 		setOpen(false);
@@ -70,7 +77,7 @@ export function EnvironmentPickerPill({
 					)}
 					<span className="truncate">
 						{selectedEnvironment?.name ??
-							(isDefault
+							(isDefault || isSessionUnavailable
 								? t({ message: "Default" })
 								: needsSetup
 									? t({ message: "Set up environment" })
@@ -84,63 +91,82 @@ export function EnvironmentPickerPill({
 				className={`w-64 p-0 ${FORM_PICKER_MENU_CLASS}`}
 				onWheel={(event) => event.stopPropagation()}
 			>
-				<Command>
-					<CommandInput
-						placeholder={t({
-							message: "Search environments...",
-						})}
-					/>
-					<CommandList className="max-h-[min(280px,var(--radix-popover-content-available-height))]">
-						<CommandEmpty className="px-3 py-3 text-center text-xs text-muted-foreground">
-							{needsSetup && repositoryFullName ? (
-								<Trans>No environment for {repositoryFullName}</Trans>
-							) : needsSetup ? (
-								<Trans>No environments yet</Trans>
-							) : (
-								<Trans>No environments found.</Trans>
-							)}
-						</CommandEmpty>
-						{(offersDefault || environments.length > 0) && (
-							<CommandGroup>
-								{offersDefault && (
-									<CommandItem onSelect={() => pick(null)} value="default">
-										<LuContainer className="size-4 text-muted-foreground" />
-										<span className="flex-1">
-											<Trans>Default</Trans>
-										</span>
-										{isDefault && <HiCheck className="size-4 shrink-0" />}
-									</CommandItem>
+				{isSessionUnavailable ? (
+					<div className="p-1">
+						<div className="flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-muted-foreground">
+							<LuContainer className="size-4" />
+							<span className="flex-1">
+								<Trans>Default</Trans>
+							</span>
+						</div>
+						<p className="px-2 pt-1 pb-1.5 text-xs leading-snug text-muted-foreground">
+							<Trans>
+								Cloud workspaces without a project are coming. Pick a project
+								for now.
+							</Trans>
+						</p>
+					</div>
+				) : (
+					<Command>
+						<CommandInput
+							placeholder={t({
+								message: "Search environments...",
+							})}
+						/>
+						<CommandList className="max-h-[min(280px,var(--radix-popover-content-available-height))]">
+							<CommandEmpty className="px-3 py-3 text-center text-xs text-muted-foreground">
+								{needsSetup && repositoryFullName ? (
+									<Trans>No environment for {repositoryFullName}</Trans>
+								) : needsSetup ? (
+									<Trans>No environments yet</Trans>
+								) : (
+									<Trans>No environments found.</Trans>
 								)}
-								{environments.map((environment) => (
-									<CommandItem
-										key={environment.id}
-										value={environment.name}
-										onSelect={() => pick(environment.id)}
-									>
-										<LuContainer className="size-4 text-muted-foreground" />
-										<span className="flex-1 truncate">{environment.name}</span>
-										{environment.id === selectedEnvironment?.id && (
-											<HiCheck className="size-4 shrink-0" />
-										)}
-									</CommandItem>
-								))}
+							</CommandEmpty>
+							{(offersDefault || environments.length > 0) && (
+								<CommandGroup>
+									{offersDefault && (
+										<CommandItem onSelect={() => pick(null)} value="default">
+											<LuContainer className="size-4 text-muted-foreground" />
+											<span className="flex-1">
+												<Trans>Default</Trans>
+											</span>
+											{isDefault && <HiCheck className="size-4 shrink-0" />}
+										</CommandItem>
+									)}
+									{environments.map((environment) => (
+										<CommandItem
+											key={environment.id}
+											value={environment.name}
+											onSelect={() => pick(environment.id)}
+										>
+											<LuContainer className="size-4 text-muted-foreground" />
+											<span className="flex-1 truncate">
+												{environment.name}
+											</span>
+											{environment.id === selectedEnvironment?.id && (
+												<HiCheck className="size-4 shrink-0" />
+											)}
+										</CommandItem>
+									))}
+								</CommandGroup>
+							)}
+							<CommandSeparator alwaysRender />
+							<CommandGroup forceMount>
+								<CommandItem
+									forceMount
+									onSelect={() => {
+										setOpen(false);
+										onCreateEnvironment();
+									}}
+								>
+									<HiMiniPlus className="size-4" />
+									<Trans>New environment</Trans>
+								</CommandItem>
 							</CommandGroup>
-						)}
-						<CommandSeparator alwaysRender />
-						<CommandGroup forceMount>
-							<CommandItem
-								forceMount
-								onSelect={() => {
-									setOpen(false);
-									onCreateEnvironment();
-								}}
-							>
-								<HiMiniPlus className="size-4" />
-								<Trans>New environment</Trans>
-							</CommandItem>
-						</CommandGroup>
-					</CommandList>
-				</Command>
+						</CommandList>
+					</Command>
+				)}
 			</PopoverContent>
 		</Popover>
 	);
