@@ -366,20 +366,34 @@ export function NewWorkspaceScreen({
 		draft.isSession ? null : projectRepositoryFullName,
 	);
 	const areEnvironmentsLoaded = environmentsQuery.isSuccess;
-	const selectedEnvironment =
-		environmentOptions.find((row) => row.id === draft.environmentId) ??
-		environmentOptions[0];
-	// Submit falls back to the first environment of all; keep the draft on the
-	// one this project's list shows.
-	useEffect(() => {
-		if (!isCloudHost || !selectedEnvironment) return;
-		if (selectedEnvironment.id === draft.environmentId) return;
-		updateDraft({ environmentId: selectedEnvironment.id });
-	}, [isCloudHost, selectedEnvironment, draft.environmentId, updateDraft]);
+	// An explicit pick; otherwise Default, which resolves below.
+	const selectedEnvironment = environmentOptions.find(
+		(row) => row.id === draft.environmentId,
+	);
+	// With no environment for the project's repository, the API starts from
+	// the repository's default one — as long as the GitHub App can see it.
+	const githubRepositoriesQuery =
+		cloudTrpc.integration.github.listRepositories.useQuery(
+			{ organizationId: activeOrganizationId ?? "" },
+			{ enabled: isCloudHost && !!activeOrganizationId },
+		);
+	const defaultRepository =
+		!draft.isSession && projectRepositoryFullName
+			? (githubRepositoriesQuery.data?.find(
+					(repository) =>
+						repository.fullName.toLowerCase() ===
+						projectRepositoryFullName.toLowerCase(),
+				) ?? null)
+			: null;
+	// Default: the project's first environment, else one the API makes for
+	// the project's repository on create.
+	const resolvedEnvironment = selectedEnvironment ?? environmentOptions[0];
+	const defaultHint =
+		resolvedEnvironment?.name ?? defaultRepository?.fullName ?? null;
 	const [isCreatingEnvironment, setIsCreatingEnvironment] = useState(false);
 	const cloudRepository = useMemo(() => {
 		if (!isCloudHost) return null;
-		const primary = selectedEnvironment?.repositories?.[0];
+		const primary = resolvedEnvironment?.repositories?.[0] ?? defaultRepository;
 		return primary
 			? {
 					owner: primary.owner,
@@ -387,7 +401,7 @@ export function NewWorkspaceScreen({
 					defaultBranch: primary.defaultBranch,
 				}
 			: null;
-	}, [isCloudHost, selectedEnvironment]);
+	}, [isCloudHost, resolvedEnvironment, defaultRepository]);
 	const isPromptEmpty = !draft.prompt.trim();
 	// The markdown editor is uncontrolled after mount, so programmatic prompt
 	// insertion bumps promptSeed to remount it with the new content.
@@ -617,6 +631,10 @@ export function NewWorkspaceScreen({
 		modeSupport ? selectedMode : null,
 		uploadAttachments,
 		promptContext,
+		{
+			environmentId: resolvedEnvironment?.id ?? null,
+			repositoryId: defaultRepository?.id ?? null,
+		},
 	);
 
 	const { otherHosts } = useWorkspaceHostOptions();
@@ -625,7 +643,7 @@ export function NewWorkspaceScreen({
 		// A cloud workspace is provisioned by the API from its environment: no
 		// host readiness to wait on, and the project only narrows the list.
 		if (selectedHostId === CLOUD_HOST_ID)
-			return areEnvironmentsLoaded && !selectedEnvironment
+			return areEnvironmentsLoaded && defaultHint === null
 				? t({ message: "Select an environment" })
 				: null;
 		if (isProjectPreselectionPending || (!selectedProject && !draft.isSession))
@@ -657,7 +675,7 @@ export function NewWorkspaceScreen({
 		activeHostUrl,
 		otherHosts,
 		areEnvironmentsLoaded,
-		selectedEnvironment,
+		defaultHint,
 		t,
 	]);
 
@@ -1104,6 +1122,7 @@ export function NewWorkspaceScreen({
 								<EnvironmentPickerPill
 									selectedEnvironment={selectedEnvironment}
 									environments={environmentOptions}
+									defaultHint={defaultHint}
 									repositoryFullName={
 										draft.isSession
 											? undefined

@@ -34,6 +34,15 @@ export function useSubmitWorkspace(
 	selectedMode: string | null,
 	uploadAttachments: UseUploadAttachmentsApi,
 	promptContext: NewWorkspacePromptContextApi,
+	/**
+	 * Where a cloud workspace starts: the environment the create surface
+	 * resolved, else the project's GitHub repository, whose default
+	 * environment the API makes on first use.
+	 */
+	cloudTarget: { environmentId: string | null; repositoryId: string | null } = {
+		environmentId: null,
+		repositoryId: null,
+	},
 ) {
 	const { t } = useLingui();
 	const navigate = useNavigate();
@@ -123,8 +132,9 @@ export function useSubmitWorkspace(
 			});
 			const startable = startableCloudEnvironments(environments);
 			const environment =
-				startable.find((row) => row.id === draft.environmentId) ?? startable[0];
-			if (!environment) {
+				startable.find((row) => row.id === cloudTarget.environmentId) ??
+				(cloudTarget.repositoryId ? null : startable[0]);
+			if (!environment && !cloudTarget.repositoryId) {
 				toast.error(
 					t({
 						message:
@@ -157,7 +167,9 @@ export function useSubmitWorkspace(
 					: null;
 				const created = await createCloudWorkspace.mutateAsync({
 					organizationId: activeOrganizationId,
-					environmentId: environment.id,
+					...(environment
+						? { environmentId: environment.id }
+						: { repositoryId: cloudTarget.repositoryId ?? undefined }),
 					name: workspaceName ?? undefined,
 					// Linked PR and issue bodies can push this past the create input's
 					// 20,000-character cap.
@@ -208,6 +220,8 @@ export function useSubmitWorkspace(
 				});
 				// Server truth on top of the patch — the generated name lands here.
 				void utils.cloudWorkspace.list.invalidate();
+				// A default environment made for the repository now exists to pick.
+				if (!environment) void utils.environment.list.invalidate();
 			} catch (error) {
 				toast.error(
 					errorMessage(
@@ -390,6 +404,8 @@ export function useSubmitWorkspace(
 		t,
 		uploadAttachments,
 		utils,
+		cloudTarget.environmentId,
+		cloudTarget.repositoryId,
 	]);
 
 	const submitWorkspace = useCallback(async () => {

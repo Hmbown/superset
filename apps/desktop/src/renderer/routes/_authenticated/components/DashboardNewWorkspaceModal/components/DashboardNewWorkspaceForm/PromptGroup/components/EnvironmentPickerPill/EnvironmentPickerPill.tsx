@@ -20,9 +20,17 @@ export interface EnvironmentOption {
 }
 
 interface EnvironmentPickerPillProps {
+	/** The explicit pick; undefined means Default. */
 	selectedEnvironment: EnvironmentOption | undefined;
 	environments: EnvironmentOption[];
-	onSelectEnvironment: (environmentId: string) => void;
+	/**
+	 * What Default resolves to for this project — an environment's name, or
+	 * the repository a new one would be made for. Null when nothing can work
+	 * for the project, so Default is not offered.
+	 */
+	defaultHint: string | null;
+	/** Null picks Default. */
+	onSelectEnvironment: (environmentId: string | null) => void;
 	onCreateEnvironment: () => void;
 	/** Shown when no environment carries the selected project's repository. */
 	repositoryFullName?: string;
@@ -32,6 +40,7 @@ interface EnvironmentPickerPillProps {
 export function EnvironmentPickerPill({
 	selectedEnvironment,
 	environments,
+	defaultHint,
 	onSelectEnvironment,
 	onCreateEnvironment,
 	repositoryFullName,
@@ -39,33 +48,37 @@ export function EnvironmentPickerPill({
 }: EnvironmentPickerPillProps) {
 	const { t } = useLingui();
 	const [open, setOpen] = useState(false);
-	const isEmpty = !isLoading && environments.length === 0;
-	const createEnvironment = () => {
+	const offersDefault = defaultHint !== null;
+	const isDefault = offersDefault && selectedEnvironment === undefined;
+	const needsSetup = !isLoading && !offersDefault && environments.length === 0;
+	const pick = (environmentId: string | null) => {
+		onSelectEnvironment(environmentId);
 		setOpen(false);
-		onCreateEnvironment();
 	};
 
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
 				<FormPickerTrigger className="max-w-[140px]">
-					{isEmpty ? (
+					{needsSetup ? (
 						<HiMiniPlus className="size-4 shrink-0 text-muted-foreground" />
 					) : (
 						<LuLayers className="size-4 shrink-0 text-muted-foreground" />
 					)}
 					<span className="truncate">
 						{selectedEnvironment?.name ??
-							(isEmpty
-								? t({ message: "Set up environment" })
-								: t({ message: "Select environment" }))}
+							(isDefault
+								? t({ message: "Default" })
+								: needsSetup
+									? t({ message: "Set up environment" })
+									: t({ message: "Select environment" }))}
 					</span>
 					<HiChevronUpDown className="size-3 shrink-0" />
 				</FormPickerTrigger>
 			</PopoverTrigger>
 			<PopoverContent
 				align="start"
-				className="w-60 p-0"
+				className="w-64 p-0"
 				onWheel={(event) => event.stopPropagation()}
 			>
 				<Command>
@@ -76,24 +89,33 @@ export function EnvironmentPickerPill({
 					/>
 					<CommandList className="max-h-[min(280px,var(--radix-popover-content-available-height))]">
 						<CommandEmpty className="px-3 py-3 text-center text-xs text-muted-foreground">
-							{isEmpty && repositoryFullName ? (
+							{needsSetup && repositoryFullName ? (
 								<Trans>No environment for {repositoryFullName}</Trans>
-							) : isEmpty ? (
+							) : needsSetup ? (
 								<Trans>No environments yet</Trans>
 							) : (
 								<Trans>No environments found.</Trans>
 							)}
 						</CommandEmpty>
-						{environments.length > 0 && (
+						{(offersDefault || environments.length > 0) && (
 							<CommandGroup>
+								{offersDefault && (
+									<CommandItem onSelect={() => pick(null)} value="default">
+										<LuLayers className="size-4 text-muted-foreground" />
+										<span className="shrink-0">
+											<Trans>Default</Trans>
+										</span>
+										<span className="min-w-0 flex-1 truncate text-xs text-muted-foreground">
+											{defaultHint}
+										</span>
+										{isDefault && <HiCheck className="size-4 shrink-0" />}
+									</CommandItem>
+								)}
 								{environments.map((environment) => (
 									<CommandItem
 										key={environment.id}
 										value={environment.name}
-										onSelect={() => {
-											onSelectEnvironment(environment.id);
-											setOpen(false);
-										}}
+										onSelect={() => pick(environment.id)}
 									>
 										<LuLayers className="size-4 text-muted-foreground" />
 										<span className="flex-1 truncate">{environment.name}</span>
@@ -106,7 +128,13 @@ export function EnvironmentPickerPill({
 						)}
 						<CommandSeparator alwaysRender />
 						<CommandGroup forceMount>
-							<CommandItem forceMount onSelect={createEnvironment}>
+							<CommandItem
+								forceMount
+								onSelect={() => {
+									setOpen(false);
+									onCreateEnvironment();
+								}}
+							>
 								<HiMiniPlus className="size-4" />
 								<Trans>New environment</Trans>
 							</CommandItem>
