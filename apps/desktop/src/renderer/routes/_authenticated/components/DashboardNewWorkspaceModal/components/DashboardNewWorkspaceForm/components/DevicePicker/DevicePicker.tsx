@@ -17,10 +17,10 @@ import { useEffect } from "react";
 import {
 	HiCheck,
 	HiChevronUpDown,
-	HiOutlineCloud,
 	HiOutlineComputerDesktop,
 	HiOutlineServer,
 } from "react-icons/hi2";
+import { CloudGlyph } from "renderer/routes/_authenticated/components/CloudGlyph";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import { FormPickerTrigger } from "../../PromptGroup/components/FormPickerTrigger";
 import { useWorkspaceHostOptions } from "./hooks/useWorkspaceHostOptions";
@@ -66,7 +66,7 @@ interface DevicePickerProps {
 
 function getSelectedIcon(hostId: string | null, machineId: string | null) {
 	if (hostId === CLOUD_HOST_ID) {
-		return <HiOutlineCloud className="size-4 shrink-0" />;
+		return <CloudGlyph className="size-4 shrink-0" />;
 	}
 	if (hostId === null || hostId === machineId) {
 		return <HiOutlineComputerDesktop className="size-4 shrink-0" />;
@@ -147,7 +147,7 @@ export function DevicePicker({
 				</DropdownMenuItem>
 				{cloudEnabled && (
 					<DropdownMenuItem onSelect={() => onSelectHostId(CLOUD_HOST_ID)}>
-						<HiOutlineCloud className="size-4" />
+						<CloudGlyph className="size-4" />
 						<span className="flex-1">
 							<Trans>Cloud</Trans>
 						</span>
