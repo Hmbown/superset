@@ -123,7 +123,7 @@ export function EnvironmentRepositoryPicker({
 									<CommandGroup>
 										{addable.map((repository) => (
 											<CommandItem
-												className="text-xs"
+												className="rounded-md text-xs"
 												key={repository.id}
 												onSelect={() => {
 													onToggle(repository.id);
@@ -145,7 +145,7 @@ export function EnvironmentRepositoryPicker({
 										<CommandGroup forceMount>
 											{onRefresh && (
 												<CommandItem
-													className="text-xs"
+													className="rounded-md text-xs"
 													disabled={isRefreshing}
 													forceMount
 													onSelect={onRefresh}
@@ -161,7 +161,7 @@ export function EnvironmentRepositoryPicker({
 											)}
 											{onConfigureGitHubApp && (
 												<CommandItem
-													className="text-xs"
+													className="rounded-md text-xs"
 													forceMount
 													onSelect={() => {
 														setOpen(false);

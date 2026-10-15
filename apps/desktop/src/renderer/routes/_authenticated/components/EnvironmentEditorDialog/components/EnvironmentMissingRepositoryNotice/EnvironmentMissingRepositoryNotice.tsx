@@ -20,9 +20,9 @@ export function EnvironmentMissingRepositoryNotice({
 		owner.toLowerCase() === installedAccountLogin.toLowerCase();
 
 	return (
-		<div className="flex items-start gap-2.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2.5">
-			<LuTriangleAlert className="mt-px size-4 shrink-0 text-amber-500" />
-			<p className="flex-1 text-xs leading-relaxed text-foreground">
+		<div className="flex items-start gap-2.5 rounded-lg border border-amber-500/15 bg-amber-500/[0.04] px-3 py-2.5">
+			<LuTriangleAlert className="mt-px size-3.5 shrink-0 text-amber-500/70" />
+			<p className="flex-1 text-xs leading-relaxed text-foreground/75">
 				{installedAccountLogin === null ? (
 					<Trans>
 						Connect GitHub in Integrations to add {repositoryFullName}.
