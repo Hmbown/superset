@@ -11,7 +11,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@superset/ui/popover";
 import { useState } from "react";
 import { HiCheck, HiChevronUpDown, HiMiniPlus } from "react-icons/hi2";
-import { LuLayers } from "react-icons/lu";
+import { LuContainer } from "react-icons/lu";
 import {
 	FORM_PICKER_MENU_CLASS,
 	FormPickerTrigger,
@@ -66,7 +66,7 @@ export function EnvironmentPickerPill({
 					{needsSetup ? (
 						<HiMiniPlus className="size-4 shrink-0 text-muted-foreground" />
 					) : (
-						<LuLayers className="size-4 shrink-0 text-muted-foreground" />
+						<LuContainer className="size-4 shrink-0 text-muted-foreground" />
 					)}
 					<span className="truncate">
 						{selectedEnvironment?.name ??
@@ -104,7 +104,7 @@ export function EnvironmentPickerPill({
 							<CommandGroup>
 								{offersDefault && (
 									<CommandItem onSelect={() => pick(null)} value="default">
-										<LuLayers className="size-4 text-muted-foreground" />
+										<LuContainer className="size-4 text-muted-foreground" />
 										<span className="flex-1">
 											<Trans>Default</Trans>
 										</span>
@@ -117,7 +117,7 @@ export function EnvironmentPickerPill({
 										value={environment.name}
 										onSelect={() => pick(environment.id)}
 									>
-										<LuLayers className="size-4 text-muted-foreground" />
+										<LuContainer className="size-4 text-muted-foreground" />
 										<span className="flex-1 truncate">{environment.name}</span>
 										{environment.id === selectedEnvironment?.id && (
 											<HiCheck className="size-4 shrink-0" />
