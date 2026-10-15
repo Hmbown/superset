@@ -10,6 +10,7 @@ import {
 } from "react";
 import { useOptimisticActions } from "renderer/routes/_authenticated/hooks/useOptimisticActions";
 import { RenameBranchDialog } from "renderer/screens/main/components/WorkspaceSidebar/WorkspaceListItem/components";
+import { useNewDashboardSidebarEnabled } from "../../hooks/useNewDashboardSidebarEnabled";
 import {
 	useDashboardSidebarHoverActions,
 	useDashboardSidebarIsHovered,
@@ -22,6 +23,7 @@ import type {
 } from "../../types";
 import { DashboardSidebarCollapsedWorkspaceButton } from "./components/DashboardSidebarCollapsedWorkspaceButton";
 import { DashboardSidebarExpandedWorkspaceRow } from "./components/DashboardSidebarExpandedWorkspaceRow";
+import { DashboardSidebarLegacyExpandedWorkspaceRow } from "./components/DashboardSidebarLegacyExpandedWorkspaceRow";
 import {
 	DashboardSidebarWorkspaceBulkContextMenu,
 	useWorkspaceRowContextMenu,
@@ -72,7 +74,8 @@ export function DashboardSidebarWorkspaceItem({
 	} = workspace;
 	const isSessionWorkspace = workspace.type === "session";
 	const isCloudWorkspace = hostType === "cloud";
-	const { status: workspaceStatus } = useSidebarWorkspaceStatus(id);
+	const { status: workspaceStatus, diffStats } = useSidebarWorkspaceStatus(id);
+	const isNewSidebar = useNewDashboardSidebarEnabled();
 	const {
 		cancelRename,
 		pendingName,
@@ -316,30 +319,58 @@ export function DashboardSidebarWorkspaceItem({
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 		>
-			<DashboardSidebarExpandedWorkspaceRow
-				workspace={displayWorkspace}
-				isActive={isActive}
-				isRenaming={isRenaming}
-				renameValue={renameValue}
-				shortcutLabel={shortcutLabel}
-				pinnedContext={pinnedContext}
-				workspaceStatus={workspaceStatus}
-				isInSection={isInSection}
-				indentation={indentation}
-				isBulkSelectable={onSelectionClick != null}
-				isSelected={isSelected}
-				onClick={handleExpandedClick}
-				onMouseDown={handleExpandedMouseDown}
-				onContextMenu={handleExpandedContextMenu}
-				onKeyboardActivate={handleExpandedKeyboardActivate}
-				onWorkspaceChipsClick={handleWorkspaceChipsClick}
-				onDoubleClick={isPending ? undefined : startRename}
-				onRemoveFromSidebarClick={handleRemoveFromSidebar}
-				onCloseWorkspaceClick={requestDelete}
-				onRenameValueChange={setRenameValue}
-				onSubmitRename={submitRename}
-				onCancelRename={cancelRename}
-			/>
+			{isNewSidebar ? (
+				<DashboardSidebarExpandedWorkspaceRow
+					workspace={displayWorkspace}
+					isActive={isActive}
+					isRenaming={isRenaming}
+					renameValue={renameValue}
+					shortcutLabel={shortcutLabel}
+					pinnedContext={pinnedContext}
+					workspaceStatus={workspaceStatus}
+					isInSection={isInSection}
+					indentation={indentation}
+					isBulkSelectable={onSelectionClick != null}
+					isSelected={isSelected}
+					onClick={handleExpandedClick}
+					onMouseDown={handleExpandedMouseDown}
+					onContextMenu={handleExpandedContextMenu}
+					onKeyboardActivate={handleExpandedKeyboardActivate}
+					onWorkspaceChipsClick={handleWorkspaceChipsClick}
+					onDoubleClick={isPending ? undefined : startRename}
+					onRemoveFromSidebarClick={handleRemoveFromSidebar}
+					onCloseWorkspaceClick={requestDelete}
+					onRenameValueChange={setRenameValue}
+					onSubmitRename={submitRename}
+					onCancelRename={cancelRename}
+				/>
+			) : (
+				<DashboardSidebarLegacyExpandedWorkspaceRow
+					workspace={displayWorkspace}
+					isActive={isActive}
+					isRenaming={isRenaming}
+					renameValue={renameValue}
+					shortcutLabel={shortcutLabel}
+					pinnedContext={pinnedContext}
+					workspaceStatus={workspaceStatus}
+					isInSection={isInSection}
+					indentation={indentation}
+					isBulkSelectable={onSelectionClick != null}
+					isSelected={isSelected}
+					onClick={handleExpandedClick}
+					onMouseDown={handleExpandedMouseDown}
+					onContextMenu={handleExpandedContextMenu}
+					onKeyboardActivate={handleExpandedKeyboardActivate}
+					onWorkspaceChipsClick={handleWorkspaceChipsClick}
+					onDoubleClick={isPending ? undefined : startRename}
+					onRemoveFromSidebarClick={handleRemoveFromSidebar}
+					onCloseWorkspaceClick={requestDelete}
+					onRenameValueChange={setRenameValue}
+					onSubmitRename={submitRename}
+					onCancelRename={cancelRename}
+					diffStats={isPending ? null : diffStats}
+				/>
+			)}
 		</div>
 	);
 
