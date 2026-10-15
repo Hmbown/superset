@@ -1758,6 +1758,9 @@ msgstr "從資料夾新增專案..."
 msgid "Add prompt e.g. look for crashes in $sentry"
 msgstr "新增提示詞，例如：在$sentry中查詢崩潰"
 
+msgid "Add repository"
+msgstr "新增儲存庫"
+
 msgid "Add script"
 msgstr "新增指令碼"
 
@@ -3580,9 +3583,6 @@ msgstr "選擇「平日」等預設，或自行撰寫 RRule。一個自動化可
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "開啟議題前，請先在GitHub議題中選擇一個專案。"
-
-msgid "Choose a repository"
-msgstr "選擇儲存庫"
 
 msgid "Choose a section."
 msgstr "選擇一個分區。"
@@ -13368,6 +13368,9 @@ msgstr "移除{0}"
 
 msgid "Remove {label}?"
 msgstr "移除{label}？"
+
+msgid "Remove {repositoryName}"
+msgstr "移除 {repositoryName}"
 
 msgid "Remove attachment"
 msgstr "移除附件"

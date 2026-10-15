@@ -343,14 +343,22 @@ export function EnvironmentEditorDialog({
 				<div className="flex flex-col gap-3 px-5 pb-5">
 					<div className="divide-y divide-border/70 overflow-hidden rounded-lg border border-border/70">
 						<EnvironmentPropertyRow
+							htmlFor="environment-name"
+							label={<Trans>Name</Trans>}
+						>
+							<Input
+								className="h-10 w-full px-3 placeholder:text-muted-foreground"
+								id="environment-name"
+								onChange={(event) => setName(event.target.value)}
+								placeholder={t({ message: "monorepo" })}
+								value={name}
+								variant="ghost"
+							/>
+						</EnvironmentPropertyRow>
+
+						<EnvironmentPropertyRow
 							htmlFor="environment-repositories"
-							label={
-								selectedRepositories.length > 1 ? (
-									<Trans>Repositories</Trans>
-								) : (
-									<Trans>Repository</Trans>
-								)
-							}
+							label={<Trans>Repositories</Trans>}
 						>
 							<EnvironmentRepositoryPicker
 								disabled={repositoriesFrozen}
@@ -365,20 +373,6 @@ export function EnvironmentEditorDialog({
 								onToggle={toggleRepository}
 								repositories={repositories}
 								selected={selectedRepositories}
-							/>
-						</EnvironmentPropertyRow>
-
-						<EnvironmentPropertyRow
-							htmlFor="environment-name"
-							label={<Trans>Name</Trans>}
-						>
-							<Input
-								className="h-10 w-full px-3 placeholder:text-muted-foreground"
-								id="environment-name"
-								onChange={(event) => setName(event.target.value)}
-								placeholder={t({ message: "monorepo" })}
-								value={name}
-								variant="ghost"
 							/>
 						</EnvironmentPropertyRow>
 

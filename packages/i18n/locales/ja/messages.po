@@ -1758,6 +1758,9 @@ msgstr "フォルダからプロジェクトを追加..."
 msgid "Add prompt e.g. look for crashes in $sentry"
 msgstr "プロンプトを追加 例: $sentryでクラッシュを探す"
 
+msgid "Add repository"
+msgstr "リポジトリを追加"
+
 msgid "Add script"
 msgstr "スクリプトを追加"
 
@@ -3580,9 +3583,6 @@ msgstr "「平日」などのプリセットを選ぶか、カスタムのRRule�
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "issueを開く前に、GitHub issueでプロジェクトを選択してください。"
-
-msgid "Choose a repository"
-msgstr "リポジトリを選択"
 
 msgid "Choose a section."
 msgstr "セクションを選んでください。"
@@ -13368,6 +13368,9 @@ msgstr "{0}を削除"
 
 msgid "Remove {label}?"
 msgstr "{label}を削除しますか?"
+
+msgid "Remove {repositoryName}"
+msgstr "{repositoryName} を削除"
 
 msgid "Remove attachment"
 msgstr "添付ファイルを削除"
