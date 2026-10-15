@@ -230,6 +230,8 @@ export function SessionView({
 	);
 
 	const focusComposer = useCallback(() => composerRef.current?.focus(), []);
+	const [revealMessageId, setRevealMessageId] = useState<string | null>(null);
+	const clearRevealMessage = useCallback(() => setRevealMessageId(null), []);
 	const timelineRef = useRef(timeline);
 	timelineRef.current = timeline;
 	const snapshotRef = useRef(session.snapshot);
@@ -379,14 +381,18 @@ export function SessionView({
 							onLoadOlder={loadOlder}
 							onRequestItemBodies={session.requestItemBodies}
 							onRespond={onRespond}
+							onMessageRevealed={clearRevealMessage}
 							onRetryPrompt={session.retryPrompt}
 							outbox={session.outbox}
+							revealMessageId={revealMessageId}
+							sessionId={client.sessionId}
 							snapshot={session.snapshot}
 						/>
 						{rail.length > 1 && (
 							<ChatHistorySidebarScroller
 								className="absolute inset-y-0 left-0 my-auto hidden h-fit max-h-full flex-col pl-3 @[56rem]:flex"
 								messages={rail}
+								onMessageSelect={setRevealMessageId}
 							/>
 						)}
 					</div>
