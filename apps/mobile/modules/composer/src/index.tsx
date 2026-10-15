@@ -49,6 +49,7 @@ interface NativeComposerViewProps {
 	onQuickKeysActionPress?: () => void;
 	onHeightChange?: (event: { nativeEvent: { height: number } }) => void;
 	onEdgeChange?: (event: { nativeEvent: { inset: number } }) => void;
+	reportsEdge?: boolean;
 	onPaste?: (event: { nativeEvent: { items: ComposerPastedItem[] } }) => void;
 	onDraftChange?: (event: { nativeEvent: { text: string } }) => void;
 	onRemoveAttachment?: (event: { nativeEvent: { id: string } }) => void;
@@ -580,6 +581,7 @@ export const Composer = forwardRef<ComposerHandle, ComposerProps>(
 				onQuickKeysActionPress={onQuickKeysActionPress}
 				onHeightChange={(event) => onHeightChange?.(event.nativeEvent.height)}
 				onEdgeChange={(event) => onEdgeChange?.(event.nativeEvent.inset)}
+				reportsEdge={onEdgeChange !== undefined}
 				onPaste={(event) => onPaste?.(event.nativeEvent.items)}
 				onDraftChange={(event) => onDraftChange?.(event.nativeEvent.text)}
 				onRemoveAttachment={(event) =>

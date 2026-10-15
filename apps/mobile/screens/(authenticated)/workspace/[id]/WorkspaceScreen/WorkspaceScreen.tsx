@@ -1283,7 +1283,9 @@ export function WorkspaceScreen() {
 					attachmentTarget={attachmentTarget}
 					onActiveChange={setComposerActive}
 					onHeightChange={setComposerHeight}
-					onEdgeChange={composerEdge.onEdgeChange}
+					onEdgeChange={
+						chatFollowsComposer ? composerEdge.onEdgeChange : undefined
+					}
 					onCopySelection={() => terminalRef.current?.copySelection()}
 					onQuickKey={handleQuickKey}
 					onSubmit={handleSubmit}

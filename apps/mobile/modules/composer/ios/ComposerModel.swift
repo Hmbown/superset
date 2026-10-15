@@ -35,6 +35,10 @@ final class ComposerModel {
   /// the outside tap any more.
   var backdrop: ComposerBackdrop = .dim
 
+  /// Whether the caller listens to `onEdgeChange`. Sampling the edge costs a
+  /// display link, so a composer nobody reads (Home, a terminal) runs none.
+  var reportsEdge = false
+
   /// Mirrors React Native's tray. The composer renders it and reports removals
   /// and taps back out; it never owns the list.
   var attachments: [ComposerAttachment] = []

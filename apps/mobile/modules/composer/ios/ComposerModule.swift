@@ -79,6 +79,10 @@ public final class ComposerModule: Module {
         view.overlay.model.backdrop = ComposerBackdrop(rawValue: backdrop) ?? .dim
       }
 
+      Prop("reportsEdge") { (view: ComposerAnchorView, reportsEdge: Bool) in
+        view.overlay.model.reportsEdge = reportsEdge
+      }
+
       /// Wrapped in a transaction, not left to an `.animation(_:value:)` on
       /// the SwiftUI side. The tray changing resizes the whole card, and only a
       /// real transaction reaches the parent that positions it — without this

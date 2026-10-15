@@ -138,9 +138,11 @@ final class ComposerOverlayController {
 /// SwiftUI only reports where an animated view ends up. The keyboard carrying
 /// the cluster, the card growing and the drag springing back are all animated,
 /// and their in-between positions exist only in the presentation layer of a
-/// UIKit view inside the cluster, so a display link samples one.
+/// UIKit view inside the cluster, so a display link samples one. Each change in
+/// `motion` starts that link, and it stops once the edge holds still.
 struct ComposerEdgeMarker: UIViewRepresentable {
   let model: ComposerModel
+  let motion: ComposerEdgeMotion
 
   func makeUIView(context: Context) -> ComposerEdgeMarkerView {
     let view = ComposerEdgeMarkerView()
@@ -151,13 +153,27 @@ struct ComposerEdgeMarker: UIViewRepresentable {
 
   func updateUIView(_ view: ComposerEdgeMarkerView, context: Context) {
     view.model = model
+    view.wake()
   }
 }
 
+/// What starts the cluster moving: the card opening or closing, the grabber
+/// drag, and the keyboard or a growing card shifting its laid-out top.
+struct ComposerEdgeMotion: Equatable {
+  let isExpanded: Bool
+  let dragOffset: CGFloat
+  let clusterTopY: CGFloat
+}
+
 final class ComposerEdgeMarkerView: UIView {
+  /// Long enough to span the gap between a layout change and the keyboard's
+  /// animation picking it up.
+  private static let idleFramesBeforePause = 12
+
   weak var model: ComposerModel?
   private var link: CADisplayLink?
   private var lastInset: CGFloat?
+  private var idleFrames = 0
 
   override func didMoveToWindow() {
     super.didMoveToWindow()
@@ -175,12 +191,22 @@ final class ComposerEdgeMarkerView: UIView {
     link?.invalidate()
   }
 
+  func wake() {
+    idleFrames = 0
+    link?.isPaused = false
+  }
+
   fileprivate func tick() {
     guard let window else { return }
     let current = layer.presentation() ?? layer
     let top = current.convert(current.bounds, to: nil).minY
     let inset = max(0, window.bounds.height - top)
-    if let lastInset, abs(lastInset - inset) < 0.5 { return }
+    if let lastInset, abs(lastInset - inset) < 0.5 {
+      idleFrames += 1
+      if idleFrames >= Self.idleFramesBeforePause { link?.isPaused = true }
+      return
+    }
+    idleFrames = 0
     lastInset = inset
     model?.onEdgeChange?(inset)
   }
