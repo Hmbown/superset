@@ -176,7 +176,6 @@ export type AcpImageStoreContext = {
 	replaying: boolean;
 };
 
-const SELECTION_WAIT_MS = 5000;
 const STARTUP_TIMEOUT_MS = 120_000;
 const REQUEST_TIMEOUT_MS = 30_000;
 const STDERR_TAIL_CHARS = 4000;
@@ -195,8 +194,6 @@ export type AcpAdapterOptions = SpawnAcpOptions & {
 	launch?: () => Promise<Pick<SpawnAcpOptions, "command" | "args" | "env">>;
 	/** Selected for a new session that asks for no mode, when the agent offers it. */
 	defaultModeId?: string;
-	/** How long a prompt waits for mode and option changes the agent has not answered. */
-	selectionWaitMs?: number;
 	startupTimeoutMs?: number;
 	requestTimeoutMs?: number;
 	resolveAttachment?: (attachmentId: string) => Promise<AcpAttachment | null>;
@@ -560,23 +557,7 @@ export class AcpAdapter implements HarnessAdapter {
 	/** An agent may run a prompt before it applies a mode or model it was just sent. */
 	private async selectionsApplied(): Promise<void> {
 		if (this.selectionsInFlight.size === 0) return;
-		let timer: ReturnType<typeof setTimeout> | undefined;
-		const confirmed = await Promise.race([
-			Promise.all(this.selectionsInFlight).then(() => true),
-			new Promise<boolean>((resolve) => {
-				timer = setTimeout(
-					() => resolve(false),
-					this.options.selectionWaitMs ?? SELECTION_WAIT_MS,
-				);
-			}),
-		]);
-		clearTimeout(timer);
-		if (!confirmed) {
-			this.emitNotice(
-				"error",
-				"The agent did not confirm a mode or model change. This turn can run with the previous setting.",
-			);
-		}
+		await Promise.all(this.selectionsInFlight);
 	}
 
 	setConfigOption(configId: string, value: string): void {

@@ -288,7 +288,7 @@ function startAdapter(
 	adapterOptions: Pick<
 		AcpAdapterOptions,
 		| "defaultModeId"
-		| "selectionWaitMs"
+		| "requestTimeoutMs"
 		| "backgroundDetailIntervalMs"
 		| "startupTimeoutMs"
 	> = {},
@@ -1543,7 +1543,7 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
-	it("says so when a prompt goes out before a change is confirmed", async () => {
+	it("sends the prompt after a change the agent never answers times out, with its error", async () => {
 		const agent = new FakeAcpAgent();
 		agent.holdSelections = true;
 		agent.newSessionConfigOptions = [
@@ -1563,19 +1563,23 @@ describe("AcpAdapter on protocol v2", () => {
 			agent,
 			undefined,
 			{},
-			{ defaultModeId: "bypassPermissions", selectionWaitMs: 5 },
+			{ defaultModeId: "bypassPermissions", requestTimeoutMs: 5 },
 		);
 		adapter.prompt([{ type: "text", text: "go" }]);
-		await Bun.sleep(20);
-		await flush();
+		await flush(16);
+		expect(agent.sent.map((f) => f.method)).not.toContain("session/prompt");
 
+		await Bun.sleep(20);
+		await flush(16);
 		expect(agent.sent.map((f) => f.method)).toContain("session/prompt");
 		expect(
+			sessionsOf(events)
+				.filter((session) => session.modeId !== undefined)
+				.pop()?.modeId,
+		).toBe("default");
+		expect(
 			itemsOf(events).some(
-				(item) =>
-					item.kind === "notice" &&
-					typeof item.text === "string" &&
-					item.text.includes("did not confirm a mode or model change"),
+				(item) => item.kind === "notice" && item.noticeKind === "error",
 			),
 		).toBe(true);
 
