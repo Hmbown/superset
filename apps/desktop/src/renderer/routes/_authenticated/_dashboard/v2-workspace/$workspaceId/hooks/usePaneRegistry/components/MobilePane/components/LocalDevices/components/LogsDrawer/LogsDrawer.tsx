@@ -19,6 +19,7 @@ import type { LogEntry, LogLevel } from "./utils/parseLogLine";
 
 interface LogsDrawerProps {
 	hubUrl: string;
+	hubToken: string;
 	platform: "ios" | "android";
 	deviceId: string;
 	deviceName: string;
@@ -33,6 +34,7 @@ const asText = (logs: LogEntry[]) =>
 
 export function LogsDrawer({
 	hubUrl,
+	hubToken,
 	platform,
 	deviceId,
 	deviceName,
@@ -48,6 +50,7 @@ export function LogsDrawer({
 	const [height, setHeight] = useState(DEFAULT_HEIGHT);
 	const { logs, clear, connected } = useDeviceLogs({
 		hubUrl,
+		hubToken,
 		platform,
 		deviceId,
 		scope,

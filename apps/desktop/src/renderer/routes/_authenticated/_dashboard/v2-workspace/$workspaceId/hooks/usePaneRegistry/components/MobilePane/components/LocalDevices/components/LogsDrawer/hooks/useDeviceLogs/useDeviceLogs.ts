@@ -11,6 +11,7 @@ export type LogScope = "all" | "app";
 
 interface UseDeviceLogsOptions {
 	hubUrl: string;
+	hubToken: string;
 	platform: "ios" | "android";
 	deviceId: string;
 	scope: LogScope;
@@ -24,6 +25,7 @@ interface UseDeviceLogsOptions {
  */
 export function useDeviceLogs({
 	hubUrl,
+	hubToken,
 	platform,
 	deviceId,
 	scope,
@@ -36,13 +38,25 @@ export function useDeviceLogs({
 	pausedRef.current = paused;
 
 	useEffect(() => {
-		const device = encodeURIComponent(deviceId);
-		const url =
+		const url = new URL(
 			platform === "ios"
-				? `${hubUrl}/vendor/serve-sim/logs?device=${device}${scope === "app" ? "&scope=user-apps" : ""}`
-				: `${hubUrl}/vendor/serve-emu/api/logcat?device=${device}`;
+				? `${hubUrl}/vendor/serve-sim/logs`
+				: `${hubUrl}/vendor/serve-emu/api/logcat`,
+		);
+		url.searchParams.set("device", deviceId);
+		url.searchParams.set("token", hubToken);
+		if (platform === "ios" && scope === "app") {
+			url.searchParams.set("scope", "user-apps");
+		}
 		setLogs([]);
 		const source = new EventSource(url);
+		const parse = <T>(data: string): T | null => {
+			try {
+				return JSON.parse(data) as T;
+			} catch {
+				return null;
+			}
+		};
 		const append = (entries: LogEntry[]) => {
 			if (pausedRef.current || entries.length === 0) return;
 			setLogs((current) => [...current, ...entries].slice(-MAX_LINES));
@@ -56,18 +70,20 @@ export function useDeviceLogs({
 			if (entry) append([entry]);
 		};
 		source.addEventListener("logs", (event) => {
-			const batch = JSON.parse((event as MessageEvent<string>).data) as {
-				lines?: Array<{ line: string }>;
-			};
+			const batch = parse<{ lines?: Array<{ line: string }> }>(
+				(event as MessageEvent<string>).data,
+			);
 			append(
-				(batch.lines ?? []).map(({ line }) => parseAndroidLine(line, nextId())),
+				(batch?.lines ?? []).map(({ line }) =>
+					parseAndroidLine(line, nextId()),
+				),
 			);
 		});
 		return () => {
 			source.close();
 			setConnected(false);
 		};
-	}, [hubUrl, platform, deviceId, scope]);
+	}, [hubUrl, hubToken, platform, deviceId, scope]);
 
 	const clear = useCallback(() => setLogs([]), []);
 	return { logs, clear, connected };

@@ -24,7 +24,12 @@ interface IosLogEvent {
 }
 
 export function parseIosEvent(data: string, id: string): LogEntry | null {
-	const event = JSON.parse(data) as IosLogEvent;
+	let event: IosLogEvent;
+	try {
+		event = JSON.parse(data) as IosLogEvent;
+	} catch {
+		return null;
+	}
 	if (!event.eventMessage) return null;
 	return {
 		id,

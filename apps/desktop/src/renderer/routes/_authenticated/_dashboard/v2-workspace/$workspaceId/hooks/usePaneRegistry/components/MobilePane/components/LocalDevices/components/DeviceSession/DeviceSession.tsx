@@ -16,6 +16,7 @@ import { ToolsPanel } from "../ToolsPanel";
 
 interface DeviceSessionProps {
 	hubUrl: string;
+	hubToken: string;
 	device: LocalDevice;
 	picker: ReactNode;
 }
@@ -23,7 +24,12 @@ interface DeviceSessionProps {
 const FALLBACK_ASPECT_RATIO = 9 / 19.5;
 const STALLED_AFTER_MS = 10_000;
 
-export function DeviceSession({ hubUrl, device, picker }: DeviceSessionProps) {
+export function DeviceSession({
+	hubUrl,
+	hubToken,
+	device,
+	picker,
+}: DeviceSessionProps) {
 	const client = useActiveDeviceClient(
 		{
 			platform: device.platform,
@@ -31,6 +37,7 @@ export function DeviceSession({ hubUrl, device, picker }: DeviceSessionProps) {
 			streamMode: device.platform === "ios" ? "mjpeg" : "h264",
 		},
 		hubUrl,
+		{ token: hubToken },
 	);
 	const screen = displayScreen(client.screen);
 	const aspectRatio = screen
@@ -101,6 +108,7 @@ export function DeviceSession({ hubUrl, device, picker }: DeviceSessionProps) {
 				{!expanded && logsOpen && (
 					<LogsDrawer
 						hubUrl={hubUrl}
+						hubToken={hubToken}
 						platform={device.platform}
 						deviceId={device.id}
 						deviceName={device.name}

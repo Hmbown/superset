@@ -23,6 +23,10 @@ describe("parseIosEvent", () => {
 		});
 	});
 
+	test("skips an event that is not JSON", () => {
+		expect(parseIosEvent(": keep-alive", "1")).toBe(null);
+	});
+
 	test("skips an event with no message", () => {
 		expect(parseIosEvent(JSON.stringify({ messageType: "Info" }), "1")).toBe(
 			null,
