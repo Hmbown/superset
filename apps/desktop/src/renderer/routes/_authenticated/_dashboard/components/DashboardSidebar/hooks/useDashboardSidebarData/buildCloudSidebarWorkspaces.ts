@@ -6,11 +6,11 @@ import type {
 	PullRequestState,
 } from "@superset/shared/pull-request";
 import { resolveProjectIconUrl } from "renderer/hooks/host-projects/resolveProjectIconUrl";
+import { cloudRepoProjectId } from "renderer/lib/github/cloudRepoProjectId";
 import { cloudPullRequestRefKey } from "renderer/routes/_authenticated/_dashboard/hooks/useCloudPullRequests";
 import type { CloudSidebarEntry } from "renderer/routes/_authenticated/_dashboard/stores/cloudSidebarStore";
 import { isInCloudSidebar } from "renderer/routes/_authenticated/_dashboard/utils/buildCloudSidebar";
 import { getV2WorkspaceDisplayName } from "renderer/utils/getV2WorkspaceDisplayName";
-import { v5 as uuidv5 } from "uuid";
 import type {
 	DashboardSidebarWorkspace,
 	DashboardSidebarWorkspacePullRequest,
@@ -60,15 +60,7 @@ export interface CloudSidebarRepoProject {
 	cloudWorkspaces: DashboardSidebarWorkspace[];
 }
 
-const CLOUD_REPO_PROJECT_NAMESPACE = "3f3a7f0e-6b1a-4d2c-9c0a-7e5d1b2f8a41";
-
-/** The id of the stand-in project for `repoFullName`; `null` for rows whose repo is unknown. */
-export function cloudRepoProjectId(repoFullName: string | null): string {
-	return uuidv5(
-		repoFullName?.toLowerCase() ?? "",
-		CLOUD_REPO_PROJECT_NAMESPACE,
-	);
-}
+export { cloudRepoProjectId };
 
 function toSidebarPullRequest(
 	pullRequest: CloudSidebarPullRequestInput,

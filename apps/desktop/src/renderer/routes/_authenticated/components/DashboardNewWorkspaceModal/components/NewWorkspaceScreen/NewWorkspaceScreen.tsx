@@ -116,6 +116,7 @@ import { SamplePromptCards } from "./components/SamplePromptCards";
 import { SamplePrompts } from "./components/SamplePrompts";
 import { PROMPT_PLACEHOLDERS } from "./components/SamplePrompts/constants";
 import { SupersetIcon } from "./components/SupersetIcon";
+import { useGitHubRepositoryProjects } from "./hooks/useGitHubRepositoryProjects";
 import { useProjectPreselection } from "./hooks/useProjectPreselection";
 import { useSamplePromptSelection } from "./hooks/useSamplePromptSelection";
 import { environmentsForRepository } from "./utils/environmentsForRepository";
@@ -293,10 +294,28 @@ export function NewWorkspaceScreen({
 		[hostProjects, setUpProjectIds],
 	);
 
+	const isCloudHost = draft.hostId === CLOUD_HOST_ID;
+	// On the cloud the GitHub App's repositories join the picker as stand-in
+	// projects; a device's projects are its checkouts.
+	const github = useGitHubRepositoryProjects({
+		organizationId: activeOrganizationId,
+		enabled: isCloudHost && !!activeOrganizationId,
+		projects,
+	});
+	const cloudHostProjects = useMemo(
+		() => projects.map((project) => ({ ...project, needsSetup: null })),
+		[projects],
+	);
+	const cloudProjects = useMemo(
+		() => [...cloudHostProjects, ...github.repositories],
+		[cloudHostProjects, github.repositories],
+	);
+	const selectableProjects = isCloudHost ? cloudProjects : projects;
+
 	const isProjectPreselectionPending = useProjectPreselection({
 		isOpen,
-		areProjectsReady,
-		projects,
+		areProjectsReady: areProjectsReady && (!isCloudHost || !github.isLoading),
+		projects: selectableProjects,
 		preSelectedProjectId,
 		preSelectedSession,
 		selectedProjectId: draft.selectedProjectId,
@@ -344,11 +363,8 @@ export function NewWorkspaceScreen({
 	}, [resetKey, placeholderRoll, t]);
 
 	const projectId = draft.selectedProjectId;
-	const selectedProject = projects.find((project) => project.id === projectId);
-	const isCloudHost = draft.hostId === CLOUD_HOST_ID;
-	const cloudProjects = useMemo(
-		() => projects.map((project) => ({ ...project, needsSetup: null })),
-		[projects],
+	const selectedProject = selectableProjects.find(
+		(project) => project.id === projectId,
 	);
 	const needsSetup = !isCloudHost && selectedProject?.needsSetup === true;
 
@@ -376,17 +392,10 @@ export function NewWorkspaceScreen({
 	);
 	// With no environment for the project's repository, the API starts from
 	// the repository's default one — as long as the GitHub App can see it.
-	const githubRepositoriesQuery =
-		cloudTrpc.integration.github.listRepositories.useQuery(
-			{ organizationId: activeOrganizationId ?? "" },
-			{ enabled: isCloudHost && !!activeOrganizationId },
-		);
 	const defaultRepository =
 		!draft.isSession && projectRepositoryFullName
-			? (githubRepositoriesQuery.data?.find(
-					(repository) =>
-						repository.fullName.toLowerCase() ===
-						projectRepositoryFullName.toLowerCase(),
+			? (github.repositoriesByFullName.get(
+					projectRepositoryFullName.toLowerCase(),
 				) ?? null)
 			: null;
 	// Default: the project's first environment, else one the API makes for
@@ -394,8 +403,7 @@ export function NewWorkspaceScreen({
 	const resolvedEnvironment = selectedEnvironment ?? environmentOptions[0];
 	const defaultHint =
 		resolvedEnvironment?.name ?? defaultRepository?.fullName ?? null;
-	const isCloudTargetLoading =
-		environmentsQuery.isLoading || githubRepositoriesQuery.isLoading;
+	const isCloudTargetLoading = environmentsQuery.isLoading || github.isLoading;
 	const [isCreatingEnvironment, setIsCreatingEnvironment] = useState(false);
 	const cloudRepository = useMemo(() => {
 		if (!isCloudHost) return null;
@@ -1117,8 +1125,10 @@ export function NewWorkspaceScreen({
 							/>
 							<ProjectPickerPill
 								selectedProject={selectedProject}
-								projects={isCloudHost ? cloudProjects : projects}
+								projects={isCloudHost ? cloudHostProjects : projects}
 								isSessionSelected={draft.isSession}
+								githubRepositories={isCloudHost ? github.repositories : []}
+								githubConnection={isCloudHost ? github.connection : null}
 								onSelectProject={(selectedProjectId) => {
 									if (selectedProjectId === null) {
 										selectSession();

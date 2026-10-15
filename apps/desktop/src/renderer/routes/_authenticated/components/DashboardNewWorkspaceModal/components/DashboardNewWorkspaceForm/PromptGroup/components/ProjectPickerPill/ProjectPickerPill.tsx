@@ -13,6 +13,7 @@ import { toast } from "@superset/ui/sonner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
 import { HiCheck, HiChevronUpDown, HiMiniPlus } from "react-icons/hi2";
 import {
 	LuBox,
@@ -20,13 +21,18 @@ import {
 	LuFolderPlus,
 	LuTriangleAlert,
 } from "react-icons/lu";
+import { electronTrpc } from "renderer/lib/electron-trpc";
 import { useFolderFirstImport } from "renderer/routes/_authenticated/_dashboard/components/AddRepositoryModals/hooks/useFolderFirstImport";
 import { ProjectThumbnail } from "renderer/routes/_authenticated/components/ProjectThumbnail";
 import {
 	useOpenEmptyProjectModal,
 	useOpenNewProjectModal,
 } from "renderer/stores/add-repository-modal";
-import type { ProjectOption } from "../../types";
+import type {
+	GitHubConnectionAction,
+	GitHubRepositoryOption,
+	ProjectOption,
+} from "../../types";
 import {
 	FORM_PICKER_MENU_CLASS,
 	FormPickerTrigger,
@@ -39,6 +45,12 @@ interface ProjectPickerPillProps {
 	isSessionSelected?: boolean;
 	/** Null selects "No project" (session). */
 	onSelectProject: (projectId: string | null) => void;
+	/**
+	 * Cloud only: repositories the GitHub App can see that aren't projects
+	 * yet. Picking one selects it as a stand-in project.
+	 */
+	githubRepositories?: GitHubRepositoryOption[];
+	githubConnection?: GitHubConnectionAction;
 }
 
 export function ProjectPickerPill({
@@ -46,12 +58,23 @@ export function ProjectPickerPill({
 	projects,
 	isSessionSelected = false,
 	onSelectProject,
+	githubRepositories = [],
+	githubConnection = null,
 }: ProjectPickerPillProps) {
 	const { t } = useLingui();
 	const [open, setOpen] = useState(false);
 	const openEmptyProject = useOpenEmptyProjectModal();
 	const openNewProject = useOpenNewProjectModal();
 	const navigate = useNavigate();
+	const openUrl = electronTrpc.external.openUrl.useMutation();
+
+	const handleGitHubConnection = () => {
+		setOpen(false);
+		if (!githubConnection) return;
+		if (githubConnection.kind === "configure")
+			openUrl.mutate(githubConnection.url);
+		else void navigate({ to: "/settings/integrations" });
+	};
 	const folderImport = useFolderFirstImport({
 		onError: (message) => {
 			toast.error(
@@ -194,6 +217,31 @@ export function ProjectPickerPill({
 								</CommandItem>
 							))}
 						</CommandGroup>
+						{githubRepositories.length > 0 && (
+							<CommandGroup heading={t({ message: "From GitHub" })}>
+								{githubRepositories.map((repository) => (
+									<CommandItem
+										key={repository.id}
+										value={repository.fullName}
+										onSelect={() => {
+											onSelectProject(repository.id);
+											setOpen(false);
+										}}
+									>
+										<ProjectThumbnail
+											projectName={repository.name}
+											iconUrl={repository.iconUrl}
+										/>
+										<span className="flex-1 truncate">
+											{repository.fullName}
+										</span>
+										{repository.id === selectedProject?.id && (
+											<HiCheck className="size-4 shrink-0" />
+										)}
+									</CommandItem>
+								))}
+							</CommandGroup>
+						)}
 					</CommandList>
 					<CommandSeparator alwaysRender />
 					<CommandGroup forceMount>
@@ -209,6 +257,16 @@ export function ProjectPickerPill({
 							<LuFolderInput className="size-4" />
 							<Trans>Open from folder</Trans>
 						</CommandItem>
+						{githubConnection && (
+							<CommandItem forceMount onSelect={handleGitHubConnection}>
+								<FaGithub className="size-4" />
+								{githubConnection.kind === "configure" ? (
+									<Trans>Configure GitHub App…</Trans>
+								) : (
+									<Trans>Connect GitHub…</Trans>
+								)}
+							</CommandItem>
+						)}
 					</CommandGroup>
 				</Command>
 			</PopoverContent>

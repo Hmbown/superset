@@ -31,10 +31,10 @@ import { useEffect, useState } from "react";
 import { HiChevronRight } from "react-icons/hi2";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
+import { githubAppSettingsUrl } from "renderer/lib/github/githubAppSettingsUrl";
 import { EnvironmentMissingRepositoryNotice } from "./components/EnvironmentMissingRepositoryNotice";
 import { EnvironmentPropertyRow } from "./components/EnvironmentPropertyRow";
 import { EnvironmentRepositoryPicker } from "./components/EnvironmentRepositoryPicker";
-import { githubAppSettingsUrl } from "./utils/githubAppSettingsUrl";
 
 type EnvironmentScope = "organization" | "personal";
 

@@ -1,1 +1,0 @@
-export { githubAppSettingsUrl } from "./githubAppSettingsUrl";
