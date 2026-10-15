@@ -13,6 +13,7 @@ const INITIAL_ROWS = 40;
 const REVEAL_ROWS = 40;
 const REVEAL_MARGIN_PX = 1200;
 const ESTIMATED_ROW_HEIGHT_PX = 120;
+const MAX_REVEAL_HOLD_MS = 1500;
 
 type RowRef = (element: HTMLElement | null) => void;
 
@@ -21,6 +22,8 @@ export type TranscriptWindow = {
 	spacerHeight: number;
 	spacerRef: (element: HTMLDivElement | null) => void;
 	rowRef: (rowKey: string) => RowRef;
+	resetToTail: () => void;
+	holdRevealUntilScrollEnds: () => void;
 };
 
 function spacerHeightFor(
@@ -87,7 +90,13 @@ export function useTranscriptWindow({
 	rowsRef.current = rows;
 	const startIndexRef = useRef(startIndex);
 	startIndexRef.current = startIndex;
+	const revealHeldRef = useRef(false);
+	const revealObserverRef = useRef<{
+		observer: IntersectionObserver;
+		spacer: HTMLDivElement;
+	} | null>(null);
 	const revealOlder = useCallback(() => {
+		if (revealHeldRef.current) return;
 		const nextIndex = Math.max(0, startIndexRef.current - REVEAL_ROWS);
 		const nextKey = rowsRef.current[nextIndex]?.key;
 		if (!nextKey) return;
@@ -100,6 +109,31 @@ export function useTranscriptWindow({
 		});
 	}, []);
 
+	const resetToTail = useCallback(() => {
+		startTransition(() => {
+			setWindowState((previous) => ({
+				...previous,
+				firstKey: null,
+				startIndex: null,
+			}));
+		});
+	}, []);
+
+	const holdRevealUntilScrollEnds = useCallback(() => {
+		if (!viewport) return;
+		revealHeldRef.current = true;
+		const release = () => {
+			window.clearTimeout(timer);
+			viewport.removeEventListener("scrollend", release);
+			revealHeldRef.current = false;
+			const watched = revealObserverRef.current;
+			watched?.observer.unobserve(watched.spacer);
+			watched?.observer.observe(watched.spacer);
+		};
+		const timer = window.setTimeout(release, MAX_REVEAL_HOLD_MS);
+		viewport.addEventListener("scrollend", release);
+	}, [viewport]);
+
 	const [spacer, setSpacer] = useState<HTMLDivElement | null>(null);
 	useEffect(() => {
 		if (!viewport || !spacer || startIndex === 0) return;
@@ -110,7 +144,11 @@ export function useTranscriptWindow({
 			{ root: viewport, rootMargin: `${REVEAL_MARGIN_PX}px 0px 0px 0px` },
 		);
 		observer.observe(spacer);
-		return () => observer.disconnect();
+		revealObserverRef.current = { observer, spacer };
+		return () => {
+			observer.disconnect();
+			revealObserverRef.current = null;
+		};
 	}, [viewport, spacer, startIndex, revealOlder]);
 
 	const elements = useRef(new Map<string, HTMLElement>());
@@ -163,5 +201,7 @@ export function useTranscriptWindow({
 		spacerHeight: spacerHeightFor(rows, startIndex, heights),
 		spacerRef: setSpacer,
 		rowRef,
+		resetToTail,
+		holdRevealUntilScrollEnds,
 	};
 }

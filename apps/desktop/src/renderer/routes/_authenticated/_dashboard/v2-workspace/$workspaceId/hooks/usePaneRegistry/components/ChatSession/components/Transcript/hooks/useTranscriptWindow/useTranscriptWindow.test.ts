@@ -149,3 +149,41 @@ test("records the measured height of a mounted row for the session", () => {
 		observers.restore();
 	}
 });
+
+test("goes back to the newest 40 rows when asked to reset", () => {
+	const { result, rerender } = renderWindow({ rows: rows(100) });
+	rerender({ rows: rows(100), pinned: ["row-0"] });
+	rerender({ rows: rows(100) });
+	expect(result.current.startIndex).toBe(0);
+
+	act(() => result.current.resetToTail());
+	expect(result.current.startIndex).toBe(60);
+});
+
+test("holds reveals while a jump scrolls, then resumes when the scroll ends", () => {
+	const observers = installObservers();
+	try {
+		const viewport = document.createElement("div");
+		const { result } = renderWindow(
+			{ rows: rows(100) },
+			crypto.randomUUID(),
+			viewport,
+		);
+		act(() => result.current.spacerRef(document.createElement("div")));
+		act(() => result.current.holdRevealUntilScrollEnds());
+		act(() => {
+			observers.intersections.at(-1)?.callback([{ isIntersecting: true }]);
+		});
+		expect(result.current.startIndex).toBe(60);
+
+		act(() => {
+			viewport.dispatchEvent(new Event("scrollend"));
+		});
+		act(() => {
+			observers.intersections.at(-1)?.callback([{ isIntersecting: true }]);
+		});
+		expect(result.current.startIndex).toBe(20);
+	} finally {
+		observers.restore();
+	}
+});

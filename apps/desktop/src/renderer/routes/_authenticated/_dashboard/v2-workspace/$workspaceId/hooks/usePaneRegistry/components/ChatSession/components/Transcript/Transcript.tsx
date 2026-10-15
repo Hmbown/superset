@@ -23,6 +23,7 @@ import {
 	type KeyboardEvent,
 	type PointerEvent,
 	useCallback,
+	useDeferredValue,
 	useEffect,
 	useMemo,
 	useRef,
@@ -272,26 +273,37 @@ export function Transcript({
 					null),
 		[rows, revealMessageId],
 	);
+	const findMountsAll = useDeferredValue(find.isOpen);
 	const transcriptWindow = useTranscriptWindow({
 		rows,
 		viewport,
 		sessionId,
 		pinnedRowKeys: [
 			anchorRowKey,
-			find.isOpen ? (rows[0]?.key ?? null) : null,
+			findMountsAll ? (rows[0]?.key ?? null) : null,
 			find.currentRowKey,
 			revealRowKey,
 		],
 		observeRow,
 	});
+	const { resetToTail, holdRevealUntilScrollEnds } = transcriptWindow;
+	const findWasOpen = useRef(false);
+	useEffect(() => {
+		if (findWasOpen.current && !find.isOpen && !awayFromEndRef.current) {
+			resetToTail();
+		}
+		findWasOpen.current = find.isOpen;
+	}, [find.isOpen, resetToTail]);
+
 	useEffect(() => {
 		if (revealMessageId === null) return;
+		holdRevealUntilScrollEnds();
 		scrollerRef.current.scrollToMessage(revealMessageId, {
 			align: "start",
 			behavior: "smooth",
 		});
 		onMessageRevealed?.();
-	}, [revealMessageId, onMessageRevealed]);
+	}, [revealMessageId, onMessageRevealed, holdRevealUntilScrollEnds]);
 
 	const firstPendingApprovalId = approvals[0]?.id ?? null;
 	useEffect(() => {
