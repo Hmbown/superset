@@ -4,8 +4,9 @@ import type { NativeTranscription } from "../native-transcriber";
 const TRANSCRIBE_URL = "https://chatgpt.com/backend-api/transcribe";
 const APP_SERVER_TIMEOUT_MS = 10_000;
 const TRANSCRIBE_TIMEOUT_MS = 30_000;
-// Also caches "not signed in", so a clip does not start Codex every time.
 const TOKEN_TTL_MS = 5 * 60_000;
+// Short, so a new sign-in is used soon, but clips in a row start Codex once.
+const SIGNED_OUT_TTL_MS = 30_000;
 const TOKEN_EXPIRY_MARGIN_MS = 60_000;
 
 type Fetch = (url: string, init: RequestInit) => Promise<Response>;
@@ -127,7 +128,8 @@ export function createCodexTranscriber({
 	};
 
 	const token = async () => {
-		if (cached && now() - cached.at < TOKEN_TTL_MS) {
+		const ttl = cached?.token ? TOKEN_TTL_MS : SIGNED_OUT_TTL_MS;
+		if (cached && now() - cached.at < ttl) {
 			if (cached.token === null || isFresh(cached.token)) return cached.token;
 		}
 		const next = await read(false);

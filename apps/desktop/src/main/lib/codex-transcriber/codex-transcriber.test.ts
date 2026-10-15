@@ -115,6 +115,23 @@ describe("createCodexTranscriber", () => {
 		expect(reads).toBe(1);
 	});
 
+	test("notices a ChatGPT sign-in made after a signed-out read", async () => {
+		let now = 0;
+		let signedIn = false;
+		const transcriber = createCodexTranscriber({
+			now: () => now,
+			readToken: async () => (signedIn ? "tok" : null),
+			fetchImpl: (async () =>
+				new Response(
+					JSON.stringify({ text: "ok" }),
+				)) as unknown as typeof fetch,
+		});
+		expect(await transcriber.transcribe(wav)).toBeNull();
+		signedIn = true;
+		now += 60_000;
+		expect(await transcriber.transcribe(wav)).toEqual({ ok: true, text: "ok" });
+	});
+
 	test("posts the clip with the session token and Superset's own name", async () => {
 		const sent: RequestInit[] = [];
 		const transcriber = createCodexTranscriber({
