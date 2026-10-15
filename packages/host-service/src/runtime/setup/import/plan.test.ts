@@ -34,6 +34,19 @@ describe("isStandaloneCommand", () => {
 			expect(isStandaloneCommand(line)).toBe(false);
 		}
 	});
+
+	it("rejects lines that would change or close the user's shell", () => {
+		for (const line of [
+			"set -euo pipefail",
+			"shopt -s globstar",
+			"trap cleanup EXIT",
+			"exit 0",
+			"return",
+		]) {
+			expect(isStandaloneCommand(line)).toBe(false);
+		}
+		expect(isStandaloneCommand("settle --all")).toBe(true);
+	});
 });
 
 describe("planScript", () => {

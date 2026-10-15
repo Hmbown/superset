@@ -10,6 +10,8 @@ import {
 
 const CONTROL_WORD_START =
 	/^(if|then|elif|else|fi|for|while|until|do|done|case|esac|select|function|\{|\}|\(|\))(\s|;|$)/;
+// Typed into the user's interactive shell, these outlive the script or close it.
+const SHELL_OPTION_START = /^(set|shopt|trap|exit|return)(\s|;|$)/;
 const OPEN_LINE_END = /(\\|&|\||;|\{|\(|\bthen|\bdo|\belse|\bin)$/;
 const FUNCTION_DEFINITION = /^[A-Za-z_][\w-]*\s*\(\s*\)/;
 
@@ -65,6 +67,7 @@ function scanLine(line: string): { balanced: boolean; hasComment: boolean } {
 export function isStandaloneCommand(line: string): boolean {
 	if (
 		CONTROL_WORD_START.test(line) ||
+		SHELL_OPTION_START.test(line) ||
 		OPEN_LINE_END.test(line) ||
 		FUNCTION_DEFINITION.test(line) ||
 		line.includes("<<")

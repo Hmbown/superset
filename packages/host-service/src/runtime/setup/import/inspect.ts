@@ -151,10 +151,15 @@ export function compareWithCurrentSetup(
 	const currentCwd = typeof config?.cwd === "string" ? config.cwd.trim() : "";
 	if (candidate.cwd && currentCwd !== candidate.cwd) {
 		changes.push("cwd");
-		if (currentCwd) {
+		// `cwd` applies to every key, so commands this import keeps move too.
+		const movesKeptCommands = IMPORTED_SCRIPT_KEYS.some(
+			(key) =>
+				!candidate.scripts[key] && readCurrentCommands(config, key).length > 0,
+		);
+		if (currentCwd || movesKeptCommands) {
 			conflicts.push({
 				field: "cwd",
-				current: [currentCwd],
+				current: currentCwd ? [currentCwd] : [],
 				currentScriptFile: null,
 				removesScriptFile: false,
 			});

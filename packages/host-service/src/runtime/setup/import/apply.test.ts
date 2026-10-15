@@ -138,6 +138,26 @@ describe("applySetupImport", () => {
 		expect(readConfig().setup).toEqual(["bun install"]);
 	});
 
+	it("treats a new cwd as a conflict when it moves commands the import keeps", () => {
+		write(".superset/config.json", JSON.stringify({ run: ["bun dev"] }));
+		write(
+			"cmux.json",
+			JSON.stringify({
+				commands: [{ name: "setup", command: "make setup", cwd: "apps/web" }],
+			}),
+		);
+		expect(
+			compareWithCurrentSetup(repoPath, onlyCandidate()).conflicts,
+		).toEqual([
+			{
+				field: "cwd",
+				current: [],
+				currentScriptFile: null,
+				removesScriptFile: false,
+			},
+		]);
+	});
+
 	it("treats an existing .superset/setup.sh as a setup to replace", () => {
 		write(".superset/setup.sh", "npm ci\n");
 		write("conductor.json", conductorJson);
