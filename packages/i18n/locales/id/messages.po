@@ -1053,12 +1053,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} dari {total}"
 
-msgid "{regionCity} · Only you"
-msgstr "{regionCity} · Hanya Anda"
-
-msgid "{regionCity} · Shared with your organization"
-msgstr "{regionCity} · Dibagikan dengan organisasi Anda"
-
 msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
 msgstr "{repositoryFullName} tidak ada di {installedAccountLogin}, tempat GitHub App organisasi ini dipasang."
 
@@ -2999,9 +2993,6 @@ msgstr "Laci bawah, ramah geser di perangkat sentuh."
 msgid "Box"
 msgstr "Box"
 
-msgid "Boxes run where the environment was made; a snapshot only exists in its region."
-msgstr "Box berjalan di tempat environment dibuat; snapshot hanya ada di regionnya."
-
 msgid "Branch"
 msgstr "Branch"
 
@@ -4188,9 +4179,6 @@ msgstr "component-showcase"
 msgid "Composable form layout — pairs with @superset/ui/form for react-hook-form"
 msgstr "Tata letak form yang bisa dikomposisi — berpasangan dengan @superset/ui/form untuk react-hook-form"
 
-msgid "Config location"
-msgstr "Lokasi konfigurasi"
-
 msgid "Configure"
 msgstr "Atur"
 
@@ -4206,8 +4194,8 @@ msgstr "Atur preferensi umum aplikasi"
 msgid "Configure git branch and worktree behavior"
 msgstr "Atur perilaku branch git dan worktree"
 
-msgid "Configure GitHub App"
-msgstr "Konfigurasi GitHub App"
+msgid "Configure GitHub App →"
+msgstr "Konfigurasi GitHub App →"
 
 msgid "Configure GitHub App…"
 msgstr "Konfigurasi GitHub App…"
@@ -5547,9 +5535,6 @@ msgstr "Agen terminal kustom"
 
 msgid "Custom themes"
 msgstr "Tema kustom"
-
-msgid "Customize"
-msgstr "Sesuaikan"
 
 msgid "Customize commands"
 msgstr "Sesuaikan perintah"
@@ -7561,6 +7546,9 @@ msgstr "Selesai"
 
 msgid "finished · worked for 7s"
 msgstr "selesai · bekerja 7 dtk"
+
+msgid "First repository by name"
+msgstr "Repositori pertama menurut nama"
 
 msgid "Fix all failing checks"
 msgstr "Perbaiki semua check yang gagal"
@@ -11081,9 +11069,6 @@ msgstr "Belum ada anggota tim Anda yang membagikan otomatisasi."
 msgid "Nobody reviews differently because of it."
 msgstr "Tidak ada yang mereview secara berbeda karenanya."
 
-msgid "None"
-msgstr "Tidak ada"
-
 msgid "none (session)"
 msgstr "tidak ada (sesi)"
 
@@ -11881,6 +11866,9 @@ msgstr "Membuka worktree..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Membuka workspace cloud tempat agen memasang yang dibutuhkan proyek dan menulis .superset/config.json miliknya"
+
+msgid "Opens on"
+msgstr "Dibuka di"
 
 msgid "Operator"
 msgstr "Operator"
@@ -12822,6 +12810,9 @@ msgstr "Host proyek tidak bisa dijangkau — tidak bisa ganti nama sekarang"
 
 msgid "Projects"
 msgstr "Proyek"
+
+msgid "Promoted from a workspace, so its repositories and region are fixed. Promote a workspace again to change them."
+msgstr "Dipromosikan dari workspace, jadi repositori dan regionnya tetap. Promosikan workspace lagi untuk mengubahnya."
 
 msgid "Prompt"
 msgstr "Prompt"
@@ -16658,9 +16649,6 @@ msgstr "Mesin itu sudah tidak tersedia"
 msgid "That name isn't allowed."
 msgstr "Nama itu tidak diizinkan."
 
-msgid "The .superset/config.json the workspace reads, and the repository it opens on."
-msgstr "File .superset/config.json yang dibaca workspace, dan repositori tempat workspace dibuka."
-
 msgid "The 2026 bet"
 msgstr "Taruhan 2026"
 
@@ -16982,8 +16970,8 @@ msgstr "Workspace mungkin tetap dibuat. Layar ini akan membukanya jika muncul."
 msgid "The workspace this automation is pinned to no longer exists on its host. Pin a different one in the automation's settings."
 msgstr "Ruang kerja yang disematkan untuk otomatisasi ini sudah tidak ada di host-nya. Sematkan ruang kerja lain di pengaturan otomatisasi."
 
-msgid "The workspace's repositories, as they are checked out now."
-msgstr "Repositori workspace, seperti yang ter-checkout sekarang."
+msgid "The workspace's repositories, as they are checked out now. Boxes run in its region."
+msgstr "Repositori workspace, sebagaimana di-checkout saat ini. Box berjalan di regionnya."
 
 msgid "The worktree and any uncommitted changes will be removed. This cannot be undone."
 msgstr "Worktree beserta perubahan yang belum di-commit akan dihapus. Ini tidak bisa dibatalkan."
@@ -17126,9 +17114,6 @@ msgstr "Email ini sudah terdaftar dengan metode masuk lain, dan penyedia tidak m
 
 msgid "This environment has no repositories. Create an environment with repositories in Settings, then start the workspace from it"
 msgstr "Environment ini tidak memiliki repositori. Buat environment dengan repositori di Pengaturan, lalu mulai workspace dari environment tersebut"
-
-msgid "This environment was promoted from a workspace, so its repositories are fixed. Promote a workspace again to change them."
-msgstr "Environment ini dipromosikan dari sebuah workspace, sehingga repositorinya sudah tetap. Promosikan workspace lagi untuk mengubahnya."
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "Repositori environment ini sudah tetap; promosikan workspace lagi untuk mengubahnya"
@@ -18563,9 +18548,6 @@ msgstr "Selamat datang di Superset"
 
 msgid "Welcome to the new Superset"
 msgstr "Selamat datang di Superset baru"
-
-msgid "What a cloud workspace checks out, and where it runs."
-msgstr "Apa yang di-checkout workspace cloud, dan di mana ia berjalan."
 
 msgid "What are the benefits?"
 msgstr "Apa saja tunjangannya?"

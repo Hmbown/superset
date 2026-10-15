@@ -1053,12 +1053,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} trên {total}"
 
-msgid "{regionCity} · Only you"
-msgstr "{regionCity} · Chỉ bạn"
-
-msgid "{regionCity} · Shared with your organization"
-msgstr "{regionCity} · Chia sẻ với tổ chức của bạn"
-
 msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
 msgstr "{repositoryFullName} không nằm trong {installedAccountLogin}, nơi GitHub App của tổ chức này được cài đặt."
 
@@ -2999,9 +2993,6 @@ msgstr "Ngăn kéo dưới đáy, vuốt tiện trên thiết bị cảm ứng."
 msgid "Box"
 msgstr "Box"
 
-msgid "Boxes run where the environment was made; a snapshot only exists in its region."
-msgstr "Box chạy ở nơi environment được tạo; snapshot chỉ tồn tại trong region của nó."
-
 msgid "Branch"
 msgstr "Nhánh"
 
@@ -4188,9 +4179,6 @@ msgstr "component-showcase"
 msgid "Composable form layout — pairs with @superset/ui/form for react-hook-form"
 msgstr "Bố cục form ghép được — dùng chung với @superset/ui/form cho react-hook-form"
 
-msgid "Config location"
-msgstr "Vị trí cấu hình"
-
 msgid "Configure"
 msgstr "Cấu hình"
 
@@ -4206,8 +4194,8 @@ msgstr "Cấu hình tùy chọn chung của ứng dụng"
 msgid "Configure git branch and worktree behavior"
 msgstr "Cấu hình hành vi của nhánh git và worktree"
 
-msgid "Configure GitHub App"
-msgstr "Cấu hình GitHub App"
+msgid "Configure GitHub App →"
+msgstr "Cấu hình GitHub App →"
 
 msgid "Configure GitHub App…"
 msgstr "Cấu hình GitHub App…"
@@ -5547,9 +5535,6 @@ msgstr "Agent terminal tùy chỉnh"
 
 msgid "Custom themes"
 msgstr "Theme tùy chỉnh"
-
-msgid "Customize"
-msgstr "Tùy chỉnh"
 
 msgid "Customize commands"
 msgstr "Tùy chỉnh lệnh"
@@ -7561,6 +7546,9 @@ msgstr "Đã xong"
 
 msgid "finished · worked for 7s"
 msgstr "đã xong · làm trong 7s"
+
+msgid "First repository by name"
+msgstr "Repository đầu tiên theo tên"
 
 msgid "Fix all failing checks"
 msgstr "Sửa mọi check đang lỗi"
@@ -11081,9 +11069,6 @@ msgstr "Chưa ai trong nhóm chia sẻ tự động hóa nào."
 msgid "Nobody reviews differently because of it."
 msgstr "Không ai review khác đi vì điều đó."
 
-msgid "None"
-msgstr "Không có"
-
 msgid "none (session)"
 msgstr "không có (phiên)"
 
@@ -11881,6 +11866,9 @@ msgstr "Đang mở worktree..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Mở một workspace cloud để agent cài đặt những gì dự án cần và ghi .superset/config.json của nó"
+
+msgid "Opens on"
+msgstr "Mở tại"
 
 msgid "Operator"
 msgstr "Người vận hành"
@@ -12822,6 +12810,9 @@ msgstr "Không kết nối được host của dự án — hiện không thể 
 
 msgid "Projects"
 msgstr "Dự án"
+
+msgid "Promoted from a workspace, so its repositories and region are fixed. Promote a workspace again to change them."
+msgstr "Được nâng cấp từ một workspace nên repository và khu vực là cố định. Nâng cấp lại một workspace để thay đổi."
 
 msgid "Prompt"
 msgstr "Prompt"
@@ -16658,9 +16649,6 @@ msgstr "Máy đó không còn khả dụng"
 msgid "That name isn't allowed."
 msgstr "Tên đó không được phép."
 
-msgid "The .superset/config.json the workspace reads, and the repository it opens on."
-msgstr "Tệp .superset/config.json mà workspace đọc, và repository mà nó mở."
-
 msgid "The 2026 bet"
 msgstr "Canh bạc 2026"
 
@@ -16982,8 +16970,8 @@ msgstr "Workspace vẫn có thể đã được tạo. Màn hình này sẽ mở
 msgid "The workspace this automation is pinned to no longer exists on its host. Pin a different one in the automation's settings."
 msgstr "Workspace mà tự động hóa này ghim vào không còn tồn tại trên host của nó. Hãy ghim workspace khác trong cài đặt của tự động hóa."
 
-msgid "The workspace's repositories, as they are checked out now."
-msgstr "Các kho mã của không gian làm việc, như hiện tại."
+msgid "The workspace's repositories, as they are checked out now. Boxes run in its region."
+msgstr "Các repository của workspace, như đang được checkout hiện tại. Các box chạy trong khu vực của nó."
 
 msgid "The worktree and any uncommitted changes will be removed. This cannot be undone."
 msgstr "Worktree và mọi thay đổi chưa commit sẽ bị gỡ. Không thể hoàn tác."
@@ -17126,9 +17114,6 @@ msgstr "Email này đã được đăng ký bằng phương thức đăng nhập
 
 msgid "This environment has no repositories. Create an environment with repositories in Settings, then start the workspace from it"
 msgstr "Environment này không có repository nào. Hãy tạo một environment có repository trong Settings, rồi khởi động workspace từ environment đó"
-
-msgid "This environment was promoted from a workspace, so its repositories are fixed. Promote a workspace again to change them."
-msgstr "Environment này được promote từ một workspace nên các repository của nó đã cố định. Hãy promote lại một workspace để thay đổi."
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "Các repository của environment này đã cố định; hãy promote lại một workspace để thay đổi"
@@ -18563,9 +18548,6 @@ msgstr "Chào mừng đến với Superset"
 
 msgid "Welcome to the new Superset"
 msgstr "Chào mừng đến với Superset mới"
-
-msgid "What a cloud workspace checks out, and where it runs."
-msgstr "Những gì workspace đám mây checkout, và nơi nó chạy."
 
 msgid "What are the benefits?"
 msgstr "Phúc lợi gồm những gì?"

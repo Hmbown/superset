@@ -1053,12 +1053,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} de {total}"
 
-msgid "{regionCity} · Only you"
-msgstr "{regionCity} · Só você"
-
-msgid "{regionCity} · Shared with your organization"
-msgstr "{regionCity} · Compartilhado com sua organização"
-
 msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
 msgstr "{repositoryFullName} não está em {installedAccountLogin}, onde a GitHub App desta organização está instalada."
 
@@ -2999,9 +2993,6 @@ msgstr "Gaveta inferior, com suporte a gestos em dispositivos de toque."
 msgid "Box"
 msgstr "Box"
 
-msgid "Boxes run where the environment was made; a snapshot only exists in its region."
-msgstr "As boxes rodam onde o ambiente foi criado; um snapshot só existe na sua região."
-
 msgid "Branch"
 msgstr "Branch"
 
@@ -4188,9 +4179,6 @@ msgstr "component-showcase"
 msgid "Composable form layout — pairs with @superset/ui/form for react-hook-form"
 msgstr "Layout de formulário componível — combina com @superset/ui/form para react-hook-form"
 
-msgid "Config location"
-msgstr "Local da configuração"
-
 msgid "Configure"
 msgstr "Configurar"
 
@@ -4206,8 +4194,8 @@ msgstr "Configure as preferências gerais do app"
 msgid "Configure git branch and worktree behavior"
 msgstr "Configure o comportamento de branches e worktrees do git"
 
-msgid "Configure GitHub App"
-msgstr "Configurar GitHub App"
+msgid "Configure GitHub App →"
+msgstr "Configurar GitHub App →"
 
 msgid "Configure GitHub App…"
 msgstr "Configurar GitHub App…"
@@ -5547,9 +5535,6 @@ msgstr "Agentes de terminal personalizados"
 
 msgid "Custom themes"
 msgstr "Temas personalizados"
-
-msgid "Customize"
-msgstr "Personalizar"
 
 msgid "Customize commands"
 msgstr "Personalizar comandos"
@@ -7561,6 +7546,9 @@ msgstr "Concluído"
 
 msgid "finished · worked for 7s"
 msgstr "terminou · trabalhou por 7s"
+
+msgid "First repository by name"
+msgstr "Primeiro repositório por nome"
 
 msgid "Fix all failing checks"
 msgstr "Corrigir todas as verificações com falha"
@@ -11081,9 +11069,6 @@ msgstr "Ninguém da sua equipe compartilhou automações ainda."
 msgid "Nobody reviews differently because of it."
 msgstr "Ninguém revisa de forma diferente por causa disso."
 
-msgid "None"
-msgstr "Nenhum"
-
 msgid "none (session)"
 msgstr "nenhum (sessão)"
 
@@ -11881,6 +11866,9 @@ msgstr "Abrindo worktree..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Abre uma área de trabalho na nuvem onde um agente instala o que o projeto precisa e escreve seu .superset/config.json"
+
+msgid "Opens on"
+msgstr "Abre em"
 
 msgid "Operator"
 msgstr "Operador"
@@ -12822,6 +12810,9 @@ msgstr "O host do projeto está inacessível — não dá para renomear agora"
 
 msgid "Projects"
 msgstr "Projetos"
+
+msgid "Promoted from a workspace, so its repositories and region are fixed. Promote a workspace again to change them."
+msgstr "Promovido de um workspace, então seus repositórios e região são fixos. Promova um workspace de novo para alterá-los."
 
 msgid "Prompt"
 msgstr "Prompt"
@@ -16658,9 +16649,6 @@ msgstr "Essa máquina não está mais disponível"
 msgid "That name isn't allowed."
 msgstr "Esse nome não é permitido."
 
-msgid "The .superset/config.json the workspace reads, and the repository it opens on."
-msgstr "O .superset/config.json que o workspace lê e o repositório em que ele abre."
-
 msgid "The 2026 bet"
 msgstr "A aposta de 2026"
 
@@ -16982,8 +16970,8 @@ msgstr "A área de trabalho pode ter sido criada mesmo assim. Esta tela a abre s
 msgid "The workspace this automation is pinned to no longer exists on its host. Pin a different one in the automation's settings."
 msgstr "A área de trabalho fixada para esta automação não existe mais no host correspondente. Fixe outra nas configurações da automação."
 
-msgid "The workspace's repositories, as they are checked out now."
-msgstr "Os repositórios do espaço de trabalho, como estão agora."
+msgid "The workspace's repositories, as they are checked out now. Boxes run in its region."
+msgstr "Os repositórios do workspace, como estão clonados agora. As boxes rodam na região dele."
 
 msgid "The worktree and any uncommitted changes will be removed. This cannot be undone."
 msgstr "A worktree e as alterações sem commit serão removidas. Não dá para desfazer."
@@ -17126,9 +17114,6 @@ msgstr "Este e-mail já está registrado com outro método de login, e o provedo
 
 msgid "This environment has no repositories. Create an environment with repositories in Settings, then start the workspace from it"
 msgstr "Este ambiente não tem repositórios. Crie um ambiente com repositórios em Configurações e inicie a área de trabalho a partir dele"
-
-msgid "This environment was promoted from a workspace, so its repositories are fixed. Promote a workspace again to change them."
-msgstr "Este ambiente foi promovido a partir de uma área de trabalho, então seus repositórios são fixos. Promova uma área de trabalho novamente para alterá-los."
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "Os repositórios deste ambiente são fixos; promova uma área de trabalho novamente para alterá-los"
@@ -18563,9 +18548,6 @@ msgstr "Boas-vindas ao Superset"
 
 msgid "Welcome to the new Superset"
 msgstr "Boas-vindas ao novo Superset"
-
-msgid "What a cloud workspace checks out, and where it runs."
-msgstr "O que um workspace na nuvem clona e onde ele roda."
 
 msgid "What are the benefits?"
 msgstr "Quais são os benefícios?"

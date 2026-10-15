@@ -1053,12 +1053,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{total} içinden {received}"
 
-msgid "{regionCity} · Only you"
-msgstr "{regionCity} · Yalnızca siz"
-
-msgid "{regionCity} · Shared with your organization"
-msgstr "{regionCity} · Organizasyonunuzla paylaşılıyor"
-
 msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
 msgstr "{repositoryFullName}, bu organizasyonun GitHub App'inin kurulu olduğu {installedAccountLogin} hesabında değil."
 
@@ -2999,9 +2993,6 @@ msgstr "Alt çekmece, dokunmatik cihazlarda kaydırmaya uygun."
 msgid "Box"
 msgstr "Kutu"
 
-msgid "Boxes run where the environment was made; a snapshot only exists in its region."
-msgstr "Kutular ortamın oluşturulduğu yerde çalışır; bir anlık görüntü yalnızca kendi bölgesinde bulunur."
-
 msgid "Branch"
 msgstr "Dal"
 
@@ -4188,9 +4179,6 @@ msgstr "component-showcase"
 msgid "Composable form layout — pairs with @superset/ui/form for react-hook-form"
 msgstr "Birleştirilebilir form düzeni — react-hook-form için @superset/ui/form ile birlikte kullanılır"
 
-msgid "Config location"
-msgstr "Yapılandırma konumu"
-
 msgid "Configure"
 msgstr "Yapılandır"
 
@@ -4206,8 +4194,8 @@ msgstr "Genel uygulama tercihlerini yapılandırın"
 msgid "Configure git branch and worktree behavior"
 msgstr "Git dal ve worktree davranışını yapılandırın"
 
-msgid "Configure GitHub App"
-msgstr "GitHub App'i yapılandır"
+msgid "Configure GitHub App →"
+msgstr "GitHub App'i yapılandır →"
 
 msgid "Configure GitHub App…"
 msgstr "GitHub App'i yapılandır…"
@@ -5547,9 +5535,6 @@ msgstr "Özel terminal ajanları"
 
 msgid "Custom themes"
 msgstr "Özel temalar"
-
-msgid "Customize"
-msgstr "Özelleştir"
 
 msgid "Customize commands"
 msgstr "Komutları özelleştir"
@@ -7561,6 +7546,9 @@ msgstr "Tamamlandı"
 
 msgid "finished · worked for 7s"
 msgstr "bitti · 7 sn çalıştı"
+
+msgid "First repository by name"
+msgstr "Ada göre ilk depo"
 
 msgid "Fix all failing checks"
 msgstr "Başarısız tüm kontrolleri düzelt"
@@ -11081,9 +11069,6 @@ msgstr "Takımınızdan henüz kimse otomasyon paylaşmadı."
 msgid "Nobody reviews differently because of it."
 msgstr "Kimse bu yüzden farklı inceleme yapmaz."
 
-msgid "None"
-msgstr "Yok"
-
 msgid "none (session)"
 msgstr "yok (oturum)"
 
@@ -11881,6 +11866,9 @@ msgstr "Worktree açılıyor..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Bir ajanın projenin ihtiyaç duyduklarını kurup .superset/config.json dosyasını yazdığı bir bulut çalışma alanı açar"
+
+msgid "Opens on"
+msgstr "Şurada açılır"
 
 msgid "Operator"
 msgstr "Operatör"
@@ -12822,6 +12810,9 @@ msgstr "Projenin host'una erişilemiyor — şu anda yeniden adlandırılamaz"
 
 msgid "Projects"
 msgstr "Projeler"
+
+msgid "Promoted from a workspace, so its repositories and region are fixed. Promote a workspace again to change them."
+msgstr "Bir çalışma alanından yükseltildi, bu yüzden depoları ve bölgesi sabit. Değiştirmek için bir çalışma alanını yeniden yükseltin."
 
 msgid "Prompt"
 msgstr "İstem"
@@ -16658,9 +16649,6 @@ msgstr "O makine artık kullanılamıyor"
 msgid "That name isn't allowed."
 msgstr "Bu ada izin verilmiyor."
 
-msgid "The .superset/config.json the workspace reads, and the repository it opens on."
-msgstr "Çalışma alanının okuduğu .superset/config.json ve açıldığı depo."
-
 msgid "The 2026 bet"
 msgstr "2026 bahsi"
 
@@ -16982,8 +16970,8 @@ msgstr "Çalışma alanı yine de oluşturulmuş olabilir. Göründüğünde bu 
 msgid "The workspace this automation is pinned to no longer exists on its host. Pin a different one in the automation's settings."
 msgstr "Bu otomasyonun sabitlendiği çalışma alanı artık ana makinesinde yok. Otomasyonun ayarlarından başka bir tanesini sabitleyin."
 
-msgid "The workspace's repositories, as they are checked out now."
-msgstr "Çalışma alanının depoları, şu anki halleriyle."
+msgid "The workspace's repositories, as they are checked out now. Boxes run in its region."
+msgstr "Çalışma alanının şu anda alınmış haliyle depoları. Kutular onun bölgesinde çalışır."
 
 msgid "The worktree and any uncommitted changes will be removed. This cannot be undone."
 msgstr "Worktree ve commit'lenmemiş tüm değişiklikler kaldırılacak. Bu geri alınamaz."
@@ -17126,9 +17114,6 @@ msgstr "Bu e-posta zaten başka bir oturum açma yöntemiyle kayıtlı ve sağla
 
 msgid "This environment has no repositories. Create an environment with repositories in Settings, then start the workspace from it"
 msgstr "Bu ortamda depo yok. Ayarlar'da depoları olan bir ortam oluşturun, ardından çalışma alanını o ortamdan başlatın"
-
-msgid "This environment was promoted from a workspace, so its repositories are fixed. Promote a workspace again to change them."
-msgstr "Bu ortam bir çalışma alanından yükseltildiği için depoları sabittir. Değiştirmek için bir çalışma alanını yeniden yükseltin."
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "Bu ortamın depoları sabittir; değiştirmek için bir çalışma alanını yeniden yükseltin"
@@ -18563,9 +18548,6 @@ msgstr "Superset'e hoş geldiniz"
 
 msgid "Welcome to the new Superset"
 msgstr "Yeni Superset'e hoş geldiniz"
-
-msgid "What a cloud workspace checks out, and where it runs."
-msgstr "Bir bulut çalışma alanının neyi aldığı ve nerede çalıştığı."
 
 msgid "What are the benefits?"
 msgstr "Yan haklar neler?"

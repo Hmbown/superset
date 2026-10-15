@@ -1053,12 +1053,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received}/{total}"
 
-msgid "{regionCity} · Only you"
-msgstr "{regionCity} · 自分のみ"
-
-msgid "{regionCity} · Shared with your organization"
-msgstr "{regionCity} · 組織と共有"
-
 msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
 msgstr "{repositoryFullName} は、この組織の GitHub App がインストールされている {installedAccountLogin} にありません。"
 
@@ -2999,9 +2993,6 @@ msgstr "下部ドロワー。タッチデバイスではスワイプで操作で
 msgid "Box"
 msgstr "Box"
 
-msgid "Boxes run where the environment was made; a snapshot only exists in its region."
-msgstr "ボックスは環境が作成されたリージョンで動作します。スナップショットはそのリージョンにしか存在しません。"
-
 msgid "Branch"
 msgstr "ブランチ"
 
@@ -4188,9 +4179,6 @@ msgstr "component-showcase"
 msgid "Composable form layout — pairs with @superset/ui/form for react-hook-form"
 msgstr "組み合わせ可能なフォームレイアウト — react-hook-form用の@superset/ui/formと合わせて使います"
 
-msgid "Config location"
-msgstr "設定の場所"
-
 msgid "Configure"
 msgstr "設定"
 
@@ -4206,8 +4194,8 @@ msgstr "アプリの全般設定"
 msgid "Configure git branch and worktree behavior"
 msgstr "gitブランチとワークツリーの動作を設定"
 
-msgid "Configure GitHub App"
-msgstr "GitHub App を設定"
+msgid "Configure GitHub App →"
+msgstr "GitHub App を設定 →"
 
 msgid "Configure GitHub App…"
 msgstr "GitHub App を設定…"
@@ -5547,9 +5535,6 @@ msgstr "カスタムターミナルエージェント"
 
 msgid "Custom themes"
 msgstr "カスタムテーマ"
-
-msgid "Customize"
-msgstr "カスタマイズ"
 
 msgid "Customize commands"
 msgstr "コマンドをカスタマイズ"
@@ -7561,6 +7546,9 @@ msgstr "完了"
 
 msgid "finished · worked for 7s"
 msgstr "完了 · 7秒稼働"
+
+msgid "First repository by name"
+msgstr "名前順で最初のリポジトリ"
 
 msgid "Fix all failing checks"
 msgstr "失敗したチェックをすべて修正"
@@ -11081,9 +11069,6 @@ msgstr "チームで共有されたオートメーションはまだありませ
 msgid "Nobody reviews differently because of it."
 msgstr "それによってレビューのやり方が変わることはない。"
 
-msgid "None"
-msgstr "なし"
-
 msgid "none (session)"
 msgstr "なし (セッション)"
 
@@ -11881,6 +11866,9 @@ msgstr "ワークツリーを開いています..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "クラウドワークスペースを開き、エージェントがプロジェクトに必要なものをインストールして .superset/config.json を書き込みます"
+
+msgid "Opens on"
+msgstr "開くリポジトリ"
 
 msgid "Operator"
 msgstr "オペレーター"
@@ -12822,6 +12810,9 @@ msgstr "プロジェクトのホストに到達できません — 今は名前�
 
 msgid "Projects"
 msgstr "プロジェクト"
+
+msgid "Promoted from a workspace, so its repositories and region are fixed. Promote a workspace again to change them."
+msgstr "ワークスペースから昇格したため、リポジトリとリージョンは固定です。変更するには再度ワークスペースを昇格してください。"
 
 msgid "Prompt"
 msgstr "プロンプト"
@@ -16658,9 +16649,6 @@ msgstr "そのマシンは利用できなくなりました"
 msgid "That name isn't allowed."
 msgstr "その名前は使用できません。"
 
-msgid "The .superset/config.json the workspace reads, and the repository it opens on."
-msgstr "ワークスペースが読み込む .superset/config.json と、開くリポジトリ。"
-
 msgid "The 2026 bet"
 msgstr "2026年の賭け"
 
@@ -16982,8 +16970,8 @@ msgstr "ワークスペースは作成されている可能性があります。
 msgid "The workspace this automation is pinned to no longer exists on its host. Pin a different one in the automation's settings."
 msgstr "このオートメーションがピン留めされているワークスペースは、ホスト上に存在しなくなりました。オートメーションの設定で別のワークスペースをピン留めしてください。"
 
-msgid "The workspace's repositories, as they are checked out now."
-msgstr "現在チェックアウトされている状態のワークスペースのリポジトリ。"
+msgid "The workspace's repositories, as they are checked out now. Boxes run in its region."
+msgstr "ワークスペースのリポジトリ（現在チェックアウトされている状態）。ボックスはそのリージョンで実行されます。"
 
 msgid "The worktree and any uncommitted changes will be removed. This cannot be undone."
 msgstr "ワークツリーと未コミットの変更が削除されます。この操作は元に戻せません。"
@@ -17126,9 +17114,6 @@ msgstr "このメールアドレスは別のサインイン方法で既に登録
 
 msgid "This environment has no repositories. Create an environment with repositories in Settings, then start the workspace from it"
 msgstr "この環境にはリポジトリがありません。設定でリポジトリを含む環境を作成し、その環境からワークスペースを開始してください"
-
-msgid "This environment was promoted from a workspace, so its repositories are fixed. Promote a workspace again to change them."
-msgstr "この環境はワークスペースから昇格されたため、リポジトリは固定されています。変更するにはワークスペースを再度昇格してください。"
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "この環境のリポジトリは固定されています。変更するにはワークスペースを再度昇格してください"
@@ -18563,9 +18548,6 @@ msgstr "Supersetへようこそ"
 
 msgid "Welcome to the new Superset"
 msgstr "新しいSupersetへようこそ"
-
-msgid "What a cloud workspace checks out, and where it runs."
-msgstr "クラウドワークスペースがチェックアウトするものと、実行場所。"
 
 msgid "What are the benefits?"
 msgstr "福利厚生は?"

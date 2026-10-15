@@ -1053,12 +1053,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{total} 중 {received}"
 
-msgid "{regionCity} · Only you"
-msgstr "{regionCity} · 나만"
-
-msgid "{regionCity} · Shared with your organization"
-msgstr "{regionCity} · 조직과 공유"
-
 msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
 msgstr "{repositoryFullName}은(는) 이 조직의 GitHub App이 설치된 {installedAccountLogin}에 없습니다."
 
@@ -2999,9 +2993,6 @@ msgstr "하단 드로어로, 터치 기기에서 스와이프하기 좋습니다
 msgid "Box"
 msgstr "박스"
 
-msgid "Boxes run where the environment was made; a snapshot only exists in its region."
-msgstr "박스는 환경이 만들어진 곳에서 실행됩니다. 스냅샷은 해당 리전에만 존재합니다."
-
 msgid "Branch"
 msgstr "브랜치"
 
@@ -4188,9 +4179,6 @@ msgstr "component-showcase"
 msgid "Composable form layout — pairs with @superset/ui/form for react-hook-form"
 msgstr "조합 가능한 폼 레이아웃 — react-hook-form을 쓰려면 @superset/ui/form과 함께 사용하세요"
 
-msgid "Config location"
-msgstr "구성 위치"
-
 msgid "Configure"
 msgstr "구성"
 
@@ -4206,8 +4194,8 @@ msgstr "일반 앱 환경설정을 구성합니다"
 msgid "Configure git branch and worktree behavior"
 msgstr "git 브랜치와 worktree 동작을 설정합니다"
 
-msgid "Configure GitHub App"
-msgstr "GitHub App 구성"
+msgid "Configure GitHub App →"
+msgstr "GitHub App 구성 →"
 
 msgid "Configure GitHub App…"
 msgstr "GitHub App 구성…"
@@ -5547,9 +5535,6 @@ msgstr "커스텀 터미널 에이전트"
 
 msgid "Custom themes"
 msgstr "사용자 지정 테마"
-
-msgid "Customize"
-msgstr "사용자 지정"
 
 msgid "Customize commands"
 msgstr "명령 사용자 지정"
@@ -7561,6 +7546,9 @@ msgstr "완료"
 
 msgid "finished · worked for 7s"
 msgstr "완료 · 7초 작업"
+
+msgid "First repository by name"
+msgstr "이름순 첫 번째 저장소"
 
 msgid "Fix all failing checks"
 msgstr "실패한 검사 모두 고치기"
@@ -11081,9 +11069,6 @@ msgstr "아직 팀에서 공유한 자동화가 없습니다."
 msgid "Nobody reviews differently because of it."
 msgstr "그 때문에 리뷰 방식을 바꾸는 사람은 없습니다."
 
-msgid "None"
-msgstr "없음"
-
 msgid "none (session)"
 msgstr "없음 (세션)"
 
@@ -11881,6 +11866,9 @@ msgstr "worktree를 여는 중..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "에이전트가 프로젝트에 필요한 것을 설치하고 .superset/config.json을 작성하는 클라우드 워크스페이스를 엽니다"
+
+msgid "Opens on"
+msgstr "열리는 위치"
 
 msgid "Operator"
 msgstr "작업자"
@@ -12822,6 +12810,9 @@ msgstr "프로젝트 호스트에 연결할 수 없습니다 — 지금은 이�
 
 msgid "Projects"
 msgstr "프로젝트"
+
+msgid "Promoted from a workspace, so its repositories and region are fixed. Promote a workspace again to change them."
+msgstr "워크스페이스에서 승격되어 저장소와 리전이 고정되어 있습니다. 변경하려면 워크스페이스를 다시 승격하세요."
 
 msgid "Prompt"
 msgstr "프롬프트"
@@ -16658,9 +16649,6 @@ msgstr "해당 머신을 더 이상 사용할 수 없습니다"
 msgid "That name isn't allowed."
 msgstr "사용할 수 없는 이름입니다."
 
-msgid "The .superset/config.json the workspace reads, and the repository it opens on."
-msgstr "워크스페이스가 읽는 .superset/config.json과 워크스페이스가 열리는 저장소입니다."
-
 msgid "The 2026 bet"
 msgstr "2026년의 베팅"
 
@@ -16982,8 +16970,8 @@ msgstr "워크스페이스가 생성되었을 수도 있습니다. 나타나면 
 msgid "The workspace this automation is pinned to no longer exists on its host. Pin a different one in the automation's settings."
 msgstr "이 자동화가 고정된 워크스페이스가 해당 호스트에 더 이상 존재하지 않습니다. 자동화 설정에서 다른 워크스페이스를 고정하세요."
 
-msgid "The workspace's repositories, as they are checked out now."
-msgstr "현재 체크아웃된 상태의 워크스페이스 저장소입니다."
+msgid "The workspace's repositories, as they are checked out now. Boxes run in its region."
+msgstr "현재 체크아웃된 상태의 워크스페이스 저장소입니다. 박스는 해당 리전에서 실행됩니다."
 
 msgid "The worktree and any uncommitted changes will be removed. This cannot be undone."
 msgstr "worktree와 커밋되지 않은 변경 사항이 모두 삭제됩니다. 되돌릴 수 없습니다."
@@ -17126,9 +17114,6 @@ msgstr "이 이메일은 이미 다른 로그인 방법으로 등록되어 있�
 
 msgid "This environment has no repositories. Create an environment with repositories in Settings, then start the workspace from it"
 msgstr "이 환경에는 저장소가 없습니다. 설정에서 저장소가 있는 환경을 만든 다음 그 환경에서 워크스페이스를 시작하세요"
-
-msgid "This environment was promoted from a workspace, so its repositories are fixed. Promote a workspace again to change them."
-msgstr "이 환경은 워크스페이스에서 승격되었기 때문에 리포지토리가 고정되어 있습니다. 변경하려면 워크스페이스를 다시 승격하세요."
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "이 환경의 리포지토리는 고정되어 있습니다. 변경하려면 워크스페이스를 다시 승격하세요"
@@ -18563,9 +18548,6 @@ msgstr "Superset에 오신 것을 환영합니다"
 
 msgid "Welcome to the new Superset"
 msgstr "새로운 Superset에 오신 것을 환영합니다"
-
-msgid "What a cloud workspace checks out, and where it runs."
-msgstr "클라우드 워크스페이스가 체크아웃하는 항목과 실행 위치입니다."
 
 msgid "What are the benefits?"
 msgstr "복리후생은 어떤가요?"

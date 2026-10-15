@@ -1053,12 +1053,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received}/{total}"
 
-msgid "{regionCity} · Only you"
-msgstr "{regionCity} · 仅自己"
-
-msgid "{regionCity} · Shared with your organization"
-msgstr "{regionCity} · 与你的组织共享"
-
 msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
 msgstr "{repositoryFullName} 不在 {installedAccountLogin} 上，而本组织的 GitHub App 安装在那里。"
 
@@ -2999,9 +2993,6 @@ msgstr "底部抽屉，在触屏设备上便于滑动操作。"
 msgid "Box"
 msgstr "Box"
 
-msgid "Boxes run where the environment was made; a snapshot only exists in its region."
-msgstr "沙盒在环境创建的位置运行；快照只存在于其所在区域。"
-
 msgid "Branch"
 msgstr "分支"
 
@@ -4188,9 +4179,6 @@ msgstr "component-showcase"
 msgid "Composable form layout — pairs with @superset/ui/form for react-hook-form"
 msgstr "可组合的表单布局——搭配@superset/ui/form用于react-hook-form"
 
-msgid "Config location"
-msgstr "配置位置"
-
 msgid "Configure"
 msgstr "配置"
 
@@ -4206,8 +4194,8 @@ msgstr "配置应用的通用偏好设置"
 msgid "Configure git branch and worktree behavior"
 msgstr "配置git分支和worktree行为"
 
-msgid "Configure GitHub App"
-msgstr "配置 GitHub App"
+msgid "Configure GitHub App →"
+msgstr "配置 GitHub App →"
 
 msgid "Configure GitHub App…"
 msgstr "配置 GitHub App…"
@@ -5547,9 +5535,6 @@ msgstr "自定义终端智能体"
 
 msgid "Custom themes"
 msgstr "自定义主题"
-
-msgid "Customize"
-msgstr "自定义"
 
 msgid "Customize commands"
 msgstr "自定义命令"
@@ -7561,6 +7546,9 @@ msgstr "已完成"
 
 msgid "finished · worked for 7s"
 msgstr "已完成 · 用时7秒"
+
+msgid "First repository by name"
+msgstr "按名称排序的第一个仓库"
 
 msgid "Fix all failing checks"
 msgstr "修复所有失败的检查"
@@ -11081,9 +11069,6 @@ msgstr "团队里还没有人共享自动化。"
 msgid "Nobody reviews differently because of it."
 msgstr "没有人因此改变审查方式。"
 
-msgid "None"
-msgstr "无"
-
 msgid "none (session)"
 msgstr "无（会话）"
 
@@ -11881,6 +11866,9 @@ msgstr "正在打开worktree..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "打开一个云端工作区，由代理安装项目所需内容并写入其 .superset/config.json"
+
+msgid "Opens on"
+msgstr "打开于"
 
 msgid "Operator"
 msgstr "操作员"
@@ -12822,6 +12810,9 @@ msgstr "项目所在主机不可达，暂时无法重命名"
 
 msgid "Projects"
 msgstr "项目"
+
+msgid "Promoted from a workspace, so its repositories and region are fixed. Promote a workspace again to change them."
+msgstr "由工作区提升而来，因此仓库和区域固定。再次提升一个工作区即可更改。"
 
 msgid "Prompt"
 msgstr "提示词"
@@ -16658,9 +16649,6 @@ msgstr "该机器已不可用"
 msgid "That name isn't allowed."
 msgstr "该名称不被允许。"
 
-msgid "The .superset/config.json the workspace reads, and the repository it opens on."
-msgstr "工作区读取的 .superset/config.json，以及它打开的仓库。"
-
 msgid "The 2026 bet"
 msgstr "2026年的赌注"
 
@@ -16982,8 +16970,8 @@ msgstr "工作区可能已经创建。如果出现，此界面会自动打开它
 msgid "The workspace this automation is pinned to no longer exists on its host. Pin a different one in the automation's settings."
 msgstr "此自动化固定的工作区在其主机上已不存在。请在自动化设置中固定另一个工作区。"
 
-msgid "The workspace's repositories, as they are checked out now."
-msgstr "工作区当前检出的仓库。"
+msgid "The workspace's repositories, as they are checked out now. Boxes run in its region."
+msgstr "工作区当前检出的仓库。实例在其所在区域运行。"
 
 msgid "The worktree and any uncommitted changes will be removed. This cannot be undone."
 msgstr "worktree及其中所有未提交的更改都会被移除。此操作无法撤销。"
@@ -17126,9 +17114,6 @@ msgstr "此邮箱已通过其他登录方式注册，且提供方未将其确认
 
 msgid "This environment has no repositories. Create an environment with repositories in Settings, then start the workspace from it"
 msgstr "此环境没有仓库。请先在设置中创建包含仓库的环境，再从该环境启动工作区"
-
-msgid "This environment was promoted from a workspace, so its repositories are fixed. Promote a workspace again to change them."
-msgstr "此环境由工作区提升而来，因此其仓库已固定。请再次提升一个工作区以更改它们。"
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "此环境的仓库已固定；请再次提升一个工作区以更改它们"
@@ -18563,9 +18548,6 @@ msgstr "欢迎使用Superset"
 
 msgid "Welcome to the new Superset"
 msgstr "欢迎使用全新的 Superset"
-
-msgid "What a cloud workspace checks out, and where it runs."
-msgstr "云工作区检出的内容，以及运行位置。"
 
 msgid "What are the benefits?"
 msgstr "有哪些福利？"

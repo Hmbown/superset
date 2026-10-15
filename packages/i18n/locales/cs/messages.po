@@ -1053,12 +1053,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} z {total}"
 
-msgid "{regionCity} · Only you"
-msgstr "{regionCity} · Jen vy"
-
-msgid "{regionCity} · Shared with your organization"
-msgstr "{regionCity} · Sdíleno s organizací"
-
 msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
 msgstr "{repositoryFullName} není v účtu {installedAccountLogin}, kde je nainstalovaná GitHub App této organizace."
 
@@ -2999,9 +2993,6 @@ msgstr "Spodní drawer, na dotykových zařízeních ovladatelný přejetím prs
 msgid "Box"
 msgstr "Box"
 
-msgid "Boxes run where the environment was made; a snapshot only exists in its region."
-msgstr "Boxy běží tam, kde bylo prostředí vytvořeno; snapshot existuje jen ve svém regionu."
-
 msgid "Branch"
 msgstr "Větev"
 
@@ -4188,9 +4179,6 @@ msgstr "component-showcase"
 msgid "Composable form layout — pairs with @superset/ui/form for react-hook-form"
 msgstr "Skládatelné rozvržení formuláře — funguje s @superset/ui/form pro react-hook-form"
 
-msgid "Config location"
-msgstr "Umístění konfigurace"
-
 msgid "Configure"
 msgstr "Nastavit"
 
@@ -4206,8 +4194,8 @@ msgstr "Nastavte obecné předvolby aplikace"
 msgid "Configure git branch and worktree behavior"
 msgstr "Nastavte chování git větví a worktree"
 
-msgid "Configure GitHub App"
-msgstr "Nastavit GitHub App"
+msgid "Configure GitHub App →"
+msgstr "Nastavit GitHub App →"
 
 msgid "Configure GitHub App…"
 msgstr "Nastavit GitHub App…"
@@ -5547,9 +5535,6 @@ msgstr "Vlastní termináloví agenti"
 
 msgid "Custom themes"
 msgstr "Vlastní motivy"
-
-msgid "Customize"
-msgstr "Přizpůsobit"
 
 msgid "Customize commands"
 msgstr "Upravit příkazy"
@@ -7561,6 +7546,9 @@ msgstr "Dokončeno"
 
 msgid "finished · worked for 7s"
 msgstr "hotovo · pracoval 7 s"
+
+msgid "First repository by name"
+msgstr "První repozitář podle názvu"
 
 msgid "Fix all failing checks"
 msgstr "Opravit všechny selhávající kontroly"
@@ -11081,9 +11069,6 @@ msgstr "Nikdo z vašeho týmu zatím nesdílel automatizace."
 msgid "Nobody reviews differently because of it."
 msgstr "Nikdo kvůli tomu nereviduje jinak."
 
-msgid "None"
-msgstr "Žádný"
-
 msgid "none (session)"
 msgstr "žádný (relace)"
 
@@ -11881,6 +11866,9 @@ msgstr "Otevírám worktree..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Otevře cloudový pracovní prostor, kde agent nainstaluje vše, co projekt potřebuje, a zapíše jeho .superset/config.json"
+
+msgid "Opens on"
+msgstr "Otevře se v"
 
 msgid "Operator"
 msgstr "Operátor"
@@ -12822,6 +12810,9 @@ msgstr "Host projektu není dostupný — teď nelze přejmenovat"
 
 msgid "Projects"
 msgstr "Projekty"
+
+msgid "Promoted from a workspace, so its repositories and region are fixed. Promote a workspace again to change them."
+msgstr "Povýšeno z pracovního prostoru, takže repozitáře a region jsou pevné. Pro změnu znovu povyšte pracovní prostor."
 
 msgid "Prompt"
 msgstr "Prompt"
@@ -16658,9 +16649,6 @@ msgstr "Tento počítač už není dostupný"
 msgid "That name isn't allowed."
 msgstr "Takový název není povolený."
 
-msgid "The .superset/config.json the workspace reads, and the repository it opens on."
-msgstr "Soubor .superset/config.json, který pracovní prostor čte, a repozitář, ve kterém se otevře."
-
 msgid "The 2026 bet"
 msgstr "Sázka na rok 2026"
 
@@ -16982,8 +16970,8 @@ msgstr "Pracovní prostor mohl přesto vzniknout. Tato obrazovka ho otevře, jak
 msgid "The workspace this automation is pinned to no longer exists on its host. Pin a different one in the automation's settings."
 msgstr "Pracovní prostor, ke kterému je tato automatizace připnutá, na jeho hostiteli už neexistuje. Připněte v nastavení automatizace jiný."
 
-msgid "The workspace's repositories, as they are checked out now."
-msgstr "Repozitáře pracovního prostoru v aktuálně načteném stavu."
+msgid "The workspace's repositories, as they are checked out now. Boxes run in its region."
+msgstr "Repozitáře pracovního prostoru tak, jak jsou nyní stažené. Boxy běží v jeho regionu."
 
 msgid "The worktree and any uncommitted changes will be removed. This cannot be undone."
 msgstr "Worktree a všechny necommitnuté změny budou odstraněny. Tuto akci nelze vrátit zpět."
@@ -17126,9 +17114,6 @@ msgstr "Tento e-mail je již zaregistrován jiným způsobem přihlášení a po
 
 msgid "This environment has no repositories. Create an environment with repositories in Settings, then start the workspace from it"
 msgstr "Toto prostředí nemá žádné repozitáře. V Nastavení vytvořte prostředí s repozitáři a pracovní prostor spusťte z něj"
-
-msgid "This environment was promoted from a workspace, so its repositories are fixed. Promote a workspace again to change them."
-msgstr "Toto prostředí bylo povýšeno z pracovního prostoru, takže jeho repozitáře jsou pevně dané. Pro jejich změnu znovu povyšte pracovní prostor."
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "Repozitáře tohoto prostředí jsou pevně dané; pro jejich změnu znovu povyšte pracovní prostor"
@@ -18563,9 +18548,6 @@ msgstr "Vítejte v Superset"
 
 msgid "Welcome to the new Superset"
 msgstr "Vítejte v novém Superset"
-
-msgid "What a cloud workspace checks out, and where it runs."
-msgstr "Co si cloudový pracovní prostor stáhne a kde běží."
 
 msgid "What are the benefits?"
 msgstr "Jaké jsou benefity?"

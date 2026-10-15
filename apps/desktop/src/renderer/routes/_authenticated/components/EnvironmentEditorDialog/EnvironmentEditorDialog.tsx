@@ -27,12 +27,10 @@ import {
 import { toast } from "@superset/ui/sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { HiChevronRight } from "react-icons/hi2";
-import { LuLayers } from "react-icons/lu";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
-import { EnvironmentField } from "./components/EnvironmentField";
 import { EnvironmentMissingRepositoryNotice } from "./components/EnvironmentMissingRepositoryNotice";
+import { EnvironmentPropertyRow } from "./components/EnvironmentPropertyRow";
 import { EnvironmentRepositoryPicker } from "./components/EnvironmentRepositoryPicker";
 import { githubAppSettingsUrl } from "./utils/githubAppSettingsUrl";
 
@@ -67,10 +65,11 @@ interface EnvironmentEditorDialogProps {
 const NO_HOOKS = "none";
 
 /**
- * Name, repositories, config location, region and scope for one environment.
- * A new one opens prefilled with only name and repositories in view; the rest
- * sits behind Customize. From Settings, a new environment can also be handed
- * to an agent that installs what the project needs.
+ * One property list: repository, name, region and visibility, prefilled so a
+ * new environment needs nothing but the create button. Config location shows
+ * once there is more than one repository to choose between. From Settings, a
+ * new environment can also be handed to an agent that installs what the
+ * project needs.
  */
 export function EnvironmentEditorDialog({
 	organizationId,
@@ -90,7 +89,6 @@ export function EnvironmentEditorDialog({
 		{ cloudWorkspaceId: fromWorkspaceId ?? "" },
 		{ enabled: open && fromWorkspaceId !== undefined },
 	);
-	const [isCustomizing, setIsCustomizing] = useState(!isCreating);
 	const [nameDraft, setName] = useState<string | null>(
 		environment?.name ?? initialName ?? null,
 	);
@@ -114,9 +112,6 @@ export function EnvironmentEditorDialog({
 		region ?? suggestedRegion.data?.region ?? DEFAULT_SANDBOX_REGION;
 	const shownRegion =
 		environment?.region ?? preview.data?.region ?? chosenRegion;
-	const regionCity =
-		SANDBOX_REGIONS.find((option) => option.id === shownRegion)?.city ??
-		shownRegion;
 	const repositoriesFrozen =
 		(environment?.repositoriesFrozen ?? false) || fromWorkspaceId !== undefined;
 
@@ -313,104 +308,80 @@ export function EnvironmentEditorDialog({
 		}
 	};
 
+	const showsConfigLocation = !!environment || selectedRepositories.length > 1;
+	const rowControl =
+		"h-10 w-full rounded-none border-0 bg-transparent px-3 shadow-none focus-visible:ring-0 dark:bg-transparent dark:hover:bg-transparent";
+
 	return (
 		<Dialog onOpenChange={onOpenChange} open={open}>
-			<DialogContent className="gap-0 overflow-hidden rounded-2xl p-0 sm:max-w-[460px]">
-				<DialogHeader className="flex-row items-start gap-3 px-5 pt-5 pb-4 text-left">
-					<div className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-border/70 bg-muted/40">
-						<LuLayers className="size-4 text-muted-foreground" />
-					</div>
-					<div className="flex min-w-0 flex-col gap-1 pr-6">
-						<DialogTitle className="text-base leading-tight">
-							{environment ? (
-								<Trans>Edit environment</Trans>
-							) : fromWorkspaceId ? (
-								<Trans>Save as environment</Trans>
-							) : (
-								<Trans>New environment</Trans>
-							)}
-						</DialogTitle>
+			<DialogContent className="gap-0 overflow-hidden rounded-2xl p-0 sm:max-w-[440px]">
+				<DialogHeader className="px-5 pt-5 pb-3 text-left">
+					<DialogTitle className="text-base leading-tight">
+						{environment ? (
+							<Trans>Edit environment</Trans>
+						) : fromWorkspaceId ? (
+							<Trans>Save as environment</Trans>
+						) : (
+							<Trans>New environment</Trans>
+						)}
+					</DialogTitle>
+					{fromWorkspaceId && (
 						<DialogDescription className="text-xs leading-snug">
-							{fromWorkspaceId ? (
-								<Trans>
-									Snapshots this workspace as it is now, with everything
-									installed in it. New workspaces from the environment start
-									from that snapshot.
-								</Trans>
-							) : (
-								<Trans>
-									What a cloud workspace checks out, and where it runs.
-								</Trans>
-							)}
+							<Trans>
+								Snapshots this workspace as it is now, with everything installed
+								in it. New workspaces from the environment start from that
+								snapshot.
+							</Trans>
 						</DialogDescription>
-					</div>
+					)}
 				</DialogHeader>
 
-				<div className="flex flex-col gap-4 px-5 pb-5">
-					<EnvironmentField
-						htmlFor="environment-name"
-						label={<Trans>Name</Trans>}
-					>
-						<Input
-							className="h-9"
-							id="environment-name"
-							onChange={(event) => setName(event.target.value)}
-							placeholder={t({ message: "monorepo" })}
-							value={name}
-						/>
-					</EnvironmentField>
-
-					<EnvironmentField
-						htmlFor="environment-repositories"
-						label={<Trans>Repositories</Trans>}
-						hint={
-							repositoriesFrozen ? (
-								fromWorkspaceId ? (
-									<Trans>
-										The workspace's repositories, as they are checked out now.
-									</Trans>
+				<div className="flex flex-col gap-3 px-5 pb-5">
+					<div className="divide-y divide-border/70 overflow-hidden rounded-lg border border-border/70">
+						<EnvironmentPropertyRow
+							htmlFor="environment-repositories"
+							label={
+								selectedRepositories.length > 1 ? (
+									<Trans>Repositories</Trans>
 								) : (
-									<Trans>
-										This environment was promoted from a workspace, so its
-										repositories are fixed. Promote a workspace again to change
-										them.
-									</Trans>
+									<Trans>Repository</Trans>
 								)
-							) : undefined
-						}
-					>
-						<EnvironmentRepositoryPicker
-							disabled={repositoriesFrozen}
-							isLoading={repositoriesQuery.isLoading}
-							isRefreshing={resync.isPending}
-							onConfigureGitHubApp={configureGitHubApp}
-							onRefresh={
-								fromWorkspaceId ? null : () => resync.mutate({ organizationId })
 							}
-							onToggle={toggleRepository}
-							repositories={repositories}
-							selected={selectedRepositories}
-						/>
-						{missingRepositoryFullName && (
-							<EnvironmentMissingRepositoryNotice
-								installedAccountLogin={installation?.accountLogin ?? null}
+						>
+							<EnvironmentRepositoryPicker
+								disabled={repositoriesFrozen}
+								isLoading={repositoriesQuery.isLoading}
+								isRefreshing={resync.isPending}
 								onConfigureGitHubApp={configureGitHubApp}
-								repositoryFullName={missingRepositoryFullName}
-							/>
-						)}
-					</EnvironmentField>
-
-					{isCustomizing ? (
-						<>
-							<EnvironmentField
-								htmlFor="environment-hooks"
-								label={<Trans>Config location</Trans>}
-								hint={
-									<Trans>
-										The .superset/config.json the workspace reads, and the
-										repository it opens on.
-									</Trans>
+								onRefresh={
+									fromWorkspaceId
+										? null
+										: () => resync.mutate({ organizationId })
 								}
+								onToggle={toggleRepository}
+								repositories={repositories}
+								selected={selectedRepositories}
+							/>
+						</EnvironmentPropertyRow>
+
+						<EnvironmentPropertyRow
+							htmlFor="environment-name"
+							label={<Trans>Name</Trans>}
+						>
+							<Input
+								className="h-10 w-full px-3 placeholder:text-muted-foreground"
+								id="environment-name"
+								onChange={(event) => setName(event.target.value)}
+								placeholder={t({ message: "monorepo" })}
+								value={name}
+								variant="ghost"
+							/>
+						</EnvironmentPropertyRow>
+
+						{showsConfigLocation && (
+							<EnvironmentPropertyRow
+								htmlFor="environment-hooks"
+								label={<Trans>Opens on</Trans>}
 							>
 								<Select
 									disabled={fromWorkspaceId !== undefined}
@@ -419,12 +390,12 @@ export function EnvironmentEditorDialog({
 									}
 									value={hooksChoice}
 								>
-									<SelectTrigger className="h-9 w-full" id="environment-hooks">
+									<SelectTrigger className={rowControl} id="environment-hooks">
 										<SelectValue />
 									</SelectTrigger>
 									<SelectContent>
 										<SelectItem value={NO_HOOKS}>
-											<Trans>None</Trans>
+											<Trans>First repository by name</Trans>
 										</SelectItem>
 										{selectedRepositories.map((repo) => (
 											<SelectItem key={repo.id} value={repo.id}>
@@ -433,83 +404,75 @@ export function EnvironmentEditorDialog({
 										))}
 									</SelectContent>
 								</Select>
-							</EnvironmentField>
+							</EnvironmentPropertyRow>
+						)}
 
-							<div className="grid grid-cols-2 gap-3">
-								<EnvironmentField
-									htmlFor="environment-region"
-									label={<Trans>Region</Trans>}
-								>
-									<Select
-										disabled={!isCreating}
-										onValueChange={(value) =>
-											setRegion(value as SandboxRegionId)
-										}
-										value={shownRegion}
-									>
-										<SelectTrigger className="h-9 w-full" id="environment-region">
-											<SelectValue />
-										</SelectTrigger>
-										<SelectContent>
-											{SANDBOX_REGIONS.map((option) => (
-												<SelectItem key={option.id} value={option.id}>
-													{option.city}
-												</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
-								</EnvironmentField>
-								<EnvironmentField
-									htmlFor="environment-scope"
-									label={<Trans>Visible to</Trans>}
-								>
-									<Select
-										onValueChange={(value) =>
-											setScope(value as EnvironmentScope)
-										}
-										value={scope}
-									>
-										<SelectTrigger className="h-9 w-full" id="environment-scope">
-											<SelectValue />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectItem value="organization">
-												<Trans>Organization</Trans>
-											</SelectItem>
-											<SelectItem value="personal">
-												<Trans>Only you</Trans>
-											</SelectItem>
-										</SelectContent>
-									</Select>
-								</EnvironmentField>
-							</div>
-							{!isCreating && (
-								<p className="-mt-2 text-xs leading-snug text-muted-foreground">
-									<Trans>
-										Boxes run where the environment was made; a snapshot only
-										exists in its region.
-									</Trans>
-								</p>
-							)}
-						</>
-					) : (
-						<button
-							className="group -mt-1 flex items-center gap-1.5 self-start text-xs text-muted-foreground transition-colors hover:text-foreground"
-							onClick={() => setIsCustomizing(true)}
-							type="button"
+						<EnvironmentPropertyRow
+							htmlFor="environment-region"
+							label={<Trans>Region</Trans>}
 						>
-							<span>
-								{scope === "organization" ? (
-									<Trans>{regionCity} · Shared with your organization</Trans>
-								) : (
-									<Trans>{regionCity} · Only you</Trans>
-								)}
-							</span>
-							<span className="text-foreground/80 group-hover:text-foreground">
-								<Trans>Customize</Trans>
-							</span>
-							<HiChevronRight className="size-3" />
-						</button>
+							<Select
+								disabled={!isCreating}
+								onValueChange={(value) => setRegion(value as SandboxRegionId)}
+								value={shownRegion}
+							>
+								<SelectTrigger className={rowControl} id="environment-region">
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent>
+									{SANDBOX_REGIONS.map((option) => (
+										<SelectItem key={option.id} value={option.id}>
+											{option.city}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						</EnvironmentPropertyRow>
+
+						<EnvironmentPropertyRow
+							htmlFor="environment-scope"
+							label={<Trans>Visible to</Trans>}
+						>
+							<Select
+								onValueChange={(value) => setScope(value as EnvironmentScope)}
+								value={scope}
+							>
+								<SelectTrigger className={rowControl} id="environment-scope">
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="organization">
+										<Trans>Organization</Trans>
+									</SelectItem>
+									<SelectItem value="personal">
+										<Trans>Only you</Trans>
+									</SelectItem>
+								</SelectContent>
+							</Select>
+						</EnvironmentPropertyRow>
+					</div>
+
+					{missingRepositoryFullName && (
+						<EnvironmentMissingRepositoryNotice
+							installedAccountLogin={installation?.accountLogin ?? null}
+							onConfigureGitHubApp={configureGitHubApp}
+							repositoryFullName={missingRepositoryFullName}
+						/>
+					)}
+					{repositoriesFrozen && (
+						<p className="text-xs leading-snug text-muted-foreground">
+							{fromWorkspaceId ? (
+								<Trans>
+									The workspace's repositories, as they are checked out now.
+									Boxes run in its region.
+								</Trans>
+							) : (
+								<Trans>
+									Promoted from a workspace, so its repositories and region are
+									fixed. Promote a workspace again to change them.
+								</Trans>
+							)}
+						</p>
 					)}
 				</div>
 
