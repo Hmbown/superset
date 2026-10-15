@@ -1,4 +1,4 @@
-import { db } from "@superset/db/client";
+import { dbWs } from "@superset/db/client";
 import {
 	environmentRepositories,
 	environments,
@@ -37,72 +37,83 @@ export async function ensureDefaultEnvironment(args: {
 	userId: string;
 	region: SandboxRegionId;
 }): Promise<{ id: string; created: boolean }> {
-	const carrying = await db
-		.select({
-			id: environments.id,
-			repositoryCount: sql<number>`(
-				select count(*)::int from ${environmentRepositories}
-				where ${environmentRepositories.environmentId} = ${environments.id}
-			)`,
-		})
-		.from(environments)
-		.innerJoin(
-			environmentRepositories,
-			eq(environmentRepositories.environmentId, environments.id),
-		)
-		.where(
-			and(
-				eq(environments.organizationId, args.organizationId),
-				isNull(environments.archivedAt),
-				eq(environmentRepositories.repositoryId, args.repositoryId),
-				or(
-					eq(environments.scope, "organization"),
-					eq(environments.createdByUserId, args.userId),
+	// One transaction under an advisory lock per (organization, repository):
+	// two first workspaces at once share one environment, and an environment
+	// never exists without its repository link.
+	return dbWs.transaction(async (tx) => {
+		await tx.execute(
+			sql`select pg_advisory_xact_lock(hashtext(${`${args.organizationId}:${args.repositoryId}`}))`,
+		);
+		const carrying = await tx
+			.select({
+				id: environments.id,
+				repositoryCount: sql<number>`(
+					select count(*)::int from ${environmentRepositories}
+					where ${environmentRepositories.environmentId} = ${environments.id}
+				)`,
+			})
+			.from(environments)
+			.innerJoin(
+				environmentRepositories,
+				eq(environmentRepositories.environmentId, environments.id),
+			)
+			.where(
+				and(
+					eq(environments.organizationId, args.organizationId),
+					isNull(environments.archivedAt),
+					eq(environmentRepositories.repositoryId, args.repositoryId),
+					or(
+						eq(environments.scope, "organization"),
+						eq(environments.createdByUserId, args.userId),
+					),
 				),
-			),
-		)
-		.orderBy(asc(environments.createdAt));
-	const existing = pickDefaultEnvironment(carrying);
-	if (existing) return { id: existing.id, created: false };
+			)
+			.orderBy(asc(environments.createdAt));
+		const existing = pickDefaultEnvironment(carrying);
+		if (existing) return { id: existing.id, created: false };
 
-	const repository = await db.query.githubRepositories.findFirst({
-		where: and(
-			eq(githubRepositories.id, args.repositoryId),
-			eq(githubRepositories.organizationId, args.organizationId),
-		),
-		columns: { id: true, name: true },
-	});
-	if (!repository) {
-		throw userError({
-			code: "NOT_FOUND",
-			message: "The repository is not connected to this organization",
-			i18nKey: "serverError.environment.repositoryNotConnected",
+		const [repository] = await tx
+			.select({ id: githubRepositories.id, name: githubRepositories.name })
+			.from(githubRepositories)
+			.where(
+				and(
+					eq(githubRepositories.id, args.repositoryId),
+					eq(githubRepositories.organizationId, args.organizationId),
+				),
+			)
+			.limit(1);
+		if (!repository) {
+			throw userError({
+				code: "NOT_FOUND",
+				message: "The repository is not connected to this organization",
+				i18nKey: "serverError.environment.repositoryNotConnected",
+			});
+		}
+		const [row] = await tx
+			.insert(environments)
+			.values({
+				organizationId: args.organizationId,
+				name: repository.name,
+				provider: "vercel",
+				sourceKind: "image",
+				sourceRef: SANDBOX_IMAGE_NAME,
+				region: args.region,
+				scope: "organization",
+				hooksRepositoryId: repository.id,
+				createdByUserId: args.userId,
+			})
+			.returning({ id: environments.id });
+		if (!row) {
+			throw userError({
+				code: "INTERNAL_SERVER_ERROR",
+				message: "Could not record environment",
+				i18nKey: "serverError.environment.couldNotRecord",
+			});
+		}
+		await tx.insert(environmentRepositories).values({
+			environmentId: row.id,
+			repositoryId: repository.id,
 		});
-	}
-	const [row] = await db
-		.insert(environments)
-		.values({
-			organizationId: args.organizationId,
-			name: repository.name,
-			provider: "vercel",
-			sourceKind: "image",
-			sourceRef: SANDBOX_IMAGE_NAME,
-			region: args.region,
-			scope: "organization",
-			hooksRepositoryId: repository.id,
-			createdByUserId: args.userId,
-		})
-		.returning({ id: environments.id });
-	if (!row) {
-		throw userError({
-			code: "INTERNAL_SERVER_ERROR",
-			message: "Could not record environment",
-			i18nKey: "serverError.environment.couldNotRecord",
-		});
-	}
-	await db.insert(environmentRepositories).values({
-		environmentId: row.id,
-		repositoryId: repository.id,
+		return { id: row.id, created: true };
 	});
-	return { id: row.id, created: true };
 }

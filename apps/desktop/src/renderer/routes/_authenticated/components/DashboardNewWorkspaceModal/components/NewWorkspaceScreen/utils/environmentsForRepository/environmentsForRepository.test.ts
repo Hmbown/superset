@@ -12,14 +12,14 @@ describe("environmentsForRepository", () => {
 		expect(environmentsForRepository(all, null)).toBe(all);
 	});
 
-	it("keeps environments that carry the repository, primary first, ignoring case", () => {
+	it("keeps only environments that open on the repository, ignoring case", () => {
 		const all = [
 			env("secondary", "o/other", "O/Repo"),
 			env("unrelated", "o/other"),
-			env("primary", "o/repo"),
+			env("primary", "O/REPO"),
 		];
 		expect(
 			environmentsForRepository(all, "o/repo").map((row) => row.id),
-		).toEqual(["primary", "secondary"]);
+		).toEqual(["primary"]);
 	});
 });

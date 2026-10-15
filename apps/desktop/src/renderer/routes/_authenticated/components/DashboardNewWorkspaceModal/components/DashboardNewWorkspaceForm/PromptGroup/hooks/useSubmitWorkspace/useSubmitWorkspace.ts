@@ -127,22 +127,25 @@ export function useSubmitWorkspace(
 		// Cloud workspaces are provisioned by the API, not the local host, so
 		// they bypass the host `workspaces.create` path entirely.
 		if (isCloud) {
-			const environments = await cloudTrpcClient.environment.list.query({
-				organizationId: activeOrganizationId,
-			});
-			const startable = startableCloudEnvironments(environments);
-			const environment =
-				startable.find((row) => row.id === cloudTarget.environmentId) ?? null;
-			if (!environment && !cloudTarget.repositoryId) {
-				toast.error(
-					t({
-						message:
-							"Add an environment in Settings before creating a cloud workspace",
-					}),
-				);
-				return;
-			}
 			try {
+				// A named pick is checked against the live list so a stale draft
+				// can't start a vanished environment; Default needs no list.
+				const environmentId = cloudTarget.environmentId
+					? (startableCloudEnvironments(
+							await cloudTrpcClient.environment.list.query({
+								organizationId: activeOrganizationId,
+							}),
+						).find((row) => row.id === cloudTarget.environmentId)?.id ?? null)
+					: null;
+				if (!environmentId && !cloudTarget.repositoryId) {
+					toast.error(
+						t({
+							message:
+								"Add an environment in Settings before creating a cloud workspace",
+						}),
+					);
+					return;
+				}
 				// A typed name wins; otherwise the API names it from the prompt,
 				// since nothing about a cloud workspace runs on this device.
 				// Returns as soon as the row exists — the sandbox is still being
@@ -166,8 +169,8 @@ export function useSubmitWorkspace(
 					: null;
 				const created = await createCloudWorkspace.mutateAsync({
 					organizationId: activeOrganizationId,
-					...(environment
-						? { environmentId: environment.id }
+					...(environmentId
+						? { environmentId }
 						: { repositoryId: cloudTarget.repositoryId ?? undefined }),
 					name: workspaceName ?? undefined,
 					// Linked PR and issue bodies can push this past the create input's
@@ -220,7 +223,7 @@ export function useSubmitWorkspace(
 				// Server truth on top of the patch — the generated name lands here.
 				void utils.cloudWorkspace.list.invalidate();
 				// A default environment made for the repository now exists to pick.
-				if (!environment) void utils.environment.list.invalidate();
+				if (!environmentId) void utils.environment.list.invalidate();
 			} catch (error) {
 				toast.error(
 					errorMessage(

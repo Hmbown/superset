@@ -241,7 +241,8 @@ export function useDashboardSidebarData({
 		[sidebarProjectRows],
 	);
 
-	const { projects: hostProjects } = useHostProjects();
+	const { projects: hostProjects, isReady: hostProjectsReady } =
+		useHostProjects();
 
 	const hostProjectsByKey = useMemo(
 		() => new Map(hostProjects.map((project) => [project.projectKey, project])),
@@ -273,6 +274,22 @@ export function useDashboardSidebarData({
 			}),
 		[orderedSidebarProjectRows, hostProjectsByKey],
 	);
+	// Cloud rows match against every project a host serves, visible first so
+	// sidebar order still breaks ties: a hidden project keeps its cloud rows
+	// (hidden with it) instead of losing them to a stand-in.
+	const cloudProjectTargets = useMemo(() => {
+		const visible = new Set(sidebarProjects.map((project) => project.id));
+		return [
+			...sidebarProjects,
+			...hostProjects
+				.filter((project) => !visible.has(project.projectKey))
+				.map((project) => ({
+					id: project.projectKey,
+					githubOwner: project.repoOwner,
+					githubRepoName: project.repoName,
+				})),
+		];
+	}, [sidebarProjects, hostProjects]);
 	const hiddenProjects = useMemo<DashboardSidebarHiddenProject[]>(
 		() =>
 			orderedSidebarProjectRows.flatMap((row) => {
@@ -483,7 +500,7 @@ export function useDashboardSidebarData({
 						cloudWorkspaces: shownCloudRows,
 						entries: cloudSidebarEntries,
 						userId,
-						projects: sidebarProjects,
+						projects: cloudProjectTargets,
 						repoFullNameById: cloudRepoFullNameById,
 						branchById: cloudBranchById,
 						pullRequestsByRef: cloudPullRequestsByRef,
@@ -495,7 +512,7 @@ export function useDashboardSidebarData({
 			shownCloudRows,
 			cloudSidebarEntries,
 			userId,
-			sidebarProjects,
+			cloudProjectTargets,
 			cloudRepoFullNameById,
 			cloudBranchById,
 			cloudPullRequestsByRef,
@@ -528,7 +545,8 @@ export function useDashboardSidebarData({
 		if (
 			!inlineCloudWorkspaces ||
 			!sidebarLocalStateReady ||
-			!cloudRepositoriesReady
+			!cloudRepositoriesReady ||
+			!hostProjectsReady
 		) {
 			return;
 		}
@@ -554,6 +572,7 @@ export function useDashboardSidebarData({
 		inlineCloudWorkspaces,
 		sidebarLocalStateReady,
 		cloudRepositoriesReady,
+		hostProjectsReady,
 		sidebarLocalStateRows,
 		cloudRowById,
 		ensureWorkspaceInSidebar,

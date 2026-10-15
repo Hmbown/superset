@@ -394,6 +394,8 @@ export function NewWorkspaceScreen({
 	const resolvedEnvironment = selectedEnvironment ?? environmentOptions[0];
 	const defaultHint =
 		resolvedEnvironment?.name ?? defaultRepository?.fullName ?? null;
+	const isCloudTargetLoading =
+		environmentsQuery.isLoading || githubRepositoriesQuery.isLoading;
 	const [isCreatingEnvironment, setIsCreatingEnvironment] = useState(false);
 	const cloudRepository = useMemo(() => {
 		if (!isCloudHost) return null;
@@ -648,10 +650,12 @@ export function NewWorkspaceScreen({
 		// host readiness to wait on, and the project only narrows the list.
 		if (selectedHostId === CLOUD_HOST_ID && draft.isSession)
 			return t({ message: "Cloud workspaces need a project for now" });
-		if (selectedHostId === CLOUD_HOST_ID)
-			return areEnvironmentsLoaded && defaultHint === null
+		if (selectedHostId === CLOUD_HOST_ID) {
+			if (isCloudTargetLoading) return t({ message: "Loading environments…" });
+			return defaultHint === null
 				? t({ message: "Select an environment" })
 				: null;
+		}
 		if (isProjectPreselectionPending || (!selectedProject && !draft.isSession))
 			return t({
 				message: "Select a project",
@@ -680,7 +684,7 @@ export function NewWorkspaceScreen({
 		machineId,
 		activeHostUrl,
 		otherHosts,
-		areEnvironmentsLoaded,
+		isCloudTargetLoading,
 		defaultHint,
 		t,
 	]);

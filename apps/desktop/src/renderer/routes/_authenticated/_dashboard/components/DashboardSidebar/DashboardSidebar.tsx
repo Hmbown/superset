@@ -197,10 +197,12 @@ export function DashboardSidebar({
 	} = useV2UserPreferences();
 	const sortMode = preferences.sidebarProjectSortMode;
 	// Only meaningful once cloud rows sit inside projects; with them in their
-	// own section a stored "cloud" filter would empty every project.
-	const hostFilter = inlineCloudWorkspaces
-		? preferences.sidebarProjectHostFilter
-		: "all";
+	// own section a stored "cloud" filter would empty every project. The icon
+	// rail has no control for it either, so it rests there too.
+	const hostFilter =
+		inlineCloudWorkspaces && !isCollapsed
+			? preferences.sidebarProjectHostFilter
+			: "all";
 	const [projectFilterQuery, setProjectFilterQuery] = useState("");
 	// The icon rail hides the Projects header (and its filter input); a
 	// filter left active there would invisibly hide projects.
@@ -544,9 +546,13 @@ export function DashboardSidebar({
 											isFilterActive &&
 											displayedGroups.length === 0 && (
 												<div className="select-text cursor-text px-4 py-2 text-xs text-muted-foreground">
-													{t({
-														message: `No projects match "${trimmedFilterQuery}"`,
-													})}
+													{trimmedFilterQuery !== ""
+														? t({
+																message: `No projects match "${trimmedFilterQuery}"`,
+															})
+														: hostFilter === "cloud"
+															? t({ message: "No cloud workspaces" })
+															: t({ message: "No local workspaces" })}
 												</div>
 											)}
 									</OverflowFadeContainer>
