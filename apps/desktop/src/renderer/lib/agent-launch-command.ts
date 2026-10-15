@@ -91,11 +91,28 @@ export function resolvePresetLaunchCommands(
 
 type IsAgentPresetEnabled = (presetId: string) => boolean;
 
+const ENV_ASSIGNMENT = /^[A-Za-z_][A-Za-z0-9_]*=/;
+
+function commandPrograms(command: string): string[] {
+	const programs: string[] = [];
+	let atCommandStart = true;
+	for (const token of parse(command)) {
+		if (typeof token !== "string") {
+			atCommandStart = "op" in token && token.op !== "glob";
+			continue;
+		}
+		if (!atCommandStart || ENV_ASSIGNMENT.test(token)) continue;
+		programs.push(token.slice(token.lastIndexOf("/") + 1));
+		atCommandStart = false;
+	}
+	return programs;
+}
+
 export function runsGatedAgent(
 	commands: readonly string[],
 	isAgentPresetEnabled: IsAgentPresetEnabled,
 ): boolean {
-	const programs = commands.map((command) => command.trim().split(/\s+/)[0]);
+	const programs = commands.flatMap(commandPrograms);
 	return [...AGENT_PRESET_FEATURE_FLAGS.keys()].some((presetId) => {
 		const binary = getPresetById(presetId)?.command;
 		return (

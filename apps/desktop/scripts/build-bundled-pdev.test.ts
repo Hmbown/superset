@@ -170,4 +170,17 @@ describe("build-bundled-pdev", () => {
 
 		expect(existsSync(destDir)).toBe(false);
 	});
+
+	it("fails a required bundle for a target pdev does not ship", async () => {
+		await expect(
+			main(
+				{
+					TARGET_PLATFORM: "win32",
+					TARGET_ARCH: "x64",
+					PDEV_BUNDLE_REQUIRED: "1",
+				},
+				destDir,
+			),
+		).rejects.toThrow("not shipped for win32/x64");
+	});
 });

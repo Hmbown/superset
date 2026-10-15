@@ -196,15 +196,11 @@ jobs:
           }
           "$CLI_BIN" --version
           PDEV_BIN="$APP_DIR/Contents/Resources/resources/bin/pdev/pdev"
-          if [ -e "$PDEV_BIN" ]; then
-            test -x "$PDEV_BIN" || {
-              echo "::error::Bundled pdev is not executable at $PDEV_BIN"
-              exit 1
-            }
-            "$PDEV_BIN" --version
-          else
-            echo "pdev is not bundled in this build; skipping its check"
-          fi
+          test -x "$PDEV_BIN" || {
+            echo "::error::Bundled pdev is missing or not executable at $PDEV_BIN"
+            exit 1
+          }
+          "$PDEV_BIN" --version
 
       - name: Verify native bindings packaged
         working-directory: apps/desktop
@@ -354,15 +350,11 @@ jobs:
           fi
           "$CLI_BIN" --version
           PDEV_BIN=$(find release -path "*/resources/resources/bin/pdev/pdev" -type f | head -1)
-          if [ -n "$PDEV_BIN" ]; then
-            test -x "$PDEV_BIN" || {
-              echo "::error::Bundled pdev is not executable at $PDEV_BIN"
-              exit 1
-            }
-            "$PDEV_BIN" --version
-          else
-            echo "pdev is not bundled in this build; skipping its check"
+          if [ -z "$PDEV_BIN" ] || [ ! -x "$PDEV_BIN" ]; then
+            echo "::error::Bundled pdev is missing or not executable under release/"
+            exit 1
           fi
+          "$PDEV_BIN" --version
 
       - name: Upload AppImage artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

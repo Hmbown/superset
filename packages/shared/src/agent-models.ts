@@ -640,7 +640,7 @@ export const AGENT_EFFORT_SUPPORT: readonly AgentEffortSupport[] = [
 	{
 		presetId: "pdev",
 		effortFlag: "--thinking",
-		efforts: [...PI_THINKING_LEVELS],
+		efforts: [...PI_THINKING_LEVELS, { id: "max", label: "Max" }],
 	},
 	{
 		presetId: "copilot",

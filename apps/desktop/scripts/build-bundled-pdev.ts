@@ -137,9 +137,15 @@ export async function main(
 		return;
 	}
 
+	const required = env.PDEV_BUNDLE_REQUIRED === "1";
 	const assetName = pdevAssetName(platform, arch);
 	const expectedSha256 = assetName ? checksums[assetName] : undefined;
 	if (!assetName || !expectedSha256) {
+		if (required) {
+			throw new Error(
+				`pdev is required but not shipped for ${platform}/${arch}`,
+			);
+		}
 		rmSync(destDir, { recursive: true, force: true });
 		console.log(`[desktop] pdev is not bundled for ${platform}/${arch}`);
 		return;
@@ -151,7 +157,6 @@ export async function main(
 		return;
 	}
 
-	const required = env.PDEV_BUNDLE_REQUIRED === "1";
 	const downloadDir = mkdtempSync(join(tmpdir(), "pdev-download-"));
 	try {
 		const tarball = join(downloadDir, assetName);

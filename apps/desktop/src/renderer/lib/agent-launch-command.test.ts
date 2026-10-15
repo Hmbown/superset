@@ -106,6 +106,29 @@ describe("isTerminalPresetEnabled", () => {
 		).toBe(false);
 	});
 
+	it("finds a gated agent behind env, paths, quotes and shell operators", () => {
+		for (const command of [
+			"FOO=1 pdev",
+			"cd repo && pdev",
+			"/usr/local/bin/pdev --model x",
+			'"pdev"',
+			"echo hi; BAR=2 ~/.superset/bin/pdev",
+		]) {
+			expect(
+				isTerminalPresetEnabled(
+					{ name: "my agent", commands: [command] },
+					pdevOff,
+				),
+			).toBe(false);
+		}
+		expect(
+			isTerminalPresetEnabled(
+				{ name: "my agent", commands: ["echo pdev", "claude --pdev"] },
+				pdevOff,
+			),
+		).toBe(true);
+	});
+
 	it("keeps other presets, and gated ones once the flag is on", () => {
 		expect(
 			isTerminalPresetEnabled(
