@@ -31,13 +31,29 @@ export function useFooterTier(rootRef: RefObject<HTMLElement | null>) {
 			tierRef.current = step.tier;
 			setTier(step.tier);
 		};
+		const resizeObserver = new ResizeObserver(sync);
+		const observeLabels = () => {
+			resizeObserver.disconnect();
+			resizeObserver.observe(row);
+			for (const label of row.querySelectorAll(LABEL_SELECTOR)) {
+				resizeObserver.observe(label);
+			}
+		};
+		const mutationObserver = new MutationObserver(() => {
+			observeLabels();
+			sync();
+		});
+		mutationObserver.observe(row, {
+			childList: true,
+			subtree: true,
+			characterData: true,
+		});
+		observeLabels();
 		sync();
-		const observer = new ResizeObserver(sync);
-		observer.observe(row);
-		for (const label of row.querySelectorAll(LABEL_SELECTOR)) {
-			observer.observe(label);
-		}
-		return () => observer.disconnect();
+		return () => {
+			mutationObserver.disconnect();
+			resizeObserver.disconnect();
+		};
 	}, [rootRef, tier]);
 
 	return tier;

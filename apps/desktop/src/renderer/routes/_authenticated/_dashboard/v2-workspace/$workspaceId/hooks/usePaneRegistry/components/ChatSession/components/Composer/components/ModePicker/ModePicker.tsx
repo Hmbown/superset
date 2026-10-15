@@ -132,7 +132,7 @@ export function ModePicker({
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<button
-					className={cn(PILL_TRIGGER_CLASS, "group max-w-40")}
+					className={cn(PILL_TRIGGER_CLASS, "group")}
 					title={iconOnly ? currentCopy.title : undefined}
 					type="button"
 					data-footer-label
