@@ -944,6 +944,12 @@ msgstr "{minutes}分"
 msgid "{minutes}m ago"
 msgstr "{minutes}分前"
 
+msgid "{missingRepositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{missingRepositoryFullName} は、この組織の GitHub App がインストールされている {installedAccountLogin} にありません。"
+
+msgid "{missingRepositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{missingRepositoryFullName} はまだ Superset の GitHub App と共有されていません。"
+
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵で作成"
 
@@ -4191,6 +4197,12 @@ msgstr "アプリの全般設定"
 msgid "Configure git branch and worktree behavior"
 msgstr "gitブランチとワークツリーの動作を設定"
 
+msgid "Configure GitHub App"
+msgstr "GitHub App を設定"
+
+msgid "Configure GitHub App…"
+msgstr "GitHub App を設定…"
+
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "SupersetとLinearの間でタスクをどう同期するかを設定します。"
 
@@ -4254,6 +4266,9 @@ msgstr "外部サービスを接続して組織とデータを同期します。
 
 msgid "Connect external services to sync data."
 msgstr "外部サービスを接続してデータを同期します。"
+
+msgid "Connect GitHub in Integrations to add {missingRepositoryFullName}."
+msgstr "{missingRepositoryFullName} を追加するには、連携で GitHub を接続してください。"
 
 msgid "Connect Google"
 msgstr "Googleを接続"
@@ -10740,6 +10755,9 @@ msgstr "一致する組織メンバーがいません。"
 
 msgid "No matching pages"
 msgstr "一致するページはありません"
+
+msgid "No matching repositories."
+msgstr "一致するリポジトリがありません。"
 
 msgid "No members yet"
 msgstr "メンバーはまだいません"

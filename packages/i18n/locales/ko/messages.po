@@ -944,6 +944,12 @@ msgstr "{minutes}분"
 msgid "{minutes}m ago"
 msgstr "{minutes}분 전"
 
+msgid "{missingRepositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{missingRepositoryFullName}은(는) 이 조직의 GitHub App이 설치된 {installedAccountLogin}에 없습니다."
+
+msgid "{missingRepositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{missingRepositoryFullName}은(는) 아직 Superset GitHub App과 공유되지 않았습니다."
+
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵로 만들기"
 
@@ -4191,6 +4197,12 @@ msgstr "일반 앱 환경설정을 구성합니다"
 msgid "Configure git branch and worktree behavior"
 msgstr "git 브랜치와 worktree 동작을 설정합니다"
 
+msgid "Configure GitHub App"
+msgstr "GitHub App 구성"
+
+msgid "Configure GitHub App…"
+msgstr "GitHub App 구성…"
+
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Superset과 Linear 사이에서 작업을 동기화하는 방식을 설정합니다."
 
@@ -4254,6 +4266,9 @@ msgstr "외부 서비스를 연결해 조직과 데이터를 동기화합니다.
 
 msgid "Connect external services to sync data."
 msgstr "외부 서비스를 연결해 데이터를 동기화합니다."
+
+msgid "Connect GitHub in Integrations to add {missingRepositoryFullName}."
+msgstr "{missingRepositoryFullName}을(를) 추가하려면 통합에서 GitHub를 연결하세요."
 
 msgid "Connect Google"
 msgstr "Google 연결"
@@ -10740,6 +10755,9 @@ msgstr "일치하는 조직 멤버가 없습니다."
 
 msgid "No matching pages"
 msgstr "일치하는 페이지가 없습니다"
+
+msgid "No matching repositories."
+msgstr "일치하는 저장소가 없습니다."
 
 msgid "No members yet"
 msgstr "아직 멤버가 없습니다"

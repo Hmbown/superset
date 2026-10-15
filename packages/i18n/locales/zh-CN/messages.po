@@ -944,6 +944,12 @@ msgstr "{minutes}分"
 msgid "{minutes}m ago"
 msgstr "{minutes}分钟前"
 
+msgid "{missingRepositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{missingRepositoryFullName} 不在 {installedAccountLogin} 上，而本组织的 GitHub App 安装在那里。"
+
+msgid "{missingRepositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{missingRepositoryFullName} 尚未与 Superset GitHub App 共享。"
+
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵创建"
 
@@ -4191,6 +4197,12 @@ msgstr "配置应用的通用偏好设置"
 msgid "Configure git branch and worktree behavior"
 msgstr "配置git分支和worktree行为"
 
+msgid "Configure GitHub App"
+msgstr "配置 GitHub App"
+
+msgid "Configure GitHub App…"
+msgstr "配置 GitHub App…"
+
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "配置任务在Superset和Linear之间的同步方式。"
 
@@ -4254,6 +4266,9 @@ msgstr "连接外部服务，与你的组织同步数据。"
 
 msgid "Connect external services to sync data."
 msgstr "连接外部服务以同步数据。"
+
+msgid "Connect GitHub in Integrations to add {missingRepositoryFullName}."
+msgstr "在集成中连接 GitHub 以添加 {missingRepositoryFullName}。"
 
 msgid "Connect Google"
 msgstr "连接Google"
@@ -10740,6 +10755,9 @@ msgstr "没有匹配的组织成员。"
 
 msgid "No matching pages"
 msgstr "没有匹配的页面"
+
+msgid "No matching repositories."
+msgstr "没有匹配的仓库。"
 
 msgid "No members yet"
 msgstr "暂无成员"

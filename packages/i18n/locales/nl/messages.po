@@ -944,6 +944,12 @@ msgstr "{minutes}m"
 msgid "{minutes}m ago"
 msgstr "{minutes}m geleden"
 
+msgid "{missingRepositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{missingRepositoryFullName} staat niet op {installedAccountLogin}, waar de GitHub App van deze organisatie is geïnstalleerd."
+
+msgid "{missingRepositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{missingRepositoryFullName} is nog niet gedeeld met de Superset GitHub App."
+
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵ om aan te maken"
 
@@ -4191,6 +4197,12 @@ msgstr "Configureer algemene app-voorkeuren"
 msgid "Configure git branch and worktree behavior"
 msgstr "Configureer het gedrag van git-branches en worktrees"
 
+msgid "Configure GitHub App"
+msgstr "GitHub App configureren"
+
+msgid "Configure GitHub App…"
+msgstr "GitHub App configureren…"
+
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Bepaal hoe taken tussen Superset en Linear synchroniseren."
 
@@ -4254,6 +4266,9 @@ msgstr "Verbind externe diensten om gegevens met je organisatie te synchronisere
 
 msgid "Connect external services to sync data."
 msgstr "Verbind externe diensten om gegevens te synchroniseren."
+
+msgid "Connect GitHub in Integrations to add {missingRepositoryFullName}."
+msgstr "Koppel GitHub in Integraties om {missingRepositoryFullName} toe te voegen."
 
 msgid "Connect Google"
 msgstr "Google verbinden"
@@ -10740,6 +10755,9 @@ msgstr "Geen overeenkomende leden in de organisatie."
 
 msgid "No matching pages"
 msgstr "Geen overeenkomende pagina's"
+
+msgid "No matching repositories."
+msgstr "Geen overeenkomende repository's."
 
 msgid "No members yet"
 msgstr "Nog geen leden"

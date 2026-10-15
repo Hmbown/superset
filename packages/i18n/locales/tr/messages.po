@@ -944,6 +944,12 @@ msgstr "{minutes}dk"
 msgid "{minutes}m ago"
 msgstr "{minutes}dk önce"
 
+msgid "{missingRepositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{missingRepositoryFullName}, bu organizasyonun GitHub App'inin kurulu olduğu {installedAccountLogin} hesabında değil."
+
+msgid "{missingRepositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{missingRepositoryFullName} henüz Superset GitHub App ile paylaşılmadı."
+
 msgid "{modKey}↵ to create"
 msgstr "Oluşturmak için {modKey}↵"
 
@@ -4191,6 +4197,12 @@ msgstr "Genel uygulama tercihlerini yapılandırın"
 msgid "Configure git branch and worktree behavior"
 msgstr "Git dal ve worktree davranışını yapılandırın"
 
+msgid "Configure GitHub App"
+msgstr "GitHub App'i yapılandır"
+
+msgid "Configure GitHub App…"
+msgstr "GitHub App'i yapılandır…"
+
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Görevlerin Superset ile Linear arasında nasıl eşitleneceğini yapılandırın."
 
@@ -4254,6 +4266,9 @@ msgstr "Kuruluşunuzla veri eşitlemek için harici hizmetleri bağlayın."
 
 msgid "Connect external services to sync data."
 msgstr "Verileri eşitlemek için harici hizmetleri bağlayın."
+
+msgid "Connect GitHub in Integrations to add {missingRepositoryFullName}."
+msgstr "{missingRepositoryFullName} eklemek için Entegrasyonlar'da GitHub'ı bağlayın."
 
 msgid "Connect Google"
 msgstr "Google'ı bağla"
@@ -10740,6 +10755,9 @@ msgstr "Eşleşen kuruluş üyesi yok."
 
 msgid "No matching pages"
 msgstr "Eşleşen sayfa yok"
+
+msgid "No matching repositories."
+msgstr "Eşleşen depo yok."
 
 msgid "No members yet"
 msgstr "Henüz üye yok"

@@ -15,6 +15,7 @@ import {
 	CommandInput,
 	CommandItem,
 	CommandList,
+	CommandSeparator,
 } from "@superset/ui/command";
 import {
 	Dialog,
@@ -36,10 +37,13 @@ import {
 } from "@superset/ui/select";
 import { toast } from "@superset/ui/sonner";
 import { useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { FaGithub } from "react-icons/fa";
 import { HiCheck, HiChevronUpDown } from "react-icons/hi2";
 import { LuGitBranch, LuRefreshCw } from "react-icons/lu";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
+import { electronTrpc } from "renderer/lib/electron-trpc";
+import { githubAppSettingsUrl } from "./utils/githubAppSettingsUrl";
 
 type EnvironmentScope = "organization" | "personal";
 
@@ -138,6 +142,48 @@ export function EnvironmentEditorDialog({
 		: repositoryIds
 				.map((id) => repositories.find((repo) => repo.id === id))
 				.filter((repo): repo is (typeof repositories)[number] => !!repo);
+	const installationQuery =
+		cloudTrpc.integration.github.getInstallation.useQuery(
+			{ organizationId },
+			{ enabled: open && !fromWorkspaceId },
+		);
+	const installation = installationQuery.data;
+	const appSettingsUrl = installation?.installationId
+		? githubAppSettingsUrl(installation)
+		: null;
+	const missingRepositoryFullName =
+		initialRepositoryFullName &&
+		repositoriesQuery.isSuccess &&
+		!seededRepositoryId &&
+		repositoryIdsDraft === null
+			? initialRepositoryFullName
+			: null;
+	const missingRepositoryOwner = missingRepositoryFullName?.split("/")[0] ?? "";
+	const installedAccountLogin = installation?.accountLogin ?? "";
+	const isOnInstalledAccount =
+		!!installation &&
+		missingRepositoryOwner.toLowerCase() ===
+			installation.accountLogin.toLowerCase();
+	const openUrl = electronTrpc.external.openUrl.useMutation();
+	const [isAwaitingGitHub, setIsAwaitingGitHub] = useState(false);
+	const configureGitHubApp = () => {
+		if (!appSettingsUrl) return;
+		openUrl.mutate(appSettingsUrl);
+		setIsAwaitingGitHub(true);
+	};
+	// Access granted on GitHub reaches the list by webhook; look again when the
+	// user comes back to the app.
+	useEffect(() => {
+		if (!isAwaitingGitHub || !open) return;
+		const refetch = () => {
+			void utils.integration.github.listRepositories.invalidate({
+				organizationId,
+			});
+		};
+		window.addEventListener("focus", refetch);
+		return () => window.removeEventListener("focus", refetch);
+	}, [isAwaitingGitHub, open, organizationId, utils]);
+
 	const hooksChoice = preview.data
 		? (preview.data.repositories.find((repo) => repo.hooks)?.id ?? NO_HOOKS)
 		: hooksRepositoryId && repositoryIds.includes(hooksRepositoryId)
@@ -343,6 +389,8 @@ export function EnvironmentEditorDialog({
 											<CommandEmpty>
 												{repositoriesQuery.isLoading ? (
 													<Trans>Loading repositories...</Trans>
+												) : appSettingsUrl ? (
+													<Trans>No matching repositories.</Trans>
 												) : (
 													<Trans>
 														No repositories. Connect GitHub in Integrations,
@@ -378,6 +426,23 @@ export function EnvironmentEditorDialog({
 													);
 												})}
 											</CommandGroup>
+											{appSettingsUrl && (
+												<>
+													<CommandSeparator alwaysRender />
+													<CommandGroup forceMount>
+														<CommandItem
+															forceMount
+															onSelect={() => {
+																setRepositoriesOpen(false);
+																configureGitHubApp();
+															}}
+														>
+															<FaGithub className="size-4" />
+															<Trans>Configure GitHub App…</Trans>
+														</CommandItem>
+													</CommandGroup>
+												</>
+											)}
 										</CommandList>
 									</Command>
 								</PopoverContent>
@@ -399,6 +464,40 @@ export function EnvironmentEditorDialog({
 								</Button>
 							)}
 						</div>
+						{missingRepositoryFullName && (
+							<div className="flex items-center gap-3 rounded-md border border-border bg-muted/30 px-3 py-2">
+								<FaGithub className="size-4 shrink-0 text-muted-foreground" />
+								<p className="flex-1 text-xs text-muted-foreground">
+									{!installation ? (
+										<Trans>
+											Connect GitHub in Integrations to add{" "}
+											{missingRepositoryFullName}.
+										</Trans>
+									) : isOnInstalledAccount ? (
+										<Trans>
+											{missingRepositoryFullName} isn't shared with the Superset
+											GitHub App yet.
+										</Trans>
+									) : (
+										<Trans>
+											{missingRepositoryFullName} isn't on{" "}
+											{installedAccountLogin}, where this organization's GitHub
+											App is installed.
+										</Trans>
+									)}
+								</p>
+								{appSettingsUrl && (
+									<Button
+										className="h-7 shrink-0 text-xs"
+										onClick={configureGitHubApp}
+										size="sm"
+										variant="outline"
+									>
+										<Trans>Configure GitHub App</Trans>
+									</Button>
+								)}
+							</div>
+						)}
 						{repositoriesFrozen && (
 							<p className="text-xs text-muted-foreground">
 								{fromWorkspaceId ? (

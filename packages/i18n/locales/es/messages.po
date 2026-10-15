@@ -944,6 +944,12 @@ msgstr "{minutes} min"
 msgid "{minutes}m ago"
 msgstr "hace {minutes} min"
 
+msgid "{missingRepositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{missingRepositoryFullName} no está en {installedAccountLogin}, donde está instalada la GitHub App de esta organización."
+
+msgid "{missingRepositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{missingRepositoryFullName} aún no está compartido con la GitHub App de Superset."
+
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵ para crear"
 
@@ -4191,6 +4197,12 @@ msgstr "Configura las preferencias generales de la app"
 msgid "Configure git branch and worktree behavior"
 msgstr "Configura el comportamiento de las ramas y los worktrees de git"
 
+msgid "Configure GitHub App"
+msgstr "Configurar GitHub App"
+
+msgid "Configure GitHub App…"
+msgstr "Configurar GitHub App…"
+
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Configura cómo se sincronizan las tareas entre Superset y Linear."
 
@@ -4254,6 +4266,9 @@ msgstr "Conecta servicios externos para sincronizar datos con tu organización."
 
 msgid "Connect external services to sync data."
 msgstr "Conecta servicios externos para sincronizar datos."
+
+msgid "Connect GitHub in Integrations to add {missingRepositoryFullName}."
+msgstr "Conecta GitHub en Integraciones para añadir {missingRepositoryFullName}."
 
 msgid "Connect Google"
 msgstr "Conectar Google"
@@ -10740,6 +10755,9 @@ msgstr "Ningún miembro de la organización coincide."
 
 msgid "No matching pages"
 msgstr "No hay páginas que coincidan"
+
+msgid "No matching repositories."
+msgstr "No hay repositorios que coincidan."
 
 msgid "No members yet"
 msgstr "Aún no hay miembros"
