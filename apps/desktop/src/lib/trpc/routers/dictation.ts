@@ -20,6 +20,8 @@ export type DesktopTranscriptionResult = NativeTranscription & {
 
 // Ten minutes of 16 kHz mono 16-bit WAV, base64-encoded, with headroom.
 const MAX_WAV_BASE64_LENGTH = 32 * 1024 * 1024;
+// For ChatGPT and the Mac together; past it the renderer uses the API.
+const DESKTOP_DEADLINE_MS = 45_000;
 
 function transcriberBinary() {
 	return findTranscriberBinary({
@@ -40,35 +42,69 @@ export const createDictationRouter = () => {
 			}),
 	});
 
+	const inFlight = new Map<string, AbortController>();
+
+	const transcribe = async (
+		wav: Uint8Array<ArrayBuffer>,
+		signal: AbortSignal,
+	): Promise<DesktopTranscriptionResult> => {
+		const viaCodex = await codex.transcribe(wav, signal);
+		if (viaCodex?.ok) return { ...viaCodex, engine: "chatgpt" };
+		if (signal.aborted)
+			return { ok: false, error: "aborted", message: "Transcription stopped" };
+		const chatgptError =
+			viaCodex && !viaCodex.ok ? viaCodex.message : undefined;
+		if (chatgptError)
+			console.warn("[dictation] ChatGPT transcription failed", chatgptError);
+		const binary = transcriberBinary();
+		if (!binary) {
+			return {
+				...(viaCodex ?? {
+					ok: false,
+					error: "unavailable",
+					message: "No desktop transcriber is available",
+				}),
+				chatgptError,
+			};
+		}
+		const viaMac = await transcribeNatively({ binary, wav, signal });
+		return { ...viaMac, engine: "mac", chatgptError };
+	};
+
 	return router({
+		available: publicProcedure.query(
+			async () => transcriberBinary() !== null || (await codex.signedIn()),
+		),
+
 		// A ChatGPT sign-in in Codex first, then the Mac's own transcriber. A
 		// failure here sends the renderer to the API.
 		transcribe: publicProcedure
-			.input(z.object({ wav: z.string().min(1).max(MAX_WAV_BASE64_LENGTH) }))
-			.mutation(async ({ input }): Promise<DesktopTranscriptionResult> => {
-				const wav = new Uint8Array(Buffer.from(input.wav, "base64"));
-				const viaCodex = await codex.transcribe(wav);
-				if (viaCodex?.ok) return { ...viaCodex, engine: "chatgpt" };
-				const chatgptError =
-					viaCodex && !viaCodex.ok ? viaCodex.message : undefined;
-				if (chatgptError)
-					console.warn(
-						"[dictation] ChatGPT transcription failed",
-						chatgptError,
+			.input(
+				z.object({
+					wav: z.string().min(1).max(MAX_WAV_BASE64_LENGTH),
+					id: z.string().max(64).optional(),
+				}),
+			)
+			.mutation(async ({ input }) => {
+				const controller = new AbortController();
+				if (input.id) inFlight.set(input.id, controller);
+				try {
+					return await transcribe(
+						new Uint8Array(Buffer.from(input.wav, "base64")),
+						AbortSignal.any([
+							controller.signal,
+							AbortSignal.timeout(DESKTOP_DEADLINE_MS),
+						]),
 					);
-				const binary = transcriberBinary();
-				if (!binary) {
-					return {
-						...(viaCodex ?? {
-							ok: false,
-							error: "unavailable",
-							message: "No desktop transcriber is available",
-						}),
-						chatgptError,
-					};
+				} finally {
+					if (input.id) inFlight.delete(input.id);
 				}
-				const viaMac = await transcribeNatively({ binary, wav });
-				return { ...viaMac, engine: "mac", chatgptError };
+			}),
+
+		cancel: publicProcedure
+			.input(z.object({ id: z.string().max(64) }))
+			.mutation(({ input }) => {
+				inFlight.get(input.id)?.abort();
 			}),
 	});
 };

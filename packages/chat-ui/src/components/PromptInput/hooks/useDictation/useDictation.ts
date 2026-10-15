@@ -16,7 +16,10 @@ const SILENCE_ALPHA = 0.35;
 export type DictationStatus = "idle" | "recording" | "transcribing" | "error";
 
 export type UseDictationOptions = {
-	transcribe: (audio: Blob) => Promise<string> | string;
+	transcribe: (
+		audio: Blob,
+		options: { signal: AbortSignal },
+	) => Promise<string> | string;
 	onTranscript: (text: string) => void;
 	onError?: (error: PromptInputDictationError) => void;
 	maxSeconds?: number;
@@ -151,6 +154,7 @@ export function useDictation({
 	const disposedRef = useRef(false);
 	// Bumped to drop a transcription still in flight (cancel, unmount).
 	const transcriptionRef = useRef(0);
+	const transcriptionAbortRef = useRef<AbortController | null>(null);
 	const finishRef = useRef<() => Promise<void>>(async () => {});
 
 	useEffect(() => {
@@ -158,6 +162,7 @@ export function useDictation({
 		return () => {
 			disposedRef.current = true;
 			transcriptionRef.current += 1;
+			transcriptionAbortRef.current?.abort();
 			const session = sessionRef.current;
 			if (!session) return;
 			sessionRef.current = null;
@@ -289,7 +294,11 @@ export function useDictation({
 		const run = ++transcriptionRef.current;
 		setStatus("transcribing");
 		try {
-			const text = await Promise.resolve(transcribe(audio));
+			const controller = new AbortController();
+			transcriptionAbortRef.current = controller;
+			const text = await Promise.resolve(
+				transcribe(audio, { signal: controller.signal }),
+			);
 			if (run !== transcriptionRef.current) return;
 			if (text) onTranscript(text);
 			retryAudioRef.current = null;
@@ -344,6 +353,7 @@ export function useDictation({
 	// transcription in flight, or clears the error state.
 	const cancel = () => {
 		transcriptionRef.current += 1;
+		transcriptionAbortRef.current?.abort();
 		const session = sessionRef.current;
 		if (session) {
 			sessionRef.current = null;

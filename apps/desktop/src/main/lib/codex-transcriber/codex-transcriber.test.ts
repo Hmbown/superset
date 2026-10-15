@@ -132,6 +132,40 @@ describe("createCodexTranscriber", () => {
 		expect(await transcriber.transcribe(wav)).toEqual({ ok: true, text: "ok" });
 	});
 
+	test("two clips at once read the token once", async () => {
+		let reads = 0;
+		const transcriber = createCodexTranscriber({
+			readToken: async () => {
+				reads += 1;
+				return "tok";
+			},
+			fetchImpl: (async () =>
+				new Response(
+					JSON.stringify({ text: "ok" }),
+				)) as unknown as typeof fetch,
+		});
+		await Promise.all([
+			transcriber.transcribe(wav),
+			transcriber.transcribe(wav),
+		]);
+		expect(reads).toBe(1);
+	});
+
+	test("aborts the upload when the caller cancels", async () => {
+		const controller = new AbortController();
+		let uploadSignal: AbortSignal | undefined;
+		const transcriber = createCodexTranscriber({
+			readToken: async () => "tok",
+			fetchImpl: (async (_url: string, init: RequestInit) => {
+				uploadSignal = init.signal ?? undefined;
+				controller.abort();
+				return new Response(JSON.stringify({ text: "ok" }));
+			}) as unknown as typeof fetch,
+		});
+		await transcriber.transcribe(wav, controller.signal);
+		expect(uploadSignal?.aborted).toBe(true);
+	});
+
 	test("posts the clip with the session token and Superset's own name", async () => {
 		const sent: RequestInit[] = [];
 		const transcriber = createCodexTranscriber({

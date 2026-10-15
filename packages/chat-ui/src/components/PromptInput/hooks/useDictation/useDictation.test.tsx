@@ -89,7 +89,10 @@ afterAll(async () => {
 });
 
 function setup(
-	transcribe: (audio: Blob) => Promise<string>,
+	transcribe: (
+		audio: Blob,
+		options: { signal: AbortSignal },
+	) => Promise<string>,
 	extra: { maxSeconds?: number } = {},
 ) {
 	const transcripts: string[] = [];
@@ -145,18 +148,22 @@ describe("useDictation", () => {
 		expect(hook.result.current.error).toBeNull();
 	});
 
-	test("cancel drops a transcription that is still in flight", async () => {
+	test("cancel aborts and drops a transcription that is still in flight", async () => {
 		let resolve: (text: string) => void = () => {};
-		const { hook, transcripts } = setup(
-			() => new Promise<string>((done) => (resolve = done)),
-		);
+		let signal: AbortSignal | undefined;
+		const { hook, transcripts } = setup((_audio, options) => {
+			signal = options.signal;
+			return new Promise<string>((done) => (resolve = done));
+		});
 		await act(() => hook.result.current.start());
 		let finishing: Promise<void> = Promise.resolve();
 		await act(async () => {
 			finishing = hook.result.current.finish();
 		});
 		expect(hook.result.current.status).toBe("transcribing");
+		expect(signal?.aborted).toBe(false);
 		act(() => hook.result.current.cancel());
+		expect(signal?.aborted).toBe(true);
 		await act(async () => {
 			resolve("too late");
 			await finishing;

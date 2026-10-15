@@ -4,7 +4,7 @@ const HEADER_BYTES = 44;
 export function encodeWav(
 	samples: Float32Array,
 	sampleRate: number,
-): Uint8Array {
+): Uint8Array<ArrayBuffer> {
 	const bytes = new Uint8Array(HEADER_BYTES + samples.length * 2);
 	const view = new DataView(bytes.buffer);
 	const writeAscii = (offset: number, text: string) => {

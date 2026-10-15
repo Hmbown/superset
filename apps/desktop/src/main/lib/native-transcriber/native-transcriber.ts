@@ -15,7 +15,7 @@ export type NativeTranscription =
 type ExecFile = (
 	file: string,
 	args: string[],
-	options: { timeout: number },
+	options: { timeout: number; signal?: AbortSignal },
 ) => Promise<{ stdout: string }>;
 
 const execFile: ExecFile = (file, args, options) =>
@@ -72,17 +72,22 @@ export async function transcribeNatively({
 	wav,
 	run = execFile,
 	timeoutMs = TRANSCRIBE_TIMEOUT_MS,
+	signal,
 }: {
 	binary: string;
 	wav: Uint8Array;
 	run?: ExecFile;
 	timeoutMs?: number;
+	signal?: AbortSignal;
 }): Promise<NativeTranscription> {
 	const dir = await mkdtemp(path.join(tmpdir(), "superset-dictation-"));
 	const file = path.join(dir, "clip.wav");
 	try {
 		await writeFile(file, wav, { mode: 0o600 });
-		const { stdout } = await run(binary, [file], { timeout: timeoutMs });
+		const { stdout } = await run(binary, [file], {
+			timeout: timeoutMs,
+			signal,
+		});
 		return parseTranscriberOutput(stdout);
 	} catch (error) {
 		return {

@@ -97,8 +97,12 @@ export type PromptInputDictationError = {
 
 export type PromptInputDictation = {
 	// Reject with a DictationError to choose the message and whether retry
-	// is offered; any other rejection is retryable.
-	transcribe(audio: Blob): Promise<string> | string;
+	// is offered; any other rejection is retryable. The signal aborts when
+	// the user cancels or the composer unmounts.
+	transcribe(
+		audio: Blob,
+		options: { signal: AbortSignal },
+	): Promise<string> | string;
 	// Surfaced for app-owned toasts; retryable failures also keep the
 	// recording and show retry controls in the composer row.
 	onError?(error: PromptInputDictationError): void;

@@ -4,7 +4,8 @@ import type { NativeTranscription } from "../native-transcriber";
 const TRANSCRIBE_URL = "https://chatgpt.com/backend-api/transcribe";
 const APP_SERVER_TIMEOUT_MS = 10_000;
 const TRANSCRIBE_TIMEOUT_MS = 30_000;
-const TOKEN_TTL_MS = 5 * 60_000;
+// Also how long a sign-out in Codex can go unnoticed.
+const TOKEN_TTL_MS = 60_000;
 // Short, so a new sign-in is used soon, but clips in a row start Codex once.
 const SIGNED_OUT_TTL_MS = 30_000;
 const TOKEN_EXPIRY_MARGIN_MS = 60_000;
@@ -115,16 +116,26 @@ export function createCodexTranscriber({
 	now?: () => number;
 }) {
 	let cached: { token: string | null; at: number } | null = null;
+	let pendingRead: Promise<string | null> | null = null;
 
 	const isFresh = (token: string) => {
 		const expiresAt = tokenExpiresAt(token);
 		return expiresAt === null || expiresAt - TOKEN_EXPIRY_MARGIN_MS > now();
 	};
 
-	const read = async (refresh: boolean) => {
-		const next = await readToken(refresh).catch(() => null);
-		cached = { token: next, at: now() };
-		return next;
+	const read = (refresh: boolean): Promise<string | null> => {
+		if (!refresh && pendingRead) return pendingRead;
+		const reading = readToken(refresh)
+			.catch(() => null)
+			.then((next) => {
+				cached = { token: next, at: now() };
+				return next;
+			})
+			.finally(() => {
+				if (pendingRead === reading) pendingRead = null;
+			});
+		if (!refresh) pendingRead = reading;
+		return reading;
 	};
 
 	const token = async () => {
@@ -136,7 +147,11 @@ export function createCodexTranscriber({
 		return next && !isFresh(next) ? read(true) : next;
 	};
 
-	const post = (wav: Uint8Array<ArrayBuffer>, bearer: string) => {
+	const post = (
+		wav: Uint8Array<ArrayBuffer>,
+		bearer: string,
+		signal?: AbortSignal,
+	) => {
 		const form = new FormData();
 		form.set("file", new Blob([wav], { type: "audio/wav" }), "dictation.wav");
 		return fetchImpl(TRANSCRIBE_URL, {
@@ -147,19 +162,27 @@ export function createCodexTranscriber({
 				"User-Agent": "Superset",
 			},
 			body: form,
-			signal: AbortSignal.timeout(TRANSCRIBE_TIMEOUT_MS),
+			signal: AbortSignal.any([
+				AbortSignal.timeout(TRANSCRIBE_TIMEOUT_MS),
+				...(signal ? [signal] : []),
+			]),
 		});
 	};
 
 	return {
+		async signedIn() {
+			return (await token()) !== null;
+		},
+
 		/** Null when Codex has no ChatGPT sign-in. */
 		async transcribe(
 			wav: Uint8Array<ArrayBuffer>,
+			signal?: AbortSignal,
 		): Promise<NativeTranscription | null> {
 			let bearer = await token();
 			if (!bearer) return null;
 			try {
-				let response = await post(wav, bearer);
+				let response = await post(wav, bearer, signal);
 				if (response.status === 401 || response.status === 403) {
 					bearer = await read(true);
 					if (!bearer) {
@@ -171,7 +194,7 @@ export function createCodexTranscriber({
 							message: "Codex could not refresh its ChatGPT session",
 						};
 					}
-					response = await post(wav, bearer);
+					response = await post(wav, bearer, signal);
 				}
 				if (!response.ok)
 					return {

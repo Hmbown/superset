@@ -28,6 +28,7 @@ async function failure(promise: Promise<unknown> | unknown) {
 }
 
 const clip = new Blob(["hi"], { type: "audio/webm;codecs=opus" });
+const live = { signal: new AbortController().signal };
 
 describe("createComposerDictation", () => {
 	test("sends the clip as base64 with its type and returns the text", async () => {
@@ -36,7 +37,7 @@ describe("createComposerDictation", () => {
 			sent.push(input);
 			return { text: "ship it" };
 		});
-		expect(await dictation.transcribe(clip)).toBe("ship it");
+		expect(await dictation.transcribe(clip, live)).toBe("ship it");
 		expect(sent).toEqual([
 			{ audio: btoa("hi"), mimeType: "audio/webm;codecs=opus" },
 		]);
@@ -46,7 +47,7 @@ describe("createComposerDictation", () => {
 		const { dictation, notices } = setup(async () => {
 			throw new TRPCClientError("Failed to fetch");
 		});
-		const error = await failure(dictation.transcribe(clip));
+		const error = await failure(dictation.transcribe(clip, live));
 		expect(error.canRetry).toBe(true);
 		dictation.onError?.(error);
 		expect(notices).toEqual([]);
@@ -56,14 +57,16 @@ describe("createComposerDictation", () => {
 		const { dictation } = setup(async () => {
 			throw serverError("TOO_MANY_REQUESTS");
 		});
-		expect((await failure(dictation.transcribe(clip))).canRetry).toBe(true);
+		expect((await failure(dictation.transcribe(clip, live))).canRetry).toBe(
+			true,
+		);
 	});
 
 	test("toasts a failure that cannot be retried, e.g. an API without the procedure", async () => {
 		const { dictation, notices } = setup(async () => {
 			throw serverError("NOT_FOUND");
 		});
-		const error = await failure(dictation.transcribe(clip));
+		const error = await failure(dictation.transcribe(clip, live));
 		expect(error.canRetry).toBe(false);
 		dictation.onError?.(error);
 		expect(notices).toEqual([error.message]);
@@ -73,7 +76,9 @@ describe("createComposerDictation", () => {
 		const { dictation } = setup(async () => {
 			throw serverError("BAD_REQUEST");
 		});
-		expect((await failure(dictation.transcribe(clip))).canRetry).toBe(false);
+		expect((await failure(dictation.transcribe(clip, live))).canRetry).toBe(
+			false,
+		);
 	});
 
 	test("uses the on-device result without calling the API", async () => {
@@ -86,7 +91,7 @@ describe("createComposerDictation", () => {
 			notify: () => {},
 			transcribeOnDesktop: async () => ({ ok: true, text: "from the Mac" }),
 		});
-		expect(await dictation.transcribe(clip)).toBe("from the Mac");
+		expect(await dictation.transcribe(clip, live)).toBe("from the Mac");
 		expect(called).toBe(false);
 	});
 
@@ -100,7 +105,7 @@ describe("createComposerDictation", () => {
 				message: "no model",
 			}),
 		});
-		expect(await dictation.transcribe(clip)).toBe("from the API");
+		expect(await dictation.transcribe(clip, live)).toBe("from the API");
 		const throwing = createComposerDictation({
 			request: async () => ({ text: "from the API" }),
 			notify: () => {},
@@ -108,7 +113,29 @@ describe("createComposerDictation", () => {
 				throw new Error("decode failed");
 			},
 		});
-		expect(await throwing.transcribe(clip)).toBe("from the API");
+		expect(await throwing.transcribe(clip, live)).toBe("from the API");
+	});
+
+	test("does not reach the API for a clip cancelled during the desktop attempt", async () => {
+		const controller = new AbortController();
+		let called = false;
+		const dictation = createComposerDictation({
+			request: async () => {
+				called = true;
+				return { text: "from the API" };
+			},
+			notify: () => {},
+			transcribeOnDesktop: async () => {
+				controller.abort();
+				return { ok: false, error: "aborted", message: "stopped" };
+			},
+		});
+		await expect(
+			Promise.resolve(
+				dictation.transcribe(clip, { signal: controller.signal }),
+			),
+		).rejects.toThrow();
+		expect(called).toBe(false);
 	});
 
 	test("refuses a clip over the size cap without calling the API", async () => {
@@ -118,9 +145,9 @@ describe("createComposerDictation", () => {
 			return { text: "" };
 		});
 		const oversized = new Blob([new Uint8Array(DICTATION_MAX_AUDIO_BYTES + 1)]);
-		expect((await failure(dictation.transcribe(oversized))).canRetry).toBe(
-			false,
-		);
+		expect(
+			(await failure(dictation.transcribe(oversized, live))).canRetry,
+		).toBe(false);
 		expect(called).toBe(false);
 	});
 });

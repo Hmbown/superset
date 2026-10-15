@@ -163,6 +163,7 @@ export const voiceRouter = {
 					message: "Dictation is not configured on this server.",
 				});
 			}
+			await requireActiveOrgMembership(ctx);
 			await assertTranscribeRateLimit(ctx.session.user.id);
 			const audio = new Uint8Array(Buffer.from(input.audio, "base64"));
 			try {

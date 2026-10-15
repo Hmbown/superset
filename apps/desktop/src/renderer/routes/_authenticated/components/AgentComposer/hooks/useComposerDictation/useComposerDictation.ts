@@ -13,35 +13,26 @@ import { toast } from "@superset/ui/sonner";
 import { TRPCClientError } from "@trpc/client";
 import { useMemo } from "react";
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
+import { electronTrpc } from "renderer/lib/electron-trpc";
+import { fileToBase64 } from "renderer/lib/file-to-base64";
 import { electronTrpcClient } from "renderer/lib/trpc-client";
 import { useSettings } from "renderer/stores/settings";
 import { encodeWav } from "./utils/encodeWav";
 
-type TranscribeRequest = (input: {
-	audio: string;
-	mimeType: string;
-}) => Promise<{ text: string }>;
+type TranscribeRequest = (
+	input: { audio: string; mimeType: string },
+	signal: AbortSignal,
+) => Promise<{ text: string }>;
 
 export type DesktopTranscription = (
 	| { ok: true; text: string }
 	| { ok: false; error: string; message: string }
 ) & { engine?: "chatgpt" | "mac"; chatgptError?: string };
 
-const BASE64_CHUNK = 0x8000;
 const WAV_SAMPLE_RATE = 16_000;
 
-function bytesToBase64(bytes: Uint8Array): string {
-	let binary = "";
-	for (let index = 0; index < bytes.length; index += BASE64_CHUNK) {
-		binary += String.fromCharCode(
-			...bytes.subarray(index, index + BASE64_CHUNK),
-		);
-	}
-	return btoa(binary);
-}
-
 /** Decodes the recorder's webm/opus into the WAV both desktop transcribers read. */
-async function blobToWav(blob: Blob): Promise<Uint8Array> {
+async function blobToWav(blob: Blob): Promise<Uint8Array<ArrayBuffer>> {
 	const context = new OfflineAudioContext(1, 1, WAV_SAMPLE_RATE);
 	const decoded = await context.decodeAudioData(await blob.arrayBuffer());
 	const mono = new Float32Array(decoded.length);
@@ -56,11 +47,19 @@ async function blobToWav(blob: Blob): Promise<Uint8Array> {
 
 async function requestDesktopTranscription(
 	audio: Blob,
+	signal: AbortSignal,
 ): Promise<DesktopTranscription> {
-	const wav = await blobToWav(audio);
-	return electronTrpcClient.dictation.transcribe.mutate({
-		wav: bytesToBase64(wav),
-	});
+	const wav = await fileToBase64(new Blob([await blobToWav(audio)]));
+	const id = crypto.randomUUID();
+	const cancel = () => {
+		void electronTrpcClient.dictation.cancel.mutate({ id });
+	};
+	signal.addEventListener("abort", cancel, { once: true });
+	try {
+		return await electronTrpcClient.dictation.transcribe.mutate({ wav, id });
+	} finally {
+		signal.removeEventListener("abort", cancel);
+	}
 }
 
 export function toDictationError(error: unknown): DictationError {
@@ -76,6 +75,7 @@ export function toDictationError(error: unknown): DictationError {
 		// NOT_FOUND: an API deployed before voice.transcribe existed.
 		case "NOT_FOUND":
 		case "PRECONDITION_FAILED":
+		case "FORBIDDEN":
 			return new DictationError(
 				i18n._(msg({ message: "Dictation is not available right now" })),
 				{ canRetry: false },
@@ -111,14 +111,17 @@ export function createComposerDictation({
 	request: TranscribeRequest;
 	notify: (message: string) => void;
 	// ChatGPT via Codex, else the Mac, tried first; any failure falls back to the API.
-	transcribeOnDesktop?: (audio: Blob) => Promise<DesktopTranscription>;
+	transcribeOnDesktop?: (
+		audio: Blob,
+		signal: AbortSignal,
+	) => Promise<DesktopTranscription>;
 }): PromptInputDictation {
 	return {
 		maxSeconds: DICTATION_MAX_SECONDS,
 		audioBitsPerSecond: DICTATION_AUDIO_BITS_PER_SECOND,
-		async transcribe(audio) {
+		async transcribe(audio, { signal }) {
 			if (transcribeOnDesktop) {
-				const local = await transcribeOnDesktop(audio).catch(
+				const local = await transcribeOnDesktop(audio, signal).catch(
 					(error: unknown): DesktopTranscription => ({
 						ok: false,
 						error: "failed",
@@ -128,6 +131,7 @@ export function createComposerDictation({
 				if (local.chatgptError)
 					console.warn("[dictation] ChatGPT was skipped", local.chatgptError);
 				if (local.ok) return local.text;
+				signal.throwIfAborted();
 				console.warn("[dictation] desktop transcription failed", local);
 			}
 			if (audio.size > DICTATION_MAX_AUDIO_BYTES)
@@ -135,12 +139,12 @@ export function createComposerDictation({
 					i18n._(msg({ message: "This recording is too long to transcribe" })),
 					{ canRetry: false },
 				);
-			const encoded = bytesToBase64(new Uint8Array(await audio.arrayBuffer()));
+			const encoded = await fileToBase64(audio);
 			try {
-				const { text } = await request({
-					audio: encoded,
-					mimeType: audio.type || "audio/webm",
-				});
+				const { text } = await request(
+					{ audio: encoded, mimeType: audio.type || "audio/webm" },
+					signal,
+				);
 				return text;
 			} catch (error) {
 				throw toDictationError(error);
@@ -156,14 +160,22 @@ export function createComposerDictation({
 
 export function useComposerDictation(): PromptInputDictation | undefined {
 	const enabled = useSettings((state) => state.dictationEnabled);
+	// Until main answers, try the desktop engines anyway: skipping them would
+	// send a clip dictated right after launch to the API.
+	const { data: desktopAvailable } = electronTrpc.dictation.available.useQuery(
+		undefined,
+		{ staleTime: 60_000 },
+	);
 	const dictation = useMemo(
 		() =>
 			createComposerDictation({
-				request: (input) => apiTrpcClient.voice.transcribe.mutate(input),
+				request: (input, signal) =>
+					apiTrpcClient.voice.transcribe.mutate(input, { signal }),
 				notify: (message) => toast.error(message),
-				transcribeOnDesktop: requestDesktopTranscription,
+				transcribeOnDesktop:
+					desktopAvailable === false ? undefined : requestDesktopTranscription,
 			}),
-		[],
+		[desktopAvailable],
 	);
 	return enabled ? dictation : undefined;
 }

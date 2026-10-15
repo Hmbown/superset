@@ -26,10 +26,11 @@ func fail(_ error: String, _ message: String) -> Never {
 // SpeechAnalyzer is in the macOS 26 SDK, which ships with Swift 6.2. An older
 // toolchain builds the SFSpeechRecognizer path only.
 #if compiler(>=6.2)
+/// Nil when SpeechTranscriber has no model for the locale.
 @available(macOS 26.0, *)
-func transcribeWithAnalyzer(file: AVAudioFile, locale requested: Locale) async throws -> String {
+func transcribeWithAnalyzer(file: AVAudioFile, locale requested: Locale) async throws -> String? {
 	guard let locale = await SpeechTranscriber.supportedLocale(equivalentTo: requested) else {
-		fail("unsupported-locale", "On-device dictation does not support \(requested.identifier)")
+		return nil
 	}
 	let transcriber = SpeechTranscriber(locale: locale, preset: .transcription)
 	if let request = try await AssetInventory.assetInstallationRequest(supporting: [transcriber]) {
@@ -101,7 +102,9 @@ do {
 	var text: String?
 	#if compiler(>=6.2)
 	if #available(macOS 26.0, *) {
-		text = try await transcribeWithAnalyzer(file: file, locale: locale)
+		// Any failure here (no model, offline on first use) leaves the older
+		// recognizer to try.
+		text = try? await transcribeWithAnalyzer(file: file, locale: locale)
 	}
 	#endif
 	if text == nil {
