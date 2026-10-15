@@ -344,6 +344,7 @@ struct ComposerRootView: View {
             action: { model.onHeightChange?($0) }
           .onGeometryChange(for: CGFloat.self) { $0.frame(in: .global).minY }
             action: { clusterTopY = $0 }
+          .background(ComposerEdgeMarker(model: model).allowsHitTesting(false))
         }
         .offset(y: dragOffset)
         .onGeometryChange(for: CGRect.self) { $0.frame(in: .global) }
