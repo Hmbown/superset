@@ -22,7 +22,10 @@ import {
 } from "react-icons/hi2";
 import { CloudGlyph } from "renderer/routes/_authenticated/components/CloudGlyph";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
-import { FormPickerTrigger } from "../../PromptGroup/components/FormPickerTrigger";
+import {
+	FORM_PICKER_MENU_CLASS,
+	FormPickerTrigger,
+} from "../../PromptGroup/components/FormPickerTrigger";
 import { useWorkspaceHostOptions } from "./hooks/useWorkspaceHostOptions";
 
 function OnlineDot({ online }: { online: boolean }) {
@@ -136,7 +139,10 @@ export function DevicePicker({
 					<HiChevronUpDown className="size-3 shrink-0" />
 				</FormPickerTrigger>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="start" className="w-72">
+			<DropdownMenuContent
+				align="start"
+				className={cn("w-72", FORM_PICKER_MENU_CLASS)}
+			>
 				<DropdownMenuItem onSelect={() => onSelectHostId(machineId)}>
 					<HiOutlineComputerDesktop className="size-4" />
 					<span className="flex-1">
@@ -162,7 +168,9 @@ export function DevicePicker({
 								<HiOutlineServer className="size-4" />
 								<Trans>Other Hosts</Trans>
 							</DropdownMenuSubTrigger>
-							<DropdownMenuSubContent className="w-72">
+							<DropdownMenuSubContent
+								className={cn("w-72", FORM_PICKER_MENU_CLASS)}
+							>
 								{otherHosts.map((host) => {
 									const isSelected = hostId === host.id;
 

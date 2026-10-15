@@ -12,7 +12,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "@superset/ui/popover";
 import { useState } from "react";
 import { HiCheck, HiChevronUpDown, HiMiniPlus } from "react-icons/hi2";
 import { LuLayers } from "react-icons/lu";
-import { FormPickerTrigger } from "../FormPickerTrigger";
+import {
+	FORM_PICKER_MENU_CLASS,
+	FormPickerTrigger,
+} from "../FormPickerTrigger";
 
 export interface EnvironmentOption {
 	id: string;
@@ -78,7 +81,7 @@ export function EnvironmentPickerPill({
 			</PopoverTrigger>
 			<PopoverContent
 				align="start"
-				className="w-64 p-0"
+				className={`w-64 p-0 ${FORM_PICKER_MENU_CLASS}`}
 				onWheel={(event) => event.stopPropagation()}
 			>
 				<Command>
@@ -102,11 +105,8 @@ export function EnvironmentPickerPill({
 								{offersDefault && (
 									<CommandItem onSelect={() => pick(null)} value="default">
 										<LuLayers className="size-4 text-muted-foreground" />
-										<span className="shrink-0">
+										<span className="flex-1">
 											<Trans>Default</Trans>
-										</span>
-										<span className="min-w-0 flex-1 truncate text-xs text-muted-foreground">
-											{defaultHint}
 										</span>
 										{isDefault && <HiCheck className="size-4 shrink-0" />}
 									</CommandItem>

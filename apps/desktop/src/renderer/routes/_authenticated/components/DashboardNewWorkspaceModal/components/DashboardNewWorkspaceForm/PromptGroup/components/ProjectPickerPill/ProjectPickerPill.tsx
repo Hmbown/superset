@@ -27,7 +27,10 @@ import {
 	useOpenNewProjectModal,
 } from "renderer/stores/add-repository-modal";
 import type { ProjectOption } from "../../types";
-import { FormPickerTrigger } from "../FormPickerTrigger";
+import {
+	FORM_PICKER_MENU_CLASS,
+	FormPickerTrigger,
+} from "../FormPickerTrigger";
 
 interface ProjectPickerPillProps {
 	selectedProject: ProjectOption | undefined;
@@ -131,7 +134,7 @@ export function ProjectPickerPill({
 			</PopoverTrigger>
 			<PopoverContent
 				align="start"
-				className="w-60 p-0"
+				className={`w-60 p-0 ${FORM_PICKER_MENU_CLASS}`}
 				onWheel={(event) => event.stopPropagation()}
 			>
 				<Command>
