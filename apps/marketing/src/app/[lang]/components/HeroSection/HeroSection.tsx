@@ -81,7 +81,7 @@ export function HeroSection() {
 							</span>
 						</Link>
 						<div className="space-y-4 sm:space-y-6">
-							<h1 className="font-display text-[clamp(3rem,14vw,12.5rem)] [:is(:lang(ja),:lang(ko),:lang(zh))_&]:text-[clamp(2.5rem,9vw,6.5rem)] font-extrabold uppercase leading-[0.9] tracking-[0.005em] text-balance whitespace-pre-line text-foreground relative max-w-6xl mx-auto">
+							<h1 className="font-display text-[clamp(3rem,min(14vw,22vh),12.5rem)] [:is(:lang(ja),:lang(ko),:lang(zh))_&]:text-[clamp(2.5rem,min(9vw,15vh),6.5rem)] font-extrabold uppercase leading-[0.9] tracking-[0.005em] text-balance whitespace-pre-line text-foreground relative max-w-6xl mx-auto">
 								{/* Real headline for screen readers and no-JS crawlers; the
 								    typewriter below is purely visual */}
 								<span className="sr-only">
