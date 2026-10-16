@@ -158,9 +158,9 @@ describe("discoverMcpServers", () => {
 			paths,
 		});
 
-		expect(servers.filter((server) => server.state === "not-configured")).toEqual(
-			[],
-		);
+		expect(
+			servers.filter((server) => server.state === "not-configured"),
+		).toEqual([]);
 	});
 });
 
@@ -171,7 +171,12 @@ describe("listMcpServers", () => {
 			reads += 1;
 			return [];
 		};
-		const options = { worktreePath: worktree, agent: "claude", paths, discover };
+		const options = {
+			worktreePath: worktree,
+			agent: "claude",
+			paths,
+			discover,
+		};
 
 		await listMcpServers(options);
 		await listMcpServers(options);
