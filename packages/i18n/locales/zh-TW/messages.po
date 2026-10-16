@@ -1244,6 +1244,9 @@ msgstr "推薦使用<0>Nerd Fonts</0>。"
 msgid "<0>vs</0> <1/>"
 msgstr "<0>對比</0> <1/>"
 
+msgid "~{secondsLeft}s"
+msgstr "約 {secondsLeft} 秒"
+
 msgid "~{stars} projected this week"
 msgstr "本週預計約{stars}"
 
@@ -1998,6 +2001,10 @@ msgstr "執行中"
 msgid "All"
 msgstr "全部"
 
+msgctxt "log scope"
+msgid "All"
+msgstr "全部"
+
 #. placeholder {0}: history.projects.length
 msgid "All {0} →"
 msgstr "全部{0}個 →"
@@ -2055,6 +2062,9 @@ msgstr "全部在目前分頁"
 
 msgid "All in current tab (split panes)"
 msgstr "全部在目前分頁（分屏窗格）"
+
+msgid "All labels"
+msgstr "所有標籤"
 
 msgid "All models"
 msgstr "所有模型"
@@ -2377,6 +2387,10 @@ msgstr "按API價折算"
 msgid "API-equivalent cost"
 msgstr "API 等價費用"
 
+msgctxt "log scope"
+msgid "App"
+msgstr "App"
+
 msgid "app {appVersion}"
 msgstr "應用程式 {appVersion}"
 
@@ -2388,6 +2402,9 @@ msgstr "應用顯示語言。自動模式會跟隨你的系統語言。"
 
 msgid "App icon"
 msgstr "App 圖示"
+
+msgid "App path"
+msgstr "App 路徑"
 
 msgid "Appearance"
 msgstr "外觀"
@@ -2796,6 +2813,10 @@ msgstr "等待你或你團隊的審查"
 msgid "Back"
 msgstr "返回"
 
+msgctxt "Android back button"
+msgid "Back"
+msgstr "返回"
+
 msgid "Back to About"
 msgstr "返回關於頁"
 
@@ -2932,6 +2953,9 @@ msgstr "帳單"
 msgid "Billing details"
 msgstr "帳單資訊"
 
+msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "帳單原因導致無法啟動雲端工作區：組織需要付費方案，或已達到雲端用量上限。請在「設定 > 帳單」中升級或提高上限，或在裝置上執行該自動化。"
+
 msgid "Binary"
 msgstr "二進位"
 
@@ -2965,6 +2989,9 @@ msgstr "部落格"
 msgid "Blue"
 msgstr "藍色"
 
+msgid "Blue/Yellow (Tritanopia)"
+msgstr "藍/黃（藍色盲）"
+
 msgid "Board"
 msgstr "看板"
 
@@ -2973,6 +3000,13 @@ msgstr "看板檢視"
 
 msgid "Bold"
 msgstr "粗體"
+
+msgid "Bold Text"
+msgstr "粗體文字"
+
+#. placeholder {0}: selected.name
+msgid "Booting {0}…"
+msgstr "正在啟動 {0}…"
 
 msgid "Border"
 msgstr "邊框"
@@ -3568,6 +3602,9 @@ msgstr "檢查已跳過"
 msgid "Choose a {pluginLabel} account"
 msgstr "選擇 {pluginLabel} 帳戶"
 
+msgid "Choose a device"
+msgstr "選擇裝置"
+
 msgid "Choose a fighter"
 msgstr "選擇一名鬥士"
 
@@ -3633,6 +3670,13 @@ msgstr "清理過期的TODO…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "更清爽緊湊的側邊欄"
+
+msgid "Clear"
+msgstr "清除"
+
+msgctxt "Liquid Glass style"
+msgid "Clear"
+msgstr "透明"
 
 msgid "Clear all"
 msgstr "全部清除"
@@ -3839,6 +3883,9 @@ msgstr "關閉檔案"
 msgid "Close find bar"
 msgstr "關閉查詢欄"
 
+msgid "Close logs"
+msgstr "關閉記錄"
+
 msgid "Close menu"
 msgstr "關閉選單"
 
@@ -3962,6 +4009,9 @@ msgstr "雲端工作區"
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "雲端工作區會忽略此變數。代理程式改為在「設定 › 代理程式」中登入。"
 
+msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
+msgstr "雲端工作區需要付費方案。請在「設定」中的「帳單」升級後啟動。"
+
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "雲端工作區將不再用它執行{agentLabel}。"
 
@@ -4016,6 +4066,9 @@ msgstr "正在收集…"
 
 msgid "Color"
 msgstr "顏色"
+
+msgid "Color Filter"
+msgstr "色彩濾鏡"
 
 msgid "Combine all commits"
 msgstr "把所有提交合成一個"
@@ -4637,6 +4690,9 @@ msgstr "複製localhost:{0}"
 msgid "Copy log"
 msgstr "複製日誌"
 
+msgid "Copy logs"
+msgstr "複製記錄"
+
 msgid "Copy Markdown"
 msgstr "複製Markdown"
 
@@ -4937,9 +4993,6 @@ msgstr "無法停止"
 
 msgid "Could not stop the agent"
 msgstr "無法停止代理程式"
-
-msgid "Could not stop the task"
-msgstr "無法停止任務"
 
 msgid "Could not stop watching"
 msgstr "無法停止關注"
@@ -6004,8 +6057,14 @@ msgstr "對話方塊、側邊面板、氣泡卡片和懸浮層"
 msgid "Dictate"
 msgstr "語音輸入"
 
+msgid "Dictation"
+msgstr "語音輸入"
+
 msgid "Dictation is not available on this device"
 msgstr "此裝置不支援語音輸入"
+
+msgid "Dictation is not available right now"
+msgstr "語音輸入暫時無法使用"
 
 msgid "Didn't hear back"
 msgstr "未收到回應"
@@ -6164,6 +6223,9 @@ msgstr "撤銷了審查"
 msgid "Display"
 msgstr "顯示"
 
+msgid "Display Size"
+msgstr "顯示大小"
+
 msgid "Displays the mobile sidebar."
 msgstr "顯示行動版側邊欄。"
 
@@ -6252,6 +6314,9 @@ msgstr "下載macOS版"
 
 msgid "Download image"
 msgstr "下載圖片"
+
+msgid "Download logs"
+msgstr "下載記錄"
 
 msgid "Download Manually"
 msgstr "手動下載"
@@ -6545,6 +6610,9 @@ msgstr "空狀態"
 msgid "Empty command"
 msgstr "空命令"
 
+msgid "Emulator"
+msgstr "模擬器"
+
 msgid "Enable"
 msgstr "啟用"
 
@@ -6648,6 +6716,9 @@ msgstr "按esc關閉"
 msgid "esc to exit"
 msgstr "esc退出"
 
+msgid "Event log"
+msgstr "事件記錄"
+
 msgid "Event triggered"
 msgstr "事件觸發"
 
@@ -6732,6 +6803,9 @@ msgstr "報導 Superset 所需的一切：公司簡介、最新消息、標誌�
 msgid "Everything you've published is deleted, not hidden. You can rejoin later and it will rebuild from the transcripts still on this machine."
 msgstr "你釋出過的所有內容都會被刪除，而不是隱藏。你之後可以重新加入，屆時會根據此機器上仍保留的記錄重新生成。"
 
+msgid "Executable"
+msgstr "執行檔"
+
 msgid "Existing repo path"
 msgstr "已有儲存庫路徑"
 
@@ -6753,6 +6827,9 @@ msgstr "退出設計模式（esc）"
 
 msgid "Exit device toolbar"
 msgstr "退出裝置工具列"
+
+msgid "Exit full screen"
+msgstr "結束全螢幕"
 
 msgid "Exited"
 msgstr "已退出"
@@ -7356,6 +7433,9 @@ msgstr "快速"
 msgid "Fatal"
 msgstr "致命"
 
+msgid "Fault"
+msgstr "故障"
+
 msgid "Favorites"
 msgstr "最愛"
 
@@ -7481,6 +7561,9 @@ msgstr "篩選主機"
 
 msgid "Filter hosts..."
 msgstr "篩選主機..."
+
+msgid "Filter logs"
+msgstr "篩選記錄"
 
 msgid "Filter pages"
 msgstr "篩選頁面"
@@ -7764,9 +7847,6 @@ msgstr "免費版"
 msgid "Free for everyone"
 msgstr "對所有人免費"
 
-msgid "Free to start · No credit card required"
-msgstr "免費開始 · 無需信用卡"
-
 msgid "Frequently<0/>asked questions"
 msgstr "常見<0/>問題"
 
@@ -7799,6 +7879,9 @@ msgstr "完全磁碟存取權限"
 
 msgid "Full name"
 msgstr "姓名"
+
+msgid "Full screen"
+msgstr "全螢幕"
 
 msgid "Full self-driving"
 msgstr "完全自動駕駛"
@@ -8013,8 +8096,14 @@ msgstr "授予Superset所需的系統權限。"
 msgid "Granted"
 msgstr "已授予"
 
+msgid "Grayscale"
+msgstr "灰階"
+
 msgid "Green"
 msgstr "綠色"
+
+msgid "Green/Red (Deuteranopia)"
+msgstr "綠/紅（綠色盲）"
 
 msgid "Grepped"
 msgstr "已搜尋"
@@ -8075,6 +8164,9 @@ msgstr "進行中"
 
 msgid "Hard reload"
 msgstr "強制重新載入"
+
+msgid "Hardware Keyboard"
+msgstr "硬體鍵盤"
 
 msgid "Has conflicts"
 msgstr "有衝突"
@@ -8205,6 +8297,10 @@ msgstr "歷史"
 
 msgid "Home"
 msgstr "首頁"
+
+msgctxt "device home button"
+msgid "Home"
+msgstr "主畫面"
 
 msgctxt "directory"
 msgid "Home"
@@ -8628,6 +8724,9 @@ msgstr "包含Superset特有的box變體"
 msgid "Incognito Operator"
 msgstr "隱身操作員"
 
+msgid "Increase Contrast"
+msgstr "增加對比"
+
 msgid "Indigo"
 msgstr "靛藍"
 
@@ -8851,6 +8950,9 @@ msgstr "發票與支付方式"
 
 msgid "iOS app"
 msgstr "iOS應用"
+
+msgid "iOS Simulator"
+msgstr "iOS 模擬器"
 
 msgid "IP restrictions"
 msgstr "IP限制"
@@ -9095,6 +9197,10 @@ msgstr "知識"
 
 msgid "Label"
 msgstr "名稱"
+
+msgctxt "task label filter"
+msgid "Label"
+msgstr "標籤"
 
 msgid "Label change"
 msgstr "標籤變更"
@@ -9412,6 +9518,9 @@ msgstr "連結此任務"
 msgid "Linked {slug} to workspace"
 msgstr "已將{slug}關聯到工作區"
 
+msgid "Liquid Glass"
+msgstr "Liquid Glass"
+
 msgid "List"
 msgstr "列表"
 
@@ -9612,6 +9721,9 @@ msgstr "位置"
 msgid "Location & checkout"
 msgstr "位置與檢出"
 
+msgid "Log levels"
+msgstr "記錄層級"
+
 msgid "Log out"
 msgstr "登出"
 
@@ -9638,6 +9750,9 @@ msgstr "標誌，淺色"
 
 msgid "Logos"
 msgstr "標誌"
+
+msgid "Logs"
+msgstr "記錄"
 
 msgid "Long-horizon reliability crosses a threshold. Work assigned at 6pm is mergeable at 9am often enough that not scheduling the overnight shift feels like leaving a factory idle."
 msgstr "長週期可靠性越過了一個門檻。傍晚6點派出去的活兒，早上9點常常已經可以合併，以至於不排夜班就像讓工廠空轉。"
@@ -9994,6 +10109,12 @@ msgstr "2026年中"
 msgid "Mid 2027"
 msgstr "2027年中"
 
+msgid "Min iOS"
+msgstr "最低 iOS"
+
+msgid "Min SDK"
+msgstr "最低 SDK"
+
 msgid "Mine"
 msgstr "我的"
 
@@ -10301,6 +10422,9 @@ msgstr "需要你"
 
 msgid "Nerd Fonts"
 msgstr "Nerd Fonts"
+
+msgid "Network"
+msgstr "網路"
 
 msgid "Network Changed"
 msgstr "網路已變更"
@@ -10651,6 +10775,9 @@ msgstr "沒有提供描述。"
 msgid "No desktop session is running in this sandbox."
 msgstr "此沙箱中沒有正在執行的桌面工作階段。"
 
+msgid "No device is running."
+msgstr "沒有執行中的裝置。"
+
 msgid "No devices yet"
 msgstr "還沒有裝置"
 
@@ -10668,6 +10795,9 @@ msgstr "找不到環境。"
 
 msgid "No environments yet."
 msgstr "尚無環境。建立一個，即可從中啟動雲端工作區。"
+
+msgid "No events yet"
+msgstr "尚無事件"
 
 msgid "No extended thinking"
 msgstr "不使用擴充套件思考"
@@ -10741,6 +10871,9 @@ msgstr "沒有已知的建立者"
 msgid "No labels"
 msgstr "無標籤"
 
+msgid "No labels found."
+msgstr "找不到標籤。"
+
 msgid "No lead"
 msgstr "無負責人"
 
@@ -10749,6 +10882,9 @@ msgstr "沒有監聽代理"
 
 msgid "No live sessions"
 msgstr "沒有活動會話"
+
+msgid "No log lines yet"
+msgstr "尚無記錄"
 
 msgid "no logins"
 msgstr "無登入資訊"
@@ -10786,8 +10922,8 @@ msgstr "沒有已合併的拉取請求。"
 msgid "No messages yet"
 msgstr "還沒有訊息"
 
-msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
-msgstr "此處沒有可用的行動模擬器。需要支援 Limrun 的雲端沙盒，或本機 iOS/Android 工具鏈。"
+msgid "No mobile simulator available here. This needs either an EAS simulator on a cloud sandbox or a local iOS/Android toolchain."
+msgstr "此處沒有可用的行動模擬器。需要雲端沙盒上的 EAS 模擬器，或本機 iOS/Android 工具鏈。"
 
 msgid "No name on file"
 msgstr "未登記姓名"
@@ -10951,6 +11087,9 @@ msgstr "還沒有會話"
 
 msgid "No shortcuts found matching \"{searchQuery}\""
 msgstr "沒有找到與「{searchQuery}」匹配的快速鍵"
+
+msgid "No simulator is running."
+msgstr "沒有執行中的模擬器。"
 
 msgid "No sites are signed in"
 msgstr "沒有已登入的站點"
@@ -11314,6 +11453,9 @@ msgstr "視窗變更時"
 msgid "On your machine. Repos, worktrees, terminal output, and agent sessions stay local by default; cloud sync covers account and organization metadata only. Superset doesn't proxy any API calls."
 msgstr "在你自己的機器上。儲存庫、worktree、終端輸出和代理程式會話預設都留在本地；雲端同步只涉及帳戶和組織的後設資料。Superset不代理任何API呼叫。"
 
+msgid "On-screen Keyboard"
+msgstr "螢幕鍵盤"
+
 msgid "Onboarding redesign"
 msgstr "新手引導改版"
 
@@ -11491,6 +11633,9 @@ msgstr "開啟 App Store"
 
 msgid "Open as comment pane"
 msgstr "作為評論面板開啟"
+
+msgid "Open billing"
+msgstr "開啟帳單"
 
 msgid "Open branch on GitHub"
 msgstr "在GitHub上開啟分支"
@@ -12397,6 +12542,9 @@ msgstr "方案"
 msgid "Plan restored"
 msgstr "方案已恢復"
 
+msgid "Plan updated"
+msgstr "方案已更新"
+
 msgctxt "project state"
 msgid "Planned"
 msgstr "已規劃"
@@ -12994,6 +13142,9 @@ msgstr "為代理程式排隊安排工作"
 msgid "Queued"
 msgstr "排隊中"
 
+msgid "Queued messages"
+msgstr "佇列中的訊息"
+
 msgid "Queued to Merge"
 msgstr "排隊等待合併"
 
@@ -13075,6 +13226,9 @@ msgstr "已達到"
 
 msgid "React layer of the shared pane/workspace layout engine"
 msgstr "共享面板/工作區佈局引擎的React層"
+
+msgid "React Native"
+msgstr "React Native"
 
 msgid "Reaction added"
 msgstr "添加了回應"
@@ -13178,6 +13332,9 @@ msgstr "變基併合併"
 msgid "Recent Activity"
 msgstr "最近動態"
 
+msgid "Recent apps"
+msgstr "最近使用的 App"
+
 msgid "Recent invoices"
 msgstr "最近的帳單"
 
@@ -13235,8 +13392,14 @@ msgstr "正在重新連線…"
 msgid "Reconnecting… your conversation is kept."
 msgstr "正在重新連線… 對話會保留。"
 
+msgid "Recording"
+msgstr "正在錄音"
+
 msgid "Red"
 msgstr "紅色"
+
+msgid "Red/Green (Protanopia)"
+msgstr "紅/綠（紅色盲）"
 
 msgid "Redacted Riveter"
 msgstr "保密鉚接工"
@@ -13249,6 +13412,12 @@ msgstr "正在跳轉..."
 
 msgid "Redo"
 msgstr "重做"
+
+msgid "Reduce Motion"
+msgstr "減少動態效果"
+
+msgid "Reduce Transparency"
+msgstr "減少透明度"
 
 msgid "Referenced, not demoed"
 msgstr "僅作引用，未做演示"
@@ -14062,6 +14231,9 @@ msgstr "角色已更新"
 msgid "Roll back an agent session to any checkpoint, conversation and file changes together."
 msgstr "把代理程式會話回滾到任意檢查點，對話和檔案改動一起回退。"
 
+msgid "Rotate"
+msgstr "旋轉"
+
 msgid "Rotate device"
 msgstr "旋轉裝置"
 
@@ -14197,9 +14369,6 @@ msgstr "使用此配置檔案執行中的代理程式將失去存取權限。"
 
 msgid "Running bun test…"
 msgstr "正在執行bun test…"
-
-msgid "Running in the background"
-msgstr "正在背景執行"
 
 msgid "Running now"
 msgstr "正在執行"
@@ -14359,6 +14528,9 @@ msgstr "範圍"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "當看板看到 {0} 天的使用資料後，才會開始計分。"
 
+msgid "Screenshot"
+msgstr "截圖"
+
 msgid "Screenshot copied to clipboard"
 msgstr "截圖已複製到剪貼簿"
 
@@ -14473,6 +14645,9 @@ msgstr "在{frameTitle}中搜尋…"
 
 msgid "Search issues..."
 msgstr "搜尋議題..."
+
+msgid "Search labels..."
+msgstr "搜尋標籤..."
 
 msgid "Search Linear"
 msgstr "搜尋Linear"
@@ -14818,6 +14993,9 @@ msgstr "傳送按鍵、管理視窗並控制其他應用程式程式。"
 msgid "Send message"
 msgstr "傳送訊息"
 
+msgid "Send now"
+msgstr "立即傳送"
+
 msgid "Send reply"
 msgstr "傳送回覆"
 
@@ -14979,6 +15157,9 @@ msgstr "設定（{settingsHotkey}）"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "設定 → 遠端存取 → 「允許遠端工作區通過中繼存取此裝置」。"
 
+msgid "Settings are not available for this device"
+msgstr "此裝置無法使用設定"
+
 msgid "Settings..."
 msgstr "設定..."
 
@@ -15084,6 +15265,9 @@ msgstr "顯示"
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "退出應用時顯示確認對話方塊"
 
+msgid "Show a microphone in the chat composer. Speech is transcribed by ChatGPT when Codex is signed in to it, otherwise on your Mac when possible, and otherwise by Superset's servers."
+msgstr "在聊天輸入框中顯示麥克風。如果 Codex 已登入 ChatGPT，語音由 ChatGPT 轉寫；否則在可行時於你的 Mac 上轉寫，再不行則由 Superset 的伺服器轉寫。"
+
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "在首頁側邊欄的「拉取請求」下方顯示「用量」按鈕"
 
@@ -15095,6 +15279,9 @@ msgstr "顯示所有評論"
 
 msgid "Show all lines"
 msgstr "顯示所有行"
+
+msgid "Show Borders"
+msgstr "顯示邊框"
 
 msgid "Show checks"
 msgstr "顯示檢查"
@@ -15228,6 +15415,10 @@ msgstr "會顯示在側邊欄和任務列表中。"
 msgid "Shown publicly alongside your name."
 msgstr "會與你的名字一起公開顯示。"
 
+#. placeholder {0}: selected.name
+msgid "Shut down {0}"
+msgstr "關閉 {0}"
+
 msgid "Side by Side"
 msgstr "並排"
 
@@ -15251,6 +15442,9 @@ msgstr "應用更新可安裝時顯示在側邊欄的膠囊提示"
 
 msgid "Sign in"
 msgstr "登入"
+
+msgid "Sign in again to use dictation"
+msgstr "請重新登入以使用語音輸入"
 
 msgid "Sign in as Local Admin (dev)"
 msgstr "以本地管理員身份登入（開發）"
@@ -15353,6 +15547,9 @@ msgstr "模擬更新：錯誤"
 
 msgid "Simulate update: ready"
 msgstr "模擬更新：就緒"
+
+msgid "Simulator"
+msgstr "模擬器"
 
 msgid "Since 2025"
 msgstr "自2025年起"
@@ -15872,6 +16069,9 @@ msgstr "仍然無法連線到主機。"
 msgid "Still trying. If it keeps failing, archive it and create a new one."
 msgstr "仍在重試。如果一直失敗，封存它，再建一個。"
 
+msgid "Still waking up…"
+msgstr "仍在喚醒…"
+
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "仍在處理 — 大儲存庫可能需要幾分鐘。你可以離開；工作區就緒後會出現在首頁。"
 
@@ -15921,6 +16121,9 @@ msgstr "因使用上限而停止"
 
 msgid "Stopping the agent in {what}"
 msgstr "正在停止 {what} 中的代理程式"
+
+msgid "Stops the agent and sends this now"
+msgstr "停止代理程式並立即傳送此訊息"
 
 msgid "Strikethrough"
 msgstr "刪除線"
@@ -16018,8 +16221,8 @@ msgstr "superset"
 msgid "Superset"
 msgstr "Superset"
 
-msgid "Superset (YC S26) is the open-source IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
-msgstr "Superset（YC S26）是為 AI agent 時代打造的開源 IDE，工程師可以在其中平行執行數百個 Claude Code、Codex 等程式設計 agent。"
+msgid "Superset (YC S26) is the source-available IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
+msgstr "Superset（YC S26）是為 AI agent 時代打造的原始碼公開 IDE，工程師可以在其中平行執行數百個 Claude Code、Codex 等程式設計 agent。"
 
 msgid "Superset Agent"
 msgstr "Superset代理程式"
@@ -16629,6 +16832,9 @@ msgstr "正文"
 msgid "Text input with emoji picker support"
 msgstr "支援emoji選擇器的文字輸入框"
 
+msgid "Text Size"
+msgstr "文字大小"
+
 msgid "Text style"
 msgstr "文字樣式"
 
@@ -16950,9 +17156,6 @@ msgstr "找不到伺服器"
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "登入連結不完整。請重試。"
 
-msgid "The simulator instance was terminated."
-msgstr "模擬器執行個例已終止。"
-
 msgid "The site's certificate authority is not trusted"
 msgstr "該站點的證書頒發機構不受信任"
 
@@ -17109,6 +17312,9 @@ msgstr "這將關閉所選工作區及其終端機。專案的檔案和分支保
 
 msgid "This closes the workspace and its terminals. The project's files, branches and other workspaces stay as they are."
 msgstr "這將關閉該工作區及其終端機。專案的檔案、分支和其他工作區保持不變。"
+
+msgid "This cloud workspace can't start"
+msgstr "無法啟動此雲端工作區"
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "正在喚醒此雲端工作區。如果它已閒置一段時間，可能需要最多 30 秒。"
@@ -17275,6 +17481,9 @@ msgstr "此拉取請求已不可用。"
 msgid "This pull request link is invalid."
 msgstr "這個拉取請求連結無效。"
 
+msgid "This recording is too long to transcribe"
+msgstr "這段錄音太長，無法轉寫"
+
 msgid "This removes every selected worktree from disk and deletes its workspace record."
 msgstr "這會把每個選中的worktree從磁碟上移除，並刪除它的工作區記錄。"
 
@@ -17426,6 +17635,9 @@ msgstr "時間"
 msgid "Times use your time zone."
 msgstr "時間依你的時區顯示。"
 
+msgid "Tinted"
+msgstr "色調"
+
 msgid "Tip"
 msgstr "提示"
 
@@ -17531,6 +17743,9 @@ msgstr "每次會話的 Token，近 30 天"
 msgid "Tokens stay off your machine"
 msgstr "權杖不會留在你的裝置上"
 
+msgid "Too many dictations. Try again later."
+msgstr "語音輸入次數過多，請稍後再試。"
+
 msgid "Too many feedback submissions. Try again later."
 msgstr "回饋提交次數過多。請稍後重試。"
 
@@ -17626,6 +17841,12 @@ msgstr "任務管理位置"
 
 msgid "Tracking"
 msgstr "已追蹤"
+
+msgid "Transcribing"
+msgstr "正在轉寫"
+
+msgid "Transcribing…"
+msgstr "正在轉寫…"
 
 msgid "Translated"
 msgstr "已翻譯"
@@ -17791,6 +18012,9 @@ msgstr "無法開始語音輸入"
 
 msgid "Unable to transcribe audio"
 msgstr "無法轉寫音訊"
+
+msgid "Unable to transcribe this recording"
+msgstr "無法轉寫這段錄音"
 
 msgid "Unarchive"
 msgstr "取消封存"
@@ -18392,6 +18616,9 @@ msgstr "語音模式發生問題，請再試一次。"
 msgid "Voice settings"
 msgstr "語音設定"
 
+msgid "VoiceOver"
+msgstr "VoiceOver"
+
 msgid "Volume"
 msgstr "音量"
 
@@ -18405,6 +18632,9 @@ msgstr "啟動代理程式前等待工作區設定完成"
 #. placeholder {1}: names.b
 msgid "waiting for {0} and {1}…"
 msgstr "正在等待 {0} 和 {1}…"
+
+msgid "Waiting for activity data"
+msgstr "正在等待活動資料"
 
 msgid "Waiting for Checks"
 msgstr "等待檢查"
@@ -18423,6 +18653,9 @@ msgstr "正在等待子代理程式的第一則訊息…"
 
 msgid "Waiting for your input"
 msgstr "等待你的輸入"
+
+msgid "Waking up workspace"
+msgstr "正在喚醒工作區"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "想讓某件事早點做？<0>在Discord上告訴我們</0>。這裡的很多條目最初都來自使用者的請求。"
@@ -19196,6 +19429,12 @@ msgstr "你的姓名"
 
 msgid "Your name <0>(if we use your prompt, we'll credit you in the changelog)</0>"
 msgstr "你的名字 <0>（若我們採用你的提示詞，會在更新日誌中署名致謝）</0>"
+
+msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
+msgstr "你的組織已達到雲端用量上限。請在「設定」中的「帳單」提高上限或升級，以啟動此工作區。"
+
+msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
+msgstr "你的組織已達到雲端用量上限。除非提高上限，此工作區將在幾分鐘後停止。"
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "你自己的帳戶。組織的整合讓 Superset 存取其工具；連結你自己的帳戶後，Superset 為你完成的工作會以你的名義顯示。"

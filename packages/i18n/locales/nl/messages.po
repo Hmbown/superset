@@ -1244,6 +1244,9 @@ msgstr "<0>Nerd Fonts</0> worden aanbevolen."
 msgid "<0>vs</0> <1/>"
 msgstr "<0>vs</0> <1/>"
 
+msgid "~{secondsLeft}s"
+msgstr "~{secondsLeft} s"
+
 msgid "~{stars} projected this week"
 msgstr "~{stars} verwacht deze week"
 
@@ -1998,6 +2001,10 @@ msgstr "Actief"
 msgid "All"
 msgstr "Alle"
 
+msgctxt "log scope"
+msgid "All"
+msgstr "Alle"
+
 #. placeholder {0}: history.projects.length
 msgid "All {0} →"
 msgstr "Alle {0} →"
@@ -2055,6 +2062,9 @@ msgstr "Alles in huidig tabblad"
 
 msgid "All in current tab (split panes)"
 msgstr "Alles in huidig tabblad (gesplitste panelen)"
+
+msgid "All labels"
+msgstr "Alle labels"
 
 msgid "All models"
 msgstr "Alle modellen"
@@ -2377,6 +2387,10 @@ msgstr "API-equivalent"
 msgid "API-equivalent cost"
 msgstr "API-equivalente kosten"
 
+msgctxt "log scope"
+msgid "App"
+msgstr "App"
+
 msgid "app {appVersion}"
 msgstr "app {appVersion}"
 
@@ -2388,6 +2402,9 @@ msgstr "Weergavetaal van de app. Automatisch volgt je systeemtaal."
 
 msgid "App icon"
 msgstr "App-icoon"
+
+msgid "App path"
+msgstr "App-pad"
 
 msgid "Appearance"
 msgstr "Uiterlijk"
@@ -2796,6 +2813,10 @@ msgstr "Wacht op review van jou of je team"
 msgid "Back"
 msgstr "Terug"
 
+msgctxt "Android back button"
+msgid "Back"
+msgstr "Terug"
+
 msgid "Back to About"
 msgstr "Terug naar Over ons"
 
@@ -2932,6 +2953,9 @@ msgstr "Facturering"
 msgid "Billing details"
 msgstr "Factuurgegevens"
 
+msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "Facturering heeft het starten van een cloudwerkruimte geweigerd: de organisatie heeft een betaald abonnement nodig of heeft haar limiet voor cloudgebruik bereikt. Upgrade of verhoog de limiet in Instellingen > Facturering, of voer de automatisering uit op een apparaat."
+
 msgid "Binary"
 msgstr "Binair"
 
@@ -2965,6 +2989,9 @@ msgstr "Blog"
 msgid "Blue"
 msgstr "Blauw"
 
+msgid "Blue/Yellow (Tritanopia)"
+msgstr "Blauw/geel (tritanopie)"
+
 msgid "Board"
 msgstr "Bord"
 
@@ -2973,6 +3000,13 @@ msgstr "Bordweergave"
 
 msgid "Bold"
 msgstr "Vet"
+
+msgid "Bold Text"
+msgstr "Vette tekst"
+
+#. placeholder {0}: selected.name
+msgid "Booting {0}…"
+msgstr "{0} wordt opgestart…"
 
 msgid "Border"
 msgstr "Rand"
@@ -3568,6 +3602,9 @@ msgstr "Checks overgeslagen"
 msgid "Choose a {pluginLabel} account"
 msgstr "Kies een {pluginLabel}-account"
 
+msgid "Choose a device"
+msgstr "Kies een apparaat"
+
 msgid "Choose a fighter"
 msgstr "Kies een vechter"
 
@@ -3633,6 +3670,13 @@ msgstr "Ruim verouderde TODO's op…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Strakkere, compactere zijbalk"
+
+msgid "Clear"
+msgstr "Wissen"
+
+msgctxt "Liquid Glass style"
+msgid "Clear"
+msgstr "Helder"
 
 msgid "Clear all"
 msgstr "Alles wissen"
@@ -3839,6 +3883,9 @@ msgstr "Bestand sluiten"
 msgid "Close find bar"
 msgstr "Zoekbalk sluiten"
 
+msgid "Close logs"
+msgstr "Logs sluiten"
+
 msgid "Close menu"
 msgstr "Menu sluiten"
 
@@ -3962,6 +4009,9 @@ msgstr "Cloudwerkruimtes"
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Cloudworkspaces negeren deze variabele. Agents melden zich in plaats daarvan aan via Instellingen › Agents."
 
+msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
+msgstr "Cloudwerkruimtes vereisen een betaald abonnement. Upgrade in Instellingen, Facturering om er een te starten."
+
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Cloudworkspaces stoppen met het uitvoeren van {agentLabel} hiermee."
 
@@ -4016,6 +4066,9 @@ msgstr "Verzamelen…"
 
 msgid "Color"
 msgstr "Kleur"
+
+msgid "Color Filter"
+msgstr "Kleurfilter"
 
 msgid "Combine all commits"
 msgstr "Alle commits samenvoegen"
@@ -4637,6 +4690,9 @@ msgstr "localhost:{0} kopiëren"
 msgid "Copy log"
 msgstr "Log kopiëren"
 
+msgid "Copy logs"
+msgstr "Logs kopiëren"
+
 msgid "Copy Markdown"
 msgstr "Markdown kopiëren"
 
@@ -4937,9 +4993,6 @@ msgstr "Kon niet worden gestopt"
 
 msgid "Could not stop the agent"
 msgstr "Kan de agent niet stoppen"
-
-msgid "Could not stop the task"
-msgstr "Kan de taak niet stoppen"
 
 msgid "Could not stop watching"
 msgstr "Kon niet stoppen met volgen"
@@ -6004,8 +6057,14 @@ msgstr "Dialogen, sheets, popovers en hover-oppervlakken"
 msgid "Dictate"
 msgstr "Dicteren"
 
+msgid "Dictation"
+msgstr "Dicteren"
+
 msgid "Dictation is not available on this device"
 msgstr "Dicteren is niet beschikbaar op dit apparaat"
+
+msgid "Dictation is not available right now"
+msgstr "Dicteren is nu niet beschikbaar"
 
 msgid "Didn't hear back"
 msgstr "Geen reactie ontvangen"
@@ -6164,6 +6223,9 @@ msgstr "heeft de review ingetrokken"
 msgid "Display"
 msgstr "Weergave"
 
+msgid "Display Size"
+msgstr "Weergavegrootte"
+
 msgid "Displays the mobile sidebar."
 msgstr "Toont de mobiele zijbalk."
 
@@ -6252,6 +6314,9 @@ msgstr "Download voor macOS"
 
 msgid "Download image"
 msgstr "Afbeelding downloaden"
+
+msgid "Download logs"
+msgstr "Logs downloaden"
 
 msgid "Download Manually"
 msgstr "Handmatig downloaden"
@@ -6545,6 +6610,9 @@ msgstr "Leeg"
 msgid "Empty command"
 msgstr "Leeg commando"
 
+msgid "Emulator"
+msgstr "Emulator"
+
 msgid "Enable"
 msgstr "Inschakelen"
 
@@ -6648,6 +6716,9 @@ msgstr "esc om te sluiten"
 msgid "esc to exit"
 msgstr "esc om te verlaten"
 
+msgid "Event log"
+msgstr "Gebeurtenislog"
+
 msgid "Event triggered"
 msgstr "Gebeurtenis getriggerd"
 
@@ -6732,6 +6803,9 @@ msgstr "Alles wat je nodig hebt om over Superset te schrijven: bedrijfsbeschrijv
 msgid "Everything you've published is deleted, not hidden. You can rejoin later and it will rebuild from the transcripts still on this machine."
 msgstr "Alles wat je hebt gepubliceerd wordt verwijderd, niet verborgen. Je kunt later opnieuw meedoen; dan wordt het opnieuw opgebouwd uit de transcripten die nog op deze machine staan."
 
+msgid "Executable"
+msgstr "Uitvoerbaar bestand"
+
 msgid "Existing repo path"
 msgstr "Pad van bestaande repo"
 
@@ -6753,6 +6827,9 @@ msgstr "Designmodus verlaten (esc)"
 
 msgid "Exit device toolbar"
 msgstr "Apparaatbalk verlaten"
+
+msgid "Exit full screen"
+msgstr "Volledig scherm verlaten"
 
 msgid "Exited"
 msgstr "Afgesloten"
@@ -7356,6 +7433,9 @@ msgstr "Snel"
 msgid "Fatal"
 msgstr "Fatal"
 
+msgid "Fault"
+msgstr "Storing"
+
 msgid "Favorites"
 msgstr "Favorieten"
 
@@ -7481,6 +7561,9 @@ msgstr "Hosts filteren"
 
 msgid "Filter hosts..."
 msgstr "Hosts filteren..."
+
+msgid "Filter logs"
+msgstr "Logs filteren"
 
 msgid "Filter pages"
 msgstr "Pagina's filteren"
@@ -7764,9 +7847,6 @@ msgstr "Free"
 msgid "Free for everyone"
 msgstr "Gratis voor iedereen"
 
-msgid "Free to start · No credit card required"
-msgstr "Begin gratis · Geen creditcard nodig"
-
 msgid "Frequently<0/>asked questions"
 msgstr "Veelgestelde<0/>vragen"
 
@@ -7799,6 +7879,9 @@ msgstr "Volledige Schijftoegang"
 
 msgid "Full name"
 msgstr "Volledige naam"
+
+msgid "Full screen"
+msgstr "Volledig scherm"
 
 msgid "Full self-driving"
 msgstr "Volledig zelfrijdend"
@@ -8013,8 +8096,14 @@ msgstr "Geef Superset de OS-rechten die het nodig heeft."
 msgid "Granted"
 msgstr "Verleend"
 
+msgid "Grayscale"
+msgstr "Grijstinten"
+
 msgid "Green"
 msgstr "Groen"
+
+msgid "Green/Red (Deuteranopia)"
+msgstr "Groen/rood (deuteranopie)"
 
 msgid "Grepped"
 msgstr "Gegrepped"
@@ -8075,6 +8164,9 @@ msgstr "nu bezig"
 
 msgid "Hard reload"
 msgstr "Hard herladen"
+
+msgid "Hardware Keyboard"
+msgstr "Hardwaretoetsenbord"
 
 msgid "Has conflicts"
 msgstr "Heeft conflicten"
@@ -8205,6 +8297,10 @@ msgstr "Geschiedenis"
 
 msgid "Home"
 msgstr "Home"
+
+msgctxt "device home button"
+msgid "Home"
+msgstr "Thuis"
 
 msgctxt "directory"
 msgid "Home"
@@ -8628,6 +8724,9 @@ msgstr "Inclusief de Superset-specifieke box-variant"
 msgid "Incognito Operator"
 msgstr "Incognito Operator"
 
+msgid "Increase Contrast"
+msgstr "Contrast verhogen"
+
 msgid "Indigo"
 msgstr "Indigo"
 
@@ -8851,6 +8950,9 @@ msgstr "Facturen en betaalmethode"
 
 msgid "iOS app"
 msgstr "iOS-app"
+
+msgid "iOS Simulator"
+msgstr "iOS-simulator"
 
 msgid "IP restrictions"
 msgstr "IP-beperkingen"
@@ -9093,6 +9195,10 @@ msgstr "Een paar TODO's wegwerken"
 msgid "Knowledge"
 msgstr "Kennis"
 
+msgid "Label"
+msgstr "Label"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "Label"
 
@@ -9412,6 +9518,9 @@ msgstr "Deze taak koppelen"
 msgid "Linked {slug} to workspace"
 msgstr "{slug} gekoppeld aan werkruimte"
 
+msgid "Liquid Glass"
+msgstr "Liquid Glass"
+
 msgid "List"
 msgstr "Lijst"
 
@@ -9612,6 +9721,9 @@ msgstr "Locatie"
 msgid "Location & checkout"
 msgstr "Locatie en checkout"
 
+msgid "Log levels"
+msgstr "Logniveaus"
+
 msgid "Log out"
 msgstr "Uitloggen"
 
@@ -9638,6 +9750,9 @@ msgstr "Logo, licht"
 
 msgid "Logos"
 msgstr "Logo’s"
+
+msgid "Logs"
+msgstr "Logs"
 
 msgid "Long-horizon reliability crosses a threshold. Work assigned at 6pm is mergeable at 9am often enough that not scheduling the overnight shift feels like leaving a factory idle."
 msgstr "Betrouwbaarheid over lange horizon overschrijdt een drempel. Werk dat om 18.00 uur wordt toegewezen is om 9.00 uur zo vaak mergebaar dat het niet inplannen van de nachtploeg voelt als een fabriek stil laten staan."
@@ -9994,6 +10109,12 @@ msgstr "Medio 2026"
 msgid "Mid 2027"
 msgstr "Medio 2027"
 
+msgid "Min iOS"
+msgstr "Min. iOS"
+
+msgid "Min SDK"
+msgstr "Min. SDK"
+
 msgid "Mine"
 msgstr "Mijn"
 
@@ -10301,6 +10422,9 @@ msgstr "Wacht op jou"
 
 msgid "Nerd Fonts"
 msgstr "Nerd Fonts"
+
+msgid "Network"
+msgstr "Netwerk"
 
 msgid "Network Changed"
 msgstr "Netwerk gewijzigd"
@@ -10651,6 +10775,9 @@ msgstr "Geen beschrijving opgegeven."
 msgid "No desktop session is running in this sandbox."
 msgstr "Er draait geen bureaubladsessie in deze sandbox."
 
+msgid "No device is running."
+msgstr "Er is geen apparaat actief."
+
 msgid "No devices yet"
 msgstr "Nog geen apparaten"
 
@@ -10668,6 +10795,9 @@ msgstr "Geen omgevingen gevonden."
 
 msgid "No environments yet."
 msgstr "Nog geen omgevingen. Maak er een aan om er een cloudwerkruimte vanaf te starten."
+
+msgid "No events yet"
+msgstr "Nog geen gebeurtenissen"
 
 msgid "No extended thinking"
 msgstr "Geen uitgebreid nadenken"
@@ -10741,6 +10871,9 @@ msgstr "Geen bekende makers"
 msgid "No labels"
 msgstr "Geen labels"
 
+msgid "No labels found."
+msgstr "Geen labels gevonden."
+
 msgid "No lead"
 msgstr "Geen leider"
 
@@ -10749,6 +10882,9 @@ msgstr "Geen luisterende agents"
 
 msgid "No live sessions"
 msgstr "Geen actieve sessies"
+
+msgid "No log lines yet"
+msgstr "Nog geen logregels"
 
 msgid "no logins"
 msgstr "geen logins"
@@ -10786,8 +10922,8 @@ msgstr "Geen gemergede pull requests."
 msgid "No messages yet"
 msgstr "Nog geen berichten"
 
-msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
-msgstr "Hier is geen mobiele simulator beschikbaar. Hiervoor is een Limrun-compatibele cloudsandbox of een lokale iOS/Android-toolchain nodig."
+msgid "No mobile simulator available here. This needs either an EAS simulator on a cloud sandbox or a local iOS/Android toolchain."
+msgstr "Hier is geen mobiele simulator beschikbaar. Hiervoor is een EAS-simulator in een cloudsandbox of een lokale iOS/Android-toolchain nodig."
 
 msgid "No name on file"
 msgstr "Geen naam bekend"
@@ -10951,6 +11087,9 @@ msgstr "Nog geen sessies"
 
 msgid "No shortcuts found matching \"{searchQuery}\""
 msgstr "Geen sneltoetsen gevonden voor \"{searchQuery}\""
+
+msgid "No simulator is running."
+msgstr "Er is geen simulator actief."
 
 msgid "No sites are signed in"
 msgstr "Je bent op geen enkele site ingelogd"
@@ -11314,6 +11453,9 @@ msgstr "Bij vensterwijziging"
 msgid "On your machine. Repos, worktrees, terminal output, and agent sessions stay local by default; cloud sync covers account and organization metadata only. Superset doesn't proxy any API calls."
 msgstr "Op jouw machine. Repo's, worktrees, terminaluitvoer en agentsessies blijven standaard lokaal; cloudsynchronisatie omvat alleen metadata van account en organisatie. Superset proxyt geen API-aanroepen."
 
+msgid "On-screen Keyboard"
+msgstr "Schermtoetsenbord"
+
 msgid "Onboarding redesign"
 msgstr "Onboarding-redesign"
 
@@ -11491,6 +11633,9 @@ msgstr "App Store openen"
 
 msgid "Open as comment pane"
 msgstr "Openen als opmerkingenpaneel"
+
+msgid "Open billing"
+msgstr "Facturering openen"
 
 msgid "Open branch on GitHub"
 msgstr "Branch openen op GitHub"
@@ -12397,6 +12542,9 @@ msgstr "Plan"
 msgid "Plan restored"
 msgstr "Plan hersteld"
 
+msgid "Plan updated"
+msgstr "Abonnement bijgewerkt"
+
 msgctxt "project state"
 msgid "Planned"
 msgstr "Gepland"
@@ -12994,6 +13142,9 @@ msgstr "Werk in de wachtrij zetten voor agents"
 msgid "Queued"
 msgstr "In wachtrij"
 
+msgid "Queued messages"
+msgstr "Berichten in wachtrij"
+
 msgid "Queued to Merge"
 msgstr "In wachtrij om te mergen"
 
@@ -13075,6 +13226,9 @@ msgstr "Bereikt"
 
 msgid "React layer of the shared pane/workspace layout engine"
 msgstr "React-laag van de gedeelde lay-outengine voor panelen/werkruimtes"
+
+msgid "React Native"
+msgstr "React Native"
 
 msgid "Reaction added"
 msgstr "Reactie toegevoegd"
@@ -13178,6 +13332,9 @@ msgstr "Rebasen en mergen"
 msgid "Recent Activity"
 msgstr "Recente activiteit"
 
+msgid "Recent apps"
+msgstr "Recente apps"
+
 msgid "Recent invoices"
 msgstr "Recente facturen"
 
@@ -13235,8 +13392,14 @@ msgstr "Opnieuw verbinden…"
 msgid "Reconnecting… your conversation is kept."
 msgstr "Opnieuw verbinden… je gesprek blijft bewaard."
 
+msgid "Recording"
+msgstr "Opnemen"
+
 msgid "Red"
 msgstr "Rood"
+
+msgid "Red/Green (Protanopia)"
+msgstr "Rood/groen (protanopie)"
 
 msgid "Redacted Riveter"
 msgstr "Gecensureerde Klinker"
@@ -13249,6 +13412,12 @@ msgstr "Doorsturen..."
 
 msgid "Redo"
 msgstr "Opnieuw"
+
+msgid "Reduce Motion"
+msgstr "Verminder beweging"
+
+msgid "Reduce Transparency"
+msgstr "Verminder doorzichtigheid"
 
 msgid "Referenced, not demoed"
 msgstr "Genoemd, niet gedemonstreerd"
@@ -14062,6 +14231,9 @@ msgstr "Rol bijgewerkt"
 msgid "Roll back an agent session to any checkpoint, conversation and file changes together."
 msgstr "Draai een agentsessie terug naar elk checkpoint, gesprek en bestandswijzigingen samen."
 
+msgid "Rotate"
+msgstr "Draaien"
+
 msgid "Rotate device"
 msgstr "Apparaat draaien"
 
@@ -14197,9 +14369,6 @@ msgstr "Draaiende agents op dit profiel verliezen toegang."
 
 msgid "Running bun test…"
 msgstr "bun test uitvoeren…"
-
-msgid "Running in the background"
-msgstr "Draait op de achtergrond"
 
 msgid "Running now"
 msgstr "Wordt nu uitgevoerd"
@@ -14359,6 +14528,9 @@ msgstr "Bereik"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "De score start zodra het bord {0} dagen gebruik ziet."
 
+msgid "Screenshot"
+msgstr "Schermafbeelding"
+
 msgid "Screenshot copied to clipboard"
 msgstr "Screenshot naar klembord gekopieerd"
 
@@ -14473,6 +14645,9 @@ msgstr "Zoeken in {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Issues zoeken..."
+
+msgid "Search labels..."
+msgstr "Labels zoeken..."
 
 msgid "Search Linear"
 msgstr "Linear doorzoeken"
@@ -14818,6 +14993,9 @@ msgstr "Toetsaanslagen versturen, vensters beheren en andere applicaties bediene
 msgid "Send message"
 msgstr "Bericht versturen"
 
+msgid "Send now"
+msgstr "Nu verzenden"
+
 msgid "Send reply"
 msgstr "Antwoord versturen"
 
@@ -14979,6 +15157,9 @@ msgstr "Instellingen ({settingsHotkey})"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "Instellingen → Externe toegang → “Externe toegang tot dit apparaat via de relay toestaan”."
 
+msgid "Settings are not available for this device"
+msgstr "Instellingen zijn niet beschikbaar voor dit apparaat"
+
 msgid "Settings..."
 msgstr "Instellingen..."
 
@@ -15084,6 +15265,9 @@ msgstr "Tonen"
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "Toon een bevestiging bij het afsluiten van de app"
 
+msgid "Show a microphone in the chat composer. Speech is transcribed by ChatGPT when Codex is signed in to it, otherwise on your Mac when possible, and otherwise by Superset's servers."
+msgstr "Een microfoon in het chatinvoerveld tonen. Spraak wordt getranscribeerd door ChatGPT als Codex daarbij is ingelogd, anders waar mogelijk op je Mac, en anders door de servers van Superset."
+
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "Toon een knop Gebruik in de zijbalk van het startscherm, onder Pull requests"
 
@@ -15095,6 +15279,9 @@ msgstr "Alle opmerkingen tonen"
 
 msgid "Show all lines"
 msgstr "Alle regels tonen"
+
+msgid "Show Borders"
+msgstr "Toon randen"
 
 msgid "Show checks"
 msgstr "Checks tonen"
@@ -15228,6 +15415,10 @@ msgstr "Wordt getoond in de zijbalk en de takenlijst."
 msgid "Shown publicly alongside your name."
 msgstr "Wordt publiek naast je naam getoond."
 
+#. placeholder {0}: selected.name
+msgid "Shut down {0}"
+msgstr "{0} afsluiten"
+
 msgid "Side by Side"
 msgstr "Naast elkaar"
 
@@ -15251,6 +15442,9 @@ msgstr "Zijbalkpil die verschijnt als een app-update klaarstaat"
 
 msgid "Sign in"
 msgstr "Inloggen"
+
+msgid "Sign in again to use dictation"
+msgstr "Log opnieuw in om te dicteren"
 
 msgid "Sign in as Local Admin (dev)"
 msgstr "Inloggen als lokale beheerder (dev)"
@@ -15353,6 +15547,9 @@ msgstr "Update simuleren: fout"
 
 msgid "Simulate update: ready"
 msgstr "Update simuleren: gereed"
+
+msgid "Simulator"
+msgstr "Simulator"
 
 msgid "Since 2025"
 msgstr "Sinds 2025"
@@ -15872,6 +16069,9 @@ msgstr "De host is nog steeds onbereikbaar."
 msgid "Still trying. If it keeps failing, archive it and create a new one."
 msgstr "We blijven het proberen. Als het blijft mislukken, archiveer deze en maak een nieuwe aan."
 
+msgid "Still waking up…"
+msgstr "Wordt nog gewekt…"
+
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "Nog bezig — grote repo's kunnen een paar minuten duren. Je kunt weggaan; de werkruimte verschijnt op Home zodra die klaar is."
 
@@ -15921,6 +16121,9 @@ msgstr "Gestopt door de gebruikslimiet"
 
 msgid "Stopping the agent in {what}"
 msgstr "Agent in {what} wordt gestopt"
+
+msgid "Stops the agent and sends this now"
+msgstr "Stopt de agent en verzendt dit nu"
 
 msgid "Strikethrough"
 msgstr "Doorhalen"
@@ -16018,8 +16221,8 @@ msgstr "superset"
 msgid "Superset"
 msgstr "Superset"
 
-msgid "Superset (YC S26) is the open-source IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
-msgstr "Superset (YC S26) is de open-source IDE voor het tijdperk van AI-agents, waarin engineers honderden codeeragents zoals Claude Code en Codex parallel draaien."
+msgid "Superset (YC S26) is the source-available IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
+msgstr "Superset (YC S26) is de source-available IDE voor het tijdperk van AI-agents, waarin engineers honderden codeeragents zoals Claude Code en Codex parallel draaien."
 
 msgid "Superset Agent"
 msgstr "Superset Agent"
@@ -16629,6 +16832,9 @@ msgstr "Tekst"
 msgid "Text input with emoji picker support"
 msgstr "Tekstinvoer met ondersteuning voor een emojikiezer"
 
+msgid "Text Size"
+msgstr "Tekstgrootte"
+
 msgid "Text style"
 msgstr "Tekststijl"
 
@@ -16950,9 +17156,6 @@ msgstr "De server is niet gevonden"
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "De inloglink was onvolledig. Probeer het opnieuw."
 
-msgid "The simulator instance was terminated."
-msgstr "Het simulatorexemplaar is beëindigd."
-
 msgid "The site's certificate authority is not trusted"
 msgstr "De certificaatautoriteit van de site wordt niet vertrouwd"
 
@@ -17109,6 +17312,9 @@ msgstr "Hiermee sluit je de geselecteerde werkruimtes en hun terminals. De besta
 
 msgid "This closes the workspace and its terminals. The project's files, branches and other workspaces stay as they are."
 msgstr "Hiermee sluit je de werkruimte en de bijbehorende terminals. De bestanden, branches en andere werkruimtes van het project blijven ongewijzigd."
+
+msgid "This cloud workspace can't start"
+msgstr "Deze cloudwerkruimte kan niet starten"
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "Deze cloudwerkruimte wordt gewekt. Na inactiviteit kan dat tot 30 seconden duren."
@@ -17275,6 +17481,9 @@ msgstr "Deze pull request is niet meer beschikbaar."
 msgid "This pull request link is invalid."
 msgstr "Deze link naar een pull request is ongeldig."
 
+msgid "This recording is too long to transcribe"
+msgstr "Deze opname is te lang om te transcriberen"
+
 msgid "This removes every selected worktree from disk and deletes its workspace record."
 msgstr "Hiermee wordt elke geselecteerde worktree van schijf gehaald en het bijbehorende werkruimterecord verwijderd."
 
@@ -17426,6 +17635,9 @@ msgstr "Tijd"
 msgid "Times use your time zone."
 msgstr "Tijden gebruiken je tijdzone."
 
+msgid "Tinted"
+msgstr "Getint"
+
 msgid "Tip"
 msgstr "Tip"
 
@@ -17531,6 +17743,9 @@ msgstr "tokens per sessie, laatste 30 dagen"
 msgid "Tokens stay off your machine"
 msgstr "Tokens blijven van je machine af"
 
+msgid "Too many dictations. Try again later."
+msgstr "Te veel dicteeropdrachten. Probeer het later opnieuw."
+
 msgid "Too many feedback submissions. Try again later."
 msgstr "Te veel feedbackinzendingen. Probeer het later opnieuw."
 
@@ -17626,6 +17841,12 @@ msgstr "Taken bijhouden in"
 
 msgid "Tracking"
 msgstr "Bijgehouden"
+
+msgid "Transcribing"
+msgstr "Transcriberen"
+
+msgid "Transcribing…"
+msgstr "Transcriberen…"
 
 msgid "Translated"
 msgstr "Vertaald"
@@ -17791,6 +18012,9 @@ msgstr "Kan dicteren niet starten"
 
 msgid "Unable to transcribe audio"
 msgstr "Kan audio niet transcriberen"
+
+msgid "Unable to transcribe this recording"
+msgstr "Kan deze opname niet transcriberen"
 
 msgid "Unarchive"
 msgstr "Dearchiveren"
@@ -18392,6 +18616,9 @@ msgstr "Er ging iets mis met de spraakmodus. Probeer het opnieuw."
 msgid "Voice settings"
 msgstr "Spraakinstellingen"
 
+msgid "VoiceOver"
+msgstr "VoiceOver"
+
 msgid "Volume"
 msgstr "Volume"
 
@@ -18405,6 +18632,9 @@ msgstr "Wachten op werkruimte-setup voordat agents starten"
 #. placeholder {1}: names.b
 msgid "waiting for {0} and {1}…"
 msgstr "wachten op {0} en {1}…"
+
+msgid "Waiting for activity data"
+msgstr "Wachten op activiteitsgegevens"
 
 msgid "Waiting for Checks"
 msgstr "Wachten op checks"
@@ -18423,6 +18653,9 @@ msgstr "Wachten op het eerste bericht van de subagent…"
 
 msgid "Waiting for your input"
 msgstr "Wacht op je invoer"
+
+msgid "Waking up workspace"
+msgstr "Werkruimte wordt gewekt"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Wil je iets eerder zien? <0>Laat het weten in Discord</0>. Veel van wat hier staat begon als gebruikersverzoek."
@@ -19196,6 +19429,12 @@ msgstr "Je naam"
 
 msgid "Your name <0>(if we use your prompt, we'll credit you in the changelog)</0>"
 msgstr "Je naam <0>(als we je prompt gebruiken, vermelden we je in de changelog)</0>"
+
+msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
+msgstr "Je organisatie heeft haar limiet voor cloudgebruik bereikt. Verhoog de limiet of upgrade in Instellingen, Facturering om deze werkruimte te starten."
+
+msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
+msgstr "Je organisatie heeft haar limiet voor cloudgebruik bereikt. Deze werkruimte stopt over een paar minuten, tenzij de limiet wordt verhoogd."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Je eigen accounts. De integraties van je organisatie geven Superset toegang tot haar tools; als je die van jou koppelt, verschijnt het werk dat Superset voor je doet onder jouw naam."

@@ -1244,6 +1244,9 @@ msgstr "<0>Nerd Fonts</0>を推奨します。"
 msgid "<0>vs</0> <1/>"
 msgstr "<0>vs</0> <1/>"
 
+msgid "~{secondsLeft}s"
+msgstr "約{secondsLeft}秒"
+
 msgid "~{stars} projected this week"
 msgstr "今週は約{stars}の見込み"
 
@@ -1998,6 +2001,10 @@ msgstr "稼働中"
 msgid "All"
 msgstr "すべて"
 
+msgctxt "log scope"
+msgid "All"
+msgstr "すべて"
+
 #. placeholder {0}: history.projects.length
 msgid "All {0} →"
 msgstr "すべての{0}件 →"
@@ -2055,6 +2062,9 @@ msgstr "すべて現在のタブで"
 
 msgid "All in current tab (split panes)"
 msgstr "すべて現在のタブで(ペイン分割)"
+
+msgid "All labels"
+msgstr "すべてのラベル"
 
 msgid "All models"
 msgstr "すべてのモデル"
@@ -2377,6 +2387,10 @@ msgstr "API換算"
 msgid "API-equivalent cost"
 msgstr "API換算のコスト"
 
+msgctxt "log scope"
+msgid "App"
+msgstr "アプリ"
+
 msgid "app {appVersion}"
 msgstr "アプリ {appVersion}"
 
@@ -2388,6 +2402,9 @@ msgstr "アプリの表示言語。自動ではシステムの言語に従いま
 
 msgid "App icon"
 msgstr "アプリアイコン"
+
+msgid "App path"
+msgstr "アプリのパス"
 
 msgid "Appearance"
 msgstr "外観"
@@ -2796,6 +2813,10 @@ msgstr "自分またはチームのレビュー待ち"
 msgid "Back"
 msgstr "戻る"
 
+msgctxt "Android back button"
+msgid "Back"
+msgstr "戻る"
+
 msgid "Back to About"
 msgstr "会社概要に戻る"
 
@@ -2932,6 +2953,9 @@ msgstr "請求"
 msgid "Billing details"
 msgstr "請求先情報"
 
+msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "請求の都合でクラウドワークスペースを起動できませんでした。組織に有料プランが必要か、クラウドの利用上限に達しています。「設定 > 請求」でアップグレードするか上限を引き上げるか、オートメーションをデバイスで実行してください。"
+
 msgid "Binary"
 msgstr "バイナリ"
 
@@ -2965,6 +2989,9 @@ msgstr "ブログ"
 msgid "Blue"
 msgstr "青"
 
+msgid "Blue/Yellow (Tritanopia)"
+msgstr "青/黄（3型2色覚）"
+
 msgid "Board"
 msgstr "ボード"
 
@@ -2973,6 +3000,13 @@ msgstr "ボード表示"
 
 msgid "Bold"
 msgstr "太字"
+
+msgid "Bold Text"
+msgstr "文字を太くする"
+
+#. placeholder {0}: selected.name
+msgid "Booting {0}…"
+msgstr "{0} を起動中…"
 
 msgid "Border"
 msgstr "境界線"
@@ -3568,6 +3602,9 @@ msgstr "チェックをスキップ"
 msgid "Choose a {pluginLabel} account"
 msgstr "{pluginLabel} アカウントを選択"
 
+msgid "Choose a device"
+msgstr "デバイスを選択"
+
 msgid "Choose a fighter"
 msgstr "ファイターを選ぶ"
 
@@ -3633,6 +3670,13 @@ msgstr "古いTODOを整理…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "すっきり高密度なサイドバー"
+
+msgid "Clear"
+msgstr "クリア"
+
+msgctxt "Liquid Glass style"
+msgid "Clear"
+msgstr "クリア"
 
 msgid "Clear all"
 msgstr "すべてクリア"
@@ -3839,6 +3883,9 @@ msgstr "ファイルを閉じる"
 msgid "Close find bar"
 msgstr "検索バーを閉じる"
 
+msgid "Close logs"
+msgstr "ログを閉じる"
+
 msgid "Close menu"
 msgstr "メニューを閉じる"
 
@@ -3962,6 +4009,9 @@ msgstr "クラウドワークスペース"
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "クラウドワークスペースはこの変数を無視します。エージェントは代わりに「設定 › エージェント」でサインインします。"
 
+msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
+msgstr "クラウドワークスペースには有料プランが必要です。「設定」の「請求」でアップグレードすると起動できます。"
+
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "クラウドワークスペースはこれを使って{agentLabel}を実行しなくなります。"
 
@@ -4016,6 +4066,9 @@ msgstr "収集中…"
 
 msgid "Color"
 msgstr "色"
+
+msgid "Color Filter"
+msgstr "カラーフィルタ"
 
 msgid "Combine all commits"
 msgstr "すべてのコミットを1つに統合"
@@ -4637,6 +4690,9 @@ msgstr "localhost:{0}をコピー"
 msgid "Copy log"
 msgstr "ログをコピー"
 
+msgid "Copy logs"
+msgstr "ログをコピー"
+
 msgid "Copy Markdown"
 msgstr "Markdownをコピー"
 
@@ -4937,9 +4993,6 @@ msgstr "停止できませんでした"
 
 msgid "Could not stop the agent"
 msgstr "エージェントを停止できませんでした"
-
-msgid "Could not stop the task"
-msgstr "タスクを停止できませんでした"
 
 msgid "Could not stop watching"
 msgstr "監視を停止できませんでした"
@@ -6004,8 +6057,14 @@ msgstr "ダイアログ、シート、ポップオーバー、ホバー表示"
 msgid "Dictate"
 msgstr "音声入力"
 
+msgid "Dictation"
+msgstr "音声入力"
+
 msgid "Dictation is not available on this device"
 msgstr "このデバイスでは音声入力を利用できません"
+
+msgid "Dictation is not available right now"
+msgstr "現在、音声入力は利用できません"
 
 msgid "Didn't hear back"
 msgstr "応答がありません"
@@ -6164,6 +6223,9 @@ msgstr "がレビューを取り下げました"
 msgid "Display"
 msgstr "表示"
 
+msgid "Display Size"
+msgstr "表示サイズ"
+
 msgid "Displays the mobile sidebar."
 msgstr "モバイルのサイドバーを表示します。"
 
@@ -6252,6 +6314,9 @@ msgstr "macOS版をダウンロード"
 
 msgid "Download image"
 msgstr "画像をダウンロード"
+
+msgid "Download logs"
+msgstr "ログをダウンロード"
 
 msgid "Download Manually"
 msgstr "手動でダウンロード"
@@ -6545,6 +6610,9 @@ msgstr "Empty"
 msgid "Empty command"
 msgstr "空のコマンド"
 
+msgid "Emulator"
+msgstr "エミュレータ"
+
 msgid "Enable"
 msgstr "有効にする"
 
@@ -6648,6 +6716,9 @@ msgstr "escで閉じる"
 msgid "esc to exit"
 msgstr "escで終了"
 
+msgid "Event log"
+msgstr "イベントログ"
+
 msgid "Event triggered"
 msgstr "イベントトリガー"
 
@@ -6732,6 +6803,9 @@ msgstr "Superset について記事を書くために必要な情報をまとめ
 msgid "Everything you've published is deleted, not hidden. You can rejoin later and it will rebuild from the transcripts still on this machine."
 msgstr "公開したものはすべて削除され、非表示になるわけではありません。後で再参加すれば、このマシンに残っているトランスクリプトから再構築されます。"
 
+msgid "Executable"
+msgstr "実行ファイル"
+
 msgid "Existing repo path"
 msgstr "既存リポジトリのパス"
 
@@ -6753,6 +6827,9 @@ msgstr "デザインモードを終了 (esc)"
 
 msgid "Exit device toolbar"
 msgstr "デバイスツールバーを終了"
+
+msgid "Exit full screen"
+msgstr "フルスクリーンを終了"
 
 msgid "Exited"
 msgstr "終了済み"
@@ -7356,6 +7433,9 @@ msgstr "高速"
 msgid "Fatal"
 msgstr "致命的"
 
+msgid "Fault"
+msgstr "フォールト"
+
 msgid "Favorites"
 msgstr "お気に入り"
 
@@ -7481,6 +7561,9 @@ msgstr "ホストを絞り込み"
 
 msgid "Filter hosts..."
 msgstr "ホストを絞り込み..."
+
+msgid "Filter logs"
+msgstr "ログを絞り込む"
 
 msgid "Filter pages"
 msgstr "ページを絞り込む"
@@ -7764,9 +7847,6 @@ msgstr "Free"
 msgid "Free for everyone"
 msgstr "誰でも無料"
 
-msgid "Free to start · No credit card required"
-msgstr "無料で始められます · クレジットカード不要"
-
 msgid "Frequently<0/>asked questions"
 msgstr "よくある<0/>ご質問"
 
@@ -7799,6 +7879,9 @@ msgstr "フルディスクアクセス"
 
 msgid "Full name"
 msgstr "氏名"
+
+msgid "Full screen"
+msgstr "フルスクリーン"
 
 msgid "Full self-driving"
 msgstr "完全自動運転"
@@ -8013,8 +8096,14 @@ msgstr "Supersetに必要なOS権限を許可します。"
 msgid "Granted"
 msgstr "許可済み"
 
+msgid "Grayscale"
+msgstr "グレイスケール"
+
 msgid "Green"
 msgstr "緑"
+
+msgid "Green/Red (Deuteranopia)"
+msgstr "緑/赤（2型2色覚）"
 
 msgid "Grepped"
 msgstr "検索"
@@ -8075,6 +8164,9 @@ msgstr "開催中"
 
 msgid "Hard reload"
 msgstr "ハードリロード"
+
+msgid "Hardware Keyboard"
+msgstr "ハードウェアキーボード"
 
 msgid "Has conflicts"
 msgstr "コンフリクトあり"
@@ -8203,6 +8295,10 @@ msgstr "履歴"
 msgid "History"
 msgstr "履歴"
 
+msgid "Home"
+msgstr "ホーム"
+
+msgctxt "device home button"
 msgid "Home"
 msgstr "ホーム"
 
@@ -8628,6 +8724,9 @@ msgstr "Superset独自のboxバリアントを含みます"
 msgid "Incognito Operator"
 msgstr "覆面オペレーター"
 
+msgid "Increase Contrast"
+msgstr "コントラストを上げる"
+
 msgid "Indigo"
 msgstr "インディゴ"
 
@@ -8851,6 +8950,9 @@ msgstr "請求書と支払い方法"
 
 msgid "iOS app"
 msgstr "iOSアプリ"
+
+msgid "iOS Simulator"
+msgstr "iOSシミュレータ"
 
 msgid "IP restrictions"
 msgstr "IP制限"
@@ -9093,6 +9195,10 @@ msgstr "TODOを片付ける"
 msgid "Knowledge"
 msgstr "ナレッジ"
 
+msgid "Label"
+msgstr "ラベル"
+
+msgctxt "task label filter"
 msgid "Label"
 msgstr "ラベル"
 
@@ -9412,6 +9518,9 @@ msgstr "このタスクをリンク"
 msgid "Linked {slug} to workspace"
 msgstr "{slug}をワークスペースにリンクしました"
 
+msgid "Liquid Glass"
+msgstr "Liquid Glass"
+
 msgid "List"
 msgstr "リスト"
 
@@ -9612,6 +9721,9 @@ msgstr "場所"
 msgid "Location & checkout"
 msgstr "場所とチェックアウト"
 
+msgid "Log levels"
+msgstr "ログレベル"
+
 msgid "Log out"
 msgstr "ログアウト"
 
@@ -9638,6 +9750,9 @@ msgstr "ロゴ（明色）"
 
 msgid "Logos"
 msgstr "ロゴ"
+
+msgid "Logs"
+msgstr "ログ"
 
 msgid "Long-horizon reliability crosses a threshold. Work assigned at 6pm is mergeable at 9am often enough that not scheduling the overnight shift feels like leaving a factory idle."
 msgstr "長時間にわたる信頼性がしきい値を超えます。18時に割り当てた作業が9時にはマージできる。それが十分な頻度で起きるようになり、夜間シフトを組まないことが工場を遊ばせているように感じられます。"
@@ -9994,6 +10109,12 @@ msgstr "2026年半ば"
 msgid "Mid 2027"
 msgstr "2027年半ば"
 
+msgid "Min iOS"
+msgstr "最小 iOS"
+
+msgid "Min SDK"
+msgstr "最小 SDK"
+
 msgid "Mine"
 msgstr "自分"
 
@@ -10301,6 +10422,9 @@ msgstr "要対応"
 
 msgid "Nerd Fonts"
 msgstr "Nerd Fonts"
+
+msgid "Network"
+msgstr "ネットワーク"
 
 msgid "Network Changed"
 msgstr "ネットワークが変更されました"
@@ -10651,6 +10775,9 @@ msgstr "説明はありません。"
 msgid "No desktop session is running in this sandbox."
 msgstr "このサンドボックスではデスクトップセッションが実行されていません。"
 
+msgid "No device is running."
+msgstr "実行中のデバイスはありません。"
+
 msgid "No devices yet"
 msgstr "デバイスはまだありません"
 
@@ -10668,6 +10795,9 @@ msgstr "環境が見つかりません。"
 
 msgid "No environments yet."
 msgstr "環境はまだありません。作成すると、そこからクラウドワークスペースを起動できます。"
+
+msgid "No events yet"
+msgstr "イベントはまだありません"
 
 msgid "No extended thinking"
 msgstr "拡張思考なし"
@@ -10741,6 +10871,9 @@ msgstr "既知の作成者はいません"
 msgid "No labels"
 msgstr "ラベルなし"
 
+msgid "No labels found."
+msgstr "ラベルが見つかりません。"
+
 msgid "No lead"
 msgstr "リードなし"
 
@@ -10749,6 +10882,9 @@ msgstr "コメントを受け取るエージェントはいません"
 
 msgid "No live sessions"
 msgstr "ライブセッションはありません"
+
+msgid "No log lines yet"
+msgstr "ログ行はまだありません"
 
 msgid "no logins"
 msgstr "ログイン情報なし"
@@ -10786,8 +10922,8 @@ msgstr "マージ済みのプルリクエストはありません。"
 msgid "No messages yet"
 msgstr "メッセージはまだありません"
 
-msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
-msgstr "ここで利用できるモバイルシミュレーターがありません。Limrun対応のクラウドサンドボックスか、ローカルのiOS/Androidツールチェーンのいずれかが必要です。"
+msgid "No mobile simulator available here. This needs either an EAS simulator on a cloud sandbox or a local iOS/Android toolchain."
+msgstr "ここで利用できるモバイルシミュレーターがありません。クラウドサンドボックス上のEASシミュレーターか、ローカルのiOS/Androidツールチェーンのいずれかが必要です。"
 
 msgid "No name on file"
 msgstr "登録された名前はありません"
@@ -10951,6 +11087,9 @@ msgstr "セッションはまだありません"
 
 msgid "No shortcuts found matching \"{searchQuery}\""
 msgstr "「{searchQuery}」に一致するショートカットがありません"
+
+msgid "No simulator is running."
+msgstr "実行中のシミュレータはありません。"
 
 msgid "No sites are signed in"
 msgstr "サインイン中のサイトはありません"
@@ -11314,6 +11453,9 @@ msgstr "ウィンドウ変更時"
 msgid "On your machine. Repos, worktrees, terminal output, and agent sessions stay local by default; cloud sync covers account and organization metadata only. Superset doesn't proxy any API calls."
 msgstr "お使いのマシンです。リポジトリ、ワークツリー、ターミナルの出力、エージェントのセッションは既定でローカルに留まります。クラウド同期の対象はアカウントと組織のメタデータのみです。SupersetはAPI呼び出しを一切中継しません。"
 
+msgid "On-screen Keyboard"
+msgstr "オンスクリーンキーボード"
+
 msgid "Onboarding redesign"
 msgstr "オンボーディングの再設計"
 
@@ -11491,6 +11633,9 @@ msgstr "App Store を開く"
 
 msgid "Open as comment pane"
 msgstr "コメントペインとして開く"
+
+msgid "Open billing"
+msgstr "請求を開く"
 
 msgid "Open branch on GitHub"
 msgstr "GitHubでブランチを開く"
@@ -12397,6 +12542,9 @@ msgstr "プラン"
 msgid "Plan restored"
 msgstr "プランを復元しました"
 
+msgid "Plan updated"
+msgstr "プランを更新しました"
+
 msgctxt "project state"
 msgid "Planned"
 msgstr "計画中"
@@ -12994,6 +13142,9 @@ msgstr "エージェントの作業をキューに入れる"
 msgid "Queued"
 msgstr "待機中"
 
+msgid "Queued messages"
+msgstr "キュー内のメッセージ"
+
 msgid "Queued to Merge"
 msgstr "マージ待ちのキューに追加"
 
@@ -13075,6 +13226,9 @@ msgstr "到達"
 
 msgid "React layer of the shared pane/workspace layout engine"
 msgstr "共有のペイン/ワークスペースレイアウトエンジンのReact層"
+
+msgid "React Native"
+msgstr "React Native"
 
 msgid "Reaction added"
 msgstr "リアクション追加"
@@ -13178,6 +13332,9 @@ msgstr "リベースしてマージ"
 msgid "Recent Activity"
 msgstr "最近のアクティビティ"
 
+msgid "Recent apps"
+msgstr "最近使ったアプリ"
+
 msgid "Recent invoices"
 msgstr "最近の請求書"
 
@@ -13235,8 +13392,14 @@ msgstr "再接続中…"
 msgid "Reconnecting… your conversation is kept."
 msgstr "再接続中… 会話は保持されます。"
 
+msgid "Recording"
+msgstr "録音中"
+
 msgid "Red"
 msgstr "赤"
+
+msgid "Red/Green (Protanopia)"
+msgstr "赤/緑（1型2色覚）"
 
 msgid "Redacted Riveter"
 msgstr "秘匿のリベット工"
@@ -13249,6 +13412,12 @@ msgstr "リダイレクト中..."
 
 msgid "Redo"
 msgstr "やり直す"
+
+msgid "Reduce Motion"
+msgstr "視差効果を減らす"
+
+msgid "Reduce Transparency"
+msgstr "透明度を下げる"
 
 msgid "Referenced, not demoed"
 msgstr "参照のみでデモなし"
@@ -14062,6 +14231,9 @@ msgstr "ロールを更新しました"
 msgid "Roll back an agent session to any checkpoint, conversation and file changes together."
 msgstr "エージェントのセッションを任意のチェックポイントまで巻き戻せます。会話とファイルの変更をまとめて。"
 
+msgid "Rotate"
+msgstr "回転"
+
 msgid "Rotate device"
 msgstr "デバイスを回転"
 
@@ -14197,9 +14369,6 @@ msgstr "このプロファイルで実行中のエージェントはアクセス
 
 msgid "Running bun test…"
 msgstr "bun testを実行中…"
-
-msgid "Running in the background"
-msgstr "バックグラウンドで実行中"
 
 msgid "Running now"
 msgstr "実行中"
@@ -14359,6 +14528,9 @@ msgstr "範囲"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "{0}日分の使用状況がそろうとスコアリングが始まります。"
 
+msgid "Screenshot"
+msgstr "スクリーンショット"
+
 msgid "Screenshot copied to clipboard"
 msgstr "スクリーンショットをクリップボードにコピーしました"
 
@@ -14473,6 +14645,9 @@ msgstr "{frameTitle}内を検索…"
 
 msgid "Search issues..."
 msgstr "Issueを検索..."
+
+msgid "Search labels..."
+msgstr "ラベルを検索..."
 
 msgid "Search Linear"
 msgstr "Linearを検索"
@@ -14818,6 +14993,9 @@ msgstr "キー入力の送信、ウィンドウの管理、他のアプリケー
 msgid "Send message"
 msgstr "メッセージを送信"
 
+msgid "Send now"
+msgstr "今すぐ送信"
+
 msgid "Send reply"
 msgstr "返信を送信"
 
@@ -14979,6 +15157,9 @@ msgstr "設定 ({settingsHotkey})"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "設定 → リモートアクセス →「リレー経由でこのデバイスへのリモートアクセスを許可」。"
 
+msgid "Settings are not available for this device"
+msgstr "このデバイスでは設定を利用できません"
+
 msgid "Settings..."
 msgstr "設定..."
 
@@ -15084,6 +15265,9 @@ msgstr "表示"
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "アプリ終了時に確認ダイアログを表示"
 
+msgid "Show a microphone in the chat composer. Speech is transcribed by ChatGPT when Codex is signed in to it, otherwise on your Mac when possible, and otherwise by Superset's servers."
+msgstr "チャットの入力欄にマイクを表示します。Codex が ChatGPT にサインインしている場合は ChatGPT が、それ以外は可能であれば Mac 上で、それもできない場合は Superset のサーバーが音声を文字起こしします。"
+
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "ホームのサイドバーの「プルリクエスト」の下に「使用量」ボタンを表示"
 
@@ -15095,6 +15279,9 @@ msgstr "すべてのコメントを表示"
 
 msgid "Show all lines"
 msgstr "すべての行を表示"
+
+msgid "Show Borders"
+msgstr "境界線を表示"
 
 msgid "Show checks"
 msgstr "チェックを表示"
@@ -15228,6 +15415,10 @@ msgstr "サイドバーとタスク一覧に表示されます。"
 msgid "Shown publicly alongside your name."
 msgstr "名前と一緒に公開されます。"
 
+#. placeholder {0}: selected.name
+msgid "Shut down {0}"
+msgstr "{0} をシャットダウン"
+
 msgid "Side by Side"
 msgstr "並べて表示"
 
@@ -15251,6 +15442,9 @@ msgstr "アプリの更新をインストールできるときにサイドバー
 
 msgid "Sign in"
 msgstr "サインイン"
+
+msgid "Sign in again to use dictation"
+msgstr "音声入力を使うには再度サインインしてください"
 
 msgid "Sign in as Local Admin (dev)"
 msgstr "ローカル管理者としてサインイン(開発用)"
@@ -15353,6 +15547,9 @@ msgstr "アップデートをシミュレート: エラー"
 
 msgid "Simulate update: ready"
 msgstr "アップデートをシミュレート: 準備完了"
+
+msgid "Simulator"
+msgstr "シミュレータ"
 
 msgid "Since 2025"
 msgstr "2025年から"
@@ -15872,6 +16069,9 @@ msgstr "ホストにまだ接続できません。"
 msgid "Still trying. If it keeps failing, archive it and create a new one."
 msgstr "再試行しています。失敗が続く場合は、アーカイブして新しく作成してください。"
 
+msgid "Still waking up…"
+msgstr "まだ起動中…"
+
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "処理を続けています — 大きなリポジトリでは数分かかることがあります。画面を離れても構いません。準備ができるとホームに表示されます。"
 
@@ -15921,6 +16121,9 @@ msgstr "使用量の上限により停止"
 
 msgid "Stopping the agent in {what}"
 msgstr "{what} のエージェントを停止中"
+
+msgid "Stops the agent and sends this now"
+msgstr "エージェントを停止して、これを今すぐ送信します"
 
 msgid "Strikethrough"
 msgstr "取り消し線"
@@ -16018,8 +16221,8 @@ msgstr "superset"
 msgid "Superset"
 msgstr "Superset"
 
-msgid "Superset (YC S26) is the open-source IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
-msgstr "Superset（YC S26）は、AI エージェント時代のためのオープンソース IDE です。エンジニアは Claude Code や Codex などのコーディングエージェントを数百単位で並行して実行できます。"
+msgid "Superset (YC S26) is the source-available IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
+msgstr "Superset（YC S26）は、AI エージェント時代のためのソースコード公開型 IDE です。エンジニアは Claude Code や Codex などのコーディングエージェントを数百単位で並行して実行できます。"
 
 msgid "Superset Agent"
 msgstr "Supersetエージェント"
@@ -16629,6 +16832,9 @@ msgstr "テキスト"
 msgid "Text input with emoji picker support"
 msgstr "絵文字ピッカーに対応したテキスト入力"
 
+msgid "Text Size"
+msgstr "文字サイズ"
+
 msgid "Text style"
 msgstr "テキストスタイル"
 
@@ -16950,9 +17156,6 @@ msgstr "サーバーが見つかりませんでした"
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "サインインリンクが不完全でした。もう一度お試しください。"
 
-msgid "The simulator instance was terminated."
-msgstr "シミュレーターインスタンスが終了しました。"
-
 msgid "The site's certificate authority is not trusted"
 msgstr "サイトの認証局が信頼されていません"
 
@@ -17109,6 +17312,9 @@ msgstr "選択したワークスペースとそのターミナルを閉じます
 
 msgid "This closes the workspace and its terminals. The project's files, branches and other workspaces stay as they are."
 msgstr "ワークスペースとそのターミナルを閉じます。プロジェクトのファイル、ブランチ、他のワークスペースはそのまま残ります。"
+
+msgid "This cloud workspace can't start"
+msgstr "このクラウドワークスペースを起動できません"
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "このクラウドワークスペースを起動しています。しばらく使われていなかった場合は、最大30秒かかることがあります。"
@@ -17275,6 +17481,9 @@ msgstr "このプルリクエストは利用できなくなりました。"
 msgid "This pull request link is invalid."
 msgstr "このプルリクエストのリンクは無効です。"
 
+msgid "This recording is too long to transcribe"
+msgstr "この録音は長すぎて文字起こしできません"
+
 msgid "This removes every selected worktree from disk and deletes its workspace record."
 msgstr "選択したすべてのワークツリーをディスクから削除し、ワークスペースの記録も削除します。"
 
@@ -17426,6 +17635,9 @@ msgstr "時間"
 msgid "Times use your time zone."
 msgstr "時刻はあなたのタイムゾーンで表示されます。"
 
+msgid "Tinted"
+msgstr "色合い調整"
+
 msgid "Tip"
 msgstr "ヒント"
 
@@ -17531,6 +17743,9 @@ msgstr "直近30日のセッションあたりトークン"
 msgid "Tokens stay off your machine"
 msgstr "トークンはマシンに残らない"
 
+msgid "Too many dictations. Try again later."
+msgstr "音声入力の回数が多すぎます。しばらくしてからもう一度お試しください。"
+
 msgid "Too many feedback submissions. Try again later."
 msgstr "フィードバックの送信が多すぎます。しばらくしてからお試しください。"
 
@@ -17626,6 +17841,12 @@ msgstr "タスクの管理先"
 
 msgid "Tracking"
 msgstr "計測期間"
+
+msgid "Transcribing"
+msgstr "文字起こし中"
+
+msgid "Transcribing…"
+msgstr "文字起こし中…"
 
 msgid "Translated"
 msgstr "翻訳済み"
@@ -17791,6 +18012,9 @@ msgstr "音声入力を開始できません"
 
 msgid "Unable to transcribe audio"
 msgstr "音声を文字起こしできません"
+
+msgid "Unable to transcribe this recording"
+msgstr "この録音を文字起こしできません"
 
 msgid "Unarchive"
 msgstr "アーカイブ解除"
@@ -18392,6 +18616,9 @@ msgstr "音声モードで問題が発生しました。もう一度お試しく
 msgid "Voice settings"
 msgstr "音声設定"
 
+msgid "VoiceOver"
+msgstr "VoiceOver"
+
 msgid "Volume"
 msgstr "音量"
 
@@ -18405,6 +18632,9 @@ msgstr "エージェント起動前にワークスペースのセットアップ
 #. placeholder {1}: names.b
 msgid "waiting for {0} and {1}…"
 msgstr "{0}と{1}を待っています…"
+
+msgid "Waiting for activity data"
+msgstr "アクティビティデータを待機中"
 
 msgid "Waiting for Checks"
 msgstr "チェックを待機中"
@@ -18423,6 +18653,9 @@ msgstr "サブエージェントの最初のメッセージを待っています
 
 msgid "Waiting for your input"
 msgstr "入力を待っています"
+
+msgid "Waking up workspace"
+msgstr "ワークスペースを起動中"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "もっと早く欲しいものがありますか?<0>Discordで教えてください</0>。ここにあるものの多くは、ユーザーの要望から始まりました。"
@@ -19196,6 +19429,12 @@ msgstr "あなたの名前"
 
 msgid "Your name <0>(if we use your prompt, we'll credit you in the changelog)</0>"
 msgstr "お名前 <0>(プロンプトを採用した場合、changelogでクレジットします)</0>"
+
+msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
+msgstr "組織がクラウドの利用上限に達しました。このワークスペースを起動するには、「設定」の「請求」で上限を引き上げるかアップグレードしてください。"
+
+msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
+msgstr "組織がクラウドの利用上限に達しました。上限を引き上げない限り、このワークスペースは数分後に停止します。"
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "あなた自身のアカウントです。組織の連携は Superset がそのツールにアクセスするためのもので、あなたのアカウントを接続すると、Superset があなたのために行った作業があなたの名前で表示されます。"
