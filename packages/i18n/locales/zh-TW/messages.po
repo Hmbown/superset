@@ -1999,6 +1999,10 @@ msgstr "執行中"
 msgid "All"
 msgstr "全部"
 
+msgctxt "log scope"
+msgid "All"
+msgstr "全部"
+
 #. placeholder {0}: history.projects.length
 msgid "All {0} →"
 msgstr "全部{0}個 →"
@@ -2381,6 +2385,10 @@ msgstr "按API價折算"
 msgid "API-equivalent cost"
 msgstr "API 等價費用"
 
+msgctxt "log scope"
+msgid "App"
+msgstr "App"
+
 msgid "app {appVersion}"
 msgstr "應用程式 {appVersion}"
 
@@ -2392,6 +2400,9 @@ msgstr "應用顯示語言。自動模式會跟隨你的系統語言。"
 
 msgid "App icon"
 msgstr "App 圖示"
+
+msgid "App path"
+msgstr "App 路徑"
 
 msgid "Appearance"
 msgstr "外觀"
@@ -2800,6 +2811,10 @@ msgstr "等待你或你團隊的審查"
 msgid "Back"
 msgstr "返回"
 
+msgctxt "Android back button"
+msgid "Back"
+msgstr "返回"
+
 msgid "Back to About"
 msgstr "返回關於頁"
 
@@ -2972,6 +2987,9 @@ msgstr "部落格"
 msgid "Blue"
 msgstr "藍色"
 
+msgid "Blue/Yellow (Tritanopia)"
+msgstr "藍/黃（藍色盲）"
+
 msgid "Board"
 msgstr "看板"
 
@@ -2980,6 +2998,13 @@ msgstr "看板檢視"
 
 msgid "Bold"
 msgstr "粗體"
+
+msgid "Bold Text"
+msgstr "粗體文字"
+
+#. placeholder {0}: selected.name
+msgid "Booting {0}…"
+msgstr "正在啟動 {0}…"
 
 msgid "Border"
 msgstr "邊框"
@@ -3569,6 +3594,9 @@ msgstr "檢查已跳過"
 msgid "Choose a {pluginLabel} account"
 msgstr "選擇 {pluginLabel} 帳戶"
 
+msgid "Choose a device"
+msgstr "選擇裝置"
+
 msgid "Choose a fighter"
 msgstr "選擇一名鬥士"
 
@@ -3634,6 +3662,13 @@ msgstr "清理過期的TODO…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "更清爽緊湊的側邊欄"
+
+msgid "Clear"
+msgstr "透明"
+
+msgctxt "Liquid Glass style"
+msgid "Clear"
+msgstr "透明"
 
 msgid "Clear all"
 msgstr "全部清除"
@@ -3843,6 +3878,9 @@ msgstr "關閉檔案"
 msgid "Close find bar"
 msgstr "關閉查詢欄"
 
+msgid "Close logs"
+msgstr "關閉記錄"
+
 msgid "Close menu"
 msgstr "關閉選單"
 
@@ -4032,6 +4070,9 @@ msgstr "正在收集…"
 
 msgid "Color"
 msgstr "顏色"
+
+msgid "Color Filter"
+msgstr "色彩濾鏡"
 
 msgid "Combine all commits"
 msgstr "把所有提交合成一個"
@@ -4655,6 +4696,9 @@ msgstr "複製localhost:{0}"
 
 msgid "Copy log"
 msgstr "複製日誌"
+
+msgid "Copy logs"
+msgstr "複製記錄"
 
 msgid "Copy Markdown"
 msgstr "複製Markdown"
@@ -6189,6 +6233,9 @@ msgstr "撤銷了審查"
 msgid "Display"
 msgstr "顯示"
 
+msgid "Display Size"
+msgstr "顯示大小"
+
 msgid "Displays the mobile sidebar."
 msgstr "顯示行動版側邊欄。"
 
@@ -6277,6 +6324,9 @@ msgstr "下載macOS版"
 
 msgid "Download image"
 msgstr "下載圖片"
+
+msgid "Download logs"
+msgstr "下載記錄"
 
 msgid "Download Manually"
 msgstr "手動下載"
@@ -6562,6 +6612,9 @@ msgstr "空狀態"
 msgid "Empty command"
 msgstr "空命令"
 
+msgid "Emulator"
+msgstr "模擬器"
+
 msgid "Enable"
 msgstr "啟用"
 
@@ -6665,6 +6718,9 @@ msgstr "按esc關閉"
 msgid "esc to exit"
 msgstr "esc退出"
 
+msgid "Event log"
+msgstr "事件記錄"
+
 msgid "Event triggered"
 msgstr "事件觸發"
 
@@ -6749,6 +6805,9 @@ msgstr "報導 Superset 所需的一切：公司簡介、最新消息、標誌�
 msgid "Everything you've published is deleted, not hidden. You can rejoin later and it will rebuild from the transcripts still on this machine."
 msgstr "你釋出過的所有內容都會被刪除，而不是隱藏。你之後可以重新加入，屆時會根據此機器上仍保留的記錄重新生成。"
 
+msgid "Executable"
+msgstr "執行檔"
+
 msgid "Existing repo path"
 msgstr "已有儲存庫路徑"
 
@@ -6770,6 +6829,9 @@ msgstr "退出設計模式（esc）"
 
 msgid "Exit device toolbar"
 msgstr "退出裝置工具列"
+
+msgid "Exit full screen"
+msgstr "結束全螢幕"
 
 msgid "Exited"
 msgstr "已退出"
@@ -7370,6 +7432,9 @@ msgstr "快速"
 msgid "Fatal"
 msgstr "致命"
 
+msgid "Fault"
+msgstr "故障"
+
 msgid "Favorites"
 msgstr "最愛"
 
@@ -7495,6 +7560,9 @@ msgstr "篩選主機"
 
 msgid "Filter hosts..."
 msgstr "篩選主機..."
+
+msgid "Filter logs"
+msgstr "篩選記錄"
 
 msgid "Filter pages"
 msgstr "篩選頁面"
@@ -7817,6 +7885,9 @@ msgstr "完全磁碟存取權限"
 msgid "Full name"
 msgstr "姓名"
 
+msgid "Full screen"
+msgstr "全螢幕"
+
 msgid "Full self-driving"
 msgstr "完全自動駕駛"
 
@@ -7937,9 +8008,6 @@ msgstr "未找到GitHub安裝"
 msgid "GitHub integration"
 msgstr "GitHub整合"
 
-msgid "GitHub is refusing API calls for this machine's credential until {until}. Existing pull request links stay; new pull requests appear once the limit resets."
-msgstr "GitHub 在 {until} 之前拒絕此電腦憑證的 API 呼叫。現有的提取請求連結會保留；新的提取請求將在限制重設後顯示。"
-
 msgid "GitHub issues"
 msgstr "GitHub議題"
 
@@ -7948,9 +8016,6 @@ msgstr "已達到 GitHub 速率限制"
 
 msgid "GitHub refused the merge"
 msgstr "GitHub拒絕了此次合併"
-
-msgid "GitHub rejected this machine's credentials, so pull requests cannot be detected. Run \"gh auth login\" or fix GITHUB_TOKEN; the next retry is at {until}."
-msgstr "GitHub 拒絕了此電腦的憑證，因此無法偵測提取請求。請執行 \"gh auth login\" 或修正 GITHUB_TOKEN；下次重試時間為 {until}。"
 
 msgid "GitHub sign-in needed"
 msgstr "需要登入 GitHub"
@@ -8030,8 +8095,14 @@ msgstr "授予Superset所需的系統權限。"
 msgid "Granted"
 msgstr "已授予"
 
+msgid "Grayscale"
+msgstr "灰階"
+
 msgid "Green"
 msgstr "綠色"
+
+msgid "Green/Red (Deuteranopia)"
+msgstr "綠/紅（綠色盲）"
 
 msgid "Grepped"
 msgstr "已搜尋"
@@ -8092,6 +8163,9 @@ msgstr "進行中"
 
 msgid "Hard reload"
 msgstr "強制重新載入"
+
+msgid "Hardware Keyboard"
+msgstr "硬體鍵盤"
 
 msgid "Has conflicts"
 msgstr "有衝突"
@@ -8222,6 +8296,10 @@ msgstr "歷史"
 
 msgid "Home"
 msgstr "首頁"
+
+msgctxt "device home button"
+msgid "Home"
+msgstr "主目錄"
 
 msgctxt "directory"
 msgid "Home"
@@ -8641,6 +8719,9 @@ msgstr "包含Superset特有的box變體"
 msgid "Incognito Operator"
 msgstr "隱身操作員"
 
+msgid "Increase Contrast"
+msgstr "增加對比"
+
 msgid "Indigo"
 msgstr "靛藍"
 
@@ -8864,6 +8945,9 @@ msgstr "發票與支付方式"
 
 msgid "iOS app"
 msgstr "iOS應用"
+
+msgid "iOS Simulator"
+msgstr "iOS 模擬器"
 
 msgid "IP restrictions"
 msgstr "IP限制"
@@ -9426,6 +9510,9 @@ msgstr "連結此任務"
 msgid "Linked {slug} to workspace"
 msgstr "已將{slug}關聯到工作區"
 
+msgid "Liquid Glass"
+msgstr "Liquid Glass"
+
 msgid "List"
 msgstr "列表"
 
@@ -9621,6 +9708,9 @@ msgstr "位置"
 msgid "Location & checkout"
 msgstr "位置與檢出"
 
+msgid "Log levels"
+msgstr "記錄層級"
+
 msgid "Log out"
 msgstr "登出"
 
@@ -9647,6 +9737,9 @@ msgstr "標誌，淺色"
 
 msgid "Logos"
 msgstr "標誌"
+
+msgid "Logs"
+msgstr "記錄"
 
 msgid "Long-horizon reliability crosses a threshold. Work assigned at 6pm is mergeable at 9am often enough that not scheduling the overnight shift feels like leaving a factory idle."
 msgstr "長週期可靠性越過了一個門檻。傍晚6點派出去的活兒，早上9點常常已經可以合併，以至於不排夜班就像讓工廠空轉。"
@@ -10003,6 +10096,12 @@ msgstr "2026年中"
 msgid "Mid 2027"
 msgstr "2027年中"
 
+msgid "Min iOS"
+msgstr "最低 iOS"
+
+msgid "Min SDK"
+msgstr "最低 SDK"
+
 msgid "Mine"
 msgstr "我的"
 
@@ -10307,6 +10406,9 @@ msgstr "需要你"
 
 msgid "Nerd Fonts"
 msgstr "Nerd Fonts"
+
+msgid "Network"
+msgstr "網路"
 
 msgid "Network Changed"
 msgstr "網路已變更"
@@ -10663,6 +10765,9 @@ msgstr "沒有提供描述。"
 msgid "No desktop session is running in this sandbox."
 msgstr "此沙箱中沒有正在執行的桌面工作階段。"
 
+msgid "No device is running."
+msgstr "沒有執行中的裝置。"
+
 msgid "No devices yet"
 msgstr "還沒有裝置"
 
@@ -10686,6 +10791,9 @@ msgstr "還沒有環境"
 
 msgid "No environments yet."
 msgstr "尚無環境。建立一個，即可從中啟動雲端工作區。"
+
+msgid "No events yet"
+msgstr "尚無事件"
 
 msgid "No extended thinking"
 msgstr "不使用擴充套件思考"
@@ -10774,6 +10882,9 @@ msgstr "沒有活動會話"
 msgid "No local workspaces"
 msgstr "沒有本機工作區"
 
+msgid "No log lines yet"
+msgstr "尚無記錄"
+
 msgid "no logins"
 msgstr "無登入資訊"
 
@@ -10813,8 +10924,8 @@ msgstr "沒有已合併的拉取請求。"
 msgid "No messages yet"
 msgstr "還沒有訊息"
 
-msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
-msgstr "此處沒有可用的行動模擬器。需要支援 Limrun 的雲端沙盒，或本機 iOS/Android 工具鏈。"
+msgid "No mobile simulator available here. This needs either an EAS simulator on a cloud sandbox or a local iOS/Android toolchain."
+msgstr "此處沒有可用的行動模擬器。需要雲端沙盒上的 EAS 模擬器，或本機 iOS/Android 工具鏈。"
 
 msgid "No name on file"
 msgstr "未登記姓名"
@@ -10979,6 +11090,9 @@ msgstr "還沒有會話"
 msgid "No shortcuts found matching \"{searchQuery}\""
 msgstr "沒有找到與「{searchQuery}」匹配的快速鍵"
 
+msgid "No simulator is running."
+msgstr "沒有執行中的模擬器。"
+
 msgid "No sites are signed in"
 msgstr "沒有已登入的站點"
 
@@ -11107,6 +11221,9 @@ msgstr "團隊裡還沒有人共享自動化。"
 
 msgid "Nobody reviews differently because of it."
 msgstr "沒有人因此改變審查方式。"
+
+msgid "None"
+msgstr "無"
 
 msgid "none (session)"
 msgstr "無（會話）"
@@ -11337,6 +11454,9 @@ msgstr "視窗變更時"
 
 msgid "On your machine. Repos, worktrees, terminal output, and agent sessions stay local by default; cloud sync covers account and organization metadata only. Superset doesn't proxy any API calls."
 msgstr "在你自己的機器上。儲存庫、worktree、終端輸出和代理程式會話預設都留在本地；雲端同步只涉及帳戶和組織的後設資料。Superset不代理任何API呼叫。"
+
+msgid "On-screen Keyboard"
+msgstr "螢幕鍵盤"
 
 msgid "Onboarding redesign"
 msgstr "新手引導改版"
@@ -13115,6 +13235,9 @@ msgstr "已達到"
 msgid "React layer of the shared pane/workspace layout engine"
 msgstr "共享面板/工作區佈局引擎的React層"
 
+msgid "React Native"
+msgstr "React Native"
+
 msgid "Reaction added"
 msgstr "添加了回應"
 
@@ -13209,6 +13332,9 @@ msgstr "變基併合併"
 msgid "Recent Activity"
 msgstr "最近動態"
 
+msgid "Recent apps"
+msgstr "最近使用的 App"
+
 msgid "Recent invoices"
 msgstr "最近的帳單"
 
@@ -13272,6 +13398,9 @@ msgstr "正在錄音"
 msgid "Red"
 msgstr "紅色"
 
+msgid "Red/Green (Protanopia)"
+msgstr "紅/綠（紅色盲）"
+
 msgid "Redacted Riveter"
 msgstr "保密鉚接工"
 
@@ -13283,6 +13412,12 @@ msgstr "正在跳轉..."
 
 msgid "Redo"
 msgstr "重做"
+
+msgid "Reduce Motion"
+msgstr "減少動態效果"
+
+msgid "Reduce Transparency"
+msgstr "減少透明度"
 
 msgid "Referenced, not demoed"
 msgstr "僅作引用，未做演示"
@@ -13729,6 +13864,9 @@ msgstr "重置縮放"
 msgid "Reset Zoom"
 msgstr "重置縮放"
 
+msgid "Resets at {until}"
+msgstr "將於 {until} 重設"
+
 msgid "Resets in {countdown} · {absolute}"
 msgstr "{countdown}後重置 · {absolute}"
 
@@ -13942,6 +14080,9 @@ msgstr "請在幾秒後重試；若問題持續，請重啟Superset。"
 msgid "Retry in a few seconds."
 msgstr "請在幾秒後重試。"
 
+msgid "Retrying at {until}"
+msgstr "將於 {until} 重試"
+
 msgid "Retrying…"
 msgstr "正在重試…"
 
@@ -14093,6 +14234,9 @@ msgstr "角色已更新"
 msgid "Roll back an agent session to any checkpoint, conversation and file changes together."
 msgstr "把代理程式會話回滾到任意檢查點，對話和檔案改動一起回退。"
 
+msgid "Rotate"
+msgstr "旋轉"
+
 msgid "Rotate device"
 msgstr "旋轉裝置"
 
@@ -14113,6 +14257,9 @@ msgstr "行有變更"
 
 msgid "Run"
 msgstr "執行"
+
+msgid "Run \"gh auth login\" or set GITHUB_TOKEN"
+msgstr "執行 \"gh auth login\" 或設定 GITHUB_TOKEN"
 
 #. placeholder {0}: automation.name
 msgid "Run {0} now"
@@ -14386,6 +14533,9 @@ msgstr "範圍"
 #. placeholder {0}: String(MIN_ACTIVE_DAYS)
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "當看板看到 {0} 天的使用資料後，才會開始計分。"
+
+msgid "Screenshot"
+msgstr "截圖"
 
 msgid "Screenshot copied to clipboard"
 msgstr "截圖已複製到剪貼簿"
@@ -15014,6 +15164,9 @@ msgstr "設定（{settingsHotkey}）"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "設定 → 遠端存取 → 「允許遠端工作區通過中繼存取此裝置」。"
 
+msgid "Settings are not available for this device"
+msgstr "此裝置無法使用設定"
+
 msgid "Settings..."
 msgstr "設定..."
 
@@ -15133,6 +15286,9 @@ msgstr "顯示所有評論"
 
 msgid "Show all lines"
 msgstr "顯示所有行"
+
+msgid "Show Borders"
+msgstr "顯示邊框"
 
 msgid "Show checks"
 msgstr "顯示檢查"
@@ -15266,6 +15422,10 @@ msgstr "會顯示在側邊欄和任務列表中。"
 msgid "Shown publicly alongside your name."
 msgstr "會與你的名字一起公開顯示。"
 
+#. placeholder {0}: selected.name
+msgid "Shut down {0}"
+msgstr "關閉 {0}"
+
 msgid "Side by Side"
 msgstr "並排"
 
@@ -15394,6 +15554,9 @@ msgstr "模擬更新：錯誤"
 
 msgid "Simulate update: ready"
 msgstr "模擬更新：就緒"
+
+msgid "Simulator"
+msgstr "模擬器"
 
 msgid "Since 2025"
 msgstr "自2025年起"
@@ -16077,9 +16240,6 @@ msgstr "Superset 自動化"
 msgid "superset browser cdp prints an endpoint for that pane only. Point Playwright or browser-use at it."
 msgstr "superset browser cdp 只會輸出該窗格專屬的端點。讓 Playwright 或 browser-use 連接它即可。"
 
-msgid "Superset cannot reach api.github.com from this machine. Pull request status retries at {until}."
-msgstr "Superset 無法從此電腦連線至 api.github.com。提取請求狀態將於 {until} 重試。"
-
 msgid "Superset CLI"
 msgstr "Superset CLI"
 
@@ -16667,6 +16827,9 @@ msgstr "正文"
 msgid "Text input with emoji picker support"
 msgstr "支援emoji選擇器的文字輸入框"
 
+msgid "Text Size"
+msgstr "文字大小"
+
 msgid "Text style"
 msgstr "文字樣式"
 
@@ -16985,9 +17148,6 @@ msgstr "找不到伺服器"
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "登入連結不完整。請重試。"
 
-msgid "The simulator instance was terminated."
-msgstr "模擬器執行個例已終止。"
-
 msgid "The site's certificate authority is not trusted"
 msgstr "該站點的證書頒發機構不受信任"
 
@@ -17232,6 +17392,9 @@ msgstr "這看起來是二進位檔案。以文字方式開啟可能顯示亂碼
 msgid "This Mac"
 msgstr "這台Mac"
 
+msgid "This machine"
+msgstr "本機"
+
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "這個Microsoft租戶已被{detail}連線。請讓對方先斷開連線。"
 
@@ -17463,6 +17626,9 @@ msgstr "時間"
 
 msgid "Times use your time zone."
 msgstr "時間依你的時區顯示。"
+
+msgid "Tinted"
+msgstr "色調"
 
 msgid "Tip"
 msgstr "提示"
@@ -18442,6 +18608,9 @@ msgstr "語音模式發生問題，請再試一次。"
 msgid "Voice settings"
 msgstr "語音設定"
 
+msgid "VoiceOver"
+msgstr "VoiceOver"
+
 msgid "Volume"
 msgstr "音量"
 
@@ -18455,6 +18624,9 @@ msgstr "啟動代理程式前等待工作區設定完成"
 #. placeholder {1}: names.b
 msgid "waiting for {0} and {1}…"
 msgstr "正在等待 {0} 和 {1}…"
+
+msgid "Waiting for activity data"
+msgstr "正在等待活動資料"
 
 msgid "Waiting for Checks"
 msgstr "等待檢查"

@@ -1999,6 +1999,10 @@ msgstr "Activa"
 msgid "All"
 msgstr "Todas"
 
+msgctxt "log scope"
+msgid "All"
+msgstr "Todos"
+
 #. placeholder {0}: history.projects.length
 msgid "All {0} →"
 msgstr "Ver los {0} →"
@@ -2381,6 +2385,10 @@ msgstr "equivalente en API"
 msgid "API-equivalent cost"
 msgstr "Coste equivalente de API"
 
+msgctxt "log scope"
+msgid "App"
+msgstr "App"
+
 msgid "app {appVersion}"
 msgstr "app {appVersion}"
 
@@ -2392,6 +2400,9 @@ msgstr "Idioma de la app. Automático sigue el idioma del sistema."
 
 msgid "App icon"
 msgstr "Icono de la app"
+
+msgid "App path"
+msgstr "Ruta de la app"
 
 msgid "Appearance"
 msgstr "Apariencia"
@@ -2800,6 +2811,10 @@ msgstr "Pendientes de tu revisión o la de tu equipo"
 msgid "Back"
 msgstr "Atrás"
 
+msgctxt "Android back button"
+msgid "Back"
+msgstr "Atrás"
+
 msgid "Back to About"
 msgstr "Volver a Acerca de"
 
@@ -2972,6 +2987,9 @@ msgstr "Blog"
 msgid "Blue"
 msgstr "Azul"
 
+msgid "Blue/Yellow (Tritanopia)"
+msgstr "Azul/amarillo (tritanopía)"
+
 msgid "Board"
 msgstr "Tablero"
 
@@ -2980,6 +2998,13 @@ msgstr "Vista de tablero"
 
 msgid "Bold"
 msgstr "Negrita"
+
+msgid "Bold Text"
+msgstr "Texto en negrita"
+
+#. placeholder {0}: selected.name
+msgid "Booting {0}…"
+msgstr "Iniciando {0}…"
 
 msgid "Border"
 msgstr "Borde"
@@ -3569,6 +3594,9 @@ msgstr "Comprobaciones omitidas"
 msgid "Choose a {pluginLabel} account"
 msgstr "Elige una cuenta de {pluginLabel}"
 
+msgid "Choose a device"
+msgstr "Elige un dispositivo"
+
 msgid "Choose a fighter"
 msgstr "Elige un luchador"
 
@@ -3634,6 +3662,13 @@ msgstr "Limpiar los TODO obsoletos…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Barra lateral más limpia y densa"
+
+msgid "Clear"
+msgstr "Transparente"
+
+msgctxt "Liquid Glass style"
+msgid "Clear"
+msgstr "Transparente"
 
 msgid "Clear all"
 msgstr "Borrar todo"
@@ -3843,6 +3878,9 @@ msgstr "Cerrar el archivo"
 msgid "Close find bar"
 msgstr "Cerrar la barra de búsqueda"
 
+msgid "Close logs"
+msgstr "Cerrar registros"
+
 msgid "Close menu"
 msgstr "Cerrar el menú"
 
@@ -4032,6 +4070,9 @@ msgstr "Recopilando…"
 
 msgid "Color"
 msgstr "Color"
+
+msgid "Color Filter"
+msgstr "Filtro de color"
 
 msgid "Combine all commits"
 msgstr "Combinar todos los commits"
@@ -4655,6 +4696,9 @@ msgstr "Copiar localhost:{0}"
 
 msgid "Copy log"
 msgstr "Copiar el log"
+
+msgid "Copy logs"
+msgstr "Copiar registros"
 
 msgid "Copy Markdown"
 msgstr "Copiar Markdown"
@@ -6189,6 +6233,9 @@ msgstr "descartó su revisión"
 msgid "Display"
 msgstr "Visualización"
 
+msgid "Display Size"
+msgstr "Tamaño de pantalla"
+
 msgid "Displays the mobile sidebar."
 msgstr "Muestra la barra lateral para móvil."
 
@@ -6277,6 +6324,9 @@ msgstr "Descargar para macOS"
 
 msgid "Download image"
 msgstr "Descargar la imagen"
+
+msgid "Download logs"
+msgstr "Descargar registros"
 
 msgid "Download Manually"
 msgstr "Descargar manualmente"
@@ -6562,6 +6612,9 @@ msgstr "Vacío"
 msgid "Empty command"
 msgstr "Comando vacío"
 
+msgid "Emulator"
+msgstr "Emulador"
+
 msgid "Enable"
 msgstr "Activar"
 
@@ -6665,6 +6718,9 @@ msgstr "esc para descartar"
 msgid "esc to exit"
 msgstr "esc para salir"
 
+msgid "Event log"
+msgstr "Registro de eventos"
+
 msgid "Event triggered"
 msgstr "Disparada por un evento"
 
@@ -6749,6 +6805,9 @@ msgstr "Todo lo que necesitas para escribir sobre Superset: descripción de la e
 msgid "Everything you've published is deleted, not hidden. You can rejoin later and it will rebuild from the transcripts still on this machine."
 msgstr "Todo lo que has publicado se elimina, no se oculta. Puedes volver a unirte más adelante y se reconstruirá a partir de las transcripciones que sigan en esta máquina."
 
+msgid "Executable"
+msgstr "Ejecutable"
+
 msgid "Existing repo path"
 msgstr "Ruta del repo existente"
 
@@ -6770,6 +6829,9 @@ msgstr "Salir del modo diseño (esc)"
 
 msgid "Exit device toolbar"
 msgstr "Salir de la barra de dispositivos"
+
+msgid "Exit full screen"
+msgstr "Salir de pantalla completa"
 
 msgid "Exited"
 msgstr "Finalizada"
@@ -7370,6 +7432,9 @@ msgstr "Rápido"
 msgid "Fatal"
 msgstr "Fatal"
 
+msgid "Fault"
+msgstr "Fallo"
+
 msgid "Favorites"
 msgstr "Favoritos"
 
@@ -7495,6 +7560,9 @@ msgstr "Filtrar hosts"
 
 msgid "Filter hosts..."
 msgstr "Filtrar hosts..."
+
+msgid "Filter logs"
+msgstr "Filtrar registros"
 
 msgid "Filter pages"
 msgstr "Filtrar páginas"
@@ -7817,6 +7885,9 @@ msgstr "Acceso total al disco"
 msgid "Full name"
 msgstr "Nombre completo"
 
+msgid "Full screen"
+msgstr "Pantalla completa"
+
 msgid "Full self-driving"
 msgstr "Autonomía total"
 
@@ -7937,9 +8008,6 @@ msgstr "No se encontró la instalación de GitHub"
 msgid "GitHub integration"
 msgstr "Integración con GitHub"
 
-msgid "GitHub is refusing API calls for this machine's credential until {until}. Existing pull request links stay; new pull requests appear once the limit resets."
-msgstr "GitHub rechaza las llamadas a la API con la credencial de este equipo hasta las {until}. Los enlaces a pull requests existentes se mantienen; los nuevos pull requests aparecerán cuando se restablezca el límite."
-
 msgid "GitHub issues"
 msgstr "Issues de GitHub"
 
@@ -7948,9 +8016,6 @@ msgstr "Límite de peticiones de GitHub alcanzado"
 
 msgid "GitHub refused the merge"
 msgstr "GitHub rechazó la fusión"
-
-msgid "GitHub rejected this machine's credentials, so pull requests cannot be detected. Run \"gh auth login\" or fix GITHUB_TOKEN; the next retry is at {until}."
-msgstr "GitHub rechazó las credenciales de este equipo, por lo que no se pueden detectar pull requests. Ejecuta \"gh auth login\" o corrige GITHUB_TOKEN; el próximo reintento será a las {until}."
 
 msgid "GitHub sign-in needed"
 msgstr "Se requiere iniciar sesión en GitHub"
@@ -8030,8 +8095,14 @@ msgstr "Concede los permisos del sistema que Superset necesita."
 msgid "Granted"
 msgstr "Concedido"
 
+msgid "Grayscale"
+msgstr "Escala de grises"
+
 msgid "Green"
 msgstr "Verde"
+
+msgid "Green/Red (Deuteranopia)"
+msgstr "Verde/rojo (deuteranopía)"
 
 msgid "Grepped"
 msgstr "Búsqueda con grep"
@@ -8092,6 +8163,9 @@ msgstr "en curso"
 
 msgid "Hard reload"
 msgstr "Recarga forzada"
+
+msgid "Hardware Keyboard"
+msgstr "Teclado físico"
 
 msgid "Has conflicts"
 msgstr "Tiene conflictos"
@@ -8220,6 +8294,10 @@ msgstr "historial"
 msgid "History"
 msgstr "Historial"
 
+msgid "Home"
+msgstr "Inicio"
+
+msgctxt "device home button"
 msgid "Home"
 msgstr "Inicio"
 
@@ -8641,6 +8719,9 @@ msgstr "Incluye la variante de caja propia de Superset"
 msgid "Incognito Operator"
 msgstr "Operario de incógnito"
 
+msgid "Increase Contrast"
+msgstr "Aumentar contraste"
+
 msgid "Indigo"
 msgstr "Índigo"
 
@@ -8864,6 +8945,9 @@ msgstr "Facturas y método de pago"
 
 msgid "iOS app"
 msgstr "App para iOS"
+
+msgid "iOS Simulator"
+msgstr "Simulador de iOS"
 
 msgid "IP restrictions"
 msgstr "Restricciones de IP"
@@ -9426,6 +9510,9 @@ msgstr "Vincular esta tarea"
 msgid "Linked {slug} to workspace"
 msgstr "{slug} enlazado al espacio de trabajo"
 
+msgid "Liquid Glass"
+msgstr "Liquid Glass"
+
 msgid "List"
 msgstr "Lista"
 
@@ -9621,6 +9708,9 @@ msgstr "Ubicación"
 msgid "Location & checkout"
 msgstr "Ubicación y checkout"
 
+msgid "Log levels"
+msgstr "Niveles de registro"
+
 msgid "Log out"
 msgstr "Cerrar sesión"
 
@@ -9647,6 +9737,9 @@ msgstr "Logotipo, claro"
 
 msgid "Logos"
 msgstr "Logotipos"
+
+msgid "Logs"
+msgstr "Registros"
 
 msgid "Long-horizon reliability crosses a threshold. Work assigned at 6pm is mergeable at 9am often enough that not scheduling the overnight shift feels like leaving a factory idle."
 msgstr "La fiabilidad a largo plazo cruza un umbral. El trabajo asignado a las 18:00 se puede fusionar a las 9:00 con la frecuencia suficiente como para que no programar el turno de noche se sienta como dejar una fábrica parada."
@@ -10003,6 +10096,12 @@ msgstr "Mediados de 2026"
 msgid "Mid 2027"
 msgstr "Mediados de 2027"
 
+msgid "Min iOS"
+msgstr "iOS mínimo"
+
+msgid "Min SDK"
+msgstr "SDK mínimo"
+
 msgid "Mine"
 msgstr "Mías"
 
@@ -10307,6 +10406,9 @@ msgstr "Te necesita"
 
 msgid "Nerd Fonts"
 msgstr "Nerd Fonts"
+
+msgid "Network"
+msgstr "Red"
 
 msgid "Network Changed"
 msgstr "La red cambió"
@@ -10663,6 +10765,9 @@ msgstr "No se ha proporcionado ninguna descripción."
 msgid "No desktop session is running in this sandbox."
 msgstr "No hay ninguna sesión de escritorio en este entorno aislado."
 
+msgid "No device is running."
+msgstr "No hay ningún dispositivo en ejecución."
+
 msgid "No devices yet"
 msgstr "Aún no hay dispositivos"
 
@@ -10686,6 +10791,9 @@ msgstr "Aún no hay entornos"
 
 msgid "No environments yet."
 msgstr "Aún no hay entornos. Crea uno para iniciar un espacio de trabajo en la nube a partir de él."
+
+msgid "No events yet"
+msgstr "Aún no hay eventos"
 
 msgid "No extended thinking"
 msgstr "Sin razonamiento extendido"
@@ -10774,6 +10882,9 @@ msgstr "No hay sesiones activas"
 msgid "No local workspaces"
 msgstr "No hay espacios de trabajo locales"
 
+msgid "No log lines yet"
+msgstr "Aún no hay líneas de registro"
+
 msgid "no logins"
 msgstr "sin inicios de sesión"
 
@@ -10813,8 +10924,8 @@ msgstr "No hay pull requests fusionadas."
 msgid "No messages yet"
 msgstr "Aún no hay mensajes"
 
-msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
-msgstr "No hay ningún simulador móvil disponible aquí. Se necesita un entorno aislado en la nube compatible con Limrun o una cadena de herramientas local de iOS/Android."
+msgid "No mobile simulator available here. This needs either an EAS simulator on a cloud sandbox or a local iOS/Android toolchain."
+msgstr "No hay ningún simulador móvil disponible aquí. Se necesita un simulador de EAS en un entorno aislado en la nube o una cadena de herramientas local de iOS/Android."
 
 msgid "No name on file"
 msgstr "No hay ningún nombre registrado"
@@ -10979,6 +11090,9 @@ msgstr "Aún no hay sesiones"
 msgid "No shortcuts found matching \"{searchQuery}\""
 msgstr "No se encontraron atajos que coincidan con \"{searchQuery}\""
 
+msgid "No simulator is running."
+msgstr "No hay ningún simulador en ejecución."
+
 msgid "No sites are signed in"
 msgstr "No hay sesión iniciada en ningún sitio"
 
@@ -11107,6 +11221,9 @@ msgstr "Nadie de tu equipo ha compartido automatizaciones todavía."
 
 msgid "Nobody reviews differently because of it."
 msgstr "Nadie revisa de forma distinta por ello."
+
+msgid "None"
+msgstr "Ninguno"
 
 msgid "none (session)"
 msgstr "ninguno (sesión)"
@@ -11337,6 +11454,9 @@ msgstr "Al cambiar de ventana"
 
 msgid "On your machine. Repos, worktrees, terminal output, and agent sessions stay local by default; cloud sync covers account and organization metadata only. Superset doesn't proxy any API calls."
 msgstr "En tu equipo. Los repositorios, los worktrees, la salida de la terminal y las sesiones de agente se quedan en local por defecto; la sincronización en la nube solo cubre los metadatos de cuenta y organización. Superset no hace de proxy de ninguna llamada a la API."
+
+msgid "On-screen Keyboard"
+msgstr "Teclado en pantalla"
 
 msgid "Onboarding redesign"
 msgstr "Rediseño del onboarding"
@@ -13115,6 +13235,9 @@ msgstr "Alcanzado"
 msgid "React layer of the shared pane/workspace layout engine"
 msgstr "Capa de React del motor de diseño compartido de paneles y espacios de trabajo"
 
+msgid "React Native"
+msgstr "React Native"
+
 msgid "Reaction added"
 msgstr "Reacción añadida"
 
@@ -13209,6 +13332,9 @@ msgstr "Rebase y fusión"
 msgid "Recent Activity"
 msgstr "Actividad reciente"
 
+msgid "Recent apps"
+msgstr "Apps recientes"
+
 msgid "Recent invoices"
 msgstr "Facturas recientes"
 
@@ -13272,6 +13398,9 @@ msgstr "Grabando"
 msgid "Red"
 msgstr "Rojo"
 
+msgid "Red/Green (Protanopia)"
+msgstr "Rojo/verde (protanopía)"
+
 msgid "Redacted Riveter"
 msgstr "Remachador censurado"
 
@@ -13283,6 +13412,12 @@ msgstr "Redirigiendo..."
 
 msgid "Redo"
 msgstr "Rehacer"
+
+msgid "Reduce Motion"
+msgstr "Reducir movimiento"
+
+msgid "Reduce Transparency"
+msgstr "Reducir transparencia"
 
 msgid "Referenced, not demoed"
 msgstr "Referenciados, no mostrados"
@@ -13729,6 +13864,9 @@ msgstr "Restablecer el zoom"
 msgid "Reset Zoom"
 msgstr "Restablecer el zoom"
 
+msgid "Resets at {until}"
+msgstr "Se restablece a las {until}"
+
 msgid "Resets in {countdown} · {absolute}"
 msgstr "Se reinicia en {countdown} · {absolute}"
 
@@ -13942,6 +14080,9 @@ msgstr "Reinténtalo en unos segundos; si persiste, reinicia Superset."
 msgid "Retry in a few seconds."
 msgstr "Reinténtalo en unos segundos."
 
+msgid "Retrying at {until}"
+msgstr "Reintento a las {until}"
+
 msgid "Retrying…"
 msgstr "Reintentando…"
 
@@ -14093,6 +14234,9 @@ msgstr "Rol actualizado"
 msgid "Roll back an agent session to any checkpoint, conversation and file changes together."
 msgstr "Revierte una sesión de agente a cualquier punto de control, con la conversación y los cambios de archivos a la vez."
 
+msgid "Rotate"
+msgstr "Girar"
+
 msgid "Rotate device"
 msgstr "Girar el dispositivo"
 
@@ -14113,6 +14257,9 @@ msgstr "Filas modificadas"
 
 msgid "Run"
 msgstr "Ejecutar"
+
+msgid "Run \"gh auth login\" or set GITHUB_TOKEN"
+msgstr "Ejecuta \"gh auth login\" o define GITHUB_TOKEN"
 
 #. placeholder {0}: automation.name
 msgid "Run {0} now"
@@ -14386,6 +14533,9 @@ msgstr "Alcance"
 #. placeholder {0}: String(MIN_ACTIVE_DAYS)
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "La puntuación empieza cuando el tablero cuenta con {0} días de uso."
+
+msgid "Screenshot"
+msgstr "Captura de pantalla"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Captura copiada al portapapeles"
@@ -15014,6 +15164,9 @@ msgstr "Configuración ({settingsHotkey})"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "Configuración → Acceso remoto → “Permitir que los espacios de trabajo remotos accedan a este dispositivo mediante el relay”."
 
+msgid "Settings are not available for this device"
+msgstr "Los ajustes no están disponibles para este dispositivo"
+
 msgid "Settings..."
 msgstr "Configuración..."
 
@@ -15133,6 +15286,9 @@ msgstr "Mostrar todos los comentarios"
 
 msgid "Show all lines"
 msgstr "Mostrar todas las líneas"
+
+msgid "Show Borders"
+msgstr "Mostrar bordes"
 
 msgid "Show checks"
 msgstr "Mostrar comprobaciones"
@@ -15266,6 +15422,10 @@ msgstr "Se muestra en la barra lateral y en la lista de tareas."
 msgid "Shown publicly alongside your name."
 msgstr "Se muestra públicamente junto a tu nombre."
 
+#. placeholder {0}: selected.name
+msgid "Shut down {0}"
+msgstr "Apagar {0}"
+
 msgid "Side by Side"
 msgstr "Lado a lado"
 
@@ -15394,6 +15554,9 @@ msgstr "Simular actualización: error"
 
 msgid "Simulate update: ready"
 msgstr "Simular actualización: lista"
+
+msgid "Simulator"
+msgstr "Simulador"
 
 msgid "Since 2025"
 msgstr "Desde 2025"
@@ -16077,9 +16240,6 @@ msgstr "Automatizaciones de Superset"
 msgid "superset browser cdp prints an endpoint for that pane only. Point Playwright or browser-use at it."
 msgstr "superset browser cdp imprime un endpoint solo para ese panel. Apunta Playwright o browser-use hacia él."
 
-msgid "Superset cannot reach api.github.com from this machine. Pull request status retries at {until}."
-msgstr "Superset no puede conectarse a api.github.com desde este equipo. El estado de los pull requests se reintentará a las {until}."
-
 msgid "Superset CLI"
 msgstr "CLI de Superset"
 
@@ -16667,6 +16827,9 @@ msgstr "Texto"
 msgid "Text input with emoji picker support"
 msgstr "Campo de texto con selector de emojis"
 
+msgid "Text Size"
+msgstr "Tamaño del texto"
+
 msgid "Text style"
 msgstr "Estilo de texto"
 
@@ -16985,9 +17148,6 @@ msgstr "No se encontró el servidor"
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "El enlace de inicio de sesión estaba incompleto. Inténtalo de nuevo."
 
-msgid "The simulator instance was terminated."
-msgstr "La instancia del simulador finalizó."
-
 msgid "The site's certificate authority is not trusted"
 msgstr "La autoridad de certificación del sitio no es de confianza"
 
@@ -17232,6 +17392,9 @@ msgstr "Esto parece un archivo binario. Abrirlo como texto puede mostrar caracte
 msgid "This Mac"
 msgstr "Este Mac"
 
+msgid "This machine"
+msgstr "Este equipo"
+
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Este tenant de Microsoft ya está conectado por {detail}. Pídele que lo desconecte primero."
 
@@ -17463,6 +17626,9 @@ msgstr "Tiempo"
 
 msgid "Times use your time zone."
 msgstr "Las horas usan tu zona horaria."
+
+msgid "Tinted"
+msgstr "Tintado"
 
 msgid "Tip"
 msgstr "Consejo"
@@ -18442,6 +18608,9 @@ msgstr "El modo de voz tuvo un problema. Inténtalo de nuevo."
 msgid "Voice settings"
 msgstr "Ajustes de voz"
 
+msgid "VoiceOver"
+msgstr "VoiceOver"
+
 msgid "Volume"
 msgstr "Volumen"
 
@@ -18455,6 +18624,9 @@ msgstr "Esperar a la configuración del espacio de trabajo antes de iniciar los 
 #. placeholder {1}: names.b
 msgid "waiting for {0} and {1}…"
 msgstr "esperando a {0} y {1}…"
+
+msgid "Waiting for activity data"
+msgstr "Esperando datos de actividad"
 
 msgid "Waiting for Checks"
 msgstr "Esperando las comprobaciones"

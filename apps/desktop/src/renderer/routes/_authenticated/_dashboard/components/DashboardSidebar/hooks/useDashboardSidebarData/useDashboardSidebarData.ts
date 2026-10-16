@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { useLiveQuery } from "@tanstack/react-db";
 import { useQueries, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import { resolveProjectIconUrl } from "renderer/hooks/host-projects/resolveProjectIconUrl";
 import { useHostProjects } from "renderer/hooks/host-projects/useHostProjects";
 import { useKnownHosts } from "renderer/hooks/known-hosts/useKnownHosts";
@@ -31,6 +31,7 @@ import {
 } from "renderer/routes/_authenticated/utils/workspaceTagFolders";
 import { useWorkspaceTransactionsStore } from "renderer/stores/workspace-creates";
 import type {
+	DashboardSidebarGithubHold,
 	DashboardSidebarHiddenProject,
 	DashboardSidebarPinnedWorkspace,
 	DashboardSidebarProject,
@@ -736,19 +737,47 @@ export function useDashboardSidebarData({
 		return rows;
 	}, [pullRequestQueries]);
 
+	// A held host's query can stop polling (host offline) and keep its cached
+	// hold, so nothing else re-renders when the hold expires.
+	const [githubExpiryTick, onGithubHoldExpired] = useReducer(
+		(tick: number) => tick + 1,
+		0,
+	);
 	// One notice for the whole sidebar: the hold is per host credential, not
 	// per workspace, and the local machine's is the one the user can fix.
-	const githubStatus = useMemo(
-		() =>
-			pickGithubStatus(
-				pullRequestQueries.map((query, index) => ({
-					machineId: pullRequestQueryTargets[index]?.machineId ?? "",
-					status: query.data?.github,
-				})),
-				machineId,
-			),
-		[machineId, pullRequestQueries, pullRequestQueryTargets],
-	);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: the tick re-reads Date.now() when a hold expires
+	const githubStatus = useMemo<DashboardSidebarGithubHold | null>(() => {
+		const picked = pickGithubStatus(
+			pullRequestQueries.map((query, index) => ({
+				machineId: pullRequestQueryTargets[index]?.machineId ?? "",
+				status: query.data?.github,
+			})),
+			machineId,
+			Date.now(),
+		);
+		if (!picked) return null;
+		return {
+			...picked.status,
+			machineId: picked.machineId,
+			hostName: hostsByMachineId.get(picked.machineId)?.name ?? null,
+			isLocalHost: picked.machineId === machineId,
+		};
+	}, [
+		githubExpiryTick,
+		hostsByMachineId,
+		machineId,
+		pullRequestQueries,
+		pullRequestQueryTargets,
+	]);
+	const githubHoldUntil = githubStatus?.until;
+	useEffect(() => {
+		if (githubHoldUntil === undefined) return;
+		const timer = setTimeout(
+			onGithubHoldExpired,
+			Math.max(0, githubHoldUntil - Date.now()) + 50,
+		);
+		return () => clearTimeout(timer);
+	}, [githubHoldUntil]);
 
 	const refreshWorkspacePullRequest = useCallback(
 		async (workspaceId: string) => {
