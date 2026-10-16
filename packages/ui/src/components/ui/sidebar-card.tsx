@@ -69,11 +69,13 @@ function SidebarCard({
 						}),
 					)}
 					className={cn(
-						"absolute top-2.5 right-2.5 z-10 text-muted-foreground hover:text-foreground transition-colors",
-						media && "rounded-full bg-background/80 p-0.5",
+						"absolute z-10 text-muted-foreground hover:text-foreground transition-colors",
+						media
+							? "-top-2 -right-2 flex size-5 items-center justify-center rounded-full border border-border bg-card shadow-sm"
+							: "top-2.5 right-2.5",
 					)}
 				>
-					<LuX className="size-3.5" />
+					<LuX className={media ? "size-3" : "size-3.5"} />
 				</button>
 			)}
 
