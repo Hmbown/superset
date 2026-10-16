@@ -1357,7 +1357,6 @@ export class AcpAdapter implements HarnessAdapter {
 				if (!processAlive(shellPid)) this.endBackgroundShell(id);
 			}
 		}, this.options.shellPollMs ?? SHELL_POLL_MS);
-		this.shellPoll.unref?.();
 	}
 
 	private endBackgroundShell(shellId: string): void {
