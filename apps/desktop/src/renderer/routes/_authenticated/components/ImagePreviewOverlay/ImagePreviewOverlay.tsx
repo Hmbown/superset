@@ -7,6 +7,7 @@ import {
 	CheckIcon,
 	ChevronLeftIcon,
 	ChevronRightIcon,
+	CircleCheckIcon,
 	CopyIcon,
 	DownloadIcon,
 	XIcon,
@@ -92,7 +93,9 @@ export function ImagePreviewOverlay({
 			await onCopy();
 			setCopiedSrc(src);
 			setCopyCount((count) => count + 1);
-			toast.success(t({ message: "Image copied" }));
+			toast.success(t({ message: "Image copied" }), {
+				icon: <CircleCheckIcon className="size-4 text-emerald-500" />,
+			});
 			if (copiedTimer.current) clearTimeout(copiedTimer.current);
 			copiedTimer.current = setTimeout(() => setCopiedSrc(null), COPIED_MS);
 		} catch {

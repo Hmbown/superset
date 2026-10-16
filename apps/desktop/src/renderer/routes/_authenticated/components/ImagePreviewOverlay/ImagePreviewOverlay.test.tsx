@@ -153,7 +153,8 @@ describe("ImagePreviewOverlay", () => {
 		fireEvent.click(view.getByRole("button", { name: "Copy image" }));
 		await waitFor(() => view.getByRole("button", { name: "Copied" }));
 		expect(onCopy).toHaveBeenCalledTimes(1);
-		expect(toastSuccess).toHaveBeenCalledWith("Image copied");
+		expect(toastSuccess).toHaveBeenCalledTimes(1);
+		expect(toastSuccess.mock.calls[0]?.[0]).toBe("Image copied");
 		expect(view.baseElement.querySelector("[data-copy-flash]")).toBeTruthy();
 		expect(toastError).not.toHaveBeenCalled();
 	});
