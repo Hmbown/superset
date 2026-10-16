@@ -182,6 +182,28 @@ describe("ImagePreviewOverlay", () => {
 		expect(copy.disabled).toBe(true);
 	});
 
+	test("an image that cannot be decoded says so and disables copy", () => {
+		const view = renderOverlay({ onCopy: mock(async () => {}) });
+		fireEvent.error(view.getByRole("img"));
+		expect(view.queryByRole("img")).toBeNull();
+		expect(view.getByText("Couldn't load shot.png")).toBeTruthy();
+		const copy = view.getByRole("button", {
+			name: "Copy image",
+		}) as HTMLButtonElement;
+		expect(copy.disabled).toBe(true);
+
+		view.rerender(
+			<ImagePreviewOverlay
+				filename="next.png"
+				onClose={mock(() => {})}
+				onDownload={mock(async () => {})}
+				open
+				src="data:image/png;base64,AAAA"
+			/>,
+		);
+		expect(view.getByRole("img").getAttribute("alt")).toBe("next.png");
+	});
+
 	test("focus moves into the dialog and back out on close", () => {
 		const opener = document.createElement("button");
 		document.body.appendChild(opener);

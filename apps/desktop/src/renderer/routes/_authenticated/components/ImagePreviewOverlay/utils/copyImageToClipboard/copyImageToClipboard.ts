@@ -1,10 +1,11 @@
 export type PngWriter = (png: Blob) => Promise<void>;
+export type PngEncoder = (image: Blob) => Promise<Blob>;
 
 async function writePngToClipboard(png: Blob): Promise<void> {
 	await navigator.clipboard.write([new ClipboardItem({ "image/png": png })]);
 }
 
-async function toPng(blob: Blob): Promise<Blob> {
+async function canvasToPng(blob: Blob): Promise<Blob> {
 	const bitmap = await createImageBitmap(blob);
 	try {
 		const canvas = document.createElement("canvas");
@@ -28,6 +29,7 @@ async function toPng(blob: Blob): Promise<Blob> {
 export async function copyImageToClipboard(
 	src: string,
 	write: PngWriter = writePngToClipboard,
+	toPng: PngEncoder = canvasToPng,
 ): Promise<void> {
 	const blob = await (await fetch(src)).blob();
 	await write(blob.type === "image/png" ? blob : await toPng(blob));

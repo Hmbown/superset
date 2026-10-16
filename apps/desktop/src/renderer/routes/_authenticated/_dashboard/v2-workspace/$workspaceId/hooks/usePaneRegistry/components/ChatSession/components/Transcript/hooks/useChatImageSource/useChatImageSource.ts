@@ -25,11 +25,11 @@ export function useChatImageSource(
 	{ full }: { full: boolean },
 ): ChatImageSource {
 	const { workspaceId } = useChatPaneActions();
-	const { data: workspace } = workspaceTrpc.workspace.get.useQuery(
+	const workspaceQuery = workspaceTrpc.workspace.get.useQuery(
 		{ id: workspaceId ?? "" },
 		{ enabled: Boolean(workspaceId) },
 	);
-	const worktreePath = workspace?.worktreePath;
+	const worktreePath = workspaceQuery.data?.worktreePath;
 	const absolutePath = `${worktreePath}/${image?.path}`;
 	const located = Boolean(workspaceId && worktreePath && image);
 	const thumbnail = workspaceTrpc.filesystem.readFile.useQuery(
@@ -52,6 +52,8 @@ export function useChatImageSource(
 	);
 
 	if (!workspaceId || !image) return { status: "error" };
+	if (workspaceQuery.isError) return { status: "error" };
+	if (workspaceQuery.isSuccess && !worktreePath) return { status: "error" };
 	if (thumbnail.isError) return { status: "error" };
 	if (thumbnail.isPending || !thumbnail.data) return { status: "loading" };
 	if (thumbnail.data.kind !== "bytes") return { status: "error" };

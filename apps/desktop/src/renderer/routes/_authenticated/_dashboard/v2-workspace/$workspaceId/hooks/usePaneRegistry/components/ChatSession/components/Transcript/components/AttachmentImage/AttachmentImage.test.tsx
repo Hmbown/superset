@@ -47,13 +47,16 @@ function read(exceededLimit: boolean) {
 	};
 }
 
-function renderImage(readFile: (maxBytes: number) => ReturnType<typeof read>) {
+function renderImage(
+	readFile: (maxBytes: number) => ReturnType<typeof read>,
+	getWorkspace: () => unknown = () => ({ worktreePath: "/work" }),
+) {
 	const link: TRPCLink<AppRouter> = () => (call) =>
 		observable((observer) => {
 			try {
 				const data =
 					call.op.path === "workspace.get"
-						? { worktreePath: "/work" }
+						? getWorkspace()
 						: readFile((call.op.input as { maxBytes: number }).maxBytes);
 				observer.next({ result: { data } });
 				observer.complete();
@@ -68,7 +71,9 @@ function renderImage(readFile: (maxBytes: number) => ReturnType<typeof read>) {
 		>
 			<workspaceTrpc.Provider
 				client={workspaceTrpc.createClient({ links: [link] })}
-				queryClient={new QueryClient()}
+				queryClient={
+					new QueryClient({ defaultOptions: { queries: { retry: false } } })
+				}
 			>
 				<ChatPaneActionsProvider workspaceId="ws">
 					<ChatImageGalleryProvider images={[image]}>
@@ -105,6 +110,25 @@ describe("AttachmentImage", () => {
 				"data:image/png;base64,iVBORw0KGgo=",
 			),
 		);
+	});
+
+	test("a failed workspace lookup falls back to the file name", async () => {
+		const view = renderImage(
+			() => read(false),
+			() => {
+				throw new Error("no workspace");
+			},
+		);
+		await waitFor(() => view.getByText("big.png"));
+		expect(view.queryByRole("button", tile)).toBeNull();
+	});
+
+	test("a workspace without a worktree path falls back to the file name", async () => {
+		const view = renderImage(
+			() => read(false),
+			() => ({ worktreePath: null }),
+		);
+		await waitFor(() => view.getByText("big.png"));
 	});
 
 	test("a failed read of a file over the cap says so in the overlay", async () => {

@@ -85,7 +85,9 @@ export function ImagePreviewOverlay({
 	const inSequence = position !== undefined && position.total > 1;
 	const hasPrevious = inSequence && position.index > 0;
 	const hasNext = inSequence && position.index < position.total - 1;
-	const copied = src !== null && copiedSrc === src;
+	const [brokenSrc, setBrokenSrc] = useState<string | null>(null);
+	const shownSrc = src !== null && src !== brokenSrc ? src : null;
+	const copied = shownSrc !== null && copiedSrc === shownSrc;
 
 	const handleCopy = async () => {
 		if (!onCopy) return;
@@ -207,15 +209,18 @@ export function ImagePreviewOverlay({
 					role="dialog"
 					tabIndex={-1}
 				>
-					{src ? (
+					{shownSrc ? (
 						<img
-							src={src}
+							src={shownSrc}
 							alt={filename}
 							className="max-h-[85vh] max-w-[90vw] rounded-lg object-contain"
+							onError={() => setBrokenSrc(shownSrc)}
 						/>
 					) : (
 						<div className="flex items-center justify-center text-sm text-white/80">
-							{fallback ?? <Spinner className="size-6 text-white" />}
+							{src !== null
+								? t({ message: `Couldn't load ${filename}` })
+								: (fallback ?? <Spinner className="size-6 text-white" />)}
 						</div>
 					)}
 					{inSequence && (
@@ -252,7 +257,7 @@ export function ImagePreviewOverlay({
 										? t({ message: "Copied" })
 										: t({ message: "Copy image" })
 								}
-								disabled={src === null}
+								disabled={shownSrc === null}
 								onClick={() => void handleCopy()}
 								className={CORNER_BUTTON_CLASS}
 							>
@@ -268,7 +273,7 @@ export function ImagePreviewOverlay({
 							aria-label={t({
 								message: "Download image",
 							})}
-							disabled={isSaving || src === null}
+							disabled={isSaving || shownSrc === null}
 							onClick={() => void handleDownload()}
 							className={CORNER_BUTTON_CLASS}
 						>

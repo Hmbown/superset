@@ -1,1 +1,5 @@
-export { copyImageToClipboard, type PngWriter } from "./copyImageToClipboard";
+export {
+	copyImageToClipboard,
+	type PngEncoder,
+	type PngWriter,
+} from "./copyImageToClipboard";
