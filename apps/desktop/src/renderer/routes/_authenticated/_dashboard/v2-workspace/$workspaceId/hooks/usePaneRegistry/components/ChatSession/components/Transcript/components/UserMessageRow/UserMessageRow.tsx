@@ -1,5 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { readBookkeeping, userMessageText } from "@superset/chat/core";
+import {
+	readBookkeeping,
+	transcriptItemKey,
+	userMessageText,
+} from "@superset/chat/core";
 import type { AvailableCommand, UserMessage } from "@superset/chat/protocol";
 import { Message, MessageContent } from "@superset/ui/ai-elements/message";
 import { Badge } from "@superset/ui/badge";
@@ -97,6 +101,7 @@ export function UserMessageRow({
 					{images.map((image) => (
 						<AttachmentImage
 							key={image.path}
+							owner={transcriptItemKey(item)}
 							path={image.path}
 							type={image.type}
 						/>

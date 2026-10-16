@@ -5083,6 +5083,9 @@ msgstr "워크스페이스 삭제를 끝내지 못했습니다"
 msgid "Couldn't hand this to an agent"
 msgstr "에이전트에게 넘길 수 없습니다"
 
+msgid "Couldn't load {filename}"
+msgstr "{filename}을(를) 불러올 수 없습니다"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "에이전트 설정을 불러오지 못했습니다: {0}"

@@ -5083,6 +5083,9 @@ msgstr "ワークスペースの削除を完了できませんでした"
 msgid "Couldn't hand this to an agent"
 msgstr "エージェントに引き渡せませんでした"
 
+msgid "Couldn't load {filename}"
+msgstr "{filename} を読み込めませんでした"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "エージェント設定を読み込めませんでした: {0}"
