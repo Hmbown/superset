@@ -81,7 +81,7 @@ export function HeroSection() {
 							</span>
 						</Link>
 						<div className="space-y-4 sm:space-y-6">
-							<h1 className="font-display text-[clamp(3rem,min(14vw,22vh),12.5rem)] [:is(:lang(ja),:lang(ko),:lang(zh))_&]:text-[clamp(2.5rem,min(9vw,15vh),6.5rem)] font-extrabold uppercase leading-[0.9] tracking-[0.005em] text-balance whitespace-pre-line text-foreground relative max-w-6xl mx-auto">
+							<h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] [word-spacing:0.15em] whitespace-pre-line text-foreground relative max-w-6xl mx-auto">
 								{/* Real headline for screen readers and no-JS crawlers; the
 								    typewriter below is purely visual */}
 								<span className="sr-only">
@@ -100,7 +100,7 @@ export function HeroSection() {
 										segments={headlineSegments}
 										speed={40}
 										delay={600}
-										cursorClassName="inline-block ml-[0.06em] -mr-[0.18em] w-[0.12em] h-[0.7em] bg-brand"
+										cursorClassName="inline-block ml-0.5 w-3 -mr-3.5 h-[0.72em] bg-brand"
 									/>
 								</span>
 							</h1>

@@ -2,7 +2,7 @@ import { DEFAULT_LOCALE, getLocaleMessages } from "@superset/i18n";
 import { COMPANY } from "@superset/shared/constants";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
-import { IBM_Plex_Mono, Inter, Saira_Extra_Condensed } from "next/font/google";
+import { IBM_Plex_Mono, Inter } from "next/font/google";
 import Script from "next/script";
 import { Suspense } from "react";
 import { CookieConsent } from "@/components/CookieConsent";
@@ -28,13 +28,6 @@ const ibmPlexMono = IBM_Plex_Mono({
 	display: "swap",
 	// Not used by the LCP hero text; keep it off the critical preload path
 	preload: false,
-});
-
-const sairaExtraCondensed = Saira_Extra_Condensed({
-	weight: "800",
-	subsets: ["latin", "latin-ext", "vietnamese"],
-	variable: "--font-saira-extra-condensed",
-	display: "swap",
 });
 
 // Variable font with the opsz axis: large sizes render as Inter Display
@@ -134,7 +127,7 @@ export default async function RootLayout({
 		<html
 			lang={locale}
 			style={{ colorScheme: "dark" }}
-			className={`dark overscroll-none ${ibmPlexMono.variable} ${inter.variable} ${sairaExtraCondensed.variable}`}
+			className={`dark overscroll-none ${ibmPlexMono.variable} ${inter.variable}`}
 			suppressHydrationWarning
 		>
 			<head>
