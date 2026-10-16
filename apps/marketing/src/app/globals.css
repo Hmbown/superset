@@ -61,10 +61,10 @@
    headline types into them. */
 .headline-sizer > .headline-guides {
 	--guide-line: color-mix(in srgb, var(--foreground) 45%, transparent);
-	--guide-mark: color-mix(in srgb, var(--foreground) 85%, transparent);
+	--guide-mark: var(--foreground);
 	--guide-top: 0.2em;
 	--guide-baseline: 0.24em;
-	--guide-arm: max(0.26em, 14px);
+	--guide-arm: max(0.4em, 20px);
 	--guide-half: max(0.13em, 7px);
 	position: relative;
 }
@@ -121,14 +121,14 @@
 	inset: calc(var(--guide-top) - var(--guide-half)) calc(-1 * var(--guide-half))
 		calc(var(--guide-baseline) - var(--guide-half));
 	background-image:
-		linear-gradient(var(--guide-mark), var(--guide-mark)),
-		linear-gradient(var(--guide-mark), var(--guide-mark)),
-		linear-gradient(var(--guide-mark), var(--guide-mark)),
-		linear-gradient(var(--guide-mark), var(--guide-mark)),
-		linear-gradient(var(--guide-mark), var(--guide-mark)),
-		linear-gradient(var(--guide-mark), var(--guide-mark)),
-		linear-gradient(var(--guide-mark), var(--guide-mark)),
-		linear-gradient(var(--guide-mark), var(--guide-mark));
+		linear-gradient(90deg, transparent, var(--guide-mark), transparent),
+		linear-gradient(180deg, transparent, var(--guide-mark), transparent),
+		linear-gradient(90deg, transparent, var(--guide-mark), transparent),
+		linear-gradient(180deg, transparent, var(--guide-mark), transparent),
+		linear-gradient(90deg, transparent, var(--guide-mark), transparent),
+		linear-gradient(180deg, transparent, var(--guide-mark), transparent),
+		linear-gradient(90deg, transparent, var(--guide-mark), transparent),
+		linear-gradient(180deg, transparent, var(--guide-mark), transparent);
 	background-repeat: no-repeat;
 	background-size:
 		var(--guide-arm) 1.5px,
