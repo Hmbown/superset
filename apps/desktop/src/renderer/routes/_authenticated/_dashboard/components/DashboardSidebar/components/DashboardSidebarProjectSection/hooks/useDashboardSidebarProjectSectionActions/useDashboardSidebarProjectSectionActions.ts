@@ -182,10 +182,10 @@ export function useDashboardSidebarProjectSectionActions({
 	const openDeleteDialog = () => setIsDeleteDialogOpen(true);
 
 	// A stand-in repo project has no host checkout to create in; only the
-	// cloud can.
+	// cloud can. Its id is the one the cloud picker gives that repository.
 	const handleNewWorkspace = () => {
 		if (project.kind === "cloud-repo") {
-			openNewWorkspaceForHost(CLOUD_HOST_ID);
+			openNewWorkspaceForHost(CLOUD_HOST_ID, project.id);
 			return;
 		}
 		openNewWorkspace(project.id);

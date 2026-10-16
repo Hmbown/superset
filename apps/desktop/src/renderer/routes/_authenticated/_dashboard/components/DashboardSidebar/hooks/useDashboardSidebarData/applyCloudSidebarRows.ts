@@ -4,6 +4,7 @@ import type {
 	DashboardSidebarProjectChild,
 	DashboardSidebarWorkspace,
 } from "../../types";
+import { sameItems } from "../../utils/sameItems";
 
 /**
  * A placed cloud row comes out of the project builder decorated as a device
@@ -23,13 +24,6 @@ function withCloudRow(
 		isPinned: built.isPinned,
 		pendingTransaction: built.pendingTransaction,
 	};
-}
-
-function sameItems<T>(next: T[], previous: T[]): boolean {
-	return (
-		next.length === previous.length &&
-		next.every((item, index) => item === previous[index])
-	);
 }
 
 function withCloudChild(

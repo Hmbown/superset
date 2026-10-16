@@ -12,17 +12,24 @@ import { userError } from "../../trpc";
 interface CarryingEnvironment {
 	id: string;
 	repositoryCount: number;
+	hooksRepositoryId: string | null;
 }
 
 /**
  * Among the environments that check out a repository, oldest first: the first
- * that checks out only it, else the first of all. One that also carries other
- * repositories may open on one of those instead.
+ * that opens on it, meaning it checks out only that repository or names it as
+ * its config location. One that opens on another repository is never reused;
+ * the workspace would start, and file, somewhere else.
  */
 export function pickDefaultEnvironment<T extends CarryingEnvironment>(
 	carrying: readonly T[],
+	repositoryId: string,
 ): T | undefined {
-	return carrying.find((row) => row.repositoryCount === 1) ?? carrying[0];
+	return carrying.find(
+		(row) =>
+			row.hooksRepositoryId === repositoryId ||
+			(row.repositoryCount === 1 && row.hooksRepositoryId === null),
+	);
 }
 
 /**
@@ -47,6 +54,7 @@ export async function ensureDefaultEnvironment(args: {
 		const carrying = await tx
 			.select({
 				id: environments.id,
+				hooksRepositoryId: environments.hooksRepositoryId,
 				repositoryCount: sql<number>`(
 					select count(*)::int from ${environmentRepositories}
 					where ${environmentRepositories.environmentId} = ${environments.id}
@@ -69,7 +77,7 @@ export async function ensureDefaultEnvironment(args: {
 				),
 			)
 			.orderBy(asc(environments.createdAt));
-		const existing = pickDefaultEnvironment(carrying);
+		const existing = pickDefaultEnvironment(carrying, args.repositoryId);
 		if (existing) return { id: existing.id, created: false };
 
 		const [repository] = await tx

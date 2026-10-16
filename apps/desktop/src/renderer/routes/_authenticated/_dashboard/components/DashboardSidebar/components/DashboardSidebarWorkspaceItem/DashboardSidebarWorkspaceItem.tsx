@@ -10,7 +10,7 @@ import {
 } from "react";
 import { useOptimisticActions } from "renderer/routes/_authenticated/hooks/useOptimisticActions";
 import { RenameBranchDialog } from "renderer/screens/main/components/WorkspaceSidebar/WorkspaceListItem/components";
-import { useNewDashboardSidebarEnabled } from "../../hooks/useNewDashboardSidebarEnabled";
+import { useIsNewDashboardSidebar } from "../../hooks/useNewDashboardSidebarEnabled";
 import {
 	useDashboardSidebarHoverActions,
 	useDashboardSidebarIsHovered,
@@ -75,7 +75,7 @@ export function DashboardSidebarWorkspaceItem({
 	const isSessionWorkspace = workspace.type === "session";
 	const isCloudWorkspace = hostType === "cloud";
 	const { status: workspaceStatus, diffStats } = useSidebarWorkspaceStatus(id);
-	const isNewSidebar = useNewDashboardSidebarEnabled();
+	const isNewSidebar = useIsNewDashboardSidebar();
 	const {
 		cancelRename,
 		pendingName,

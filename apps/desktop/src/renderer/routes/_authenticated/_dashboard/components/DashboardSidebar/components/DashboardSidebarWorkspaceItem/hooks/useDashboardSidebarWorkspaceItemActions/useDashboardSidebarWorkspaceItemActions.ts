@@ -131,7 +131,9 @@ export function useDashboardSidebarWorkspaceItemActions({
 		const trimmed = renameValue.trim();
 		if (!trimmed || trimmed === workspaceName) return;
 		setPendingName(trimmed);
-		workspaceActions.renameWorkspace(workspaceId, trimmed);
+		workspaceActions.renameWorkspace(workspaceId, trimmed, {
+			cloud: isCloudWorkspace,
+		});
 	};
 
 	// The delete dialog is globally mounted (archive-first tombstoning drops

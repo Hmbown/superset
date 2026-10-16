@@ -1,1 +1,4 @@
-export { filterDashboardSidebarProjectsByHost } from "./filterDashboardSidebarProjectsByHost";
+export {
+	filterDashboardSidebarProjectsByHost,
+	matchesHostFilter,
+} from "./filterDashboardSidebarProjectsByHost";

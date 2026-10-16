@@ -23,7 +23,9 @@ test("live agent state outranks the pull request", () => {
 		pullRequestState: "open",
 	});
 	expect(working.querySelector(".text-emerald-500")).toBeNull();
-	expect(working.querySelectorAll("span > span")).toHaveLength(9);
+	expect(working.querySelector("[data-lead]")?.getAttribute("data-lead")).toBe(
+		"working",
+	);
 	cleanup();
 
 	const needsInput = renderLead({
@@ -56,13 +58,17 @@ test("a dead or unborn sandbox outranks the agent and the PR", () => {
 		pullRequestState: "open",
 	});
 	expect(failed.querySelector(".bg-red-500")).not.toBeNull();
-	expect(failed.querySelectorAll("span > span")).not.toHaveLength(9);
+	expect(failed.querySelector("[data-lead]")?.getAttribute("data-lead")).toBe(
+		"failed",
+	);
 	cleanup();
 
 	const provisioning = renderLead({
 		sandboxStatus: "provisioning",
 		pullRequestState: "open",
 	});
-	expect(provisioning.querySelectorAll("span > span")).toHaveLength(9);
+	expect(
+		provisioning.querySelector("[data-lead]")?.getAttribute("data-lead"),
+	).toBe("creating");
 	expect(provisioning.querySelector(".text-emerald-500")).toBeNull();
 });

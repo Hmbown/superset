@@ -4,19 +4,15 @@ import type {
 	DashboardSidebarProjectChild,
 	DashboardSidebarWorkspace,
 } from "../../types";
+import { sameItems } from "../sameItems";
 
-function keeps(
-	workspace: DashboardSidebarWorkspace,
-	filter: Exclude<SidebarProjectHostFilter, "all">,
+/** Whether a row survives `filter`: "local" is any device, "cloud" is a sandbox. */
+export function matchesHostFilter(
+	workspace: Pick<DashboardSidebarWorkspace, "hostType">,
+	filter: SidebarProjectHostFilter,
 ): boolean {
+	if (filter === "all") return true;
 	return (workspace.hostType === "cloud") === (filter === "cloud");
-}
-
-function sameItems<T>(next: T[], previous: T[]): boolean {
-	return (
-		next.length === previous.length &&
-		next.every((item, index) => item === previous[index])
-	);
 }
 
 function filterChildren(
@@ -25,10 +21,10 @@ function filterChildren(
 ): DashboardSidebarProjectChild[] {
 	return children.flatMap((child): DashboardSidebarProjectChild[] => {
 		if (child.type === "workspace") {
-			return keeps(child.workspace, filter) ? [child] : [];
+			return matchesHostFilter(child.workspace, filter) ? [child] : [];
 		}
 		const workspaces = child.section.workspaces.filter((workspace) =>
-			keeps(workspace, filter),
+			matchesHostFilter(workspace, filter),
 		);
 		if (workspaces.length === 0) return [];
 		if (sameItems(workspaces, child.section.workspaces)) return [child];
@@ -38,8 +34,9 @@ function filterChildren(
 
 /**
  * Keeps only the rows that run where `filter` says: "local" is any device
- * (this one or a paired one), "cloud" is a sandbox. A project with nothing
- * left is dropped. Collapse state is untouched, and every project, folder
+ * (this one or a paired one), "cloud" is a sandbox. A project left empty by
+ * the filter is dropped; one that was empty already stays under "local",
+ * so a new project and its "+" don't vanish. Collapse state is untouched, and every project, folder
  * and row that survives whole is returned as the same object so the
  * sidebar's memoized rows don't re-render.
  */
@@ -50,6 +47,8 @@ export function filterDashboardSidebarProjectsByHost(
 	if (filter === "all") return projects;
 
 	return projects.flatMap((project): DashboardSidebarProject[] => {
+		if (project.children.length === 0)
+			return filter === "local" ? [project] : [];
 		const children = filterChildren(project.children, filter);
 		if (children.length === 0) return [];
 		if (sameItems(children, project.children)) return [project];

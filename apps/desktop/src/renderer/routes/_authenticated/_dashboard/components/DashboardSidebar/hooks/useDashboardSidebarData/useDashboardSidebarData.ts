@@ -498,7 +498,6 @@ export function useDashboardSidebarData({
 			inlineCloudWorkspaces
 				? buildCloudSidebarWorkspaces({
 						cloudWorkspaces: shownCloudRows,
-						entries: cloudSidebarEntries,
 						userId,
 						projects: cloudProjectTargets,
 						repoFullNameById: cloudRepoFullNameById,
@@ -510,7 +509,6 @@ export function useDashboardSidebarData({
 		[
 			inlineCloudWorkspaces,
 			shownCloudRows,
-			cloudSidebarEntries,
 			userId,
 			cloudProjectTargets,
 			cloudRepoFullNameById,

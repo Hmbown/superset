@@ -1,27 +1,44 @@
 import { describe, expect, test } from "bun:test";
 import { pickDefaultEnvironment } from "./default-environment";
 
+const REPO = "repo-web";
+
 describe("pickDefaultEnvironment", () => {
-	test("prefers the oldest environment that checks out only the repository", () => {
+	test("takes the oldest environment that opens on the repository", () => {
 		expect(
-			pickDefaultEnvironment([
-				{ id: "mono", repositoryCount: 3 },
-				{ id: "solo-old", repositoryCount: 1 },
-				{ id: "solo-new", repositoryCount: 1 },
-			])?.id,
+			pickDefaultEnvironment(
+				[
+					{ id: "mono", repositoryCount: 3, hooksRepositoryId: "repo-api" },
+					{ id: "solo-old", repositoryCount: 1, hooksRepositoryId: null },
+					{ id: "solo-new", repositoryCount: 1, hooksRepositoryId: REPO },
+				],
+				REPO,
+			)?.id,
 		).toBe("solo-old");
 	});
 
-	test("falls back to the oldest environment that carries it at all", () => {
+	test("reuses a multi-repository environment only when it opens on the repository", () => {
 		expect(
-			pickDefaultEnvironment([
-				{ id: "mono-old", repositoryCount: 2 },
-				{ id: "mono-new", repositoryCount: 4 },
-			])?.id,
-		).toBe("mono-old");
+			pickDefaultEnvironment(
+				[{ id: "mono", repositoryCount: 2, hooksRepositoryId: REPO }],
+				REPO,
+			)?.id,
+		).toBe("mono");
 	});
 
-	test("is undefined when nothing carries the repository", () => {
-		expect(pickDefaultEnvironment([])).toBeUndefined();
+	test("never reuses one that opens on another repository", () => {
+		expect(
+			pickDefaultEnvironment(
+				[
+					{ id: "mono", repositoryCount: 2, hooksRepositoryId: "repo-api" },
+					{
+						id: "other-hooks",
+						repositoryCount: 1,
+						hooksRepositoryId: "repo-api",
+					},
+				],
+				REPO,
+			),
+		).toBeUndefined();
 	});
 });

@@ -6,7 +6,6 @@ import { toast } from "@superset/ui/sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { getQueryKey } from "@trpc/react-query";
 import { useCallback, useMemo } from "react";
-import { useCloudWorkspaces } from "renderer/hooks/useCloudWorkspaces";
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
@@ -211,13 +210,6 @@ export function useOptimisticActions() {
 	const sandboxIds = useMemo(
 		() => new Set(sandboxTargets.map((target) => target.workspaceId)),
 		[sandboxTargets],
-	);
-	// The cloud list knows a workspace before its sandbox answers, so a row
-	// still provisioning (or failed) is routed to the API too.
-	const { workspaces: cloudWorkspaces } = useCloudWorkspaces();
-	const cloudWorkspaceIds = useMemo(
-		() => new Set((cloudWorkspaces ?? []).map((workspace) => workspace.id)),
-		[cloudWorkspaces],
 	);
 	const trackWorkspaceTransaction = useWorkspaceTransactionsStore(
 		(state) => state.track,
@@ -429,8 +421,14 @@ export function useOptimisticActions() {
 				// sandbox underneath it — the sandbox's own row exists only to give
 				// host-service something to serve. Renaming through the host would
 				// write to a name nothing reads.
-				renameWorkspace: (workspaceId: string, name: string) =>
-					cloudWorkspaceIds.has(workspaceId) || sandboxIds.has(workspaceId)
+				// A cloud caller says so: the row knows it is cloud before its
+				// sandbox answers (provisioning, failed).
+				renameWorkspace: (
+					workspaceId: string,
+					name: string,
+					options?: { cloud?: boolean },
+				) =>
+					options?.cloud || sandboxIds.has(workspaceId)
 						? runWorkspaceMutation(
 								t({ message: "Failed to rename workspace" }),
 								() => {
@@ -534,7 +532,6 @@ export function useOptimisticActions() {
 		queryClient,
 		runMutation,
 		sandboxIds,
-		cloudWorkspaceIds,
 		t,
 		trackWorkspaceTransaction,
 		utils,

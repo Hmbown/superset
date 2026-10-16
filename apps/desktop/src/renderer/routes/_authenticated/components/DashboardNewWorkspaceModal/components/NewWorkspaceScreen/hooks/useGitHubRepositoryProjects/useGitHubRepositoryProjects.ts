@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { resolveProjectIconUrl } from "renderer/hooks/host-projects/resolveProjectIconUrl";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { cloudRepoProjectId } from "renderer/lib/github/cloudRepoProjectId";
 import { githubAppSettingsUrl } from "renderer/lib/github/githubAppSettingsUrl";
@@ -68,7 +69,10 @@ export function useGitHubRepositoryProjects({
 				name: repository.name,
 				githubOwner: repository.owner,
 				githubRepoName: repository.name,
-				iconUrl: `https://github.com/${repository.owner}.png?size=64`,
+				iconUrl: resolveProjectIconUrl({
+					icon: null,
+					repoOwner: repository.owner,
+				}),
 				needsSetup: null,
 				fullName: repository.fullName,
 			}));

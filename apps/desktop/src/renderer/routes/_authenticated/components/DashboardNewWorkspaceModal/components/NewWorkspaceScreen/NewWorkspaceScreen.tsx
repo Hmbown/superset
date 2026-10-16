@@ -302,8 +302,13 @@ export function NewWorkspaceScreen({
 		enabled: isCloudHost && !!activeOrganizationId,
 		projects,
 	});
+	// The cloud starts from a GitHub repository, so a project without one
+	// can't be picked there.
 	const cloudHostProjects = useMemo(
-		() => projects.map((project) => ({ ...project, needsSetup: null })),
+		() =>
+			projects
+				.filter((project) => project.githubOwner && project.githubRepoName)
+				.map((project) => ({ ...project, needsSetup: null })),
 		[projects],
 	);
 	const cloudProjects = useMemo(
@@ -379,13 +384,13 @@ export function NewWorkspaceScreen({
 			: null;
 	// A cloud workspace without a project would be a session, which the cloud
 	// can't start yet; offer nothing rather than an unrelated repository.
-	const environmentOptions = draft.isSession
-		? []
-		: environmentsForRepository(
-				startableCloudEnvironments(environmentsQuery.data ?? []),
-				projectRepositoryFullName,
-			);
-	const areEnvironmentsLoaded = environmentsQuery.isSuccess;
+	const environmentOptions =
+		draft.isSession || !projectRepositoryFullName
+			? []
+			: environmentsForRepository(
+					startableCloudEnvironments(environmentsQuery.data ?? []),
+					projectRepositoryFullName,
+				);
 	// An explicit pick; otherwise Default, which resolves below.
 	const selectedEnvironment = environmentOptions.find(
 		(row) => row.id === draft.environmentId,
@@ -659,6 +664,8 @@ export function NewWorkspaceScreen({
 		// host readiness to wait on, and the project only narrows the list.
 		if (selectedHostId === CLOUD_HOST_ID && draft.isSession)
 			return t({ message: "Cloud workspaces need a project for now" });
+		if (selectedHostId === CLOUD_HOST_ID && !projectRepositoryFullName)
+			return t({ message: "Select a project" });
 		if (selectedHostId === CLOUD_HOST_ID) {
 			if (isCloudTargetLoading) return t({ message: "Loading environments…" });
 			return defaultHint === null
@@ -695,6 +702,7 @@ export function NewWorkspaceScreen({
 		otherHosts,
 		isCloudTargetLoading,
 		defaultHint,
+		projectRepositoryFullName,
 		t,
 	]);
 
@@ -1135,7 +1143,12 @@ export function NewWorkspaceScreen({
 										selectSession();
 										return;
 									}
-									setLastProjectId(selectedProjectId);
+									// A stand-in id means nothing to a device; keep the
+									// device's last project for next time.
+									if (
+										projects.some((project) => project.id === selectedProjectId)
+									)
+										setLastProjectId(selectedProjectId);
 									selectProject(selectedProjectId);
 								}}
 							/>
@@ -1153,7 +1166,7 @@ export function NewWorkspaceScreen({
 										updateDraft({ environmentId: next })
 									}
 									onCreateEnvironment={() => setIsCreatingEnvironment(true)}
-									isLoading={!areEnvironmentsLoaded}
+									isLoading={environmentsQuery.isLoading}
 									isSessionUnavailable={draft.isSession}
 								/>
 							)}

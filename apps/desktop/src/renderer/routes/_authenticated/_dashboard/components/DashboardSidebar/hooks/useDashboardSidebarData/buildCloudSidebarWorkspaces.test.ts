@@ -44,7 +44,6 @@ function makePullRequest(
 function build(overrides: Partial<BuildCloudSidebarWorkspacesParams> = {}) {
 	return buildCloudSidebarWorkspaces({
 		cloudWorkspaces: [],
-		entries: {},
 		userId: ME,
 		projects: [],
 		repoFullNameById: new Map(),
@@ -139,7 +138,7 @@ describe("buildCloudSidebarWorkspaces", () => {
 		});
 	});
 
-	it("shows only the viewer's workspaces and the ones opted in", () => {
+	it("marks the viewer's own rows", () => {
 		const layout = build({
 			cloudWorkspaces: [
 				makeCloudWorkspace({ id: "mine" }),
@@ -147,16 +146,10 @@ describe("buildCloudSidebarWorkspaces", () => {
 					id: "theirs-opted-in",
 					createdBy: { userId: "user-other" },
 				}),
-				makeCloudWorkspace({
-					id: "theirs",
-					createdBy: { userId: "user-other" },
-				}),
 			],
-			entries: { "theirs-opted-in": { inSidebar: true } },
 		});
 
 		const rows = layout.repoProjects[0]?.cloudWorkspaces ?? [];
-		expect(rows.map((row) => row.id)).toEqual(["mine", "theirs-opted-in"]);
 		expect(rows.map((row) => row.isMine)).toEqual([true, false]);
 	});
 

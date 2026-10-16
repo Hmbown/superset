@@ -296,16 +296,19 @@ export function useDashboardSidebarState() {
 		},
 		[v2Workspaces],
 	);
-	// Folder membership is a host tag; a row no host serves (a placed cloud
-	// workspace) keeps only its local pointer.
+	// Folder membership is a host tag; a cloud workspace keeps only its local
+	// pointer, even while its sandbox answers as a host.
 	const writeHostWorkspaceTags = useCallback(
 		(workspaceId: string, tags: string[]) => {
-			if (!hostWorkspaces.some((workspace) => workspace.id === workspaceId)) {
-				return;
-			}
+			const served = hostWorkspaces.some(
+				(workspace) =>
+					workspace.id === workspaceId &&
+					!hostWorkspacesCache.isSandboxHost(workspace.hostId),
+			);
+			if (!served) return;
 			void writeWorkspaceTags(workspaceId, tags);
 		},
-		[hostWorkspaces, writeWorkspaceTags],
+		[hostWorkspaces, hostWorkspacesCache, writeWorkspaceTags],
 	);
 
 	// Folder presentation (label, color) is host-owned beside its workspaces.

@@ -8,8 +8,6 @@ import type {
 import { resolveProjectIconUrl } from "renderer/hooks/host-projects/resolveProjectIconUrl";
 import { cloudRepoProjectId } from "renderer/lib/github/cloudRepoProjectId";
 import { cloudPullRequestRefKey } from "renderer/routes/_authenticated/_dashboard/hooks/useCloudPullRequests";
-import type { CloudSidebarEntry } from "renderer/routes/_authenticated/_dashboard/stores/cloudSidebarStore";
-import { isInCloudSidebar } from "renderer/routes/_authenticated/_dashboard/utils/buildCloudSidebar";
 import { getV2WorkspaceDisplayName } from "renderer/utils/getV2WorkspaceDisplayName";
 import type {
 	DashboardSidebarWorkspace,
@@ -81,7 +79,6 @@ function toSidebarPullRequest(
 
 export interface BuildCloudSidebarWorkspacesParams {
 	cloudWorkspaces: CloudSidebarWorkspaceInput[];
-	entries: Record<string, CloudSidebarEntry>;
 	userId: string | null;
 	projects: CloudSidebarProjectTarget[];
 	/** Primary repo (`owner/name`) per cloud workspace id. */
@@ -103,13 +100,13 @@ export interface CloudSidebarWorkspacesLayout {
 
 /**
  * Turns the cloud workspace list into sidebar rows, each filed under the
- * project whose GitHub repo it was created from. Shown rows follow the Cloud
- * section's rule (mine, or opted in) and its order (latest agent message
- * first). A repo with no project gets a stand-in project of its own.
+ * project whose GitHub repo it was created from. The caller passes only the
+ * rows to show (the Cloud section's rule: mine, or opted in); they keep its
+ * order (latest agent message first). A repo with no project gets a stand-in
+ * project of its own.
  */
 export function buildCloudSidebarWorkspaces({
 	cloudWorkspaces,
-	entries,
 	userId,
 	projects,
 	repoFullNameById,
@@ -125,11 +122,7 @@ export function buildCloudSidebarWorkspaces({
 		if (!projectIdByRepo.has(key)) projectIdByRepo.set(key, project.id);
 	}
 
-	const shown = sortByLastAgentMessage(
-		cloudWorkspaces.filter((workspace) =>
-			isInCloudSidebar(workspace, entries[workspace.id], userId),
-		),
-	);
+	const shown = sortByLastAgentMessage(cloudWorkspaces);
 
 	const byProjectId = new Map<string, DashboardSidebarWorkspace[]>();
 	const repoProjectsById = new Map<string, CloudSidebarRepoProject>();
