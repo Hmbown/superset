@@ -246,6 +246,13 @@ describe("ImagePreviewOverlay", () => {
 		expect(view.getByRole("img").getAttribute("alt")).toBe("next.png");
 	});
 
+	test("marks itself as an open dialog, so the window's drag strips let clicks through", () => {
+		renderOverlay({ onCopy: mock(async () => {}) });
+		expect(
+			document.querySelector('[role="dialog"][data-state="open"]'),
+		).toBeTruthy();
+	});
+
 	test("focus moves into the dialog and back out on close", () => {
 		const opener = document.createElement("button");
 		document.body.appendChild(opener);

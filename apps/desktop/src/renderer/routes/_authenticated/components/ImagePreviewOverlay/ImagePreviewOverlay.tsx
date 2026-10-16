@@ -198,6 +198,7 @@ export function ImagePreviewOverlay({
 					key="image-preview"
 					aria-label={filename}
 					aria-modal="true"
+					data-state="open"
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
