@@ -107,21 +107,36 @@ describe("ChatImageGalleryProvider", () => {
 			expect(shownSrc(view)).toBe(`data:image/png;base64,${btoa("c.png")}`),
 		);
 		expect(view.getByText("3 of 3")).toBeTruthy();
-		const next = view.getByRole("button", {
-			name: "Next image",
-		}) as HTMLButtonElement;
-		expect(next.disabled).toBe(true);
 	});
 
-	test("prefetches the neighbours of the open image", async () => {
-		const { view, reads } = renderGallery(1);
+	test("stepping past either end wraps around to the other", async () => {
+		const { view } = renderGallery(1);
 		fireEvent.click(
 			await waitFor(() => view.getByRole("button", { name: "Preview a.png" })),
 		);
-		await waitFor(() => expect(reads).toContain(`/work/${DIR}/b.png`));
+		await waitFor(() => view.getByText("1 of 3"));
+		fireEvent.keyDown(window, { key: "ArrowLeft" });
+		await waitFor(() =>
+			expect(shownSrc(view)).toBe(`data:image/png;base64,${btoa("c.png")}`),
+		);
+		expect(view.getByText("3 of 3")).toBeTruthy();
+		fireEvent.click(view.getByRole("button", { name: "Next image" }));
+		await waitFor(() =>
+			expect(shownSrc(view)).toBe(`data:image/png;base64,${btoa("a.png")}`),
+		);
+		expect(view.getByText("1 of 3")).toBeTruthy();
+	});
+
+	test("prefetches the neighbours of the open image, across the wrap", async () => {
+		const { view, reads } = renderGallery(1);
+		await waitFor(() => view.getByRole("button", { name: "Preview a.png" }));
+		expect(reads).not.toContain(`/work/${DIR}/b.png`);
 		expect(reads).not.toContain(`/work/${DIR}/c.png`);
-		fireEvent.keyDown(window, { key: "ArrowRight" });
-		await waitFor(() => expect(reads).toContain(`/work/${DIR}/c.png`));
+		fireEvent.click(view.getByRole("button", { name: "Preview a.png" }));
+		await waitFor(() => {
+			expect(reads).toContain(`/work/${DIR}/b.png`);
+			expect(reads).toContain(`/work/${DIR}/c.png`);
+		});
 	});
 
 	test("closing returns focus to the thumbnail of the image shown", async () => {

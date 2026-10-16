@@ -67,8 +67,12 @@ export function ChatImageGalleryProvider({
 		if (gone) setIsOpen(false);
 	}, [gone]);
 	const shown = images[index] ?? current;
+	const neighbour = (delta: number) =>
+		index === -1 || images.length < 2
+			? undefined
+			: images[(index + delta + images.length) % images.length];
 	const step = (delta: number) => {
-		const next = images[index + delta];
+		const next = neighbour(delta);
 		if (next) setCurrent(next);
 	};
 	const focusOnClose = () =>
@@ -82,13 +86,13 @@ export function ChatImageGalleryProvider({
 				<ChatImageGalleryOverlay
 					focusOnClose={focusOnClose}
 					image={shown}
-					next={images[index + 1]}
+					next={neighbour(1)}
 					onClose={() => setIsOpen(false)}
 					onNext={() => step(1)}
 					onPrevious={() => step(-1)}
 					open={isOpen && !gone}
 					position={{ index, total: images.length }}
-					previous={images[index - 1]}
+					previous={neighbour(-1)}
 				/>
 			)}
 		</ChatImageGalleryContext.Provider>

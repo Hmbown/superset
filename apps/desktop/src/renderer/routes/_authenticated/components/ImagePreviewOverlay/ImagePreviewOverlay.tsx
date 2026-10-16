@@ -83,8 +83,6 @@ export function ImagePreviewOverlay({
 	focusOnCloseRef.current = focusOnClose;
 
 	const inSequence = position !== undefined && position.total > 1;
-	const hasPrevious = inSequence && position.index > 0;
-	const hasNext = inSequence && position.index < position.total - 1;
 	const [brokenSrc, setBrokenSrc] = useState<string | null>(null);
 	const shownSrc = src !== null && src !== brokenSrc ? src : null;
 	const copied = shownSrc !== null && copiedSrc === shownSrc;
@@ -109,8 +107,8 @@ export function ImagePreviewOverlay({
 
 	const keysRef = useRef({ onClose, onPrevious, onNext, handleCopy });
 	keysRef.current = { onClose, onPrevious, onNext, handleCopy };
-	const stepsRef = useRef({ hasPrevious, hasNext, canCopy: Boolean(onCopy) });
-	stepsRef.current = { hasPrevious, hasNext, canCopy: Boolean(onCopy) };
+	const stepsRef = useRef({ inSequence, canCopy: Boolean(onCopy) });
+	stepsRef.current = { inSequence, canCopy: Boolean(onCopy) };
 	useEffect(() => {
 		if (!open) return;
 		const handler = (event: KeyboardEvent) => {
@@ -124,8 +122,9 @@ export function ImagePreviewOverlay({
 			if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
 				event.stopPropagation();
 				event.preventDefault();
-				if (event.key === "ArrowLeft" && steps.hasPrevious) keys.onPrevious?.();
-				if (event.key === "ArrowRight" && steps.hasNext) keys.onNext?.();
+				if (!steps.inSequence) return;
+				if (event.key === "ArrowLeft") keys.onPrevious?.();
+				else keys.onNext?.();
 				return;
 			}
 			if (
@@ -229,7 +228,6 @@ export function ImagePreviewOverlay({
 								type="button"
 								aria-label={t({ message: "Previous image" })}
 								className={cn(EDGE_BUTTON_CLASS, "left-4")}
-								disabled={!hasPrevious}
 								onClick={onPrevious}
 							>
 								<ChevronLeftIcon className="size-6" />
@@ -238,7 +236,6 @@ export function ImagePreviewOverlay({
 								type="button"
 								aria-label={t({ message: "Next image" })}
 								className={cn(EDGE_BUTTON_CLASS, "right-4")}
-								disabled={!hasNext}
 								onClick={onNext}
 							>
 								<ChevronRightIcon className="size-6" />

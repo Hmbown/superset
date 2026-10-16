@@ -51,7 +51,7 @@ const previous = { name: "Previous image" };
 const next = { name: "Next image" };
 
 describe("ImagePreviewOverlay", () => {
-	test("steps with the edge buttons and disables them at the ends", () => {
+	test("steps with the edge buttons, which stay enabled at the ends", () => {
 		const onPrevious = mock(() => {});
 		const onNext = mock(() => {});
 		const view = renderOverlay({
@@ -60,8 +60,8 @@ describe("ImagePreviewOverlay", () => {
 			position: { index: 0, total: 3 },
 		});
 		expect(view.getByText("1 of 3")).toBeTruthy();
-		const back = view.getByRole("button", previous) as HTMLButtonElement;
-		expect(back.disabled).toBe(true);
+		fireEvent.click(view.getByRole("button", previous));
+		expect(onPrevious).toHaveBeenCalledTimes(1);
 		fireEvent.click(view.getByRole("button", next));
 		expect(onNext).toHaveBeenCalledTimes(1);
 
@@ -78,10 +78,8 @@ describe("ImagePreviewOverlay", () => {
 			/>,
 		);
 		expect(view.getByText("3 of 3")).toBeTruthy();
-		const forward = view.getByRole("button", next) as HTMLButtonElement;
-		expect(forward.disabled).toBe(true);
-		fireEvent.click(view.getByRole("button", previous));
-		expect(onPrevious).toHaveBeenCalledTimes(1);
+		fireEvent.click(view.getByRole("button", next));
+		expect(onNext).toHaveBeenCalledTimes(2);
 	});
 
 	test("hides the step buttons and the count for a single image", () => {
@@ -95,14 +93,24 @@ describe("ImagePreviewOverlay", () => {
 		expect(view.queryByText("1 of 1")).toBeNull();
 	});
 
-	test("arrow keys step, and stop at the ends", () => {
+	test("arrow keys step from either end", () => {
 		const onPrevious = mock(() => {});
 		const onNext = mock(() => {});
 		renderOverlay({ onNext, onPrevious, position: { index: 1, total: 2 } });
 		fireEvent.keyDown(window, { key: "ArrowRight" });
-		expect(onNext).not.toHaveBeenCalled();
+		expect(onNext).toHaveBeenCalledTimes(1);
 		fireEvent.keyDown(window, { key: "ArrowLeft" });
 		expect(onPrevious).toHaveBeenCalledTimes(1);
+	});
+
+	test("arrow keys do nothing for a single image", () => {
+		const onPrevious = mock(() => {});
+		const onNext = mock(() => {});
+		renderOverlay({ onNext, onPrevious, position: { index: 0, total: 1 } });
+		fireEvent.keyDown(window, { key: "ArrowRight" });
+		fireEvent.keyDown(window, { key: "ArrowLeft" });
+		expect(onNext).not.toHaveBeenCalled();
+		expect(onPrevious).not.toHaveBeenCalled();
 	});
 
 	test("arrow keys do not reach listeners under the overlay", () => {

@@ -47,8 +47,8 @@ export function useAttachmentPreview(): {
 	const step = (delta: number) =>
 		setPreview((current) => {
 			if (!current) return current;
-			const index = current.index + delta;
-			return current.images[index] ? { ...current, index } : current;
+			const total = current.images.length;
+			return { ...current, index: (current.index + delta + total) % total };
 		});
 	const image = preview?.images[preview.index];
 	const overlay =

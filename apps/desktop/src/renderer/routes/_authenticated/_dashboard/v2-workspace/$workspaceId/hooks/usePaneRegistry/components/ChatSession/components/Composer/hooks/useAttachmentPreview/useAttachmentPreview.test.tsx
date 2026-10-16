@@ -87,10 +87,9 @@ describe("useAttachmentPreview", () => {
 		fireEvent.keyDown(window, { key: "ArrowLeft" });
 		expect(shownSrc(view)).toBe("blob:shot");
 		expect(view.getByText("1 of 2")).toBeTruthy();
-		const previous = view.getByRole("button", {
-			name: "Previous image",
-		}) as HTMLButtonElement;
-		expect(previous.disabled).toBe(true);
+		fireEvent.keyDown(window, { key: "ArrowLeft" });
+		expect(shownSrc(view)).toBe("blob:diagram");
+		expect(view.getByText("2 of 2")).toBeTruthy();
 	});
 
 	test("a pill that is not an image opens nothing", () => {
