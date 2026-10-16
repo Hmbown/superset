@@ -2,8 +2,9 @@
 
 import { Trans, useLingui } from "@lingui/react/macro";
 import { COMPANY } from "@superset/shared/constants";
+import { useInView } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaApple, FaGithub } from "react-icons/fa";
 import { track } from "@/lib/analytics";
 import { DownloadButton } from "../DownloadButton";
@@ -11,6 +12,8 @@ import { WaitlistModal } from "../WaitlistModal";
 import { BoidsBackground } from "./components/BoidsBackground";
 import { ProductDemo } from "./components/ProductDemo";
 import { TypewriterText } from "./components/TypewriterText";
+import { useHeadlineVariant } from "./hooks/useHeadlineVariant";
+import type { HeadlineVariant } from "./utils/subscribeToHeadlineVariant";
 
 export function HeroSection() {
 	const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -25,6 +28,53 @@ export function HeroSection() {
 	}, []);
 	const { t, i18n } = useLingui();
 
+	const assignment = useHeadlineVariant();
+	const headlineRef = useRef<HTMLHeadingElement>(null);
+	const isHeadlineInView = useInView(headlineRef, { amount: 0.5 });
+
+	useEffect(() => {
+		if (!assignment || !isHeadlineInView) return;
+		const recordWhenVisible = () => {
+			if (document.visibilityState === "visible") assignment.recordExposure();
+		};
+		recordWhenVisible();
+		document.addEventListener("visibilitychange", recordWhenVisible);
+		return () =>
+			document.removeEventListener("visibilitychange", recordWhenVisible);
+	}, [assignment, isHeadlineInView]);
+
+	const headlines: Record<HeadlineVariant, [lead: string, emphasis: string]> = {
+		control: [
+			t({ message: "Bring Any Agent" }),
+			t({ message: "Orchestrate Them All" }),
+		],
+		ide: [
+			t({
+				message: "The IDE for",
+				comment:
+					"Homepage headline, line 1 of 2. Line 2 is “Parallel Agents”; reorder the two lines if the language needs it.",
+			}),
+			t({
+				message: "Parallel Agents",
+				comment:
+					"Homepage headline, line 2 of 2, after “The IDE for”. Shown in a scanline style.",
+			}),
+		],
+		army: [
+			t({
+				message: "Run an Army of",
+				comment:
+					"Homepage headline, line 1 of 2. Line 2 is “Coding Agents”; reorder the two lines if the language needs it.",
+			}),
+			t({
+				message: "Coding Agents",
+				comment:
+					"Homepage headline, line 2 of 2, after “Run an Army of”. Shown in a scanline style.",
+			}),
+		],
+	};
+	const [lead, emphasis] = headlines[assignment?.variant ?? "control"];
+
 	const headlineSegments = [
 		{
 			id: "lead",
@@ -33,22 +83,15 @@ export function HeroSection() {
 			// second line) instead of the second segment starting on line one and
 			// reflowing down once it outgrows the width. Needs the h1's
 			// whitespace-pre-line to render.
-			text: `${t({
-				message: "The IDE for",
-				comment:
-					"Homepage headline, line 1 of 2. Line 2 is “Parallel Agents”; reorder the two lines if the language needs it.",
-			})}\n`,
+			text: `${lead}\n`,
 		},
 		{
 			id: "emphasis",
-			text: t({
-				message: "Parallel Agents",
-				comment:
-					"Homepage headline, line 2 of 2, after “The IDE for”. Shown in a grey scanline style.",
-			}),
+			text: emphasis,
 			// Beat on the empty second line before the payoff line types
 			delayBefore: 450,
-			className: "scanline-text text-foreground/55",
+			className:
+				"scanline-text text-foreground drop-shadow-[0_0_14px_color-mix(in_srgb,var(--foreground)_22%,transparent)]",
 		},
 	];
 
@@ -81,7 +124,10 @@ export function HeroSection() {
 							</span>
 						</Link>
 						<div className="space-y-4 sm:space-y-6">
-							<h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] [word-spacing:0.15em] whitespace-pre-line text-foreground relative max-w-6xl mx-auto">
+							<h1
+								ref={headlineRef}
+								className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] [word-spacing:0.15em] whitespace-pre-line text-foreground relative max-w-6xl mx-auto"
+							>
 								{/* Real headline for screen readers and no-JS crawlers; the
 								    typewriter below is purely visual */}
 								<span className="sr-only">
@@ -96,12 +142,15 @@ export function HeroSection() {
 									))}
 								</span>
 								<span className="absolute inset-0" aria-hidden="true">
-									<TypewriterText
-										segments={headlineSegments}
-										speed={40}
-										delay={600}
-										cursorClassName="inline-block ml-0.5 w-3 -mr-3.5 h-[0.72em] bg-brand"
-									/>
+									{assignment && (
+										<TypewriterText
+											key={assignment.variant}
+											segments={headlineSegments}
+											speed={40}
+											delay={600}
+											cursorClassName="inline-block ml-0.5 w-3 -mr-3.5 h-[0.72em] bg-brand"
+										/>
+									)}
 								</span>
 							</h1>
 							<p

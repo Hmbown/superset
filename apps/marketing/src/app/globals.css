@@ -50,7 +50,7 @@
 	background-image: repeating-linear-gradient(
 		180deg,
 		currentColor 0 3px,
-		color-mix(in srgb, currentColor 60%, transparent) 3px 4px
+		color-mix(in srgb, currentColor 35%, transparent) 3px 4px
 	);
 	-webkit-background-clip: text;
 	background-clip: text;
