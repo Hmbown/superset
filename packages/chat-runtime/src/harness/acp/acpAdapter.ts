@@ -180,6 +180,13 @@ const SELECTION_WAIT_MS = 5000;
 const STARTUP_TIMEOUT_MS = 120_000;
 const REQUEST_TIMEOUT_MS = 30_000;
 const STDERR_TAIL_CHARS = 4000;
+const ASK_MODE_ID = "default";
+const QUESTION_FIELD_ID = "answer";
+const CLIENT_APPROVAL_MODES = [
+	{ id: ASK_MODE_ID, label: "Ask for approval" },
+	{ id: "auto", label: "Approve for me" },
+	{ id: "bypassPermissions", label: "Full access" },
+];
 
 function sessionMissing(error: unknown): boolean {
 	return (
@@ -195,6 +202,8 @@ export type AcpAdapterOptions = SpawnAcpOptions & {
 	launch?: () => Promise<Pick<SpawnAcpOptions, "command" | "args" | "env">>;
 	/** Selected for a new session that asks for no mode, when the agent offers it. */
 	defaultModeId?: string;
+	/** The agent has no approval modes, so the adapter offers its own and answers permission requests. */
+	clientApprovalModes?: boolean;
 	/** How long a prompt waits for mode and option changes the agent has not answered. */
 	selectionWaitMs?: number;
 	startupTimeoutMs?: number;
@@ -232,6 +241,7 @@ type PendingApproval = {
 	turnId: string;
 	item: ApprovalRequest;
 	fieldTypes?: Record<string, string | undefined>;
+	selectsOption?: boolean;
 };
 
 type AcpSessionModes = NonNullable<
@@ -519,6 +529,10 @@ export class AcpAdapter implements HarnessAdapter {
 	setMode(modeId: string): void {
 		const previous = this.modeId;
 		this.emitSession({ modeId });
+		if (this.options.clientApprovalModes) {
+			if (modeId !== ASK_MODE_ID) this.approvePendingPermissions();
+			return;
+		}
 		if (!this.client || !this.sessionId) return;
 		// v2 dropped session/set_mode outright: a mode is a config option there,
 		// and `config_option_update` is what told us which one.
@@ -800,17 +814,29 @@ export class AcpAdapter implements HarnessAdapter {
 			this.emitSession({
 				status: "idle",
 				harnessSessionId: this.sessionId,
-				...(parsed.success && parsed.data.modes?.currentModeId
-					? { modeId: parsed.data.modes.currentModeId }
-					: {}),
-				...(parsed.success && parsed.data.modes?.availableModes
+				...(this.options.clientApprovalModes
 					? {
-							availableModes: parsed.data.modes.availableModes.map((mode) => ({
-								id: mode.id,
-								label: mode.name,
-							})),
+							modeId:
+								[this.modeId, this.startModeId(startOptions, false)].find(
+									(id) => CLIENT_APPROVAL_MODES.some((mode) => mode.id === id),
+								) ?? ASK_MODE_ID,
+							availableModes: CLIENT_APPROVAL_MODES,
 						}
-					: {}),
+					: {
+							...(parsed.success && parsed.data.modes?.currentModeId
+								? { modeId: parsed.data.modes.currentModeId }
+								: {}),
+							...(parsed.success && parsed.data.modes?.availableModes
+								? {
+										availableModes: parsed.data.modes.availableModes.map(
+											(mode) => ({
+												id: mode.id,
+												label: mode.name,
+											}),
+										),
+									}
+								: {}),
+						}),
 			});
 			this.handleConfigOptions(response);
 			this.applyStartSelections(
@@ -1014,7 +1040,7 @@ export class AcpAdapter implements HarnessAdapter {
 				this.handleAvailableCommands(outer.data.update);
 				return;
 			case "current_mode_update":
-				if (update.data.currentModeId)
+				if (update.data.currentModeId && !this.options.clientApprovalModes)
 					this.emitSession({ modeId: update.data.currentModeId });
 				return;
 			case "config_option_update":
@@ -1174,7 +1200,8 @@ export class AcpAdapter implements HarnessAdapter {
 			...(state === "flushed" ? { completedAtMs: this.now() } : {}),
 		};
 		switch (open.kind) {
-			case "agent_message":
+			case "agent_message": {
+				const model = this.replaying ? undefined : this.currentModelLabel();
 				return {
 					...base,
 					kind: "agent_message",
@@ -1182,7 +1209,9 @@ export class AcpAdapter implements HarnessAdapter {
 					...(open.attachments.length > 0
 						? { attachments: open.attachments }
 						: {}),
+					...(model ? { model } : {}),
 				};
+			}
 			case "user_message":
 				return {
 					...base,
@@ -1192,6 +1221,14 @@ export class AcpAdapter implements HarnessAdapter {
 			default:
 				return { ...base, kind: "reasoning", text: open.text };
 		}
+	}
+
+	private currentModelLabel(): string | undefined {
+		const option = this.configOptions.find(
+			(entry) => entry.category === "model",
+		);
+		return option?.options.find((entry) => entry.id === option.currentValue)
+			?.label;
 	}
 
 	private handleToolCall(raw: unknown, turnId: string): void {
@@ -1669,29 +1706,75 @@ export class AcpAdapter implements HarnessAdapter {
 			);
 			return;
 		}
+		const allow = parsed.data.options.find((option) =>
+			/^allow\b/i.test(option.name),
+		);
+		if (
+			this.options.clientApprovalModes &&
+			allow &&
+			this.modeId !== ASK_MODE_ID
+		) {
+			this.client?.respond(request.id, {
+				outcome: { outcome: "selected", optionId: allow.optionId },
+			});
+			return;
+		}
+		const question = this.options.clientApprovalModes === true && !allow;
 		const turnId = this.resolveTurnId();
 		const targetItemId = parsed.data.toolCall?.toolCallId ?? null;
 		const approvalId = `approval:${targetItemId ?? this.mintId()}`;
+		const title = parsed.data.toolCall?.title ?? "Permission required";
 		const item: ApprovalRequest = {
 			id: approvalId,
 			kind: "approval_request",
 			targetItemId,
-			title: parsed.data.toolCall?.title ?? "Permission required",
+			title,
 			status: "pending",
 			startedAtMs: this.nextStartMs(),
-			options: parsed.data.options.map((option) => ({
-				optionId: option.optionId,
-				label: option.name,
-				...(isApprovalOptionKind(option.kind) ? { kind: option.kind } : {}),
-			})),
+			...(question
+				? {
+						form: {
+							message: title,
+							fields: [
+								{
+									id: QUESTION_FIELD_ID,
+									input: "single" as const,
+									required: true,
+									options: parsed.data.options.map((option) => ({
+										value: option.optionId,
+										label: option.name,
+									})),
+								},
+							],
+						},
+					}
+				: {
+						options: parsed.data.options.map((option) => ({
+							optionId: option.optionId,
+							label: option.name,
+							...(isApprovalOptionKind(option.kind) &&
+							!this.options.clientApprovalModes
+								? { kind: option.kind }
+								: {}),
+						})),
+					}),
 		};
 		this.pendingApprovals.set(approvalId, {
 			requestId: request.id,
 			turnId,
 			item,
+			...(question ? { selectsOption: true } : {}),
 		});
 		this.emitItem(item, turnId);
 		this.emitSession({ status: "awaiting_input" });
+	}
+
+	private approvePendingPermissions(): void {
+		for (const [approvalId, pending] of this.pendingApprovals) {
+			if (!pending.item.form) {
+				this.respondToApproval(approvalId, { type: "accept" });
+			}
+		}
 	}
 
 	private handleElicitation(request: AcpServerRequest): void {
@@ -1739,6 +1822,13 @@ export class AcpAdapter implements HarnessAdapter {
 		pending: PendingApproval,
 		decision: Decision,
 	): unknown {
+		if (pending.selectsOption) {
+			const optionId =
+				decision.type === "form" ? decision.values[QUESTION_FIELD_ID] : null;
+			return typeof optionId === "string"
+				? { outcome: { outcome: "selected", optionId } }
+				: { outcome: { outcome: "cancelled" } };
+		}
 		if (pending.item.form) {
 			if (decision.type === "form") {
 				return {

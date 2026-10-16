@@ -139,6 +139,11 @@ export function AgentMessageRow({
 							</DropdownMenuContent>
 						</DropdownMenu>
 					)}
+					{item.model && (
+						<span className="max-w-48 truncate text-[11px]" title={item.model}>
+							{item.model}
+						</span>
+					)}
 					<MessageTime atMs={item.completedAtMs ?? item.startedAtMs} />
 				</div>
 			)}

@@ -101,6 +101,24 @@ class FakeAcpAgent {
 		return id;
 	}
 
+	askQuestion(sessionId: string, toolCallId: string): number {
+		const id = 9003;
+		this.deliver({
+			jsonrpc: "2.0",
+			id,
+			method: "session/request_permission",
+			params: {
+				sessionId,
+				toolCall: { toolCallId, title: "Which color?" },
+				options: [
+					{ optionId: "choice-0", name: "Red", kind: "allow_once" },
+					{ optionId: "choice-1", name: "Blue", kind: "allow_once" },
+				],
+			},
+		});
+		return id;
+	}
+
 	requestElicitation(params: Record<string, unknown>, id = 9002): number {
 		this.deliver({
 			jsonrpc: "2.0",
@@ -288,6 +306,7 @@ function startAdapter(
 	adapterOptions: Pick<
 		AcpAdapterOptions,
 		| "defaultModeId"
+		| "clientApprovalModes"
 		| "selectionWaitMs"
 		| "backgroundDetailIntervalMs"
 		| "startupTimeoutMs"
@@ -1372,6 +1391,117 @@ describe("AcpAdapter on protocol v2", () => {
 			modeId: "bypassPermissions",
 		});
 		expect(sessionsOf(events).pop()?.modeId).toBe("bypassPermissions");
+
+		await adapter.dispose();
+	});
+
+	it("offers its own approval modes, answers permissions silently by them, and asks questions as forms", async () => {
+		const agent = new FakeAcpAgent();
+		agent.protocolVersion = 1;
+		agent.newSessionModes = {
+			currentModeId: "medium",
+			availableModes: [
+				{ id: "low", name: "Thinking: low" },
+				{ id: "medium", name: "Thinking: medium" },
+			],
+		};
+		const { adapter, events } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ defaultModeId: "bypassPermissions", clientApprovalModes: true },
+		);
+		await flush();
+		expect(sessionsOf(events).find((s) => s.availableModes)).toMatchObject({
+			modeId: "bypassPermissions",
+			availableModes: [
+				{ id: "default" },
+				{ id: "auto" },
+				{ id: "bypassPermissions" },
+			],
+		});
+		adapter.prompt([{ type: "text", text: "run" }]);
+		await flush();
+
+		agent.requestPermission("sess-1", "tc-1");
+		await flush();
+		expect(agent.lastPermissionResponse()?.result).toEqual({
+			outcome: { outcome: "selected", optionId: "allow" },
+		});
+		expect(itemsOf(events).some((item) => item.id === "approval:tc-1")).toBe(
+			false,
+		);
+
+		agent.askQuestion("sess-1", "q-1");
+		await flush();
+		expect(
+			itemsOf(events).find((item) => item.id === "approval:q-1"),
+		).toMatchObject({
+			status: "pending",
+			form: {
+				fields: [
+					{
+						input: "single",
+						options: [
+							{ value: "choice-0", label: "Red" },
+							{ value: "choice-1", label: "Blue" },
+						],
+					},
+				],
+			},
+		});
+		adapter.respondToApproval("approval:q-1", {
+			type: "form",
+			values: { answer: "choice-1" },
+		});
+		await flush();
+		expect(agent.sent.find((f) => f.id === 9003)?.result).toEqual({
+			outcome: { outcome: "selected", optionId: "choice-1" },
+		});
+
+		adapter.setMode("default");
+		agent.requestPermission("sess-1", "tc-2");
+		await flush();
+		expect(
+			itemsOf(events)
+				.filter((item) => item.id === "approval:tc-2")
+				.at(-1),
+		).toMatchObject({ status: "pending" });
+
+		adapter.setMode("auto");
+		await flush();
+		expect(
+			itemsOf(events)
+				.filter((item) => item.id === "approval:tc-2")
+				.at(-1),
+		).toMatchObject({ status: "answered" });
+		expect(agent.sent.some((f) => f.method === "session/set_mode")).toBe(false);
+
+		await adapter.dispose();
+	});
+
+	it("names the selected model on a live agent message", async () => {
+		const agent = new FakeAcpAgent();
+		agent.newSessionConfigOptions = [
+			{
+				configId: "model",
+				name: "Model",
+				type: "select",
+				category: "model",
+				currentValue: "pdev/auto",
+				options: [{ value: "pdev/auto", name: "pdev/Auto" }],
+			},
+		];
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "hi" }]);
+		await flush();
+
+		expect(
+			itemsOf(events)
+				.filter((item) => item.kind === "agent_message")
+				.at(-1),
+		).toMatchObject({ model: "pdev/Auto" });
 
 		await adapter.dispose();
 	});
