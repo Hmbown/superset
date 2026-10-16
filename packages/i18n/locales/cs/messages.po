@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}: {statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, one {# řádek} few {# řádky} many {# řádku} other {# řádků}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName} (toto zařízení)"
 
@@ -5104,6 +5107,9 @@ msgstr "Mazání pracovních prostorů se nepodařilo dokončit"
 msgid "Couldn't hand this to an agent"
 msgstr "Nepodařilo se předat agentovi"
 
+msgid "Couldn't load {filename}"
+msgstr "Soubor {filename} se nepodařilo načíst"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "Nepodařilo se načíst nastavení agenta: {0}"
@@ -8306,6 +8312,9 @@ msgstr "Skrýt komentáře z revize"
 msgid "Hide sessions"
 msgstr "Skrýt relace"
 
+msgid "Hide text"
+msgstr "Skrýt text"
+
 msgid "Hide unchanged regions"
 msgstr "Skrýt nezměněné části"
 
@@ -10616,6 +10625,9 @@ msgstr "Další komentář"
 msgid "Next file"
 msgstr "Další soubor"
 
+msgid "Next image"
+msgstr "Další obrázek"
+
 msgid "Next match"
 msgstr "Další shoda"
 
@@ -12865,6 +12877,9 @@ msgstr "Předchozí komentář"
 msgid "Previous file"
 msgstr "Předchozí soubor"
 
+msgid "Previous image"
+msgstr "Předchozí obrázek"
+
 msgid "Previous match"
 msgstr "Předchozí shoda"
 
@@ -13667,6 +13682,9 @@ msgstr "Odebrat zmínku"
 
 msgid "Remove mention {path}"
 msgstr "Odebrat zmínku {path}"
+
+msgid "Remove pasted text"
+msgstr "Odebrat vložený text"
 
 msgid "Remove PR Link"
 msgstr "Odebrat propojení s PR"
@@ -15421,6 +15439,9 @@ msgstr "Zobrazit v grafu"
 msgid "Show in folder"
 msgstr "Zobrazit ve složce"
 
+msgid "Show in text field"
+msgstr "Zobrazit v textovém poli"
+
 msgid "Show items in all states"
 msgstr "Zobrazit položky ve všech stavech"
 
@@ -15483,6 +15504,9 @@ msgstr "Zobrazit relace"
 
 msgid "Show status and send notifications for this agent."
 msgstr "Zobrazovat stav a posílat oznámení pro tohoto agenta."
+
+msgid "Show text"
+msgstr "Zobrazit text"
 
 msgid "Show the triggering payload"
 msgstr "Zobrazit spouštěcí data"

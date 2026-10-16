@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate} : {statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, one {# ligne} other {# lignes}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName} (cet appareil)"
 
@@ -5104,6 +5107,9 @@ msgstr "Impossible de terminer la suppression des espaces de travail"
 msgid "Couldn't hand this to an agent"
 msgstr "Impossible de confier ceci à un agent"
 
+msgid "Couldn't load {filename}"
+msgstr "Impossible de charger {filename}"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "Impossible de charger les paramètres de l'agent : {0}"
@@ -8306,6 +8312,9 @@ msgstr "Masquer les commentaires de revue"
 msgid "Hide sessions"
 msgstr "Masquer les sessions"
 
+msgid "Hide text"
+msgstr "Masquer le texte"
+
 msgid "Hide unchanged regions"
 msgstr "Masquer les régions inchangées"
 
@@ -10616,6 +10625,9 @@ msgstr "Commentaire suivant"
 msgid "Next file"
 msgstr "Fichier suivant"
 
+msgid "Next image"
+msgstr "Image suivante"
+
 msgid "Next match"
 msgstr "Résultat suivant"
 
@@ -12865,6 +12877,9 @@ msgstr "Commentaire précédent"
 msgid "Previous file"
 msgstr "Fichier précédent"
 
+msgid "Previous image"
+msgstr "Image précédente"
+
 msgid "Previous match"
 msgstr "Résultat précédent"
 
@@ -13667,6 +13682,9 @@ msgstr "Retirer la mention"
 
 msgid "Remove mention {path}"
 msgstr "Retirer la mention {path}"
+
+msgid "Remove pasted text"
+msgstr "Retirer le texte collé"
 
 msgid "Remove PR Link"
 msgstr "Retirer le lien de la PR"
@@ -15421,6 +15439,9 @@ msgstr "Afficher dans le graphique"
 msgid "Show in folder"
 msgstr "Afficher dans le dossier"
 
+msgid "Show in text field"
+msgstr "Afficher dans le champ de texte"
+
 msgid "Show items in all states"
 msgstr "Afficher les éléments dans tous les états"
 
@@ -15483,6 +15504,9 @@ msgstr "Afficher les sessions"
 
 msgid "Show status and send notifications for this agent."
 msgstr "Afficher le statut et envoyer des notifications pour cet agent."
+
+msgid "Show text"
+msgstr "Afficher le texte"
 
 msgid "Show the triggering payload"
 msgstr "Afficher la charge utile déclenchante"

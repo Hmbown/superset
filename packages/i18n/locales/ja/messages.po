@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}: {statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, other {# 行}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName}（このデバイス）"
 
@@ -5104,6 +5107,9 @@ msgstr "ワークスペースの削除を完了できませんでした"
 msgid "Couldn't hand this to an agent"
 msgstr "エージェントに引き渡せませんでした"
 
+msgid "Couldn't load {filename}"
+msgstr "{filename} を読み込めませんでした"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "エージェント設定を読み込めませんでした: {0}"
@@ -8306,6 +8312,9 @@ msgstr "レビューコメントを隠す"
 msgid "Hide sessions"
 msgstr "セッションを隠す"
 
+msgid "Hide text"
+msgstr "テキストを隠す"
+
 msgid "Hide unchanged regions"
 msgstr "変更のない領域を隠す"
 
@@ -10616,6 +10625,9 @@ msgstr "次のコメント"
 msgid "Next file"
 msgstr "次のファイル"
 
+msgid "Next image"
+msgstr "次の画像"
+
 msgid "Next match"
 msgstr "次の一致"
 
@@ -12865,6 +12877,9 @@ msgstr "前のコメント"
 msgid "Previous file"
 msgstr "前のファイル"
 
+msgid "Previous image"
+msgstr "前の画像"
+
 msgid "Previous match"
 msgstr "前の一致"
 
@@ -13667,6 +13682,9 @@ msgstr "メンションを削除"
 
 msgid "Remove mention {path}"
 msgstr "メンション{path}を削除"
+
+msgid "Remove pasted text"
+msgstr "貼り付けたテキストを削除"
 
 msgid "Remove PR Link"
 msgstr "PRリンクを解除"
@@ -15421,6 +15439,9 @@ msgstr "チャートに表示"
 msgid "Show in folder"
 msgstr "フォルダに表示"
 
+msgid "Show in text field"
+msgstr "テキスト欄に表示"
+
 msgid "Show items in all states"
 msgstr "すべての状態の項目を表示"
 
@@ -15483,6 +15504,9 @@ msgstr "セッションを表示"
 
 msgid "Show status and send notifications for this agent."
 msgstr "このエージェントのステータス表示と通知を有効にします。"
+
+msgid "Show text"
+msgstr "テキストを表示"
 
 msgid "Show the triggering payload"
 msgstr "トリガーのペイロードを表示"

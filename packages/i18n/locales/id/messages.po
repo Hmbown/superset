@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}: {statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, other {# baris}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName} (perangkat ini)"
 
@@ -5104,6 +5107,9 @@ msgstr "Tidak bisa menyelesaikan penghapusan workspace"
 msgid "Couldn't hand this to an agent"
 msgstr "Tidak dapat menyerahkan ini ke agen"
 
+msgid "Couldn't load {filename}"
+msgstr "Tidak dapat memuat {filename}"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "Tidak bisa memuat pengaturan agen: {0}"
@@ -8306,6 +8312,9 @@ msgstr "Sembunyikan komentar review"
 msgid "Hide sessions"
 msgstr "Sembunyikan sesi"
 
+msgid "Hide text"
+msgstr "Sembunyikan teks"
+
 msgid "Hide unchanged regions"
 msgstr "Sembunyikan bagian yang tidak berubah"
 
@@ -10616,6 +10625,9 @@ msgstr "Komentar berikutnya"
 msgid "Next file"
 msgstr "File berikutnya"
 
+msgid "Next image"
+msgstr "Gambar berikutnya"
+
 msgid "Next match"
 msgstr "Kecocokan berikutnya"
 
@@ -12865,6 +12877,9 @@ msgstr "Komentar sebelumnya"
 msgid "Previous file"
 msgstr "File sebelumnya"
 
+msgid "Previous image"
+msgstr "Gambar sebelumnya"
+
 msgid "Previous match"
 msgstr "Kecocokan sebelumnya"
 
@@ -13667,6 +13682,9 @@ msgstr "Hapus mention"
 
 msgid "Remove mention {path}"
 msgstr "Hapus mention {path}"
+
+msgid "Remove pasted text"
+msgstr "Hapus teks yang ditempel"
 
 msgid "Remove PR Link"
 msgstr "Hapus Tautan PR"
@@ -15421,6 +15439,9 @@ msgstr "Tampilkan di grafik"
 msgid "Show in folder"
 msgstr "Tampilkan di folder"
 
+msgid "Show in text field"
+msgstr "Tampilkan di kolom teks"
+
 msgid "Show items in all states"
 msgstr "Tampilkan item di semua status"
 
@@ -15483,6 +15504,9 @@ msgstr "Tampilkan sesi"
 
 msgid "Show status and send notifications for this agent."
 msgstr "Tampilkan status dan kirim notifikasi untuk agen ini."
+
+msgid "Show text"
+msgstr "Tampilkan teks"
 
 msgid "Show the triggering payload"
 msgstr "Tampilkan payload pemicu"

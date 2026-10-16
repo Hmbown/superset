@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}：{statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, other {# 行}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName}（此设备）"
 
@@ -5104,6 +5107,9 @@ msgstr "没能完成工作区的删除"
 msgid "Couldn't hand this to an agent"
 msgstr "无法交给智能体处理"
 
+msgid "Couldn't load {filename}"
+msgstr "无法加载 {filename}"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "无法加载智能体设置：{0}"
@@ -8306,6 +8312,9 @@ msgstr "隐藏审查评论"
 msgid "Hide sessions"
 msgstr "隐藏会话"
 
+msgid "Hide text"
+msgstr "隐藏文本"
+
 msgid "Hide unchanged regions"
 msgstr "隐藏未更改区域"
 
@@ -10616,6 +10625,9 @@ msgstr "下一条评论"
 msgid "Next file"
 msgstr "下一个文件"
 
+msgid "Next image"
+msgstr "下一张图片"
+
 msgid "Next match"
 msgstr "下一个匹配"
 
@@ -12865,6 +12877,9 @@ msgstr "上一条评论"
 msgid "Previous file"
 msgstr "上一个文件"
 
+msgid "Previous image"
+msgstr "上一张图片"
+
 msgid "Previous match"
 msgstr "上一个匹配"
 
@@ -13667,6 +13682,9 @@ msgstr "移除提及"
 
 msgid "Remove mention {path}"
 msgstr "移除提及{path}"
+
+msgid "Remove pasted text"
+msgstr "移除粘贴的文本"
 
 msgid "Remove PR Link"
 msgstr "移除PR链接"
@@ -15421,6 +15439,9 @@ msgstr "在图表中显示"
 msgid "Show in folder"
 msgstr "在文件夹中显示"
 
+msgid "Show in text field"
+msgstr "在输入框中显示"
+
 msgid "Show items in all states"
 msgstr "显示所有状态的条目"
 
@@ -15483,6 +15504,9 @@ msgstr "显示会话"
 
 msgid "Show status and send notifications for this agent."
 msgstr "为此智能体显示状态并发送通知。"
+
+msgid "Show text"
+msgstr "显示文本"
 
 msgid "Show the triggering payload"
 msgstr "显示触发负载"

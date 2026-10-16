@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}: {statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, one {# satır} other {# satır}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName} (bu cihaz)"
 
@@ -5104,6 +5107,9 @@ msgstr "Çalışma alanlarını silme işlemi tamamlanamadı"
 msgid "Couldn't hand this to an agent"
 msgstr "Bu bir ajana devredilemedi"
 
+msgid "Couldn't load {filename}"
+msgstr "{filename} yüklenemedi"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "Ajan ayarları yüklenemedi: {0}"
@@ -8306,6 +8312,9 @@ msgstr "İnceleme yorumlarını gizle"
 msgid "Hide sessions"
 msgstr "Oturumları gizle"
 
+msgid "Hide text"
+msgstr "Metni gizle"
+
 msgid "Hide unchanged regions"
 msgstr "Değişmeyen bölgeleri gizle"
 
@@ -10616,6 +10625,9 @@ msgstr "Sonraki yorum"
 msgid "Next file"
 msgstr "Sonraki dosya"
 
+msgid "Next image"
+msgstr "Sonraki görsel"
+
 msgid "Next match"
 msgstr "Sonraki eşleşme"
 
@@ -12865,6 +12877,9 @@ msgstr "Önceki yorum"
 msgid "Previous file"
 msgstr "Önceki dosya"
 
+msgid "Previous image"
+msgstr "Önceki görsel"
+
 msgid "Previous match"
 msgstr "Önceki eşleşme"
 
@@ -13667,6 +13682,9 @@ msgstr "Bahsi kaldır"
 
 msgid "Remove mention {path}"
 msgstr "{path} bahsini kaldır"
+
+msgid "Remove pasted text"
+msgstr "Yapıştırılan metni kaldır"
 
 msgid "Remove PR Link"
 msgstr "PR bağlantısını kaldır"
@@ -15421,6 +15439,9 @@ msgstr "Grafikte göster"
 msgid "Show in folder"
 msgstr "Klasörde göster"
 
+msgid "Show in text field"
+msgstr "Metin alanında göster"
+
 msgid "Show items in all states"
 msgstr "Tüm durumlardaki öğeleri göster"
 
@@ -15483,6 +15504,9 @@ msgstr "Oturumları göster"
 
 msgid "Show status and send notifications for this agent."
 msgstr "Bu ajan için durum göster ve bildirim gönder."
+
+msgid "Show text"
+msgstr "Metni göster"
 
 msgid "Show the triggering payload"
 msgstr "Tetikleyen yükü göster"

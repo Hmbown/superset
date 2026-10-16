@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}: {statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, one {# строка} few {# строки} many {# строк} other {# строки}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName} (это устройство)"
 
@@ -5104,6 +5107,9 @@ msgstr "Не удалось завершить удаление рабочих �
 msgid "Couldn't hand this to an agent"
 msgstr "Не удалось передать агенту"
 
+msgid "Couldn't load {filename}"
+msgstr "Не удалось загрузить {filename}"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "Не удалось загрузить настройки агента: {0}"
@@ -8306,6 +8312,9 @@ msgstr "Скрыть комментарии ревью"
 msgid "Hide sessions"
 msgstr "Скрыть сессии"
 
+msgid "Hide text"
+msgstr "Скрыть текст"
+
 msgid "Hide unchanged regions"
 msgstr "Скрыть неизменённые участки"
 
@@ -10616,6 +10625,9 @@ msgstr "Следующий комментарий"
 msgid "Next file"
 msgstr "Следующий файл"
 
+msgid "Next image"
+msgstr "Следующее изображение"
+
 msgid "Next match"
 msgstr "Следующее совпадение"
 
@@ -12865,6 +12877,9 @@ msgstr "Предыдущий комментарий"
 msgid "Previous file"
 msgstr "Предыдущий файл"
 
+msgid "Previous image"
+msgstr "Предыдущее изображение"
+
 msgid "Previous match"
 msgstr "Предыдущее совпадение"
 
@@ -13667,6 +13682,9 @@ msgstr "Удалить упоминание"
 
 msgid "Remove mention {path}"
 msgstr "Удалить упоминание {path}"
+
+msgid "Remove pasted text"
+msgstr "Удалить вставленный текст"
 
 msgid "Remove PR Link"
 msgstr "Отвязать PR"
@@ -15421,6 +15439,9 @@ msgstr "Показать на графике"
 msgid "Show in folder"
 msgstr "Показать в папке"
 
+msgid "Show in text field"
+msgstr "Показать в поле ввода"
+
 msgid "Show items in all states"
 msgstr "Показывать во всех состояниях"
 
@@ -15483,6 +15504,9 @@ msgstr "Показать сессии"
 
 msgid "Show status and send notifications for this agent."
 msgstr "Показывать статус и отправлять уведомления для этого агента."
+
+msgid "Show text"
+msgstr "Показать текст"
 
 msgid "Show the triggering payload"
 msgstr "Показать полезную нагрузку триггера"

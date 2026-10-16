@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}: {statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, one {# line} other {# lines}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName} (this device)"
 
@@ -5104,6 +5107,9 @@ msgstr "Couldn’t finish deleting workspaces"
 msgid "Couldn't hand this to an agent"
 msgstr "Couldn't hand this to an agent"
 
+msgid "Couldn't load {filename}"
+msgstr "Couldn't load {filename}"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "Couldn't load agent settings: {0}"
@@ -8306,6 +8312,9 @@ msgstr "Hide review comments"
 msgid "Hide sessions"
 msgstr "Hide sessions"
 
+msgid "Hide text"
+msgstr "Hide text"
+
 msgid "Hide unchanged regions"
 msgstr "Hide unchanged regions"
 
@@ -10616,6 +10625,9 @@ msgstr "Next comment"
 msgid "Next file"
 msgstr "Next file"
 
+msgid "Next image"
+msgstr "Next image"
+
 msgid "Next match"
 msgstr "Next match"
 
@@ -12865,6 +12877,9 @@ msgstr "Previous comment"
 msgid "Previous file"
 msgstr "Previous file"
 
+msgid "Previous image"
+msgstr "Previous image"
+
 msgid "Previous match"
 msgstr "Previous match"
 
@@ -13667,6 +13682,9 @@ msgstr "Remove mention"
 
 msgid "Remove mention {path}"
 msgstr "Remove mention {path}"
+
+msgid "Remove pasted text"
+msgstr "Remove pasted text"
 
 msgid "Remove PR Link"
 msgstr "Remove PR Link"
@@ -15421,6 +15439,9 @@ msgstr "Show in chart"
 msgid "Show in folder"
 msgstr "Show in folder"
 
+msgid "Show in text field"
+msgstr "Show in text field"
+
 msgid "Show items in all states"
 msgstr "Show items in all states"
 
@@ -15483,6 +15504,9 @@ msgstr "Show sessions"
 
 msgid "Show status and send notifications for this agent."
 msgstr "Show status and send notifications for this agent."
+
+msgid "Show text"
+msgstr "Show text"
 
 msgid "Show the triggering payload"
 msgstr "Show the triggering payload"

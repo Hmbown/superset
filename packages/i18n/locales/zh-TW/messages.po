@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}：{statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, other {# 行}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName}（此裝置）"
 
@@ -5104,6 +5107,9 @@ msgstr "沒能完成工作區的刪除"
 msgid "Couldn't hand this to an agent"
 msgstr "無法交給代理程式處理"
 
+msgid "Couldn't load {filename}"
+msgstr "無法載入 {filename}"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "無法載入代理程式設定：{0}"
@@ -8306,6 +8312,9 @@ msgstr "隱藏審查評論"
 msgid "Hide sessions"
 msgstr "隱藏會話"
 
+msgid "Hide text"
+msgstr "隱藏文字"
+
 msgid "Hide unchanged regions"
 msgstr "隱藏未更改區域"
 
@@ -10616,6 +10625,9 @@ msgstr "下一條評論"
 msgid "Next file"
 msgstr "下一個檔案"
 
+msgid "Next image"
+msgstr "下一張圖片"
+
 msgid "Next match"
 msgstr "下一個匹配"
 
@@ -12865,6 +12877,9 @@ msgstr "上一條評論"
 msgid "Previous file"
 msgstr "上一個檔案"
 
+msgid "Previous image"
+msgstr "上一張圖片"
+
 msgid "Previous match"
 msgstr "上一個匹配"
 
@@ -13667,6 +13682,9 @@ msgstr "移除提及"
 
 msgid "Remove mention {path}"
 msgstr "移除提及{path}"
+
+msgid "Remove pasted text"
+msgstr "移除貼上的文字"
 
 msgid "Remove PR Link"
 msgstr "移除PR連結"
@@ -15421,6 +15439,9 @@ msgstr "在圖表中顯示"
 msgid "Show in folder"
 msgstr "在資料夾中顯示"
 
+msgid "Show in text field"
+msgstr "在輸入框中顯示"
+
 msgid "Show items in all states"
 msgstr "顯示所有狀態的條目"
 
@@ -15483,6 +15504,9 @@ msgstr "顯示會話"
 
 msgid "Show status and send notifications for this agent."
 msgstr "為此代理程式顯示狀態併發送通知。"
+
+msgid "Show text"
+msgstr "顯示文字"
 
 msgid "Show the triggering payload"
 msgstr "顯示觸發酬載"

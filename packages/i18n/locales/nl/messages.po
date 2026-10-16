@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}: {statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, one {# regel} other {# regels}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName} (dit apparaat)"
 
@@ -5104,6 +5107,9 @@ msgstr "Kon het verwijderen van werkruimtes niet afronden"
 msgid "Couldn't hand this to an agent"
 msgstr "Kon dit niet aan een agent overdragen"
 
+msgid "Couldn't load {filename}"
+msgstr "Kan {filename} niet laden"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "Kan agentinstellingen niet laden: {0}"
@@ -8306,6 +8312,9 @@ msgstr "Reviewopmerkingen verbergen"
 msgid "Hide sessions"
 msgstr "Sessies verbergen"
 
+msgid "Hide text"
+msgstr "Tekst verbergen"
+
 msgid "Hide unchanged regions"
 msgstr "Ongewijzigde stukken verbergen"
 
@@ -10616,6 +10625,9 @@ msgstr "Volgende opmerking"
 msgid "Next file"
 msgstr "Volgend bestand"
 
+msgid "Next image"
+msgstr "Volgende afbeelding"
+
 msgid "Next match"
 msgstr "Volgende overeenkomst"
 
@@ -12865,6 +12877,9 @@ msgstr "Vorige opmerking"
 msgid "Previous file"
 msgstr "Vorig bestand"
 
+msgid "Previous image"
+msgstr "Vorige afbeelding"
+
 msgid "Previous match"
 msgstr "Vorige overeenkomst"
 
@@ -13667,6 +13682,9 @@ msgstr "Vermelding verwijderen"
 
 msgid "Remove mention {path}"
 msgstr "Vermelding {path} verwijderen"
+
+msgid "Remove pasted text"
+msgstr "Geplakte tekst verwijderen"
 
 msgid "Remove PR Link"
 msgstr "PR-koppeling verwijderen"
@@ -15421,6 +15439,9 @@ msgstr "Tonen in grafiek"
 msgid "Show in folder"
 msgstr "Tonen in map"
 
+msgid "Show in text field"
+msgstr "In tekstveld tonen"
+
 msgid "Show items in all states"
 msgstr "Items in alle statussen tonen"
 
@@ -15483,6 +15504,9 @@ msgstr "Sessies tonen"
 
 msgid "Show status and send notifications for this agent."
 msgstr "Status tonen en meldingen sturen voor deze agent."
+
+msgid "Show text"
+msgstr "Tekst tonen"
 
 msgid "Show the triggering payload"
 msgstr "Activerende payload tonen"
