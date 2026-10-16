@@ -1,17 +1,52 @@
+import { homedir } from "node:os";
+import { join } from "node:path";
+import { installedPluginsFilePath } from "@superset/agent-setup";
+import type { McpServerEntry } from "@superset/shared/mcp-servers";
 import type { SlashCommand } from "@superset/shared/slash-commands";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { workspaces } from "../../../db/schema";
 import { resolveHostAgentConfig } from "../../../terminal-agents/agent-config";
+import type { HostServiceContext } from "../../../types";
 import { queryProcedure, router } from "../../index";
 import { resolveDefaultAccountEnv } from "../usage/default-account";
 import { listAgentSlashCommands } from "./discovery";
+import { listMcpServers } from "./mcp-servers";
 
 // Declaration emit (docs/interim-router-types.md): the procedure's return
 // type must be nameable from dist-types, and shared is runtime-neutral so
 // mobile can resolve it.
+export type { McpServerEntry } from "@superset/shared/mcp-servers";
 export type { SlashCommand } from "@superset/shared/slash-commands";
+
+function findWorkspace(ctx: HostServiceContext, workspaceId: string) {
+	const workspace = ctx.db.query.workspaces
+		.findFirst({ where: eq(workspaces.id, workspaceId) })
+		.sync();
+	if (!workspace) {
+		throw new TRPCError({
+			code: "NOT_FOUND",
+			message: `Workspace ${workspaceId} not found on this host`,
+		});
+	}
+	return workspace;
+}
+
+/**
+ * The launch env an agent family runs with: the host-default account, under
+ * the config's own env when the asking agent is that family.
+ */
+function familyEnv(
+	ctx: HostServiceContext,
+	family: "claude" | "codex",
+	config: { presetId: string; env: Record<string, string> } | null,
+): Record<string, string> {
+	return {
+		...resolveDefaultAccountEnv(ctx.db, family),
+		...(config?.presetId === family ? config.env : {}),
+	};
+}
 
 export const agentToolingRouter = router({
 	/**
@@ -23,15 +58,7 @@ export const agentToolingRouter = router({
 	listSlashCommands: queryProcedure
 		.input(z.object({ workspaceId: z.string(), agent: z.string() }))
 		.query(async ({ ctx, input }): Promise<SlashCommand[]> => {
-			const workspace = ctx.db.query.workspaces
-				.findFirst({ where: eq(workspaces.id, input.workspaceId) })
-				.sync();
-			if (!workspace) {
-				throw new TRPCError({
-					code: "NOT_FOUND",
-					message: `Workspace ${input.workspaceId} not found on this host`,
-				});
-			}
+			const workspace = findWorkspace(ctx, input.workspaceId);
 			const config = resolveHostAgentConfig(ctx.db, input.agent);
 			const presetId = config?.presetId ?? input.agent;
 			// Same precedence as the agent launch itself: the config's own env
@@ -47,5 +74,49 @@ export const agentToolingRouter = router({
 				presetId,
 				env,
 			});
+		}),
+
+	/**
+	 * The MCP servers Claude Code and Codex have configured for this
+	 * workspace, with their state for the given agent, plus the Superset
+	 * plugin servers that agent does not have yet. Read from config files
+	 * only. Cached for 30 s; `refresh` reads again.
+	 */
+	listMcpServers: queryProcedure
+		.input(
+			z.object({
+				workspaceId: z.string(),
+				agent: z.string(),
+				refresh: z.boolean().optional(),
+			}),
+		)
+		.query(async ({ ctx, input }): Promise<{ servers: McpServerEntry[] }> => {
+			const workspace = findWorkspace(ctx, input.workspaceId);
+			const config = resolveHostAgentConfig(ctx.db, input.agent);
+			const presetId = config?.presetId ?? input.agent;
+			const home = homedir();
+			const claudeDir = familyEnv(
+				ctx,
+				"claude",
+				config,
+			).CLAUDE_CONFIG_DIR?.trim();
+			const codexHome = familyEnv(ctx, "codex", config).CODEX_HOME?.trim();
+			const servers = await listMcpServers({
+				worktreePath: workspace.worktreePath,
+				agent: presetId,
+				refresh: input.refresh,
+				paths: {
+					homeDir: home,
+					claudeStatePath: claudeDir
+						? join(claudeDir, ".claude.json")
+						: join(home, ".claude.json"),
+					codexConfigPath: join(
+						codexHome || join(home, ".codex"),
+						"config.toml",
+					),
+					installedPluginsPath: installedPluginsFilePath(),
+				},
+			});
+			return { servers };
 		}),
 });
