@@ -10,9 +10,7 @@ export type AcpHarness = {
 	upgrade?: string;
 	/** The agent's own id for its unrestricted mode; chats start in it. */
 	fullAccessModeId?: string;
-	/** The agent has no approval modes, so Superset offers its own. */
 	clientApprovalModes?: boolean;
-	/** The agent is built on pi, whose background shells are listed as tasks. */
 	piBackgroundShells?: boolean;
 	note: string;
 } & AcpTranslator;

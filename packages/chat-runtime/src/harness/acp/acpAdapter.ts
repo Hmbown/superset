@@ -204,9 +204,7 @@ export type AcpAdapterOptions = SpawnAcpOptions & {
 	launch?: () => Promise<Pick<SpawnAcpOptions, "command" | "args" | "env">>;
 	/** Selected for a new session that asks for no mode, when the agent offers it. */
 	defaultModeId?: string;
-	/** The agent has no approval modes, so the adapter offers its own and answers permission requests. */
 	clientApprovalModes?: boolean;
-	/** Tool results carry pi's `details.shellId`, so background shells are listed as tasks. */
 	piBackgroundShells?: boolean;
 	shellPollMs?: number;
 	/** How long a prompt waits for mode and option changes the agent has not answered. */
