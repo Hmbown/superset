@@ -16,6 +16,7 @@ import type {
 	UserContent,
 } from "@superset/chat/protocol";
 import { AGENT_DEFAULT_MODE } from "@superset/chat/protocol";
+import { z } from "zod";
 import { BackgroundTasks } from "../backgroundTasks";
 import { EventQueue } from "../eventQueue";
 import type {
@@ -182,6 +183,7 @@ const REQUEST_TIMEOUT_MS = 30_000;
 const STDERR_TAIL_CHARS = 4000;
 const ASK_MODE_ID = "default";
 const QUESTION_FIELD_ID = "answer";
+const SHELL_POLL_MS = 2000;
 const CLIENT_APPROVAL_MODES = [
 	{ id: ASK_MODE_ID, label: "Ask for approval" },
 	{ id: "auto", label: "Approve for me" },
@@ -204,6 +206,9 @@ export type AcpAdapterOptions = SpawnAcpOptions & {
 	defaultModeId?: string;
 	/** The agent has no approval modes, so the adapter offers its own and answers permission requests. */
 	clientApprovalModes?: boolean;
+	/** Tool results carry pi's `details.shellId`, so background shells are listed as tasks. */
+	piBackgroundShells?: boolean;
+	shellPollMs?: number;
 	/** How long a prompt waits for mode and option changes the agent has not answered. */
 	selectionWaitMs?: number;
 	startupTimeoutMs?: number;
@@ -234,6 +239,7 @@ type OpenText = {
 	attachments: ItemAttachment[];
 	turnId: string;
 	startedAtMs: number;
+	model?: string;
 };
 
 type PendingApproval = {
@@ -421,6 +427,8 @@ export class AcpAdapter implements HarnessAdapter {
 	private disposed = false;
 	private dead = false;
 	private stderrTail = "";
+	private readonly shellPids = new Map<string, number>();
+	private shellPoll: ReturnType<typeof setInterval> | null = null;
 
 	constructor(private readonly options: AcpAdapterOptions) {
 		this.backgroundTasks = new BackgroundTasks(
@@ -527,12 +535,14 @@ export class AcpAdapter implements HarnessAdapter {
 	}
 
 	setMode(modeId: string): void {
-		const previous = this.modeId;
-		this.emitSession({ modeId });
 		if (this.options.clientApprovalModes) {
-			if (modeId !== ASK_MODE_ID) this.approvePendingPermissions();
+			if (!isClientApprovalMode(modeId)) return;
+			this.emitSession({ modeId });
+			if (autoApproves(modeId)) this.approvePendingPermissions();
 			return;
 		}
+		const previous = this.modeId;
+		this.emitSession({ modeId });
 		if (!this.client || !this.sessionId) return;
 		// v2 dropped session/set_mode outright: a mode is a config option there,
 		// and `config_option_update` is what told us which one.
@@ -631,6 +641,8 @@ export class AcpAdapter implements HarnessAdapter {
 	}
 
 	async stopBackgroundTask(taskId: string): Promise<boolean> {
+		const shellPid = this.shellPids.get(taskId);
+		if (shellPid !== undefined) return stopProcessGroup(shellPid);
 		if (!this.client || !this.sessionId) return false;
 		if (!this.backgroundTasks.canStop(taskId)) return false;
 		const response = await this.client.request(
@@ -671,6 +683,7 @@ export class AcpAdapter implements HarnessAdapter {
 		this.disposed = true;
 		this.stalePendingApprovals();
 		this.backgroundTasks.dispose();
+		if (this.shellPoll) clearInterval(this.shellPoll);
 		await this.client?.close();
 		this.queue.close();
 	}
@@ -817,8 +830,8 @@ export class AcpAdapter implements HarnessAdapter {
 				...(this.options.clientApprovalModes
 					? {
 							modeId:
-								[this.modeId, this.startModeId(startOptions, false)].find(
-									(id) => CLIENT_APPROVAL_MODES.some((mode) => mode.id === id),
+								[this.modeId, this.startModeId(startOptions, resumed)].find(
+									isClientApprovalMode,
 								) ?? ASK_MODE_ID,
 							availableModes: CLIENT_APPROVAL_MODES,
 						}
@@ -1145,6 +1158,9 @@ export class AcpAdapter implements HarnessAdapter {
 			attachments: [...(flushed?.attachments ?? [])],
 			turnId,
 			startedAtMs: flushed?.startedAtMs ?? this.nextStartMs(),
+			...(kind === "agent_message" && !this.replaying
+				? { model: this.currentModelLabel() }
+				: {}),
 		};
 		this.openText = next;
 		// A user message has no text field to stream into, so it is recorded
@@ -1201,7 +1217,7 @@ export class AcpAdapter implements HarnessAdapter {
 		};
 		switch (open.kind) {
 			case "agent_message": {
-				const model = this.replaying ? undefined : this.currentModelLabel();
+				const { model } = open;
 				return {
 					...base,
 					kind: "agent_message",
@@ -1305,6 +1321,49 @@ export class AcpAdapter implements HarnessAdapter {
 		};
 		this.toolCalls.set(update.toolCallId, item);
 		this.emitItem(item, turnId);
+		if (this.options.piBackgroundShells && !this.replaying) {
+			this.trackBackgroundShell(item);
+		}
+	}
+
+	private trackBackgroundShell(item: ToolCall): void {
+		const details = piShellDetailsSchema.safeParse(
+			(item.rawOutput as { details?: unknown } | undefined)?.details,
+		);
+		if (!details.success) return;
+		const { shellId, status, pid } = details.data;
+		if (status !== "running") {
+			this.endBackgroundShell(shellId);
+			return;
+		}
+		if (this.backgroundTasks.has(shellId)) return;
+		const input = piShellInputSchema.safeParse(item.rawInput);
+		this.backgroundTasks.start({
+			id: shellId,
+			kind: "process",
+			name:
+				(input.success && (input.data.description || input.data.command)) ||
+				shellId,
+			canStop: pid !== undefined,
+			startedAtMs: this.now(),
+		});
+		if (pid === undefined) return;
+		this.shellPids.set(shellId, pid);
+		this.shellPoll ??= setInterval(() => {
+			for (const [id, shellPid] of this.shellPids) {
+				if (!processAlive(shellPid)) this.endBackgroundShell(id);
+			}
+		}, this.options.shellPollMs ?? SHELL_POLL_MS);
+		this.shellPoll.unref?.();
+	}
+
+	private endBackgroundShell(shellId: string): void {
+		this.shellPids.delete(shellId);
+		this.backgroundTasks.end(shellId);
+		if (this.shellPids.size === 0 && this.shellPoll) {
+			clearInterval(this.shellPoll);
+			this.shellPoll = null;
+		}
 	}
 
 	/**
@@ -1709,21 +1768,23 @@ export class AcpAdapter implements HarnessAdapter {
 		const allow = parsed.data.options.find((option) =>
 			/^allow\b/i.test(option.name),
 		);
+		const title = parsed.data.toolCall?.title ?? "Permission required";
+		const permission = Boolean(allow) && /^allow\b/i.test(title);
 		if (
 			this.options.clientApprovalModes &&
+			permission &&
 			allow &&
-			this.modeId !== ASK_MODE_ID
+			autoApproves(this.modeId)
 		) {
 			this.client?.respond(request.id, {
 				outcome: { outcome: "selected", optionId: allow.optionId },
 			});
 			return;
 		}
-		const question = this.options.clientApprovalModes === true && !allow;
+		const question = this.options.clientApprovalModes === true && !permission;
 		const turnId = this.resolveTurnId();
 		const targetItemId = parsed.data.toolCall?.toolCallId ?? null;
 		const approvalId = `approval:${targetItemId ?? this.mintId()}`;
-		const title = parsed.data.toolCall?.title ?? "Permission required";
 		const item: ApprovalRequest = {
 			id: approvalId,
 			kind: "approval_request",
@@ -1752,10 +1813,11 @@ export class AcpAdapter implements HarnessAdapter {
 						options: parsed.data.options.map((option) => ({
 							optionId: option.optionId,
 							label: option.name,
-							...(isApprovalOptionKind(option.kind) &&
-							!this.options.clientApprovalModes
-								? { kind: option.kind }
-								: {}),
+							...(this.options.clientApprovalModes
+								? { kind: optionKindFromLabel(option.name) }
+								: isApprovalOptionKind(option.kind)
+									? { kind: option.kind }
+									: {}),
 						})),
 					}),
 		};
@@ -2098,6 +2160,52 @@ export class AcpAdapter implements HarnessAdapter {
 	private mintId(): string {
 		return (this.options.mintId ?? randomUUID)();
 	}
+}
+
+function isClientApprovalMode(modeId: string | undefined): modeId is string {
+	return CLIENT_APPROVAL_MODES.some((mode) => mode.id === modeId);
+}
+
+function autoApproves(modeId: string | undefined): boolean {
+	return modeId === "auto" || modeId === "bypassPermissions";
+}
+
+function optionKindFromLabel(
+	label: string,
+): "allow_once" | "allow_always" | "reject_once" {
+	if (/^(deny|reject|no)\b/i.test(label)) return "reject_once";
+	if (/always|session/i.test(label)) return "allow_always";
+	return "allow_once";
+}
+
+const piShellDetailsSchema = z.looseObject({
+	shellId: z.string().min(1),
+	status: z.string(),
+	pid: z.number().int().positive().optional(),
+});
+
+const piShellInputSchema = z.looseObject({
+	command: z.string().optional(),
+	description: z.string().optional(),
+});
+
+function processAlive(pid: number): boolean {
+	try {
+		process.kill(pid, 0);
+		return true;
+	} catch (error) {
+		return (error as NodeJS.ErrnoException).code === "EPERM";
+	}
+}
+
+function stopProcessGroup(pid: number): boolean {
+	for (const target of [-pid, pid]) {
+		try {
+			process.kill(target, "SIGTERM");
+			return true;
+		} catch {}
+	}
+	return false;
 }
 
 export function createAcpAdapter(options: AcpAdapterOptions): HarnessAdapter {

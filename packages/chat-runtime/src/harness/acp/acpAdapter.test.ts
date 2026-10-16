@@ -1,4 +1,5 @@
 import { describe, expect, it } from "bun:test";
+import { spawn } from "node:child_process";
 import type { Item } from "@superset/chat/protocol";
 import { AGENT_DEFAULT_MODE } from "@superset/chat/protocol";
 import type { AdapterEvent } from "../types";
@@ -99,6 +100,27 @@ class FakeAcpAgent {
 			},
 		});
 		return id;
+	}
+
+	requestPdevPermission(toolCallId: string, id: number): void {
+		this.deliver({
+			jsonrpc: "2.0",
+			id,
+			method: "session/request_permission",
+			params: {
+				sessionId: "sess-1",
+				toolCall: { toolCallId, title: "Allow Write hello.txt?" },
+				options: [
+					{ optionId: "choice-0", name: "Allow once", kind: "allow_once" },
+					{
+						optionId: "choice-1",
+						name: "Allow all edits this session",
+						kind: "allow_once",
+					},
+					{ optionId: "choice-2", name: "Deny", kind: "allow_once" },
+				],
+			},
+		});
 	}
 
 	askQuestion(sessionId: string, toolCallId: string): number {
@@ -307,6 +329,8 @@ function startAdapter(
 		AcpAdapterOptions,
 		| "defaultModeId"
 		| "clientApprovalModes"
+		| "piBackgroundShells"
+		| "shellPollMs"
 		| "selectionWaitMs"
 		| "backgroundDetailIntervalMs"
 		| "startupTimeoutMs"
@@ -1412,6 +1436,8 @@ describe("AcpAdapter on protocol v2", () => {
 			{ defaultModeId: "bypassPermissions", clientApprovalModes: true },
 		);
 		await flush();
+		adapter.setMode("medium");
+		expect(sessionsOf(events).at(-1)?.modeId).toBe("bypassPermissions");
 		expect(sessionsOf(events).find((s) => s.availableModes)).toMatchObject({
 			modeId: "bypassPermissions",
 			availableModes: [
@@ -1423,10 +1449,10 @@ describe("AcpAdapter on protocol v2", () => {
 		adapter.prompt([{ type: "text", text: "run" }]);
 		await flush();
 
-		agent.requestPermission("sess-1", "tc-1");
+		agent.requestPdevPermission("tc-1", 9101);
 		await flush();
-		expect(agent.lastPermissionResponse()?.result).toEqual({
-			outcome: { outcome: "selected", optionId: "allow" },
+		expect(agent.sent.find((f) => f.id === 9101)?.result).toEqual({
+			outcome: { outcome: "selected", optionId: "choice-0" },
 		});
 		expect(itemsOf(events).some((item) => item.id === "approval:tc-1")).toBe(
 			false,
@@ -1460,13 +1486,20 @@ describe("AcpAdapter on protocol v2", () => {
 		});
 
 		adapter.setMode("default");
-		agent.requestPermission("sess-1", "tc-2");
+		agent.requestPdevPermission("tc-2", 9102);
 		await flush();
 		expect(
 			itemsOf(events)
 				.filter((item) => item.id === "approval:tc-2")
 				.at(-1),
-		).toMatchObject({ status: "pending" });
+		).toMatchObject({
+			status: "pending",
+			options: [
+				{ optionId: "choice-0", kind: "allow_once" },
+				{ optionId: "choice-1", kind: "allow_always" },
+				{ optionId: "choice-2", kind: "reject_once" },
+			],
+		});
 
 		adapter.setMode("auto");
 		await flush();
@@ -1475,7 +1508,29 @@ describe("AcpAdapter on protocol v2", () => {
 				.filter((item) => item.id === "approval:tc-2")
 				.at(-1),
 		).toMatchObject({ status: "answered" });
+		expect(agent.sent.find((f) => f.id === 9102)?.result).toEqual({
+			outcome: { outcome: "selected", optionId: "choice-0" },
+		});
 		expect(agent.sent.some((f) => f.method === "session/set_mode")).toBe(false);
+
+		await adapter.dispose();
+	});
+
+	it("resumes a session with its own approval modes in Ask, not the harness default", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(
+			agent,
+			"sess-1",
+			{},
+			{ defaultModeId: "bypassPermissions", clientApprovalModes: true },
+		);
+		await flush(40);
+
+		expect(
+			sessionsOf(events)
+				.filter((s) => s.availableModes)
+				.at(-1)?.modeId,
+		).toBe("default");
 
 		await adapter.dispose();
 	});
@@ -1502,6 +1557,89 @@ describe("AcpAdapter on protocol v2", () => {
 				.filter((item) => item.kind === "agent_message")
 				.at(-1),
 		).toMatchObject({ model: "pdev/Auto" });
+
+		await adapter.dispose();
+	});
+
+	it("lists a pi background shell from its tool result until pi reports it stopped", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ piBackgroundShells: true },
+		);
+		await flush();
+		adapter.prompt([{ type: "text", text: "run" }]);
+		await flush();
+		const shellTasks = () =>
+			sessionsOf(events)
+				.filter((session) => session.backgroundTasks)
+				.at(-1)
+				?.backgroundTasks?.map((task) => [task.id, task.name]);
+
+		agent.notify("sess-1", {
+			sessionUpdate: "tool_call",
+			toolCallId: "bg",
+			title: "bash_background",
+			rawInput: { command: "sleep 25", description: "Wait a while" },
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "tool_call_update",
+			toolCallId: "bg",
+			status: "completed",
+			rawOutput: {
+				details: { shellId: "bash_1", status: "running", pid: process.pid },
+			},
+		});
+		await flush();
+		expect(shellTasks()).toEqual([["bash_1", "Wait a while"]]);
+
+		agent.notify("sess-1", {
+			sessionUpdate: "tool_call_update",
+			toolCallId: "kill",
+			title: "kill_shell",
+			status: "completed",
+			rawOutput: { details: { shellId: "bash_1", status: "killed" } },
+		});
+		await flush();
+		expect(shellTasks()).toEqual([]);
+
+		await adapter.dispose();
+	});
+
+	it("stops a pi background shell's process and drops it once the process is gone", async () => {
+		const shell = spawn("sleep", ["30"], { detached: true, stdio: "ignore" });
+		const pid = shell.pid;
+		if (pid === undefined) throw new Error("no pid");
+		const exited = new Promise((resolve) => shell.once("exit", resolve));
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ piBackgroundShells: true, shellPollMs: 5 },
+		);
+		await flush();
+		adapter.prompt([{ type: "text", text: "run" }]);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "tool_call_update",
+			toolCallId: "bg",
+			title: "bash_background",
+			status: "completed",
+			rawOutput: { details: { shellId: "bash_1", status: "running", pid } },
+		});
+		await flush();
+
+		expect(await adapter.stopBackgroundTask("bash_1")).toBe(true);
+		await exited;
+		await new Promise((resolve) => setTimeout(resolve, 20));
+		expect(
+			sessionsOf(events)
+				.filter((session) => session.backgroundTasks)
+				.at(-1)?.backgroundTasks,
+		).toEqual([]);
 
 		await adapter.dispose();
 	});
