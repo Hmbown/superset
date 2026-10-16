@@ -18,7 +18,6 @@ export type AgentComposerProps = Omit<
 > & {
 	mentionProviders?: ComposerMentionProvider[];
 	commands?: PromptInputCommand[];
-	/** More chips to restore from a stored draft, next to the plugin mentions. */
 	findChips?: (text: string) => ComposerChipMatch[];
 };
 

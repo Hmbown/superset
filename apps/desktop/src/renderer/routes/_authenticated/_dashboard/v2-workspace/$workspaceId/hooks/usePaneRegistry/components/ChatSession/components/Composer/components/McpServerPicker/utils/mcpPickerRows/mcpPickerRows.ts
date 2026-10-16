@@ -1,9 +1,7 @@
 import type { McpServerEntry } from "@superset/shared/mcp-servers";
 
-/** What the account catalog knows about a plugin. */
 export interface McpPluginAccount {
 	displayName: string;
-	/** Connector slug; null when the plugin needs no account. */
 	connector: string | null;
 	connected: boolean;
 	installed: boolean;
@@ -18,10 +16,8 @@ export type McpPickerRow =
 			action: "install" | "connect";
 			plugin: string;
 			displayName: string;
-			/** Installed on this machine or on the account. */
 			installed: boolean;
 			connector: string | null;
-			/** The connector has no connected account yet. */
 			needsAccount: boolean;
 	  }
 	| {
@@ -70,11 +66,6 @@ function rowFor(
 	return { key, server, kind: "available" };
 }
 
-/**
- * Servers the agent can use first, then plugins that need an install or an
- * account, then the ones it cannot use, each by name. A plugin server the
- * account catalog does not offer is left out, as on the Plugins page.
- */
 export function mcpPickerRows(
 	servers: readonly McpServerEntry[],
 	plugins: ReadonlyMap<string, McpPluginAccount>,

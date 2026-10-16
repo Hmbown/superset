@@ -80,7 +80,6 @@ export function SessionView({
 	workspaceId,
 }: {
 	client: SessionClient;
-	/** The agent's preset or config id. */
 	agentId?: string;
 	draftKey: string;
 	workspaceId: string;

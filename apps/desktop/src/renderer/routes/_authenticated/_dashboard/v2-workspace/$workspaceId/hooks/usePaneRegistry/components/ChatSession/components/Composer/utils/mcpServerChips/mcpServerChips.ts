@@ -14,10 +14,6 @@ function tokenSafe(value: string): string {
 	return value.replace(/[^\w.-]+/g, "-").replace(/^\.+|\.+$/g, "") || "server";
 }
 
-/**
- * `@mcp/<name>`, with the scope in front when the same agent has another
- * server of that name.
- */
 export function mcpServerToken(
 	server: Pick<McpServerEntry, "name" | "agent" | "scope">,
 	servers: readonly Pick<McpServerEntry, "name" | "agent" | "scope">[],
@@ -53,7 +49,6 @@ export interface McpTokenMatch {
 	start: number;
 	end: number;
 	token: string;
-	/** The last path segment, which is the server name. */
 	name: string;
 }
 
@@ -70,7 +65,6 @@ export function findMcpServerTokens(text: string): McpTokenMatch[] {
 	});
 }
 
-/** The line put in front of a message that names MCP servers to use. */
 export function mcpContextLine(serverNames: readonly string[]): string | null {
 	const names = [...new Set(serverNames)];
 	if (names.length === 0) return null;

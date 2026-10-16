@@ -33,10 +33,6 @@ function findWorkspace(ctx: HostServiceContext, workspaceId: string) {
 	return workspace;
 }
 
-/**
- * The launch env an agent family runs with: the host-default account, under
- * the config's own env when the asking agent is that family.
- */
 function familyEnv(
 	ctx: HostServiceContext,
 	family: "claude" | "codex",
@@ -76,12 +72,6 @@ export const agentToolingRouter = router({
 			});
 		}),
 
-	/**
-	 * The MCP servers Claude Code and Codex have configured for this
-	 * workspace, with their state for the given agent, plus the Superset
-	 * plugin servers that agent does not have yet. Read from config files
-	 * only. Cached for 30 s; `refresh` reads again.
-	 */
 	listMcpServers: queryProcedure
 		.input(
 			z.object({

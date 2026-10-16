@@ -28,12 +28,6 @@ export type McpServerPickerControls = {
 	dialog: ReactNode;
 };
 
-/**
- * `/mcp` for the chat composer: a picker of the servers the agent can use,
- * whose picks become chips. Plugins that need an install or an account go
- * through the Plugins page's install and connect flow, then the picker opens
- * again with a fresh list.
- */
 export function useMcpServerPicker({
 	workspaceId,
 	agentId,

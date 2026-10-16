@@ -17,19 +17,15 @@ import {
 } from "@superset/shared/plugins";
 
 export interface McpConfigPaths {
-	/** Stops the walk up for project files. */
 	homeDir: string;
 	/** `~/.claude.json`, or `.claude.json` inside a custom CLAUDE_CONFIG_DIR. */
 	claudeStatePath: string;
-	/** `config.toml` in CODEX_HOME. */
 	codexConfigPath: string;
-	/** Superset's installed-plugins ledger for this machine. */
 	installedPluginsPath: string;
 }
 
 export interface DiscoverMcpServersOptions {
 	worktreePath: string;
-	/** Family of the agent asking: claude, codex, or another preset. */
 	agent: string;
 	paths: McpConfigPaths;
 }
@@ -88,7 +84,6 @@ async function exists(path: string): Promise<boolean> {
 	}
 }
 
-/** The worktree and its parents, up to the repository root or the home dir. */
 async function projectDirs(
 	worktreePath: string,
 	homeDir: string,
@@ -184,7 +179,6 @@ function tomlString(line: string, key: string): string | undefined {
 	return match ? (match[1] ?? match[2]) : undefined;
 }
 
-/** `[mcp_servers.<name>]` tables, read line by line: enough for names and endpoints. */
 export function parseCodexMcpServers(
 	content: string,
 	scope: McpServerScope,
@@ -394,10 +388,6 @@ const cache = new Map<
 	{ promise: Promise<McpServerEntry[]>; fetchedAt: number }
 >();
 
-/**
- * Cached per workspace, agent, and config files for 30 s, which covers a
- * picker reopening; `refresh` reads the files again.
- */
 export function listMcpServers(
 	options: DiscoverMcpServersOptions & {
 		refresh?: boolean;

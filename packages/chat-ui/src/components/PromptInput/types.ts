@@ -24,7 +24,6 @@ export type ComposerActionContext = {
 };
 
 export type ComposerPanelControls = {
-	// Closes the panel and returns focus to the editor.
 	close(): void;
 };
 

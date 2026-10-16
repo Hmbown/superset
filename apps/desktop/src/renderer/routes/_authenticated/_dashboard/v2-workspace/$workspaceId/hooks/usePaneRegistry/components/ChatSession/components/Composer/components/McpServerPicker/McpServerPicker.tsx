@@ -81,7 +81,6 @@ export function McpServerPicker({
 				}),
 			);
 		} catch {
-			// The list keeps what it had; the next open reads again.
 		} finally {
 			setIsRefreshing(false);
 		}

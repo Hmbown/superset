@@ -51,7 +51,6 @@ import { mcpContextLine, mcpServerOfChip } from "./utils/mcpServerChips";
 
 export type ComposerProps = {
 	workspaceId: string;
-	/** The agent's preset or config id; enables `/mcp`. */
 	agentId?: string;
 	draftKey: string;
 	inputRef?: Ref<Pick<PromptInputHandle, "appendText" | "focus">>;
