@@ -4,6 +4,7 @@ import type {
 	ComposerChipMatch,
 	PromptInputCommand,
 } from "@superset/chat-ui/PromptInput";
+import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useNavigate } from "@tanstack/react-router";
 import { ServerIcon } from "lucide-react";
@@ -44,7 +45,7 @@ export function useMcpServerPicker({
 	const navigate = useNavigate();
 	const isDark = useIsDarkTheme();
 	const utils = workspaceTrpc.useUtils();
-	const { install } = usePluginMutations();
+	const { install } = usePluginMutations({ announceInstall: false });
 	const input = { workspaceId, agent: agentId ?? "" };
 	const cached = workspaceTrpc.agentTooling.listMcpServers.useQuery(input, {
 		enabled: false,
@@ -68,7 +69,7 @@ export function useMcpServerPicker({
 	};
 
 	const runAction = async (row: McpPickerActionRow) => {
-		if (!row.server.plugin?.installed) {
+		if (!row.installed) {
 			try {
 				await install(row.plugin);
 			} catch {
@@ -80,6 +81,12 @@ export function useMcpServerPicker({
 			setConnecting({ plugin: row.plugin, connector: row.connector });
 			return;
 		}
+		const name = row.displayName;
+		toast.success(t({ message: `${name} is installed` }), {
+			description: t({
+				message: "Its tools reach the agent in your next chat.",
+			}),
+		});
 		reopen();
 	};
 	const runActionRef = useRef(runAction);

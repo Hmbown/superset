@@ -964,12 +964,15 @@ msgstr "{name} è integrato e non può essere rimosso"
 msgid "serverError.plugins.marketplaceReserved"
 msgstr "{name} è integrato e non può essere sostituito"
 
+msgid "{name} is installed"
+msgstr "{name} è installato"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} non è aggiunto"
 
-msgid "{name} plugin · applies from the next session"
-msgstr "Plugin {name} · si applica dalla prossima sessione"
+msgid "{name} plugin"
+msgstr "Plugin {name}"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Specifica almeno una persona, oppure scegli {choice}.} sender {Specifica almeno un mittente, oppure scegli {choice}.} other {Specifica almeno una voce, oppure scegli {choice}.}}"
@@ -8722,6 +8725,9 @@ msgstr "Nell'app desktop di Superset, apri Impostazioni → Accesso remoto e att
 msgid "In under a year, more than 130,000 developers across 176 countries have run Superset and created over 1.5 million agent workspaces. Japan is its second-largest market after the US, with over 12,000 developers, and Asia as a whole now accounts for more users than the US."
 msgstr "In meno di un anno, oltre 130.000 sviluppatori in 176 paesi hanno usato Superset e creato più di 1,5 milioni di workspace di agenti. Il Giappone è il secondo mercato dopo gli Stati Uniti, con oltre 12.000 sviluppatori, e l’Asia nel suo complesso conta ormai più utenti degli Stati Uniti."
 
+msgid "In your next chat"
+msgstr "Nella tua prossima chat"
+
 msgid "In your terminal"
 msgstr "Nel tuo terminale"
 
@@ -9081,6 +9087,9 @@ msgstr "Un branch e una copia dei file tutti suoi"
 
 msgid "Its replies go with it."
 msgstr "Anche le risposte verranno eliminate."
+
+msgid "Its tools reach the agent in your next chat."
+msgstr "I suoi strumenti arrivano all'agente nella tua prossima chat."
 
 msgid "Its workspaces and terminals are unavailable until it restarts — use the Superset tray menu > Host Service > Restart."
 msgstr "I suoi workspace e terminali non sono disponibili finché non si riavvia — usa il menu della barra di stato di Superset > Servizio host > Riavvia."
@@ -10619,9 +10628,6 @@ msgstr "Prossima esecuzione {0}"
 
 msgid "Next run in 3d"
 msgstr "Prossima esecuzione tra 3g"
-
-msgid "Next session"
-msgstr "Prossima sessione"
 
 msgid "Next slide"
 msgstr "Diapositiva successiva"

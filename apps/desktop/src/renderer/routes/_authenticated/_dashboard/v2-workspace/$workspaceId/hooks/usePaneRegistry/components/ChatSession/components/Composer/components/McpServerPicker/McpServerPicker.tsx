@@ -5,7 +5,6 @@ import type {
 	McpServerEntry,
 	McpServerScope,
 } from "@superset/shared/mcp-servers";
-import { getPluginByName } from "@superset/shared/plugins";
 import {
 	Command,
 	CommandInput,
@@ -98,6 +97,7 @@ export function McpServerPicker({
 						displayName: plugin.interface.displayName,
 						connector: plugin.connector,
 						connected: plugin.connections.length > 0,
+						installed: plugin.installed,
 					},
 				]),
 			),
@@ -117,10 +117,8 @@ export function McpServerPicker({
 		const { server } = row;
 		if (server.state === "not-configured" && server.plugin) {
 			const name =
-				plugins.get(server.plugin.name)?.displayName ??
-				getPluginByName(server.plugin.name)?.interface.displayName ??
-				server.plugin.name;
-			return t({ message: `${name} plugin · applies from the next session` });
+				plugins.get(server.plugin.name)?.displayName ?? server.plugin.name;
+			return t({ message: `${name} plugin` });
 		}
 		return `${AGENT_LABELS[server.agent]} · ${scopeLabels[server.scope]}`;
 	};
@@ -140,7 +138,7 @@ export function McpServerPicker({
 		}
 		if (row.reason === "disabled")
 			return <Trans>Disabled in agent config</Trans>;
-		if (row.reason === "next-session") return <Trans>Next session</Trans>;
+		if (row.reason === "next-session") return <Trans>In your next chat</Trans>;
 		const agent = AGENT_LABELS[row.server.agent];
 		return t({ message: `Configured for ${agent}` });
 	};

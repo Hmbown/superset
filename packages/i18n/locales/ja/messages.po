@@ -964,12 +964,15 @@ msgstr "{name} は組み込みのため削除できません"
 msgid "serverError.plugins.marketplaceReserved"
 msgstr "{name} は組み込みのため置き換えられません"
 
+msgid "{name} is installed"
+msgstr "{name} をインストールしました"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} は追加されていません"
 
-msgid "{name} plugin · applies from the next session"
-msgstr "{name} プラグイン · 次のセッションから有効"
+msgid "{name} plugin"
+msgstr "{name} プラグイン"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {人を1人以上指定するか、{choice}を選択してください。} sender {送信者を1人以上指定するか、{choice}を選択してください。} other {項目を1つ以上指定するか、{choice}を選択してください。}}"
@@ -8722,6 +8725,9 @@ msgstr "Supersetデスクトップアプリで設定 → リモートアクセ�
 msgid "In under a year, more than 130,000 developers across 176 countries have run Superset and created over 1.5 million agent workspaces. Japan is its second-largest market after the US, with over 12,000 developers, and Asia as a whole now accounts for more users than the US."
 msgstr "公開から 1 年足らずで、176 か国の 13 万人以上の開発者が Superset を使い、150 万以上のエージェントワークスペースが作成されました。日本は米国に次ぐ第 2 の市場で、1 万 2,000 人以上の開発者が利用しています。また、アジア全体のユーザー数は米国を上回っています。"
 
+msgid "In your next chat"
+msgstr "次のチャットから"
+
 msgid "In your terminal"
 msgstr "ターミナルで"
 
@@ -9081,6 +9087,9 @@ msgstr "独自のブランチとファイルのコピー"
 
 msgid "Its replies go with it."
 msgstr "返信も一緒に削除されます。"
+
+msgid "Its tools reach the agent in your next chat."
+msgstr "ツールは次のチャットからエージェントで使えます。"
 
 msgid "Its workspaces and terminals are unavailable until it restarts — use the Superset tray menu > Host Service > Restart."
 msgstr "再起動するまで、そのワークスペースとターミナルは利用できません — Supersetのトレイメニューから「ホストサービス」>「再起動」を実行してください。"
@@ -10619,9 +10628,6 @@ msgstr "次回の実行 {0}"
 
 msgid "Next run in 3d"
 msgstr "次回の実行は3日後"
-
-msgid "Next session"
-msgstr "次のセッション"
 
 msgid "Next slide"
 msgstr "次のスライド"

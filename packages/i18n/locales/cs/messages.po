@@ -964,12 +964,15 @@ msgstr "{name} je vestavěný a nelze jej odebrat"
 msgid "serverError.plugins.marketplaceReserved"
 msgstr "{name} je vestavěný a nelze jej nahradit"
 
+msgid "{name} is installed"
+msgstr "Plugin {name} je nainstalovaný"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} není přidán"
 
-msgid "{name} plugin · applies from the next session"
-msgstr "Plugin {name} · platí od příští relace"
+msgid "{name} plugin"
+msgstr "Plugin {name}"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Zadejte alespoň jednu osobu, nebo zvolte {choice}.} sender {Zadejte alespoň jednoho odesílatele, nebo zvolte {choice}.} other {Zadejte alespoň jednu položku, nebo zvolte {choice}.}}"
@@ -8722,6 +8725,9 @@ msgstr "V desktopové aplikaci Superset otevřete Nastavení → Vzdálený př�
 msgid "In under a year, more than 130,000 developers across 176 countries have run Superset and created over 1.5 million agent workspaces. Japan is its second-largest market after the US, with over 12,000 developers, and Asia as a whole now accounts for more users than the US."
 msgstr "Za méně než rok spustilo Superset více než 130 000 vývojářů ze 176 zemí a vytvořilo přes 1,5 milionu pracovních prostorů agentů. Japonsko je po USA druhým největším trhem s více než 12 000 vývojáři a Asie jako celek má nyní více uživatelů než USA."
 
+msgid "In your next chat"
+msgstr "V příštím chatu"
+
 msgid "In your terminal"
 msgstr "Ve vašem terminálu"
 
@@ -9081,6 +9087,9 @@ msgstr "Vlastní větev a vlastní kopie souborů"
 
 msgid "Its replies go with it."
 msgstr "Smažou se i odpovědi."
+
+msgid "Its tools reach the agent in your next chat."
+msgstr "Jeho nástroje agent dostane v příštím chatu."
 
 msgid "Its workspaces and terminals are unavailable until it restarts — use the Superset tray menu > Host Service > Restart."
 msgstr "Její pracovní prostory a terminály nebudou dostupné, dokud se nerestartuje — použijte nabídku Superset na liště > Host Service > Restart."
@@ -10619,9 +10628,6 @@ msgstr "Další běh {0}"
 
 msgid "Next run in 3d"
 msgstr "Další běh za 3 d"
-
-msgid "Next session"
-msgstr "Příští relace"
 
 msgid "Next slide"
 msgstr "Další snímek"

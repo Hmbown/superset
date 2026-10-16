@@ -964,12 +964,15 @@ msgstr "{name}은(는) 기본 제공이라 제거할 수 없습니다"
 msgid "serverError.plugins.marketplaceReserved"
 msgstr "{name}은(는) 기본 제공이라 교체할 수 없습니다"
 
+msgid "{name} is installed"
+msgstr "{name}을(를) 설치했습니다"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name}이(가) 추가되지 않았습니다"
 
-msgid "{name} plugin · applies from the next session"
-msgstr "{name} 플러그인 · 다음 세션부터 적용"
+msgid "{name} plugin"
+msgstr "{name} 플러그인"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {사람을 한 명 이상 지정하거나 {choice} 옵션을 선택하세요.} sender {발신자를 한 명 이상 지정하거나 {choice} 옵션을 선택하세요.} other {항목을 하나 이상 지정하거나 {choice} 옵션을 선택하세요.}}"
@@ -8722,6 +8725,9 @@ msgstr "Superset 데스크톱 앱에서 설정 → 원격 액세스을 열고 �
 msgid "In under a year, more than 130,000 developers across 176 countries have run Superset and created over 1.5 million agent workspaces. Japan is its second-largest market after the US, with over 12,000 developers, and Asia as a whole now accounts for more users than the US."
 msgstr "1년이 채 되지 않아 176개국의 130,000명 이상의 개발자가 Superset을 실행했고, 150만 개 이상의 에이전트 워크스페이스를 만들었습니다. 일본은 미국 다음으로 큰 시장으로 12,000명 이상의 개발자가 사용하고 있으며, 이제 아시아 전체 사용자 수가 미국을 넘어섰습니다."
 
+msgid "In your next chat"
+msgstr "다음 채팅부터"
+
 msgid "In your terminal"
 msgstr "터미널에서"
 
@@ -9081,6 +9087,9 @@ msgstr "독립된 브랜치와 파일 사본"
 
 msgid "Its replies go with it."
 msgstr "답글도 함께 삭제됩니다."
+
+msgid "Its tools reach the agent in your next chat."
+msgstr "도구는 다음 채팅부터 에이전트가 사용할 수 있습니다."
 
 msgid "Its workspaces and terminals are unavailable until it restarts — use the Superset tray menu > Host Service > Restart."
 msgstr "다시 시작할 때까지 해당 워크스페이스와 터미널을 사용할 수 없습니다. Superset 트레이 메뉴 > 호스트 서비스 > 다시 시작을 사용하세요."
@@ -10619,9 +10628,6 @@ msgstr "다음 실행 {0}"
 
 msgid "Next run in 3d"
 msgstr "다음 실행은 3일 후"
-
-msgid "Next session"
-msgstr "다음 세션"
 
 msgid "Next slide"
 msgstr "다음 슬라이드"

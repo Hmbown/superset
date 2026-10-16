@@ -16,10 +16,14 @@ function server(overrides: Partial<McpServerEntry>): McpServerEntry {
 	};
 }
 
-const linearAccount = (connected: boolean): McpPluginAccount => ({
+const linearAccount = (
+	connected: boolean,
+	installed = false,
+): McpPluginAccount => ({
 	displayName: "Linear",
 	connector: "linear",
 	connected,
+	installed,
 });
 
 describe("mcpPickerRows", () => {
@@ -88,6 +92,38 @@ describe("mcpPickerRows", () => {
 				}),
 			],
 			new Map([["linear", linearAccount(true)]]),
+			"",
+		);
+		expect(row).toMatchObject({ kind: "unavailable", reason: "next-session" });
+	});
+
+	it("leaves out plugin servers the account catalog does not offer", () => {
+		const rows = mcpPickerRows(
+			[
+				server({
+					name: "chrome-devtools",
+					configPath: "",
+					state: "not-configured",
+					plugin: { name: "chrome-devtools", installed: false, proxied: false },
+				}),
+			],
+			new Map(),
+			"",
+		);
+		expect(rows).toEqual([]);
+	});
+
+	it("counts an install on the account before this machine has written it", () => {
+		const [row] = mcpPickerRows(
+			[
+				server({
+					name: "linear",
+					configPath: "",
+					state: "not-configured",
+					plugin: { name: "linear", installed: false, proxied: true },
+				}),
+			],
+			new Map([["linear", linearAccount(true, true)]]),
 			"",
 		);
 		expect(row).toMatchObject({ kind: "unavailable", reason: "next-session" });

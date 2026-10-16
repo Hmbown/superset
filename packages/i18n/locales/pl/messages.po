@@ -964,12 +964,15 @@ msgstr "{name} jest wbudowany i nie można go usunąć"
 msgid "serverError.plugins.marketplaceReserved"
 msgstr "{name} jest wbudowany i nie można go zastąpić"
 
+msgid "{name} is installed"
+msgstr "{name} jest zainstalowany"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} nie został dodany"
 
-msgid "{name} plugin · applies from the next session"
-msgstr "Wtyczka {name} · działa od następnej sesji"
+msgid "{name} plugin"
+msgstr "Wtyczka {name}"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Podaj co najmniej jedną osobę lub wybierz {choice}.} sender {Podaj co najmniej jednego nadawcę lub wybierz {choice}.} other {Podaj co najmniej jedną pozycję lub wybierz {choice}.}}"
@@ -8722,6 +8725,9 @@ msgstr "W aplikacji Superset na komputerze otwórz Ustawienia → Dostęp zdalny
 msgid "In under a year, more than 130,000 developers across 176 countries have run Superset and created over 1.5 million agent workspaces. Japan is its second-largest market after the US, with over 12,000 developers, and Asia as a whole now accounts for more users than the US."
 msgstr "W niecały rok ponad 130 000 programistów ze 176 krajów uruchomiło Superset i utworzyło ponad 1,5 mln obszarów roboczych agentów. Japonia jest drugim największym rynkiem po USA, z ponad 12 000 programistów, a Azja jako całość ma już więcej użytkowników niż USA."
 
+msgid "In your next chat"
+msgstr "W następnym czacie"
+
 msgid "In your terminal"
 msgstr "W Twoim terminalu"
 
@@ -9081,6 +9087,9 @@ msgstr "Własna gałąź i własna kopia plików"
 
 msgid "Its replies go with it."
 msgstr "Odpowiedzi też zostaną usunięte."
+
+msgid "Its tools reach the agent in your next chat."
+msgstr "Jego narzędzia trafią do agenta w następnym czacie."
 
 msgid "Its workspaces and terminals are unavailable until it restarts — use the Superset tray menu > Host Service > Restart."
 msgstr "Jej obszary robocze i terminale są niedostępne do czasu restartu — użyj menu zasobnika Superset > Usługa hosta > Uruchom ponownie."
@@ -10619,9 +10628,6 @@ msgstr "Następne uruchomienie {0}"
 
 msgid "Next run in 3d"
 msgstr "Następne uruchomienie za 3 dni"
-
-msgid "Next session"
-msgstr "Następna sesja"
 
 msgid "Next slide"
 msgstr "Następny slajd"

@@ -964,12 +964,15 @@ msgstr "{name} bawaan dan tidak dapat dihapus"
 msgid "serverError.plugins.marketplaceReserved"
 msgstr "{name} bawaan dan tidak dapat diganti"
 
+msgid "{name} is installed"
+msgstr "{name} sudah terpasang"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} belum ditambahkan"
 
-msgid "{name} plugin · applies from the next session"
-msgstr "Plugin {name} · berlaku mulai sesi berikutnya"
+msgid "{name} plugin"
+msgstr "Plugin {name}"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Tentukan minimal satu orang, atau pilih {choice}.} sender {Tentukan minimal satu pengirim, atau pilih {choice}.} other {Tentukan minimal satu entri, atau pilih {choice}.}}"
@@ -8722,6 +8725,9 @@ msgstr "Di aplikasi desktop Superset, buka Pengaturan → Akses Jarak Jauh dan a
 msgid "In under a year, more than 130,000 developers across 176 countries have run Superset and created over 1.5 million agent workspaces. Japan is its second-largest market after the US, with over 12,000 developers, and Asia as a whole now accounts for more users than the US."
 msgstr "Dalam waktu kurang dari setahun, lebih dari 130.000 developer di 176 negara telah menjalankan Superset dan membuat lebih dari 1,5 juta workspace agen. Jepang adalah pasar terbesar kedua setelah AS, dengan lebih dari 12.000 developer, dan Asia secara keseluruhan kini memiliki lebih banyak pengguna daripada AS."
 
+msgid "In your next chat"
+msgstr "Di chat berikutnya"
+
 msgid "In your terminal"
 msgstr "Di terminal Anda"
 
@@ -9081,6 +9087,9 @@ msgstr "Branch dan salinan file tersendiri"
 
 msgid "Its replies go with it."
 msgstr "Balasannya ikut terhapus."
+
+msgid "Its tools reach the agent in your next chat."
+msgstr "Alatnya tersedia untuk agen di chat berikutnya."
 
 msgid "Its workspaces and terminals are unavailable until it restarts — use the Superset tray menu > Host Service > Restart."
 msgstr "Workspace dan terminalnya tidak tersedia sampai layanan ini dimulai ulang — pakai menu tray Superset > Host Service > Restart."
@@ -10619,9 +10628,6 @@ msgstr "Run berikutnya {0}"
 
 msgid "Next run in 3d"
 msgstr "Run berikutnya dalam 3h"
-
-msgid "Next session"
-msgstr "Sesi berikutnya"
 
 msgid "Next slide"
 msgstr "Slide berikutnya"

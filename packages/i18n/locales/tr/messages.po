@@ -964,12 +964,15 @@ msgstr "{name} yerleşiktir ve kaldırılamaz"
 msgid "serverError.plugins.marketplaceReserved"
 msgstr "{name} yerleşiktir ve değiştirilemez"
 
+msgid "{name} is installed"
+msgstr "{name} yüklendi"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} eklenmedi"
 
-msgid "{name} plugin · applies from the next session"
-msgstr "{name} eklentisi · sonraki oturumdan itibaren geçerli"
+msgid "{name} plugin"
+msgstr "{name} eklentisi"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {En az bir kişi belirtin veya {choice} seçeneğini seçin.} sender {En az bir gönderen belirtin veya {choice} seçeneğini seçin.} other {En az bir öğe belirtin veya {choice} seçeneğini seçin.}}"
@@ -8722,6 +8725,9 @@ msgstr "Superset masaüstü uygulamasında Ayarlar → Uzaktan erişim bölümü
 msgid "In under a year, more than 130,000 developers across 176 countries have run Superset and created over 1.5 million agent workspaces. Japan is its second-largest market after the US, with over 12,000 developers, and Asia as a whole now accounts for more users than the US."
 msgstr "Bir yıldan kısa sürede 176 ülkeden 130.000'den fazla geliştirici Superset'i çalıştırdı ve 1,5 milyondan fazla ajan çalışma alanı oluşturdu. Japonya, 12.000'den fazla geliştiriciyle ABD'den sonra ikinci büyük pazardır ve Asya genelindeki kullanıcı sayısı artık ABD'yi geçti."
 
+msgid "In your next chat"
+msgstr "Sonraki sohbetinizde"
+
 msgid "In your terminal"
 msgstr "Terminalinizde"
 
@@ -9081,6 +9087,9 @@ msgstr "Kendi dalı ve dosyaların kendi kopyası"
 
 msgid "Its replies go with it."
 msgstr "Yanıtları da silinir."
+
+msgid "Its tools reach the agent in your next chat."
+msgstr "Araçları sonraki sohbetinizde ajana ulaşır."
 
 msgid "Its workspaces and terminals are unavailable until it restarts — use the Superset tray menu > Host Service > Restart."
 msgstr "Yeniden başlayana kadar çalışma alanları ve terminalleri kullanılamaz — Superset tepsi menüsünde Host hizmeti > Yeniden başlat yolunu kullanın."
@@ -10619,9 +10628,6 @@ msgstr "Sonraki çalıştırma {0}"
 
 msgid "Next run in 3d"
 msgstr "Sonraki çalıştırma 3g içinde"
-
-msgid "Next session"
-msgstr "Sonraki oturum"
 
 msgid "Next slide"
 msgstr "Sonraki slayt"

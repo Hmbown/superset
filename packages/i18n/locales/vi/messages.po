@@ -964,12 +964,15 @@ msgstr "{name} là tích hợp sẵn nên không thể gỡ"
 msgid "serverError.plugins.marketplaceReserved"
 msgstr "{name} là tích hợp sẵn nên không thể thay thế"
 
+msgid "{name} is installed"
+msgstr "Đã cài {name}"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} chưa được thêm"
 
-msgid "{name} plugin · applies from the next session"
-msgstr "Plugin {name} · áp dụng từ phiên sau"
+msgid "{name} plugin"
+msgstr "Plugin {name}"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Hãy chỉ định ít nhất một người, hoặc chọn {choice}.} sender {Hãy chỉ định ít nhất một người gửi, hoặc chọn {choice}.} other {Hãy chỉ định ít nhất một mục, hoặc chọn {choice}.}}"
@@ -8722,6 +8725,9 @@ msgstr "Trong ứng dụng Superset trên máy tính, mở Cài đặt → Truy 
 msgid "In under a year, more than 130,000 developers across 176 countries have run Superset and created over 1.5 million agent workspaces. Japan is its second-largest market after the US, with over 12,000 developers, and Asia as a whole now accounts for more users than the US."
 msgstr "Chưa đầy một năm, hơn 130.000 nhà phát triển tại 176 quốc gia đã chạy Superset và tạo hơn 1,5 triệu workspace agent. Nhật Bản là thị trường lớn thứ hai sau Mỹ, với hơn 12.000 nhà phát triển, và châu Á nói chung hiện có nhiều người dùng hơn Mỹ."
 
+msgid "In your next chat"
+msgstr "Trong cuộc trò chuyện sau"
+
 msgid "In your terminal"
 msgstr "Trong terminal của bạn"
 
@@ -9081,6 +9087,9 @@ msgstr "Nhánh riêng và bản sao tệp riêng"
 
 msgid "Its replies go with it."
 msgstr "Các câu trả lời cũng bị xóa theo."
+
+msgid "Its tools reach the agent in your next chat."
+msgstr "Công cụ của nó sẽ có cho agent trong cuộc trò chuyện sau."
 
 msgid "Its workspaces and terminals are unavailable until it restarts — use the Superset tray menu > Host Service > Restart."
 msgstr "Các workspace và terminal của nó không khả dụng cho đến khi khởi động lại — dùng menu khay Superset > Host Service > Restart."
@@ -10619,9 +10628,6 @@ msgstr "Lần chạy tiếp theo {0}"
 
 msgid "Next run in 3d"
 msgstr "Lượt chạy tiếp theo sau 3 ngày"
-
-msgid "Next session"
-msgstr "Phiên sau"
 
 msgid "Next slide"
 msgstr "Slide kế tiếp"
