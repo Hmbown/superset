@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, expect, mock, test } from "bun:test";
+import { appendPastedText } from "@superset/chat/core";
 import type { UserMessage } from "@superset/chat/protocol";
-import { appendPastedText } from "@superset/chat-ui/utils/pastedText";
 import { cleanup, fireEvent, render, waitFor } from "@testing-library/react";
 import { copySourceText } from "../../utils/copySourceText";
 import { UserMessageRow } from "./UserMessageRow";

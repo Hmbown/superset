@@ -2,10 +2,10 @@
 
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { countLines, firstLine } from "@superset/chat/core";
 import { cn } from "@superset/ui/utils";
 import { FileTextIcon, XIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import { countLines, firstLine } from "../../utils/pastedText";
 
 export type PastedTextCardProps = {
 	text: string;

@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { appendPastedText } from "@superset/chat/core";
 import type {
 	AvailableCommand,
 	SessionConfigOption,
@@ -13,7 +14,6 @@ import type {
 	PromptInputHandle,
 	PromptInputSubmitPayload,
 } from "@superset/chat-ui/PromptInput";
-import { appendPastedText } from "@superset/chat-ui/utils/pastedText";
 import { toast } from "@superset/ui/sonner";
 import { cn } from "@superset/ui/utils";
 import { workspaceTrpc } from "@superset/workspace-client";

@@ -1,9 +1,12 @@
+import { isLargePaste, normalizePastedText } from "@superset/chat/core";
 import {
 	$getRoot,
 	$getSelection,
 	$isRangeSelection,
+	$isTextNode,
 	COMMAND_PRIORITY_LOW,
 	COMMAND_PRIORITY_NORMAL,
+	HISTORIC_TAG,
 	HISTORY_PUSH_TAG,
 	type LexicalEditor,
 	PASTE_COMMAND,
@@ -12,10 +15,6 @@ import {
 } from "lexical";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-	isLargePaste,
-	normalizePastedText,
-} from "../../../../utils/pastedText";
-import {
 	createPasteUndo,
 	type PastedTextEntry,
 	type PasteUndoResult,
@@ -23,6 +22,17 @@ import {
 
 function $editorText(): string {
 	return $getRoot().getTextContent();
+}
+
+function $charBeforeSelection(): string | undefined {
+	const selection = $getSelection();
+	if (!$isRangeSelection(selection)) return undefined;
+	const { offset } = selection.anchor;
+	const node = selection.anchor.getNode();
+	if ($isTextNode(node)) return node.getTextContent()[offset - 1];
+	if (offset === 0) return undefined;
+	const previous = node.getChildAtIndex?.(offset - 1);
+	return previous?.getTextContent().at(-1);
 }
 
 function toCards(texts: readonly string[]): PastedTextEntry[] {
@@ -76,14 +86,14 @@ export function usePastedTexts(
 				if (!isLargePaste(text)) return false;
 				event.preventDefault();
 				const editorText = $editorText();
-				const before = cardsRef.current;
-				const after = [...before, ...toCards([text])];
+				const added = toCards([text]);
 				history.record({
-					before,
-					after,
+					added,
+					removed: [],
 					textBefore: editorText,
 					textAfter: editorText,
 				});
+				const after = [...cardsRef.current, ...added];
 				setCards(after, editorText);
 				return true;
 			},
@@ -91,29 +101,41 @@ export function usePastedTexts(
 		);
 		const unregisterUndo = editor.registerCommand(
 			UNDO_COMMAND,
-			() => applyStep(history.undo($editorText())),
+			() => applyStep(history.undo($editorText(), cardsRef.current)),
 			COMMAND_PRIORITY_LOW,
 		);
 		const unregisterRedo = editor.registerCommand(
 			REDO_COMMAND,
-			() => applyStep(history.redo($editorText())),
+			() => applyStep(history.redo($editorText(), cardsRef.current)),
 			COMMAND_PRIORITY_LOW,
+		);
+		// A new edit starts a new branch, as in the editor's own history.
+		const unregisterEdits = editor.registerUpdateListener(
+			({ editorState, prevEditorState, tags }) => {
+				if (tags.has(HISTORIC_TAG)) return;
+				if (editorState.read($editorText) !== prevEditorState.read($editorText))
+					history.clearRedo();
+			},
 		);
 		return () => {
 			unregisterPaste();
 			unregisterUndo();
 			unregisterRedo();
+			unregisterEdits();
 		};
 	}, [editor, enabled, history, setCards]);
 
 	const remove = useCallback(
 		(id: string) => {
 			const before = cardsRef.current;
+			const index = before.findIndex((card) => card.id === id);
+			const entry = before[index];
+			if (!entry) return;
 			const after = before.filter((card) => card.id !== id);
 			const editorText = readText();
 			history.record({
-				before,
-				after,
+				added: [],
+				removed: [{ entry, index }],
 				textBefore: editorText,
 				textAfter: editorText,
 			});
@@ -126,7 +148,8 @@ export function usePastedTexts(
 	const showInTextField = useCallback(
 		(id: string) => {
 			const before = cardsRef.current;
-			const card = before.find((entry) => entry.id === id);
+			const index = before.findIndex((entry) => entry.id === id);
+			const card = before[index];
 			if (!card) return;
 			const after = before.filter((entry) => entry.id !== id);
 			const textBefore = readText();
@@ -138,14 +161,20 @@ export function usePastedTexts(
 						$getRoot().selectEnd();
 						selection = $getSelection();
 					}
-					if ($isRangeSelection(selection)) selection.insertRawText(card.text);
+					if (!$isRangeSelection(selection)) return;
+					const previous = $charBeforeSelection();
+					selection.insertRawText(
+						previous !== undefined && previous !== "\n"
+							? `\n${card.text}`
+							: card.text,
+					);
 				},
 				{
 					tag: HISTORY_PUSH_TAG,
 					onUpdate: () =>
 						history.record({
-							before,
-							after,
+							added: [],
+							removed: [{ entry: card, index }],
 							textBefore,
 							textAfter: readText(),
 						}),

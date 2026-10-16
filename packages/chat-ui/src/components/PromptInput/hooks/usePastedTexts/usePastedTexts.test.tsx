@@ -95,6 +95,17 @@ function setup() {
 			);
 		});
 	};
+	const backspace = async () => {
+		await act(async () => {
+			current().editor.update(() => {
+				const last = lexical.$getRoot().getLastDescendant();
+				if (!lexical.$isTextNode(last)) return;
+				const rest = last.getTextContent().slice(0, -1);
+				if (rest) last.setTextContent(rest);
+				else last.remove();
+			});
+		});
+	};
 	const paste = async (value: string) => {
 		const data = new DataTransfer();
 		data.setData("text/plain", value);
@@ -117,7 +128,7 @@ function setup() {
 		});
 	};
 	const cards = () => current().hook.cards.map((card) => card.text);
-	return { current, text, type, paste, dispatch, cards, drafts };
+	return { current, text, type, backspace, paste, dispatch, cards, drafts };
 }
 
 afterEach(cleanup);
@@ -151,19 +162,48 @@ describe("usePastedTexts", () => {
 		expect(view.cards()).toEqual([LOG]);
 	});
 
-	test("Show in text field moves the text into the editor, and undo moves it back", async () => {
+	test("Show in text field moves the text onto its own line, and undo moves it back", async () => {
 		const view = setup();
 		await view.type("Why?");
 		await view.paste(LOG);
 		const [card] = view.current().hook.cards;
 		await act(async () => view.current().hook.showInTextField(card?.id ?? ""));
-		expect(view.text()).toBe(`Why?${LOG}`);
+		expect(view.text()).toBe(`Why?\n${LOG}`);
 		expect(view.cards()).toEqual([]);
 		await view.dispatch("undo");
 		expect(view.text()).toBe("Why?");
 		expect(view.cards()).toEqual([LOG]);
 		await view.dispatch("redo");
-		expect(view.text()).toBe(`Why?${LOG}`);
+		expect(view.text()).toBe(`Why?\n${LOG}`);
+		expect(view.cards()).toEqual([]);
+	});
+
+	test("Show in text field adds no line break in an empty editor", async () => {
+		const view = setup();
+		await view.paste(LOG);
+		const [card] = view.current().hook.cards;
+		await act(async () => view.current().hook.showInTextField(card?.id ?? ""));
+		expect(view.text()).toBe(LOG);
+	});
+
+	test("undoing a paste keeps a card returned after it", async () => {
+		const view = setup();
+		await view.paste(LOG);
+		await act(async () => view.current().hook.restore(["returned"]));
+		await view.dispatch("undo");
+		expect(view.cards()).toEqual(["returned"]);
+		await view.dispatch("redo");
+		expect(view.cards()).toEqual(["returned", LOG]);
+	});
+
+	test("a new edit after undo drops the card redo", async () => {
+		const view = setup();
+		await view.paste(LOG);
+		await view.dispatch("undo");
+		await view.type("x");
+		await view.backspace();
+		expect(view.text()).toBe("");
+		await view.dispatch("redo");
 		expect(view.cards()).toEqual([]);
 	});
 

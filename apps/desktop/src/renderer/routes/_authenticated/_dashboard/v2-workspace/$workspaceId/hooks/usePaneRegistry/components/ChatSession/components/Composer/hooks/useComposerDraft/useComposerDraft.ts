@@ -1,7 +1,4 @@
-import {
-	appendPastedText,
-	parsePastedText,
-} from "@superset/chat-ui/utils/pastedText";
+import { appendPastedText, parsePastedText } from "@superset/chat/core";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const DRAFT_DEBOUNCE_MS = 300;
@@ -41,13 +38,13 @@ function joinDrafts(drafts: readonly string[]): string {
 	);
 }
 
-export function prependToDraft(draftKey: string, text: string) {
-	const merged = joinDrafts([text, readDraft(draftKey) ?? ""]);
+export function prependToDraft(draftKey: string, texts: readonly string[]) {
+	const merged = joinDrafts([...texts, readDraft(draftKey) ?? ""]);
 	unsavedDrafts.set(draftKey, merged);
 	persistDraft(draftKey, merged);
 	recoveredAfterRead.set(draftKey, [
 		...(recoveredAfterRead.get(draftKey) ?? []),
-		text,
+		...texts,
 	]);
 }
 

@@ -1,8 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { userMessageText } from "@superset/chat/core";
+import { countLines, firstLine, userMessageText } from "@superset/chat/core";
 import type { UserMessage } from "@superset/chat/protocol";
-import { countLines, firstLine } from "@superset/chat-ui/utils/pastedText";
 import {
 	QueueItem,
 	QueueItemAction,
