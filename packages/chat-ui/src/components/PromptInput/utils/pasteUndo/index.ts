@@ -1,5 +1,5 @@
 export {
 	createPasteUndo,
-	type PastedTextCard,
+	type PastedTextEntry,
 	type PasteUndoResult,
 } from "./pasteUndo";

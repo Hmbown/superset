@@ -17,7 +17,7 @@ import {
 } from "../../../../utils/pastedText";
 import {
 	createPasteUndo,
-	type PastedTextCard,
+	type PastedTextEntry,
 	type PasteUndoResult,
 } from "../../utils/pasteUndo";
 
@@ -25,7 +25,7 @@ function $editorText(): string {
 	return $getRoot().getTextContent();
 }
 
-function toCards(texts: readonly string[]): PastedTextCard[] {
+function toCards(texts: readonly string[]): PastedTextEntry[] {
 	return texts.map((text) => ({ id: crypto.randomUUID(), text }));
 }
 
@@ -36,10 +36,10 @@ export function usePastedTexts(
 		onCardsChange,
 	}: {
 		enabled: boolean;
-		onCardsChange: (cards: PastedTextCard[], editorText: string) => void;
+		onCardsChange: (cards: PastedTextEntry[], editorText: string) => void;
 	},
 ) {
-	const [cards, setCardsState] = useState<PastedTextCard[]>([]);
+	const [cards, setCardsState] = useState<PastedTextEntry[]>([]);
 	const cardsRef = useRef(cards);
 	const [history] = useState(createPasteUndo);
 	const onCardsChangeRef = useRef(onCardsChange);
@@ -49,11 +49,14 @@ export function usePastedTexts(
 		() => editor.getEditorState().read($editorText),
 		[editor],
 	);
-	const setCards = useCallback((next: PastedTextCard[], editorText: string) => {
-		cardsRef.current = next;
-		setCardsState(next);
-		onCardsChangeRef.current(next, editorText);
-	}, []);
+	const setCards = useCallback(
+		(next: PastedTextEntry[], editorText: string) => {
+			cardsRef.current = next;
+			setCardsState(next);
+			onCardsChangeRef.current(next, editorText);
+		},
+		[],
+	);
 
 	useEffect(() => {
 		if (!enabled) return;

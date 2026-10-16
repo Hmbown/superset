@@ -1,14 +1,14 @@
-export type PastedTextCard = { id: string; text: string };
+export type PastedTextEntry = { id: string; text: string };
 
 type PasteStep = {
-	before: PastedTextCard[];
-	after: PastedTextCard[];
+	before: PastedTextEntry[];
+	after: PastedTextEntry[];
 	textBefore: string;
 	textAfter: string;
 };
 
 export type PasteUndoResult = {
-	cards: PastedTextCard[];
+	cards: PastedTextEntry[];
 	// The step also changed the editor, so its own history must move too.
 	editorChanged: boolean;
 };

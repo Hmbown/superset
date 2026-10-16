@@ -15,7 +15,7 @@ import {
 	PastedTextCard,
 } from "../../../PastedTextCard";
 import type { PromptInputAttachment } from "../../types";
-import type { PastedTextCard as PastedTextEntry } from "../../utils/pasteUndo";
+import type { PastedTextEntry } from "../../utils/pasteUndo";
 import { RemoveButton } from "./components/RemoveButton";
 
 export type AttachmentPillsProps = {
