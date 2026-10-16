@@ -20,6 +20,7 @@ import {
 	useState,
 } from "react";
 import { createPortal } from "react-dom";
+import { PR_GREEN_FILL_CLASS_NAME } from "renderer/routes/_authenticated/_dashboard/pull-requests/components/pull-request-colors";
 
 interface ImagePreviewOverlayProps {
 	/** Null while the bytes load; `fallback` or a spinner shows in its place. */
@@ -94,7 +95,11 @@ export function ImagePreviewOverlay({
 			setCopiedSrc(src);
 			setCopyCount((count) => count + 1);
 			toast.success(t({ message: "Image copied" }), {
-				icon: <CircleCheckIcon className="size-4 text-emerald-500" />,
+				icon: (
+					<CircleCheckIcon
+						className={cn("size-4 text-background", PR_GREEN_FILL_CLASS_NAME)}
+					/>
+				),
 			});
 			if (copiedTimer.current) clearTimeout(copiedTimer.current);
 			copiedTimer.current = setTimeout(() => setCopiedSrc(null), COPIED_MS);
