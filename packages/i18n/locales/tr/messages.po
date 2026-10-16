@@ -1053,6 +1053,12 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{total} içinden {received}"
 
+msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{repositoryFullName}, bu organizasyonun GitHub App'inin kurulu olduğu {installedAccountLogin} hesabında değil."
+
+msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{repositoryFullName} henüz Superset GitHub App ile paylaşılmadı."
+
 msgid "{seconds}s ago"
 msgstr "{seconds}sn önce"
 
@@ -1752,6 +1758,9 @@ msgstr "Klasörden proje ekle..."
 msgid "Add prompt e.g. look for crashes in $sentry"
 msgstr "İstem ekleyin, örn. $sentry içinde çökmeleri ara"
 
+msgid "Add repository"
+msgstr "Depo ekle"
+
 msgid "Add script"
 msgstr "Betik ekle"
 
@@ -2087,6 +2096,9 @@ msgstr "Tüm yazılar"
 
 msgid "All projects"
 msgstr "Tüm projeler"
+
+msgid "All releases"
+msgstr "Tüm sürümler"
 
 msgid "All releases on GitHub"
 msgstr "GitHub'daki tüm sürümler"
@@ -2588,6 +2600,9 @@ msgstr "aynı anda"
 msgid "Attach files"
 msgstr "Dosya ekle"
 
+msgid "Attach image"
+msgstr "Görsel ekle"
+
 msgid "Attached"
 msgstr "Bağlı"
 
@@ -3011,9 +3026,6 @@ msgstr "Alt çekmece, dokunmatik cihazlarda kaydırmaya uygun."
 
 msgid "Box"
 msgstr "Kutu"
-
-msgid "Boxes run where the environment was made; a snapshot only exists in its region."
-msgstr "Kutular ortamın oluşturulduğu yerde çalışır; bir anlık görüntü yalnızca kendi bölgesinde bulunur."
 
 msgid "Branch"
 msgstr "Dal"
@@ -3658,7 +3670,7 @@ msgid "Cleaner, denser sidebar"
 msgstr "Daha temiz, daha yoğun kenar çubuğu"
 
 msgid "Clear"
-msgstr "Temizle"
+msgstr "Şeffaf"
 
 msgctxt "Liquid Glass style"
 msgid "Clear"
@@ -3783,6 +3795,9 @@ msgstr "Oturum kimliğini kopyalamak için tıklayın (`claude --resume <id>` il
 
 msgid "Click to open on GitHub"
 msgstr "GitHub'da açmak için tıklayın"
+
+msgid "Click to open the pull request"
+msgstr "Pull request'i açmak için tıklayın"
 
 msgid "Click two commits to define the range."
 msgstr "Aralığı tanımlamak için iki commit'e tıklayın."
@@ -3998,8 +4013,17 @@ msgstr "Bulut çalışma alanları bu değişkeni yok sayar. Ajanlar bunun yerin
 msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
 msgstr "Bulut çalışma alanları ücretli bir plan gerektirir. Başlatmak için Ayarlar, Faturalandırma bölümünden planı yükseltin."
 
+msgid "Cloud workspaces need a project for now"
+msgstr "Bulut çalışma alanları şimdilik bir proje gerektiriyor"
+
+msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
+msgstr "Bulut çalışma alanları projelerinin altında, yerel ve bulut filtresi ve yeniden tasarlanan çalışma alanı satırı."
+
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Bulut çalışma alanları {agentLabel} için bunu kullanmayı bırakacak."
+
+msgid "Cloud workspaces without a project are coming. Pick a project for now."
+msgstr "Projesiz bulut çalışma alanları yakında geliyor. Şimdilik bir proje seçin."
 
 msgid "Co-founder & CTO, TrainLoop (YC W25)"
 msgstr "Kurucu ortak ve CTO, TrainLoop (YC W25)"
@@ -4218,9 +4242,6 @@ msgstr "component-showcase"
 msgid "Composable form layout — pairs with @superset/ui/form for react-hook-form"
 msgstr "Birleştirilebilir form düzeni — react-hook-form için @superset/ui/form ile birlikte kullanılır"
 
-msgid "Config location"
-msgstr "Yapılandırma konumu"
-
 msgid "Configure"
 msgstr "Yapılandır"
 
@@ -4235,6 +4256,12 @@ msgstr "Genel uygulama tercihlerini yapılandırın"
 
 msgid "Configure git branch and worktree behavior"
 msgstr "Git dal ve worktree davranışını yapılandırın"
+
+msgid "Configure GitHub App"
+msgstr "GitHub App'i yapılandır"
+
+msgid "Configure GitHub App…"
+msgstr "GitHub App'i yapılandır…"
 
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Görevlerin Superset ile Linear arasında nasıl eşitleneceğini yapılandırın."
@@ -4299,6 +4326,12 @@ msgstr "Kuruluşunuzla veri eşitlemek için harici hizmetleri bağlayın."
 
 msgid "Connect external services to sync data."
 msgstr "Verileri eşitlemek için harici hizmetleri bağlayın."
+
+msgid "Connect GitHub in Integrations to add {repositoryFullName}."
+msgstr "{repositoryFullName} eklemek için Entegrasyonlar'da GitHub'ı bağlayın."
+
+msgid "Connect GitHub…"
+msgstr "GitHub'ı bağla…"
 
 msgid "Connect Google"
 msgstr "Google'ı bağla"
@@ -5290,6 +5323,9 @@ msgstr "Yeniden oluştur"
 msgid "Create an account"
 msgstr "Hesap oluşturun"
 
+msgid "Create environment"
+msgstr "Ortam oluştur"
+
 msgid "Create failed: {message}"
 msgstr "Oluşturulamadı: {message}"
 
@@ -5493,6 +5529,9 @@ msgstr "Worktree oluşturuluyor"
 
 msgid "Creating..."
 msgstr "Oluşturuluyor..."
+
+msgid "Creating…"
+msgstr "Oluşturuluyor…"
 
 msgid "Creative Manager, Valid"
 msgstr "Kreatif Yönetici, Valid"
@@ -7607,6 +7646,9 @@ msgstr "Tamamlandı"
 msgid "finished · worked for 7s"
 msgstr "bitti · 7 sn çalıştı"
 
+msgid "First repository by name"
+msgstr "Ada göre ilk depo"
+
 msgid "Fix all failing checks"
 msgstr "Başarısız tüm kontrolleri düzelt"
 
@@ -7832,6 +7874,9 @@ msgstr "başlangıç: {price}/kullanıcı/ay"
 msgid "From a hackathon project to the workspace for parallel coding agents."
 msgstr "Bir hackathon projesinden paralel kodlama ajanları için çalışma alanına."
 
+msgid "From GitHub"
+msgstr "GitHub'dan"
+
 msgid "Front matter hidden — switch to Markdown to edit it"
 msgstr "Front matter gizli — düzenlemek için Markdown'a geçin"
 
@@ -7973,9 +8018,6 @@ msgstr "GitHub kurulumu bulunamadı"
 msgid "GitHub integration"
 msgstr "GitHub entegrasyonu"
 
-msgid "GitHub is refusing API calls for this machine's credential until {until}. Existing pull request links stay; new pull requests appear once the limit resets."
-msgstr "GitHub, bu makinenin kimlik bilgileriyle yapılan API çağrılarını reddediyor; sınır saat {until} itibarıyla sıfırlanır. Mevcut pull request bağlantıları korunur; yeni pull request'ler sınır sıfırlandığında görünür."
-
 msgid "GitHub issues"
 msgstr "GitHub issue'ları"
 
@@ -7984,9 +8026,6 @@ msgstr "GitHub istek sınırına ulaşıldı"
 
 msgid "GitHub refused the merge"
 msgstr "GitHub birleştirmeyi reddetti"
-
-msgid "GitHub rejected this machine's credentials, so pull requests cannot be detected. Run \"gh auth login\" or fix GITHUB_TOKEN; the next retry is at {until}."
-msgstr "GitHub bu makinenin kimlik bilgilerini reddetti, bu yüzden pull request'ler algılanamıyor. \"gh auth login\" komutunu çalıştırın veya GITHUB_TOKEN değerini düzeltin; sonraki deneme saat {until} itibarıyla yapılacak."
 
 msgid "GitHub sign-in needed"
 msgstr "GitHub oturumu açmanız gerekiyor"
@@ -8270,7 +8309,7 @@ msgstr "Ana sayfa"
 
 msgctxt "device home button"
 msgid "Home"
-msgstr "Ana Ekran"
+msgstr "Ana dizin"
 
 msgctxt "directory"
 msgid "Home"
@@ -8508,6 +8547,9 @@ msgstr "Görsel kopyalandı"
 
 msgid "Image is too large (max 10MB)"
 msgstr "Görsel çok büyük (en fazla 10MB)"
+
+msgid "Image not found — upload it first"
+msgstr "Görsel bulunamadı — önce yükleyin"
 
 #. placeholder {0}: getBaseName(filePath)
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
@@ -9586,6 +9628,9 @@ msgstr "Konuşma yükleniyor..."
 msgid "Loading diff…"
 msgstr "Fark yükleniyor…"
 
+msgid "Loading environments…"
+msgstr "Ortamlar yükleniyor…"
+
 msgid "Loading files..."
 msgstr "Dosyalar yükleniyor..."
 
@@ -10335,9 +10380,6 @@ msgstr "Gezinme"
 msgid "Navigation Menu"
 msgstr "Gezinme menüsü"
 
-msgid "Nearest to you."
-msgstr "Size en yakın olan."
-
 msgid "Need app-level wiring (form state, chart data, app shell)"
 msgstr "Uygulama düzeyinde bağlantı gerekir (form durumu, grafik verisi, uygulama kabuğu)"
 
@@ -10463,6 +10505,9 @@ msgstr "Yeni oturum"
 msgid "New shell"
 msgstr "Yeni kabuk"
 
+msgid "New sidebar"
+msgstr "Yeni kenar çubuğu"
+
 msgid "New stars"
 msgstr "Yeni yıldızlar"
 
@@ -10537,6 +10582,9 @@ msgstr "Sonraki dosya"
 
 msgid "Next match"
 msgstr "Sonraki eşleşme"
+
+msgid "Next release"
+msgstr "Sonraki sürüm"
 
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
@@ -10673,6 +10721,9 @@ msgstr "Chrome, Brave, Arc veya başka bir Chromium tarayıcısı bulunamadı."
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "Bu makinede henüz Claude veya Codex kullanımı bulunamadı. Şimdi katılın; bir ajan kullandığınızda listede görüneceksiniz."
 
+msgid "No cloud workspaces"
+msgstr "Bulut çalışma alanı yok"
+
 msgid "No cloud workspaces match these filters"
 msgstr "Bu filtrelerle eşleşen bulut çalışma alanı yok"
 
@@ -10742,11 +10793,17 @@ msgstr "Henüz indirme yok"
 msgid "No emoji found"
 msgstr "Emoji bulunamadı"
 
+msgid "No environment for {repositoryFullName}"
+msgstr "{repositoryFullName} için ortam yok"
+
 msgid "No environments available"
 msgstr "Kullanılabilir ortam yok"
 
 msgid "No environments found."
 msgstr "Ortam bulunamadı."
+
+msgid "No environments yet"
+msgstr "Henüz ortam yok"
 
 msgid "No environments yet."
 msgstr "Henüz ortam yok. Bir bulut çalışma alanını üzerinden başlatmak için bir ortam oluşturun."
@@ -10838,6 +10895,9 @@ msgstr "Dinleyen ajan yok"
 msgid "No live sessions"
 msgstr "Canlı oturum yok"
 
+msgid "No local workspaces"
+msgstr "Yerel çalışma alanı yok"
+
 msgid "No log lines yet"
 msgstr "Henüz günlük satırı yok"
 
@@ -10861,6 +10921,9 @@ msgstr "Eşleşen kuruluş üyesi yok."
 
 msgid "No matching pages"
 msgstr "Eşleşen sayfa yok"
+
+msgid "No matching repositories."
+msgstr "Eşleşen depo yok."
 
 msgid "No members yet"
 msgstr "Henüz üye yok"
@@ -10997,6 +11060,9 @@ msgstr "Henüz herkese açık ajan yapılandırması yok. Bu bölüm gelecekteki
 
 msgid "No pull requests found."
 msgstr "Pull request bulunamadı."
+
+msgid "No release notes at {url}"
+msgstr "{url} adresinde sürüm notu yok"
 
 msgid "No repositories found. Make sure your GitHub App has access to repositories."
 msgstr "Depo bulunamadı. GitHub App'inizin depolara erişimi olduğundan emin olun."
@@ -11470,6 +11536,9 @@ msgstr "Bu konumu yalnızca host sahipleri değiştirebilir."
 
 msgid "Only host owners or organization owners can delete this host"
 msgstr "Bu host'u yalnızca host sahipleri veya kuruluş sahipleri silebilir"
+
+msgid "Only images can be attached to a comment"
+msgstr "Bir yoruma yalnızca görsel eklenebilir"
 
 msgid "Only organization owners can modify these settings."
 msgstr "Bu ayarları yalnızca kuruluş sahipleri değiştirebilir."
@@ -11978,6 +12047,9 @@ msgstr "Worktree açılıyor..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Bir ajanın projenin ihtiyaç duyduklarını kurup .superset/config.json dosyasını yazdığı bir bulut çalışma alanı açar"
+
+msgid "Opens on"
+msgstr "Şurada açılır"
 
 msgid "Operator"
 msgstr "Operatör"
@@ -12737,6 +12809,9 @@ msgstr "Geliştirme sunucunuzu terminallerinizin yanında önizleyin. Ajanınız
 msgid "Preview: GitHub star nag toast"
 msgstr "Önizleme: GitHub yıldız hatırlatma bildirimi"
 
+msgid "Preview: release notes card"
+msgstr "Önizleme: sürüm notları kartı"
+
 msgid "Previous"
 msgstr "Önceki"
 
@@ -12757,6 +12832,9 @@ msgstr "Önceki eşleşme"
 
 msgid "Previous prompts"
 msgstr "Önceki istemler"
+
+msgid "Previous release"
+msgstr "Önceki sürüm"
 
 msgid "Previous slide"
 msgstr "Önceki slayt"
@@ -12923,6 +13001,9 @@ msgstr "Projenin host'una erişilemiyor — şu anda yeniden adlandırılamaz"
 
 msgid "Projects"
 msgstr "Projeler"
+
+msgid "Promoted from a workspace, so its repositories and region are fixed. Promote a workspace again to change them."
+msgstr "Bir çalışma alanından yükseltildi, bu yüzden depoları ve bölgesi sabit. Değiştirmek için bir çalışma alanını yeniden yükseltin."
 
 msgid "Prompt"
 msgstr "İstem"
@@ -13497,6 +13578,9 @@ msgstr "{0} kişisini kaldır"
 msgid "Remove {label}?"
 msgstr "{label} kaldırılsın mı?"
 
+msgid "Remove {repositoryName}"
+msgstr "{repositoryName} kaldır"
+
 msgid "Remove attachment"
 msgstr "Eki kaldır"
 
@@ -13514,6 +13598,9 @@ msgstr "Kenar çubuğundan kaldır"
 
 msgid "Remove icon"
 msgstr "Simgeyi kaldır"
+
+msgid "Remove image"
+msgstr "Görseli kaldır"
 
 msgid "Remove linked issue"
 msgstr "Bağlı issue'yu kaldır"
@@ -13812,6 +13899,9 @@ msgstr "Yakınlaştırmayı sıfırla"
 msgid "Reset Zoom"
 msgstr "Yakınlaştırmayı sıfırla"
 
+msgid "Resets at {until}"
+msgstr "{until} saatinde sıfırlanır"
+
 msgid "Resets in {countdown} · {absolute}"
 msgstr "{countdown} sonra sıfırlanır · {absolute}"
 
@@ -14025,6 +14115,9 @@ msgstr "Birkaç saniye sonra yeniden deneyin; sorun sürerse Superset'i yeniden 
 msgid "Retry in a few seconds."
 msgstr "Birkaç saniye sonra yeniden deneyin."
 
+msgid "Retrying at {until}"
+msgstr "{until} saatinde yeniden denenecek"
+
 msgid "Retrying…"
 msgstr "Yeniden deneniyor…"
 
@@ -14199,6 +14292,9 @@ msgstr "Satırlar değişti"
 
 msgid "Run"
 msgstr "Çalıştır"
+
+msgid "Run \"gh auth login\" or set GITHUB_TOKEN"
+msgstr "\"gh auth login\" çalıştırın veya GITHUB_TOKEN ayarlayın"
 
 #. placeholder {0}: automation.name
 msgid "Run {0} now"
@@ -14808,6 +14904,9 @@ msgstr "Bir ajan seçin"
 msgid "Select an editor from the dropdown"
 msgstr "Açılır menüden bir düzenleyici seçin"
 
+msgid "Select an environment"
+msgstr "Bir ortam seçin"
+
 msgid "Select an organization"
 msgstr "Bir kuruluş seçin"
 
@@ -15071,6 +15170,9 @@ msgstr "SSH ile host kur"
 msgid "Set up an automation"
 msgstr "Bir otomasyon kur"
 
+msgid "Set up environment"
+msgstr "Ortam kur"
+
 msgid "Set up project on {hostName}"
 msgstr "{hostName} üzerinde projeyi kur"
 
@@ -15079,6 +15181,9 @@ msgstr "Projeyi kur…"
 
 msgid "Set up this project for Superset"
 msgstr "Bu projeyi Superset için kur"
+
+msgid "Set up with an agent"
+msgstr "Bir ajanla kur"
 
 msgid "Set up your organization to get started"
 msgstr "Başlamak için kuruluşunuzu kurun"
@@ -15534,9 +15639,6 @@ msgstr "Beceriler Superset eklentisiyle gelir ve kullandığınız her ajanda ot
 msgid "Skip"
 msgstr "Atla"
 
-msgid "Skip & save"
-msgstr "Atla ve kaydet"
-
 msgid "Skip All"
 msgstr "Tümünü atla"
 
@@ -15673,6 +15775,9 @@ msgstr "Çalışma alanlarını sırala"
 
 msgid "Sort workspaces ({currentLabel})"
 msgstr "Çalışma alanlarını sırala ({currentLabel})"
+
+msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
+msgstr "Çalışma alanlarını sırala ({currentLabel}) · {hostLabel}"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "Tamamlanan görevler için sesler ve zil sesi"
@@ -15878,9 +15983,6 @@ msgstr "Bir oturum başlat"
 
 msgid "Start a workspace straight from a Linear ticket. The agent picks it up and reports back with a PR."
 msgstr "Doğrudan bir Linear biletinden çalışma alanı başlatın. Ajan işi devralır ve bir PR ile geri döner."
-
-msgid "Start agent"
-msgstr "Ajanı başlat"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "iPhone veya iPad'inizden ajanları başlatın, canlı takip edin ve diff'i inceleyin. Kodunuz makinelerinizde kalır."
@@ -16162,6 +16264,9 @@ msgstr "Superset"
 msgid "Superset (YC S26) is the source-available IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
 msgstr "Superset (YC S26), mühendislerin Claude Code ve Codex gibi yüzlerce kodlama ajanını paralel olarak çalıştırdığı, yapay zekâ ajanları çağı için kaynak kodu erişilebilir IDE'dir."
 
+msgid "Superset {version}"
+msgstr "Superset {version}"
+
 msgid "Superset Agent"
 msgstr "Superset Ajanı"
 
@@ -16176,9 +16281,6 @@ msgstr "Superset Otomasyonlar"
 
 msgid "superset browser cdp prints an endpoint for that pane only. Point Playwright or browser-use at it."
 msgstr "superset browser cdp yalnızca o bölme için bir uç nokta yazdırır. Playwright'ı veya browser-use'u ona yönlendirin."
-
-msgid "Superset cannot reach api.github.com from this machine. Pull request status retries at {until}."
-msgstr "Superset bu makineden api.github.com adresine ulaşamıyor. Pull request durumu saat {until} itibarıyla yeniden denenecek."
 
 msgid "Superset CLI"
 msgstr "Superset CLI"
@@ -16976,6 +17078,9 @@ msgstr "İnsan, birleştirilmeden önce her satırı okur."
 msgid "The IDE for"
 msgstr "Paralel ajanlar için"
 
+msgid "The image upload expired — attach it again"
+msgstr "Görsel yüklemesinin süresi doldu — yeniden ekleyin"
+
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "İş tanımı değişir. Mühendisler zevk sahibi daktilocular olmayı bırakıp zevk sahibi dağıtıcılar olur: işi parçalara ayırır, filolara yönlendirir ve aynı modüle dokunan iki ajan arasındaki çakışmalara hakemlik eder."
 
@@ -17061,9 +17166,6 @@ msgstr "Kurtarma süresi sona erdi. support@superset.sh adresine yazın."
 msgid "The remote branch has diverged. Pull before continuing."
 msgstr "Uzak dal ayrıştı. Devam etmeden önce pull yapın."
 
-msgid "The repositories a cloud workspace checks out, and which one's .superset/config.json it acts on. The workspace opens on the config location, or on the first repository by name."
-msgstr "Bir bulut çalışma alanının çektiği depolar ve hangisinin .superset/config.json dosyasını uyguladığı. Çalışma alanı yapılandırma konumunda, yoksa ada göre ilk depoda açılır."
-
 msgid "The request failed."
 msgstr "İstek başarısız oldu."
 
@@ -17140,8 +17242,8 @@ msgstr "Çalışma alanı yine de oluşturulmuş olabilir. Göründüğünde bu 
 msgid "The workspace this automation is pinned to no longer exists on its host. Pin a different one in the automation's settings."
 msgstr "Bu otomasyonun sabitlendiği çalışma alanı artık ana makinesinde yok. Otomasyonun ayarlarından başka bir tanesini sabitleyin."
 
-msgid "The workspace's repositories, as they are checked out now."
-msgstr "Çalışma alanının depoları, şu anki halleriyle."
+msgid "The workspace's repositories, as they are checked out now. Boxes run in its region."
+msgstr "Çalışma alanında şu anda checkout edilmiş depolar. Sandbox'lar çalışma alanının bölgesinde çalışır."
 
 msgid "The worktree and any uncommitted changes will be removed. This cannot be undone."
 msgstr "Worktree ve commit'lenmemiş tüm değişiklikler kaldırılacak. Bu geri alınamaz."
@@ -17285,9 +17387,6 @@ msgstr "Bu e-posta zaten başka bir oturum açma yöntemiyle kayıtlı ve sağla
 msgid "This environment has no repositories. Create an environment with repositories in Settings, then start the workspace from it"
 msgstr "Bu ortamda depo yok. Ayarlar'da depoları olan bir ortam oluşturun, ardından çalışma alanını o ortamdan başlatın"
 
-msgid "This environment was promoted from a workspace, so its repositories are fixed. Promote a workspace again to change them."
-msgstr "Bu ortam bir çalışma alanından yükseltildiği için depoları sabittir. Değiştirmek için bir çalışma alanını yeniden yükseltin."
-
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "Bu ortamın depoları sabittir; değiştirmek için bir çalışma alanını yeniden yükseltin"
 
@@ -17341,6 +17440,9 @@ msgstr "Bu bir ikili dosyaya benziyor. Metin olarak açmak bozuk çıktı göste
 
 msgid "This Mac"
 msgstr "Bu Mac"
+
+msgid "This machine"
+msgstr "Bu bilgisayar"
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Bu Microsoft kiracısı {detail} tarafından zaten bağlanmış. Önce bağlantıyı kesmesini isteyin."
@@ -18542,6 +18644,9 @@ msgstr "Kullanımı görüntüle"
 
 msgid "Violence or harassment"
 msgstr "Şiddet veya taciz"
+
+msgid "Visible to"
+msgstr "Görebilenler"
 
 msgid "Voice"
 msgstr "Ses"

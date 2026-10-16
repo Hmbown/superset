@@ -204,6 +204,13 @@ export const FEATURE_FLAGS = {
 	 */
 	CLOUD_WORKSPACES: "cloud-workspaces",
 	/**
+	 * Renders cloud workspaces as rows of their GitHub repo's project in the
+	 * desktop sidebar instead of in a separate Cloud section. UI-only and
+	 * renderer-local: off, unloaded, or offline all keep the Cloud section, so
+	 * flips take effect live and nothing on a host changes.
+	 */
+	SIDEBAR_INLINE_CLOUD_WORKSPACES: "sidebar-inline-cloud-workspaces",
+	/**
 	 * Lets the Slack agent answer replies in a thread it has already replied
 	 * in without an @-mention. Evaluated per Slack team; off, unloaded or
 	 * offline all mean mention-only.
