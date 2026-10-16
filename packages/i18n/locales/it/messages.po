@@ -1058,6 +1058,12 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} di {total}"
 
+msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{repositoryFullName} non è su {installedAccountLogin}, dove è installata la GitHub App di questa organizzazione."
+
+msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{repositoryFullName} non è ancora condiviso con la GitHub App di Superset."
+
 msgid "{seconds}s ago"
 msgstr "{seconds}s fa"
 
@@ -1762,6 +1768,9 @@ msgstr "Aggiungi progetto da cartella..."
 
 msgid "Add prompt e.g. look for crashes in $sentry"
 msgstr "Aggiungi un prompt, es. cerca i crash in $sentry"
+
+msgid "Add repository"
+msgstr "Aggiungi repository"
 
 msgid "Add script"
 msgstr "Aggiungi script"
@@ -3023,9 +3032,6 @@ msgstr "Cassetto inferiore, comodo da scorrere sui dispositivi touch."
 msgid "Box"
 msgstr "Box"
 
-msgid "Boxes run where the environment was made; a snapshot only exists in its region."
-msgstr "I box girano dove l'ambiente è stato creato; uno snapshot esiste solo nella sua regione."
-
 msgid "Branch"
 msgstr "Branch"
 
@@ -3672,7 +3678,7 @@ msgid "Cleaner, denser sidebar"
 msgstr "Barra laterale più pulita e densa"
 
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Trasparente"
 
 msgctxt "Liquid Glass style"
 msgid "Clear"
@@ -3797,6 +3803,9 @@ msgstr "Clicca per copiare l'ID della sessione (riprendi con `claude --resume <i
 
 msgid "Click to open on GitHub"
 msgstr "Clicca per aprire su GitHub"
+
+msgid "Click to open the pull request"
+msgstr "Clicca per aprire la pull request"
 
 msgid "Click two commits to define the range."
 msgstr "Clicca due commit per definire l'intervallo."
@@ -4012,8 +4021,17 @@ msgstr "Gli spazi di lavoro cloud ignorano questa variabile. Gli agenti accedono
 msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
 msgstr "I workspace cloud richiedono un piano a pagamento. Passa a un piano superiore in Impostazioni, Fatturazione per avviarne uno."
 
+msgid "Cloud workspaces need a project for now"
+msgstr "Per ora i workspace cloud richiedono un progetto"
+
+msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
+msgstr "Workspace cloud sotto i loro progetti, un filtro locale e cloud e la riga del workspace ridisegnata."
+
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "I workspace cloud smetteranno di eseguire {agentLabel} con questa credenziale."
+
+msgid "Cloud workspaces without a project are coming. Pick a project for now."
+msgstr "I workspace cloud senza progetto arriveranno presto. Per ora scegli un progetto."
 
 msgid "Co-founder & CTO, TrainLoop (YC W25)"
 msgstr "Cofondatore e CTO, TrainLoop (YC W25)"
@@ -4228,9 +4246,6 @@ msgstr "component-showcase"
 msgid "Composable form layout — pairs with @superset/ui/form for react-hook-form"
 msgstr "Layout di form componibile — si abbina a @superset/ui/form per react-hook-form"
 
-msgid "Config location"
-msgstr "Posizione della configurazione"
-
 msgid "Configure"
 msgstr "Configura"
 
@@ -4245,6 +4260,12 @@ msgstr "Configura le preferenze generali dell'app"
 
 msgid "Configure git branch and worktree behavior"
 msgstr "Configura il comportamento dei branch git e dei worktree"
+
+msgid "Configure GitHub App"
+msgstr "Configura GitHub App"
+
+msgid "Configure GitHub App…"
+msgstr "Configura GitHub App…"
 
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Configura come i task si sincronizzano tra Superset e Linear."
@@ -4309,6 +4330,12 @@ msgstr "Collega servizi esterni per sincronizzare i dati con la tua organizzazio
 
 msgid "Connect external services to sync data."
 msgstr "Collega servizi esterni per sincronizzare i dati."
+
+msgid "Connect GitHub in Integrations to add {repositoryFullName}."
+msgstr "Collega GitHub in Integrazioni per aggiungere {repositoryFullName}."
+
+msgid "Connect GitHub…"
+msgstr "Collega GitHub…"
 
 msgid "Connect Google"
 msgstr "Collega Google"
@@ -5306,6 +5333,9 @@ msgstr "Crea di nuovo"
 msgid "Create an account"
 msgstr "Crea un account"
 
+msgid "Create environment"
+msgstr "Crea ambiente"
+
 msgid "Create failed: {message}"
 msgstr "Creazione non riuscita: {message}"
 
@@ -5509,6 +5539,9 @@ msgstr "Creazione del worktree"
 
 msgid "Creating..."
 msgstr "Creazione..."
+
+msgid "Creating…"
+msgstr "Creazione…"
 
 msgid "Creative Manager, Valid"
 msgstr "Responsabile creativo, Valid"
@@ -7637,6 +7670,9 @@ msgstr "Completato"
 msgid "finished · worked for 7s"
 msgstr "terminato · ha lavorato per 7s"
 
+msgid "First repository by name"
+msgstr "Primo repository per nome"
+
 msgid "Fix all failing checks"
 msgstr "Correggi tutti i controlli falliti"
 
@@ -7862,6 +7898,9 @@ msgstr "da {price}/utente/mese"
 msgid "From a hackathon project to the workspace for parallel coding agents."
 msgstr "Da progetto di hackathon allo spazio di lavoro per agenti di codice in parallelo."
 
+msgid "From GitHub"
+msgstr "Da GitHub"
+
 msgid "Front matter hidden — switch to Markdown to edit it"
 msgstr "Front matter nascosto — passa a Markdown per modificarlo"
 
@@ -8003,9 +8042,6 @@ msgstr "Installazione GitHub non trovata"
 msgid "GitHub integration"
 msgstr "Integrazione GitHub"
 
-msgid "GitHub is refusing API calls for this machine's credential until {until}. Existing pull request links stay; new pull requests appear once the limit resets."
-msgstr "GitHub rifiuta le chiamate API per le credenziali di questa macchina fino alle {until}. I collegamenti alle pull request esistenti restano; le nuove pull request compariranno quando il limite verrà azzerato."
-
 msgid "GitHub issues"
 msgstr "Issue GitHub"
 
@@ -8014,9 +8050,6 @@ msgstr "Limite di richieste GitHub raggiunto"
 
 msgid "GitHub refused the merge"
 msgstr "GitHub ha rifiutato il merge"
-
-msgid "GitHub rejected this machine's credentials, so pull requests cannot be detected. Run \"gh auth login\" or fix GITHUB_TOKEN; the next retry is at {until}."
-msgstr "GitHub ha rifiutato le credenziali di questa macchina, quindi le pull request non possono essere rilevate. Esegui \"gh auth login\" o correggi GITHUB_TOKEN; il prossimo tentativo sarà alle {until}."
 
 msgid "GitHub sign-in needed"
 msgstr "Accesso a GitHub necessario"
@@ -9631,6 +9664,9 @@ msgstr "Caricamento della conversazione..."
 msgid "Loading diff…"
 msgstr "Caricamento del diff…"
 
+msgid "Loading environments…"
+msgstr "Caricamento degli ambienti…"
+
 msgid "Loading files..."
 msgstr "Caricamento dei file..."
 
@@ -10380,9 +10416,6 @@ msgstr "Navigazione"
 msgid "Navigation Menu"
 msgstr "Navigation Menu"
 
-msgid "Nearest to you."
-msgstr "La più vicina a te."
-
 msgid "Need app-level wiring (form state, chart data, app shell)"
 msgstr "Richiedono un collegamento a livello di app (stato dei form, dati dei grafici, shell dell'app)"
 
@@ -10507,6 +10540,9 @@ msgstr "Nuova sessione"
 
 msgid "New shell"
 msgstr "Nuova shell"
+
+msgid "New sidebar"
+msgstr "Nuova barra laterale"
 
 msgid "New stars"
 msgstr "Nuove star"
@@ -10718,6 +10754,9 @@ msgstr "Non sono stati trovati Chrome, Brave, Arc o altri browser Chromium."
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "Nessun utilizzo di Claude o Codex trovato su questa macchina. Unisciti ora e comparirai dopo aver usato un agente."
 
+msgid "No cloud workspaces"
+msgstr "Nessun workspace cloud"
+
 msgid "No cloud workspaces match these filters"
 msgstr "Nessun workspace cloud corrisponde a questi filtri"
 
@@ -10787,11 +10826,17 @@ msgstr "Ancora nessun download"
 msgid "No emoji found"
 msgstr "Nessuna emoji trovata"
 
+msgid "No environment for {repositoryFullName}"
+msgstr "Nessun ambiente per {repositoryFullName}"
+
 msgid "No environments available"
 msgstr "Nessun ambiente disponibile"
 
 msgid "No environments found."
 msgstr "Nessun ambiente trovato."
+
+msgid "No environments yet"
+msgstr "Ancora nessun ambiente"
 
 msgid "No environments yet."
 msgstr "Nessun ambiente. Creane uno per avviare da lì un workspace cloud."
@@ -10883,6 +10928,9 @@ msgstr "Nessun agente in ascolto"
 msgid "No live sessions"
 msgstr "Nessuna sessione attiva"
 
+msgid "No local workspaces"
+msgstr "Nessun workspace locale"
+
 msgid "No log lines yet"
 msgstr "Ancora nessuna riga di log"
 
@@ -10906,6 +10954,9 @@ msgstr "Nessun membro dell'organizzazione corrispondente."
 
 msgid "No matching pages"
 msgstr "Nessuna pagina corrispondente"
+
+msgid "No matching repositories."
+msgstr "Nessun repository corrispondente."
 
 msgid "No members yet"
 msgstr "Ancora nessun membro"
@@ -12024,6 +12075,9 @@ msgstr "Apertura del worktree..."
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Apre un workspace cloud in cui un agente installa ciò di cui il progetto ha bisogno e scrive il suo .superset/config.json"
 
+msgid "Opens on"
+msgstr "Si apre su"
+
 msgid "Operator"
 msgstr "Operatore"
 
@@ -12965,6 +13019,9 @@ msgstr "L'host del progetto non è raggiungibile — non è possibile rinominare
 msgid "Projects"
 msgstr "Progetti"
 
+msgid "Promoted from a workspace, so its repositories and region are fixed. Promote a workspace again to change them."
+msgstr "Promosso da un workspace, quindi repository e regione sono fissi. Promuovi di nuovo un workspace per cambiarli."
+
 msgid "Prompt"
 msgstr "Prompt"
 
@@ -13546,6 +13603,9 @@ msgstr "Rimuovi {0}"
 msgid "Remove {label}?"
 msgstr "Rimuovere {label}?"
 
+msgid "Remove {repositoryName}"
+msgstr "Rimuovi {repositoryName}"
+
 msgid "Remove attachment"
 msgstr "Rimuovi allegato"
 
@@ -13861,6 +13921,9 @@ msgstr "Reimposta lo zoom"
 msgid "Reset Zoom"
 msgstr "Reimposta lo zoom"
 
+msgid "Resets at {until}"
+msgstr "Si azzera alle {until}"
+
 msgid "Resets in {countdown} · {absolute}"
 msgstr "Si azzera tra {countdown} · {absolute}"
 
@@ -14080,6 +14143,9 @@ msgstr "Riprova tra qualche secondo; se persiste, riavvia Superset."
 msgid "Retry in a few seconds."
 msgstr "Riprova tra qualche secondo."
 
+msgid "Retrying at {until}"
+msgstr "Nuovo tentativo alle {until}"
+
 msgid "Retrying…"
 msgstr "Nuovo tentativo…"
 
@@ -14254,6 +14320,9 @@ msgstr "Righe modificate"
 
 msgid "Run"
 msgstr "Esegui"
+
+msgid "Run \"gh auth login\" or set GITHUB_TOKEN"
+msgstr "Esegui \"gh auth login\" o imposta GITHUB_TOKEN"
 
 #. placeholder {0}: automation.name
 msgid "Run {0} now"
@@ -14867,6 +14936,9 @@ msgstr "Seleziona un agente"
 msgid "Select an editor from the dropdown"
 msgstr "Seleziona un editor dal menu a discesa"
 
+msgid "Select an environment"
+msgstr "Seleziona un ambiente"
+
 msgid "Select an organization"
 msgstr "Seleziona un'organizzazione"
 
@@ -15130,6 +15202,9 @@ msgstr "Configura un host tramite SSH"
 msgid "Set up an automation"
 msgstr "Configura un’automazione"
 
+msgid "Set up environment"
+msgstr "Configura ambiente"
+
 msgid "Set up project on {hostName}"
 msgstr "Configura il progetto su {hostName}"
 
@@ -15138,6 +15213,9 @@ msgstr "Configura il progetto…"
 
 msgid "Set up this project for Superset"
 msgstr "Configura questo progetto per Superset"
+
+msgid "Set up with an agent"
+msgstr "Configura con un agente"
 
 msgid "Set up your organization to get started"
 msgstr "Configura la tua organizzazione per iniziare"
@@ -15593,9 +15671,6 @@ msgstr "Le skill sono incluse nel plugin Superset e vengono mantenute aggiornate
 msgid "Skip"
 msgstr "Salta"
 
-msgid "Skip & save"
-msgstr "Salta e salva"
-
 msgid "Skip All"
 msgstr "Salta tutto"
 
@@ -15732,6 +15807,9 @@ msgstr "Ordina i workspace"
 
 msgid "Sort workspaces ({currentLabel})"
 msgstr "Ordina i workspace ({currentLabel})"
+
+msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
+msgstr "Ordina i workspace ({currentLabel}) · {hostLabel}"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "Suoni e suoneria per i task completati"
@@ -15937,9 +16015,6 @@ msgstr "Avvia una sessione"
 
 msgid "Start a workspace straight from a Linear ticket. The agent picks it up and reports back with a PR."
 msgstr "Avvia un workspace direttamente da un ticket Linear. L'agente lo prende in carico e risponde con una PR."
-
-msgid "Start agent"
-msgstr "Avvia agente"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "Avvia gli agenti, seguili in tempo reale e rivedi il diff dal tuo iPhone o iPad. Il tuo codice resta sulle tue macchine."
@@ -16238,9 +16313,6 @@ msgstr "Superset Automazioni"
 
 msgid "superset browser cdp prints an endpoint for that pane only. Point Playwright or browser-use at it."
 msgstr "superset browser cdp stampa un endpoint solo per quel riquadro. Punta Playwright o browser-use su di esso."
-
-msgid "Superset cannot reach api.github.com from this machine. Pull request status retries at {until}."
-msgstr "Superset non riesce a raggiungere api.github.com da questa macchina. Lo stato delle pull request verrà ritentato alle {until}."
 
 msgid "Superset CLI"
 msgstr "CLI di Superset"
@@ -17122,9 +17194,6 @@ msgstr "Il periodo di recupero è terminato. Contatta support@superset.sh."
 msgid "The remote branch has diverged. Pull before continuing."
 msgstr "Il branch remoto è divergente. Fai pull prima di continuare."
 
-msgid "The repositories a cloud workspace checks out, and which one's .superset/config.json it acts on. The workspace opens on the config location, or on the first repository by name."
-msgstr "I repository di cui un workspace cloud fa il checkout, e di quale applica il .superset/config.json. Il workspace si apre nella posizione della configurazione, oppure nel primo repository per nome."
-
 msgid "The request failed."
 msgstr "La richiesta non è riuscita."
 
@@ -17201,8 +17270,8 @@ msgstr "Il workspace potrebbe essere stato creato comunque. Questa schermata lo 
 msgid "The workspace this automation is pinned to no longer exists on its host. Pin a different one in the automation's settings."
 msgstr "Il workspace a cui è fissata questa automazione non esiste più sul suo host. Fissa un altro workspace nelle impostazioni dell'automazione."
 
-msgid "The workspace's repositories, as they are checked out now."
-msgstr "I repository del workspace, così come sono ora."
+msgid "The workspace's repositories, as they are checked out now. Boxes run in its region."
+msgstr "I repository del workspace, come sono scaricati ora. Le box girano nella sua regione."
 
 msgid "The worktree and any uncommitted changes will be removed. This cannot be undone."
 msgstr "Il worktree e le eventuali modifiche non committate verranno rimossi. L'operazione non può essere annullata."
@@ -17346,9 +17415,6 @@ msgstr "Questa email è già registrata con un altro metodo di accesso e il prov
 msgid "This environment has no repositories. Create an environment with repositories in Settings, then start the workspace from it"
 msgstr "Questo ambiente non ha repository. Crea un ambiente con repository nelle Impostazioni, poi avvia il workspace da lì"
 
-msgid "This environment was promoted from a workspace, so its repositories are fixed. Promote a workspace again to change them."
-msgstr "Questo ambiente è stato promosso da un workspace, quindi i suoi repository sono fissi. Promuovi di nuovo un workspace per cambiarli."
-
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "I repository di questo ambiente sono fissi; promuovi di nuovo un workspace per cambiarli"
 
@@ -17402,6 +17468,9 @@ msgstr "Sembra un file binario. Aprirlo come testo può mostrare output illeggib
 
 msgid "This Mac"
 msgstr "Questo Mac"
+
+msgid "This machine"
+msgstr "Questo computer"
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Questo tenant Microsoft è già collegato da {detail}. Chiedi di scollegarlo prima."
@@ -18606,6 +18675,9 @@ msgstr "Vedi utilizzo"
 
 msgid "Violence or harassment"
 msgstr "Violenza o molestie"
+
+msgid "Visible to"
+msgstr "Visibile a"
 
 msgid "Voice"
 msgstr "Voce"

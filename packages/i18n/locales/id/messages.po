@@ -1058,6 +1058,12 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} dari {total}"
 
+msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{repositoryFullName} tidak ada di {installedAccountLogin}, tempat GitHub App organisasi ini dipasang."
+
+msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{repositoryFullName} belum dibagikan ke GitHub App Superset."
+
 msgid "{seconds}s ago"
 msgstr "{seconds}d lalu"
 
@@ -1762,6 +1768,9 @@ msgstr "Tambah Proyek dari Folder..."
 
 msgid "Add prompt e.g. look for crashes in $sentry"
 msgstr "Tambahkan prompt, mis. cari crash di $sentry"
+
+msgid "Add repository"
+msgstr "Tambah repositori"
 
 msgid "Add script"
 msgstr "Tambah skrip"
@@ -3023,9 +3032,6 @@ msgstr "Laci bawah, ramah geser di perangkat sentuh."
 msgid "Box"
 msgstr "Box"
 
-msgid "Boxes run where the environment was made; a snapshot only exists in its region."
-msgstr "Box berjalan di tempat environment dibuat; snapshot hanya ada di regionnya."
-
 msgid "Branch"
 msgstr "Branch"
 
@@ -3672,7 +3678,7 @@ msgid "Cleaner, denser sidebar"
 msgstr "Sidebar lebih bersih dan padat"
 
 msgid "Clear"
-msgstr "Bersihkan"
+msgstr "Bening"
 
 msgctxt "Liquid Glass style"
 msgid "Clear"
@@ -3797,6 +3803,9 @@ msgstr "Klik untuk menyalin ID sesi (lanjutkan dengan `claude --resume <id>`)."
 
 msgid "Click to open on GitHub"
 msgstr "Klik untuk membuka di GitHub"
+
+msgid "Click to open the pull request"
+msgstr "Klik untuk membuka pull request"
 
 msgid "Click two commits to define the range."
 msgstr "Klik dua commit untuk menentukan rentangnya."
@@ -4012,8 +4021,17 @@ msgstr "Workspace cloud mengabaikan variabel ini. Agen masuk melalui Pengaturan 
 msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
 msgstr "Workspace cloud memerlukan paket berbayar. Upgrade di Pengaturan, Penagihan untuk memulainya."
 
+msgid "Cloud workspaces need a project for now"
+msgstr "Workspace cloud perlu proyek untuk saat ini"
+
+msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
+msgstr "Workspace cloud di bawah proyeknya, filter lokal dan cloud, dan baris workspace yang didesain ulang."
+
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Workspace cloud tidak lagi menjalankan {agentLabel} dengannya."
+
+msgid "Cloud workspaces without a project are coming. Pick a project for now."
+msgstr "Workspace cloud tanpa proyek akan segera hadir. Pilih proyek untuk saat ini."
 
 msgid "Co-founder & CTO, TrainLoop (YC W25)"
 msgstr "Pendiri bersama & CTO, TrainLoop (YC W25)"
@@ -4228,9 +4246,6 @@ msgstr "component-showcase"
 msgid "Composable form layout — pairs with @superset/ui/form for react-hook-form"
 msgstr "Tata letak form yang bisa dikomposisi — berpasangan dengan @superset/ui/form untuk react-hook-form"
 
-msgid "Config location"
-msgstr "Lokasi konfigurasi"
-
 msgid "Configure"
 msgstr "Atur"
 
@@ -4245,6 +4260,12 @@ msgstr "Atur preferensi umum aplikasi"
 
 msgid "Configure git branch and worktree behavior"
 msgstr "Atur perilaku branch git dan worktree"
+
+msgid "Configure GitHub App"
+msgstr "Konfigurasi GitHub App"
+
+msgid "Configure GitHub App…"
+msgstr "Konfigurasi GitHub App…"
 
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Atur cara tugas disinkronkan antara Superset dan Linear."
@@ -4309,6 +4330,12 @@ msgstr "Hubungkan layanan eksternal untuk menyinkronkan data dengan organisasi A
 
 msgid "Connect external services to sync data."
 msgstr "Hubungkan layanan eksternal untuk menyinkronkan data."
+
+msgid "Connect GitHub in Integrations to add {repositoryFullName}."
+msgstr "Hubungkan GitHub di Integrasi untuk menambahkan {repositoryFullName}."
+
+msgid "Connect GitHub…"
+msgstr "Hubungkan GitHub…"
 
 msgid "Connect Google"
 msgstr "Hubungkan Google"
@@ -5306,6 +5333,9 @@ msgstr "Buat lagi"
 msgid "Create an account"
 msgstr "Buat akun"
 
+msgid "Create environment"
+msgstr "Buat lingkungan"
+
 msgid "Create failed: {message}"
 msgstr "Gagal membuat: {message}"
 
@@ -5509,6 +5539,9 @@ msgstr "Membuat worktree"
 
 msgid "Creating..."
 msgstr "Membuat..."
+
+msgid "Creating…"
+msgstr "Membuat…"
 
 msgid "Creative Manager, Valid"
 msgstr "Manajer Kreatif, Valid"
@@ -7637,6 +7670,9 @@ msgstr "Selesai"
 msgid "finished · worked for 7s"
 msgstr "selesai · bekerja 7 dtk"
 
+msgid "First repository by name"
+msgstr "Repositori pertama menurut nama"
+
 msgid "Fix all failing checks"
 msgstr "Perbaiki semua check yang gagal"
 
@@ -7862,6 +7898,9 @@ msgstr "mulai {price}/pengguna/bln"
 msgid "From a hackathon project to the workspace for parallel coding agents."
 msgstr "Dari proyek hackathon menjadi workspace untuk agen coding paralel."
 
+msgid "From GitHub"
+msgstr "Dari GitHub"
+
 msgid "Front matter hidden — switch to Markdown to edit it"
 msgstr "Front matter disembunyikan — beralih ke Markdown untuk mengeditnya"
 
@@ -8003,9 +8042,6 @@ msgstr "Instalasi GitHub tidak ditemukan"
 msgid "GitHub integration"
 msgstr "Integrasi GitHub"
 
-msgid "GitHub is refusing API calls for this machine's credential until {until}. Existing pull request links stay; new pull requests appear once the limit resets."
-msgstr "GitHub menolak panggilan API untuk kredensial mesin ini hingga {until}. Tautan pull request yang ada tetap dipertahankan; pull request baru akan muncul setelah batasnya diatur ulang."
-
 msgid "GitHub issues"
 msgstr "Issue GitHub"
 
@@ -8014,9 +8050,6 @@ msgstr "Batas laju GitHub tercapai"
 
 msgid "GitHub refused the merge"
 msgstr "GitHub menolak merge-nya"
-
-msgid "GitHub rejected this machine's credentials, so pull requests cannot be detected. Run \"gh auth login\" or fix GITHUB_TOKEN; the next retry is at {until}."
-msgstr "GitHub menolak kredensial mesin ini, sehingga pull request tidak dapat dideteksi. Jalankan \"gh auth login\" atau perbaiki GITHUB_TOKEN; percobaan berikutnya pada {until}."
 
 msgid "GitHub sign-in needed"
 msgstr "Perlu masuk ke GitHub"
@@ -8300,7 +8333,7 @@ msgstr "Beranda"
 
 msgctxt "device home button"
 msgid "Home"
-msgstr "Beranda"
+msgstr "Home"
 
 msgctxt "directory"
 msgid "Home"
@@ -9631,6 +9664,9 @@ msgstr "Memuat percakapan..."
 msgid "Loading diff…"
 msgstr "Memuat diff…"
 
+msgid "Loading environments…"
+msgstr "Memuat lingkungan…"
+
 msgid "Loading files..."
 msgstr "Memuat file..."
 
@@ -10380,9 +10416,6 @@ msgstr "Navigasi"
 msgid "Navigation Menu"
 msgstr "Menu Navigasi"
 
-msgid "Nearest to you."
-msgstr "Terdekat dengan Anda."
-
 msgid "Need app-level wiring (form state, chart data, app shell)"
 msgstr "Butuh perangkaian di level aplikasi (state form, data grafik, app shell)"
 
@@ -10507,6 +10540,9 @@ msgstr "Sesi baru"
 
 msgid "New shell"
 msgstr "Shell baru"
+
+msgid "New sidebar"
+msgstr "Sidebar baru"
 
 msgid "New stars"
 msgstr "Star baru"
@@ -10718,6 +10754,9 @@ msgstr "Tidak ditemukan Chrome, Brave, Arc, atau browser Chromium lainnya."
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "Belum ada penggunaan Claude atau Codex di mesin ini. Gabung sekarang dan Anda akan muncul setelah memakai agen."
 
+msgid "No cloud workspaces"
+msgstr "Tidak ada workspace cloud"
+
 msgid "No cloud workspaces match these filters"
 msgstr "Tidak ada workspace cloud yang cocok dengan filter ini"
 
@@ -10787,11 +10826,17 @@ msgstr "Belum ada unduhan"
 msgid "No emoji found"
 msgstr "Emoji tidak ditemukan"
 
+msgid "No environment for {repositoryFullName}"
+msgstr "Tidak ada lingkungan untuk {repositoryFullName}"
+
 msgid "No environments available"
 msgstr "Tidak ada environment yang tersedia"
 
 msgid "No environments found."
 msgstr "Environment tidak ditemukan."
+
+msgid "No environments yet"
+msgstr "Belum ada lingkungan"
 
 msgid "No environments yet."
 msgstr "Belum ada environment. Buat satu untuk memulai workspace cloud darinya."
@@ -10883,6 +10928,9 @@ msgstr "Tidak ada agen pendengar"
 msgid "No live sessions"
 msgstr "Tidak ada sesi aktif"
 
+msgid "No local workspaces"
+msgstr "Tidak ada workspace lokal"
+
 msgid "No log lines yet"
 msgstr "Belum ada baris log"
 
@@ -10906,6 +10954,9 @@ msgstr "Tidak ada anggota organisasi yang cocok."
 
 msgid "No matching pages"
 msgstr "Tidak ada halaman yang cocok"
+
+msgid "No matching repositories."
+msgstr "Tidak ada repositori yang cocok."
 
 msgid "No members yet"
 msgstr "Belum ada anggota"
@@ -12024,6 +12075,9 @@ msgstr "Membuka worktree..."
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Membuka workspace cloud tempat agen memasang yang dibutuhkan proyek dan menulis .superset/config.json miliknya"
 
+msgid "Opens on"
+msgstr "Dibuka di"
+
 msgid "Operator"
 msgstr "Operator"
 
@@ -12965,6 +13019,9 @@ msgstr "Host proyek tidak bisa dijangkau — tidak bisa ganti nama sekarang"
 msgid "Projects"
 msgstr "Proyek"
 
+msgid "Promoted from a workspace, so its repositories and region are fixed. Promote a workspace again to change them."
+msgstr "Dipromosikan dari workspace, jadi repositori dan regionnya tetap. Promosikan workspace lagi untuk mengubahnya."
+
 msgid "Prompt"
 msgstr "Prompt"
 
@@ -13546,6 +13603,9 @@ msgstr "Hapus {0}"
 msgid "Remove {label}?"
 msgstr "Hapus {label}?"
 
+msgid "Remove {repositoryName}"
+msgstr "Hapus {repositoryName}"
+
 msgid "Remove attachment"
 msgstr "Hapus lampiran"
 
@@ -13861,6 +13921,9 @@ msgstr "Reset zoom"
 msgid "Reset Zoom"
 msgstr "Reset zoom"
 
+msgid "Resets at {until}"
+msgstr "Direset pada {until}"
+
 msgid "Resets in {countdown} · {absolute}"
 msgstr "Reset dalam {countdown} · {absolute}"
 
@@ -14080,6 +14143,9 @@ msgstr "Coba lagi dalam beberapa detik; kalau terus terjadi, mulai ulang Superse
 msgid "Retry in a few seconds."
 msgstr "Coba lagi dalam beberapa detik."
 
+msgid "Retrying at {until}"
+msgstr "Dicoba lagi pada {until}"
+
 msgid "Retrying…"
 msgstr "Mencoba lagi…"
 
@@ -14254,6 +14320,9 @@ msgstr "Baris berubah"
 
 msgid "Run"
 msgstr "Jalankan"
+
+msgid "Run \"gh auth login\" or set GITHUB_TOKEN"
+msgstr "Jalankan \"gh auth login\" atau atur GITHUB_TOKEN"
 
 #. placeholder {0}: automation.name
 msgid "Run {0} now"
@@ -14867,6 +14936,9 @@ msgstr "Pilih agen"
 msgid "Select an editor from the dropdown"
 msgstr "Pilih editor dari dropdown"
 
+msgid "Select an environment"
+msgstr "Pilih lingkungan"
+
 msgid "Select an organization"
 msgstr "Pilih sebuah organisasi"
 
@@ -15130,6 +15202,9 @@ msgstr "Siapkan host lewat SSH"
 msgid "Set up an automation"
 msgstr "Siapkan otomatisasi"
 
+msgid "Set up environment"
+msgstr "Siapkan lingkungan"
+
 msgid "Set up project on {hostName}"
 msgstr "Siapkan proyek di {hostName}"
 
@@ -15138,6 +15213,9 @@ msgstr "Siapkan proyek…"
 
 msgid "Set up this project for Superset"
 msgstr "Siapkan proyek ini untuk Superset"
+
+msgid "Set up with an agent"
+msgstr "Siapkan dengan agen"
 
 msgid "Set up your organization to get started"
 msgstr "Siapkan organisasi Anda untuk memulai"
@@ -15593,9 +15671,6 @@ msgstr "Skill hadir bersama plugin Superset dan selalu diperbarui otomatis di se
 msgid "Skip"
 msgstr "Lewati"
 
-msgid "Skip & save"
-msgstr "Lewati & simpan"
-
 msgid "Skip All"
 msgstr "Lewati Semua"
 
@@ -15732,6 +15807,9 @@ msgstr "Urutkan workspace"
 
 msgid "Sort workspaces ({currentLabel})"
 msgstr "Urutkan workspace ({currentLabel})"
+
+msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
+msgstr "Urutkan workspace ({currentLabel}) · {hostLabel}"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "Suara dan nada dering untuk tugas yang selesai"
@@ -15937,9 +16015,6 @@ msgstr "Mulai sesi"
 
 msgid "Start a workspace straight from a Linear ticket. The agent picks it up and reports back with a PR."
 msgstr "Mulai workspace langsung dari tiket Linear. Agen mengambilnya dan melapor kembali dengan sebuah PR."
-
-msgid "Start agent"
-msgstr "Mulai agen"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "Mulai agen, ikuti secara langsung, dan tinjau diff dari iPhone atau iPad Anda. Kode Anda tetap di mesin Anda."
@@ -16238,9 +16313,6 @@ msgstr "Otomatisasi Superset"
 
 msgid "superset browser cdp prints an endpoint for that pane only. Point Playwright or browser-use at it."
 msgstr "superset browser cdp mencetak endpoint hanya untuk panel itu. Arahkan Playwright atau browser-use ke sana."
-
-msgid "Superset cannot reach api.github.com from this machine. Pull request status retries at {until}."
-msgstr "Superset tidak dapat menjangkau api.github.com dari mesin ini. Status pull request akan dicoba lagi pada {until}."
 
 msgid "Superset CLI"
 msgstr "Superset CLI"
@@ -17122,9 +17194,6 @@ msgstr "Masa pemulihan sudah berakhir. Hubungi support@superset.sh."
 msgid "The remote branch has diverged. Pull before continuing."
 msgstr "Branch remote sudah menyimpang. Lakukan pull sebelum melanjutkan."
 
-msgid "The repositories a cloud workspace checks out, and which one's .superset/config.json it acts on. The workspace opens on the config location, or on the first repository by name."
-msgstr "Repositori yang di-checkout oleh workspace cloud, dan .superset/config.json milik repositori mana yang diterapkan. Workspace dibuka di lokasi konfigurasi, atau di repositori pertama menurut nama."
-
 msgid "The request failed."
 msgstr "Permintaan gagal."
 
@@ -17201,8 +17270,8 @@ msgstr "Workspace mungkin tetap dibuat. Layar ini akan membukanya jika muncul."
 msgid "The workspace this automation is pinned to no longer exists on its host. Pin a different one in the automation's settings."
 msgstr "Ruang kerja yang disematkan untuk otomatisasi ini sudah tidak ada di host-nya. Sematkan ruang kerja lain di pengaturan otomatisasi."
 
-msgid "The workspace's repositories, as they are checked out now."
-msgstr "Repositori workspace, seperti yang ter-checkout sekarang."
+msgid "The workspace's repositories, as they are checked out now. Boxes run in its region."
+msgstr "Repositori workspace, sebagaimana di-checkout saat ini. Box berjalan di regionnya."
 
 msgid "The worktree and any uncommitted changes will be removed. This cannot be undone."
 msgstr "Worktree beserta perubahan yang belum di-commit akan dihapus. Ini tidak bisa dibatalkan."
@@ -17346,9 +17415,6 @@ msgstr "Email ini sudah terdaftar dengan metode masuk lain, dan penyedia tidak m
 msgid "This environment has no repositories. Create an environment with repositories in Settings, then start the workspace from it"
 msgstr "Environment ini tidak memiliki repositori. Buat environment dengan repositori di Pengaturan, lalu mulai workspace dari environment tersebut"
 
-msgid "This environment was promoted from a workspace, so its repositories are fixed. Promote a workspace again to change them."
-msgstr "Environment ini dipromosikan dari sebuah workspace, sehingga repositorinya sudah tetap. Promosikan workspace lagi untuk mengubahnya."
-
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "Repositori environment ini sudah tetap; promosikan workspace lagi untuk mengubahnya"
 
@@ -17402,6 +17468,9 @@ msgstr "Ini tampak seperti file biner. Membukanya sebagai teks bisa menampilkan 
 
 msgid "This Mac"
 msgstr "Mac ini"
+
+msgid "This machine"
+msgstr "Mesin ini"
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Tenant Microsoft ini sudah terhubung oleh {detail}. Minta mereka memutuskannya dulu."
@@ -18606,6 +18675,9 @@ msgstr "Lihat penggunaan"
 
 msgid "Violence or harassment"
 msgstr "Kekerasan atau pelecehan"
+
+msgid "Visible to"
+msgstr "Terlihat oleh"
 
 msgid "Voice"
 msgstr "Suara"

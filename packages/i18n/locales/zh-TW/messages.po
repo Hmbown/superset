@@ -1058,6 +1058,12 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received}/{total}"
 
+msgid "{repositoryFullName} isn't on {installedAccountLogin}, where this organization's GitHub App is installed."
+msgstr "{repositoryFullName} 不在 {installedAccountLogin} 上，而本組織的 GitHub App 安裝在那裡。"
+
+msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
+msgstr "{repositoryFullName} 尚未與 Superset GitHub App 共用。"
+
 msgid "{seconds}s ago"
 msgstr "{seconds}秒前"
 
@@ -1762,6 +1768,9 @@ msgstr "從資料夾新增專案..."
 
 msgid "Add prompt e.g. look for crashes in $sentry"
 msgstr "新增提示詞，例如：在$sentry中查詢崩潰"
+
+msgid "Add repository"
+msgstr "新增儲存庫"
 
 msgid "Add script"
 msgstr "新增指令碼"
@@ -3023,9 +3032,6 @@ msgstr "底部抽屜，在觸控螢幕裝置上便於滑動操作。"
 msgid "Box"
 msgstr "Box"
 
-msgid "Boxes run where the environment was made; a snapshot only exists in its region."
-msgstr "沙盒在環境建立的位置執行；快照只存在於其所在區域。"
-
 msgid "Branch"
 msgstr "分支"
 
@@ -3672,7 +3678,7 @@ msgid "Cleaner, denser sidebar"
 msgstr "更清爽緊湊的側邊欄"
 
 msgid "Clear"
-msgstr "清除"
+msgstr "透明"
 
 msgctxt "Liquid Glass style"
 msgid "Clear"
@@ -3797,6 +3803,9 @@ msgstr "點選複製會話ID（使用`claude --resume <id>`恢復）。"
 
 msgid "Click to open on GitHub"
 msgstr "點選在GitHub上開啟"
+
+msgid "Click to open the pull request"
+msgstr "點擊開啟拉取請求"
 
 msgid "Click two commits to define the range."
 msgstr "點選兩個提交以確定範圍。"
@@ -4012,8 +4021,17 @@ msgstr "雲端工作區會忽略此變數。代理程式改為在「設定 › �
 msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
 msgstr "雲端工作區需要付費方案。請在「設定」中的「帳單」升級後啟動。"
 
+msgid "Cloud workspaces need a project for now"
+msgstr "雲端工作區目前需要一個專案"
+
+msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
+msgstr "雲端工作區顯示在所屬專案下，提供本機與雲端篩選，以及重新設計的工作區列。"
+
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "雲端工作區將不再用它執行{agentLabel}。"
+
+msgid "Cloud workspaces without a project are coming. Pick a project for now."
+msgstr "無專案的雲端工作區即將推出。目前請先選擇一個專案。"
 
 msgid "Co-founder & CTO, TrainLoop (YC W25)"
 msgstr "共同創辦人暨 CTO，TrainLoop (YC W25)"
@@ -4228,9 +4246,6 @@ msgstr "component-showcase"
 msgid "Composable form layout — pairs with @superset/ui/form for react-hook-form"
 msgstr "可組合的表單佈局——搭配@superset/ui/form用於react-hook-form"
 
-msgid "Config location"
-msgstr "設定位置"
-
 msgid "Configure"
 msgstr "配置"
 
@@ -4245,6 +4260,12 @@ msgstr "配置應用的通用偏好設定"
 
 msgid "Configure git branch and worktree behavior"
 msgstr "配置git分支和worktree行為"
+
+msgid "Configure GitHub App"
+msgstr "設定 GitHub App"
+
+msgid "Configure GitHub App…"
+msgstr "設定 GitHub App…"
 
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "配置任務在Superset和Linear之間的同步方式。"
@@ -4309,6 +4330,12 @@ msgstr "連線外部服務，與你的組織同步資料。"
 
 msgid "Connect external services to sync data."
 msgstr "連線外部服務以同步資料。"
+
+msgid "Connect GitHub in Integrations to add {repositoryFullName}."
+msgstr "在整合中連結 GitHub 以新增 {repositoryFullName}。"
+
+msgid "Connect GitHub…"
+msgstr "連結 GitHub…"
 
 msgid "Connect Google"
 msgstr "連線Google"
@@ -5306,6 +5333,9 @@ msgstr "再次建立"
 msgid "Create an account"
 msgstr "建立帳戶"
 
+msgid "Create environment"
+msgstr "建立環境"
+
 msgid "Create failed: {message}"
 msgstr "建立失敗：{message}"
 
@@ -5509,6 +5539,9 @@ msgstr "正在建立worktree"
 
 msgid "Creating..."
 msgstr "正在建立..."
+
+msgid "Creating…"
+msgstr "建立中…"
 
 msgid "Creative Manager, Valid"
 msgstr "創意經理，Valid"
@@ -7637,6 +7670,9 @@ msgstr "已完成"
 msgid "finished · worked for 7s"
 msgstr "已完成 · 用時7秒"
 
+msgid "First repository by name"
+msgstr "依名稱排序的第一個儲存庫"
+
 msgid "Fix all failing checks"
 msgstr "修復所有失敗的檢查"
 
@@ -7862,6 +7898,9 @@ msgstr "{price}/使用者/月起"
 msgid "From a hackathon project to the workspace for parallel coding agents."
 msgstr "從一個黑客松專案，到平行程式設計代理的工作空間。"
 
+msgid "From GitHub"
+msgstr "來自 GitHub"
+
 msgid "Front matter hidden — switch to Markdown to edit it"
 msgstr "已隱藏front matter，切換到Markdown可編輯"
 
@@ -8003,9 +8042,6 @@ msgstr "未找到GitHub安裝"
 msgid "GitHub integration"
 msgstr "GitHub整合"
 
-msgid "GitHub is refusing API calls for this machine's credential until {until}. Existing pull request links stay; new pull requests appear once the limit resets."
-msgstr "GitHub 在 {until} 之前拒絕此電腦憑證的 API 呼叫。現有的提取請求連結會保留；新的提取請求將在限制重設後顯示。"
-
 msgid "GitHub issues"
 msgstr "GitHub議題"
 
@@ -8014,9 +8050,6 @@ msgstr "已達到 GitHub 速率限制"
 
 msgid "GitHub refused the merge"
 msgstr "GitHub拒絕了此次合併"
-
-msgid "GitHub rejected this machine's credentials, so pull requests cannot be detected. Run \"gh auth login\" or fix GITHUB_TOKEN; the next retry is at {until}."
-msgstr "GitHub 拒絕了此電腦的憑證，因此無法偵測提取請求。請執行 \"gh auth login\" 或修正 GITHUB_TOKEN；下次重試時間為 {until}。"
 
 msgid "GitHub sign-in needed"
 msgstr "需要登入 GitHub"
@@ -8300,7 +8333,7 @@ msgstr "首頁"
 
 msgctxt "device home button"
 msgid "Home"
-msgstr "主畫面"
+msgstr "主目錄"
 
 msgctxt "directory"
 msgid "Home"
@@ -9631,6 +9664,9 @@ msgstr "正在載入對話..."
 msgid "Loading diff…"
 msgstr "正在載入差異…"
 
+msgid "Loading environments…"
+msgstr "正在載入環境…"
+
 msgid "Loading files..."
 msgstr "正在載入檔案..."
 
@@ -10380,9 +10416,6 @@ msgstr "導航"
 msgid "Navigation Menu"
 msgstr "導航選單"
 
-msgid "Nearest to you."
-msgstr "離你最近的區域。"
-
 msgid "Need app-level wiring (form state, chart data, app shell)"
 msgstr "需要應用層的接線（表單狀態、圖表資料、應用程式外殼）"
 
@@ -10507,6 +10540,9 @@ msgstr "新建會話"
 
 msgid "New shell"
 msgstr "新增 Shell"
+
+msgid "New sidebar"
+msgstr "新側邊欄"
 
 msgid "New stars"
 msgstr "新增星標"
@@ -10718,6 +10754,9 @@ msgstr "未找到Chrome、Brave、Arc或其他Chromium瀏覽器。"
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "這臺機器上還沒有發現Claude或Codex的用量。現在加入，用過代理程式後你就會出現在榜單上。"
 
+msgid "No cloud workspaces"
+msgstr "沒有雲端工作區"
+
 msgid "No cloud workspaces match these filters"
 msgstr "沒有符合這些篩選條件的雲端工作區"
 
@@ -10787,11 +10826,17 @@ msgstr "暫無下載"
 msgid "No emoji found"
 msgstr "未找到表情"
 
+msgid "No environment for {repositoryFullName}"
+msgstr "{repositoryFullName} 沒有環境"
+
 msgid "No environments available"
 msgstr "沒有可用的環境"
 
 msgid "No environments found."
 msgstr "找不到環境。"
+
+msgid "No environments yet"
+msgstr "還沒有環境"
 
 msgid "No environments yet."
 msgstr "尚無環境。建立一個，即可從中啟動雲端工作區。"
@@ -10883,6 +10928,9 @@ msgstr "沒有監聽代理"
 msgid "No live sessions"
 msgstr "沒有活動會話"
 
+msgid "No local workspaces"
+msgstr "沒有本機工作區"
+
 msgid "No log lines yet"
 msgstr "尚無記錄"
 
@@ -10906,6 +10954,9 @@ msgstr "沒有匹配的組織成員。"
 
 msgid "No matching pages"
 msgstr "沒有符合的頁面"
+
+msgid "No matching repositories."
+msgstr "沒有相符的儲存庫。"
 
 msgid "No members yet"
 msgstr "暫無成員"
@@ -12024,6 +12075,9 @@ msgstr "正在開啟worktree..."
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "開啟雲端工作區，由代理安裝專案所需內容並寫入其 .superset/config.json"
 
+msgid "Opens on"
+msgstr "開啟於"
+
 msgid "Operator"
 msgstr "操作員"
 
@@ -12965,6 +13019,9 @@ msgstr "專案所在主機不可達，暫時無法重新命名"
 msgid "Projects"
 msgstr "專案"
 
+msgid "Promoted from a workspace, so its repositories and region are fixed. Promote a workspace again to change them."
+msgstr "由工作區提升而來，因此儲存庫和區域固定。再次提升一個工作區即可變更。"
+
 msgid "Prompt"
 msgstr "提示詞"
 
@@ -13546,6 +13603,9 @@ msgstr "移除{0}"
 msgid "Remove {label}?"
 msgstr "移除{label}？"
 
+msgid "Remove {repositoryName}"
+msgstr "移除 {repositoryName}"
+
 msgid "Remove attachment"
 msgstr "移除附件"
 
@@ -13861,6 +13921,9 @@ msgstr "重置縮放"
 msgid "Reset Zoom"
 msgstr "重置縮放"
 
+msgid "Resets at {until}"
+msgstr "將於 {until} 重設"
+
 msgid "Resets in {countdown} · {absolute}"
 msgstr "{countdown}後重置 · {absolute}"
 
@@ -14080,6 +14143,9 @@ msgstr "請在幾秒後重試；若問題持續，請重啟Superset。"
 msgid "Retry in a few seconds."
 msgstr "請在幾秒後重試。"
 
+msgid "Retrying at {until}"
+msgstr "將於 {until} 重試"
+
 msgid "Retrying…"
 msgstr "正在重試…"
 
@@ -14254,6 +14320,9 @@ msgstr "行有變更"
 
 msgid "Run"
 msgstr "執行"
+
+msgid "Run \"gh auth login\" or set GITHUB_TOKEN"
+msgstr "執行 \"gh auth login\" 或設定 GITHUB_TOKEN"
 
 #. placeholder {0}: automation.name
 msgid "Run {0} now"
@@ -14867,6 +14936,9 @@ msgstr "選擇代理程式"
 msgid "Select an editor from the dropdown"
 msgstr "從下拉選單中選擇編輯器"
 
+msgid "Select an environment"
+msgstr "選擇一個環境"
+
 msgid "Select an organization"
 msgstr "選擇一個組織"
 
@@ -15130,6 +15202,9 @@ msgstr "透過 SSH 設定主機"
 msgid "Set up an automation"
 msgstr "設定自動化"
 
+msgid "Set up environment"
+msgstr "設定環境"
+
 msgid "Set up project on {hostName}"
 msgstr "在{hostName}上設定專案"
 
@@ -15138,6 +15213,9 @@ msgstr "配置專案…"
 
 msgid "Set up this project for Superset"
 msgstr "為Superset配置這個專案"
+
+msgid "Set up with an agent"
+msgstr "用代理程式設定"
 
 msgid "Set up your organization to get started"
 msgstr "設定你的組織即可開始"
@@ -15593,9 +15671,6 @@ msgstr "技能隨Superset外掛一起提供，並會在你使用的每個代理�
 msgid "Skip"
 msgstr "跳過"
 
-msgid "Skip & save"
-msgstr "略過並儲存"
-
 msgid "Skip All"
 msgstr "全部跳過"
 
@@ -15732,6 +15807,9 @@ msgstr "排序工作區"
 
 msgid "Sort workspaces ({currentLabel})"
 msgstr "排序工作區（{currentLabel}）"
+
+msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
+msgstr "排序工作區（{currentLabel}） · {hostLabel}"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "任務完成時的聲音和鈴聲"
@@ -15937,9 +16015,6 @@ msgstr "開始一個會話"
 
 msgid "Start a workspace straight from a Linear ticket. The agent picks it up and reports back with a PR."
 msgstr "直接從Linear工單啟動工作區。代理程式接手，並以一個PR回報結果。"
-
-msgid "Start agent"
-msgstr "啟動代理"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "在 iPhone 或 iPad 上啟動 agent、即時追蹤並審查差異。你的程式碼始終留在你的機器上。"
@@ -16238,9 +16313,6 @@ msgstr "Superset 自動化"
 
 msgid "superset browser cdp prints an endpoint for that pane only. Point Playwright or browser-use at it."
 msgstr "superset browser cdp 只會輸出該窗格專屬的端點。讓 Playwright 或 browser-use 連接它即可。"
-
-msgid "Superset cannot reach api.github.com from this machine. Pull request status retries at {until}."
-msgstr "Superset 無法從此電腦連線至 api.github.com。提取請求狀態將於 {until} 重試。"
 
 msgid "Superset CLI"
 msgstr "Superset CLI"
@@ -17122,9 +17194,6 @@ msgstr "恢復期已結束。請聯絡support@superset.sh。"
 msgid "The remote branch has diverged. Pull before continuing."
 msgstr "遠端分支已分叉。請先拉取再繼續。"
 
-msgid "The repositories a cloud workspace checks out, and which one's .superset/config.json it acts on. The workspace opens on the config location, or on the first repository by name."
-msgstr "雲端工作區簽出的儲存庫，以及它套用哪個儲存庫的 .superset/config.json。工作區會在設定位置開啟，否則在依名稱排序的第一個儲存庫開啟。"
-
 msgid "The request failed."
 msgstr "請求失敗。"
 
@@ -17201,8 +17270,8 @@ msgstr "工作區可能仍已建立。如果出現，此畫面會開啟它。"
 msgid "The workspace this automation is pinned to no longer exists on its host. Pin a different one in the automation's settings."
 msgstr "此自動化所釘選的工作區在其主機上已不存在。請在自動化設定中釘選另一個工作區。"
 
-msgid "The workspace's repositories, as they are checked out now."
-msgstr "工作區目前簽出的儲存庫。"
+msgid "The workspace's repositories, as they are checked out now. Boxes run in its region."
+msgstr "工作區目前簽出的儲存庫。執行個體在其所在區域運行。"
 
 msgid "The worktree and any uncommitted changes will be removed. This cannot be undone."
 msgstr "worktree及其中所有未提交的更改都會被移除。此操作無法復原。"
@@ -17346,9 +17415,6 @@ msgstr "此電子郵件已透過其他登入方式註冊，且提供者未將其
 msgid "This environment has no repositories. Create an environment with repositories in Settings, then start the workspace from it"
 msgstr "此環境沒有儲存庫。請先在設定中建立包含儲存庫的環境，再從該環境啟動工作區"
 
-msgid "This environment was promoted from a workspace, so its repositories are fixed. Promote a workspace again to change them."
-msgstr "此環境由工作區提升而來，因此其儲存庫已固定。請再次提升一個工作區以變更它們。"
-
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "此環境的儲存庫已固定；請再次提升一個工作區以變更它們"
 
@@ -17402,6 +17468,9 @@ msgstr "這看起來是二進位檔案。以文字方式開啟可能顯示亂碼
 
 msgid "This Mac"
 msgstr "這台Mac"
+
+msgid "This machine"
+msgstr "本機"
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "這個Microsoft租戶已被{detail}連線。請讓對方先斷開連線。"
@@ -18606,6 +18675,9 @@ msgstr "檢視用量"
 
 msgid "Violence or harassment"
 msgstr "暴力或騷擾"
+
+msgid "Visible to"
+msgstr "可見範圍"
 
 msgid "Voice"
 msgstr "語音"
