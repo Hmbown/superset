@@ -1,7 +1,7 @@
 export type PngWriter = (png: Blob) => Promise<void>;
 export type PngEncoder = (image: Blob) => Promise<Blob>;
 
-async function writePngToClipboard(png: Blob): Promise<void> {
+export async function writePngToClipboard(png: Blob): Promise<void> {
 	await navigator.clipboard.write([new ClipboardItem({ "image/png": png })]);
 }
 

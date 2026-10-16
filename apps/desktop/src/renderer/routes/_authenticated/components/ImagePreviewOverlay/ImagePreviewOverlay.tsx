@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { toast } from "@superset/ui/sonner";
 import { Spinner } from "@superset/ui/spinner";
 import { cn } from "@superset/ui/utils";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
 	CheckIcon,
 	ChevronLeftIcon,
@@ -46,19 +46,16 @@ const EDGE_BUTTON_CLASS = cn(
 );
 const COPIED_MS = 1500;
 
-function isCopyShortcut(event: KeyboardEvent): boolean {
-	return (
-		(event.metaKey || event.ctrlKey) &&
-		!event.altKey &&
-		!event.shiftKey &&
-		event.key.toLowerCase() === "c"
-	);
+function selectionInside(container: HTMLElement | null): boolean {
+	const selection = window.getSelection();
+	if (!container || !selection || selection.isCollapsed) return false;
+	return container.contains(selection.anchorNode);
 }
 
 /**
  * Full-screen image preview: dark scrim, centered image, floating buttons in
  * the top-right corner. Escape or a scrim click closes; Left and Right step
- * through a sequence; ⌘C copies the image unless text is selected.
+ * through a sequence; ⌘C copies the image unless text in the overlay is selected.
  */
 export function ImagePreviewOverlay({
 	src,
@@ -74,7 +71,9 @@ export function ImagePreviewOverlay({
 	focusOnClose,
 }: ImagePreviewOverlayProps) {
 	const { t } = useLingui();
+	const reduceMotion = useReducedMotion();
 	const [isSaving, setIsSaving] = useState(false);
+	const [copyCount, setCopyCount] = useState(0);
 	const [copiedSrc, setCopiedSrc] = useState<string | null>(null);
 	const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 	const dialogRef = useRef<HTMLDivElement>(null);
@@ -92,6 +91,8 @@ export function ImagePreviewOverlay({
 		try {
 			await onCopy();
 			setCopiedSrc(src);
+			setCopyCount((count) => count + 1);
+			toast.success(t({ message: "Image copied" }));
 			if (copiedTimer.current) clearTimeout(copiedTimer.current);
 			copiedTimer.current = setTimeout(() => setCopiedSrc(null), COPIED_MS);
 		} catch {
@@ -127,18 +128,20 @@ export function ImagePreviewOverlay({
 				else keys.onNext?.();
 				return;
 			}
-			if (
-				isCopyShortcut(event) &&
-				steps.canCopy &&
-				!window.getSelection()?.toString()
-			) {
-				event.stopPropagation();
-				event.preventDefault();
-				void keys.handleCopy();
-			}
+		};
+		// ⌘C reaches the page as the Edit menu's Copy command, not always as a keydown.
+		const copyHandler = (event: ClipboardEvent) => {
+			if (!stepsRef.current.canCopy || selectionInside(dialogRef.current))
+				return;
+			event.preventDefault();
+			void keysRef.current.handleCopy();
 		};
 		window.addEventListener("keydown", handler, true);
-		return () => window.removeEventListener("keydown", handler, true);
+		document.addEventListener("copy", copyHandler, true);
+		return () => {
+			window.removeEventListener("keydown", handler, true);
+			document.removeEventListener("copy", copyHandler, true);
+		};
 	}, [open]);
 
 	const wasOpen = useRef(false);
@@ -209,12 +212,24 @@ export function ImagePreviewOverlay({
 					tabIndex={-1}
 				>
 					{shownSrc ? (
-						<img
-							src={shownSrc}
-							alt={filename}
-							className="max-h-[85vh] max-w-[90vw] rounded-lg object-contain"
-							onError={() => setBrokenSrc(shownSrc)}
-						/>
+						<div className="relative">
+							<img
+								src={shownSrc}
+								alt={filename}
+								className="block max-h-[85vh] max-w-[90vw] rounded-lg object-contain"
+								onError={() => setBrokenSrc(shownSrc)}
+							/>
+							{copyCount > 0 && !reduceMotion && (
+								<motion.div
+									animate={{ opacity: 0 }}
+									className="pointer-events-none absolute inset-0 rounded-lg bg-white"
+									data-copy-flash
+									initial={{ opacity: 0.5 }}
+									key={copyCount}
+									transition={{ duration: 0.4, ease: "easeOut" }}
+								/>
+							)}
+						</div>
 					) : (
 						<div className="flex items-center justify-center text-sm text-white/80">
 							{src !== null
@@ -256,13 +271,25 @@ export function ImagePreviewOverlay({
 								}
 								disabled={shownSrc === null}
 								onClick={() => void handleCopy()}
-								className={CORNER_BUTTON_CLASS}
-							>
-								{copied ? (
-									<CheckIcon className="size-4" />
-								) : (
-									<CopyIcon className="size-4" />
+								className={cn(
+									CORNER_BUTTON_CLASS,
+									copied &&
+										"bg-emerald-500 text-white hover:bg-emerald-500 active:bg-emerald-500",
 								)}
+							>
+								<motion.span
+									animate={{ scale: 1 }}
+									className="flex"
+									initial={reduceMotion ? false : { scale: 0.4 }}
+									key={copied ? "copied" : "copy"}
+									transition={{ type: "spring", stiffness: 500, damping: 18 }}
+								>
+									{copied ? (
+										<CheckIcon className="size-4" />
+									) : (
+										<CopyIcon className="size-4" />
+									)}
+								</motion.span>
 							</button>
 						)}
 						<button

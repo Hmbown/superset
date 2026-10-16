@@ -19,13 +19,30 @@ const { toast } = await import("@superset/ui/sonner");
 const { ImagePreviewOverlay } = await import("./ImagePreviewOverlay");
 
 let toastError: ReturnType<typeof spyOn<typeof toast, "error">>;
+let toastSuccess: ReturnType<typeof spyOn<typeof toast, "success">>;
 beforeEach(() => {
 	toastError = spyOn(toast, "error").mockImplementation(() => "");
+	toastSuccess = spyOn(toast, "success").mockImplementation(() => "");
 });
 afterEach(() => {
 	cleanup();
 	toastError.mockRestore();
+	toastSuccess.mockRestore();
 });
+
+function pressCopy() {
+	const event = new Event("copy", { bubbles: true, cancelable: true });
+	document.dispatchEvent(event);
+	return event;
+}
+
+function select(node: Node) {
+	const range = document.createRange();
+	range.selectNodeContents(node);
+	const selection = window.getSelection();
+	selection?.removeAllRanges();
+	selection?.addRange(range);
+}
 afterAll(() => {
 	reactActGlobal.IS_REACT_ACT_ENVIRONMENT = previousActEnvironment;
 });
@@ -129,12 +146,15 @@ describe("ImagePreviewOverlay", () => {
 		}
 	});
 
-	test("a successful copy shows a check", async () => {
+	test("a successful copy shows a check, flashes the image and confirms in a toast", async () => {
 		const onCopy = mock(async () => {});
 		const view = renderOverlay({ onCopy });
+		expect(view.baseElement.querySelector("[data-copy-flash]")).toBeNull();
 		fireEvent.click(view.getByRole("button", { name: "Copy image" }));
 		await waitFor(() => view.getByRole("button", { name: "Copied" }));
 		expect(onCopy).toHaveBeenCalledTimes(1);
+		expect(toastSuccess).toHaveBeenCalledWith("Image copied");
+		expect(view.baseElement.querySelector("[data-copy-flash]")).toBeTruthy();
 		expect(toastError).not.toHaveBeenCalled();
 	});
 
@@ -148,32 +168,46 @@ describe("ImagePreviewOverlay", () => {
 		await waitFor(() => expect(toastError).toHaveBeenCalledTimes(1));
 		expect(view.getByRole("button", { name: "Copy image" })).toBeTruthy();
 		expect(view.queryByRole("button", { name: "Copied" })).toBeNull();
+		expect(toastSuccess).not.toHaveBeenCalled();
 	});
 
-	test("⌘C copies unless text is selected", async () => {
-		const onCopy = mock(async () => {});
-		const view = renderOverlay({ onCopy });
-		fireEvent.keyDown(window, { key: "c", metaKey: true });
-		await waitFor(() => expect(onCopy).toHaveBeenCalledTimes(1));
-
-		const text = document.createElement("p");
-		text.textContent = "selected words";
-		document.body.appendChild(text);
-		const range = document.createRange();
-		range.selectNodeContents(text);
-		const selection = window.getSelection();
-		selection?.removeAllRanges();
-		selection?.addRange(range);
+	test("the menu's Copy (⌘C) copies the image, even with text selected behind the overlay", async () => {
+		const behind = document.createElement("p");
+		behind.textContent = "transcript words";
+		document.body.appendChild(behind);
 		try {
-			expect(selection?.toString()).toBe("selected words");
-			fireEvent.keyDown(window, { key: "c", metaKey: true });
-			await new Promise((resolve) => setTimeout(resolve, 0));
-			expect(onCopy).toHaveBeenCalledTimes(1);
+			const onCopy = mock(async () => {});
+			renderOverlay({ onCopy });
+			expect(pressCopy().defaultPrevented).toBe(true);
+			await waitFor(() => expect(onCopy).toHaveBeenCalledTimes(1));
+
+			select(behind);
+			expect(pressCopy().defaultPrevented).toBe(true);
+			await waitFor(() => expect(onCopy).toHaveBeenCalledTimes(2));
 		} finally {
-			selection?.removeAllRanges();
-			text.remove();
+			window.getSelection()?.removeAllRanges();
+			behind.remove();
 		}
-		void view;
+	});
+
+	test("text selected inside the overlay copies as text", async () => {
+		const onCopy = mock(async () => {});
+		const view = renderOverlay({ onCopy, position: { index: 0, total: 2 } });
+		try {
+			select(view.getByText("1 of 2"));
+			expect(pressCopy().defaultPrevented).toBe(false);
+			await new Promise((resolve) => setTimeout(resolve, 0));
+			expect(onCopy).not.toHaveBeenCalled();
+		} finally {
+			window.getSelection()?.removeAllRanges();
+		}
+	});
+
+	test("the copy event does nothing once the overlay is closed", () => {
+		const onCopy = mock(async () => {});
+		renderOverlay({ onCopy, open: false });
+		expect(pressCopy().defaultPrevented).toBe(false);
+		expect(onCopy).not.toHaveBeenCalled();
 	});
 
 	test("without a source it shows the fallback and disables copy", () => {

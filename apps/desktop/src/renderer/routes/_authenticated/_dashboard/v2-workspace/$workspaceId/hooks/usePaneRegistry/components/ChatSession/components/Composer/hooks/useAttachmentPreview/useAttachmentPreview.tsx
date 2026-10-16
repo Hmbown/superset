@@ -1,7 +1,7 @@
 import type { PromptInputAttachment } from "@superset/chat-ui/PromptInput";
 import { type ReactNode, useCallback, useState } from "react";
 import { ImagePreviewOverlay } from "renderer/routes/_authenticated/components/ImagePreviewOverlay";
-import { copyImageToClipboard } from "renderer/routes/_authenticated/components/ImagePreviewOverlay/utils/copyImageToClipboard";
+import { useCopyImageToClipboard } from "renderer/routes/_authenticated/hooks/useCopyImageToClipboard";
 import { useSaveImageToDownloads } from "renderer/routes/_authenticated/hooks/useSaveImageToDownloads";
 
 type PreviewImage = { id: string; src: string; filename: string };
@@ -26,6 +26,7 @@ export function useAttachmentPreview(): {
 	overlay: ReactNode;
 } {
 	const saveImageToDownloads = useSaveImageToDownloads();
+	const copyImage = useCopyImageToClipboard();
 	const [preview, setPreview] = useState<Preview | null>(null);
 	const [open, setOpen] = useState(false);
 	const onAttachmentClick = useCallback(
@@ -56,7 +57,7 @@ export function useAttachmentPreview(): {
 			<ImagePreviewOverlay
 				filename={image.filename}
 				onClose={() => setOpen(false)}
-				onCopy={() => copyImageToClipboard(image.src)}
+				onCopy={() => copyImage(image.src)}
 				onDownload={() => saveImageToDownloads(image.src, image.filename)}
 				onNext={() => step(1)}
 				onPrevious={() => step(-1)}

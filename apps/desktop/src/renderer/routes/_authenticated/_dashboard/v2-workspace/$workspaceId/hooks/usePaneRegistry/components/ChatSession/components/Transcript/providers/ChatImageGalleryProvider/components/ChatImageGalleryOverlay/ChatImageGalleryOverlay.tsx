@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/react/macro";
 import { ImagePreviewOverlay } from "renderer/routes/_authenticated/components/ImagePreviewOverlay";
-import { copyImageToClipboard } from "renderer/routes/_authenticated/components/ImagePreviewOverlay/utils/copyImageToClipboard";
+import { useCopyImageToClipboard } from "renderer/routes/_authenticated/hooks/useCopyImageToClipboard";
 import { useSaveImageToDownloads } from "renderer/routes/_authenticated/hooks/useSaveImageToDownloads";
 import { useChatImageSource } from "../../../../hooks/useChatImageSource";
 import type { GalleryImage } from "../../../../utils/galleryImages";
@@ -28,6 +28,7 @@ export function ChatImageGalleryOverlay({
 	focusOnClose: () => HTMLElement | null | undefined;
 }) {
 	const saveImageToDownloads = useSaveImageToDownloads();
+	const copyImage = useCopyImageToClipboard();
 	const source = useChatImageSource(image, { full: true });
 	const src = source.status === "ready" ? source.src : null;
 	const filename = image.filename;
@@ -42,7 +43,7 @@ export function ChatImageGalleryOverlay({
 				filename={filename}
 				focusOnClose={focusOnClose}
 				onClose={onClose}
-				onCopy={src ? () => copyImageToClipboard(src) : undefined}
+				onCopy={src ? () => copyImage(src) : undefined}
 				onDownload={() =>
 					src ? saveImageToDownloads(src, filename) : Promise.resolve()
 				}
