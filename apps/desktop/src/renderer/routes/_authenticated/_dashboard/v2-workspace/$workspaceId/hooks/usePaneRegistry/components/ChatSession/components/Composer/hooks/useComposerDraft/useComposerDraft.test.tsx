@@ -1,4 +1,8 @@
 import { afterEach, beforeEach, expect, spyOn, test } from "bun:test";
+import {
+	appendPastedText,
+	parsePastedText,
+} from "@superset/chat-ui/utils/pastedText";
 
 const { act, cleanup, renderHook } = await import("@testing-library/react");
 const { prependToDraft, takeRecoveredDraftText, useComposerDraft } =
@@ -38,6 +42,22 @@ test("recovered text survives the composer's own save on unmount", () => {
 	expect(window.localStorage.getItem("chat-v3-draft:recover-b")).toBe(
 		"unsent message\n\nnewer draft",
 	);
+});
+
+test("an unsent prompt with a pasted card joins a draft with its own card", () => {
+	const draft = renderHook(() => useComposerDraft("chat-v3-draft:pastes"));
+	act(() =>
+		draft.result.current.onChange(appendPastedText("draft", ["draft log"])),
+	);
+	draft.unmount();
+	prependToDraft(
+		"chat-v3-draft:pastes",
+		appendPastedText("unsent", ["unsent log"]),
+	);
+
+	expect(
+		parsePastedText(window.localStorage.getItem("chat-v3-draft:pastes") ?? ""),
+	).toEqual({ text: "unsent\n\ndraft", pastes: ["unsent log", "draft log"] });
 });
 
 test("a draft that fails to save is still read from memory", () => {

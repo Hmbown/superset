@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}: {statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, other {#줄}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName} (이 기기)"
 
@@ -8282,6 +8285,9 @@ msgstr "리뷰 코멘트 숨기기"
 msgid "Hide sessions"
 msgstr "세션 숨기기"
 
+msgid "Hide text"
+msgstr "텍스트 숨기기"
+
 msgid "Hide unchanged regions"
 msgstr "변경되지 않은 부분 숨기기"
 
@@ -13612,6 +13618,9 @@ msgstr "멘션 제거"
 msgid "Remove mention {path}"
 msgstr "{path} 멘션 제거"
 
+msgid "Remove pasted text"
+msgstr "붙여넣은 텍스트 제거"
+
 msgid "Remove PR Link"
 msgstr "PR 링크 제거"
 
@@ -15362,6 +15371,9 @@ msgstr "차트에 표시"
 msgid "Show in folder"
 msgstr "폴더에서 보기"
 
+msgid "Show in text field"
+msgstr "입력란에 표시"
+
 msgid "Show items in all states"
 msgstr "모든 상태의 항목 표시"
 
@@ -15424,6 +15436,9 @@ msgstr "세션 표시"
 
 msgid "Show status and send notifications for this agent."
 msgstr "이 에이전트의 상태를 표시하고 알림을 보냅니다."
+
+msgid "Show text"
+msgstr "텍스트 보기"
 
 msgid "Show the triggering payload"
 msgstr "트리거 페이로드 표시"

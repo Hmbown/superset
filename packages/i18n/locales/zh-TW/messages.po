@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}：{statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, other {# 行}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName}（此裝置）"
 
@@ -8282,6 +8285,9 @@ msgstr "隱藏審查評論"
 msgid "Hide sessions"
 msgstr "隱藏會話"
 
+msgid "Hide text"
+msgstr "隱藏文字"
+
 msgid "Hide unchanged regions"
 msgstr "隱藏未更改區域"
 
@@ -13612,6 +13618,9 @@ msgstr "移除提及"
 msgid "Remove mention {path}"
 msgstr "移除提及{path}"
 
+msgid "Remove pasted text"
+msgstr "移除貼上的文字"
+
 msgid "Remove PR Link"
 msgstr "移除PR連結"
 
@@ -15362,6 +15371,9 @@ msgstr "在圖表中顯示"
 msgid "Show in folder"
 msgstr "在資料夾中顯示"
 
+msgid "Show in text field"
+msgstr "在輸入框中顯示"
+
 msgid "Show items in all states"
 msgstr "顯示所有狀態的條目"
 
@@ -15424,6 +15436,9 @@ msgstr "顯示會話"
 
 msgid "Show status and send notifications for this agent."
 msgstr "為此代理程式顯示狀態併發送通知。"
+
+msgid "Show text"
+msgstr "顯示文字"
 
 msgid "Show the triggering payload"
 msgstr "顯示觸發酬載"

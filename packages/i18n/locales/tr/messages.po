@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}: {statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, one {# satır} other {# satır}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName} (bu cihaz)"
 
@@ -8282,6 +8285,9 @@ msgstr "İnceleme yorumlarını gizle"
 msgid "Hide sessions"
 msgstr "Oturumları gizle"
 
+msgid "Hide text"
+msgstr "Metni gizle"
+
 msgid "Hide unchanged regions"
 msgstr "Değişmeyen bölgeleri gizle"
 
@@ -13612,6 +13618,9 @@ msgstr "Bahsi kaldır"
 msgid "Remove mention {path}"
 msgstr "{path} bahsini kaldır"
 
+msgid "Remove pasted text"
+msgstr "Yapıştırılan metni kaldır"
+
 msgid "Remove PR Link"
 msgstr "PR bağlantısını kaldır"
 
@@ -15362,6 +15371,9 @@ msgstr "Grafikte göster"
 msgid "Show in folder"
 msgstr "Klasörde göster"
 
+msgid "Show in text field"
+msgstr "Metin alanında göster"
+
 msgid "Show items in all states"
 msgstr "Tüm durumlardaki öğeleri göster"
 
@@ -15424,6 +15436,9 @@ msgstr "Oturumları göster"
 
 msgid "Show status and send notifications for this agent."
 msgstr "Bu ajan için durum göster ve bildirim gönder."
+
+msgid "Show text"
+msgstr "Metni göster"
 
 msgid "Show the triggering payload"
 msgstr "Tetikleyen yükü göster"

@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}: {statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, one {# řádek} few {# řádky} many {# řádku} other {# řádků}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName} (toto zařízení)"
 
@@ -8282,6 +8285,9 @@ msgstr "Skrýt komentáře z revize"
 msgid "Hide sessions"
 msgstr "Skrýt relace"
 
+msgid "Hide text"
+msgstr "Skrýt text"
+
 msgid "Hide unchanged regions"
 msgstr "Skrýt nezměněné části"
 
@@ -13612,6 +13618,9 @@ msgstr "Odebrat zmínku"
 msgid "Remove mention {path}"
 msgstr "Odebrat zmínku {path}"
 
+msgid "Remove pasted text"
+msgstr "Odebrat vložený text"
+
 msgid "Remove PR Link"
 msgstr "Odebrat propojení s PR"
 
@@ -15362,6 +15371,9 @@ msgstr "Zobrazit v grafu"
 msgid "Show in folder"
 msgstr "Zobrazit ve složce"
 
+msgid "Show in text field"
+msgstr "Zobrazit v textovém poli"
+
 msgid "Show items in all states"
 msgstr "Zobrazit položky ve všech stavech"
 
@@ -15424,6 +15436,9 @@ msgstr "Zobrazit relace"
 
 msgid "Show status and send notifications for this agent."
 msgstr "Zobrazovat stav a posílat oznámení pro tohoto agenta."
+
+msgid "Show text"
+msgstr "Zobrazit text"
 
 msgid "Show the triggering payload"
 msgstr "Zobrazit spouštěcí data"

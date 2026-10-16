@@ -1,3 +1,7 @@
+import {
+	appendPastedText,
+	parsePastedText,
+} from "@superset/chat-ui/utils/pastedText";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const DRAFT_DEBOUNCE_MS = 300;
@@ -26,9 +30,19 @@ function readDraft(draftKey: string): string | undefined {
 	}
 }
 
+function joinDrafts(drafts: readonly string[]): string {
+	const parts = drafts.map(parsePastedText);
+	return appendPastedText(
+		parts
+			.map((part) => part.text)
+			.filter(Boolean)
+			.join("\n\n"),
+		parts.flatMap((part) => part.pastes),
+	);
+}
+
 export function prependToDraft(draftKey: string, text: string) {
-	const current = readDraft(draftKey);
-	const merged = current ? `${text}\n\n${current}` : text;
+	const merged = joinDrafts([text, readDraft(draftKey) ?? ""]);
 	unsavedDrafts.set(draftKey, merged);
 	persistDraft(draftKey, merged);
 	recoveredAfterRead.set(draftKey, [
@@ -40,7 +54,7 @@ export function prependToDraft(draftKey: string, text: string) {
 export function takeRecoveredDraftText(draftKey: string): string | null {
 	const recovered = recoveredAfterRead.get(draftKey);
 	recoveredAfterRead.delete(draftKey);
-	return recovered?.length ? recovered.join("\n\n") : null;
+	return recovered?.length ? joinDrafts(recovered) : null;
 }
 
 export function useComposerDraft(draftKey: string) {

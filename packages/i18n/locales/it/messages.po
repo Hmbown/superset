@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}: {statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, one {# riga} other {# righe}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName} (questo dispositivo)"
 
@@ -8282,6 +8285,9 @@ msgstr "Nascondi i commenti di revisione"
 msgid "Hide sessions"
 msgstr "Nascondi le sessioni"
 
+msgid "Hide text"
+msgstr "Nascondi testo"
+
 msgid "Hide unchanged regions"
 msgstr "Nascondi le regioni non modificate"
 
@@ -13612,6 +13618,9 @@ msgstr "Rimuovi la menzione"
 msgid "Remove mention {path}"
 msgstr "Rimuovi la menzione {path}"
 
+msgid "Remove pasted text"
+msgstr "Rimuovi testo incollato"
+
 msgid "Remove PR Link"
 msgstr "Rimuovi il link alla PR"
 
@@ -15362,6 +15371,9 @@ msgstr "Mostra nel grafico"
 msgid "Show in folder"
 msgstr "Mostra nella cartella"
 
+msgid "Show in text field"
+msgstr "Mostra nel campo di testo"
+
 msgid "Show items in all states"
 msgstr "Mostra gli elementi in tutti gli stati"
 
@@ -15424,6 +15436,9 @@ msgstr "Mostra le sessioni"
 
 msgid "Show status and send notifications for this agent."
 msgstr "Mostra lo stato e invia notifiche per questo agente."
+
+msgid "Show text"
+msgstr "Mostra testo"
 
 msgid "Show the triggering payload"
 msgstr "Mostra il payload che ha attivato questa esecuzione"

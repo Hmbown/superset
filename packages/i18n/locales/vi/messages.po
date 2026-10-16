@@ -923,6 +923,9 @@ msgstr "{level} · {gate} · {statusLabel}"
 msgid "{level} {gate}: {statusLabel}"
 msgstr "{level} {gate}: {statusLabel}"
 
+msgid "{lines, plural, one {# line} other {# lines}}"
+msgstr "{lines, plural, other {# dòng}}"
+
 msgid "{localHostName} (this device)"
 msgstr "{localHostName} (thiết bị này)"
 
@@ -8282,6 +8285,9 @@ msgstr "Ẩn bình luận review"
 msgid "Hide sessions"
 msgstr "Ẩn phiên"
 
+msgid "Hide text"
+msgstr "Ẩn văn bản"
+
 msgid "Hide unchanged regions"
 msgstr "Ẩn các vùng không đổi"
 
@@ -13612,6 +13618,9 @@ msgstr "Xóa nhắc đến"
 msgid "Remove mention {path}"
 msgstr "Xóa nhắc đến {path}"
 
+msgid "Remove pasted text"
+msgstr "Xóa văn bản đã dán"
+
 msgid "Remove PR Link"
 msgstr "Gỡ liên kết PR"
 
@@ -15362,6 +15371,9 @@ msgstr "Hiện trên biểu đồ"
 msgid "Show in folder"
 msgstr "Hiện trong thư mục"
 
+msgid "Show in text field"
+msgstr "Hiển thị trong ô nhập"
+
 msgid "Show items in all states"
 msgstr "Hiện mục ở mọi trạng thái"
 
@@ -15424,6 +15436,9 @@ msgstr "Hiện phiên"
 
 msgid "Show status and send notifications for this agent."
 msgstr "Hiển thị trạng thái và gửi thông báo cho agent này."
+
+msgid "Show text"
+msgstr "Hiện văn bản"
 
 msgid "Show the triggering payload"
 msgstr "Hiển thị payload kích hoạt"
