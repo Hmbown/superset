@@ -13,6 +13,10 @@ interface SidebarCardProps {
 	actionLabel?: string;
 	onAction?: () => void;
 	onDismiss?: () => void;
+	/** Makes the whole card a button. */
+	onClick?: () => void;
+	/** Rendered edge to edge above the title. */
+	media?: React.ReactNode;
 	className?: string;
 	children?: React.ReactNode;
 }
@@ -24,6 +28,8 @@ function SidebarCard({
 	actionLabel,
 	onAction,
 	onDismiss,
+	onClick,
+	media,
 	className,
 	children,
 }: SidebarCardProps) {
@@ -32,9 +38,25 @@ function SidebarCard({
 			data-slot="sidebar-card"
 			className={cn(
 				"relative rounded-lg border border-border bg-card p-3",
+				onClick && "transition-colors hover:bg-accent/40",
 				className,
 			)}
 		>
+			{onClick && (
+				<button
+					type="button"
+					onClick={onClick}
+					aria-label={title}
+					className="absolute inset-0 rounded-lg focus-visible:outline-2 focus-visible:outline-ring"
+				/>
+			)}
+
+			{media && (
+				<div className="-mx-1 -mt-1 mb-2.5 overflow-hidden rounded-md">
+					{media}
+				</div>
+			)}
+
 			{badge && <Badge variant="box">{badge}</Badge>}
 
 			{onDismiss && (
@@ -46,7 +68,10 @@ function SidebarCard({
 							message: "Dismiss",
 						}),
 					)}
-					className="absolute top-2.5 right-2.5 text-muted-foreground hover:text-foreground transition-colors"
+					className={cn(
+						"absolute top-2.5 right-2.5 z-10 text-muted-foreground hover:text-foreground transition-colors",
+						media && "rounded-full bg-background/80 p-0.5",
+					)}
 				>
 					<LuX className="size-3.5" />
 				</button>

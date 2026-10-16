@@ -2097,6 +2097,9 @@ msgstr "Tüm yazılar"
 msgid "All projects"
 msgstr "Tüm projeler"
 
+msgid "All releases"
+msgstr "Tüm sürümler"
+
 msgid "All releases on GitHub"
 msgstr "GitHub'daki tüm sürümler"
 
@@ -10570,6 +10573,9 @@ msgstr "Sonraki dosya"
 msgid "Next match"
 msgstr "Sonraki eşleşme"
 
+msgid "Next release"
+msgstr "Sonraki sürüm"
+
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "Sonraki çalıştırma {0}"
@@ -11044,6 +11050,9 @@ msgstr "Henüz herkese açık ajan yapılandırması yok. Bu bölüm gelecekteki
 
 msgid "No pull requests found."
 msgstr "Pull request bulunamadı."
+
+msgid "No release notes at {url}"
+msgstr "{url} adresinde sürüm notu yok"
 
 msgid "No repositories found. Make sure your GitHub App has access to repositories."
 msgstr "Depo bulunamadı. GitHub App'inizin depolara erişimi olduğundan emin olun."
@@ -12783,6 +12792,9 @@ msgstr "Geliştirme sunucunuzu terminallerinizin yanında önizleyin. Ajanınız
 msgid "Preview: GitHub star nag toast"
 msgstr "Önizleme: GitHub yıldız hatırlatma bildirimi"
 
+msgid "Preview: release notes card"
+msgstr "Önizleme: sürüm notları kartı"
+
 msgid "Previous"
 msgstr "Önceki"
 
@@ -12803,6 +12815,9 @@ msgstr "Önceki eşleşme"
 
 msgid "Previous prompts"
 msgstr "Önceki istemler"
+
+msgid "Previous release"
+msgstr "Önceki sürüm"
 
 msgid "Previous slide"
 msgstr "Önceki slayt"
@@ -16224,6 +16239,9 @@ msgstr "Superset"
 
 msgid "Superset (YC S26) is the source-available IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
 msgstr "Superset (YC S26), mühendislerin Claude Code ve Codex gibi yüzlerce kodlama ajanını paralel olarak çalıştırdığı, yapay zekâ ajanları çağı için kaynak kodu erişilebilir IDE'dir."
+
+msgid "Superset {version}"
+msgstr "Superset {version}"
 
 msgid "Superset Agent"
 msgstr "Superset Ajanı"

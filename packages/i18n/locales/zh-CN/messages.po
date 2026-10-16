@@ -2097,6 +2097,9 @@ msgstr "全部文章"
 msgid "All projects"
 msgstr "所有项目"
 
+msgid "All releases"
+msgstr "全部版本"
+
 msgid "All releases on GitHub"
 msgstr "GitHub 上的全部版本"
 
@@ -10570,6 +10573,9 @@ msgstr "下一个文件"
 msgid "Next match"
 msgstr "下一个匹配"
 
+msgid "Next release"
+msgstr "下一个版本"
+
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "下次运行{0}"
@@ -11044,6 +11050,9 @@ msgstr "暂无公开的智能体配置。此页面已为将来的智能体配置
 
 msgid "No pull requests found."
 msgstr "未找到拉取请求。"
+
+msgid "No release notes at {url}"
+msgstr "{url} 上没有版本说明"
 
 msgid "No repositories found. Make sure your GitHub App has access to repositories."
 msgstr "未找到仓库。请确认你的GitHub App有权访问仓库。"
@@ -12783,6 +12792,9 @@ msgstr "在终端旁边预览你的开发服务器。智能体可以点击浏览
 msgid "Preview: GitHub star nag toast"
 msgstr "预览：GitHub 星标提醒弹窗"
 
+msgid "Preview: release notes card"
+msgstr "预览：版本说明卡片"
+
 msgid "Previous"
 msgstr "上一页"
 
@@ -12803,6 +12815,9 @@ msgstr "上一个匹配"
 
 msgid "Previous prompts"
 msgstr "历史提示词"
+
+msgid "Previous release"
+msgstr "上一个版本"
 
 msgid "Previous slide"
 msgstr "上一张"
@@ -16224,6 +16239,9 @@ msgstr "Superset"
 
 msgid "Superset (YC S26) is the source-available IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
 msgstr "Superset（YC S26）是面向 AI 智能体时代的源码可用 IDE，工程师可以在其中并行运行数百个 Claude Code、Codex 等编程智能体。"
+
+msgid "Superset {version}"
+msgstr "Superset {version}"
 
 msgid "Superset Agent"
 msgstr "Superset智能体"

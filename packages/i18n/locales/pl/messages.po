@@ -2097,6 +2097,9 @@ msgstr "Wszystkie wpisy"
 msgid "All projects"
 msgstr "Wszystkie projekty"
 
+msgid "All releases"
+msgstr "Wszystkie wydania"
+
 msgid "All releases on GitHub"
 msgstr "Wszystkie wydania na GitHubie"
 
@@ -10570,6 +10573,9 @@ msgstr "Następny plik"
 msgid "Next match"
 msgstr "Następne dopasowanie"
 
+msgid "Next release"
+msgstr "Następne wydanie"
+
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "Następne uruchomienie {0}"
@@ -11044,6 +11050,9 @@ msgstr "Brak publicznych konfiguracji agentów. Ta ścieżka jest gotowa na przy
 
 msgid "No pull requests found."
 msgstr "Nie znaleziono pull requestów."
+
+msgid "No release notes at {url}"
+msgstr "Brak informacji o wydaniu pod {url}"
 
 msgid "No repositories found. Make sure your GitHub App has access to repositories."
 msgstr "Nie znaleziono repozytoriów. Upewnij się, że Twoja aplikacja GitHub ma do nich dostęp."
@@ -12783,6 +12792,9 @@ msgstr "Podglądaj serwer deweloperski obok terminali. Agent może się po nim p
 msgid "Preview: GitHub star nag toast"
 msgstr "Podgląd: przypomnienie o gwiazdce na GitHub"
 
+msgid "Preview: release notes card"
+msgstr "Podgląd: karta informacji o wydaniu"
+
 msgid "Previous"
 msgstr "Wstecz"
 
@@ -12803,6 +12815,9 @@ msgstr "Poprzednie dopasowanie"
 
 msgid "Previous prompts"
 msgstr "Poprzednie prompty"
+
+msgid "Previous release"
+msgstr "Poprzednie wydanie"
 
 msgid "Previous slide"
 msgstr "Poprzedni slajd"
@@ -16224,6 +16239,9 @@ msgstr "Superset"
 
 msgid "Superset (YC S26) is the source-available IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
 msgstr "Superset (YC S26) to IDE z publicznie dostępnym kodem źródłowym na erę agentów AI, w którym inżynierowie uruchamiają równolegle setki agentów programistycznych, takich jak Claude Code i Codex."
+
+msgid "Superset {version}"
+msgstr "Superset {version}"
 
 msgid "Superset Agent"
 msgstr "Superset Agent"

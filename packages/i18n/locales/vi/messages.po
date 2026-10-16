@@ -2097,6 +2097,9 @@ msgstr "Tất cả bài viết"
 msgid "All projects"
 msgstr "Tất cả dự án"
 
+msgid "All releases"
+msgstr "Tất cả bản phát hành"
+
 msgid "All releases on GitHub"
 msgstr "Tất cả bản phát hành trên GitHub"
 
@@ -10570,6 +10573,9 @@ msgstr "Tệp tiếp theo"
 msgid "Next match"
 msgstr "Kết quả kế tiếp"
 
+msgid "Next release"
+msgstr "Bản phát hành kế tiếp"
+
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "Lần chạy tiếp theo {0}"
@@ -11044,6 +11050,9 @@ msgstr "Chưa có cấu hình agent công khai nào. Đường dẫn này đã s
 
 msgid "No pull requests found."
 msgstr "Không tìm thấy pull request nào."
+
+msgid "No release notes at {url}"
+msgstr "Không có ghi chú phát hành tại {url}"
 
 msgid "No repositories found. Make sure your GitHub App has access to repositories."
 msgstr "Không tìm thấy repository nào. Hãy đảm bảo GitHub App của bạn có quyền truy cập repository."
@@ -12783,6 +12792,9 @@ msgstr "Xem trước dev server ngay cạnh terminal. Agent có thể tự nhấ
 msgid "Preview: GitHub star nag toast"
 msgstr "Xem trước: lời nhắc gắn sao GitHub"
 
+msgid "Preview: release notes card"
+msgstr "Xem trước: thẻ ghi chú phát hành"
+
 msgid "Previous"
 msgstr "Trước"
 
@@ -12803,6 +12815,9 @@ msgstr "Kết quả trước"
 
 msgid "Previous prompts"
 msgstr "Prompt trước đó"
+
+msgid "Previous release"
+msgstr "Bản phát hành trước"
 
 msgid "Previous slide"
 msgstr "Slide trước"
@@ -16224,6 +16239,9 @@ msgstr "Superset"
 
 msgid "Superset (YC S26) is the source-available IDE for the AI agents era, where engineers run hundreds of coding agents like Claude Code and Codex in parallel."
 msgstr "Superset (YC S26) là IDE công khai mã nguồn cho kỷ nguyên agent AI, nơi các kỹ sư chạy song song hàng trăm agent lập trình như Claude Code và Codex."
+
+msgid "Superset {version}"
+msgstr "Superset {version}"
 
 msgid "Superset Agent"
 msgstr "Superset Agent"
