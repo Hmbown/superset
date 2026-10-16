@@ -5,6 +5,7 @@ import type {
 	McpServerEntry,
 	McpServerScope,
 } from "@superset/shared/mcp-servers";
+import { getPluginByName } from "@superset/shared/plugins";
 import {
 	Command,
 	CommandInput,
@@ -14,7 +15,7 @@ import {
 import { cn } from "@superset/ui/utils";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { RefreshCwIcon, SettingsIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
 	getPresetIcon,
 	useIsDarkTheme,
@@ -57,6 +58,13 @@ export function McpServerPicker({
 	const { t } = useLingui();
 	const isDark = useIsDarkTheme();
 	const [query, setQuery] = useState("");
+	const searchRef = useRef<HTMLInputElement>(null);
+	// The command menu's own editor update runs after this mounts and keeps
+	// focus in the editor, so focus the search a frame later.
+	useEffect(() => {
+		const frame = requestAnimationFrame(() => searchRef.current?.focus());
+		return () => cancelAnimationFrame(frame);
+	}, []);
 	const input = { workspaceId, agent: agentId };
 	const utils = workspaceTrpc.useUtils();
 	const list = workspaceTrpc.agentTooling.listMcpServers.useQuery(input, {
@@ -109,7 +117,9 @@ export function McpServerPicker({
 		const { server } = row;
 		if (server.state === "not-configured" && server.plugin) {
 			const name =
-				plugins.get(server.plugin.name)?.displayName ?? server.plugin.name;
+				plugins.get(server.plugin.name)?.displayName ??
+				getPluginByName(server.plugin.name)?.interface.displayName ??
+				server.plugin.name;
 			return t({ message: `${name} plugin · applies from the next session` });
 		}
 		return `${AGENT_LABELS[server.agent]} · ${scopeLabels[server.scope]}`;
@@ -150,7 +160,7 @@ export function McpServerPicker({
 		>
 			<div className="flex items-center pr-1.5 [&>[data-slot=command-input-wrapper]]:flex-1 [&>[data-slot=command-input-wrapper]]:border-b-0">
 				<CommandInput
-					autoFocus
+					ref={searchRef}
 					value={query}
 					onValueChange={setQuery}
 					placeholder={t({ message: "Search MCP servers…" })}

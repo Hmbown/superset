@@ -4,7 +4,7 @@ import type { McpServerEntry } from "@superset/shared/mcp-servers";
 const TOKEN_PREFIX = "@mcp/";
 const SEGMENT = "[\\w-]+(?:\\.[\\w-]+)*";
 const TOKEN_PATTERN = new RegExp(
-	`(^|[\\s([{])(${TOKEN_PREFIX}${SEGMENT}(?:/${SEGMENT}){0,2})(?=$|[\\s)\\]}.!?;,:])`,
+	`(^|[\\s([{])(${TOKEN_PREFIX}${SEGMENT}(?:/${SEGMENT})?)(?=$|[\\s)\\]}.!?;,:])`,
 	"g",
 );
 
@@ -15,19 +15,20 @@ function tokenSafe(value: string): string {
 }
 
 /**
- * `@mcp/<name>`, or with the agent and then the scope in front when another
- * listed server has the same name.
+ * `@mcp/<name>`, with the scope in front when the same agent has another
+ * server of that name.
  */
 export function mcpServerToken(
 	server: Pick<McpServerEntry, "name" | "agent" | "scope">,
 	servers: readonly Pick<McpServerEntry, "name" | "agent" | "scope">[],
 ): string {
 	const name = tokenSafe(server.name);
-	const namesakes = servers.filter((other) => tokenSafe(other.name) === name);
-	if (namesakes.length <= 1) return `${TOKEN_PREFIX}${name}`;
-	const sameAgent = namesakes.filter((other) => other.agent === server.agent);
-	if (sameAgent.length <= 1) return `${TOKEN_PREFIX}${server.agent}/${name}`;
-	return `${TOKEN_PREFIX}${server.agent}/${server.scope}/${name}`;
+	const namesakes = servers.filter(
+		(other) => other.agent === server.agent && tokenSafe(other.name) === name,
+	);
+	return namesakes.length <= 1
+		? `${TOKEN_PREFIX}${name}`
+		: `${TOKEN_PREFIX}${server.scope}/${name}`;
 }
 
 export function mcpServerChip(

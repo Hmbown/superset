@@ -132,7 +132,9 @@ export function useMcpServerPicker({
 		(text: string): ComposerChipMatch[] =>
 			findMcpServerTokens(text).map(({ start, end, token, name }) => {
 				const server = cached?.find(
-					(candidate) => mcpServerToken(candidate, cached) === token,
+					(candidate) =>
+						candidate.agent === agentId &&
+						mcpServerToken(candidate, cached) === token,
 				);
 				return {
 					start,
@@ -144,7 +146,7 @@ export function useMcpServerPicker({
 					),
 				};
 			}),
-		[cached, isDark],
+		[agentId, cached, isDark],
 	);
 
 	const dialog = (
