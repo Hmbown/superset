@@ -7,7 +7,15 @@ export type ShellIntent = {
 	path?: string;
 	query?: string;
 	startLine?: number;
+	/** Where the command ran, when the agent said; `path` stays as typed. */
+	cwd?: string;
 };
+
+/** The path to open: `path` resolved against where the command ran. */
+export function intentLocation(intent: ShellIntent): string | undefined {
+	if (!intent.path) return undefined;
+	return intent.cwd ? joinPath(intent.cwd, intent.path) : intent.path;
+}
 
 /** A script this long is a program, not a glance at a file. */
 const MAX_COMMAND_CHARS = 2000;
@@ -149,14 +157,21 @@ export function inferShellIntent(command: string): ShellIntent | null {
 	const text = unwrapShellCommand(command);
 	if (!text || text.length > MAX_COMMAND_CHARS) return null;
 	if (hasSubstitution(text)) return null;
-	const redirect = writeRedirect(text);
 
 	const intents: ShellIntent[] = [];
+	let redirect: ShellIntent | undefined;
 	let directory = "";
 	for (const chain of splitTopLevel(text, chainSeparator)) {
+		const write = writeRedirect(chain);
+		if (write) {
+			redirect = {
+				verb: write.append ? "edit" : "write",
+				path: joinPath(directory, write.path),
+			};
+		}
 		let last: ShellIntent | undefined;
 		for (const stage of splitTopLevel(chain, pipeSeparator)) {
-			const tokens = tokenize(stage);
+			const tokens = tokenize(withoutRedirects(stage));
 			if (!tokens || tokens.length === 0) return null;
 			const argv = tokens.map((token) => token.value);
 			if (binName(argv[0] ?? "") === "cd") {
@@ -173,12 +188,7 @@ export function inferShellIntent(command: string): ShellIntent | null {
 		if (last) intents.push(last);
 	}
 
-	if (redirect) {
-		return {
-			verb: redirect.append ? "edit" : "write",
-			path: joinPath(directory, redirect.path),
-		};
-	}
+	if (redirect) return redirect;
 	if (intents.length === 0) return null;
 	const latest = [...intents].reverse();
 	return (
@@ -252,7 +262,13 @@ export function toolCallCommand(item: ToolCall): string | null {
 export function toolCallIntent(item: ToolCall): ShellIntent | null {
 	if (item.toolKind !== "execute") return null;
 	const command = toolCallCommand(item);
-	return command ? inferShellIntent(command) : null;
+	const intent = command ? inferShellIntent(command) : null;
+	const raw = item.rawInput;
+	const cwd =
+		typeof raw === "object" && raw !== null && !Array.isArray(raw)
+			? (raw as Record<string, unknown>).cwd
+			: undefined;
+	return intent && typeof cwd === "string" && cwd ? { ...intent, cwd } : intent;
 }
 
 /** The kind a reader would file the call under, once a shell verb is known. */
@@ -395,7 +411,21 @@ function grepIntent(argv: string[]): Classified {
 	return { verb: "search", query, ...(path ? { path } : {}) };
 }
 
+/** `find` actions that run or change something, not just list matches. */
+const FIND_ACTIONS = new Set([
+	"-delete",
+	"-exec",
+	"-execdir",
+	"-ok",
+	"-okdir",
+	"-fprint",
+	"-fprint0",
+	"-fprintf",
+	"-fls",
+]);
+
 function findIntent(argv: string[]): Classified {
+	if (argv.some((arg) => FIND_ACTIONS.has(arg))) return "opaque";
 	let query: string | undefined;
 	let path: string | undefined;
 	for (let index = 1; index < argv.length; index += 1) {
@@ -528,6 +558,7 @@ function tidyPath(value: string | undefined): string | undefined {
 /** `cd src` then `cat index.ts` read `src/index.ts`; an absolute path stands alone. */
 function joinPath(directory: string, path: string): string {
 	if (!directory || !path || /^(?:[a-zA-Z]:)?[/~]/.test(path)) return path;
+	const root = directory.startsWith("/") ? "/" : "";
 	const parts = `${directory}/${path}`.split("/");
 	const out: string[] = [];
 	for (const part of parts) {
@@ -535,21 +566,35 @@ function joinPath(directory: string, path: string): string {
 		if (part === ".." && out.length > 0 && out.at(-1) !== "..") out.pop();
 		else out.push(part);
 	}
-	return out.join("/");
+	return root + out.join("/");
 }
 
 function binName(token: string): string {
 	return (token.replace(/\\/g, "/").split("/").pop() ?? token).toLowerCase();
 }
 
-/** Backticks and `$(…)` run something the text does not show. */
+/**
+ * Backticks and `$(…)` run something the text does not show. Only single
+ * quotes stop them; inside double quotes the shell still runs them.
+ */
 function hasSubstitution(command: string): boolean {
 	let quote: "'" | '"' | null = null;
 	for (let index = 0; index < command.length; index += 1) {
 		const char = command[index];
-		if (quote) {
-			if (quote === '"' && char === "\\") index += 1;
-			else if (char === quote) quote = null;
+		if (quote === "'") {
+			if (char === "'") quote = null;
+			continue;
+		}
+		if (quote === '"') {
+			if (char === "\\") index += 1;
+			else if (char === '"') quote = null;
+			else if (
+				char === "`" ||
+				(char === "$" &&
+					(command[index + 1] === "(" || command[index + 1] === "{"))
+			) {
+				return true;
+			}
 			continue;
 		}
 		if (char === "'" || char === '"') {
@@ -592,6 +637,16 @@ function writeRedirect(
 			continue;
 		}
 		if (char !== ">") continue;
+		// `2>` and friends redirect another stream; only stdout is the output.
+		const fd = command[index - 1];
+		if (
+			fd !== undefined &&
+			/\d/.test(fd) &&
+			fd !== "1" &&
+			/^\s?$/.test(command[index - 2] ?? "")
+		) {
+			continue;
+		}
 		let append = false;
 		let cursor = index + 1;
 		if (command[cursor] === ">") {
@@ -600,15 +655,76 @@ function writeRedirect(
 		}
 		while (command[cursor] === " " || command[cursor] === "\t") cursor += 1;
 		if (command[cursor] === "&") continue;
-		let end = cursor;
-		while (end < command.length && !/[\s|&;<>]/.test(command[end] ?? "")) {
-			end += 1;
-		}
-		const path = tidyPath(command.slice(cursor, end));
+		const word = readWord(command, cursor);
+		if (!word) continue;
+		const path = tidyPath(word.value);
 		if (path) found = { path, append };
-		index = Math.max(index, end - 1);
+		index = Math.max(index, word.end - 1);
 	}
 	return found;
+}
+
+/**
+ * The stage without its redirections (`2> err.log`, `< in.txt`, `2>&1`),
+ * so a redirect's target is never read as one of the command's arguments.
+ */
+function withoutRedirects(stage: string): string {
+	let out = "";
+	let quote: "'" | '"' | null = null;
+	for (let index = 0; index < stage.length; index += 1) {
+		const char = stage[index] ?? "";
+		if (quote) {
+			if (quote === '"' && char === "\\") {
+				out += char + (stage[index + 1] ?? "");
+				index += 1;
+				continue;
+			}
+			if (char === quote) quote = null;
+			out += char;
+			continue;
+		}
+		if (char === "'" || char === '"') {
+			quote = char;
+			out += char;
+			continue;
+		}
+		if (char === "\\") {
+			out += char + (stage[index + 1] ?? "");
+			index += 1;
+			continue;
+		}
+		if (char !== ">" && char !== "<") {
+			out += char;
+			continue;
+		}
+		// A file-descriptor number right before the operator belongs to it.
+		out = out.replace(/(^|\s)\d+$/, "$1");
+		let cursor = index + 1;
+		while (stage[cursor] === ">" || stage[cursor] === "<") cursor += 1;
+		if (stage[cursor] === "&") {
+			cursor += 1;
+			while (/[\d-]/.test(stage[cursor] ?? "")) cursor += 1;
+			index = cursor - 1;
+			out += " ";
+			continue;
+		}
+		while (stage[cursor] === " " || stage[cursor] === "\t") cursor += 1;
+		const word = readWord(stage, cursor);
+		index = (word ? word.end : cursor) - 1;
+		out += " ";
+	}
+	return out;
+}
+
+/** One shell word from `start`, with its quotes and escapes resolved. */
+function readWord(
+	text: string,
+	start: number,
+): { value: string; end: number } | null {
+	const tokens = tokenize(text.slice(start));
+	const first = tokens?.[0];
+	if (!first || first.start !== 0) return null;
+	return { value: first.value, end: start + first.end };
 }
 
 function chainSeparator(text: string, index: number): number {
@@ -681,7 +797,11 @@ function tokenize(stage: string): Token[] | null {
 			if (char === '"') {
 				index += 1;
 				while (index < stage.length && stage[index] !== '"') {
-					if (stage[index] === "\\" && index + 1 < stage.length) {
+					if (
+						stage[index] === "\\" &&
+						index + 1 < stage.length &&
+						'$`"\\\n'.includes(stage[index + 1] ?? "")
+					) {
 						value += stage[index + 1];
 						index += 2;
 						continue;
