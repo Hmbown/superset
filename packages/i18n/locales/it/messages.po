@@ -968,6 +968,9 @@ msgstr "{name} è integrato e non può essere sostituito"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} non è aggiunto"
 
+msgid "{name} plugin · applies from the next session"
+msgstr "Plugin {name} · si applica dalla prossima sessione"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Specifica almeno una persona, oppure scegli {choice}.} sender {Specifica almeno un mittente, oppure scegli {choice}.} other {Specifica almeno una voce, oppure scegli {choice}.}}"
 
@@ -3555,6 +3558,9 @@ msgstr "Verifica degli ambienti…"
 msgid "Checking host…"
 msgstr "Verifica dell'host…"
 
+msgid "Checking MCP servers…"
+msgstr "Controllo dei server MCP…"
+
 msgid "Checking out a PR requires a project"
 msgstr "Il checkout di una PR richiede un progetto"
 
@@ -3627,6 +3633,9 @@ msgstr "Scegli l'agente"
 msgid "Choose an existing repo folder"
 msgstr "Scegli una cartella di repo esistente"
 
+msgid "Choose an MCP server"
+msgstr "Scegli un server MCP"
+
 msgid "Choose app"
 msgstr "Scegli l'app"
 
@@ -3638,6 +3647,9 @@ msgstr "Scegli come si apre la vista delle modifiche dalla barra superiore"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Scegli come aprire i percorsi dei file con Cmd+clic nel terminale"
+
+msgid "Choose MCP servers for this message"
+msgstr "Scegli i server MCP per questo messaggio"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Scegli cosa cancellare dal browser interno."
@@ -4273,6 +4285,9 @@ msgstr "Configura quali agenti compaiono nei launcher e come vengono costruiti i
 
 msgid "Configure workspace run command"
 msgstr "Configura il comando di esecuzione del workspace"
+
+msgid "Configured for {agent}"
+msgstr "Configurato per {agent}"
 
 msgid "Confirm before quitting"
 msgstr "Chiedi conferma prima di uscire"
@@ -4934,6 +4949,9 @@ msgstr "Impossibile raggiungere la macchina di questo workspace"
 
 msgid "Could not reactivate"
 msgstr "Impossibile riattivare"
+
+msgid "Could not read MCP servers."
+msgstr "Impossibile leggere i server MCP."
 
 msgid "Could not read selected file"
 msgstr "Impossibile leggere il file selezionato"
@@ -6120,6 +6138,9 @@ msgstr "Disattiva la skill"
 
 msgid "Disabled"
 msgstr "Disattivato"
+
+msgid "Disabled in agent config"
+msgstr "Disattivato nella configurazione dell'agente"
 
 msgid "Disabled toggle"
 msgstr "Interruttore disattivato"
@@ -9693,6 +9714,10 @@ msgstr "Caricamento..."
 msgid "Loading…"
 msgstr "Caricamento…"
 
+msgctxt "MCP server scope"
+msgid "local"
+msgstr "locale"
+
 msgid "Local"
 msgstr "Locale"
 
@@ -9860,6 +9885,9 @@ msgstr "Gestisci il piano"
 msgid "Manage plan on the web"
 msgstr "Gestisci il piano sul web"
 
+msgid "Manage plugins…"
+msgstr "Gestisci i plugin…"
+
 msgid "Manage sessions"
 msgstr "Gestisci le sessioni"
 
@@ -9958,6 +9986,9 @@ msgstr "Server MCP"
 
 msgid "MCP Server Commands"
 msgstr "Comandi del server MCP"
+
+msgid "MCP servers"
+msgstr "Server MCP"
 
 msgid "Measured over the trailing 30 days"
 msgstr "Misurato sugli ultimi 30 giorni"
@@ -10589,6 +10620,9 @@ msgstr "Prossima esecuzione {0}"
 msgid "Next run in 3d"
 msgstr "Prossima esecuzione tra 3g"
 
+msgid "Next session"
+msgstr "Prossima sessione"
+
 msgid "Next slide"
 msgstr "Diapositiva successiva"
 
@@ -10909,6 +10943,9 @@ msgstr "Nessuna corrispondenza"
 msgid "No matching files"
 msgstr "Nessun file corrispondente"
 
+msgid "No matching MCP servers"
+msgstr "Nessun server MCP corrispondente"
+
 msgid "No matching models"
 msgstr "Nessun modello corrispondente"
 
@@ -10920,6 +10957,9 @@ msgstr "Nessuna pagina corrispondente"
 
 msgid "No matching repositories."
 msgstr "Nessun repository corrispondente."
+
+msgid "No MCP servers found"
+msgstr "Nessun server MCP trovato"
 
 msgid "No members yet"
 msgstr "Ancora nessun membro"
@@ -12924,6 +12964,10 @@ msgstr "Avanzamento"
 msgid "Progress · Spinner"
 msgstr "Progress · Spinner"
 
+msgctxt "MCP server scope"
+msgid "project"
+msgstr "progetto"
+
 msgid "Project"
 msgstr "Progetto"
 
@@ -13285,6 +13329,9 @@ msgstr "Leggi i log di deploy e build"
 
 msgid "Read it on your phone"
 msgstr "Leggila sul telefono"
+
+msgid "Read MCP servers again"
+msgstr "Rileggi i server MCP"
 
 msgid "Read the changelog"
 msgstr "Leggi il changelog"
@@ -14687,6 +14734,9 @@ msgstr "Cerca in Linear"
 
 msgid "Search Linear…"
 msgstr "Cerca in Linear…"
+
+msgid "Search MCP servers…"
+msgstr "Cerca server MCP…"
 
 msgid "Search models"
 msgstr "Cerca modelli"
@@ -18463,6 +18513,10 @@ msgstr "Usato quando il sistema è in modalità scura."
 
 msgid "Used when your system is in light mode."
 msgstr "Usato quando il sistema è in modalità chiara."
+
+msgctxt "MCP server scope"
+msgid "user"
+msgstr "utente"
 
 msgid "User already has access to this host"
 msgstr "L'utente ha già accesso a questo host"

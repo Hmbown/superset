@@ -968,6 +968,9 @@ msgstr "{name} là tích hợp sẵn nên không thể thay thế"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} chưa được thêm"
 
+msgid "{name} plugin · applies from the next session"
+msgstr "Plugin {name} · áp dụng từ phiên sau"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Hãy chỉ định ít nhất một người, hoặc chọn {choice}.} sender {Hãy chỉ định ít nhất một người gửi, hoặc chọn {choice}.} other {Hãy chỉ định ít nhất một mục, hoặc chọn {choice}.}}"
 
@@ -3555,6 +3558,9 @@ msgstr "Đang kiểm tra môi trường…"
 msgid "Checking host…"
 msgstr "Đang kiểm tra host…"
 
+msgid "Checking MCP servers…"
+msgstr "Đang kiểm tra server MCP…"
+
 msgid "Checking out a PR requires a project"
 msgstr "Checkout một PR cần có dự án"
 
@@ -3627,6 +3633,9 @@ msgstr "Chọn agent"
 msgid "Choose an existing repo folder"
 msgstr "Chọn một thư mục repo có sẵn"
 
+msgid "Choose an MCP server"
+msgstr "Chọn một server MCP"
+
 msgid "Choose app"
 msgstr "Chọn ứng dụng"
 
@@ -3638,6 +3647,9 @@ msgstr "Chọn cách chế độ xem thay đổi mở từ thanh trên cùng"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Chọn cách mở đường dẫn tệp khi Cmd+nhấp trong terminal"
+
+msgid "Choose MCP servers for this message"
+msgstr "Chọn server MCP cho tin nhắn này"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Chọn thứ cần xóa khỏi trình duyệt trong ứng dụng."
@@ -4273,6 +4285,9 @@ msgstr "Chọn agent nào xuất hiện trong trình khởi chạy và cách d�
 
 msgid "Configure workspace run command"
 msgstr "Cấu hình lệnh chạy của workspace"
+
+msgid "Configured for {agent}"
+msgstr "Đã cấu hình cho {agent}"
 
 msgid "Confirm before quitting"
 msgstr "Xác nhận trước khi thoát"
@@ -4934,6 +4949,9 @@ msgstr "Không kết nối được tới máy của workspace này"
 
 msgid "Could not reactivate"
 msgstr "Không thể kích hoạt lại"
+
+msgid "Could not read MCP servers."
+msgstr "Không đọc được các server MCP."
 
 msgid "Could not read selected file"
 msgstr "Không thể đọc tệp đã chọn"
@@ -6120,6 +6138,9 @@ msgstr "Tắt skill"
 
 msgid "Disabled"
 msgstr "Đã tắt"
+
+msgid "Disabled in agent config"
+msgstr "Đã tắt trong cấu hình agent"
 
 msgid "Disabled toggle"
 msgstr "Công tắc đã tắt"
@@ -9693,6 +9714,10 @@ msgstr "Đang tải..."
 msgid "Loading…"
 msgstr "Đang tải…"
 
+msgctxt "MCP server scope"
+msgid "local"
+msgstr "cục bộ"
+
 msgid "Local"
 msgstr "Cục bộ"
 
@@ -9860,6 +9885,9 @@ msgstr "Quản lý gói"
 msgid "Manage plan on the web"
 msgstr "Quản lý gói trên web"
 
+msgid "Manage plugins…"
+msgstr "Quản lý plugin…"
+
 msgid "Manage sessions"
 msgstr "Quản lý phiên"
 
@@ -9958,6 +9986,9 @@ msgstr "Server MCP"
 
 msgid "MCP Server Commands"
 msgstr "Lệnh server MCP"
+
+msgid "MCP servers"
+msgstr "Server MCP"
 
 msgid "Measured over the trailing 30 days"
 msgstr "Đo trong 30 ngày gần nhất"
@@ -10589,6 +10620,9 @@ msgstr "Lần chạy tiếp theo {0}"
 msgid "Next run in 3d"
 msgstr "Lượt chạy tiếp theo sau 3 ngày"
 
+msgid "Next session"
+msgstr "Phiên sau"
+
 msgid "Next slide"
 msgstr "Slide kế tiếp"
 
@@ -10909,6 +10943,9 @@ msgstr "Không có kết quả khớp"
 msgid "No matching files"
 msgstr "Không có tệp phù hợp"
 
+msgid "No matching MCP servers"
+msgstr "Không có server MCP phù hợp"
+
 msgid "No matching models"
 msgstr "Không có mô hình phù hợp"
 
@@ -10920,6 +10957,9 @@ msgstr "Không có trang phù hợp"
 
 msgid "No matching repositories."
 msgstr "Không có repository nào khớp."
+
+msgid "No MCP servers found"
+msgstr "Không tìm thấy server MCP"
 
 msgid "No members yet"
 msgstr "Chưa có thành viên nào"
@@ -12924,6 +12964,10 @@ msgstr "Tiến độ"
 msgid "Progress · Spinner"
 msgstr "Progress · Spinner"
 
+msgctxt "MCP server scope"
+msgid "project"
+msgstr "dự án"
+
 msgid "Project"
 msgstr "Dự án"
 
@@ -13285,6 +13329,9 @@ msgstr "Đọc log deployment và build"
 
 msgid "Read it on your phone"
 msgstr "Đọc trên điện thoại"
+
+msgid "Read MCP servers again"
+msgstr "Đọc lại các server MCP"
 
 msgid "Read the changelog"
 msgstr "Đọc changelog"
@@ -14687,6 +14734,9 @@ msgstr "Tìm trong Linear"
 
 msgid "Search Linear…"
 msgstr "Tìm trong Linear…"
+
+msgid "Search MCP servers…"
+msgstr "Tìm server MCP…"
 
 msgid "Search models"
 msgstr "Tìm mô hình"
@@ -18463,6 +18513,10 @@ msgstr "Dùng khi hệ thống ở chế độ tối."
 
 msgid "Used when your system is in light mode."
 msgstr "Dùng khi hệ thống ở chế độ sáng."
+
+msgctxt "MCP server scope"
+msgid "user"
+msgstr "người dùng"
 
 msgid "User already has access to this host"
 msgstr "Người dùng đã có quyền truy cập host này"

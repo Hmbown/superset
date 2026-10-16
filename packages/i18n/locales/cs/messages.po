@@ -968,6 +968,9 @@ msgstr "{name} je vestavěný a nelze jej nahradit"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} není přidán"
 
+msgid "{name} plugin · applies from the next session"
+msgstr "Plugin {name} · platí od příští relace"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Zadejte alespoň jednu osobu, nebo zvolte {choice}.} sender {Zadejte alespoň jednoho odesílatele, nebo zvolte {choice}.} other {Zadejte alespoň jednu položku, nebo zvolte {choice}.}}"
 
@@ -3555,6 +3558,9 @@ msgstr "Kontrola prostředí…"
 msgid "Checking host…"
 msgstr "Kontroluji hosta…"
 
+msgid "Checking MCP servers…"
+msgstr "Kontrolují se MCP servery…"
+
 msgid "Checking out a PR requires a project"
 msgstr "Checkout PR vyžaduje projekt"
 
@@ -3627,6 +3633,9 @@ msgstr "Vyberte agenta"
 msgid "Choose an existing repo folder"
 msgstr "Vyberte složku s existujícím repozitářem"
 
+msgid "Choose an MCP server"
+msgstr "Vyberte MCP server"
+
 msgid "Choose app"
 msgstr "Vyberte aplikaci"
 
@@ -3638,6 +3647,9 @@ msgstr "Zvolte, jak se zobrazení změn otevírá z horní lišty"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Zvolte, jak se otevírají cesty k souborům při Cmd+kliknutí v terminálu"
+
+msgid "Choose MCP servers for this message"
+msgstr "Vyberte MCP servery pro tuto zprávu"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Vyberte, co se má z vestavěného prohlížeče vymazat."
@@ -4273,6 +4285,9 @@ msgstr "Nastavte, kteří agenti se zobrazují ve spouštěčích a jak se jejic
 
 msgid "Configure workspace run command"
 msgstr "Nastavit spouštěcí příkaz pracovního prostoru"
+
+msgid "Configured for {agent}"
+msgstr "Nastaveno pro {agent}"
 
 msgid "Confirm before quitting"
 msgstr "Potvrdit před ukončením"
@@ -4934,6 +4949,9 @@ msgstr "Nepodařilo se spojit s počítačem tohoto pracovního prostoru"
 
 msgid "Could not reactivate"
 msgstr "Nepodařilo se obnovit"
+
+msgid "Could not read MCP servers."
+msgstr "MCP servery se nepodařilo načíst."
 
 msgid "Could not read selected file"
 msgstr "Vybraný soubor se nepodařilo přečíst"
@@ -6120,6 +6138,9 @@ msgstr "Vypnout skill"
 
 msgid "Disabled"
 msgstr "Vypnuto"
+
+msgid "Disabled in agent config"
+msgstr "Vypnuto v konfiguraci agenta"
 
 msgid "Disabled toggle"
 msgstr "Vypnutý přepínač"
@@ -9693,6 +9714,10 @@ msgstr "Načítám..."
 msgid "Loading…"
 msgstr "Načítání…"
 
+msgctxt "MCP server scope"
+msgid "local"
+msgstr "místní"
+
 msgid "Local"
 msgstr "Lokální"
 
@@ -9860,6 +9885,9 @@ msgstr "Spravovat tarif"
 msgid "Manage plan on the web"
 msgstr "Správa tarifu na webu"
 
+msgid "Manage plugins…"
+msgstr "Spravovat pluginy…"
+
 msgid "Manage sessions"
 msgstr "Spravovat relace"
 
@@ -9958,6 +9986,9 @@ msgstr "MCP server"
 
 msgid "MCP Server Commands"
 msgstr "Příkazy MCP serveru"
+
+msgid "MCP servers"
+msgstr "MCP servery"
 
 msgid "Measured over the trailing 30 days"
 msgstr "Měřeno za posledních 30 dní"
@@ -10589,6 +10620,9 @@ msgstr "Další běh {0}"
 msgid "Next run in 3d"
 msgstr "Další běh za 3 d"
 
+msgid "Next session"
+msgstr "Příští relace"
+
 msgid "Next slide"
 msgstr "Další snímek"
 
@@ -10909,6 +10943,9 @@ msgstr "Žádné shody"
 msgid "No matching files"
 msgstr "Žádné odpovídající soubory"
 
+msgid "No matching MCP servers"
+msgstr "Žádné odpovídající MCP servery"
+
 msgid "No matching models"
 msgstr "Žádné odpovídající modely"
 
@@ -10920,6 +10957,9 @@ msgstr "Žádné odpovídající stránky"
 
 msgid "No matching repositories."
 msgstr "Žádné odpovídající repozitáře."
+
+msgid "No MCP servers found"
+msgstr "Nenalezeny žádné MCP servery"
 
 msgid "No members yet"
 msgstr "Zatím žádní členové"
@@ -12924,6 +12964,10 @@ msgstr "Průběh"
 msgid "Progress · Spinner"
 msgstr "Průběh · Spinner"
 
+msgctxt "MCP server scope"
+msgid "project"
+msgstr "projekt"
+
 msgid "Project"
 msgstr "Projekt"
 
@@ -13285,6 +13329,9 @@ msgstr "Čtení logů nasazení a buildů"
 
 msgid "Read it on your phone"
 msgstr "Čtěte na telefonu"
+
+msgid "Read MCP servers again"
+msgstr "Znovu načíst MCP servery"
 
 msgid "Read the changelog"
 msgstr "Přečíst changelog"
@@ -14687,6 +14734,9 @@ msgstr "Hledat v Linearu"
 
 msgid "Search Linear…"
 msgstr "Hledat v Linearu…"
+
+msgid "Search MCP servers…"
+msgstr "Hledat MCP servery…"
 
 msgid "Search models"
 msgstr "Hledat modely"
@@ -18463,6 +18513,10 @@ msgstr "Použije se, když je systém v tmavém režimu."
 
 msgid "Used when your system is in light mode."
 msgstr "Použije se, když je systém ve světlém režimu."
+
+msgctxt "MCP server scope"
+msgid "user"
+msgstr "uživatel"
 
 msgid "User already has access to this host"
 msgstr "Uživatel už k tomuto hostu má přístup"

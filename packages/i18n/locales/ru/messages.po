@@ -968,6 +968,9 @@ msgstr "{name} встроен и не может быть заменён"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} не добавлен"
 
+msgid "{name} plugin · applies from the next session"
+msgstr "Плагин {name} · начнёт работать со следующей сессии"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Укажите хотя бы одного человека или выберите {choice}.} sender {Укажите хотя бы одного отправителя или выберите {choice}.} other {Укажите хотя бы одно значение или выберите {choice}.}}"
 
@@ -3555,6 +3558,9 @@ msgstr "Проверка окружений…"
 msgid "Checking host…"
 msgstr "Проверка хоста…"
 
+msgid "Checking MCP servers…"
+msgstr "Проверка серверов MCP…"
+
 msgid "Checking out a PR requires a project"
 msgstr "Для переключения на PR нужен проект"
 
@@ -3627,6 +3633,9 @@ msgstr "Выберите агента"
 msgid "Choose an existing repo folder"
 msgstr "Выберите папку существующего репозитория"
 
+msgid "Choose an MCP server"
+msgstr "Выберите сервер MCP"
+
 msgid "Choose app"
 msgstr "Выберите приложение"
 
@@ -3638,6 +3647,9 @@ msgstr "Выберите, как открывается представлени
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Выберите, как открывать пути файлов при Cmd+клике в терминале"
+
+msgid "Choose MCP servers for this message"
+msgstr "Выбрать серверы MCP для этого сообщения"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Выберите, что очистить во встроенном браузере."
@@ -4273,6 +4285,9 @@ msgstr "Настройте, какие агенты появляются в за
 
 msgid "Configure workspace run command"
 msgstr "Настроить команду запуска рабочей области"
+
+msgid "Configured for {agent}"
+msgstr "Настроен для {agent}"
 
 msgid "Confirm before quitting"
 msgstr "Подтверждать выход"
@@ -4934,6 +4949,9 @@ msgstr "Не удалось связаться с машиной этой раб
 
 msgid "Could not reactivate"
 msgstr "Не удалось активировать заново"
+
+msgid "Could not read MCP servers."
+msgstr "Не удалось прочитать серверы MCP."
 
 msgid "Could not read selected file"
 msgstr "Не удалось прочитать выбранный файл"
@@ -6120,6 +6138,9 @@ msgstr "Отключить навык"
 
 msgid "Disabled"
 msgstr "Отключён"
+
+msgid "Disabled in agent config"
+msgstr "Отключён в конфигурации агента"
 
 msgid "Disabled toggle"
 msgstr "Отключённый переключатель"
@@ -9693,6 +9714,10 @@ msgstr "Загрузка..."
 msgid "Loading…"
 msgstr "Загрузка…"
 
+msgctxt "MCP server scope"
+msgid "local"
+msgstr "локальный"
+
 msgid "Local"
 msgstr "Локальная"
 
@@ -9860,6 +9885,9 @@ msgstr "Управление тарифом"
 msgid "Manage plan on the web"
 msgstr "Управление тарифом в веб-версии"
 
+msgid "Manage plugins…"
+msgstr "Управление плагинами…"
+
 msgid "Manage sessions"
 msgstr "Управление сессиями"
 
@@ -9958,6 +9986,9 @@ msgstr "Сервер MCP"
 
 msgid "MCP Server Commands"
 msgstr "Команды сервера MCP"
+
+msgid "MCP servers"
+msgstr "Серверы MCP"
 
 msgid "Measured over the trailing 30 days"
 msgstr "Измерено за последние 30 дней"
@@ -10589,6 +10620,9 @@ msgstr "Следующий запуск {0}"
 msgid "Next run in 3d"
 msgstr "Следующий запуск через 3 дн."
 
+msgid "Next session"
+msgstr "Следующая сессия"
+
 msgid "Next slide"
 msgstr "Следующий слайд"
 
@@ -10909,6 +10943,9 @@ msgstr "Нет совпадений"
 msgid "No matching files"
 msgstr "Нет подходящих файлов"
 
+msgid "No matching MCP servers"
+msgstr "Нет подходящих серверов MCP"
+
 msgid "No matching models"
 msgstr "Нет подходящих моделей"
 
@@ -10920,6 +10957,9 @@ msgstr "Нет подходящих страниц"
 
 msgid "No matching repositories."
 msgstr "Нет подходящих репозиториев."
+
+msgid "No MCP servers found"
+msgstr "Серверы MCP не найдены"
 
 msgid "No members yet"
 msgstr "Участников пока нет"
@@ -12924,6 +12964,10 @@ msgstr "Прогресс"
 msgid "Progress · Spinner"
 msgstr "Прогресс · спиннер"
 
+msgctxt "MCP server scope"
+msgid "project"
+msgstr "проект"
+
 msgid "Project"
 msgstr "Проект"
 
@@ -13285,6 +13329,9 @@ msgstr "Чтение логов деплоя и сборки"
 
 msgid "Read it on your phone"
 msgstr "Читайте на телефоне"
+
+msgid "Read MCP servers again"
+msgstr "Перечитать серверы MCP"
 
 msgid "Read the changelog"
 msgstr "Читать changelog"
@@ -14687,6 +14734,9 @@ msgstr "Поиск в Linear"
 
 msgid "Search Linear…"
 msgstr "Поиск в Linear…"
+
+msgid "Search MCP servers…"
+msgstr "Поиск серверов MCP…"
 
 msgid "Search models"
 msgstr "Поиск моделей"
@@ -18463,6 +18513,10 @@ msgstr "Используется, когда система в тёмном ре
 
 msgid "Used when your system is in light mode."
 msgstr "Используется, когда система в светлом режиме."
+
+msgctxt "MCP server scope"
+msgid "user"
+msgstr "пользователь"
 
 msgid "User already has access to this host"
 msgstr "У пользователя уже есть доступ к этому хосту"
