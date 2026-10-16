@@ -343,7 +343,6 @@ function startAdapter(
 		AcpAdapterOptions,
 		| "defaultModeId"
 		| "clientApprovalModes"
-		| "piBackgroundShells"
 		| "shellPollMs"
 		| "selectionWaitMs"
 		| "backgroundDetailIntervalMs"
@@ -1697,12 +1696,7 @@ describe("AcpAdapter on protocol v2", () => {
 
 	it("lists a pi background shell from its tool result until pi reports it stopped", async () => {
 		const agent = new FakeAcpAgent();
-		const { adapter, events } = startAdapter(
-			agent,
-			undefined,
-			{},
-			{ piBackgroundShells: true },
-		);
+		const { adapter, events } = startAdapter(agent);
 		await flush();
 		adapter.prompt([{ type: "text", text: "run" }]);
 		await flush();
@@ -1752,7 +1746,7 @@ describe("AcpAdapter on protocol v2", () => {
 			agent,
 			undefined,
 			{},
-			{ piBackgroundShells: true, shellPollMs: 5 },
+			{ shellPollMs: 5 },
 		);
 		await flush();
 		adapter.prompt([{ type: "text", text: "run" }]);

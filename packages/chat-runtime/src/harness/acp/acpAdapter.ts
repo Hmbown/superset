@@ -205,7 +205,6 @@ export type AcpAdapterOptions = SpawnAcpOptions & {
 	/** Selected for a new session that asks for no mode, when the agent offers it. */
 	defaultModeId?: string;
 	clientApprovalModes?: boolean;
-	piBackgroundShells?: boolean;
 	shellPollMs?: number;
 	/** How long a prompt waits for mode and option changes the agent has not answered. */
 	selectionWaitMs?: number;
@@ -1324,7 +1323,7 @@ export class AcpAdapter implements HarnessAdapter {
 		};
 		this.toolCalls.set(update.toolCallId, item);
 		this.emitItem(item, turnId);
-		if (this.options.piBackgroundShells && !this.replaying) {
+		if (!this.replaying) {
 			this.trackBackgroundShell(item);
 		}
 	}
