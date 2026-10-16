@@ -31,6 +31,7 @@ import {
 	LuX,
 } from "react-icons/lu";
 import { useHotkeyDisplay } from "renderer/hotkeys";
+import { parseSidebarFolderKey } from "renderer/routes/_authenticated/utils/workspaceTagFolders";
 import { useDashboardSidebarPortKill } from "../../../../hooks/useDashboardSidebarPortKill";
 import { useProjectTagFolderSections } from "../../../../hooks/useProjectTagFolderSections";
 import { useRunAfterMenuClose } from "../../../../hooks/useRunAfterMenuClose";
@@ -46,8 +47,9 @@ interface DashboardSidebarWorkspaceContextMenuProps {
 	isInSection?: boolean;
 	isLocalWorkspace: boolean;
 	/**
-	 * A cloud workspace has no placement row (no pin or group), no host
-	 * bindings to clear, and is archived rather than deleted.
+	 * A cloud workspace has no host bindings to clear and is archived rather
+	 * than deleted. It pins and joins older folders through its placement row,
+	 * but can't join a tag-backed folder (membership there is a host tag).
 	 */
 	isCloudWorkspace?: boolean;
 	isPinned: boolean;
@@ -110,7 +112,14 @@ export function DashboardSidebarWorkspaceContextMenu({
 		showDeleteHotkey && deleteHotkeyText !== "Unassigned";
 	// The derived union — a tag-only folder with no stored row is a valid
 	// move target.
-	const { sections } = useProjectTagFolderSections(projectId);
+	const { sections: allSections } = useProjectTagFolderSections(projectId);
+	// New groups are tag-backed, so a cloud row is offered only older folders.
+	const sections = isCloudWorkspace
+		? allSections.filter(
+				(section) => parseSidebarFolderKey(section.id)?.tag == null,
+			)
+		: allSections;
+	const canCreateGroup = !isCloudWorkspace;
 	const canJoinGroup = projectId !== null || isSessionWorkspace;
 	const handleCloseAllPorts = () => {
 		if (isKillingPorts) return;
@@ -190,48 +199,58 @@ export function DashboardSidebarWorkspaceContextMenu({
 				)}
 				{/* Group actions mutate placement (sectionId/tabOrder), which a pinned
 				    row doesn't display — the change would only surface on unpin. */}
-				{!isPinned && canJoinGroup && (
-					<>
-						<ContextMenuSeparator />
-						<ContextMenuItem onSelect={onCreateSection}>
-							<LuFolderPlus className="size-4 mr-2" />
-							<Trans>New group from workspace</Trans>
-						</ContextMenuItem>
-						<ContextMenuSub>
-							<ContextMenuSubTrigger>
-								<LuArrowRightLeft className="size-4 mr-2" />
-								<Trans>Move to group</Trans>
-							</ContextMenuSubTrigger>
-							<ContextMenuSubContent>
-								{sections.map((section) => (
-									<ContextMenuItem
-										key={section.id}
-										onSelect={() => onMoveToSection(section.id)}
-									>
-										{section.color && (
-											<span
-												className="size-2 shrink-0 rounded-full mr-2"
-												style={{ backgroundColor: section.color }}
-											/>
-										)}
-										{section.name}
-									</ContextMenuItem>
-								))}
-								{sections.length > 0 && <ContextMenuSeparator />}
+				{!isPinned &&
+					canJoinGroup &&
+					(canCreateGroup || sections.length > 0 || isInSection) && (
+						<>
+							<ContextMenuSeparator />
+							{canCreateGroup && (
 								<ContextMenuItem onSelect={onCreateSection}>
 									<LuFolderPlus className="size-4 mr-2" />
-									<Trans>Create new group</Trans>
+									<Trans>New group from workspace</Trans>
 								</ContextMenuItem>
-							</ContextMenuSubContent>
-						</ContextMenuSub>
-						{isInSection && (
-							<ContextMenuItem onSelect={() => onMoveToSection(null)}>
-								<LuArrowUp className="size-4 mr-2" />
-								<Trans>Ungroup</Trans>
-							</ContextMenuItem>
-						)}
-					</>
-				)}
+							)}
+							{(canCreateGroup || sections.length > 0) && (
+								<ContextMenuSub>
+									<ContextMenuSubTrigger>
+										<LuArrowRightLeft className="size-4 mr-2" />
+										<Trans>Move to group</Trans>
+									</ContextMenuSubTrigger>
+									<ContextMenuSubContent>
+										{sections.map((section) => (
+											<ContextMenuItem
+												key={section.id}
+												onSelect={() => onMoveToSection(section.id)}
+											>
+												{section.color && (
+													<span
+														className="size-2 shrink-0 rounded-full mr-2"
+														style={{ backgroundColor: section.color }}
+													/>
+												)}
+												{section.name}
+											</ContextMenuItem>
+										))}
+										{canCreateGroup && sections.length > 0 && (
+											<ContextMenuSeparator />
+										)}
+										{canCreateGroup && (
+											<ContextMenuItem onSelect={onCreateSection}>
+												<LuFolderPlus className="size-4 mr-2" />
+												<Trans>Create new group</Trans>
+											</ContextMenuItem>
+										)}
+									</ContextMenuSubContent>
+								</ContextMenuSub>
+							)}
+							{isInSection && (
+								<ContextMenuItem onSelect={() => onMoveToSection(null)}>
+									<LuArrowUp className="size-4 mr-2" />
+									<Trans>Ungroup</Trans>
+								</ContextMenuItem>
+							)}
+						</>
+					)}
 				<ContextMenuSeparator />
 				{ports.length > 0 && (
 					<ContextMenuItem
