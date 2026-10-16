@@ -149,7 +149,11 @@ export type PromptInputProps = {
 	hideSubmit?: boolean;
 	autoFocus?: boolean;
 	onMentionHighlight?: (entry: ComposerMentionEntry | null) => void;
-	onAttachmentClick?: (attachment: PromptInputAttachment) => void;
+	/** The clicked pill, and every pending attachment in order. */
+	onAttachmentClick?: (
+		attachment: PromptInputAttachment,
+		attachments: readonly PromptInputAttachment[],
+	) => void;
 	onChipClick?: (chip: ComposerChip) => void;
 	history?: string[];
 	className?: string;
