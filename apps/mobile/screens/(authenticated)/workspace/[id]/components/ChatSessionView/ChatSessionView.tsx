@@ -6,11 +6,15 @@ import {
 	runningTurnId,
 } from "@superset/chat/core";
 import type { Decision } from "@superset/chat/protocol";
-import { useChatSession, useTimeline } from "@superset/chat/react";
+import {
+	ItemBodiesProvider,
+	useChatSession,
+	useTimeline,
+} from "@superset/chat/react";
 import { randomUUID } from "expo-crypto";
 import { useRouter } from "expo-router";
 import { useHeaderHeight } from "expo-router/react-navigation";
-import { GitPullRequest } from "lucide-react-native";
+import { GitPullRequest, ListEnd } from "lucide-react-native";
 import {
 	forwardRef,
 	useCallback,
@@ -21,7 +25,6 @@ import {
 	useState,
 } from "react";
 import { ActionSheetIOS, Alert, Pressable, View } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { Conversation } from "@/components/ai-elements/conversation";
 import { Text } from "@/components/ui/text";
 import {
@@ -42,9 +45,9 @@ import {
 } from "../../utils/chatRows";
 import { ChatRowView } from "../ChatRowView";
 import { DockChip } from "./components/DockChip";
-import { QueuedPrompts } from "./components/QueuedPrompts";
 import { ScrollToBottom } from "./components/ScrollToBottom";
 import { StickToBottom } from "./components/StickToBottom";
+import { useTapHandlers } from "./hooks/useTapHandlers";
 
 const CONFIG_OPTIONS_GRACE_MS = 1000;
 const BANNER_SPACE = 36;
@@ -131,9 +134,9 @@ export const ChatSessionView = forwardRef<
 		() => deriveQueuedPrompts(chat.snapshot),
 		[chat.snapshot],
 	);
-	const [queueOpen, setQueueOpen] = useState(false);
 	const session = chat.snapshot.session;
 	const queuePaused = session?.queuePaused === true;
+	const queueControls = session?.queueControls === true;
 	const harness = session?.harness;
 	const turnId = runningTurnId(chat.snapshot.turns);
 
@@ -186,19 +189,6 @@ export const ChatSessionView = forwardRef<
 			.cancelTurn(turnId, { pauseQueue: true })
 			.catch(failAlert(t({ message: "Could not stop the agent" })));
 	}, [chat, turnId, failAlert, t]);
-
-	const stopTask = useCallback(
-		(taskId: string) => {
-			const title = t({ message: "Could not stop the task" });
-			void chat
-				.stopBackgroundTask(taskId)
-				.then((stopped) => {
-					if (!stopped) Alert.alert(title);
-				})
-				.catch(failAlert(title));
-		},
-		[chat, failAlert, t],
-	);
 
 	const branchFrom = useCallback(
 		(itemId: string) => {
@@ -258,26 +248,60 @@ export const ChatSessionView = forwardRef<
 		[chat, confirmedModeId, failAlert, t],
 	);
 
-	const backgroundTasks = session?.backgroundTasks;
-	const actionsRef = useRef({ selectMode, stopTask, stop });
-	actionsRef.current = { selectMode, stopTask, stop };
+	const steerQueued = useCallback(
+		(itemId: string) =>
+			void chat
+				.steerQueuedPrompt(itemId)
+				.catch(failAlert(t({ message: "Could not steer" }))),
+		[chat, failAlert, t],
+	);
+	const removeQueued = useCallback(
+		(itemId: string) =>
+			void chat
+				.removeQueuedPrompt(itemId)
+				.catch(failAlert(t({ message: "Could not delete" }))),
+		[chat, failAlert, t],
+	);
+	const resumeQueue = useCallback(
+		() =>
+			void chat
+				.resumeQueue()
+				.catch(failAlert(t({ message: "Could not resume" }))),
+		[chat, failAlert, t],
+	);
+
+	const actions = {
+		selectMode,
+		stop,
+		steerQueued,
+		removeQueued,
+		resumeQueue,
+	};
+	const actionsRef = useRef(actions);
+	actionsRef.current = actions;
 	useEffect(() => {
 		useActiveChatStore.getState().publish(sessionId, {
 			modes,
 			currentModeId: pendingModeId ?? confirmedModeId,
-			backgroundTasks: backgroundTasks ?? [],
 			running: turnId !== null,
+			queued,
+			queuePaused,
+			queueControls,
 			selectMode: (modeId) => actionsRef.current.selectMode(modeId),
-			stopTask: (taskId) => actionsRef.current.stopTask(taskId),
 			stop: () => actionsRef.current.stop(),
+			steerQueued: (itemId) => actionsRef.current.steerQueued(itemId),
+			removeQueued: (itemId) => actionsRef.current.removeQueued(itemId),
+			resumeQueue: () => actionsRef.current.resumeQueue(),
 		});
 	}, [
 		sessionId,
 		modes,
 		pendingModeId,
 		confirmedModeId,
-		backgroundTasks,
 		turnId,
+		queued,
+		queuePaused,
+		queueControls,
 	]);
 	useEffect(
 		() => () => useActiveChatStore.getState().clear(sessionId),
@@ -335,6 +359,7 @@ export const ChatSessionView = forwardRef<
 				<View className={endsGroup ? "pb-5" : "pb-2.5"}>
 					<ChatRowView
 						harness={harness}
+						hostUrl={hostUrl}
 						onDiscardPrompt={chat.discardPrompt}
 						onLongPressMessage={branchFrom}
 						onOpenActivity={openActivity}
@@ -353,21 +378,19 @@ export const ChatSessionView = forwardRef<
 				</View>
 			);
 		},
-		[harness, chat, onRespond, branchFrom, positions, replyEnds, openActivity],
+		[
+			harness,
+			hostUrl,
+			chat,
+			onRespond,
+			branchFrom,
+			positions,
+			replyEnds,
+			openActivity,
+		],
 	);
 
-	const onTapRef = useRef(onTap);
-	onTapRef.current = onTap;
-	const tap = useMemo(
-		() =>
-			Gesture.Tap()
-				.runOnJS(true)
-				.cancelsTouchesInView(false)
-				.onEnd((_event, success) => {
-					if (success) onTapRef.current?.();
-				}),
-		[],
-	);
+	const tapHandlers = useTapHandlers(onTap);
 
 	const banner =
 		session?.status === "dead"
@@ -386,8 +409,8 @@ export const ChatSessionView = forwardRef<
 					<Text className="text-foreground text-xs font-medium">{banner}</Text>
 				</View>
 			) : null}
-			<GestureDetector gesture={tap}>
-				<View className="flex-1">
+			<ItemBodiesProvider requestItemBodies={chat.requestItemBodies}>
+				<View className="flex-1" {...tapHandlers}>
 					<Conversation
 						contentContainerClassName="px-4"
 						contentContainerStyle={{
@@ -409,39 +432,19 @@ export const ChatSessionView = forwardRef<
 							) : null
 						}
 						ListFooterComponent={<View style={{ height: dockHeight + 8 }} />}
+						keyboardDismissMode="interactive"
 						renderItem={renderRow}
 					>
 						<StickToBottom inset={dockHeight} />
-						<ScrollToBottom inset={dockHeight} />
+						<ScrollToBottom />
 					</Conversation>
 				</View>
-			</GestureDetector>
+			</ItemBodiesProvider>
 			<View
 				className="absolute inset-x-0 bottom-0 gap-2 px-3 pb-2"
 				onLayout={(event) => setDockHeight(event.nativeEvent.layout.height)}
 				pointerEvents="box-none"
 			>
-				{queueOpen && queued.length > 0 ? (
-					<QueuedPrompts
-						onRemove={(itemId) =>
-							void chat
-								.removeQueuedPrompt(itemId)
-								.catch(failAlert(t({ message: "Could not delete" })))
-						}
-						onResume={() =>
-							void chat
-								.resumeQueue()
-								.catch(failAlert(t({ message: "Could not resume" })))
-						}
-						onSteer={(itemId) =>
-							void chat
-								.steerQueuedPrompt(itemId)
-								.catch(failAlert(t({ message: "Could not steer" })))
-						}
-						paused={queuePaused}
-						prompts={queued}
-					/>
-				) : null}
 				{pullRequestLabel || queued.length > 0 ? (
 					<View className="flex-row gap-2" pointerEvents="box-none">
 						{pullRequestLabel && onOpenPullRequests ? (
@@ -454,13 +457,17 @@ export const ChatSessionView = forwardRef<
 						{queued.length > 0 ? (
 							<DockChip
 								count={queued.length}
+								icon={ListEnd}
 								label={
 									queuePaused
 										? t({ message: "Queue paused" })
 										: t({ message: "Queued" })
 								}
-								onPress={() => setQueueOpen((open) => !open)}
-								selected={queueOpen}
+								onPress={() =>
+									router.push(
+										`/(authenticated)/workspace/${workspaceId}/queued?session=${sessionId}`,
+									)
+								}
 							/>
 						) : null}
 					</View>

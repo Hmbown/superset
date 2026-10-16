@@ -6,6 +6,7 @@ export type ComposerChip = {
 	brandColor?: string;
 	// Icon as a URL string so chips stay serializable data.
 	iconUrl?: string;
+	description?: string;
 	data?: unknown;
 };
 
@@ -66,6 +67,7 @@ export type ComposerMentionProvider = {
 export type PromptInputCommand = {
 	id: string;
 	title: string;
+	hint?: string;
 	description?: string;
 	icon?: ReactNode;
 	rightIcon?: ReactNode;
@@ -94,10 +96,19 @@ export type PromptInputDictationError = {
 };
 
 export type PromptInputDictation = {
-	transcribe(audio: Blob): Promise<string> | string;
+	// Reject with a DictationError to choose the message and whether retry
+	// is offered; any other rejection is retryable. The signal aborts when
+	// the user cancels or the composer unmounts.
+	transcribe(
+		audio: Blob,
+		options: { signal: AbortSignal },
+	): Promise<string> | string;
 	// Surfaced for app-owned toasts; retryable failures also keep the
 	// recording and show retry controls in the composer row.
 	onError?(error: PromptInputDictationError): void;
+	// Recording stops and transcribes on its own at this length.
+	maxSeconds?: number;
+	audioBitsPerSecond?: number;
 };
 
 export type PromptInputHandle = {
@@ -126,7 +137,10 @@ export type PromptInputProps = {
 	// Spans of a stored draft that were chips before it was serialized, so
 	// they come back as chips. Runs on the draft as read, never on typing.
 	findChips?: (text: string) => ComposerChipMatch[];
-	onSubmit?: (payload: PromptInputSubmitPayload) => void;
+	/** Returning `false` keeps the draft in the editor. */
+	onSubmit?: (
+		payload: PromptInputSubmitPayload,
+	) => false | void | Promise<void>;
 	onStop?: () => void;
 	header?: ReactNode;
 	onAddFiles?: (files: File[]) => void;
