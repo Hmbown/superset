@@ -44,7 +44,7 @@ export function HeroSection() {
 			}),
 			// Beat on the empty second line before the payoff line types
 			delayBefore: 450,
-			className: "headline-guides",
+			className: "headline-marks",
 		},
 	];
 

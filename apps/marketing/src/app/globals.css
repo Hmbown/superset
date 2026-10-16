@@ -44,110 +44,63 @@
 	}
 }
 
-/* Cyber HUD frame: four L-shaped corner brackets drawn as background strips
-   (two strips per corner). Sized in em so it scales with the text. */
-.headline-guides {
+.headline-marks {
 	padding: 0 0.3em;
 	white-space: nowrap;
 }
 
 @media (max-width: 640px) {
-	.headline-guides {
+	.headline-marks {
 		padding: 0 0.2em;
 	}
 }
 
 /* Drawn from the full-width sizer copy so the marks are in place before the
    headline types into them. */
-.headline-sizer > .headline-guides {
-	--guide-line: color-mix(in srgb, var(--foreground) 45%, transparent);
-	--guide-mark: var(--foreground);
-	--guide-top: 0.2em;
-	--guide-baseline: 0.24em;
-	--guide-arm: max(0.4em, 20px);
-	--guide-half: max(0.13em, 7px);
+.headline-sizer > .headline-marks {
+	--mark-color: var(--foreground);
+	--mark-top: 0.2em;
+	--mark-baseline: 0.24em;
+	--mark-arm: max(0.4em, 20px);
+	--mark-half: max(0.13em, 7px);
 	position: relative;
 }
 
-.headline-sizer > .headline-guides::before,
-.headline-sizer > .headline-guides::after {
+.headline-sizer > .headline-marks::after {
 	content: "";
 	visibility: visible;
 	position: absolute;
 	pointer-events: none;
-}
-
-.headline-sizer > .headline-guides::before {
-	top: var(--guide-top);
-	bottom: var(--guide-baseline);
-	left: 50%;
-	width: 100vw;
-	transform: translateX(-50%);
+	inset: calc(var(--mark-top) - var(--mark-half)) calc(-1 * var(--mark-half))
+		calc(var(--mark-baseline) - var(--mark-half));
 	background-image:
-		repeating-linear-gradient(
-			90deg,
-			var(--guide-line) 0 2px,
-			transparent 2px 6px
-		),
-		repeating-linear-gradient(
-			90deg,
-			var(--guide-line) 0 2px,
-			transparent 2px 6px
-		);
+		linear-gradient(90deg, transparent, var(--mark-color), transparent),
+		linear-gradient(180deg, transparent, var(--mark-color), transparent),
+		linear-gradient(90deg, transparent, var(--mark-color), transparent),
+		linear-gradient(180deg, transparent, var(--mark-color), transparent),
+		linear-gradient(90deg, transparent, var(--mark-color), transparent),
+		linear-gradient(180deg, transparent, var(--mark-color), transparent),
+		linear-gradient(90deg, transparent, var(--mark-color), transparent),
+		linear-gradient(180deg, transparent, var(--mark-color), transparent);
 	background-repeat: no-repeat;
 	background-size:
-		100% 1px,
-		100% 1px;
+		var(--mark-arm) 1.5px,
+		1.5px var(--mark-arm),
+		var(--mark-arm) 1.5px,
+		1.5px var(--mark-arm),
+		var(--mark-arm) 1.5px,
+		1.5px var(--mark-arm),
+		var(--mark-arm) 1.5px,
+		1.5px var(--mark-arm);
 	background-position:
-		0 0,
-		0 100%;
-	-webkit-mask-image: linear-gradient(
-		90deg,
-		transparent 8%,
-		#000 30%,
-		#000 70%,
-		transparent 92%
-	);
-	mask-image: linear-gradient(
-		90deg,
-		transparent 8%,
-		#000 30%,
-		#000 70%,
-		transparent 92%
-	);
-}
-
-.headline-sizer > .headline-guides::after {
-	inset: calc(var(--guide-top) - var(--guide-half)) calc(-1 * var(--guide-half))
-		calc(var(--guide-baseline) - var(--guide-half));
-	background-image:
-		linear-gradient(90deg, transparent, var(--guide-mark), transparent),
-		linear-gradient(180deg, transparent, var(--guide-mark), transparent),
-		linear-gradient(90deg, transparent, var(--guide-mark), transparent),
-		linear-gradient(180deg, transparent, var(--guide-mark), transparent),
-		linear-gradient(90deg, transparent, var(--guide-mark), transparent),
-		linear-gradient(180deg, transparent, var(--guide-mark), transparent),
-		linear-gradient(90deg, transparent, var(--guide-mark), transparent),
-		linear-gradient(180deg, transparent, var(--guide-mark), transparent);
-	background-repeat: no-repeat;
-	background-size:
-		var(--guide-arm) 1.5px,
-		1.5px var(--guide-arm),
-		var(--guide-arm) 1.5px,
-		1.5px var(--guide-arm),
-		var(--guide-arm) 1.5px,
-		1.5px var(--guide-arm),
-		var(--guide-arm) 1.5px,
-		1.5px var(--guide-arm);
-	background-position:
-		0 calc(var(--guide-half) - 0.75px),
-		calc(var(--guide-half) - 0.75px) 0,
-		100% calc(var(--guide-half) - 0.75px),
-		calc(100% - var(--guide-half) + 0.75px) 0,
-		0 calc(100% - var(--guide-half) + 0.75px),
-		calc(var(--guide-half) - 0.75px) 100%,
-		100% calc(100% - var(--guide-half) + 0.75px),
-		calc(100% - var(--guide-half) + 0.75px) 100%;
+		0 calc(var(--mark-half) - 0.75px),
+		calc(var(--mark-half) - 0.75px) 0,
+		100% calc(var(--mark-half) - 0.75px),
+		calc(100% - var(--mark-half) + 0.75px) 0,
+		0 calc(100% - var(--mark-half) + 0.75px),
+		calc(var(--mark-half) - 0.75px) 100%,
+		100% calc(100% - var(--mark-half) + 0.75px),
+		calc(100% - var(--mark-half) + 0.75px) 100%;
 }
 
 @utility scrollbar-hide {
