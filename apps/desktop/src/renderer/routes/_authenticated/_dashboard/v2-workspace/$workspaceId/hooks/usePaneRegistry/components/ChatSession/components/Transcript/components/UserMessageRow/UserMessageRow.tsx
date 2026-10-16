@@ -15,6 +15,7 @@ import {
 } from "../../../../utils/messageElements";
 import { CopyButton } from "../../../CopyButton";
 import { AttachmentImage } from "../AttachmentImage";
+import { MessageTime } from "../MessageTime";
 import { UserMessageText } from "./components/UserMessageText";
 import { useFitsOneLine } from "./hooks/useFitsOneLine";
 
@@ -131,7 +132,8 @@ export function UserMessageRow({
 				</MessageContent>
 			)}
 			{copyable && (
-				<div className="-mt-1.5 flex justify-end opacity-0 transition-opacity focus-within:opacity-100 group-hover/message:opacity-100">
+				<div className="-mt-1.5 flex items-center justify-end gap-2 text-muted-foreground/60 opacity-0 transition-opacity focus-within:opacity-100 group-hover/message:opacity-100">
+					<MessageTime atMs={item.startedAtMs} />
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<span>
