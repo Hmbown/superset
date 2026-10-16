@@ -19,5 +19,6 @@ export const releaseNotesQuery = queryOptions({
 		return releaseNotesResponseSchema.parse(await response.json());
 	},
 	staleTime: ONE_HOUR_MS,
-	refetchOnWindowFocus: false,
+	refetchInterval: ONE_HOUR_MS,
+	refetchOnWindowFocus: true,
 });

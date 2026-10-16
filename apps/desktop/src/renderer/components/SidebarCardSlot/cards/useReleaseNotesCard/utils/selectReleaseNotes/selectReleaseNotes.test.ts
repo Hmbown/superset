@@ -1,6 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import type { ReleaseNote } from "@superset/shared/release-notes";
-import { getCardRelease, getShippedReleases } from "./selectReleaseNotes";
+import {
+	getCardRelease,
+	getShippedReleases,
+	sortReleases,
+} from "./selectReleaseNotes";
 
 function release(version: string): ReleaseNote {
 	return {
@@ -27,6 +31,12 @@ describe("getShippedReleases", () => {
 			getShippedReleases(feed, "1.39.0-canary.3").map((r) => r.version),
 		).toEqual(["1.39.0", "1.38.0", "1.36.0"]);
 	});
+});
+
+test("sortReleases keeps releases newer than the app for previews", () => {
+	expect(
+		sortReleases([...feed, release("not-a-version")]).map((r) => r.version),
+	).toEqual(["1.39.0", "1.38.0", "1.36.0"]);
 });
 
 describe("getCardRelease", () => {

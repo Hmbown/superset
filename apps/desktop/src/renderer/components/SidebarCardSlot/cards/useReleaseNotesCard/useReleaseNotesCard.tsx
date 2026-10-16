@@ -9,7 +9,11 @@ import type { SidebarCardEntry } from "../../types";
 import { ReleaseNotesDialog } from "./components/ReleaseNotesDialog";
 import { formatReleaseDate } from "./utils/formatReleaseDate";
 import { releaseNotesQuery } from "./utils/releaseNotesQuery";
-import { getCardRelease, getShippedReleases } from "./utils/selectReleaseNotes";
+import {
+	getCardRelease,
+	getShippedReleases,
+	sortReleases,
+} from "./utils/selectReleaseNotes";
 
 export function useReleaseNotesCard(): SidebarCardEntry | null {
 	const { t } = useLingui();
@@ -24,13 +28,17 @@ export function useReleaseNotesCard(): SidebarCardEntry | null {
 	// Fails closed: no feed means no card.
 	const { data } = useQuery(releaseNotesQuery);
 
-	const shipped = useMemo(
-		() => getShippedReleases(data?.releases ?? [], window.App.appVersion),
-		[data],
+	// A preview also shows releases newer than this build, so notes can be checked before they ship.
+	const releases = useMemo(
+		() =>
+			isPreviewing
+				? sortReleases(data?.releases ?? [])
+				: getShippedReleases(data?.releases ?? [], window.App.appVersion),
+		[data, isPreviewing],
 	);
 	const release = isPreviewing
-		? (shipped[0] ?? null)
-		: getCardRelease(shipped, { previousVersion, dismissedVersion });
+		? (releases[0] ?? null)
+		: getCardRelease(releases, { previousVersion, dismissedVersion });
 	if (!release) return null;
 	const version = release.version;
 	const dismiss = () =>
@@ -59,7 +67,7 @@ export function useReleaseNotesCard(): SidebarCardEntry | null {
 		children: (
 			<ReleaseNotesDialog
 				open={isDialogOpen}
-				releases={shipped}
+				releases={releases}
 				onClose={() => {
 					setDialogOpen(false);
 					dismiss();

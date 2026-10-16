@@ -1,1 +1,5 @@
-export { getCardRelease, getShippedReleases } from "./selectReleaseNotes";
+export {
+	getCardRelease,
+	getShippedReleases,
+	sortReleases,
+} from "./selectReleaseNotes";

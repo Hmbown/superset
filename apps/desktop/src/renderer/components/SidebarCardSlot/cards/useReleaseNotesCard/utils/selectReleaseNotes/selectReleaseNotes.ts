@@ -1,6 +1,13 @@
 import type { ReleaseNote } from "@superset/shared/release-notes";
 import { coerce, compare, gte, lte, valid } from "semver";
 
+/** Every release with a valid version, newest first. */
+export function sortReleases(releases: ReleaseNote[]): ReleaseNote[] {
+	return releases
+		.filter((release) => valid(release.version))
+		.sort((a, b) => compare(b.version, a.version));
+}
+
 /** Releases this build already includes, newest first. */
 export function getShippedReleases(
 	releases: ReleaseNote[],
@@ -8,11 +15,9 @@ export function getShippedReleases(
 ): ReleaseNote[] {
 	const current = coerce(appVersion);
 	if (!current) return [];
-	return releases
-		.filter(
-			(release) => valid(release.version) && lte(release.version, current),
-		)
-		.sort((a, b) => compare(b.version, a.version));
+	return sortReleases(releases).filter((release) =>
+		lte(release.version, current),
+	);
 }
 
 /**
