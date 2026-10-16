@@ -870,6 +870,8 @@ export class AcpAdapter implements HarnessAdapter {
 				error instanceof AcpRpcError ? error.detail : (error as Error).message;
 			this.flushOpenText();
 			this.cancelPendingApprovals(turnId);
+			const limit = this.usageLimitFrom(message);
+			if (limit) this.emitSession({ usageLimit: limit });
 			this.emitTurn({
 				id: turnId,
 				status: "failed",
@@ -878,8 +880,6 @@ export class AcpAdapter implements HarnessAdapter {
 				completedAtMs: this.now(),
 			});
 			this.emitNotice("error", message);
-			const limit = this.usageLimitFrom(message);
-			if (limit) this.emitSession({ usageLimit: limit });
 			this.emitSession({ status: "idle" });
 		}
 	}
