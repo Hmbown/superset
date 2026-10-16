@@ -410,56 +410,52 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 											)}
 									</div>
 								)}
-								{!isPending && !isSelected && (
-									<div className="hidden items-center justify-end gap-1.5 group-hover:flex group-focus-within:flex">
-										{shortcutLabel && (
-											<span className="shrink-0 font-mono text-[10px] tabular-nums text-muted-foreground">
-												{shortcutLabel}
-											</span>
-										)}
-										{
-											<Tooltip delayDuration={300}>
-												<TooltipTrigger asChild>
-													<button
-														type="button"
-														onClick={(event) => {
-															event.stopPropagation();
-															onCloseWorkspaceClick();
-														}}
-														onKeyDown={(event) => {
-															if (
-																event.key === "Enter" ||
-																event.key === " " ||
-																event.key === "Spacebar"
-															) {
-																event.stopPropagation();
-															}
-														}}
-														className="flex items-center justify-center text-muted-foreground hover:text-foreground"
-														aria-label={t({
-															message: "Delete workspace",
-														})}
-													>
-														<HiMiniXMark className="size-3.5" />
-													</button>
-												</TooltipTrigger>
-												<TooltipContent side="top">
-													<HotkeyLabel
-														label={t({
-															message: "Delete workspace",
-														})}
-														id={isActive ? "CLOSE_WORKSPACE" : undefined}
-													/>
-												</TooltipContent>
-											</Tooltip>
-										}
-									</div>
+								{!isPending && !isSelected && shortcutLabel && (
+									<span className="hidden shrink-0 font-mono text-[10px] tabular-nums text-muted-foreground group-hover:inline group-focus-within:inline">
+										{shortcutLabel}
+									</span>
 								)}
 							</div>
 							{ports.length > 0 && (
 								<DashboardSidebarRowEventBoundary>
 									<DashboardSidebarPortsChip ports={ports} />
 								</DashboardSidebarRowEventBoundary>
+							)}
+							{!isPending && !isSelected && (
+								<Tooltip delayDuration={300}>
+									<TooltipTrigger asChild>
+										<button
+											type="button"
+											onClick={(event) => {
+												event.stopPropagation();
+												onCloseWorkspaceClick();
+											}}
+											onKeyDown={(event) => {
+												if (
+													event.key === "Enter" ||
+													event.key === " " ||
+													event.key === "Spacebar"
+												) {
+													event.stopPropagation();
+												}
+											}}
+											className="hidden shrink-0 items-center justify-center text-muted-foreground hover:text-foreground group-hover:flex group-focus-within:flex"
+											aria-label={t({
+												message: "Delete workspace",
+											})}
+										>
+											<HiMiniXMark className="size-3.5" />
+										</button>
+									</TooltipTrigger>
+									<TooltipContent side="top">
+										<HotkeyLabel
+											label={t({
+												message: "Delete workspace",
+											})}
+											id={isActive ? "CLOSE_WORKSPACE" : undefined}
+										/>
+									</TooltipContent>
+								</Tooltip>
 							)}
 						</div>
 					</div>

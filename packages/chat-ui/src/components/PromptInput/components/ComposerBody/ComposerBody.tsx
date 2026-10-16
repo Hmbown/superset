@@ -900,7 +900,10 @@ export function ComposerBody({
 					}
 				/>
 			</div>
-			<div className="flex min-h-12 items-center gap-2 px-3 pb-2.5">
+			<div
+				className="flex min-h-12 items-center gap-2 px-3 pb-2.5"
+				data-composer-footer
+			>
 				<ContextButton
 					onClick={toggleBrowseMenu}
 					disabled={dictationSession.status !== "idle"}

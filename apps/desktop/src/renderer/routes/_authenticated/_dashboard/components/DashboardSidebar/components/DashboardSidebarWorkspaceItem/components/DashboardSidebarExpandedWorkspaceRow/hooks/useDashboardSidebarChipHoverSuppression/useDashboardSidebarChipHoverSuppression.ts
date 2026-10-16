@@ -1,6 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDashboardSidebarHoverActions } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/providers/DashboardSidebarHoverProvider";
 
+interface UseDashboardSidebarChipHoverSuppressionOptions {
+	/**
+	 * When the workspace hover card is held closed. "hover" holds it from the
+	 * moment the pointer enters the chip; "open" holds it only while the
+	 * chip's own card is open, so a pointer passing over the chip on its way
+	 * to the workspace card does not dismiss it.
+	 */
+	suppressWorkspaceCardOn?: "hover" | "open";
+}
+
 interface UseDashboardSidebarChipHoverSuppressionResult {
 	isOpen: boolean;
 	onOpenChange: (open: boolean) => void;
@@ -15,9 +25,12 @@ interface UseDashboardSidebarChipHoverSuppressionResult {
  * owned on unmount are released automatically — a chip can disappear
  * mid-hover after a bulk close.
  */
-export function useDashboardSidebarChipHoverSuppression(): UseDashboardSidebarChipHoverSuppressionResult {
+export function useDashboardSidebarChipHoverSuppression({
+	suppressWorkspaceCardOn = "hover",
+}: UseDashboardSidebarChipHoverSuppressionOptions = {}): UseDashboardSidebarChipHoverSuppressionResult {
 	const { beginHoverCardSuppression, endHoverCardSuppression } =
 		useDashboardSidebarHoverActions();
+	const holdsWhileHovered = suppressWorkspaceCardOn === "hover";
 	const holdsRef = useRef(0);
 	const isOpenRef = useRef(false);
 	const dismissedByClickRef = useRef(false);
@@ -55,13 +68,13 @@ export function useDashboardSidebarChipHoverSuppression(): UseDashboardSidebarCh
 	const onPointerEnter = useCallback(() => {
 		// Do not clear a click dismissal here. Removing the hover-card content can
 		// produce another enter while the pointer is still over the trigger.
-		hold();
-	}, [hold]);
+		if (holdsWhileHovered) hold();
+	}, [hold, holdsWhileHovered]);
 
 	const onPointerLeave = useCallback(() => {
 		dismissedByClickRef.current = false;
-		release();
-	}, [release]);
+		if (holdsWhileHovered) release();
+	}, [release, holdsWhileHovered]);
 
 	const toggleOpen = useCallback(() => {
 		const nextOpen = !isOpenRef.current;

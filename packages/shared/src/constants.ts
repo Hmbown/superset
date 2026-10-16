@@ -231,6 +231,13 @@ export const FEATURE_FLAGS = {
 	 * release condition on the flag, so widening never needs a release.
 	 */
 	ACP_CHAT: "acp-chat",
+	/**
+	 * Shows the `pdev` agent: in the agent catalog, agent pickers
+	 * and, with ACP_CHAT, as a chat harness (`pdev acp`). Off, unloaded or
+	 * offline all hide it. Hosts never seed it, so a user only gets it by
+	 * adding it while the flag is on.
+	 */
+	PDEV_AGENT: "pdev-agent",
 } as const;
 
 /**
