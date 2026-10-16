@@ -57,14 +57,13 @@ export function useV2SetupScriptCard({
 
 	const importLabel = importCandidate?.label ?? lastImportLabelRef.current;
 	if (importLabel && (importCandidate || isImportOpen)) {
-		const label = importLabel;
 		return {
 			id: `setup-script-import:${projectId}`,
 			badge: t({
 				message: "Setup",
 			}),
-			title: t`Found ${label} setup`,
-			description: t`Import its scripts to automate workspace setup for ${projectName}`,
+			title: t`No Superset setup scripts`,
+			description: t`${projectName} has setup scripts from another tool. Import them?`,
 			actionLabel: t`Import`,
 			onAction: () => setIsImportOpen(true),
 			onDismiss: () => dismiss(projectId),

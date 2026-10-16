@@ -13,33 +13,31 @@ const target: SetupImportOfferTarget = {
 
 function makeDeps(overrides: Partial<SetupImportOfferDeps> = {}) {
 	const prompt = mock<SetupImportOfferDeps["prompt"]>(() => {});
-	const findImport = mock<SetupImportOfferDeps["findImport"]>(
-		async () => "Orca",
-	);
+	const hasImport = mock<SetupImportOfferDeps["hasImport"]>(async () => true);
 	const deps: SetupImportOfferDeps = {
 		isPromptWindow: async () => true,
 		waitForFocus: async () => {},
 		isDismissed: () => false,
-		findImport,
+		hasImport,
 		prompt,
 		...overrides,
 	};
-	return { deps, prompt: deps.prompt as typeof prompt, findImport };
+	return { deps, prompt: deps.prompt as typeof prompt, hasImport };
 }
 
 describe("offerSetupImport", () => {
-	test("prompts with the found setup's label", async () => {
+	test("prompts for an importable project", async () => {
 		const { deps, prompt } = makeDeps();
 		await offerSetupImport(target, deps, new AbortController().signal);
-		expect(prompt).toHaveBeenCalledWith(target, "Orca");
+		expect(prompt).toHaveBeenCalledWith(target);
 	});
 
 	test("stays quiet in a window that is not the org's last focused", async () => {
-		const { deps, prompt, findImport } = makeDeps({
+		const { deps, prompt, hasImport } = makeDeps({
 			isPromptWindow: async () => false,
 		});
 		await offerSetupImport(target, deps, new AbortController().signal);
-		expect(findImport).not.toHaveBeenCalled();
+		expect(hasImport).not.toHaveBeenCalled();
 		expect(prompt).not.toHaveBeenCalled();
 	});
 
@@ -49,13 +47,13 @@ describe("offerSetupImport", () => {
 			waitForFocus: async () => {
 				order.push("focus");
 			},
-			findImport: async () => {
-				order.push("find");
-				return "Orca";
+			hasImport: async () => {
+				order.push("check");
+				return true;
 			},
 		});
 		await offerSetupImport(target, deps, new AbortController().signal);
-		expect(order).toEqual(["focus", "find"]);
+		expect(order).toEqual(["focus", "check"]);
 	});
 
 	test("does not prompt for a dismissed project", async () => {
@@ -65,7 +63,7 @@ describe("offerSetupImport", () => {
 	});
 
 	test("does not prompt when there is nothing to import", async () => {
-		const { deps, prompt } = makeDeps({ findImport: async () => null });
+		const { deps, prompt } = makeDeps({ hasImport: async () => false });
 		await offerSetupImport(target, deps, new AbortController().signal);
 		expect(prompt).not.toHaveBeenCalled();
 	});
@@ -73,9 +71,9 @@ describe("offerSetupImport", () => {
 	test("does not prompt after the listener unmounts", async () => {
 		const controller = new AbortController();
 		const { deps, prompt } = makeDeps({
-			findImport: async () => {
+			hasImport: async () => {
 				controller.abort();
-				return "Orca";
+				return true;
 			},
 		});
 		await offerSetupImport(target, deps, controller.signal);

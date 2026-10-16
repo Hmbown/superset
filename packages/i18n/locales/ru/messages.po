@@ -1033,6 +1033,9 @@ msgstr "{presetLabel} сброшен к значениям по умолчани
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · высота строки {0}"
 
+msgid "{projectName} has setup scripts from another tool. Import them?"
+msgstr "В {projectName} есть скрипты установки из другого инструмента. Импортировать их?"
+
 msgid "{provider} logo"
 msgstr "логотип {provider}"
 
@@ -7745,9 +7748,6 @@ msgstr "Элементы формы и композиция полей"
 msgid "Forward"
 msgstr "Вперёд"
 
-msgid "Found {label} setup"
-msgstr "Найдена настройка {label}"
-
 msgid "Found 12 tooltip call sites"
 msgstr "Найдено 12 мест вызова tooltip"
 
@@ -8502,9 +8502,6 @@ msgstr "Импорт из файла"
 
 msgid "Import from v1"
 msgstr "Импорт из v1"
-
-msgid "Import its scripts to automate workspace setup for {projectName}"
-msgstr "Импортируйте её скрипты, чтобы автоматизировать настройку рабочих областей для {projectName}"
 
 msgid "Import puts a worktree on a new branch at its current commit, so it can come over. Your files do not change."
 msgstr "Импорт переключает worktree на новую ветку на текущем коммите, чтобы его можно было перенести. Ваши файлы не меняются."
@@ -10970,6 +10967,9 @@ msgstr "Нет звёзд за этот период."
 
 msgid "No Stripe customer found"
 msgstr "Клиент Stripe не найден"
+
+msgid "No Superset setup scripts"
+msgstr "Нет скриптов установки Superset"
 
 msgid "no tags"
 msgstr "нет тегов"

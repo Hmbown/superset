@@ -1033,6 +1033,9 @@ msgstr "{presetLabel} obnoveno na výchozí"
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize} px · výška řádku {0}"
 
+msgid "{projectName} has setup scripts from another tool. Import them?"
+msgstr "{projectName} má setup skripty z jiného nástroje. Importovat je?"
+
 msgid "{provider} logo"
 msgstr "logo {provider}"
 
@@ -7745,9 +7748,6 @@ msgstr "Prvky formuláře a skládání polí"
 msgid "Forward"
 msgstr "Vpřed"
 
-msgid "Found {label} setup"
-msgstr "Nalezeno nastavení {label}"
-
 msgid "Found 12 tooltip call sites"
 msgstr "Nalezeno 12 volání tooltipu"
 
@@ -8502,9 +8502,6 @@ msgstr "Importovat ze souboru"
 
 msgid "Import from v1"
 msgstr "Import z v1"
-
-msgid "Import its scripts to automate workspace setup for {projectName}"
-msgstr "Importujte jeho skripty a zautomatizujte nastavení pracovního prostoru pro {projectName}"
 
 msgid "Import puts a worktree on a new branch at its current commit, so it can come over. Your files do not change."
 msgstr "Import přepne worktree na novou větev na jeho aktuálním commitu, aby mohl být přenesen. Vaše soubory se nezmění."
@@ -10970,6 +10967,9 @@ msgstr "V tomto období žádné hvězdy."
 
 msgid "No Stripe customer found"
 msgstr "Nenalezen žádný zákazník ve Stripe"
+
+msgid "No Superset setup scripts"
+msgstr "Žádné setup skripty Superset"
 
 msgid "no tags"
 msgstr "žádné štítky"

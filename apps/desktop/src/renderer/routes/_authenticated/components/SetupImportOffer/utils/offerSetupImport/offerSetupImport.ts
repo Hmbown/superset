@@ -9,9 +9,9 @@ export interface SetupImportOfferDeps {
 	isPromptWindow: () => Promise<boolean>;
 	waitForFocus: (signal: AbortSignal) => Promise<void>;
 	isDismissed: (projectId: string) => boolean;
-	/** The label of the setup to import, or null when there is nothing to offer. */
-	findImport: (target: SetupImportOfferTarget) => Promise<string | null>;
-	prompt: (target: SetupImportOfferTarget, label: string) => void;
+	/** No Superset scripts yet, and another tool's setup would change that. */
+	hasImport: (target: SetupImportOfferTarget) => Promise<boolean>;
+	prompt: (target: SetupImportOfferTarget) => void;
 }
 
 export async function offerSetupImport(
@@ -22,7 +22,6 @@ export async function offerSetupImport(
 	if (!(await deps.isPromptWindow())) return;
 	await deps.waitForFocus(signal);
 	if (signal.aborted || deps.isDismissed(target.projectId)) return;
-	const label = await deps.findImport(target);
-	if (!label || signal.aborted) return;
-	deps.prompt(target, label);
+	if (!(await deps.hasImport(target)) || signal.aborted) return;
+	deps.prompt(target);
 }

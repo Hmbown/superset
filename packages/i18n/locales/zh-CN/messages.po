@@ -1033,6 +1033,9 @@ msgstr "{presetLabel}已重置为默认值"
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · 行高{0}"
 
+msgid "{projectName} has setup scripts from another tool. Import them?"
+msgstr "{projectName} 有来自其他工具的设置脚本。要导入吗？"
+
 msgid "{provider} logo"
 msgstr "{provider}标志"
 
@@ -7745,9 +7748,6 @@ msgstr "表单控件与字段组合"
 msgid "Forward"
 msgstr "前进"
 
-msgid "Found {label} setup"
-msgstr "发现 {label} 初始化配置"
-
 msgid "Found 12 tooltip call sites"
 msgstr "找到12处tooltip调用"
 
@@ -8502,9 +8502,6 @@ msgstr "从文件导入"
 
 msgid "Import from v1"
 msgstr "从v1导入"
-
-msgid "Import its scripts to automate workspace setup for {projectName}"
-msgstr "导入其脚本，为{projectName}自动化工作区初始化"
 
 msgid "Import puts a worktree on a new branch at its current commit, so it can come over. Your files do not change."
 msgstr "导入会在当前提交上为工作树创建一个新分支，使其可以迁移。你的文件不会改变。"
@@ -10970,6 +10967,9 @@ msgstr "此区间内没有星标。"
 
 msgid "No Stripe customer found"
 msgstr "未找到Stripe客户"
+
+msgid "No Superset setup scripts"
+msgstr "没有 Superset 设置脚本"
 
 msgid "no tags"
 msgstr "无标签"

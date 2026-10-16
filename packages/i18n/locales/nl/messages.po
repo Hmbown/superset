@@ -1033,6 +1033,9 @@ msgstr "{presetLabel} teruggezet naar standaardwaarden"
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · regelhoogte {0}"
 
+msgid "{projectName} has setup scripts from another tool. Import them?"
+msgstr "{projectName} heeft setup-scripts van een andere tool. Importeren?"
+
 msgid "{provider} logo"
 msgstr "logo van {provider}"
 
@@ -7745,9 +7748,6 @@ msgstr "Formulierbesturing en veldsamenstelling"
 msgid "Forward"
 msgstr "Vooruit"
 
-msgid "Found {label} setup"
-msgstr "{label}-setup gevonden"
-
 msgid "Found 12 tooltip call sites"
 msgstr "12 tooltip-aanroepplekken gevonden"
 
@@ -8502,9 +8502,6 @@ msgstr "Importeren uit bestand"
 
 msgid "Import from v1"
 msgstr "Importeren uit v1"
-
-msgid "Import its scripts to automate workspace setup for {projectName}"
-msgstr "Importeer de scripts om het instellen van werkruimtes voor {projectName} te automatiseren"
 
 msgid "Import puts a worktree on a new branch at its current commit, so it can come over. Your files do not change."
 msgstr "Importeren zet een worktree op een nieuwe branch op zijn huidige commit, zodat hij kan worden overgezet. Je bestanden veranderen niet."
@@ -10970,6 +10967,9 @@ msgstr "Geen sterren in dit bereik."
 
 msgid "No Stripe customer found"
 msgstr "Geen Stripe-klant gevonden"
+
+msgid "No Superset setup scripts"
+msgstr "Geen Superset-setup-scripts"
 
 msgid "no tags"
 msgstr "geen tags"

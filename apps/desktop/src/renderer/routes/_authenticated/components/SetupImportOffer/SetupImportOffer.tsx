@@ -52,38 +52,36 @@ export function SetupImportOffer() {
 		enabled: reviewing !== null,
 	});
 
-	const findImport = useEffectEvent(
+	const hasImport = useEffectEvent(
 		async ({ hostUrl, projectId }: SetupImportOfferTarget) => {
 			const client = getHostServiceClientByUrl(hostUrl);
 			if (!(await client.config.shouldShowSetupCard.query({ projectId }))) {
-				return null;
+				return false;
 			}
 			const result = await queryClient.fetchQuery(
 				setupImportCandidatesQuery(hostUrl, projectId),
 			);
-			return withChanges(result.candidates)[0]?.label ?? null;
+			return withChanges(result.candidates).length > 0;
 		},
 	);
 
-	const prompt = useEffectEvent(
-		(target: SetupImportOfferTarget, label: string) => {
-			const { projectId, projectName } = target;
-			toast(t`Found ${label} setup`, {
-				id: `setup-import-offer:${projectId}`,
-				description: t`Import its scripts to automate workspace setup for ${projectName}`,
-				duration: PROMPT_DURATION_MS,
-				action: {
-					label: t`Import`,
-					onClick: () => setReviewing(target),
-				},
-				cancel: {
-					label: t`Not now`,
-					onClick: () =>
-						useV2SetupCardDismissalsStore.getState().dismiss(projectId),
-				},
-			});
-		},
-	);
+	const prompt = useEffectEvent((target: SetupImportOfferTarget) => {
+		const { projectId, projectName } = target;
+		toast(t`No Superset setup scripts`, {
+			id: `setup-import-offer:${projectId}`,
+			description: t`${projectName} has setup scripts from another tool. Import them?`,
+			duration: PROMPT_DURATION_MS,
+			action: {
+				label: t`Import`,
+				onClick: () => setReviewing(target),
+			},
+			cancel: {
+				label: t`Not now`,
+				onClick: () =>
+					useV2SetupCardDismissalsStore.getState().dismiss(projectId),
+			},
+		});
+	});
 
 	useEffect(() => {
 		if (!activeHostUrl) return;
@@ -103,7 +101,7 @@ export function SetupImportOffer() {
 						waitForFocus,
 						isDismissed: (id) =>
 							useV2SetupCardDismissalsStore.getState().isDismissed(id),
-						findImport,
+						hasImport,
 						prompt,
 					},
 					controller.signal,

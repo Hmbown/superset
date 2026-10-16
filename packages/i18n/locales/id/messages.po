@@ -1033,6 +1033,9 @@ msgstr "{presetLabel} direset ke setelan bawaan"
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · tinggi baris {0}"
 
+msgid "{projectName} has setup scripts from another tool. Import them?"
+msgstr "{projectName} punya skrip setup dari alat lain. Impor skrip itu?"
+
 msgid "{provider} logo"
 msgstr "Logo {provider}"
 
@@ -7745,9 +7748,6 @@ msgstr "Kontrol form dan komposisi field"
 msgid "Forward"
 msgstr "Maju"
 
-msgid "Found {label} setup"
-msgstr "Setup {label} ditemukan"
-
 msgid "Found 12 tooltip call sites"
 msgstr "Menemukan 12 call site tooltip"
 
@@ -8502,9 +8502,6 @@ msgstr "Impor dari file"
 
 msgid "Import from v1"
 msgstr "Impor dari v1"
-
-msgid "Import its scripts to automate workspace setup for {projectName}"
-msgstr "Impor skripnya untuk mengotomatiskan penyiapan workspace untuk {projectName}"
 
 msgid "Import puts a worktree on a new branch at its current commit, so it can come over. Your files do not change."
 msgstr "Impor menempatkan worktree pada branch baru di commit saat ini agar dapat dipindahkan. File Anda tidak berubah."
@@ -10970,6 +10967,9 @@ msgstr "Tidak ada star di rentang ini."
 
 msgid "No Stripe customer found"
 msgstr "Tidak ada pelanggan Stripe yang ditemukan"
+
+msgid "No Superset setup scripts"
+msgstr "Tidak ada skrip setup Superset"
 
 msgid "no tags"
 msgstr "tanpa tag"

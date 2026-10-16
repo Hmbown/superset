@@ -1033,6 +1033,9 @@ msgstr "{presetLabel}이(가) 기본값으로 초기화되었습니다"
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · 줄 높이 {0}"
 
+msgid "{projectName} has setup scripts from another tool. Import them?"
+msgstr "{projectName}에 다른 도구의 설정 스크립트가 있습니다. 가져올까요?"
+
 msgid "{provider} logo"
 msgstr "{provider} 로고"
 
@@ -7745,9 +7748,6 @@ msgstr "폼 컨트롤과 필드 구성"
 msgid "Forward"
 msgstr "앞으로"
 
-msgid "Found {label} setup"
-msgstr "{label} 설정을 찾았습니다"
-
 msgid "Found 12 tooltip call sites"
 msgstr "툴팁 호출 지점 12곳 발견"
 
@@ -8502,9 +8502,6 @@ msgstr "파일에서 가져오기"
 
 msgid "Import from v1"
 msgstr "v1에서 가져오기"
-
-msgid "Import its scripts to automate workspace setup for {projectName}"
-msgstr "스크립트를 가져와 {projectName}의 워크스페이스 설정을 자동화하세요"
 
 msgid "Import puts a worktree on a new branch at its current commit, so it can come over. Your files do not change."
 msgstr "가져오기는 worktree를 현재 커밋의 새 브랜치로 전환해 옮길 수 있게 합니다. 파일은 바뀌지 않습니다."
@@ -10970,6 +10967,9 @@ msgstr "이 기간에는 스타가 없습니다."
 
 msgid "No Stripe customer found"
 msgstr "Stripe 고객을 찾을 수 없습니다"
+
+msgid "No Superset setup scripts"
+msgstr "Superset 설정 스크립트 없음"
 
 msgid "no tags"
 msgstr "태그 없음"

@@ -1033,6 +1033,9 @@ msgstr "Đã đặt lại {presetLabel} về mặc định"
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · chiều cao dòng {0}"
 
+msgid "{projectName} has setup scripts from another tool. Import them?"
+msgstr "{projectName} có script thiết lập từ công cụ khác. Nhập các script đó?"
+
 msgid "{provider} logo"
 msgstr "Logo {provider}"
 
@@ -7745,9 +7748,6 @@ msgstr "Các điều khiển form và cách ghép trường"
 msgid "Forward"
 msgstr "Tiến"
 
-msgid "Found {label} setup"
-msgstr "Đã tìm thấy thiết lập của {label}"
-
 msgid "Found 12 tooltip call sites"
 msgstr "Tìm thấy 12 chỗ gọi tooltip"
 
@@ -8502,9 +8502,6 @@ msgstr "Nhập từ tệp"
 
 msgid "Import from v1"
 msgstr "Nhập từ v1"
-
-msgid "Import its scripts to automate workspace setup for {projectName}"
-msgstr "Nhập các script của nó để tự động thiết lập workspace cho {projectName}"
 
 msgid "Import puts a worktree on a new branch at its current commit, so it can come over. Your files do not change."
 msgstr "Nhập sẽ đưa worktree sang một nhánh mới tại commit hiện tại để có thể chuyển sang. Tệp của bạn không thay đổi."
@@ -10970,6 +10967,9 @@ msgstr "Không có star nào trong khoảng này."
 
 msgid "No Stripe customer found"
 msgstr "Không tìm thấy khách hàng Stripe"
+
+msgid "No Superset setup scripts"
+msgstr "Chưa có script thiết lập Superset"
 
 msgid "no tags"
 msgstr "không có thẻ"

@@ -1033,6 +1033,9 @@ msgstr "{presetLabel} varsayılanlara sıfırlandı"
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · {0} satır yüksekliği"
 
+msgid "{projectName} has setup scripts from another tool. Import them?"
+msgstr "{projectName} başka bir araçtan kurulum betiklerine sahip. İçe aktarılsın mı?"
+
 msgid "{provider} logo"
 msgstr "{provider} logosu"
 
@@ -7745,9 +7748,6 @@ msgstr "Form denetimleri ve alan kompozisyonu"
 msgid "Forward"
 msgstr "İleri"
 
-msgid "Found {label} setup"
-msgstr "{label} kurulumu bulundu"
-
 msgid "Found 12 tooltip call sites"
 msgstr "12 tooltip çağrı noktası bulundu"
 
@@ -8502,9 +8502,6 @@ msgstr "Dosyadan içe aktar"
 
 msgid "Import from v1"
 msgstr "v1'den içe aktar"
-
-msgid "Import its scripts to automate workspace setup for {projectName}"
-msgstr "{projectName} için çalışma alanı kurulumunu otomatikleştirmek üzere betiklerini içe aktarın"
 
 msgid "Import puts a worktree on a new branch at its current commit, so it can come over. Your files do not change."
 msgstr "İçe aktar, worktree'yi mevcut commit'inde yeni bir dala alır, böylece taşınabilir. Dosyalarınız değişmez."
@@ -10970,6 +10967,9 @@ msgstr "Bu aralıkta yıldız yok."
 
 msgid "No Stripe customer found"
 msgstr "Stripe müşterisi bulunamadı"
+
+msgid "No Superset setup scripts"
+msgstr "Superset kurulum betiği yok"
 
 msgid "no tags"
 msgstr "etiket yok"
