@@ -246,6 +246,7 @@ type PendingApproval = {
 	item: ApprovalRequest;
 	fieldTypes?: Record<string, string | undefined>;
 	selectsOption?: boolean;
+	otherOptionId?: string;
 };
 
 type AcpSessionModes = NonNullable<
@@ -425,6 +426,7 @@ export class AcpAdapter implements HarnessAdapter {
 	private disposed = false;
 	private dead = false;
 	private stderrTail = "";
+	private customAnswer: string | null = null;
 	private readonly shellPids = new Map<string, number>();
 	private shellPoll: ReturnType<typeof setInterval> | null = null;
 
@@ -520,6 +522,7 @@ export class AcpAdapter implements HarnessAdapter {
 			pending.requestId,
 			this.approvalOutcome(pending, decision),
 		);
+		if (this.currentTurn?.status !== "running") this.sendCustomAnswer();
 		this.emitItem(
 			{
 				...pending.item,
@@ -892,7 +895,9 @@ export class AcpAdapter implements HarnessAdapter {
 				this.emitNotice("info", "The agent declined to continue.");
 			this.cancelPendingApprovals(turnId);
 			this.emitSession({ status: "idle" });
+			this.sendCustomAnswer();
 		} catch (error) {
+			this.customAnswer = null;
 			this.flushOpenText();
 			this.cancelPendingApprovals(turnId);
 			this.emitTurn({
@@ -1783,6 +1788,13 @@ export class AcpAdapter implements HarnessAdapter {
 			return;
 		}
 		const question = this.options.clientApprovalModes === true && !permission;
+		const other = parsed.data.options.find((option) =>
+			/^other\b/i.test(option.name),
+		);
+		const choices = parsed.data.options.filter((option) => option !== other);
+		const headed = title.match(/^([^:\n]{1,40}):\s+([\s\S]+)$/);
+		const header = headed?.[1];
+		const questionText = headed?.[2] ?? title;
 		const turnId = this.resolveTurnId();
 		const targetItemId = parsed.data.toolCall?.toolCallId ?? null;
 		const approvalId = `approval:${targetItemId ?? this.mintId()}`;
@@ -1796,17 +1808,27 @@ export class AcpAdapter implements HarnessAdapter {
 			...(question
 				? {
 						form: {
-							message: title,
+							message: questionText,
 							fields: [
 								{
 									id: QUESTION_FIELD_ID,
+									...(header ? { title: header } : {}),
 									input: "single" as const,
-									required: true,
-									options: parsed.data.options.map((option) => ({
+									options: choices.map((option) => ({
 										value: option.optionId,
 										label: option.name,
 									})),
 								},
+								...(other
+									? [
+											{
+												id: `${QUESTION_FIELD_ID}_custom`,
+												title: "Other",
+												description: "Type your own answer (optional).",
+												input: "text" as const,
+											},
+										]
+									: []),
 							],
 						},
 					}
@@ -1827,9 +1849,17 @@ export class AcpAdapter implements HarnessAdapter {
 			turnId,
 			item,
 			...(question ? { selectsOption: true } : {}),
+			...(question && other ? { otherOptionId: other.optionId } : {}),
 		});
 		this.emitItem(item, turnId);
 		this.emitSession({ status: "awaiting_input" });
+	}
+
+	private sendCustomAnswer(): void {
+		const text = this.customAnswer;
+		if (!text) return;
+		this.customAnswer = null;
+		void this.runTurn([{ type: "text", text }]);
 	}
 
 	private approvePendingPermissions(): void {
@@ -1886,6 +1916,16 @@ export class AcpAdapter implements HarnessAdapter {
 		decision: Decision,
 	): unknown {
 		if (pending.selectsOption) {
+			const typed =
+				decision.type === "form"
+					? decision.values[`${QUESTION_FIELD_ID}_custom`]
+					: null;
+			if (typeof typed === "string" && typed.trim() && pending.otherOptionId) {
+				this.customAnswer = typed.trim();
+				return {
+					outcome: { outcome: "selected", optionId: pending.otherOptionId },
+				};
+			}
 			const optionId =
 				decision.type === "form" ? decision.values[QUESTION_FIELD_ID] : null;
 			return typeof optionId === "string"

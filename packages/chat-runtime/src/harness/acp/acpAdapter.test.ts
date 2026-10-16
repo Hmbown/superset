@@ -140,10 +140,15 @@ class FakeAcpAgent {
 			method: "session/request_permission",
 			params: {
 				sessionId,
-				toolCall: { toolCallId, title: "Which color?" },
+				toolCall: { toolCallId, title: "Color: Which color?" },
 				options: [
 					{ optionId: "choice-0", name: "Red", kind: "allow_once" },
 					{ optionId: "choice-1", name: "Blue", kind: "allow_once" },
+					{
+						optionId: "choice-2",
+						name: "Other (type an answer)",
+						kind: "allow_once",
+					},
 				],
 			},
 		});
@@ -1474,14 +1479,17 @@ describe("AcpAdapter on protocol v2", () => {
 		).toMatchObject({
 			status: "pending",
 			form: {
+				message: "Which color?",
 				fields: [
 					{
+						title: "Color",
 						input: "single",
 						options: [
 							{ value: "choice-0", label: "Red" },
 							{ value: "choice-1", label: "Blue" },
 						],
 					},
+					{ id: "answer_custom", title: "Other", input: "text" },
 				],
 			},
 		});
@@ -1602,6 +1610,42 @@ describe("AcpAdapter on protocol v2", () => {
 			form: { fields: [{ input: "single" }] },
 		});
 		expect(agent.sent.some((f) => f.id === 9201)).toBe(false);
+
+		await adapter.dispose();
+	});
+
+	it("answers a typed question with pi's Other choice and sends the text once the turn ends", async () => {
+		const agent = new FakeAcpAgent();
+		agent.holdPrompts = true;
+		const { adapter } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ defaultModeId: "bypassPermissions", clientApprovalModes: true },
+		);
+		await flush();
+		adapter.prompt([{ type: "text", text: "run" }]);
+		await flush();
+		agent.askQuestion("sess-1", "q-1");
+		await flush();
+
+		adapter.respondToApproval("approval:q-1", {
+			type: "form",
+			values: { answer_custom: "purple" },
+		});
+		await flush();
+		expect(agent.sent.find((f) => f.id === 9003)?.result).toEqual({
+			outcome: { outcome: "selected", optionId: "choice-2" },
+		});
+		const prompts = () =>
+			agent.sent.filter((f) => f.method === "session/prompt");
+		expect(prompts()).toHaveLength(1);
+
+		agent.releasePrompts("end_turn");
+		await flush();
+		expect(prompts().at(-1)?.params).toMatchObject({
+			prompt: [{ type: "text", text: "purple" }],
+		});
 
 		await adapter.dispose();
 	});
