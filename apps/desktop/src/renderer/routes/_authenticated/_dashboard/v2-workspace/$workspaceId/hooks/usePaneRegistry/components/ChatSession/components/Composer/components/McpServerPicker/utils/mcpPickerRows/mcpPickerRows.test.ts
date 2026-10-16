@@ -16,14 +16,10 @@ function server(overrides: Partial<McpServerEntry>): McpServerEntry {
 	};
 }
 
-const linearAccount = (
-	connected: boolean,
-	installed = false,
-): McpPluginAccount => ({
+const linearAccount = (connected: boolean): McpPluginAccount => ({
 	displayName: "Linear",
 	connector: "linear",
 	connected,
-	installed,
 });
 
 describe("mcpPickerRows", () => {
@@ -113,20 +109,22 @@ describe("mcpPickerRows", () => {
 		expect(rows).toEqual([]);
 	});
 
-	it("counts an install on the account before this machine has written it", () => {
+	it("offers Install when the account has the plugin but this machine does not", () => {
 		const [row] = mcpPickerRows(
 			[
 				server({
-					name: "linear",
+					name: "exa",
 					configPath: "",
 					state: "not-configured",
-					plugin: { name: "linear", installed: false, proxied: true },
+					plugin: { name: "exa", installed: false, proxied: false },
 				}),
 			],
-			new Map([["linear", linearAccount(true, true)]]),
+			new Map([
+				["exa", { displayName: "Exa", connector: null, connected: false }],
+			]),
 			"",
 		);
-		expect(row).toMatchObject({ kind: "unavailable", reason: "next-session" });
+		expect(row).toMatchObject({ kind: "action", action: "install" });
 	});
 
 	it("searches names, plugin names, agents, and scopes", () => {

@@ -6,6 +6,7 @@ import type { SlashCommand } from "@superset/shared/slash-commands";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
+import { buildChatAgentEnv } from "../../../chat-v3/agentEnv";
 import { workspaces } from "../../../db/schema";
 import { resolveHostAgentConfig } from "../../../terminal-agents/agent-config";
 import type { HostServiceContext } from "../../../types";
@@ -31,17 +32,6 @@ function findWorkspace(ctx: HostServiceContext, workspaceId: string) {
 		});
 	}
 	return workspace;
-}
-
-function familyEnv(
-	ctx: HostServiceContext,
-	family: "claude" | "codex",
-	config: { presetId: string; env: Record<string, string> } | null,
-): Record<string, string> {
-	return {
-		...resolveDefaultAccountEnv(ctx.db, family),
-		...(config?.presetId === family ? config.env : {}),
-	};
 }
 
 export const agentToolingRouter = router({
@@ -85,12 +75,13 @@ export const agentToolingRouter = router({
 			const config = resolveHostAgentConfig(ctx.db, input.agent);
 			const presetId = config?.presetId ?? input.agent;
 			const home = homedir();
-			const claudeDir = familyEnv(
-				ctx,
-				"claude",
-				config,
-			).CLAUDE_CONFIG_DIR?.trim();
-			const codexHome = familyEnv(ctx, "codex", config).CODEX_HOME?.trim();
+			const env = await buildChatAgentEnv({
+				db: ctx.db,
+				cwd: workspace.worktreePath,
+				workspaceId: input.workspaceId,
+			});
+			const claudeDir = env.CLAUDE_CONFIG_DIR?.trim();
+			const codexHome = env.CODEX_HOME?.trim();
 			const servers = await listMcpServers({
 				worktreePath: workspace.worktreePath,
 				agent: presetId,

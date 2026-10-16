@@ -3,6 +3,7 @@ import {
 	findMcpServerTokens,
 	mcpContextLine,
 	mcpServerToken,
+	withMcpContext,
 } from "./mcpServerChips";
 
 describe("mcpServerToken", () => {
@@ -34,5 +35,13 @@ describe("mcpContextLine", () => {
 		expect(mcpContextLine(["linear", "linear", "docs"])).toBe(
 			'MCP context: Use the configured MCP servers "linear", "docs" when relevant to this request.',
 		);
+	});
+});
+
+describe("withMcpContext", () => {
+	it("replaces the line a recalled message already carries", () => {
+		const sent = withMcpContext("@mcp/github list PRs", ["github"]);
+		expect(withMcpContext(sent, ["github"])).toBe(sent);
+		expect(withMcpContext(sent, [])).toBe("@mcp/github list PRs");
 	});
 });

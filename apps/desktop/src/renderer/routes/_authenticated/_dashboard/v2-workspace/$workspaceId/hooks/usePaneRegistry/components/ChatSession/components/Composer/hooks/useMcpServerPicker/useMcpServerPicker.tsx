@@ -36,6 +36,8 @@ export function useMcpServerPicker({
 	agentId: string | undefined;
 }): McpServerPickerControls {
 	const { t } = useLingui();
+	const pickerAgent =
+		agentId === "claude" || agentId === "codex" ? agentId : undefined;
 	const navigate = useNavigate();
 	const isDark = useIsDarkTheme();
 	const utils = workspaceTrpc.useUtils();
@@ -49,6 +51,7 @@ export function useMcpServerPicker({
 		connector: string;
 	} | null>(null);
 	const contextRef = useRef<ComposerActionContext | null>(null);
+	const installedHereRef = useRef<ReadonlySet<string>>(new Set());
 	const openRef = useRef<(ctx: ComposerActionContext) => void>(() => {});
 
 	const refresh = () =>
@@ -63,12 +66,16 @@ export function useMcpServerPicker({
 	};
 
 	const runAction = async (row: McpPickerActionRow) => {
-		if (!row.installed) {
+		if (!row.server.plugin?.installed) {
 			try {
 				await install(row.plugin);
 			} catch {
 				return;
 			}
+			installedHereRef.current = new Set([
+				...installedHereRef.current,
+				row.plugin,
+			]);
 		}
 		await refresh();
 		if (row.needsAccount && row.connector) {
@@ -87,14 +94,15 @@ export function useMcpServerPicker({
 	runActionRef.current = runAction;
 
 	openRef.current = (ctx) => {
-		if (!agentId) return;
+		if (!pickerAgent) return;
 		contextRef.current = ctx;
 		ctx.openPanel({
 			title: t({ message: "MCP servers" }),
 			bare: true,
 			render: ({ close }) => (
 				<McpServerPicker
-					agentId={agentId}
+					agentId={pickerAgent}
+					installedHere={installedHereRef.current}
 					workspaceId={workspaceId}
 					onPick={(chip) => {
 						ctx.insertChip(chip);
@@ -116,7 +124,7 @@ export function useMcpServerPicker({
 
 	const command = useMemo<PromptInputCommand | null>(
 		() =>
-			agentId
+			pickerAgent
 				? {
 						id: "superset:mcp",
 						title: "/mcp",
@@ -126,7 +134,7 @@ export function useMcpServerPicker({
 						onSelect: (ctx) => openRef.current(ctx),
 					}
 				: null,
-		[agentId, t],
+		[pickerAgent, t],
 	);
 
 	const findChips = useCallback(

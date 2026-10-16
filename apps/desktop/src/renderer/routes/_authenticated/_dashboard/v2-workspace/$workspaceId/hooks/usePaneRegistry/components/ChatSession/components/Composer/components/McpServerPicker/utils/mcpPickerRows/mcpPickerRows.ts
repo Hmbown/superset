@@ -4,7 +4,6 @@ export interface McpPluginAccount {
 	displayName: string;
 	connector: string | null;
 	connected: boolean;
-	installed: boolean;
 }
 
 export type McpPickerRow =
@@ -16,7 +15,6 @@ export type McpPickerRow =
 			action: "install" | "connect";
 			plugin: string;
 			displayName: string;
-			installed: boolean;
 			connector: string | null;
 			needsAccount: boolean;
 	  }
@@ -24,7 +22,7 @@ export type McpPickerRow =
 			key: string;
 			server: McpServerEntry;
 			kind: "unavailable";
-			reason: "disabled" | "other-agent" | "next-session";
+			reason: "disabled" | "other-agent" | "untrusted" | "next-session";
 	  };
 
 export type McpPickerActionRow = Extract<McpPickerRow, { kind: "action" }>;
@@ -36,7 +34,11 @@ function rowFor(
 	plugins: ReadonlyMap<string, McpPluginAccount>,
 ): McpPickerRow | null {
 	const key = `${server.agent}:${server.scope}:${server.configPath}:${server.name}`;
-	if (server.state === "disabled" || server.state === "other-agent") {
+	if (
+		server.state === "disabled" ||
+		server.state === "other-agent" ||
+		server.state === "untrusted"
+	) {
 		return { key, server, kind: "unavailable", reason: server.state };
 	}
 	const plugin = server.plugin;
@@ -44,7 +46,6 @@ function rowFor(
 	if (server.state === "not-configured" && !account) return null;
 	if (!plugin || !account) return { key, server, kind: "available" };
 
-	const installed = plugin.installed || account.installed;
 	const needsAccount = Boolean(account.connector && !account.connected);
 	const action = (kind: "install" | "connect"): McpPickerRow => ({
 		key,
@@ -53,13 +54,12 @@ function rowFor(
 		action: kind,
 		plugin: plugin.name,
 		displayName: account.displayName,
-		installed,
 		connector: account.connector,
 		needsAccount,
 	});
 	if (server.state === "not-configured") {
 		if (needsAccount) return action("connect");
-		if (!installed) return action("install");
+		if (!plugin.installed) return action("install");
 		return { key, server, kind: "unavailable", reason: "next-session" };
 	}
 	if (plugin.proxied && needsAccount) return action("connect");

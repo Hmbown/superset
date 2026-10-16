@@ -118,6 +118,58 @@ describe("discoverMcpServers", () => {
 		});
 	});
 
+	it("marks Codex project servers untrusted unless the project or its main repository is trusted", async () => {
+		const main = join(home, "main");
+		const linked = join(home, "linked");
+		mkdirSync(join(main, ".git", "worktrees", "linked"), { recursive: true });
+		mkdirSync(linked, { recursive: true });
+		write(join(linked, ".git"), `gitdir: ${main}/.git/worktrees/linked\n`);
+		for (const dir of [worktree, linked]) {
+			write(
+				join(dir, ".codex", "config.toml"),
+				"[mcp_servers.repo]\ncommand = 'node'\n",
+			);
+		}
+		write(
+			paths.codexConfigPath,
+			`[projects."${main}"]\ntrust_level = "trusted"\n`,
+		);
+
+		const untrusted = await discoverMcpServers({
+			worktreePath: worktree,
+			agent: "codex",
+			paths,
+		});
+		const trusted = await discoverMcpServers({
+			worktreePath: linked,
+			agent: "codex",
+			paths,
+		});
+
+		expect(byName(untrusted, "repo")[0]?.state).toBe("untrusted");
+		expect(byName(trusted, "repo")[0]?.state).toBe("available");
+	});
+
+	it("keeps only the nearest project definition of a server", async () => {
+		const nested = join(worktree, "packages", "app");
+		write(join(nested, ".mcp.json"), {
+			mcpServers: { docs: { command: "near" } },
+		});
+		write(join(worktree, ".mcp.json"), {
+			mcpServers: { docs: { command: "far" } },
+		});
+
+		const servers = await discoverMcpServers({
+			worktreePath: nested,
+			agent: "claude",
+			paths,
+		});
+
+		expect(byName(servers, "docs").map((server) => server.configPath)).toEqual([
+			join(nested, ".mcp.json"),
+		]);
+	});
+
 	it("marks Superset plugin servers and lists the ones the agent does not have yet", async () => {
 		write(paths.claudeStatePath, {
 			mcpServers: {

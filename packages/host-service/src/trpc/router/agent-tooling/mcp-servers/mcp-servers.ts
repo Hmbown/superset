@@ -1,5 +1,5 @@
 import { readFile, stat } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { dirname, join, sep } from "node:path";
 import { readEnabledPlugins } from "@superset/agent-setup";
 import type {
 	McpServerAgent,
@@ -40,6 +40,7 @@ interface FoundServer {
 	url?: string;
 	command?: string;
 	args?: string[];
+	untrusted?: boolean;
 }
 
 const MAX_CONFIG_BYTES = 50 * 1024 * 1024;
@@ -98,6 +99,16 @@ async function projectDirs(
 		dir = parent;
 	}
 	return dirs;
+}
+
+function nearestPerName(): (servers: FoundServer[]) => FoundServer[] {
+	const seen = new Set<string>();
+	return (servers) =>
+		servers.filter((server) => {
+			if (seen.has(server.name)) return false;
+			seen.add(server.name);
+			return true;
+		});
 }
 
 function jsonServers(
@@ -159,11 +170,14 @@ async function readClaudeServers(
 			disabled,
 		),
 	];
+	const nearest = nearestPerName();
 	for (const dir of await projectDirs(worktreePath, paths.homeDir)) {
 		const file = join(dir, ".mcp.json");
 		const config = await readJson(file);
 		found.push(
-			...jsonServers(config?.mcpServers, "project", file, disabledProjectFile),
+			...nearest(
+				jsonServers(config?.mcpServers, "project", file, disabledProjectFile),
+			),
 		);
 	}
 	return found;
@@ -230,6 +244,32 @@ export function parseCodexMcpServers(
 	return [...servers.values()];
 }
 
+export function parseCodexTrustedProjects(content: string): Set<string> {
+	const trusted = new Set<string>();
+	let project: string | null = null;
+	for (const line of content.split(/\r?\n/)) {
+		if (/^\s*\[/.test(line)) {
+			const match = line.match(
+				/^\s*\[\s*projects\.(?:"([^"]+)"|'([^']+)')\s*\]/,
+			);
+			project = match ? (match[1] ?? match[2] ?? null) : null;
+			continue;
+		}
+		if (project && tomlString(line, "trust_level") === "trusted") {
+			trusted.add(project);
+		}
+	}
+	return trusted;
+}
+
+/** Codex trusts a git worktree through the repository it belongs to. */
+async function trustRoots(dir: string): Promise<string[]> {
+	const gitFile = await readText(join(dir, ".git"));
+	const gitDir = gitFile?.match(/^gitdir:\s*(.+)$/m)?.[1]?.trim();
+	const mainRepo = gitDir?.split(`${sep}.git${sep}worktrees${sep}`)[0];
+	return mainRepo && mainRepo !== gitDir ? [dir, mainRepo] : [dir];
+}
+
 async function readCodexServers(
 	worktreePath: string,
 	paths: McpConfigPaths,
@@ -239,12 +279,20 @@ async function readCodexServers(
 	if (user !== null) {
 		found.push(...parseCodexMcpServers(user, "user", paths.codexConfigPath));
 	}
+	const trusted = parseCodexTrustedProjects(user ?? "");
+	const nearest = nearestPerName();
 	for (const dir of await projectDirs(worktreePath, paths.homeDir)) {
 		const file = join(dir, ".codex", "config.toml");
 		const content = await readText(file);
-		if (content !== null) {
-			found.push(...parseCodexMcpServers(content, "project", file));
-		}
+		if (content === null) continue;
+		const untrusted = !(await trustRoots(dir)).some((root) =>
+			trusted.has(root),
+		);
+		found.push(
+			...nearest(parseCodexMcpServers(content, "project", file)).map(
+				(server) => (untrusted ? { ...server, untrusted } : server),
+			),
+		);
 	}
 	return found;
 }
@@ -349,9 +397,11 @@ export async function discoverMcpServers({
 			state:
 				found.agent !== agent
 					? "other-agent"
-					: found.enabled
-						? "available"
-						: "disabled",
+					: found.untrusted
+						? "untrusted"
+						: found.enabled
+							? "available"
+							: "disabled",
 		};
 	});
 

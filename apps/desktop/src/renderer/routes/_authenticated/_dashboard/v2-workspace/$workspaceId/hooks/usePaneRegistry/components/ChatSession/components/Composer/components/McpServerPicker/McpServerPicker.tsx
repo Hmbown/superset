@@ -40,6 +40,8 @@ const AGENT_LABELS: Record<McpServerAgent, string> = {
 export type McpServerPickerProps = {
 	workspaceId: string;
 	agentId: string;
+	/** Plugins installed from this picker before this machine's config caught up. */
+	installedHere: ReadonlySet<string>;
 	onPick: (chip: ComposerChip) => void;
 	onAction: (row: McpPickerActionRow) => void;
 	onManage: () => void;
@@ -49,6 +51,7 @@ export type McpServerPickerProps = {
 export function McpServerPicker({
 	workspaceId,
 	agentId,
+	installedHere,
 	onPick,
 	onAction,
 	onManage,
@@ -85,7 +88,15 @@ export function McpServerPicker({
 			setIsRefreshing(false);
 		}
 	};
-	const servers = list.data?.servers ?? NO_SERVERS;
+	const servers = useMemo(
+		() =>
+			(list.data?.servers ?? NO_SERVERS).map((server) =>
+				server.plugin && installedHere.has(server.plugin.name)
+					? { ...server, plugin: { ...server.plugin, installed: true } }
+					: server,
+			),
+		[list.data, installedHere],
+	);
 	const { plugins: catalog } = usePluginCatalog();
 	const plugins = useMemo(
 		() =>
@@ -96,7 +107,6 @@ export function McpServerPicker({
 						displayName: plugin.interface.displayName,
 						connector: plugin.connector,
 						connected: plugin.connections.length > 0,
-						installed: plugin.installed,
 					},
 				]),
 			),
@@ -138,6 +148,9 @@ export function McpServerPicker({
 		if (row.reason === "disabled")
 			return <Trans>Disabled in agent config</Trans>;
 		if (row.reason === "next-session") return <Trans>In your next chat</Trans>;
+		if (row.reason === "untrusted") {
+			return <Trans>Project not trusted in Codex</Trans>;
+		}
 		const agent = AGENT_LABELS[row.server.agent];
 		return t({ message: `Configured for ${agent}` });
 	};

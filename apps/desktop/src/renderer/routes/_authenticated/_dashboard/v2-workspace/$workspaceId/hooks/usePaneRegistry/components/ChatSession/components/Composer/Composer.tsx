@@ -47,7 +47,7 @@ import { useFooterTier } from "./hooks/useFooterTier";
 import { useMcpServerPicker } from "./hooks/useMcpServerPicker";
 import { useQueueActions } from "./hooks/useQueueActions";
 import { useUploadAttachments } from "./hooks/useUploadAttachments";
-import { mcpContextLine, mcpServerOfChip } from "./utils/mcpServerChips";
+import { mcpServerOfChip, withMcpContext } from "./utils/mcpServerChips";
 
 export type ComposerProps = {
 	workspaceId: string;
@@ -288,10 +288,10 @@ export const Composer = memo(function Composer({
 				promptInputRef.current?.appendText(text);
 				return;
 			}
-			const context = mcpContextLine(
+			const message = withMcpContext(
+				text.trim(),
 				mentions.flatMap((chip) => mcpServerOfChip(chip) ?? []),
 			);
-			const message = context ? `${context}\n\n${text.trim()}` : text.trim();
 			const elements = elementsForChips(message, mentions);
 			onSend(
 				[
