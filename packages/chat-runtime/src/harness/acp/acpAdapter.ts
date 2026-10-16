@@ -1682,9 +1682,9 @@ export class AcpAdapter implements HarnessAdapter {
 				},
 			];
 		});
-		const mode = this.configOptions.find(
-			(option) => option.category === "mode",
-		);
+		const mode = this.options.clientApprovalModes
+			? undefined
+			: this.configOptions.find((option) => option.category === "mode");
 		if (mode) this.modeConfigId = mode.id;
 		this.emitSession({
 			configOptions: this.configOptions,
@@ -1717,7 +1717,7 @@ export class AcpAdapter implements HarnessAdapter {
 		const modeId = this.startModeId(startOptions, resumed);
 		for (const [category, value] of [
 			["model", startOptions.modelId],
-			["mode", modeId],
+			["mode", this.options.clientApprovalModes ? undefined : modeId],
 		] as const) {
 			const option = this.configOptions.find(
 				(entry) => entry.category === category,
@@ -1767,7 +1767,10 @@ export class AcpAdapter implements HarnessAdapter {
 			/^allow\b/i.test(option.name),
 		);
 		const title = parsed.data.toolCall?.title ?? "Permission required";
-		const permission = Boolean(allow) && /^allow\b/i.test(title);
+		const asking = [...this.toolCalls.values()].some(
+			(call) => call.status === "running" && call.title === "ask_user_question",
+		);
+		const permission = !asking && Boolean(allow) && /^allow\b/i.test(title);
 		if (
 			this.options.clientApprovalModes &&
 			permission &&

@@ -102,6 +102,15 @@ class FakeAcpAgent {
 		return id;
 	}
 
+	requestPermissionWith(params: Record<string, unknown>, id: number): void {
+		this.deliver({
+			jsonrpc: "2.0",
+			id,
+			method: "session/request_permission",
+			params: { sessionId: "sess-1", ...params },
+		});
+	}
+
 	requestPdevPermission(toolCallId: string, id: number): void {
 		this.deliver({
 			jsonrpc: "2.0",
@@ -1512,6 +1521,87 @@ describe("AcpAdapter on protocol v2", () => {
 			outcome: { outcome: "selected", optionId: "choice-0" },
 		});
 		expect(agent.sent.some((f) => f.method === "session/set_mode")).toBe(false);
+
+		await adapter.dispose();
+	});
+
+	it("keeps its own approval modes over an agent's mode config option", async () => {
+		const agent = new FakeAcpAgent();
+		agent.newSessionConfigOptions = [
+			{
+				configId: "mode",
+				name: "Mode",
+				type: "select",
+				category: "mode",
+				currentValue: "medium",
+				options: [
+					{ value: "low", name: "Thinking: low" },
+					{ value: "medium", name: "Thinking: medium" },
+				],
+			},
+		];
+		const { adapter, events } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ defaultModeId: "bypassPermissions", clientApprovalModes: true },
+		);
+		await flush();
+
+		const withModes = sessionsOf(events).filter((s) => s.availableModes);
+		expect(withModes.at(-1)?.availableModes?.map((mode) => mode.id)).toEqual([
+			"default",
+			"auto",
+			"bypassPermissions",
+		]);
+		expect(
+			sessionsOf(events)
+				.filter((s) => s.modeId)
+				.at(-1)?.modeId,
+		).toBe("bypassPermissions");
+		expect(
+			agent.sent.some((f) => f.method === "session/set_config_option"),
+		).toBe(false);
+
+		await adapter.dispose();
+	});
+
+	it("asks a question with Allow and Deny choices while ask_user_question runs", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ defaultModeId: "bypassPermissions", clientApprovalModes: true },
+		);
+		await flush();
+		adapter.prompt([{ type: "text", text: "run" }]);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "tool_call",
+			toolCallId: "ask",
+			title: "ask_user_question",
+			status: "pending",
+		});
+		agent.requestPermissionWith(
+			{
+				toolCall: { toolCallId: "q-1", title: "Allow network access?" },
+				options: [
+					{ optionId: "choice-0", name: "Allow", kind: "allow_once" },
+					{ optionId: "choice-1", name: "Deny", kind: "allow_once" },
+				],
+			},
+			9201,
+		);
+		await flush();
+
+		expect(
+			itemsOf(events).find((item) => item.id === "approval:q-1"),
+		).toMatchObject({
+			status: "pending",
+			form: { fields: [{ input: "single" }] },
+		});
+		expect(agent.sent.some((f) => f.id === 9201)).toBe(false);
 
 		await adapter.dispose();
 	});
