@@ -1387,8 +1387,8 @@ msgstr "每個窗格一個 CDP 端點"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "我們每週發布一次更新日誌。大多數新進同仁到職頭幾天就會向使用者發布功能。"
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "聊天進行中無法切換到其他提供者。請將此對話分支到新的 {label} 聊天。目前的 {currentLabel} 聊天會保持開啟。"
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "聊天進行中無法切換到其他提供者。請開始新的 {label} 聊天，或將此對話分岔到新聊天中。此 {currentLabel} 聊天會保持開啟。"
 
 msgid "A chat takes its name from the agent."
 msgstr "聊天的名稱來自代理程式。"
@@ -4559,9 +4559,6 @@ msgstr "右鍵選單"
 msgid "Continue"
 msgstr "繼續"
 
-msgid "Continue in a new {label} chat?"
-msgstr "在新的 {label} 聊天中繼續？"
-
 msgid "Continue or fork session"
 msgstr "繼續或分支會話"
 
@@ -5226,6 +5223,9 @@ msgstr "無法還原「{projectName}」"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "無法還原「{workspaceName}」"
+
+msgid "Couldn't restore the files"
+msgstr "無法還原檔案"
 
 msgid "Couldn't save"
 msgstr "儲存失敗"
@@ -7865,14 +7865,14 @@ msgstr "忘記{domain}"
 msgid "Fork args"
 msgstr "分支參數"
 
+msgid "Fork conversation"
+msgstr "分岔對話"
+
 msgid "Fork session"
 msgstr "分支會話"
 
 msgid "Fork session…"
 msgstr "分支會話…"
-
-msgid "Fork to new chat"
-msgstr "分支到新聊天"
 
 msgid "Form controls and field composition"
 msgstr "表單控制項與欄位組合"
@@ -8101,6 +8101,9 @@ msgstr "返回"
 
 msgid "Go back home"
 msgstr "返回首頁"
+
+msgid "Go back to an earlier message and restore the files"
+msgstr "回到先前的訊息並還原檔案"
 
 msgid "Go back to the previous page in history"
 msgstr "返回歷史記錄中的上一頁"
@@ -10934,6 +10937,9 @@ msgstr "無圖示"
 msgid "No icons match."
 msgstr "沒有符合的圖示。"
 
+msgid "No installed agent can be opened as a chat"
+msgstr "沒有已安裝的代理程式可以聊天形式開啟"
+
 msgid "No Internet Connection"
 msgstr "無網路連線"
 
@@ -11729,6 +11735,9 @@ msgstr "在檔案面板中開啟{path}"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "為目前終端開啟多行提示詞編輯器"
+
+msgid "Open a new {label} chat?"
+msgstr "要開啟新的 {label} 聊天嗎？"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "開啟一個窗格，或從中間拖一個到這裡。"
@@ -12586,6 +12595,9 @@ msgstr "選擇資料夾…"
 
 msgid "Pick a low-risk papercut, fix it, and explain how it was verified."
 msgstr "挑一個低風險的小毛病，修好它，並說明是怎麼驗證的。"
+
+msgid "Pick a message. The chat goes back to just before it, and the message returns to the composer."
+msgstr "選擇一則訊息。聊天會回到這則訊息之前，該訊息會回到輸入框。"
 
 msgid "Pick a model"
 msgstr "選擇模型"
@@ -14347,6 +14359,18 @@ msgstr "吊銷API金鑰"
 
 msgid "Revoke key"
 msgstr "吊銷金鑰"
+
+msgid "Rewind"
+msgstr "倒回"
+
+msgid "Rewind chat and files"
+msgstr "倒回聊天和檔案"
+
+msgid "Rewind chat only"
+msgstr "只倒回聊天"
+
+msgid "Rewind to this message?"
+msgstr "要倒回到這則訊息嗎？"
 
 msgid "Rewrote it and published version 2."
 msgstr "已重寫並發布第 2 版。"
@@ -16157,6 +16181,9 @@ msgstr "開始免費試用"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "免費開始。團隊用不夠時再升級。企業方案面向有進階安全與合規需求的組織。"
 
+msgid "Start fresh"
+msgstr "重新開始"
+
 msgid "Start from a template"
 msgstr "從模板開始"
 
@@ -16295,6 +16322,9 @@ msgstr "在此停止Superset，然後從其他裝置刪除。"
 
 msgid "Stop the agent and send this now"
 msgstr "停止代理並立即傳送"
+
+msgid "Stop the agent before you rewind"
+msgstr "倒回前請先停止代理程式"
 
 msgid "Stop watching"
 msgstr "停止關注"
@@ -17430,6 +17460,12 @@ msgstr "主題"
 msgid "Themes and agents"
 msgstr "主題與代理程式"
 
+msgid "There are no messages to rewind to yet."
+msgstr "目前還沒有可以倒回的訊息。"
+
+msgid "There is no file snapshot for that message, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "這則訊息沒有檔案快照，因此沒有倒回任何內容。若只想倒回對話，請選擇「只倒回聊天」。"
+
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "建立工作區時會自動執行這些命令。<0>閱讀文件<1/></0>"
 
@@ -17563,6 +17599,9 @@ msgstr "這個GitHub安裝已連線到另一個Superset組織。請先在那裡�
 msgid "This host"
 msgstr "此主機"
 
+msgid "This host can't restore files, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "此主機無法還原檔案，因此沒有倒回任何內容。若只想倒回對話，請選擇「只倒回聊天」。"
+
 msgid "This host has not reported a version yet."
 msgstr "此主機尚未回報版本。"
 
@@ -17604,6 +17643,9 @@ msgstr "這台Mac"
 
 msgid "This machine"
 msgstr "本機"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
+msgstr "這則訊息及之後的內容會從聊天中移除，該訊息會回到輸入框。同時倒回檔案會復原此後的變更。系統會先保存目前檔案的快照。"
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "這個Microsoft租戶已被{detail}連線。請讓對方先斷開連線。"

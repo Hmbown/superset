@@ -1387,8 +1387,8 @@ msgstr "ペインごとに専用のCDPエンドポイント"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "毎週Changelogを公開しています。ほとんどの新メンバーが入社して数日のうちにユーザーへリリースします。"
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "チャットの途中で別のプロバイダーに切り替えることはできません。代わりに、この会話を新しい {label} チャットにフォークしてください。この {currentLabel} チャットは開いたままです。"
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "チャットの途中で別のプロバイダーに切り替えることはできません。新しい {label} チャットを始めるか、この会話を新しいチャットに分岐してください。この {currentLabel} チャットは開いたままです。"
 
 msgid "A chat takes its name from the agent."
 msgstr "チャットの名前はエージェントから付けられます。"
@@ -4559,9 +4559,6 @@ msgstr "Context Menu"
 msgid "Continue"
 msgstr "続行"
 
-msgid "Continue in a new {label} chat?"
-msgstr "新しい {label} チャットで続けますか？"
-
 msgid "Continue or fork session"
 msgstr "セッションを続行またはフォーク"
 
@@ -5226,6 +5223,9 @@ msgstr "「{projectName}」を復元できませんでした"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "「{workspaceName}」を復元できませんでした"
+
+msgid "Couldn't restore the files"
+msgstr "ファイルを復元できませんでした"
 
 msgid "Couldn't save"
 msgstr "保存できませんでした"
@@ -7865,14 +7865,14 @@ msgstr "{domain}を削除"
 msgid "Fork args"
 msgstr "フォーク引数"
 
+msgid "Fork conversation"
+msgstr "会話を分岐"
+
 msgid "Fork session"
 msgstr "セッションをフォーク"
 
 msgid "Fork session…"
 msgstr "セッションをフォーク…"
-
-msgid "Fork to new chat"
-msgstr "新しいチャットにフォーク"
 
 msgid "Form controls and field composition"
 msgstr "フォームコントロールとフィールドの組み立て"
@@ -8101,6 +8101,9 @@ msgstr "戻る"
 
 msgid "Go back home"
 msgstr "ホームに戻る"
+
+msgid "Go back to an earlier message and restore the files"
+msgstr "以前のメッセージに戻り、ファイルを復元します"
 
 msgid "Go back to the previous page in history"
 msgstr "履歴の前のページに戻る"
@@ -10934,6 +10937,9 @@ msgstr "アイコンなし"
 msgid "No icons match."
 msgstr "一致するアイコンはありません。"
 
+msgid "No installed agent can be opened as a chat"
+msgstr "チャットとして開けるエージェントがインストールされていません"
+
 msgid "No Internet Connection"
 msgstr "インターネット接続がありません"
 
@@ -11729,6 +11735,9 @@ msgstr "{path}をファイルペインで開く"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "アクティブなターミナル用の複数行プロンプト入力を開く"
+
+msgid "Open a new {label} chat?"
+msgstr "新しい {label} チャットを開きますか？"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "ペインを開くか、中央からここへドラッグしてください。"
@@ -12586,6 +12595,9 @@ msgstr "フォルダを選択…"
 
 msgid "Pick a low-risk papercut, fix it, and explain how it was verified."
 msgstr "リスクの低い小さな不具合を選んで修正し、検証方法を説明します。"
+
+msgid "Pick a message. The chat goes back to just before it, and the message returns to the composer."
+msgstr "メッセージを選択してください。チャットはその直前に戻り、メッセージは入力欄に戻ります。"
 
 msgid "Pick a model"
 msgstr "モデルを選択"
@@ -14347,6 +14359,18 @@ msgstr "APIキーを取り消す"
 
 msgid "Revoke key"
 msgstr "キーを取り消す"
+
+msgid "Rewind"
+msgstr "巻き戻し"
+
+msgid "Rewind chat and files"
+msgstr "チャットとファイルを巻き戻す"
+
+msgid "Rewind chat only"
+msgstr "チャットのみ巻き戻す"
+
+msgid "Rewind to this message?"
+msgstr "このメッセージまで巻き戻しますか？"
 
 msgid "Rewrote it and published version 2."
 msgstr "書き直してバージョン2を公開しました。"
@@ -16157,6 +16181,9 @@ msgstr "無料トライアルを開始"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "無料で始められます。チームの規模に合わなくなったらアップグレードを。高度なセキュリティとコンプライアンスが必要な組織にはEnterpriseプランがあります。"
 
+msgid "Start fresh"
+msgstr "新しく始める"
+
 msgid "Start from a template"
 msgstr "テンプレートから開始"
 
@@ -16295,6 +16322,9 @@ msgstr "別のデバイスから削除するには、ここでSupersetを停止�
 
 msgid "Stop the agent and send this now"
 msgstr "エージェントを停止して今すぐ送信"
+
+msgid "Stop the agent before you rewind"
+msgstr "巻き戻す前にエージェントを停止してください"
 
 msgid "Stop watching"
 msgstr "監視を停止"
@@ -17430,6 +17460,12 @@ msgstr "テーマ"
 msgid "Themes and agents"
 msgstr "テーマとエージェント"
 
+msgid "There are no messages to rewind to yet."
+msgstr "巻き戻せるメッセージはまだありません。"
+
+msgid "There is no file snapshot for that message, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "このメッセージのファイルのスナップショットがないため、何も巻き戻していません。会話だけを巻き戻すには「チャットのみ巻き戻す」を選んでください。"
+
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "これらのコマンドはワークスペース作成時に自動的に実行されます。<0>ドキュメントを読む<1/></0>"
 
@@ -17563,6 +17599,9 @@ msgstr "このGitHubインストールは別のSuperset組織にすでに接続�
 msgid "This host"
 msgstr "このホスト"
 
+msgid "This host can't restore files, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "このホストではファイルを復元できないため、何も巻き戻していません。会話だけを巻き戻すには「チャットのみ巻き戻す」を選んでください。"
+
 msgid "This host has not reported a version yet."
 msgstr "このホストはまだバージョンを報告していません。"
 
@@ -17604,6 +17643,9 @@ msgstr "このMac"
 
 msgid "This machine"
 msgstr "このマシン"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
+msgstr "このメッセージとそれ以降の内容はチャットから削除され、メッセージは入力欄に戻ります。ファイルも巻き戻すと、それ以降の変更も元に戻ります。先に現在のファイルのスナップショットが保存されます。"
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "このMicrosoftテナントは{detail}がすでに接続しています。先に接続を解除してもらってください。"

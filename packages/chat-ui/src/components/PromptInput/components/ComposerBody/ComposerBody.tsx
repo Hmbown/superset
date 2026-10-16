@@ -258,6 +258,9 @@ export function ComposerBody({
 			openFileDialog() {
 				fileInputRef.current?.click();
 			},
+			openPanel(next: ComposerPanelContent) {
+				setPanel(next);
+			},
 			focus() {
 				focusAtEnd();
 			},
@@ -832,7 +835,7 @@ export function ComposerBody({
 					placement={placement}
 					onClose={() => setPanel(null)}
 				>
-					{panel.render()}
+					{panel.render(() => setPanel(null))}
 				</ComposerPanel>
 			)}
 			<div

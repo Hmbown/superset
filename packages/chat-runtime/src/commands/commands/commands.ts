@@ -35,11 +35,13 @@ import {
 	queuedPromptInputSchema,
 	respondToApprovalInputSchema,
 	resumeQueueInputSchema,
+	rewindFilesInputSchema,
 	setConfigOptionInputSchema,
 	setModeInputSchema,
 	stopBackgroundTaskInputSchema,
 } from "@superset/chat/protocol";
 import { z } from "zod";
+import type { ChatCheckpoints, RewindFilesResult } from "../../checkpoints";
 import type { ChatDb, ChatSessionRow } from "../../db";
 import type { ChatJournal } from "../../journal";
 import type { ChatSessionStore } from "../../projection";
@@ -62,6 +64,11 @@ export const forkSessionCommandSchema = forkSessionInputSchema.extend({
 	cwd: z.string().min(1),
 });
 export type ForkSessionCommandInput = z.input<typeof forkSessionCommandSchema>;
+
+export const rewindFilesCommandSchema = rewindFilesInputSchema.extend({
+	cwd: z.string().min(1),
+});
+export type RewindFilesCommandInput = z.input<typeof rewindFilesCommandSchema>;
 
 export const listSessionsCommandSchema = listSessionsInputSchema
 	.omit({ workspaceId: true })
@@ -109,6 +116,7 @@ export type ChatCommands = {
 	forkSession(
 		input: ForkSessionCommandInput,
 	): Promise<CreateSessionResult | null>;
+	rewindFiles(input: RewindFilesCommandInput): Promise<RewindFilesResult>;
 	getSession(input: GetSessionInput): GetSessionResult;
 	getQueue(input: GetSessionInput): GetQueueResult;
 	listSessions(input: ListSessionsCommandInput): ChatSessionListEntry[];
@@ -132,6 +140,7 @@ export type CommandsOptions = {
 	db: ChatDb;
 	sessions: ChatSessionStore;
 	live: LiveSessionRegistry;
+	checkpoints?: ChatCheckpoints;
 	dedupe: { run<T>(commandId: string, execute: () => T): T };
 	mintSessionId?: () => string;
 };
@@ -336,6 +345,17 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 				resume: { harnessSessionId: forked },
 				terminalId: live.terminalId,
 			});
+		},
+
+		async rewindFiles(input) {
+			const parsed = rewindFilesCommandSchema.parse(input);
+			if (!options.checkpoints) return { files: "unsupported" };
+			const files = await options.checkpoints.restore({
+				cwd: parsed.cwd,
+				sessionId: parsed.sessionId,
+				itemId: parsed.itemId,
+			});
+			return { files };
 		},
 
 		async closeSession(input) {

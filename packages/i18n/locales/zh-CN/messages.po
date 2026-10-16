@@ -1387,8 +1387,8 @@ msgstr "每个窗格一个 CDP 端点"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "我们每周发布一次更新日志。大多数新员工入职头几天就会向用户发布功能。"
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "聊天进行中无法切换到其他提供方。请将此对话分叉到新的 {label} 聊天。当前的 {currentLabel} 聊天会保持打开。"
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "聊天进行中无法切换到其他提供方。请开始一个新的 {label} 聊天，或将此对话分叉到新聊天中。此 {currentLabel} 聊天会保持打开。"
 
 msgid "A chat takes its name from the agent."
 msgstr "聊天的名称来自智能体。"
@@ -4559,9 +4559,6 @@ msgstr "右键菜单"
 msgid "Continue"
 msgstr "继续"
 
-msgid "Continue in a new {label} chat?"
-msgstr "在新的 {label} 聊天中继续？"
-
 msgid "Continue or fork session"
 msgstr "继续或分叉会话"
 
@@ -5226,6 +5223,9 @@ msgstr "无法恢复“{projectName}”"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "无法恢复“{workspaceName}”"
+
+msgid "Couldn't restore the files"
+msgstr "无法恢复文件"
 
 msgid "Couldn't save"
 msgstr "保存失败"
@@ -7865,14 +7865,14 @@ msgstr "忘记{domain}"
 msgid "Fork args"
 msgstr "分叉参数"
 
+msgid "Fork conversation"
+msgstr "分叉对话"
+
 msgid "Fork session"
 msgstr "分叉会话"
 
 msgid "Fork session…"
 msgstr "分叉会话…"
-
-msgid "Fork to new chat"
-msgstr "分叉到新聊天"
 
 msgid "Form controls and field composition"
 msgstr "表单控件与字段组合"
@@ -8101,6 +8101,9 @@ msgstr "返回"
 
 msgid "Go back home"
 msgstr "返回首页"
+
+msgid "Go back to an earlier message and restore the files"
+msgstr "回到之前的消息并恢复文件"
 
 msgid "Go back to the previous page in history"
 msgstr "返回历史记录中的上一页"
@@ -10934,6 +10937,9 @@ msgstr "无图标"
 msgid "No icons match."
 msgstr "没有匹配的图标。"
 
+msgid "No installed agent can be opened as a chat"
+msgstr "没有已安装的智能体可以作为聊天打开"
+
 msgid "No Internet Connection"
 msgstr "无网络连接"
 
@@ -11729,6 +11735,9 @@ msgstr "在文件面板中打开{path}"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "为当前终端打开多行提示词编辑器"
+
+msgid "Open a new {label} chat?"
+msgstr "打开新的 {label} 聊天？"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "打开一个窗格，或从中间拖一个到这里。"
@@ -12586,6 +12595,9 @@ msgstr "选择文件夹…"
 
 msgid "Pick a low-risk papercut, fix it, and explain how it was verified."
 msgstr "挑一个低风险的小毛病，修好它，并说明是怎么验证的。"
+
+msgid "Pick a message. The chat goes back to just before it, and the message returns to the composer."
+msgstr "选择一条消息。聊天会回到这条消息之前，该消息会回到输入框。"
 
 msgid "Pick a model"
 msgstr "选择模型"
@@ -14347,6 +14359,18 @@ msgstr "吊销API密钥"
 
 msgid "Revoke key"
 msgstr "吊销密钥"
+
+msgid "Rewind"
+msgstr "回退"
+
+msgid "Rewind chat and files"
+msgstr "回退聊天和文件"
+
+msgid "Rewind chat only"
+msgstr "仅回退聊天"
+
+msgid "Rewind to this message?"
+msgstr "回退到这条消息？"
 
 msgid "Rewrote it and published version 2."
 msgstr "已重写并发布版本 2。"
@@ -16157,6 +16181,9 @@ msgstr "开始免费试用"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "免费开始。团队用不够时再升级。企业方案面向有进阶安全与合规需求的组织。"
 
+msgid "Start fresh"
+msgstr "重新开始"
+
 msgid "Start from a template"
 msgstr "从模板开始"
 
@@ -16295,6 +16322,9 @@ msgstr "在此停止Superset，然后从其他设备删除。"
 
 msgid "Stop the agent and send this now"
 msgstr "停止智能体并立即发送"
+
+msgid "Stop the agent before you rewind"
+msgstr "回退前请先停止智能体"
 
 msgid "Stop watching"
 msgstr "停止关注"
@@ -17430,6 +17460,12 @@ msgstr "主题"
 msgid "Themes and agents"
 msgstr "主题与智能体"
 
+msgid "There are no messages to rewind to yet."
+msgstr "还没有可以回退到的消息。"
+
+msgid "There is no file snapshot for that message, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "这条消息没有文件快照，因此没有回退任何内容。若只想回退对话，请选择“仅回退聊天”。"
+
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "创建工作区时会自动运行这些命令。<0>阅读文档<1/></0>"
 
@@ -17563,6 +17599,9 @@ msgstr "这个GitHub安装已连接到另一个Superset组织。请先在那里�
 msgid "This host"
 msgstr "此主机"
 
+msgid "This host can't restore files, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "此主机无法恢复文件，因此没有回退任何内容。若只想回退对话，请选择“仅回退聊天”。"
+
 msgid "This host has not reported a version yet."
 msgstr "此主机尚未报告版本。"
 
@@ -17604,6 +17643,9 @@ msgstr "这台Mac"
 
 msgid "This machine"
 msgstr "本机"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
+msgstr "这条消息及之后的内容会从聊天中移除，该消息会回到输入框。同时回退文件会撤销此后的更改。系统会先保存当前文件的快照。"
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "这个Microsoft租户已被{detail}连接。请让对方先断开连接。"

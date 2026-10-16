@@ -25,7 +25,7 @@ export type ComposerActionContext = {
 
 export type ComposerPanelContent = {
 	title: string;
-	render: () => ReactNode;
+	render: (close: () => void) => ReactNode;
 };
 
 export type ComposerMentionEntry = {
@@ -116,6 +116,7 @@ export type PromptInputDictation = {
 export type PromptInputHandle = {
 	appendText(text: string): void;
 	openFileDialog(): void;
+	openPanel(panel: ComposerPanelContent): void;
 	focus(): void;
 };
 

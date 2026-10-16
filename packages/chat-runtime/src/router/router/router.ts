@@ -12,6 +12,7 @@ import {
 	queuedPromptInputSchema,
 	respondToApprovalInputSchema,
 	resumeQueueInputSchema,
+	rewindFilesInputSchema,
 	setConfigOptionInputSchema,
 	setModeInputSchema,
 	stopBackgroundTaskInputSchema,
@@ -144,6 +145,14 @@ export function createChatRouter(
 				const { workspaceId, ...rest } = input;
 				const cwd = await options.resolveCwd(workspaceId);
 				return guarded(() => runtime.commands.forkSession({ ...rest, cwd }));
+			}),
+
+		rewindFiles: t.procedure
+			.input(rewindFilesInputSchema.extend({ workspaceId: z.string().min(1) }))
+			.mutation(async ({ input }) => {
+				const { workspaceId, ...rest } = input;
+				const cwd = await options.resolveCwd(workspaceId);
+				return guarded(() => runtime.commands.rewindFiles({ ...rest, cwd }));
 			}),
 
 		closeSession: t.procedure

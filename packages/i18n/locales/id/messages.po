@@ -1387,8 +1387,8 @@ msgstr "Satu endpoint CDP per panel"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "Changelog terbit setiap minggu. Kebanyakan karyawan baru sudah merilis ke pengguna dalam beberapa hari pertama."
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "Chat tidak dapat beralih ke penyedia lain di tengah percakapan. Sebagai gantinya, cabangkan percakapan ini ke chat {label} baru. Chat {currentLabel} ini tetap terbuka."
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "Chat tidak bisa beralih ke penyedia lain di tengah jalan. Mulai chat {label} baru, atau cabangkan percakapan ini ke chat baru. Chat {currentLabel} ini tetap terbuka."
 
 msgid "A chat takes its name from the agent."
 msgstr "Chat mengambil namanya dari agen."
@@ -4559,9 +4559,6 @@ msgstr "Menu Konteks"
 msgid "Continue"
 msgstr "Lanjutkan"
 
-msgid "Continue in a new {label} chat?"
-msgstr "Lanjutkan di chat {label} baru?"
-
 msgid "Continue or fork session"
 msgstr "Lanjutkan atau fork sesi"
 
@@ -5226,6 +5223,9 @@ msgstr "Tidak dapat memulihkan \"{projectName}\""
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "Tidak dapat memulihkan \"{workspaceName}\""
+
+msgid "Couldn't restore the files"
+msgstr "Tidak dapat memulihkan file"
 
 msgid "Couldn't save"
 msgstr "Tidak bisa menyimpan"
@@ -7865,14 +7865,14 @@ msgstr "Lupakan {domain}"
 msgid "Fork args"
 msgstr "Argumen fork"
 
+msgid "Fork conversation"
+msgstr "Cabangkan percakapan"
+
 msgid "Fork session"
 msgstr "Fork sesi"
 
 msgid "Fork session…"
 msgstr "Fork sesi…"
-
-msgid "Fork to new chat"
-msgstr "Cabangkan ke chat baru"
 
 msgid "Form controls and field composition"
 msgstr "Kontrol form dan komposisi field"
@@ -8101,6 +8101,9 @@ msgstr "Kembali"
 
 msgid "Go back home"
 msgstr "Kembali ke beranda"
+
+msgid "Go back to an earlier message and restore the files"
+msgstr "Kembali ke pesan sebelumnya dan pulihkan file"
 
 msgid "Go back to the previous page in history"
 msgstr "Kembali ke halaman sebelumnya di riwayat"
@@ -10934,6 +10937,9 @@ msgstr "Tanpa ikon"
 msgid "No icons match."
 msgstr "Tidak ada ikon yang cocok."
 
+msgid "No installed agent can be opened as a chat"
+msgstr "Tidak ada agen terpasang yang bisa dibuka sebagai chat"
+
 msgid "No Internet Connection"
 msgstr "Tidak Ada Koneksi Internet"
 
@@ -11729,6 +11735,9 @@ msgstr "Buka {path} di panel file"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "Buka komposer prompt multibaris untuk terminal aktif"
+
+msgid "Open a new {label} chat?"
+msgstr "Buka chat {label} baru?"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "Buka panel, atau seret panel ke sini dari tengah."
@@ -12586,6 +12595,9 @@ msgstr "Pilih folder…"
 
 msgid "Pick a low-risk papercut, fix it, and explain how it was verified."
 msgstr "Pilih satu gangguan kecil berisiko rendah, perbaiki, dan jelaskan cara verifikasinya."
+
+msgid "Pick a message. The chat goes back to just before it, and the message returns to the composer."
+msgstr "Pilih pesan. Chat kembali ke tepat sebelum pesan itu, dan pesan kembali ke kolom tulis."
 
 msgid "Pick a model"
 msgstr "Pilih sebuah model"
@@ -14347,6 +14359,18 @@ msgstr "Cabut kunci API"
 
 msgid "Revoke key"
 msgstr "Cabut kunci"
+
+msgid "Rewind"
+msgstr "Putar balik"
+
+msgid "Rewind chat and files"
+msgstr "Putar balik chat dan file"
+
+msgid "Rewind chat only"
+msgstr "Putar balik chat saja"
+
+msgid "Rewind to this message?"
+msgstr "Putar balik ke pesan ini?"
 
 msgid "Rewrote it and published version 2."
 msgstr "Sudah ditulis ulang dan versi 2 diterbitkan."
@@ -16157,6 +16181,9 @@ msgstr "Mulai uji coba gratis"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Mulai gratis. Upgrade saat tim Anda membutuhkan lebih. Paket enterprise untuk organisasi dengan kebutuhan keamanan dan kepatuhan tingkat lanjut."
 
+msgid "Start fresh"
+msgstr "Mulai dari awal"
+
 msgid "Start from a template"
 msgstr "Mulai dari templat"
 
@@ -16295,6 +16322,9 @@ msgstr "Hentikan Superset di sini untuk menghapus dari perangkat lain."
 
 msgid "Stop the agent and send this now"
 msgstr "Hentikan agen dan kirim sekarang"
+
+msgid "Stop the agent before you rewind"
+msgstr "Hentikan agen sebelum memutar balik"
 
 msgid "Stop watching"
 msgstr "Berhenti memantau"
@@ -17430,6 +17460,12 @@ msgstr "Tema"
 msgid "Themes and agents"
 msgstr "Tema dan agen"
 
+msgid "There are no messages to rewind to yet."
+msgstr "Belum ada pesan untuk diputar balik."
+
+msgid "There is no file snapshot for that message, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "Tidak ada snapshot file untuk pesan itu, jadi tidak ada yang diputar balik. Pilih \"Putar balik chat saja\" untuk memutar balik percakapannya saja."
+
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Perintah ini berjalan otomatis saat workspace dibuat. <0>Baca dokumentasi kami<1/></0>"
 
@@ -17563,6 +17599,9 @@ msgstr "Instalasi GitHub ini sudah terhubung ke organisasi Superset lain. Putusk
 msgid "This host"
 msgstr "Host ini"
 
+msgid "This host can't restore files, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "Host ini tidak dapat memulihkan file, jadi tidak ada yang diputar balik. Pilih \"Putar balik chat saja\" untuk memutar balik percakapannya saja."
+
 msgid "This host has not reported a version yet."
 msgstr "Host ini belum melaporkan versi."
 
@@ -17604,6 +17643,9 @@ msgstr "Mac ini"
 
 msgid "This machine"
 msgstr "Mesin ini"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
+msgstr "Pesan ini dan semua setelahnya keluar dari chat, dan pesan kembali ke kolom tulis. Memutar balik file juga membatalkan perubahan sejak saat itu. Snapshot file saat ini disimpan lebih dulu."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Tenant Microsoft ini sudah terhubung oleh {detail}. Minta mereka memutuskannya dulu."

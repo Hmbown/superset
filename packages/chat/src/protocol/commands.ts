@@ -95,6 +95,13 @@ export const forkSessionInputSchema = z.object({
 });
 export type ForkSessionInput = z.infer<typeof forkSessionInputSchema>;
 
+/** Puts the working tree back as it was just before `itemId` reached the agent. */
+export const rewindFilesInputSchema = z.object({
+	...commandBaseFields,
+	itemId: z.string().min(1),
+});
+export type RewindFilesInput = z.infer<typeof rewindFilesInputSchema>;
+
 /**
  * Stops the session's harness process. The transcript stays readable; only the
  * live agent goes away, so a later `createSession` with `resume` picks it back

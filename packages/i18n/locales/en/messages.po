@@ -1387,8 +1387,8 @@ msgstr "A CDP endpoint per pane"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "A changelog goes out every week. Most new hires ship to users in their first few days."
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
 
 msgid "A chat takes its name from the agent."
 msgstr "A chat takes its name from the agent."
@@ -4559,9 +4559,6 @@ msgstr "Context Menu"
 msgid "Continue"
 msgstr "Continue"
 
-msgid "Continue in a new {label} chat?"
-msgstr "Continue in a new {label} chat?"
-
 msgid "Continue or fork session"
 msgstr "Continue or fork session"
 
@@ -5226,6 +5223,9 @@ msgstr "Couldn't restore \"{projectName}\""
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "Couldn't restore \"{workspaceName}\""
+
+msgid "Couldn't restore the files"
+msgstr "Couldn't restore the files"
 
 msgid "Couldn't save"
 msgstr "Couldn't save"
@@ -7865,14 +7865,14 @@ msgstr "Forget {domain}"
 msgid "Fork args"
 msgstr "Fork args"
 
+msgid "Fork conversation"
+msgstr "Fork conversation"
+
 msgid "Fork session"
 msgstr "Fork session"
 
 msgid "Fork session…"
 msgstr "Fork session…"
-
-msgid "Fork to new chat"
-msgstr "Fork to new chat"
 
 msgid "Form controls and field composition"
 msgstr "Form controls and field composition"
@@ -8101,6 +8101,9 @@ msgstr "Go back"
 
 msgid "Go back home"
 msgstr "Go back home"
+
+msgid "Go back to an earlier message and restore the files"
+msgstr "Go back to an earlier message and restore the files"
 
 msgid "Go back to the previous page in history"
 msgstr "Go back to the previous page in history"
@@ -10934,6 +10937,9 @@ msgstr "No icon"
 msgid "No icons match."
 msgstr "No icons match."
 
+msgid "No installed agent can be opened as a chat"
+msgstr "No installed agent can be opened as a chat"
+
 msgid "No Internet Connection"
 msgstr "No Internet Connection"
 
@@ -11729,6 +11735,9 @@ msgstr "Open {path} in file pane"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "Open a multiline prompt composer for the active terminal"
+
+msgid "Open a new {label} chat?"
+msgstr "Open a new {label} chat?"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "Open a pane, or drag one here from the center."
@@ -12586,6 +12595,9 @@ msgstr "Pick a folder…"
 
 msgid "Pick a low-risk papercut, fix it, and explain how it was verified."
 msgstr "Pick a low-risk papercut, fix it, and explain how it was verified."
+
+msgid "Pick a message. The chat goes back to just before it, and the message returns to the composer."
+msgstr "Pick a message. The chat goes back to just before it, and the message returns to the composer."
 
 msgid "Pick a model"
 msgstr "Pick a model"
@@ -14347,6 +14359,18 @@ msgstr "Revoke API key"
 
 msgid "Revoke key"
 msgstr "Revoke key"
+
+msgid "Rewind"
+msgstr "Rewind"
+
+msgid "Rewind chat and files"
+msgstr "Rewind chat and files"
+
+msgid "Rewind chat only"
+msgstr "Rewind chat only"
+
+msgid "Rewind to this message?"
+msgstr "Rewind to this message?"
 
 msgid "Rewrote it and published version 2."
 msgstr "Rewrote it and published version 2."
@@ -16157,6 +16181,9 @@ msgstr "Start free trial"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 
+msgid "Start fresh"
+msgstr "Start fresh"
+
 msgid "Start from a template"
 msgstr "Start from a template"
 
@@ -16295,6 +16322,9 @@ msgstr "Stop Superset here to delete from another device."
 
 msgid "Stop the agent and send this now"
 msgstr "Stop the agent and send this now"
+
+msgid "Stop the agent before you rewind"
+msgstr "Stop the agent before you rewind"
 
 msgid "Stop watching"
 msgstr "Stop watching"
@@ -17430,6 +17460,12 @@ msgstr "Themes"
 msgid "Themes and agents"
 msgstr "Themes and agents"
 
+msgid "There are no messages to rewind to yet."
+msgstr "There are no messages to rewind to yet."
+
+msgid "There is no file snapshot for that message, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "There is no file snapshot for that message, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 
@@ -17563,6 +17599,9 @@ msgstr "This GitHub installation is already connected to another Superset organi
 msgid "This host"
 msgstr "This host"
 
+msgid "This host can't restore files, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "This host can't restore files, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+
 msgid "This host has not reported a version yet."
 msgstr "This host has not reported a version yet."
 
@@ -17604,6 +17643,9 @@ msgstr "This Mac"
 
 msgid "This machine"
 msgstr "This machine"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
+msgstr "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."

@@ -1387,8 +1387,8 @@ msgstr "Jeden CDP endpoint na panel"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "Každý týden vydáváme changelog. Většina nových kolegů dodá něco uživatelům už během prvních pár dní."
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "Chat nemůže uprostřed konverzace přejít k jinému poskytovateli. Místo toho tuto konverzaci rozvětvěte do nového chatu {label}. Tento chat {currentLabel} zůstane otevřený."
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "Chat nemůže uprostřed přejít k jinému poskytovateli. Začněte nový chat {label}, nebo tuto konverzaci rozvětvete do nového chatu. Tento chat {currentLabel} zůstane otevřený."
 
 msgid "A chat takes its name from the agent."
 msgstr "Chat přebírá název od agenta."
@@ -4559,9 +4559,6 @@ msgstr "Kontextová nabídka"
 msgid "Continue"
 msgstr "Pokračovat"
 
-msgid "Continue in a new {label} chat?"
-msgstr "Pokračovat v novém chatu {label}?"
-
 msgid "Continue or fork session"
 msgstr "Pokračovat nebo forkovat relaci"
 
@@ -5226,6 +5223,9 @@ msgstr "„{projectName}“ se nepodařilo obnovit"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "„{workspaceName}“ se nepodařilo obnovit"
+
+msgid "Couldn't restore the files"
+msgstr "Soubory se nepodařilo obnovit"
 
 msgid "Couldn't save"
 msgstr "Nepodařilo se uložit"
@@ -7865,14 +7865,14 @@ msgstr "Zapomenout {domain}"
 msgid "Fork args"
 msgstr "Argumenty pro fork"
 
+msgid "Fork conversation"
+msgstr "Rozvětvit konverzaci"
+
 msgid "Fork session"
 msgstr "Forkovat relaci"
 
 msgid "Fork session…"
 msgstr "Forkovat relaci…"
-
-msgid "Fork to new chat"
-msgstr "Rozvětvit do nového chatu"
 
 msgid "Form controls and field composition"
 msgstr "Prvky formuláře a skládání polí"
@@ -8101,6 +8101,9 @@ msgstr "Zpět"
 
 msgid "Go back home"
 msgstr "Zpět na úvod"
+
+msgid "Go back to an earlier message and restore the files"
+msgstr "Vrátit se k dřívější zprávě a obnovit soubory"
 
 msgid "Go back to the previous page in history"
 msgstr "Přejít zpět na předchozí stránku v historii"
@@ -10934,6 +10937,9 @@ msgstr "Bez ikony"
 msgid "No icons match."
 msgstr "Žádné ikony neodpovídají."
 
+msgid "No installed agent can be opened as a chat"
+msgstr "Žádného nainstalovaného agenta nelze otevřít jako chat"
+
 msgid "No Internet Connection"
 msgstr "Bez připojení k internetu"
 
@@ -11729,6 +11735,9 @@ msgstr "Otevřít {path} v panelu souboru"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "Otevřít víceřádkový editor promptu pro aktivní terminál"
+
+msgid "Open a new {label} chat?"
+msgstr "Otevřít nový chat {label}?"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "Otevřete panel nebo sem nějaký přetáhněte ze středu."
@@ -12586,6 +12595,9 @@ msgstr "Vyberte složku…"
 
 msgid "Pick a low-risk papercut, fix it, and explain how it was verified."
 msgstr "Vybere drobnost s nízkým rizikem, opraví ji a vysvětlí, jak to ověřil."
+
+msgid "Pick a message. The chat goes back to just before it, and the message returns to the composer."
+msgstr "Vyberte zprávu. Chat se vrátí těsně před ni a zpráva se vrátí do pole pro psaní."
 
 msgid "Pick a model"
 msgstr "Vyberte model"
@@ -14347,6 +14359,18 @@ msgstr "Zneplatnit API klíč"
 
 msgid "Revoke key"
 msgstr "Zneplatnit klíč"
+
+msgid "Rewind"
+msgstr "Přetočit zpět"
+
+msgid "Rewind chat and files"
+msgstr "Přetočit chat i soubory"
+
+msgid "Rewind chat only"
+msgstr "Přetočit jen chat"
+
+msgid "Rewind to this message?"
+msgstr "Přetočit zpět k této zprávě?"
 
 msgid "Rewrote it and published version 2."
 msgstr "Přepsáno a publikována verze 2."
@@ -16157,6 +16181,9 @@ msgstr "Začít zkušební verzi zdarma"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Začněte zdarma. Až vám to jako týmu přestane stačit, přejděte výš. Pro organizace s náročnými požadavky na bezpečnost a compliance máme tarify Enterprise."
 
+msgid "Start fresh"
+msgstr "Začít znovu"
+
 msgid "Start from a template"
 msgstr "Začít ze šablony"
 
@@ -16295,6 +16322,9 @@ msgstr "Ukončete tady Superset, ať ho smažete z jiného zařízení."
 
 msgid "Stop the agent and send this now"
 msgstr "Zastavit agenta a odeslat hned"
+
+msgid "Stop the agent before you rewind"
+msgstr "Před přetočením zastavte agenta"
 
 msgid "Stop watching"
 msgstr "Přestat sledovat"
@@ -17430,6 +17460,12 @@ msgstr "Motivy"
 msgid "Themes and agents"
 msgstr "Motivy a agenti"
 
+msgid "There are no messages to rewind to yet."
+msgstr "Zatím nejsou žádné zprávy, ke kterým se lze vrátit."
+
+msgid "There is no file snapshot for that message, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "Pro tuto zprávu neexistuje snímek souborů, takže se nic nepřetočilo. Chcete-li přetočit jen konverzaci, zvolte „Přetočit jen chat“."
+
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Tyto příkazy se spustí automaticky při vytvoření pracovního prostoru. <0>Přečtěte si dokumentaci<1/></0>"
 
@@ -17563,6 +17599,9 @@ msgstr "Tato instalace GitHubu je už připojená k jiné organizaci Superset. O
 msgid "This host"
 msgstr "Tento host"
 
+msgid "This host can't restore files, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "Tento hostitel nemůže obnovit soubory, takže se nic nepřetočilo. Chcete-li přetočit jen konverzaci, zvolte „Přetočit jen chat“."
+
 msgid "This host has not reported a version yet."
 msgstr "Tento hostitel zatím nenahlásil verzi."
 
@@ -17604,6 +17643,9 @@ msgstr "Tento Mac"
 
 msgid "This machine"
 msgstr "Tento počítač"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
+msgstr "Tato zpráva a vše po ní z chatu zmizí a zpráva se vrátí do pole pro psaní. Přetočení souborů také vrátí změny provedené od té doby. Nejprve se uloží snímek aktuálních souborů."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Tento tenant Microsoftu už má připojený {detail}. Požádejte je, ať se nejdřív odpojí."

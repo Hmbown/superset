@@ -23,6 +23,7 @@ export type LiveSessionOptions = {
 	journal: ChatJournal;
 	publish: (envelope: Envelope) => void;
 	adapter: HarnessAdapter;
+	checkpoint?: (itemId: string) => Promise<void>;
 	mintId?: () => string;
 	now?: () => number;
 };
@@ -342,6 +343,26 @@ export class LiveSession {
 
 	private deliver(prompt: PendingPrompt): void {
 		this.awaitingTurn = prompt;
+		const checkpoint = this.options.checkpoint;
+		if (!checkpoint) {
+			this.send(prompt);
+			return;
+		}
+		void checkpoint(prompt.item.id)
+			.catch((error: unknown) =>
+				console.warn("[chat-runtime] checkpoint failed", error),
+			)
+			.then(() => {
+				if (this.stopped || this.awaitingTurn !== prompt) return;
+				try {
+					this.send(prompt);
+				} catch (error) {
+					this.fail(error);
+				}
+			});
+	}
+
+	private send(prompt: PendingPrompt): void {
 		try {
 			this.options.adapter.prompt(prompt.content);
 		} catch (error) {

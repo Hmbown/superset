@@ -1387,8 +1387,8 @@ msgstr "Her bölme için bir CDP uç noktası"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "Her hafta bir değişiklik günlüğü yayınlıyoruz. Yeni katılanların çoğu ilk birkaç gününde kullanıcılara bir şey yayınlıyor."
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "Bir sohbet, konuşmanın ortasında başka bir sağlayıcıya geçemez. Bunun yerine bu konuşmayı yeni bir {label} sohbetine çatallayın. Bu {currentLabel} sohbeti açık kalır."
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "Bir sohbet konuşmanın ortasında başka bir sağlayıcıya geçemez. Yeni bir {label} sohbeti başlatın veya bu konuşmayı yeni bir sohbete ayırın. Bu {currentLabel} sohbeti açık kalır."
 
 msgid "A chat takes its name from the agent."
 msgstr "Sohbet adını ajandan alır."
@@ -4559,9 +4559,6 @@ msgstr "Bağlam menüsü"
 msgid "Continue"
 msgstr "Devam et"
 
-msgid "Continue in a new {label} chat?"
-msgstr "Yeni bir {label} sohbetinde devam edilsin mi?"
-
 msgid "Continue or fork session"
 msgstr "Oturumu sürdür veya forkla"
 
@@ -5226,6 +5223,9 @@ msgstr "\"{projectName}\" geri yüklenemedi"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "\"{workspaceName}\" geri yüklenemedi"
+
+msgid "Couldn't restore the files"
+msgstr "Dosyalar geri yüklenemedi"
 
 msgid "Couldn't save"
 msgstr "Kaydedilemedi"
@@ -7865,14 +7865,14 @@ msgstr "{domain} sitesini unut"
 msgid "Fork args"
 msgstr "Fork argümanları"
 
+msgid "Fork conversation"
+msgstr "Konuşmayı ayır"
+
 msgid "Fork session"
 msgstr "Oturumu forkla"
 
 msgid "Fork session…"
 msgstr "Oturumu forkla…"
-
-msgid "Fork to new chat"
-msgstr "Yeni sohbete çatalla"
 
 msgid "Form controls and field composition"
 msgstr "Form denetimleri ve alan kompozisyonu"
@@ -8101,6 +8101,9 @@ msgstr "Geri git"
 
 msgid "Go back home"
 msgstr "Ana sayfaya dön"
+
+msgid "Go back to an earlier message and restore the files"
+msgstr "Önceki bir mesaja dönün ve dosyaları geri yükleyin"
 
 msgid "Go back to the previous page in history"
 msgstr "Geçmişte önceki sayfaya dön"
@@ -10934,6 +10937,9 @@ msgstr "Simge yok"
 msgid "No icons match."
 msgstr "Eşleşen simge yok."
 
+msgid "No installed agent can be opened as a chat"
+msgstr "Yüklü hiçbir ajan sohbet olarak açılamıyor"
+
 msgid "No Internet Connection"
 msgstr "İnternet bağlantısı yok"
 
@@ -11729,6 +11735,9 @@ msgstr "{path} dosyasını dosya bölmesinde aç"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "Etkin terminal için çok satırlı istem düzenleyicisini aç"
+
+msgid "Open a new {label} chat?"
+msgstr "Yeni bir {label} sohbeti açılsın mı?"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "Bir bölme açın veya ortadan buraya sürükleyin."
@@ -12586,6 +12595,9 @@ msgstr "Bir klasör seçin…"
 
 msgid "Pick a low-risk papercut, fix it, and explain how it was verified."
 msgstr "Düşük riskli küçük bir sorun seç, düzelt ve nasıl doğrulandığını anlat."
+
+msgid "Pick a message. The chat goes back to just before it, and the message returns to the composer."
+msgstr "Bir mesaj seçin. Sohbet o mesajın hemen öncesine döner ve mesaj yazma alanına geri gelir."
 
 msgid "Pick a model"
 msgstr "Bir model seçin"
@@ -14347,6 +14359,18 @@ msgstr "API anahtarını iptal et"
 
 msgid "Revoke key"
 msgstr "Anahtarı iptal et"
+
+msgid "Rewind"
+msgstr "Geri sar"
+
+msgid "Rewind chat and files"
+msgstr "Sohbeti ve dosyaları geri sar"
+
+msgid "Rewind chat only"
+msgstr "Yalnızca sohbeti geri sar"
+
+msgid "Rewind to this message?"
+msgstr "Bu mesaja geri sarılsın mı?"
 
 msgid "Rewrote it and published version 2."
 msgstr "Yeniden yazdım ve sürüm 2'yi yayınladım."
@@ -16157,6 +16181,9 @@ msgstr "Ücretsiz denemeyi başlat"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Ücretsiz başlayın. Takımınız büyüdüğünde yükseltin. Gelişmiş güvenlik ve uyumluluk ihtiyaçları olan kuruluşlar için Enterprise planları."
 
+msgid "Start fresh"
+msgstr "Baştan başla"
+
 msgid "Start from a template"
 msgstr "Şablondan başla"
 
@@ -16295,6 +16322,9 @@ msgstr "Başka bir cihazdan silmek için Superset'i burada durdurun."
 
 msgid "Stop the agent and send this now"
 msgstr "Ajanı durdur ve şimdi gönder"
+
+msgid "Stop the agent before you rewind"
+msgstr "Geri sarmadan önce ajanı durdurun"
 
 msgid "Stop watching"
 msgstr "İzlemeyi durdur"
@@ -17430,6 +17460,12 @@ msgstr "Temalar"
 msgid "Themes and agents"
 msgstr "Temalar ve ajanlar"
 
+msgid "There are no messages to rewind to yet."
+msgstr "Henüz geri sarılacak mesaj yok."
+
+msgid "There is no file snapshot for that message, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "Bu mesaj için dosya anlık görüntüsü yok, bu yüzden hiçbir şey geri sarılmadı. Yalnızca konuşmayı geri sarmak için \"Yalnızca sohbeti geri sar\" seçeneğini seçin."
+
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Bu komutlar bir çalışma alanı oluşturulduğunda otomatik olarak çalışır. <0>Belgelerimizi okuyun<1/></0>"
 
@@ -17563,6 +17599,9 @@ msgstr "Bu GitHub kurulumu zaten başka bir Superset kuruluşuna bağlı. Oradak
 msgid "This host"
 msgstr "Bu host"
 
+msgid "This host can't restore files, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "Bu ana makine dosyaları geri yükleyemiyor, bu yüzden hiçbir şey geri sarılmadı. Yalnızca konuşmayı geri sarmak için \"Yalnızca sohbeti geri sar\" seçeneğini seçin."
+
 msgid "This host has not reported a version yet."
 msgstr "Bu ana makine henüz bir sürüm bildirmedi."
 
@@ -17604,6 +17643,9 @@ msgstr "Bu Mac"
 
 msgid "This machine"
 msgstr "Bu bilgisayar"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
+msgstr "Bu mesaj ve sonrasındaki her şey sohbetten çıkar, mesaj yazma alanına geri gelir. Dosyaları da geri sarmak, o zamandan beri yapılan değişiklikleri geri alır. Önce mevcut dosyaların anlık görüntüsü kaydedilir."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Bu Microsoft kiracısı {detail} tarafından zaten bağlanmış. Önce bağlantıyı kesmesini isteyin."

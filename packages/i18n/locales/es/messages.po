@@ -1387,8 +1387,8 @@ msgstr "Un endpoint CDP por panel"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "Cada semana publicamos un registro de cambios. La mayoría de las nuevas incorporaciones lanzan su primer cambio a los usuarios en sus primeros días."
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "Un chat no puede cambiar a otro proveedor a mitad de la conversación. Bifurca esta conversación en un nuevo chat de {label}. Este chat de {currentLabel} seguirá abierto."
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "Un chat no puede cambiar de proveedor a mitad de camino. Inicia un chat nuevo de {label} o bifurca esta conversación en uno. Este chat de {currentLabel} sigue abierto."
 
 msgid "A chat takes its name from the agent."
 msgstr "Un chat toma su nombre del agente."
@@ -4559,9 +4559,6 @@ msgstr "Menú contextual"
 msgid "Continue"
 msgstr "Continuar"
 
-msgid "Continue in a new {label} chat?"
-msgstr "¿Continuar en un nuevo chat de {label}?"
-
 msgid "Continue or fork session"
 msgstr "Continuar o bifurcar la sesión"
 
@@ -5226,6 +5223,9 @@ msgstr "No se pudo restaurar \"{projectName}\""
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "No se pudo restaurar \"{workspaceName}\""
+
+msgid "Couldn't restore the files"
+msgstr "No se pudieron restaurar los archivos"
 
 msgid "Couldn't save"
 msgstr "No se pudo guardar"
@@ -7865,14 +7865,14 @@ msgstr "Olvidar {domain}"
 msgid "Fork args"
 msgstr "Argumentos de fork"
 
+msgid "Fork conversation"
+msgstr "Bifurcar conversación"
+
 msgid "Fork session"
 msgstr "Bifurcar sesión"
 
 msgid "Fork session…"
 msgstr "Bifurcar sesión…"
-
-msgid "Fork to new chat"
-msgstr "Bifurcar a un chat nuevo"
 
 msgid "Form controls and field composition"
 msgstr "Controles de formulario y composición de campos"
@@ -8101,6 +8101,9 @@ msgstr "Volver"
 
 msgid "Go back home"
 msgstr "Volver al inicio"
+
+msgid "Go back to an earlier message and restore the files"
+msgstr "Volver a un mensaje anterior y restaurar los archivos"
 
 msgid "Go back to the previous page in history"
 msgstr "Volver a la página anterior del historial"
@@ -10934,6 +10937,9 @@ msgstr "Sin icono"
 msgid "No icons match."
 msgstr "Ningún icono coincide."
 
+msgid "No installed agent can be opened as a chat"
+msgstr "Ningún agente instalado se puede abrir como chat"
+
 msgid "No Internet Connection"
 msgstr "Sin conexión a internet"
 
@@ -11729,6 +11735,9 @@ msgstr "Abrir {path} en el panel de archivos"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "Abrir un editor de prompts multilínea para la terminal activa"
+
+msgid "Open a new {label} chat?"
+msgstr "¿Abrir un nuevo chat de {label}?"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "Abre un panel o arrastra uno aquí desde el centro."
@@ -12586,6 +12595,9 @@ msgstr "Elige una carpeta…"
 
 msgid "Pick a low-risk papercut, fix it, and explain how it was verified."
 msgstr "Elige una molestia de bajo riesgo, corrígela y explica cómo se verificó."
+
+msgid "Pick a message. The chat goes back to just before it, and the message returns to the composer."
+msgstr "Elige un mensaje. El chat vuelve justo antes de él y el mensaje regresa al cuadro de texto."
 
 msgid "Pick a model"
 msgstr "Elige un modelo"
@@ -14347,6 +14359,18 @@ msgstr "Revocar la clave de API"
 
 msgid "Revoke key"
 msgstr "Revocar la clave"
+
+msgid "Rewind"
+msgstr "Rebobinar"
+
+msgid "Rewind chat and files"
+msgstr "Rebobinar chat y archivos"
+
+msgid "Rewind chat only"
+msgstr "Rebobinar solo el chat"
+
+msgid "Rewind to this message?"
+msgstr "¿Rebobinar hasta este mensaje?"
 
 msgid "Rewrote it and published version 2."
 msgstr "Lo reescribí y publiqué la versión 2."
@@ -16157,6 +16181,9 @@ msgstr "Empezar prueba gratuita"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Empieza gratis. Sube de plan cuando tu equipo se quede corto. Planes Enterprise para organizaciones con necesidades avanzadas de seguridad y cumplimiento."
 
+msgid "Start fresh"
+msgstr "Empezar de nuevo"
+
 msgid "Start from a template"
 msgstr "Empezar desde una plantilla"
 
@@ -16295,6 +16322,9 @@ msgstr "Detén Superset aquí para eliminarlo desde otro dispositivo."
 
 msgid "Stop the agent and send this now"
 msgstr "Detener el agente y enviar ahora"
+
+msgid "Stop the agent before you rewind"
+msgstr "Detén el agente antes de rebobinar"
 
 msgid "Stop watching"
 msgstr "Dejar de observar"
@@ -17430,6 +17460,12 @@ msgstr "Temas"
 msgid "Themes and agents"
 msgstr "Temas y agentes"
 
+msgid "There are no messages to rewind to yet."
+msgstr "Todavía no hay mensajes a los que rebobinar."
+
+msgid "There is no file snapshot for that message, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "No hay una instantánea de archivos para ese mensaje, así que no se rebobinó nada. Elige «Rebobinar solo el chat» para rebobinar solo la conversación."
+
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Estos comandos se ejecutan automáticamente al crear un espacio de trabajo. <0>Consulta la documentación<1/></0>"
 
@@ -17563,6 +17599,9 @@ msgstr "Esta instalación de GitHub ya está conectada a otra organización de S
 msgid "This host"
 msgstr "Este host"
 
+msgid "This host can't restore files, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "Este host no puede restaurar archivos, así que no se rebobinó nada. Elige «Rebobinar solo el chat» para rebobinar solo la conversación."
+
 msgid "This host has not reported a version yet."
 msgstr "Este host aún no ha informado de una versión."
 
@@ -17604,6 +17643,9 @@ msgstr "Este Mac"
 
 msgid "This machine"
 msgstr "Este equipo"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
+msgstr "Este mensaje y todo lo posterior salen del chat, y el mensaje vuelve al cuadro de texto. Rebobinar también los archivos deshace los cambios hechos desde entonces. Antes se guarda una instantánea de los archivos actuales."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Este tenant de Microsoft ya está conectado por {detail}. Pídele que lo desconecte primero."

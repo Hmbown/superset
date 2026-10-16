@@ -1387,8 +1387,8 @@ msgstr "Un endpoint CDP per riquadro"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "Ogni settimana pubblichiamo un changelog. La maggior parte dei nuovi assunti rilascia agli utenti già nei primi giorni."
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "Una chat non può passare a un altro provider a metà conversazione. Crea invece un fork di questa conversazione in una nuova chat {label}. Questa chat {currentLabel} resta aperta."
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "Una chat non può passare a un altro provider a metà. Avvia una nuova chat {label} oppure dirama questa conversazione in una nuova chat. Questa chat {currentLabel} resta aperta."
 
 msgid "A chat takes its name from the agent."
 msgstr "Una chat prende il nome dall'agente."
@@ -4559,9 +4559,6 @@ msgstr "Context Menu"
 msgid "Continue"
 msgstr "Continua"
 
-msgid "Continue in a new {label} chat?"
-msgstr "Continuare in una nuova chat {label}?"
-
 msgid "Continue or fork session"
 msgstr "Continua o biforca la sessione"
 
@@ -5226,6 +5223,9 @@ msgstr "Impossibile ripristinare \"{projectName}\""
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "Impossibile ripristinare \"{workspaceName}\""
+
+msgid "Couldn't restore the files"
+msgstr "Impossibile ripristinare i file"
 
 msgid "Couldn't save"
 msgstr "Impossibile salvare"
@@ -7865,14 +7865,14 @@ msgstr "Dimentica {domain}"
 msgid "Fork args"
 msgstr "Argomenti di fork"
 
+msgid "Fork conversation"
+msgstr "Dirama conversazione"
+
 msgid "Fork session"
 msgstr "Biforca sessione"
 
 msgid "Fork session…"
 msgstr "Biforca sessione…"
-
-msgid "Fork to new chat"
-msgstr "Fork in una nuova chat"
 
 msgid "Form controls and field composition"
 msgstr "Controlli dei form e composizione dei campi"
@@ -8101,6 +8101,9 @@ msgstr "Indietro"
 
 msgid "Go back home"
 msgstr "Torna alla home"
+
+msgid "Go back to an earlier message and restore the files"
+msgstr "Torna a un messaggio precedente e ripristina i file"
 
 msgid "Go back to the previous page in history"
 msgstr "Torna alla pagina precedente nella cronologia"
@@ -10934,6 +10937,9 @@ msgstr "Nessuna icona"
 msgid "No icons match."
 msgstr "Nessuna icona corrisponde."
 
+msgid "No installed agent can be opened as a chat"
+msgstr "Nessun agente installato può essere aperto come chat"
+
 msgid "No Internet Connection"
 msgstr "Nessuna connessione a internet"
 
@@ -11729,6 +11735,9 @@ msgstr "Apri {path} nel pannello dei file"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "Apri un compositore di prompt multiriga per il terminale attivo"
+
+msgid "Open a new {label} chat?"
+msgstr "Aprire una nuova chat {label}?"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "Apri un riquadro o trascinane uno qui dal centro."
@@ -12586,6 +12595,9 @@ msgstr "Scegli una cartella…"
 
 msgid "Pick a low-risk papercut, fix it, and explain how it was verified."
 msgstr "Scegli una piccola seccatura a basso rischio, correggila e spiega come l'hai verificata."
+
+msgid "Pick a message. The chat goes back to just before it, and the message returns to the composer."
+msgstr "Scegli un messaggio. La chat torna a subito prima di esso e il messaggio ritorna nel campo di testo."
 
 msgid "Pick a model"
 msgstr "Scegli un modello"
@@ -14347,6 +14359,18 @@ msgstr "Revoca la chiave API"
 
 msgid "Revoke key"
 msgstr "Revoca la chiave"
+
+msgid "Rewind"
+msgstr "Riavvolgi"
+
+msgid "Rewind chat and files"
+msgstr "Riavvolgi chat e file"
+
+msgid "Rewind chat only"
+msgstr "Riavvolgi solo la chat"
+
+msgid "Rewind to this message?"
+msgstr "Riavvolgere fino a questo messaggio?"
 
 msgid "Rewrote it and published version 2."
 msgstr "Riscritto e pubblicata la versione 2."
@@ -16157,6 +16181,9 @@ msgstr "Inizia la prova gratuita"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Inizia gratis. Passa a un piano superiore quando il tuo team cresce. Piani Enterprise per organizzazioni con esigenze avanzate di sicurezza e conformità."
 
+msgid "Start fresh"
+msgstr "Ricomincia da capo"
+
 msgid "Start from a template"
 msgstr "Parti da un modello"
 
@@ -16295,6 +16322,9 @@ msgstr "Chiudi Superset qui per eliminarlo da un altro dispositivo."
 
 msgid "Stop the agent and send this now"
 msgstr "Ferma l'agente e invia ora"
+
+msgid "Stop the agent before you rewind"
+msgstr "Ferma l'agente prima di riavvolgere"
 
 msgid "Stop watching"
 msgstr "Smetti di osservare"
@@ -17430,6 +17460,12 @@ msgstr "Temi"
 msgid "Themes and agents"
 msgstr "Temi e agenti"
 
+msgid "There are no messages to rewind to yet."
+msgstr "Non ci sono ancora messaggi a cui tornare."
+
+msgid "There is no file snapshot for that message, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "Non c'è uno snapshot dei file per quel messaggio, quindi non è stato riavvolto nulla. Scegli \"Riavvolgi solo la chat\" per riavvolgere solo la conversazione."
+
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Questi comandi vengono eseguiti automaticamente quando viene creato un workspace. <0>Leggi la documentazione<1/></0>"
 
@@ -17563,6 +17599,9 @@ msgstr "Questa installazione GitHub è già collegata a un'altra organizzazione 
 msgid "This host"
 msgstr "Questo host"
 
+msgid "This host can't restore files, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "Questo host non può ripristinare i file, quindi non è stato riavvolto nulla. Scegli \"Riavvolgi solo la chat\" per riavvolgere solo la conversazione."
+
 msgid "This host has not reported a version yet."
 msgstr "Questo host non ha ancora riportato una versione."
 
@@ -17604,6 +17643,9 @@ msgstr "Questo Mac"
 
 msgid "This machine"
 msgstr "Questo computer"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
+msgstr "Questo messaggio e tutto ciò che segue escono dalla chat, e il messaggio torna nel campo di testo. Riavvolgere anche i file annulla le modifiche fatte da allora. Prima viene salvato uno snapshot dei file attuali."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Questo tenant Microsoft è già collegato da {detail}. Chiedi di scollegarlo prima."

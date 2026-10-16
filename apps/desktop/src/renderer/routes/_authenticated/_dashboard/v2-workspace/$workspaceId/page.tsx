@@ -54,6 +54,7 @@ import { useCreatePendingMigratedTerminals } from "./hooks/useCreatePendingMigra
 import { useDefaultContextMenuActions } from "./hooks/useDefaultContextMenuActions";
 import { useDefaultPaneActions } from "./hooks/useDefaultPaneActions";
 import { useDiffPaneTarget } from "./hooks/useDiffPaneTarget";
+import { useIsChatTabActive } from "./hooks/useIsChatTabActive";
 import { usePaneAreaMoveActions } from "./hooks/usePaneAreaMoveActions";
 import { usePaneRegistry } from "./hooks/usePaneRegistry";
 import { renderBrowserTabIcon } from "./hooks/usePaneRegistry/components/BrowserPane";
@@ -205,6 +206,7 @@ function V2WorkspaceContent() {
 	);
 	const { store, isLayoutReady, hasRow } = useV2WorkspacePaneLayout();
 	useClearActivePaneAttention({ store });
+	const isChatTabActive = useIsChatTabActive(store);
 	const rightPaneAreaFlag = useFeatureFlagEnabled(
 		FEATURE_FLAGS.RIGHT_PANE_AREA,
 	);
@@ -255,19 +257,23 @@ function V2WorkspaceContent() {
 		close: closeRightSidebar,
 	});
 	const launcher = useV2TerminalLauncher();
-	const { createNewAgentSession, openAgentChat, focusAgentTerminal } =
-		useAgentSessionLauncher({ workspaceId, store });
+	const {
+		createNewAgentSession,
+		openAgentChat,
+		openNewChat,
+		focusAgentTerminal,
+	} = useAgentSessionLauncher({ workspaceId, store });
 	const { hostUrl } = useWorkspaceClient();
 	const { data: agentConfigs } = useV2AgentConfigs(hostUrl);
 	const acpChat = useAcpChatEnabled();
-	const defaultChatConfigId =
-		acpChat === "enabled"
-			? agentConfigs?.find((config) => acpHarnessForPreset(config.presetId))?.id
-			: undefined;
+	const canOpenChat =
+		acpChat === "enabled" &&
+		(agentConfigs?.some((config) => acpHarnessForPreset(config.presetId)) ??
+			false);
 	const addChatTab = useCallback(() => {
-		if (!defaultChatConfigId) return;
-		void openAgentChat({ configId: defaultChatConfigId, placement: "new-tab" });
-	}, [openAgentChat, defaultChatConfigId]);
+		if (!canOpenChat) return;
+		void openNewChat();
+	}, [openNewChat, canOpenChat]);
 	const {
 		matchedPresets,
 		newTabPresets,
@@ -710,7 +716,7 @@ function V2WorkspaceContent() {
 										/>
 									)}
 									renderBelowTabBar={() =>
-										showPresetsBar ? (
+										showPresetsBar && !isChatTabActive ? (
 											<V2PresetsBar
 												matchedPresets={matchedPresets}
 												executePreset={executePreset}
@@ -723,7 +729,7 @@ function V2WorkspaceContent() {
 										<AddTabMenu
 											onAddTerminal={addTerminalTab}
 											runAfterClose={runAfterClose}
-											onAddChat={defaultChatConfigId ? addChatTab : undefined}
+											onAddChat={canOpenChat ? addChatTab : undefined}
 											onAddBrowser={
 												isRightPaneAreaEnabled ? undefined : addBrowserTab
 											}

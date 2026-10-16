@@ -1387,8 +1387,8 @@ msgstr "Свой CDP-эндпоинт для каждой панели"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "Changelog выходит каждую неделю. Большинство новых сотрудников выпускают свой первый код для пользователей уже в первые дни."
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "Чат нельзя переключить на другого провайдера посреди разговора. Вместо этого создайте ответвление этого разговора в новом чате {label}. Этот чат {currentLabel} останется открытым."
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "Чат нельзя переключить на другого провайдера посреди разговора. Начните новый чат {label} или ответвите этот разговор в новый чат. Этот чат {currentLabel} останется открытым."
 
 msgid "A chat takes its name from the agent."
 msgstr "Чат получает имя от агента."
@@ -4559,9 +4559,6 @@ msgstr "Контекстное меню"
 msgid "Continue"
 msgstr "Продолжить"
 
-msgid "Continue in a new {label} chat?"
-msgstr "Продолжить в новом чате {label}?"
-
 msgid "Continue or fork session"
 msgstr "Продолжить или форкнуть сессию"
 
@@ -5226,6 +5223,9 @@ msgstr "Не удалось восстановить «{projectName}»"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "Не удалось восстановить «{workspaceName}»"
+
+msgid "Couldn't restore the files"
+msgstr "Не удалось восстановить файлы"
 
 msgid "Couldn't save"
 msgstr "Не удалось сохранить"
@@ -7865,14 +7865,14 @@ msgstr "Забыть {domain}"
 msgid "Fork args"
 msgstr "Аргументы форка"
 
+msgid "Fork conversation"
+msgstr "Ответвить разговор"
+
 msgid "Fork session"
 msgstr "Форкнуть сессию"
 
 msgid "Fork session…"
 msgstr "Форкнуть сессию…"
-
-msgid "Fork to new chat"
-msgstr "Ответвить в новый чат"
 
 msgid "Form controls and field composition"
 msgstr "Элементы формы и композиция полей"
@@ -8101,6 +8101,9 @@ msgstr "Назад"
 
 msgid "Go back home"
 msgstr "Вернуться на главную"
+
+msgid "Go back to an earlier message and restore the files"
+msgstr "Вернуться к более раннему сообщению и восстановить файлы"
 
 msgid "Go back to the previous page in history"
 msgstr "Вернуться на предыдущую страницу в истории"
@@ -10934,6 +10937,9 @@ msgstr "Без иконки"
 msgid "No icons match."
 msgstr "Нет подходящих значков."
 
+msgid "No installed agent can be opened as a chat"
+msgstr "Ни один установленный агент нельзя открыть как чат"
+
 msgid "No Internet Connection"
 msgstr "Нет подключения к интернету"
 
@@ -11729,6 +11735,9 @@ msgstr "Открыть {path} в панели файла"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "Открыть многострочный редактор промпта для активного терминала"
+
+msgid "Open a new {label} chat?"
+msgstr "Открыть новый чат {label}?"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "Откройте панель или перетащите её сюда из центра."
@@ -12586,6 +12595,9 @@ msgstr "Выберите папку…"
 
 msgid "Pick a low-risk papercut, fix it, and explain how it was verified."
 msgstr "Выбрать мелкую безопасную недоработку, исправить её и объяснить, как это проверено."
+
+msgid "Pick a message. The chat goes back to just before it, and the message returns to the composer."
+msgstr "Выберите сообщение. Чат вернётся к моменту прямо перед ним, а сообщение вернётся в поле ввода."
 
 msgid "Pick a model"
 msgstr "Выберите модель"
@@ -14347,6 +14359,18 @@ msgstr "Отозвать ключ API"
 
 msgid "Revoke key"
 msgstr "Отозвать ключ"
+
+msgid "Rewind"
+msgstr "Откатить"
+
+msgid "Rewind chat and files"
+msgstr "Откатить чат и файлы"
+
+msgid "Rewind chat only"
+msgstr "Откатить только чат"
+
+msgid "Rewind to this message?"
+msgstr "Откатить к этому сообщению?"
 
 msgid "Rewrote it and published version 2."
 msgstr "Переписал и опубликовал версию 2."
@@ -16157,6 +16181,9 @@ msgstr "Начать бесплатный пробный период"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Начните бесплатно. Переходите на платный, когда команда вырастет. Enterprise — для организаций с повышенными требованиями к безопасности и соответствию."
 
+msgid "Start fresh"
+msgstr "Начать заново"
+
 msgid "Start from a template"
 msgstr "Начать с шаблона"
 
@@ -16295,6 +16322,9 @@ msgstr "Остановите Superset здесь, чтобы удалить с �
 
 msgid "Stop the agent and send this now"
 msgstr "Остановить агента и отправить сейчас"
+
+msgid "Stop the agent before you rewind"
+msgstr "Остановите агента перед откатом"
 
 msgid "Stop watching"
 msgstr "Прекратить отслеживание"
@@ -17430,6 +17460,12 @@ msgstr "Темы"
 msgid "Themes and agents"
 msgstr "Темы и агенты"
 
+msgid "There are no messages to rewind to yet."
+msgstr "Пока нет сообщений, к которым можно откатиться."
+
+msgid "There is no file snapshot for that message, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "Для этого сообщения нет снимка файлов, поэтому ничего не откачено. Чтобы откатить только разговор, выберите «Откатить только чат»."
+
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Эти команды выполняются автоматически при создании рабочей области. <0>Читать документацию<1/></0>"
 
@@ -17563,6 +17599,9 @@ msgstr "Эта установка GitHub уже подключена к друг
 msgid "This host"
 msgstr "Этот хост"
 
+msgid "This host can't restore files, so nothing was rewound. Choose Rewind chat only to rewind just the conversation."
+msgstr "Этот хост не может восстанавливать файлы, поэтому ничего не откачено. Чтобы откатить только разговор, выберите «Откатить только чат»."
+
 msgid "This host has not reported a version yet."
 msgstr "Этот хост ещё не сообщил версию."
 
@@ -17604,6 +17643,9 @@ msgstr "Этот Mac"
 
 msgid "This machine"
 msgstr "Этот компьютер"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
+msgstr "Это сообщение и всё, что после него, будут удалены из чата, а сообщение вернётся в поле ввода. Откат файлов также отменит изменения, сделанные с тех пор. Сначала сохраняется снимок текущих файлов."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Этот тенант Microsoft уже подключён пользователем {detail}. Попросите отключить его."
