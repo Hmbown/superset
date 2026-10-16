@@ -29,6 +29,10 @@ class FakeAcpAgent {
 	silent = false;
 	/** What the agent answers `initialize` with; older agents answer 1. */
 	protocolVersion = 2;
+	/** agentInfo.name reported at initialize, as pdev reports "paradev". */
+	agentName: string | null = null;
+	/** _meta attached to the first scripted agent message chunk. */
+	chunkMeta: Record<string, unknown> | null = null;
 	/** Session capabilities advertised at initialize; both shipped agents fork. */
 	sessionCapabilities: Record<string, unknown> | null = { fork: {} };
 	/** Replay history with v2's whole-message variants instead of chunks. */
@@ -204,6 +208,7 @@ class FakeAcpAgent {
 		queueMicrotask(() => {
 			if (frame.method === "initialize") {
 				this.respond(frame.id as number, {
+					...(this.agentName ? { agentInfo: { name: this.agentName } } : {}),
 					...(this.steeringOutcome
 						? { _meta: { steering: { supported: true } } }
 						: {}),
@@ -305,6 +310,7 @@ class FakeAcpAgent {
 				this.notify("sess-1", {
 					sessionUpdate: "agent_message_chunk",
 					content: { type: "text", text: "Hello" },
+					...(this.chunkMeta ? { _meta: this.chunkMeta } : {}),
 				});
 				this.notify("sess-1", {
 					sessionUpdate: "agent_message_chunk",
@@ -1690,6 +1696,115 @@ describe("AcpAdapter on protocol v2", () => {
 				.filter((item) => item.kind === "agent_message")
 				.at(-1),
 		).toMatchObject({ model: "pdev/Auto" });
+
+		await adapter.dispose();
+	});
+
+	it("shows the model pdev resolved, not the alias, on a live message", async () => {
+		const agent = new FakeAcpAgent();
+		agent.agentName = "paradev";
+		agent.chunkMeta = {
+			piAcp: {
+				model: { provider: "vercel-ai-gateway", modelId: "zai/glm-5.3-flash" },
+			},
+		};
+		agent.newSessionConfigOptions = [
+			{
+				configId: "model",
+				name: "Model",
+				type: "select",
+				category: "model",
+				currentValue: "pdev/auto",
+				options: [{ value: "pdev/auto", name: "pdev/Auto" }],
+			},
+		];
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "hi" }]);
+		await flush();
+
+		expect(
+			itemsOf(events)
+				.filter((item) => item.kind === "agent_message")
+				.at(-1),
+		).toMatchObject({ model: "zai/glm-5.3-flash" });
+
+		await adapter.dispose();
+	});
+
+	it("strips the gateway prefix from the model id pdev reports", async () => {
+		const agent = new FakeAcpAgent();
+		agent.chunkMeta = {
+			piAcp: { model: "vercel-ai-gateway/zai/glm-5.3-flash" },
+		};
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "hi" }]);
+		await flush();
+
+		expect(
+			itemsOf(events)
+				.filter((item) => item.kind === "agent_message")
+				.at(-1),
+		).toMatchObject({ model: "zai/glm-5.3-flash" });
+
+		await adapter.dispose();
+	});
+
+	it("drops the pdev/ prefix from pdev's own model option labels", async () => {
+		const agent = new FakeAcpAgent();
+		agent.agentName = "paradev";
+		agent.newSessionConfigOptions = [
+			{
+				configId: "model",
+				name: "Model",
+				type: "select",
+				category: "model",
+				currentValue: "pdev/auto",
+				options: [{ value: "pdev/auto", name: "pdev/Auto" }],
+			},
+		];
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+
+		const session = sessionsOf(events)
+			.filter((s) => s.configOptions)
+			.at(-1);
+		const model = session?.configOptions?.find(
+			(option) => option.category === "model",
+		);
+		expect(model?.options[0]).toMatchObject({ label: "Auto" });
+
+		// A message the agent did not name a model for falls back to that label.
+		adapter.prompt([{ type: "text", text: "hi" }]);
+		await flush();
+		expect(
+			itemsOf(events)
+				.filter((item) => item.kind === "agent_message")
+				.at(-1),
+		).toMatchObject({ model: "Auto" });
+
+		await adapter.dispose();
+	});
+
+	it("keeps the model a replayed v2 message reports", async () => {
+		const agent = new FakeAcpAgent();
+		agent.replayUpdates = [
+			{
+				sessionUpdate: "agent_message",
+				messageId: "a1",
+				content: [{ type: "text", text: "On it." }],
+				_meta: { piAcp: { model: "zai/glm-5.3-flash" } },
+			},
+		];
+		const { adapter, events } = startAdapter(agent, "sess-1");
+		await flush();
+
+		expect(
+			itemsOf(events)
+				.filter((item) => item.kind === "agent_message")
+				.at(-1),
+		).toMatchObject({ model: "zai/glm-5.3-flash" });
 
 		await adapter.dispose();
 	});

@@ -162,6 +162,32 @@ const SESSION_STATUS_BY_ACP_STATE: Record<string, SessionState["status"]> = {
 	requires_action: "awaiting_input",
 };
 
+const GATEWAY_MODEL_PREFIX = "vercel-ai-gateway/";
+
+// pdev sends `_meta.piAcp.model` as an id or a { provider, modelId } pair.
+function resolvedModelOf(raw: unknown): string | undefined {
+	const meta = (raw as { _meta?: unknown })._meta;
+	const piAcp =
+		typeof meta === "object" &&
+		meta !== null &&
+		typeof (meta as Record<string, unknown>).piAcp === "object"
+			? ((meta as Record<string, unknown>).piAcp as Record<string, unknown>)
+			: undefined;
+	const reported = piAcp?.model;
+	const id =
+		typeof reported === "string"
+			? reported
+			: typeof reported === "object" &&
+					reported !== null &&
+					typeof (reported as Record<string, unknown>).modelId === "string"
+				? (reported as Record<string, unknown>).modelId
+				: undefined;
+	if (typeof id !== "string" || id === "") return undefined;
+	return id.startsWith(GATEWAY_MODEL_PREFIX)
+		? id.slice(GATEWAY_MODEL_PREFIX.length)
+		: id;
+}
+
 export type AcpAttachment = {
 	path: string;
 	mimeType: string;
@@ -383,7 +409,12 @@ export class AcpAdapter implements HarnessAdapter {
 	 */
 	private readonly messages = new Map<
 		string,
-		{ text: string; attachments: ItemAttachment[]; startedAtMs: number }
+		{
+			text: string;
+			attachments: ItemAttachment[];
+			startedAtMs: number;
+			model?: string;
+		}
 	>();
 	private readonly subagents = new Map<
 		string,
@@ -420,6 +451,7 @@ export class AcpAdapter implements HarnessAdapter {
 	private readonly selectionsInFlight = new Set<Promise<void>>();
 	private configOptions: SessionConfigOption[] = [];
 	private replaying = false;
+	private agentName: string | null = null;
 	private unkeyedImageSequence = 0;
 	private queuedPrompts: UserContent[][] = [];
 	private disposed = false;
@@ -751,6 +783,7 @@ export class AcpAdapter implements HarnessAdapter {
 			if (negotiated.success) {
 				this.negotiatedVersion =
 					negotiated.data.protocolVersion ?? this.negotiatedVersion;
+				this.agentName = negotiated.data.agentInfo?.name ?? null;
 				this.agentCapabilities =
 					negotiated.data.capabilities ??
 					negotiated.data.agentCapabilities ??
@@ -1019,6 +1052,7 @@ export class AcpAdapter implements HarnessAdapter {
 					this.contentBlock(raw.content),
 					turnId,
 					this.messageIdOf(outer.data.update),
+					resolvedModelOf(outer.data.update),
 				);
 				return;
 			case "agent_thought_chunk":
@@ -1030,7 +1064,12 @@ export class AcpAdapter implements HarnessAdapter {
 				);
 				return;
 			case "agent_message":
-				this.handleMessage("agent_message", outer.data.update, turnId);
+				this.handleMessage(
+					"agent_message",
+					outer.data.update,
+					turnId,
+					resolvedModelOf(outer.data.update),
+				);
 				return;
 			case "agent_thought":
 				this.handleMessage("reasoning", outer.data.update, turnId);
@@ -1105,6 +1144,7 @@ export class AcpAdapter implements HarnessAdapter {
 		content: AcpContentBlock | undefined,
 		turnId: string,
 		messageId: string | null = null,
+		model: string | undefined = undefined,
 	): void {
 		if (kind === "agent_message" && content && content.type !== "text") {
 			const attachment = this.attachmentOf(
@@ -1113,6 +1153,7 @@ export class AcpAdapter implements HarnessAdapter {
 			);
 			if (!attachment) return;
 			const open = this.openMessage(kind, turnId, messageId);
+			if (model) open.model = model;
 			open.attachments.push(attachment);
 			this.emitItem(this.textItem(open, "open"), turnId);
 			return;
@@ -1120,6 +1161,7 @@ export class AcpAdapter implements HarnessAdapter {
 		const chunk = content?.type === "text" ? (content.text ?? "") : "";
 		if (!chunk) return;
 		const open = this.openMessage(kind, turnId, messageId);
+		if (kind === "agent_message" && model) open.model = model;
 		open.text += chunk;
 		if (kind === "user_message") return;
 		this.emit({
@@ -1160,8 +1202,12 @@ export class AcpAdapter implements HarnessAdapter {
 			attachments: [...(flushed?.attachments ?? [])],
 			turnId,
 			startedAtMs: flushed?.startedAtMs ?? this.nextStartMs(),
-			...(kind === "agent_message" && !this.replaying
-				? { model: this.currentModelLabel() }
+			...(kind === "agent_message"
+				? {
+						model:
+							flushed?.model ??
+							(this.replaying ? undefined : this.currentModelLabel()),
+					}
 				: {}),
 		};
 		this.openText = next;
@@ -1181,10 +1227,12 @@ export class AcpAdapter implements HarnessAdapter {
 		kind: OpenText["kind"],
 		raw: unknown,
 		turnId: string,
+		model: string | undefined = undefined,
 	): void {
 		const parsed = acpMessageSchema.safeParse(raw);
 		if (!parsed.success) return;
 		const open = this.openMessage(kind, turnId, parsed.data.messageId);
+		if (kind === "agent_message" && model) open.model = model;
 		if (parsed.data.content !== undefined) {
 			open.text = messageText(parsed.data.content ?? []);
 			open.attachments =
@@ -1207,6 +1255,7 @@ export class AcpAdapter implements HarnessAdapter {
 				text: open.text,
 				attachments: open.attachments,
 				startedAtMs: open.startedAtMs,
+				...(open.model ? { model: open.model } : {}),
 			});
 		this.emitItem(this.textItem(open, "flushed"), open.turnId);
 	}
@@ -1247,6 +1296,14 @@ export class AcpAdapter implements HarnessAdapter {
 		);
 		return option?.options.find((entry) => entry.id === option.currentValue)
 			?.label;
+	}
+
+	private optionLabel(name: string): string {
+		return this.isPdevAgent() ? name.replace(/^pdev\//, "") : name;
+	}
+
+	private isPdevAgent(): boolean {
+		return this.agentName === "paradev" || this.agentName === "pdev";
 	}
 
 	private handleToolCall(raw: unknown, turnId: string): void {
@@ -1676,12 +1733,14 @@ export class AcpAdapter implements HarnessAdapter {
 			return [
 				{
 					id,
-					label: option.name,
+					label: this.optionLabel(option.name),
 					...(option.category ? { category: option.category } : {}),
 					...(typeof option.currentValue === "string"
 						? { currentValue: option.currentValue }
 						: {}),
-					options: flattenSelectOptions(option.options ?? []),
+					options: flattenSelectOptions(option.options ?? [], (name) =>
+						this.optionLabel(name),
+					),
 				},
 			];
 		});
@@ -2253,13 +2312,14 @@ export function createAcpAdapter(options: AcpAdapterOptions): HarnessAdapter {
 
 function flattenSelectOptions(
 	entries: AcpConfigSelectOption[],
+	labelOf: (name: string) => string,
 ): SessionConfigOption["options"] {
 	return entries.flatMap((entry) => {
 		const leaves =
 			entry.options ?? (entry.value ? [{ ...entry, value: entry.value }] : []);
 		return leaves.map((leaf) => ({
 			id: leaf.value,
-			label: leaf.name,
+			label: labelOf(leaf.name),
 			...(leaf.description ? { description: leaf.description } : {}),
 		}));
 	});
