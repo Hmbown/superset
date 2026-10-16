@@ -3090,9 +3090,6 @@ msgstr "將 {companyName} 引入您的團隊。與我們聯繫以進一步瞭解
 msgid "Bring a link to something you built recently."
 msgstr "請帶上你最近做的作品連結。"
 
-msgid "Bring Any Agent"
-msgstr "帶上任意代理程式"
-
 msgid "Bring over your projects"
 msgstr "遷入專案"
 
@@ -12008,9 +12005,6 @@ msgstr "橙色"
 msgid "Orchestrate Parallel Agents"
 msgstr "編排並行代理程式"
 
-msgid "Orchestrate Them All"
-msgstr "統一編排"
-
 msgid "Orchestrated"
 msgstr "編排"
 
@@ -12237,6 +12231,10 @@ msgstr "並行的代理程式worktree"
 
 msgid "Parallel agents"
 msgstr "平行代理程式"
+
+#. Homepage headline, line 2 of 2, after “The IDE for”. Shown in a grey scanline style.
+msgid "Parallel Agents"
+msgstr "專屬 IDE"
 
 msgid "Parallel agents guide"
 msgstr "並行代理程式指南"
@@ -16959,6 +16957,10 @@ msgstr "主機已回退到先前的版本。"
 
 msgid "The human reads every line before it merges."
 msgstr "合併前人類會逐行閱讀。"
+
+#. Homepage headline, line 1 of 2. Line 2 is “Parallel Agents”; reorder the two lines if the language needs it.
+msgid "The IDE for"
+msgstr "並行代理程式"
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "崗位描述變了。工程師不再是有品味的打字員，而成了有品味的排程員：拆解工作、分派給代理程式叢集、在兩個改了同一個模組的代理程式之間做裁決。"

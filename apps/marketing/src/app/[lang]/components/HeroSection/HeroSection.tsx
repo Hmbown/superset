@@ -34,20 +34,21 @@ export function HeroSection() {
 			// reflowing down once it outgrows the width. Needs the h1's
 			// whitespace-pre-line to render.
 			text: `${t({
-				message: "Bring Any Agent",
+				message: "The IDE for",
+				comment:
+					"Homepage headline, line 1 of 2. Line 2 is “Parallel Agents”; reorder the two lines if the language needs it.",
 			})}\n`,
 		},
 		{
 			id: "emphasis",
 			text: t({
-				message: "Orchestrate Them All",
+				message: "Parallel Agents",
+				comment:
+					"Homepage headline, line 2 of 2, after “The IDE for”. Shown in a grey scanline style.",
 			}),
 			// Beat on the empty second line before the payoff line types
 			delayBefore: 450,
-			// Plain inline (not inline-block): vertical padding on inline boxes
-			// paints the brackets without affecting line height, so the line
-			// can't jump when this segment mounts mid-animation
-			className: "corner-brackets px-[0.2em] py-[0.06em] whitespace-nowrap",
+			className: "scanline-text text-foreground/55",
 		},
 	];
 
@@ -80,7 +81,7 @@ export function HeroSection() {
 							</span>
 						</Link>
 						<div className="space-y-4 sm:space-y-6">
-							<h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] [word-spacing:0.15em] whitespace-pre-line text-foreground relative max-w-6xl mx-auto">
+							<h1 className="font-display text-[clamp(3rem,14vw,12.5rem)] [:is(:lang(ja),:lang(ko),:lang(zh))_&]:text-[clamp(2.5rem,9vw,6.5rem)] font-extrabold uppercase leading-[0.9] tracking-[0.005em] text-balance whitespace-pre-line text-foreground relative max-w-6xl mx-auto">
 								{/* Real headline for screen readers and no-JS crawlers; the
 								    typewriter below is purely visual */}
 								<span className="sr-only">
@@ -99,10 +100,7 @@ export function HeroSection() {
 										segments={headlineSegments}
 										speed={40}
 										delay={600}
-										// Caret matches the corner-bracket box height (1.30em) for the
-										// whole animation; drawn via scale-y so its layout height stays
-										// 0.72em and can't inflate the line box
-										cursorClassName="inline-block ml-0.5 w-3 -mr-3.5 h-[0.72em] origin-bottom scale-y-[1.806] translate-y-[0.268em] bg-brand"
+										cursorClassName="inline-block ml-[0.06em] -mr-[0.18em] w-[0.12em] h-[0.7em] bg-brand"
 									/>
 								</span>
 							</h1>

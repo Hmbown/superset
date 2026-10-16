@@ -3090,9 +3090,6 @@ msgstr "{companyName}をチームに導入しましょう。エンタープラ�
 msgid "Bring a link to something you built recently."
 msgstr "最近作ったもののリンクをお持ちください。"
 
-msgid "Bring Any Agent"
-msgstr "どのエージェントでも"
-
 msgid "Bring over your projects"
 msgstr "プロジェクトを引き継ぐ"
 
@@ -12008,9 +12005,6 @@ msgstr "オレンジ"
 msgid "Orchestrate Parallel Agents"
 msgstr "並列エージェントを指揮"
 
-msgid "Orchestrate Them All"
-msgstr "すべてを指揮する"
-
 msgid "Orchestrated"
 msgstr "オーケストレーション"
 
@@ -12237,6 +12231,10 @@ msgstr "並列のエージェントワークツリー"
 
 msgid "Parallel agents"
 msgstr "並列エージェント"
+
+#. Homepage headline, line 2 of 2, after “The IDE for”. Shown in a grey scanline style.
+msgid "Parallel Agents"
+msgstr "専用IDE"
 
 msgid "Parallel agents guide"
 msgstr "並列エージェントガイド"
@@ -16959,6 +16957,10 @@ msgstr "ホストは以前のビルドに戻りました。"
 
 msgid "The human reads every line before it merges."
 msgstr "人間がマージ前に全行を読む。"
+
+#. Homepage headline, line 1 of 2. Line 2 is “Parallel Agents”; reorder the two lines if the language needs it.
+msgid "The IDE for"
+msgstr "並列エージェント"
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "職務の中身が変わります。エンジニアは審美眼のあるタイピストであることをやめ、審美眼のあるディスパッチャーになります。作業を分解し、フリートに割り振り、同じモジュールに触れたエージェント同士の衝突を裁く役です。"
