@@ -14,8 +14,11 @@ import {
 
 type SupersetConfig = OAuthConfig & { organizationId?: string };
 
-const httpError = (status: number) =>
-	Object.assign(new Error(`Token refresh failed: ${status}`), { status });
+const httpError = (status: number, oauthError?: string) =>
+	Object.assign(new Error(`Token refresh failed: ${status}`), {
+		status,
+		oauthError,
+	});
 
 /**
  * The token endpoint rotates the refresh token on every call and treats a
@@ -304,7 +307,7 @@ describe("refreshStoredAuth", () => {
 	it("drops the token when the server rejects it", async () => {
 		const h = makeHarness(staleAuth());
 		h.deps.refresh = async () => {
-			throw httpError(400);
+			throw httpError(400, "invalid_grant");
 		};
 		try {
 			await expect(refreshStoredAuth(h.deps)).rejects.toBeInstanceOf(
@@ -313,6 +316,26 @@ describe("refreshStoredAuth", () => {
 			expect(h.stored.auth?.refreshToken).toBeUndefined();
 		} finally {
 			h.cleanup();
+		}
+	});
+
+	it("keeps the token when a 400 or 401 is not invalid_grant", async () => {
+		for (const failure of [
+			httpError(400, "invalid_request"),
+			httpError(401, "invalid_client"),
+			httpError(400),
+		]) {
+			const h = makeHarness(staleAuth());
+			h.deps.refresh = async () => {
+				throw failure;
+			};
+			try {
+				await expect(refreshStoredAuth(h.deps)).rejects.toBe(failure);
+				expect(h.stored.auth?.refreshToken).toBe("stale-refresh");
+				expect(h.stored.auth?.refreshStartedAt).toBeNumber();
+			} finally {
+				h.cleanup();
+			}
 		}
 	});
 
@@ -326,7 +349,7 @@ describe("refreshStoredAuth", () => {
 					expiresAt: Date.now() - 1000,
 				},
 			});
-			throw httpError(400);
+			throw httpError(400, "invalid_grant");
 		};
 		try {
 			await expect(refreshStoredAuth(h.deps)).rejects.toBeInstanceOf(

@@ -1,6 +1,7 @@
 import { createHash, randomBytes } from "node:crypto";
 import { createServer, type Server } from "node:http";
 import { CLIError } from "@superset/cli-framework";
+import { readOAuthErrorCode } from "@superset/shared/oauth-refresh";
 import { env } from "./env";
 import { canReachDesktop, openUrl } from "./open-url";
 
@@ -237,7 +238,10 @@ async function exchangeCodeForToken({
 const REFRESH_TIMEOUT_MS = 60_000;
 
 export class TokenRefreshHttpError extends CLIError {
-	constructor(readonly status: number) {
+	constructor(
+		readonly status: number,
+		readonly oauthError: string | undefined,
+	) {
 		super(`Token refresh failed: ${status}`, LOGIN_AGAIN_SUGGESTION);
 	}
 }
@@ -259,7 +263,10 @@ export async function refreshAccessToken(
 	});
 
 	if (!response.ok) {
-		throw new TokenRefreshHttpError(response.status);
+		throw new TokenRefreshHttpError(
+			response.status,
+			await readOAuthErrorCode(response),
+		);
 	}
 
 	const data = (await response.json()) as {

@@ -13,6 +13,7 @@ import { resolveWriteTarget } from "@superset/agent-setup/write-file-if-changed"
 import {
 	isAuthFresh,
 	REFRESH_TIMINGS,
+	readOAuthErrorCode,
 	refreshLockPath,
 	refreshStoredAuth,
 	type StoredOAuth,
@@ -156,6 +157,7 @@ export class ConfigFileSessionTokenSource {
 				new Error(`Token refresh failed: ${response.status}`),
 				{
 					status: response.status,
+					oauthError: await readOAuthErrorCode(response),
 				},
 			);
 		}

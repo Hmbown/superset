@@ -188,15 +188,34 @@ const UNSENT_ERROR_CODES = new Set([
 	"EAI_AGAIN",
 ]);
 
-/** `refresh` reports an HTTP failure as an error with a numeric `status`. */
+/** The OAuth `error` code in a failed token response, when its body has one. */
+export async function readOAuthErrorCode(
+	response: Response,
+): Promise<string | undefined> {
+	try {
+		const body = (await response.json()) as { error?: unknown };
+		return typeof body.error === "string" ? body.error : undefined;
+	} catch {
+		return undefined;
+	}
+}
+
+/**
+ * `refresh` reports an HTTP failure as an error with a numeric `status` and
+ * the response's OAuth `oauthError` code. Only `invalid_grant` proves the
+ * refresh token is dead; any other 400/401 may come from a server fault.
+ */
 function classifyFailure(error: unknown): "unsent" | "rejected" | "unknown" {
-	const { status, code, cause } = error as {
+	const { status, oauthError, code, cause } = error as {
 		status?: unknown;
+		oauthError?: unknown;
 		code?: unknown;
 		cause?: { code?: unknown };
 	};
 	if (typeof status === "number") {
-		if (status === 400 || status === 401) return "rejected";
+		if ((status === 400 || status === 401) && oauthError === "invalid_grant") {
+			return "rejected";
+		}
 		if (status === 429) return "unsent";
 		return "unknown";
 	}
