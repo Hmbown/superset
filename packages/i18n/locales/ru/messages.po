@@ -1167,6 +1167,9 @@ msgstr "{workspaceName}: хост недоступен"
 msgid "{workspaceName}: teardown failed"
 msgstr "{workspaceName}: не удалось выполнить очистку"
 
+msgid "{yearlyTotal} per user, billed yearly"
+msgstr "{yearlyTotal} за пользователя при годовой оплате"
+
 msgid "{years}y ago"
 msgstr "{years} г. назад"
 
@@ -1296,9 +1299,6 @@ msgstr "${balance} кредитов"
 
 msgid "$0"
 msgstr "$0"
-
-msgid "$180 per user, billed yearly"
-msgstr "$180 за пользователя при годовой оплате"
 
 msgid "1"
 msgstr "1"
@@ -13028,8 +13028,8 @@ msgstr "PRO"
 msgid "Pro Features"
 msgstr "Возможности Pro"
 
-msgid "Pro is $20 per user/month billed monthly, or $15 per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro стоит $20 за пользователя в месяц при помесячной оплате или $15 при годовой (скидка 25%). Оплата за активные места в команде."
+msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
+msgstr "Pro стоит {monthlyPrice} за пользователя в месяц при помесячной оплате или {yearlyPrice} при годовой (скидка 25%). Оплата за активные места в команде."
 
 msgid "Process"
 msgstr "Процесс"
@@ -15754,8 +15754,8 @@ msgstr "Регистрация работает. Экран приветстви
 msgid "Simple pricing for every team"
 msgstr "Простые цены для любой команды"
 
-msgid "Simple pricing for every team. Free for individuals, $15/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
-msgstr "Понятные тарифы для любой команды. Бесплатно для одного пользователя, $15/пользователь/месяц для команд, индивидуально для enterprise. Запускайте 100+ параллельных кодинг-агентов с {companyName}."
+msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "Понятные тарифы для любой команды. Бесплатно для одного пользователя, {yearlyPrice}/пользователь/месяц для команд, индивидуально для enterprise. Запускайте 100+ параллельных кодинг-агентов с {companyName}."
 
 msgid "Simulate update: downloading"
 msgstr "Симуляция обновления: загрузка"

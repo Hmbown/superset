@@ -1167,6 +1167,9 @@ msgstr "{workspaceName}: 호스트를 사용할 수 없습니다"
 msgid "{workspaceName}: teardown failed"
 msgstr "{workspaceName}: 정리에 실패했습니다"
 
+msgid "{yearlyTotal} per user, billed yearly"
+msgstr "사용자당 {yearlyTotal}, 연간 결제"
+
 msgid "{years}y ago"
 msgstr "{years}년 전"
 
@@ -1296,9 +1299,6 @@ msgstr "크레딧 ${balance}"
 
 msgid "$0"
 msgstr "$0"
-
-msgid "$180 per user, billed yearly"
-msgstr "사용자당 $180, 연간 결제"
 
 msgid "1"
 msgstr "1"
@@ -13028,8 +13028,8 @@ msgstr "PRO"
 msgid "Pro Features"
 msgstr "Pro 기능"
 
-msgid "Pro is $20 per user/month billed monthly, or $15 per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro는 월간 결제 시 사용자당 월 $20, 연간 결제 시 사용자당 월 $15입니다(25% 할인). 팀의 활성 좌석 수만큼 청구됩니다."
+msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
+msgstr "Pro는 월간 결제 시 사용자당 월 {monthlyPrice}, 연간 결제 시 사용자당 월 {yearlyPrice}입니다(25% 할인). 팀의 활성 좌석 수만큼 청구됩니다."
 
 msgid "Process"
 msgstr "프로세스"
@@ -15754,8 +15754,8 @@ msgstr "가입이 잘 됩니다. 환영 화면이 열리고 콘솔에 오류가 
 msgid "Simple pricing for every team"
 msgstr "모든 팀을 위한 간단한 가격"
 
-msgid "Simple pricing for every team. Free for individuals, $15/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
-msgstr "모든 팀을 위한 간단한 요금제. 개인은 무료, 팀은 사용자당 월 $15, 엔터프라이즈는 맞춤 견적입니다. {companyName}으로 100개 이상의 병렬 코딩 에이전트를 실행하세요."
+msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "모든 팀을 위한 간단한 요금제. 개인은 무료, 팀은 사용자당 월 {yearlyPrice}, 엔터프라이즈는 맞춤 견적입니다. {companyName}으로 100개 이상의 병렬 코딩 에이전트를 실행하세요."
 
 msgid "Simulate update: downloading"
 msgstr "업데이트 시뮬레이션: 다운로드 중"

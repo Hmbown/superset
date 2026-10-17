@@ -1167,6 +1167,9 @@ msgstr "{workspaceName}: host kullanılamıyor"
 msgid "{workspaceName}: teardown failed"
 msgstr "{workspaceName}: kapatma başarısız"
 
+msgid "{yearlyTotal} per user, billed yearly"
+msgstr "Kullanıcı başına {yearlyTotal}, yıllık faturalandırılır"
+
 msgid "{years}y ago"
 msgstr "{years}y önce"
 
@@ -1296,9 +1299,6 @@ msgstr "${balance} kredi"
 
 msgid "$0"
 msgstr "$0"
-
-msgid "$180 per user, billed yearly"
-msgstr "Kullanıcı başına 180 $, yıllık faturalandırılır"
 
 msgid "1"
 msgstr "1"
@@ -13028,8 +13028,8 @@ msgstr "PRO"
 msgid "Pro Features"
 msgstr "Pro özellikler"
 
-msgid "Pro is $20 per user/month billed monthly, or $15 per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro, aylık faturalandırmada kullanıcı başına ayda 20 $, yıllık faturalandırmada kullanıcı başına ayda 15 $ (%25 indirim). Takımınızdaki etkin koltuk başına faturalandırılırsınız."
+msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
+msgstr "Pro, aylık faturalandırmada kullanıcı başına ayda {monthlyPrice}, yıllık faturalandırmada kullanıcı başına ayda {yearlyPrice} (%25 indirim). Takımınızdaki etkin koltuk başına faturalandırılırsınız."
 
 msgid "Process"
 msgstr "Süreç"
@@ -15754,8 +15754,8 @@ msgstr "Kayıt çalışıyor. Hoş geldiniz ekranı yükleniyor ve konsol temiz.
 msgid "Simple pricing for every team"
 msgstr "Her takım için basit fiyatlandırma"
 
-msgid "Simple pricing for every team. Free for individuals, $15/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
-msgstr "Her ekip için basit fiyatlandırma. Bireyler için ücretsiz, ekipler için kullanıcı başına aylık 15 $, kurumsal için özel. {companyName} ile 100+ paralel kodlama ajanı çalıştırın."
+msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "Her ekip için basit fiyatlandırma. Bireyler için ücretsiz, ekipler için kullanıcı başına aylık {yearlyPrice}, kurumsal için özel. {companyName} ile 100+ paralel kodlama ajanı çalıştırın."
 
 msgid "Simulate update: downloading"
 msgstr "Güncellemeyi simüle et: indiriliyor"

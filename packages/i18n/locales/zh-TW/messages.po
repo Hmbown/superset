@@ -1167,6 +1167,9 @@ msgstr "{workspaceName}：主機不可用"
 msgid "{workspaceName}: teardown failed"
 msgstr "{workspaceName}：清理失敗"
 
+msgid "{yearlyTotal} per user, billed yearly"
+msgstr "每使用者{yearlyTotal}，按年計費"
+
 msgid "{years}y ago"
 msgstr "{years}年前"
 
@@ -1296,9 +1299,6 @@ msgstr "${balance}額度"
 
 msgid "$0"
 msgstr "$0"
-
-msgid "$180 per user, billed yearly"
-msgstr "每使用者$180，按年計費"
 
 msgid "1"
 msgstr "1"
@@ -13028,8 +13028,8 @@ msgstr "PRO"
 msgid "Pro Features"
 msgstr "Pro功能"
 
-msgid "Pro is $20 per user/month billed monthly, or $15 per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro按月付費為每使用者每月$20，按年付費為每使用者每月$15（優惠25%）。按團隊中的活躍席位計費。"
+msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
+msgstr "Pro按月付費為每使用者每月{monthlyPrice}，按年付費為每使用者每月{yearlyPrice}（優惠25%）。按團隊中的活躍席位計費。"
 
 msgid "Process"
 msgstr "處理程序"
@@ -15754,8 +15754,8 @@ msgstr "註冊正常。歡迎畫面已載入，主控台沒有錯誤。"
 msgid "Simple pricing for every team"
 msgstr "適合每支團隊的簡單定價"
 
-msgid "Simple pricing for every team. Free for individuals, $15/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
-msgstr "適合各種團隊的簡單定價。個人免費，團隊每位使用者每月 $15，企業可客製。使用 {companyName} 執行 100+ 個平行編碼代理。"
+msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "適合各種團隊的簡單定價。個人免費，團隊每位使用者每月 {yearlyPrice}，企業可客製。使用 {companyName} 執行 100+ 個平行編碼代理。"
 
 msgid "Simulate update: downloading"
 msgstr "模擬更新：下載中"

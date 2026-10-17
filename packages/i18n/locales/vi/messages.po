@@ -1167,6 +1167,9 @@ msgstr "{workspaceName}: host không khả dụng"
 msgid "{workspaceName}: teardown failed"
 msgstr "{workspaceName}: teardown thất bại"
 
+msgid "{yearlyTotal} per user, billed yearly"
+msgstr "{yearlyTotal} mỗi người, thanh toán theo năm"
+
 msgid "{years}y ago"
 msgstr "{years} năm trước"
 
@@ -1296,9 +1299,6 @@ msgstr "${balance} credit"
 
 msgid "$0"
 msgstr "$0"
-
-msgid "$180 per user, billed yearly"
-msgstr "180 USD mỗi người, thanh toán theo năm"
 
 msgid "1"
 msgstr "1"
@@ -13028,8 +13028,8 @@ msgstr "PRO"
 msgid "Pro Features"
 msgstr "Tính năng Pro"
 
-msgid "Pro is $20 per user/month billed monthly, or $15 per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro có giá 20 USD/người/tháng khi trả theo tháng, hoặc 15 USD/người/tháng khi trả theo năm (giảm 25%). Bạn được tính phí theo số ghế đang hoạt động trong nhóm."
+msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
+msgstr "Pro có giá {monthlyPrice}/người/tháng khi trả theo tháng, hoặc {yearlyPrice}/người/tháng khi trả theo năm (giảm 25%). Bạn được tính phí theo số ghế đang hoạt động trong nhóm."
 
 msgid "Process"
 msgstr "Tiến trình"
@@ -15754,8 +15754,8 @@ msgstr "Đăng ký hoạt động tốt. Màn hình chào mừng tải xong và 
 msgid "Simple pricing for every team"
 msgstr "Giá đơn giản cho mọi đội ngũ"
 
-msgid "Simple pricing for every team. Free for individuals, $15/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
-msgstr "Giá đơn giản cho mọi đội nhóm. Miễn phí cho cá nhân, $15/người/tháng cho đội nhóm, tùy chỉnh cho enterprise. Chạy 100+ agent lập trình song song với {companyName}."
+msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "Giá đơn giản cho mọi đội nhóm. Miễn phí cho cá nhân, {yearlyPrice}/người/tháng cho đội nhóm, tùy chỉnh cho enterprise. Chạy 100+ agent lập trình song song với {companyName}."
 
 msgid "Simulate update: downloading"
 msgstr "Mô phỏng cập nhật: đang tải xuống"

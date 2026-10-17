@@ -1167,6 +1167,9 @@ msgstr "{workspaceName}: host is unavailable"
 msgid "{workspaceName}: teardown failed"
 msgstr "{workspaceName}: teardown failed"
 
+msgid "{yearlyTotal} per user, billed yearly"
+msgstr "{yearlyTotal} per user, billed yearly"
+
 msgid "{years}y ago"
 msgstr "{years}y ago"
 
@@ -1296,9 +1299,6 @@ msgstr "${balance} credits"
 
 msgid "$0"
 msgstr "$0"
-
-msgid "$180 per user, billed yearly"
-msgstr "$180 per user, billed yearly"
 
 msgid "1"
 msgstr "1"
@@ -13028,8 +13028,8 @@ msgstr "PRO"
 msgid "Pro Features"
 msgstr "Pro Features"
 
-msgid "Pro is $20 per user/month billed monthly, or $15 per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro is $20 per user/month billed monthly, or $15 per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
+msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
+msgstr "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
 
 msgid "Process"
 msgstr "Process"
@@ -15754,8 +15754,8 @@ msgstr "Signup works. The welcome screen loads and the console is clean."
 msgid "Simple pricing for every team"
 msgstr "Simple pricing for every team"
 
-msgid "Simple pricing for every team. Free for individuals, $15/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
-msgstr "Simple pricing for every team. Free for individuals, $15/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
 
 msgid "Simulate update: downloading"
 msgstr "Simulate update: downloading"

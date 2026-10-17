@@ -1167,6 +1167,9 @@ msgstr "{workspaceName}: Host ist nicht verfügbar"
 msgid "{workspaceName}: teardown failed"
 msgstr "{workspaceName}: Teardown fehlgeschlagen"
 
+msgid "{yearlyTotal} per user, billed yearly"
+msgstr "{yearlyTotal} pro Nutzer, jährlich abgerechnet"
+
 msgid "{years}y ago"
 msgstr "vor {years} J."
 
@@ -1296,9 +1299,6 @@ msgstr "{balance} $ Guthaben"
 
 msgid "$0"
 msgstr "0 $"
-
-msgid "$180 per user, billed yearly"
-msgstr "180 $ pro Nutzer, jährlich abgerechnet"
 
 msgid "1"
 msgstr "1"
@@ -13028,8 +13028,8 @@ msgstr "PRO"
 msgid "Pro Features"
 msgstr "Pro-Funktionen"
 
-msgid "Pro is $20 per user/month billed monthly, or $15 per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro kostet 20 $ pro Nutzer/Monat bei monatlicher Abrechnung oder 15 $ pro Nutzer/Monat bei jährlicher Abrechnung (25 % Rabatt). Abgerechnet wird pro aktivem Platz in deinem Team."
+msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
+msgstr "Pro kostet {monthlyPrice} pro Nutzer/Monat bei monatlicher Abrechnung oder {yearlyPrice} pro Nutzer/Monat bei jährlicher Abrechnung (25 % Rabatt). Abgerechnet wird pro aktivem Platz in deinem Team."
 
 msgid "Process"
 msgstr "Prozess"
@@ -15754,8 +15754,8 @@ msgstr "Die Registrierung funktioniert. Der Willkommensbildschirm lädt und die 
 msgid "Simple pricing for every team"
 msgstr "Einfache Preise für jedes Team"
 
-msgid "Simple pricing for every team. Free for individuals, $15/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
-msgstr "Einfache Preise für jedes Team. Kostenlos für Einzelpersonen, 15 $/Nutzer/Monat für Teams, individuell für Enterprise. Betreibe 100+ parallele Coding-Agents mit {companyName}."
+msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "Einfache Preise für jedes Team. Kostenlos für Einzelpersonen, {yearlyPrice}/Nutzer/Monat für Teams, individuell für Enterprise. Betreibe 100+ parallele Coding-Agents mit {companyName}."
 
 msgid "Simulate update: downloading"
 msgstr "Update simulieren: wird heruntergeladen"

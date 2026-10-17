@@ -1167,6 +1167,9 @@ msgstr "{workspaceName} : hôte indisponible"
 msgid "{workspaceName}: teardown failed"
 msgstr "{workspaceName} : échec du nettoyage"
 
+msgid "{yearlyTotal} per user, billed yearly"
+msgstr "{yearlyTotal} par utilisateur, facturation annuelle"
+
 msgid "{years}y ago"
 msgstr "il y a {years} ans"
 
@@ -1296,9 +1299,6 @@ msgstr "{balance} $ de crédits"
 
 msgid "$0"
 msgstr "$0"
-
-msgid "$180 per user, billed yearly"
-msgstr "180 $ par utilisateur, facturation annuelle"
 
 msgid "1"
 msgstr "1"
@@ -13028,8 +13028,8 @@ msgstr "PRO"
 msgid "Pro Features"
 msgstr "Fonctionnalités Pro"
 
-msgid "Pro is $20 per user/month billed monthly, or $15 per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro coûte 20 $ par utilisateur et par mois en facturation mensuelle, ou 15 $ par utilisateur et par mois en facturation annuelle (25 % de remise). Vous êtes facturé par siège actif dans votre équipe."
+msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
+msgstr "Pro coûte {monthlyPrice} par utilisateur et par mois en facturation mensuelle, ou {yearlyPrice} par utilisateur et par mois en facturation annuelle (25 % de remise). Vous êtes facturé par siège actif dans votre équipe."
 
 msgid "Process"
 msgstr "Processus"
@@ -15754,8 +15754,8 @@ msgstr "L'inscription fonctionne. L'écran d'accueil se charge et la console est
 msgid "Simple pricing for every team"
 msgstr "Une tarification simple pour chaque équipe"
 
-msgid "Simple pricing for every team. Free for individuals, $15/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
-msgstr "Une tarification simple pour toutes les équipes. Gratuit pour les particuliers, 15 $/utilisateur/mois pour les équipes, sur mesure pour les entreprises. Exécutez plus de 100 agents de code en parallèle avec {companyName}."
+msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "Une tarification simple pour toutes les équipes. Gratuit pour les particuliers, {yearlyPrice}/utilisateur/mois pour les équipes, sur mesure pour les entreprises. Exécutez plus de 100 agents de code en parallèle avec {companyName}."
 
 msgid "Simulate update: downloading"
 msgstr "Simuler une mise à jour : téléchargement"

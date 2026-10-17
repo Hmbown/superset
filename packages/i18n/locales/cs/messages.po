@@ -1167,6 +1167,9 @@ msgstr "{workspaceName}: host není dostupný"
 msgid "{workspaceName}: teardown failed"
 msgstr "{workspaceName}: teardown selhal"
 
+msgid "{yearlyTotal} per user, billed yearly"
+msgstr "{yearlyTotal} na uživatele, účtováno ročně"
+
 msgid "{years}y ago"
 msgstr "před {years} r."
 
@@ -1296,9 +1299,6 @@ msgstr "{balance} $ kreditů"
 
 msgid "$0"
 msgstr "0 $"
-
-msgid "$180 per user, billed yearly"
-msgstr "180 $ na uživatele, účtováno ročně"
 
 msgid "1"
 msgstr "1"
@@ -13028,8 +13028,8 @@ msgstr "PRO"
 msgid "Pro Features"
 msgstr "Funkce Pro"
 
-msgid "Pro is $20 per user/month billed monthly, or $15 per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro stojí 20 $ na uživatele a měsíc při měsíční platbě, nebo 15 $ na uživatele a měsíc při roční platbě (sleva 25 %). Účtujeme podle aktivních míst ve vašem týmu."
+msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
+msgstr "Pro stojí {monthlyPrice} na uživatele a měsíc při měsíční platbě, nebo {yearlyPrice} na uživatele a měsíc při roční platbě (sleva 25 %). Účtujeme podle aktivních míst ve vašem týmu."
 
 msgid "Process"
 msgstr "Proces"
@@ -15754,8 +15754,8 @@ msgstr "Registrace funguje. Uvítací obrazovka se načte a konzole je čistá."
 msgid "Simple pricing for every team"
 msgstr "Jednoduchý ceník pro každý tým"
 
-msgid "Simple pricing for every team. Free for individuals, $15/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
-msgstr "Jednoduché ceny pro každý tým. Zdarma pro jednotlivce, 15 $/uživatele/měsíc pro týmy, na míru pro enterprise. Spusťte 100+ paralelních kódovacích agentů s {companyName}."
+msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "Jednoduché ceny pro každý tým. Zdarma pro jednotlivce, {yearlyPrice}/uživatele/měsíc pro týmy, na míru pro enterprise. Spusťte 100+ paralelních kódovacích agentů s {companyName}."
 
 msgid "Simulate update: downloading"
 msgstr "Simulovat aktualizaci: stahování"
