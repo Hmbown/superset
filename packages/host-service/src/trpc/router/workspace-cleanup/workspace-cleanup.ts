@@ -511,7 +511,8 @@ async function runDestroyPhases(
 		worktreeRemoved = isMissingPath(local.worktreePath, {
 			followSymlinks: false,
 		});
-		if (!worktreeRemoved && isMissingPath(project.repoPath)) {
+		const repoMissing = isMissingPath(project.repoPath);
+		if (repoMissing && !worktreeRemoved) {
 			// The project repo was moved or deleted outside Superset: there is
 			// no repository to run `git worktree remove` in, and the worktree's
 			// gitdir pointer is already dead, so no retry can ever succeed.
@@ -545,7 +546,7 @@ async function runDestroyPhases(
 					});
 				}
 			}
-		} else {
+		} else if (!repoMissing) {
 			try {
 				repoGitEnv = await cleanupGitOps.resolveGitEnv(ctx, project.repoPath);
 			} catch (err) {
