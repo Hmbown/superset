@@ -13,6 +13,7 @@ import { resolveWriteTarget } from "@superset/agent-setup/write-file-if-changed"
 import {
 	isAuthFresh,
 	REFRESH_TIMINGS,
+	type RefreshTimings,
 	readOAuthErrorCode,
 	refreshLockPath,
 	refreshStoredAuth,
@@ -38,6 +39,9 @@ type OAuthRefreshResponse = {
 export type ConfigFileSessionTokenSourceOptions = {
 	configPath: string;
 	apiUrl: string;
+	/** Every API call asks for a token, so a failed refresh waits this long before the same token is sent again. */
+	refreshRetryDelayMs?: number;
+	timings?: Partial<RefreshTimings>;
 };
 
 async function readConfig(configPath: string): Promise<SupersetAuthConfig> {
@@ -84,20 +88,30 @@ function loginAgainError(): Error {
 }
 
 const REFRESH_TIMEOUT_MS = 60_000;
+const REFRESH_RETRY_DELAY_MS = 30_000;
 
 export class ConfigFileSessionTokenSource {
 	private readonly configPath: string;
 	private readonly apiUrl: string;
+	private readonly refreshRetryDelayMs: number;
+	private readonly timings: RefreshTimings;
 	private refreshPromise: Promise<string> | null = null;
 	private refreshNeeded = false;
+	private rejectedAccessToken: string | null = null;
+	private failedRefreshToken: string | undefined;
+	private nextRefreshAt = 0;
 
 	constructor(options: ConfigFileSessionTokenSourceOptions) {
 		this.configPath = options.configPath;
 		this.apiUrl = options.apiUrl;
+		this.refreshRetryDelayMs =
+			options.refreshRetryDelayMs ?? REFRESH_RETRY_DELAY_MS;
+		this.timings = { ...REFRESH_TIMINGS, ...options.timings };
 	}
 
 	invalidateCache(): void {
 		this.refreshNeeded = true;
+		this.rejectedAccessToken = null;
 	}
 
 	async getSessionToken(): Promise<string> {
@@ -112,14 +126,28 @@ export class ConfigFileSessionTokenSource {
 
 		if (this.refreshPromise) return this.refreshPromise;
 
-		const rejectedAccessToken = auth.accessToken;
+		const now = Date.now();
+		this.rejectedAccessToken ??= auth.accessToken;
+		const rejectedAccessToken = this.rejectedAccessToken;
+		if (auth.accessToken !== rejectedAccessToken && isAuthFresh(auth, now)) {
+			this.refreshNeeded = false;
+			return auth.accessToken;
+		}
+		if (
+			now < this.nextRefreshAt &&
+			auth.refreshToken === this.failedRefreshToken
+		) {
+			throw loginAgainError();
+		}
+
+		const sentRefreshToken = auth.refreshToken;
 		this.refreshPromise = refreshStoredAuth<SupersetAuthConfig>(
 			{
 				refresh: (refreshToken) => this.refreshAccessToken(refreshToken),
 				readConfig: () => readConfig(this.configPath),
 				writeConfig: (next) => writeConfig(this.configPath, next),
 				lockPath: refreshLockPath(this.configPath),
-				...REFRESH_TIMINGS,
+				...this.timings,
 				now: () => Date.now(),
 				sleep: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
 			},
@@ -128,9 +156,12 @@ export class ConfigFileSessionTokenSource {
 		)
 			.then((refreshed) => {
 				this.refreshNeeded = false;
+				this.rejectedAccessToken = null;
 				return refreshed.apiKey?.trim() || refreshed.auth.accessToken;
 			})
 			.catch(() => {
+				this.failedRefreshToken = sentRefreshToken;
+				this.nextRefreshAt = Date.now() + this.refreshRetryDelayMs;
 				throw loginAgainError();
 			})
 			.finally(() => {

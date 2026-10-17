@@ -72,6 +72,8 @@ export const REFRESH_TIMINGS = {
 	rejectedSettleMs: 3_000,
 } as const;
 
+export type RefreshTimings = Record<keyof typeof REFRESH_TIMINGS, number>;
+
 export class RefreshInProgressError extends Error {
 	constructor() {
 		super("session refresh still in progress elsewhere");
