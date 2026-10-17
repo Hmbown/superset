@@ -11,7 +11,7 @@ import { DownloadButton } from "../DownloadButton";
 import { WaitlistModal } from "../WaitlistModal";
 import { BoidsBackground } from "./components/BoidsBackground";
 import { ProductDemo } from "./components/ProductDemo";
-import { TypewriterText } from "./components/TypewriterText";
+import { RiseHeadline } from "./components/RiseHeadline";
 import { useHeadlineVariant } from "./hooks/useHeadlineVariant";
 import type { HeadlineVariant } from "./utils/subscribeToHeadlineVariant";
 
@@ -56,8 +56,7 @@ export function HeroSection() {
 			}),
 			t({
 				message: "Parallel Agents",
-				comment:
-					"Homepage headline, line 2 of 2, after “The IDE for”. Shown in a scanline style.",
+				comment: "Homepage headline, line 2 of 2, after “The IDE for”.",
 			}),
 		],
 		army: [
@@ -68,32 +67,11 @@ export function HeroSection() {
 			}),
 			t({
 				message: "Coding Agents",
-				comment:
-					"Homepage headline, line 2 of 2, after “Run an Army of”. Shown in a scanline style.",
+				comment: "Homepage headline, line 2 of 2, after “Run an Army of”.",
 			}),
 		],
 	};
 	const [lead, emphasis] = headlines[assignment?.variant ?? "control"];
-
-	const headlineSegments = [
-		{
-			id: "lead",
-			// Typed newline, not a space: the headline is always two lines, and
-			// the break arrives as part of the animation (the caret drops to the
-			// second line) instead of the second segment starting on line one and
-			// reflowing down once it outgrows the width. Needs the h1's
-			// whitespace-pre-line to render.
-			text: `${lead}\n`,
-		},
-		{
-			id: "emphasis",
-			text: emphasis,
-			// Beat on the empty second line before the payoff line types
-			delayBefore: 450,
-			className:
-				"scanline-text text-foreground drop-shadow-[0_0_14px_color-mix(in_srgb,var(--foreground)_22%,transparent)]",
-		},
-	];
 
 	return (
 		<div>
@@ -126,32 +104,19 @@ export function HeroSection() {
 						<div className="space-y-4 sm:space-y-6">
 							<h1
 								ref={headlineRef}
-								className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] [word-spacing:0.15em] whitespace-pre-line text-foreground relative max-w-6xl mx-auto"
+								className="text-[min(2.25rem,8.6vw)] sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] [word-spacing:0.15em] whitespace-pre-line text-foreground relative max-w-6xl mx-auto"
 							>
-								{/* Real headline for screen readers and no-JS crawlers; the
-								    typewriter below is purely visual */}
-								<span className="sr-only">
-									{headlineSegments.map((segment) => segment.text).join("")}
-								</span>
-								{/* Sizer must mirror the visible segments' styling so wrapping matches */}
-								<span className="invisible" aria-hidden="true">
-									{headlineSegments.map((segment) => (
-										<span key={segment.id} className={segment.className}>
-											{segment.text}
-										</span>
-									))}
-								</span>
-								<span className="absolute inset-0" aria-hidden="true">
-									{assignment && (
-										<TypewriterText
-											key={assignment.variant}
-											segments={headlineSegments}
-											speed={40}
-											delay={600}
-											cursorClassName="inline-block ml-0.5 w-3 -mr-3.5 h-[0.72em] bg-brand"
-										/>
-									)}
-								</span>
+								{assignment ? (
+									<RiseHeadline
+										key={assignment.variant}
+										lead={lead}
+										emphasis={emphasis}
+									/>
+								) : (
+									<span className="invisible" aria-hidden="true">
+										<RiseHeadline lead={lead} emphasis={emphasis} />
+									</span>
+								)}
 							</h1>
 							<p
 								id="hero-subheadline"

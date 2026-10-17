@@ -9,7 +9,7 @@ import {
 } from "../../utils/subscribeToHeadlineVariant";
 
 // PostHog loads lazily after the page, so flags can take a moment. Past this
-// wait the headline types control copy and the visitor is not enrolled.
+// wait the headline shows control copy and the visitor is not enrolled.
 const FLAG_WAIT_MS = 1500;
 
 const CONTROL: HeadlineAssignment = {
@@ -26,7 +26,7 @@ function isProductionHost(): boolean {
 	);
 }
 
-/** Null until the headline copy is decided; the typewriter waits for it. */
+/** Null until the headline copy is decided; the headline waits for it. */
 export function useHeadlineVariant(): HeadlineAssignment | null {
 	const [assignment, setAssignment] = useState<HeadlineAssignment | null>(null);
 

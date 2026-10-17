@@ -908,16 +908,53 @@ describe("workspaceCleanup.destroy cleanup ordering", () => {
 	});
 
 	test("branch delete failure is reported as a warning after the local commit point", async () => {
+		const repo = mkdtempSync(join(tmpdir(), "workspace-delete-repo-"));
+		try {
+			const ctx = makeCtx({
+				workspace: {
+					id: "ws-1",
+					projectId: "p-1",
+					worktreePath: "/missing/wt",
+					branch: "feature",
+				},
+				project: { id: "p-1", repoPath: repo },
+				deleteBranch: async () => {
+					throw new Error("branch delete boom");
+				},
+			});
+			const caller = workspaceCleanupRouter.createCaller(ctx);
+
+			const result = await caller.destroy({
+				workspaceId: "ws-1",
+				deleteBranch: true,
+				force: true,
+			});
+			expect(result.success).toBe(true);
+			expect(result.worktreeRemoved).toBe(true);
+			expect(result.branchDeleted).toBe(false);
+			expect(result.warnings).toContain(
+				"Failed to delete branch feature: branch delete boom",
+			);
+		} finally {
+			rmSync(repo, { recursive: true, force: true });
+		}
+	});
+
+	test("worktree and project repo both gone: destroy succeeds without running git", async () => {
 		const ctx = makeCtx({
 			workspace: {
 				id: "ws-1",
 				projectId: "p-1",
-				worktreePath: "/missing/wt",
+				worktreePath: "/gone/wt",
 				branch: "feature",
 			},
-			project: { id: "p-1", repoPath: "/repo" },
+			project: { id: "p-1", repoPath: "/gone/repo" },
+			removeWorktree: () =>
+				Promise.reject(
+					new Error("Cannot use simple-git on a directory that does not exist"),
+				),
 			deleteBranch: async () => {
-				throw new Error("branch delete boom");
+				throw new Error("branch delete must not run");
 			},
 		});
 		const caller = workspaceCleanupRouter.createCaller(ctx);
@@ -930,9 +967,7 @@ describe("workspaceCleanup.destroy cleanup ordering", () => {
 		expect(result.success).toBe(true);
 		expect(result.worktreeRemoved).toBe(true);
 		expect(result.branchDeleted).toBe(false);
-		expect(result.warnings).toContain(
-			"Failed to delete branch feature: branch delete boom",
-		);
+		expect(result.warnings).toEqual([]);
 	});
 
 	test("worktree-removal timeout carries its phase into the reported error", async () => {
@@ -943,30 +978,35 @@ describe("workspaceCleanup.destroy cleanup ordering", () => {
 		const poolTimeout = new WorkerTaskError(
 			'[host-worker] Task "git/removeWorktree" timed out after 120000ms in phase "worktree-remove"',
 		);
-		const ctx = makeCtx({
-			workspace: {
-				id: "ws-1",
-				projectId: "p-1",
-				worktreePath: "/branch/wt",
-				branch: "feature",
-			},
-			project: { id: "p-1", repoPath: "/repo" },
-			removeWorktree: () => Promise.reject(poolTimeout),
-		});
-		const caller = workspaceCleanupRouter.createCaller(ctx);
+		const repo = mkdtempSync(join(tmpdir(), "workspace-delete-repo-"));
+		try {
+			const ctx = makeCtx({
+				workspace: {
+					id: "ws-1",
+					projectId: "p-1",
+					worktreePath: "/branch/wt",
+					branch: "feature",
+				},
+				project: { id: "p-1", repoPath: repo },
+				removeWorktree: () => Promise.reject(poolTimeout),
+			});
+			const caller = workspaceCleanupRouter.createCaller(ctx);
 
-		const error = await caller
-			.destroy({ workspaceId: "ws-1", deleteBranch: false, force: true })
-			.then(() => null)
-			.catch((err: Error) => err);
+			const error = await caller
+				.destroy({ workspaceId: "ws-1", deleteBranch: false, force: true })
+				.then(() => null)
+				.catch((err: Error) => err);
 
-		// Built from the pool error rather than restated, so the two halves
-		// cannot drift; the pool's exact wording is pinned by the phase tests
-		// in src/workers/host-worker-pool.test.ts.
-		expect(error?.message).toBe(
-			`Failed to verify worktree removal at /branch/wt: ${poolTimeout.message}`,
-		);
-		expect(error?.message).toContain('in phase "worktree-remove"');
+			// Built from the pool error rather than restated, so the two halves
+			// cannot drift; the pool's exact wording is pinned by the phase tests
+			// in src/workers/host-worker-pool.test.ts.
+			expect(error?.message).toBe(
+				`Failed to verify worktree removal at /branch/wt: ${poolTimeout.message}`,
+			);
+			expect(error?.message).toContain('in phase "worktree-remove"');
+		} finally {
+			rmSync(repo, { recursive: true, force: true });
+		}
 	});
 
 	test("preflight pool timeout fails closed instead of skipping the dirty check", async () => {
