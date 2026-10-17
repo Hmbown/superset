@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { oauthProvider } from "@better-auth/oauth-provider";
+import { REFRESH_TIMINGS } from "@superset/shared/oauth-refresh";
 import { betterAuth } from "better-auth";
 import { memoryAdapter } from "better-auth/adapters/memory";
 import { jwt } from "better-auth/plugins";
@@ -15,6 +16,7 @@ import { jwt } from "better-auth/plugins";
 const repoRoot = join(import.meta.dir, "../../..");
 const API_URL = "http://localhost:3999";
 const CLIENT_ID = "superset-cli";
+const GRACE_MS = 10 * 60 * 1000;
 
 type Row = Record<string, unknown>;
 
@@ -127,10 +129,14 @@ describe("@better-auth/oauth-provider refresh reuse grace patch", () => {
 		await t.seedRefreshToken("machine-b");
 
 		expect((await t.refresh("machine-a")).status).toBe(200);
-		t.backdateRevocations(10 * 60 * 1000 + 1);
+		t.backdateRevocations(GRACE_MS + 1);
 
 		expect((await t.refresh("machine-a")).status).toBe(400);
 		expect(t.liveTokens()).toBe(0);
 		expect((await t.refresh("machine-b")).status).toBe(400);
+	});
+
+	test("clients stop retrying an unknown refresh before the grace window ends", () => {
+		expect(REFRESH_TIMINGS.retryWindowMs).toBeLessThan(GRACE_MS);
 	});
 });

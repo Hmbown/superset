@@ -494,9 +494,10 @@ hook's read and the provider's read, another request can rotate the token.
 **What it changes** (`dist/index.mjs`, `handleRefreshTokenGrant`): when the
 token was revoked less than 10 minutes ago, the request still fails with
 `invalid_grant` but the token family is kept. Reuse after 10 minutes still
-deletes it. The CLI retries a refresh with an unknown outcome only within 5
-minutes (`retryWindowMs` in `packages/cli/src/lib/oauth-refresh.ts`), so keep
-that below this window.
+deletes it. The CLI and the host-service retry a refresh with an unknown
+outcome only within 5 minutes (`REFRESH_TIMINGS.retryWindowMs` in
+`packages/shared/src/oauth-refresh.ts`), so keep that below this window. The
+guard test checks it.
 
 **Guard test:** `packages/auth/src/oauth-provider-refresh-grace-patch.test.ts`.
 It runs the installed provider against an in-memory database.
