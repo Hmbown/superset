@@ -6,6 +6,7 @@ import {
 	getItemBodiesInputSchema,
 	getItemsInputSchema,
 	getOutlineInputSchema,
+	getRewindSupportInputSchema,
 	getSessionInputSchema,
 	listSessionsInputSchema,
 	promptInputSchema,
@@ -164,6 +165,18 @@ export function createChatRouter(
 				const { workspaceId, ...rest } = input;
 				const cwd = await options.resolveCwd(workspaceId);
 				return guarded(() => runtime.commands.rewindSession({ ...rest, cwd }));
+			}),
+
+		getRewindSupport: t.procedure
+			.input(
+				getRewindSupportInputSchema.extend({ workspaceId: z.string().min(1) }),
+			)
+			.query(async ({ input }) => {
+				const cwd = await options.resolveCwd(input.workspaceId);
+				return runtime.commands.getRewindSupport({
+					sessionId: input.sessionId,
+					cwd,
+				});
 			}),
 
 		closeSession: t.procedure

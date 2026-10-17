@@ -75,6 +75,7 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		minVersion: UNGATED_VERSION,
 		fullAccessModeId: "bypassPermissions",
 		clientApprovalModes: true,
+		forkAtMessage: true,
 		note: "Ungated: every release, from 0.1.0 on, ships `pdev acp`, so there is no older build to reject and no upgrade command. `pdev acp` is its own ACP server, so no adapter. The desktop bundles it and needs no env: pdev signs in to the router through the superset CLI on PATH.",
 	},
 };

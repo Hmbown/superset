@@ -46,7 +46,11 @@ import {
 	stopBackgroundTaskInputSchema,
 } from "@superset/chat/protocol";
 import { z } from "zod";
-import type { ChatCheckpoints, RewindFilesResult } from "../../checkpoints";
+import type {
+	ChatCheckpoints,
+	RewindFilesResult,
+	RewindSupport,
+} from "../../checkpoints";
 import type { ChatDb, ChatSessionRow } from "../../db";
 import type { ChatJournal } from "../../journal";
 import type { ChatSessionStore } from "../../projection";
@@ -176,6 +180,10 @@ export type ChatCommands = {
 	): Promise<CreateSessionResult | null>;
 	rewindFiles(input: RewindFilesCommandInput): Promise<RewindFilesResult>;
 	rewindSession(input: RewindSessionCommandInput): Promise<CreateSessionResult>;
+	getRewindSupport(input: {
+		sessionId: string;
+		cwd: string;
+	}): Promise<RewindSupport>;
 	getSession(input: GetSessionInput): GetSessionResult;
 	getQueue(input: GetSessionInput): GetQueueResult;
 	listSessions(input: ListSessionsCommandInput): ChatSessionListEntry[];
@@ -485,6 +493,18 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 				);
 			}
 			return created;
+		},
+
+		async getRewindSupport({ sessionId, cwd }) {
+			const files = options.checkpoints
+				? await (options.checkpoints.available?.(cwd) ?? Promise.resolve(true))
+				: false;
+			return {
+				conversation: options.live.get(sessionId)?.canForkAtMessage()
+					? "native"
+					: "text",
+				files,
+			};
 		},
 
 		async closeSession(input) {

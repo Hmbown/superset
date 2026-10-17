@@ -115,6 +115,11 @@ export const rewindSessionInputSchema = z.object({
 });
 export type RewindSessionInput = z.infer<typeof rewindSessionInputSchema>;
 
+export const getRewindSupportInputSchema = z.object({
+	sessionId: z.string().min(1),
+});
+export type GetRewindSupportInput = z.infer<typeof getRewindSupportInputSchema>;
+
 /**
  * Stops the session's harness process. The transcript stays readable; only the
  * live agent goes away, so a later `createSession` with `resume` picks it back

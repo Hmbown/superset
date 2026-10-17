@@ -966,6 +966,9 @@ msgstr "自分のオートメーションのうち{myFailedCount}件が前回の
 msgid "{name} accounts"
 msgstr "{name} のアカウント"
 
+msgid "{name} can't rewind its own history, so it is told the earlier conversation as text, without the details of its tool calls."
+msgstr "{name} は自身の履歴を巻き戻せないため、以前の会話はテキストとして伝えられます。ツール呼び出しの詳細は含まれません。"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} は組み込みのため削除できません"
@@ -7573,6 +7576,9 @@ msgstr "ファイル"
 
 msgid "Files & Editor"
 msgstr "ファイルとエディター"
+
+msgid "Files can't be rewound here because this folder is not a git repository. Only the chat goes back."
+msgstr "このフォルダーは git リポジトリではないため、ファイルは巻き戻せません。チャットのみが戻ります。"
 
 msgid "Files changed"
 msgstr "変更されたファイル"
@@ -14422,6 +14428,9 @@ msgstr "キーを取り消す"
 msgid "Rewind"
 msgstr "巻き戻し"
 
+msgid "Rewind chat"
+msgstr "チャットを巻き戻す"
+
 msgid "Rewind chat and files"
 msgstr "チャットとファイルを巻き戻す"
 
@@ -17465,6 +17474,9 @@ msgstr "クラウドワークスペースの起動元となる出発点 — ベ�
 msgid "The Superset desktop app is available for macOS and Linux."
 msgstr "Supersetデスクトップアプリは macOS と Linux で利用できます。"
 
+msgid "The Superset host on this machine is out of date, so only the chat goes back and the agent is told the earlier conversation as text."
+msgstr "このマシンの Superset ホストが古いため、チャットのみが戻り、エージェントには以前の会話がテキストとして伝えられます。"
+
 msgid "The Superset host service for {organization} stopped unexpectedly ({cause}) and could not be restarted automatically."
 msgstr "{organization}のSupersetホストサービスが予期せず停止し ({cause})、自動的に再起動できませんでした。"
 
@@ -17557,6 +17569,9 @@ msgstr "この {plugin} アカウントはすでに別の Superset 組織が接�
 
 msgid "This action is irreversible."
 msgstr "この操作は元に戻せません。"
+
+msgid "This agent"
+msgstr "このエージェント"
 
 msgid "This agent can't be opened as a chat."
 msgstr "このエージェントはチャットとして開けません。"
@@ -17705,6 +17720,9 @@ msgstr "このMac"
 
 msgid "This machine"
 msgstr "このマシン"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Files stay as they are."
+msgstr "このメッセージとそれ以降の内容はチャットから削除され、メッセージは入力欄に戻ります。ファイルはそのままです。"
 
 msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
 msgstr "このメッセージとそれ以降の内容はチャットから削除され、メッセージは入力欄に戻ります。ファイルも巻き戻すと、それ以降の変更も元に戻ります。先に現在のファイルのスナップショットが保存されます。"

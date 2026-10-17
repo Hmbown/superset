@@ -966,6 +966,9 @@ msgstr "{myFailedCount} of your automations failed their last run"
 msgid "{name} accounts"
 msgstr "{name} accounts"
 
+msgid "{name} can't rewind its own history, so it is told the earlier conversation as text, without the details of its tool calls."
+msgstr "{name} can't rewind its own history, so it is told the earlier conversation as text, without the details of its tool calls."
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} is built in and cannot be removed"
@@ -7573,6 +7576,9 @@ msgstr "Files"
 
 msgid "Files & Editor"
 msgstr "Files & Editor"
+
+msgid "Files can't be rewound here because this folder is not a git repository. Only the chat goes back."
+msgstr "Files can't be rewound here because this folder is not a git repository. Only the chat goes back."
 
 msgid "Files changed"
 msgstr "Files changed"
@@ -14422,6 +14428,9 @@ msgstr "Revoke key"
 msgid "Rewind"
 msgstr "Rewind"
 
+msgid "Rewind chat"
+msgstr "Rewind chat"
+
 msgid "Rewind chat and files"
 msgstr "Rewind chat and files"
 
@@ -17465,6 +17474,9 @@ msgstr "The starting point a cloud workspace boots from. Variables set here reac
 msgid "The Superset desktop app is available for macOS and Linux."
 msgstr "The Superset desktop app is available for macOS and Linux."
 
+msgid "The Superset host on this machine is out of date, so only the chat goes back and the agent is told the earlier conversation as text."
+msgstr "The Superset host on this machine is out of date, so only the chat goes back and the agent is told the earlier conversation as text."
+
 msgid "The Superset host service for {organization} stopped unexpectedly ({cause}) and could not be restarted automatically."
 msgstr "The Superset host service for {organization} stopped unexpectedly ({cause}) and could not be restarted automatically."
 
@@ -17557,6 +17569,9 @@ msgstr "This {plugin} account is already connected by another Superset organizat
 
 msgid "This action is irreversible."
 msgstr "This action is irreversible."
+
+msgid "This agent"
+msgstr "This agent"
 
 msgid "This agent can't be opened as a chat."
 msgstr "This agent can't be opened as a chat."
@@ -17705,6 +17720,9 @@ msgstr "This Mac"
 
 msgid "This machine"
 msgstr "This machine"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Files stay as they are."
+msgstr "This message and everything after it leave the chat, and the message goes back to the composer. Files stay as they are."
 
 msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
 msgstr "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."

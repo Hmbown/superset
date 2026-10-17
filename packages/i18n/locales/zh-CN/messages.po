@@ -966,6 +966,9 @@ msgstr "你有{myFailedCount}个自动化上次运行失败"
 msgid "{name} accounts"
 msgstr "{name} 账号"
 
+msgid "{name} can't rewind its own history, so it is told the earlier conversation as text, without the details of its tool calls."
+msgstr "{name} 无法回退自身的历史，因此会以文本形式告知它之前的对话，不包含其工具调用的细节。"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} 是内置的，无法移除"
@@ -7573,6 +7576,9 @@ msgstr "文件"
 
 msgid "Files & Editor"
 msgstr "文件与编辑器"
+
+msgid "Files can't be rewound here because this folder is not a git repository. Only the chat goes back."
+msgstr "此文件夹不是 git 仓库，因此无法回退文件。只会回退聊天。"
 
 msgid "Files changed"
 msgstr "更改的文件"
@@ -14422,6 +14428,9 @@ msgstr "吊销密钥"
 msgid "Rewind"
 msgstr "回退"
 
+msgid "Rewind chat"
+msgstr "回退聊天"
+
 msgid "Rewind chat and files"
 msgstr "回退聊天和文件"
 
@@ -17465,6 +17474,9 @@ msgstr "云端工作区启动的起点 — 一个基础镜像，或你已配置�
 msgid "The Superset desktop app is available for macOS and Linux."
 msgstr "Superset 桌面应用支持 macOS 和 Linux。"
 
+msgid "The Superset host on this machine is out of date, so only the chat goes back and the agent is told the earlier conversation as text."
+msgstr "此机器上的 Superset 主机版本过旧，因此只会回退聊天，并以文本形式告知智能体之前的对话。"
+
 msgid "The Superset host service for {organization} stopped unexpectedly ({cause}) and could not be restarted automatically."
 msgstr "{organization}的Superset主机服务意外停止（{cause}），且无法自动重启。"
 
@@ -17557,6 +17569,9 @@ msgstr "该 {plugin} 账户已被另一个 Superset 组织连接。"
 
 msgid "This action is irreversible."
 msgstr "此操作不可逆。"
+
+msgid "This agent"
+msgstr "此智能体"
 
 msgid "This agent can't be opened as a chat."
 msgstr "该智能体无法以聊天方式打开。"
@@ -17705,6 +17720,9 @@ msgstr "这台Mac"
 
 msgid "This machine"
 msgstr "本机"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Files stay as they are."
+msgstr "这条消息及之后的内容会从聊天中移除，该消息会回到输入框。文件保持不变。"
 
 msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
 msgstr "这条消息及之后的内容会从聊天中移除，该消息会回到输入框。同时回退文件会撤销此后的更改。系统会先保存当前文件的快照。"

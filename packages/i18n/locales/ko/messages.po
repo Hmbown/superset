@@ -966,6 +966,9 @@ msgstr "내 자동화 {myFailedCount}개가 마지막 실행에 실패했습니�
 msgid "{name} accounts"
 msgstr "{name} 계정"
 
+msgid "{name} can't rewind its own history, so it is told the earlier conversation as text, without the details of its tool calls."
+msgstr "{name}은(는) 자체 기록을 되감을 수 없어, 이전 대화를 텍스트로 전달받습니다. 도구 호출의 세부 정보는 포함되지 않습니다."
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name}은(는) 기본 제공이라 제거할 수 없습니다"
@@ -7573,6 +7576,9 @@ msgstr "파일"
 
 msgid "Files & Editor"
 msgstr "파일 및 편집기"
+
+msgid "Files can't be rewound here because this folder is not a git repository. Only the chat goes back."
+msgstr "이 폴더는 git 저장소가 아니어서 파일을 되감을 수 없습니다. 채팅만 되돌아갑니다."
 
 msgid "Files changed"
 msgstr "변경된 파일"
@@ -14422,6 +14428,9 @@ msgstr "키 해지"
 msgid "Rewind"
 msgstr "되감기"
 
+msgid "Rewind chat"
+msgstr "채팅 되감기"
+
 msgid "Rewind chat and files"
 msgstr "채팅과 파일 되감기"
 
@@ -17465,6 +17474,9 @@ msgstr "클라우드 워크스페이스가 부팅되는 시작점입니다 — �
 msgid "The Superset desktop app is available for macOS and Linux."
 msgstr "Superset 데스크톱 앱은 macOS와 Linux에서 사용할 수 있습니다."
 
+msgid "The Superset host on this machine is out of date, so only the chat goes back and the agent is told the earlier conversation as text."
+msgstr "이 기기의 Superset 호스트가 오래되어 채팅만 되돌아가고, 에이전트는 이전 대화를 텍스트로 전달받습니다."
+
 msgid "The Superset host service for {organization} stopped unexpectedly ({cause}) and could not be restarted automatically."
 msgstr "{organization}의 Superset 호스트 서비스가 예기치 않게 중지되었으며({cause}) 자동으로 다시 시작하지 못했습니다."
 
@@ -17557,6 +17569,9 @@ msgstr "이 {plugin} 계정은 이미 다른 Superset 조직에 연결되어 있
 
 msgid "This action is irreversible."
 msgstr "이 동작은 되돌릴 수 없습니다."
+
+msgid "This agent"
+msgstr "이 에이전트"
 
 msgid "This agent can't be opened as a chat."
 msgstr "이 에이전트는 채팅으로 열 수 없습니다."
@@ -17705,6 +17720,9 @@ msgstr "이 Mac"
 
 msgid "This machine"
 msgstr "이 컴퓨터"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Files stay as they are."
+msgstr "이 메시지와 그 이후의 내용은 채팅에서 제거되고, 메시지는 입력창으로 돌아갑니다. 파일은 그대로 유지됩니다."
 
 msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
 msgstr "이 메시지와 그 이후의 내용은 채팅에서 제거되고, 메시지는 입력창으로 돌아갑니다. 파일도 되감으면 그 이후의 변경 사항도 취소됩니다. 먼저 현재 파일의 스냅샷이 저장됩니다."

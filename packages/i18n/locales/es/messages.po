@@ -966,6 +966,9 @@ msgstr "Tus automatizaciones con error en su última ejecución: {myFailedCount}
 msgid "{name} accounts"
 msgstr "Cuentas de {name}"
 
+msgid "{name} can't rewind its own history, so it is told the earlier conversation as text, without the details of its tool calls."
+msgstr "{name} no puede rebobinar su propio historial, así que se le cuenta la conversación anterior como texto, sin los detalles de sus llamadas a herramientas."
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} es integrado y no se puede quitar"
@@ -7573,6 +7576,9 @@ msgstr "Archivos"
 
 msgid "Files & Editor"
 msgstr "Archivos y editor"
+
+msgid "Files can't be rewound here because this folder is not a git repository. Only the chat goes back."
+msgstr "Aquí no se pueden rebobinar los archivos porque esta carpeta no es un repositorio git. Solo vuelve el chat."
 
 msgid "Files changed"
 msgstr "Archivos modificados"
@@ -14422,6 +14428,9 @@ msgstr "Revocar la clave"
 msgid "Rewind"
 msgstr "Rebobinar"
 
+msgid "Rewind chat"
+msgstr "Rebobinar chat"
+
 msgid "Rewind chat and files"
 msgstr "Rebobinar chat y archivos"
 
@@ -17465,6 +17474,9 @@ msgstr "El punto de partida desde el que arranca un espacio de trabajo en la nub
 msgid "The Superset desktop app is available for macOS and Linux."
 msgstr "La aplicación de escritorio de Superset está disponible para macOS y Linux."
 
+msgid "The Superset host on this machine is out of date, so only the chat goes back and the agent is told the earlier conversation as text."
+msgstr "El host de Superset de esta máquina está desactualizado, así que solo vuelve el chat y al agente se le cuenta la conversación anterior como texto."
+
 msgid "The Superset host service for {organization} stopped unexpectedly ({cause}) and could not be restarted automatically."
 msgstr "El servicio del host de Superset de {organization} se detuvo de forma inesperada ({cause}) y no se pudo reiniciar automáticamente."
 
@@ -17557,6 +17569,9 @@ msgstr "Esta cuenta de {plugin} ya está conectada por otra organización de Sup
 
 msgid "This action is irreversible."
 msgstr "Esta acción es irreversible."
+
+msgid "This agent"
+msgstr "Este agente"
 
 msgid "This agent can't be opened as a chat."
 msgstr "Este agente no se puede abrir como chat."
@@ -17705,6 +17720,9 @@ msgstr "Este Mac"
 
 msgid "This machine"
 msgstr "Este equipo"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Files stay as they are."
+msgstr "Este mensaje y todo lo posterior salen del chat, y el mensaje vuelve al cuadro de texto. Los archivos se quedan como están."
 
 msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
 msgstr "Este mensaje y todo lo posterior salen del chat, y el mensaje vuelve al cuadro de texto. Rebobinar también los archivos deshace los cambios hechos desde entonces. Antes se guarda una instantánea de los archivos actuales."

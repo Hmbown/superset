@@ -144,6 +144,10 @@ export function createGitCheckpoints(): ChatCheckpoints {
 			);
 		},
 
+		async available(cwd) {
+			return (await workTreeRoot(cwd)) !== null;
+		},
+
 		async fork({ cwd: dir, fromSessionId, toSessionId }) {
 			const cwd = await workTreeRoot(dir);
 			if (!cwd) return;

@@ -567,29 +567,99 @@ export function AcpChatPane({
 			modeId,
 		],
 	);
+	// A host from before rewind support answers with an unknown procedure; it
+	// can still rewind the chat as text, but not the files.
+	const { data: rewindSupport } = useQuery({
+		enabled: sessionId !== null && onRewound !== undefined,
+		queryKey: ["acp-chat-rewind-support", sessionId, workspaceId],
+		queryFn: () =>
+			sessionId
+				? wiring.transport
+						.getRewindSupport({ sessionId, workspaceId })
+						.then((support) => ({ ...support, outdatedHost: false }))
+						.catch((error: unknown) => {
+							if (
+								error instanceof TRPCClientError &&
+								/No procedure/.test(error.message)
+							) {
+								return {
+									conversation: "text" as const,
+									files: false,
+									outdatedHost: true,
+								};
+							}
+							throw error;
+						})
+				: Promise.resolve(null),
+		staleTime: 30_000,
+	});
+	const rewindNotes = useMemo(() => {
+		if (!rewindSupport) return [];
+		if (rewindSupport.outdatedHost) {
+			return [
+				t({
+					message:
+						"The Superset host on this machine is out of date, so only the chat goes back and the agent is told the earlier conversation as text.",
+				}),
+			];
+		}
+		const name = agentLabel ?? t({ message: "This agent" });
+		return [
+			...(rewindSupport.conversation === "text"
+				? [
+						t({
+							message: `${name} can't rewind its own history, so it is told the earlier conversation as text, without the details of its tool calls.`,
+						}),
+					]
+				: []),
+			...(rewindSupport.files
+				? []
+				: [
+						t({
+							message:
+								"Files can't be rewound here because this folder is not a git repository. Only the chat goes back.",
+						}),
+					]),
+		];
+	}, [rewindSupport, agentLabel, t]);
+	const canRewindFiles = rewindSupport?.files !== false;
+
 	const rewind = useCallback(
 		(request: ChatRewindRequest) =>
 			alert({
 				title: t({ message: "Rewind to this message?" }),
-				description: t({
-					message:
-						"This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first.",
-				}),
+				description: canRewindFiles
+					? t({
+							message:
+								"This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first.",
+						})
+					: t({
+							message:
+								"This message and everything after it leave the chat, and the message goes back to the composer. Files stay as they are.",
+						}),
 				actions: [
+					...(canRewindFiles
+						? [
+								{
+									label: t({ message: "Rewind chat and files" }),
+									variant: "default" as const,
+									onClick: () => void runRewind(request, true),
+								},
+							]
+						: []),
 					{
-						label: t({ message: "Rewind chat and files" }),
-						variant: "default",
-						onClick: () => void runRewind(request, true),
-					},
-					{
-						label: t({ message: "Rewind chat only" }),
-						variant: "outline",
+						label: canRewindFiles
+							? t({ message: "Rewind chat only" })
+							: t({ message: "Rewind chat" }),
+						variant: canRewindFiles
+							? ("outline" as const)
+							: ("default" as const),
 						onClick: () => void runRewind(request, false),
 					},
-					{ label: t({ message: "Cancel" }), variant: "ghost" },
+					{ label: t({ message: "Cancel" }), variant: "ghost" as const },
 				],
 			}),
-		[runRewind, t],
+		[runRewind, t, canRewindFiles],
 	);
 
 	const draft = (notice: ReactNode) => (
@@ -663,6 +733,7 @@ export function AcpChatPane({
 			isActive={isActive}
 			onFork={fork}
 			onRewind={onRewound ? rewind : undefined}
+			rewindNotes={rewindNotes}
 			openFile={onOpenFile}
 			openPage={onOpenPage}
 			openLink={onOpenLink}

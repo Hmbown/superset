@@ -966,6 +966,9 @@ msgstr "Vaše automatizace s neúspěšným posledním během: {myFailedCount}"
 msgid "{name} accounts"
 msgstr "Účty {name}"
 
+msgid "{name} can't rewind its own history, so it is told the earlier conversation as text, without the details of its tool calls."
+msgstr "{name} nedokáže přetočit vlastní historii, a tak se mu dřívější konverzace předá jako text, bez podrobností o voláních nástrojů."
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} je vestavěný a nelze jej odebrat"
@@ -7573,6 +7576,9 @@ msgstr "Soubory"
 
 msgid "Files & Editor"
 msgstr "Soubory a editor"
+
+msgid "Files can't be rewound here because this folder is not a git repository. Only the chat goes back."
+msgstr "Soubory zde nelze přetočit, protože tato složka není git repozitář. Vrátí se jen chat."
 
 msgid "Files changed"
 msgstr "Změněné soubory"
@@ -14422,6 +14428,9 @@ msgstr "Zneplatnit klíč"
 msgid "Rewind"
 msgstr "Přetočit zpět"
 
+msgid "Rewind chat"
+msgstr "Přetočit chat"
+
 msgid "Rewind chat and files"
 msgstr "Přetočit chat i soubory"
 
@@ -17465,6 +17474,9 @@ msgstr "Výchozí bod, ze kterého se spouští cloudový pracovní prostor — 
 msgid "The Superset desktop app is available for macOS and Linux."
 msgstr "Desktopová aplikace Superset je dostupná pro macOS a Linux."
 
+msgid "The Superset host on this machine is out of date, so only the chat goes back and the agent is told the earlier conversation as text."
+msgstr "Hostitel Superset na tomto počítači je zastaralý, takže se vrátí jen chat a agentovi se dřívější konverzace předá jako text."
+
 msgid "The Superset host service for {organization} stopped unexpectedly ({cause}) and could not be restarted automatically."
 msgstr "Host service Superset pro {organization} se nečekaně zastavila ({cause}) a nešlo ji automaticky restartovat."
 
@@ -17557,6 +17569,9 @@ msgstr "Tento účet {plugin} už je připojený k jiné organizaci Supersetu."
 
 msgid "This action is irreversible."
 msgstr "Tuto akci nelze vrátit zpět."
+
+msgid "This agent"
+msgstr "Tento agent"
 
 msgid "This agent can't be opened as a chat."
 msgstr "Tohoto agenta nelze otevřít jako chat."
@@ -17705,6 +17720,9 @@ msgstr "Tento Mac"
 
 msgid "This machine"
 msgstr "Tento počítač"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Files stay as they are."
+msgstr "Tato zpráva a vše po ní z chatu zmizí a zpráva se vrátí do pole pro psaní. Soubory zůstanou beze změny."
 
 msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
 msgstr "Tato zpráva a vše po ní z chatu zmizí a zpráva se vrátí do pole pro psaní. Přetočení souborů také vrátí změny provedené od té doby. Nejprve se uloží snímek aktuálních souborů."

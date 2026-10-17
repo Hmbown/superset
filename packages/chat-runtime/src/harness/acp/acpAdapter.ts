@@ -725,6 +725,15 @@ export class AcpAdapter implements HarnessAdapter {
 		return parsed.success ? parsed.data.sessionId : null;
 	}
 
+	canForkAtMessage(): boolean {
+		return Boolean(
+			this.options.forkAtMessage &&
+				this.client &&
+				this.sessionId &&
+				this.supportsSessionCapability("fork"),
+		);
+	}
+
 	/** What `initialize` said this agent can do to a session. */
 	private supportsSessionCapability(name: string): boolean {
 		const caps = this.agentCapabilities.sessionCapabilities;

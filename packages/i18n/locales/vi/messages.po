@@ -966,6 +966,9 @@ msgstr "{myFailedCount} tự động hóa của bạn thất bại ở lần ch�
 msgid "{name} accounts"
 msgstr "Tài khoản {name}"
 
+msgid "{name} can't rewind its own history, so it is told the earlier conversation as text, without the details of its tool calls."
+msgstr "{name} không thể tua lại lịch sử của chính nó, nên cuộc trò chuyện trước đó được gửi cho nó dưới dạng văn bản, không kèm chi tiết các lệnh gọi công cụ."
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} là tích hợp sẵn nên không thể gỡ"
@@ -7573,6 +7576,9 @@ msgstr "Tệp"
 
 msgid "Files & Editor"
 msgstr "Tệp và trình soạn thảo"
+
+msgid "Files can't be rewound here because this folder is not a git repository. Only the chat goes back."
+msgstr "Không thể tua lại tệp ở đây vì thư mục này không phải là kho git. Chỉ chat được quay lại."
 
 msgid "Files changed"
 msgstr "Tệp đã thay đổi"
@@ -14422,6 +14428,9 @@ msgstr "Thu hồi khóa"
 msgid "Rewind"
 msgstr "Tua lại"
 
+msgid "Rewind chat"
+msgstr "Tua lại chat"
+
 msgid "Rewind chat and files"
 msgstr "Tua lại chat và tệp"
 
@@ -17465,6 +17474,9 @@ msgstr "Điểm khởi đầu mà một workspace cloud boot lên — một base
 msgid "The Superset desktop app is available for macOS and Linux."
 msgstr "Ứng dụng desktop Superset có sẵn cho macOS và Linux."
 
+msgid "The Superset host on this machine is out of date, so only the chat goes back and the agent is told the earlier conversation as text."
+msgstr "Máy chủ Superset trên máy này đã cũ, nên chỉ chat được quay lại và cuộc trò chuyện trước đó được gửi cho tác tử dưới dạng văn bản."
+
 msgid "The Superset host service for {organization} stopped unexpectedly ({cause}) and could not be restarted automatically."
 msgstr "Dịch vụ host Superset cho {organization} đã dừng bất ngờ ({cause}) và không tự khởi động lại được."
 
@@ -17557,6 +17569,9 @@ msgstr "Tài khoản {plugin} này đã được một tổ chức Superset khá
 
 msgid "This action is irreversible."
 msgstr "Không thể hoàn tác thao tác này."
+
+msgid "This agent"
+msgstr "Tác tử này"
 
 msgid "This agent can't be opened as a chat."
 msgstr "Không thể mở tác nhân này dưới dạng trò chuyện."
@@ -17705,6 +17720,9 @@ msgstr "Mac này"
 
 msgid "This machine"
 msgstr "Máy này"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Files stay as they are."
+msgstr "Tin nhắn này và mọi thứ sau nó sẽ rời khỏi chat, và tin nhắn trở về ô soạn thảo. Các tệp vẫn giữ nguyên."
 
 msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
 msgstr "Tin nhắn này và mọi thứ sau nó sẽ rời khỏi chat, và tin nhắn trở về ô soạn thảo. Tua lại cả tệp cũng hoàn tác các thay đổi từ lúc đó. Ảnh chụp nhanh của các tệp hiện tại được lưu trước."

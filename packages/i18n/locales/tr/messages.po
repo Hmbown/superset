@@ -966,6 +966,9 @@ msgstr "Otomasyonlarınızdan {myFailedCount} tanesi son çalıştırmasında ba
 msgid "{name} accounts"
 msgstr "{name} hesapları"
 
+msgid "{name} can't rewind its own history, so it is told the earlier conversation as text, without the details of its tool calls."
+msgstr "{name} kendi geçmişini geri saramadığı için önceki konuşma ona metin olarak iletilir; araç çağrılarının ayrıntıları dahil edilmez."
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} yerleşiktir ve kaldırılamaz"
@@ -7573,6 +7576,9 @@ msgstr "Dosyalar"
 
 msgid "Files & Editor"
 msgstr "Dosyalar ve Düzenleyici"
+
+msgid "Files can't be rewound here because this folder is not a git repository. Only the chat goes back."
+msgstr "Bu klasör bir git deposu olmadığı için dosyalar burada geri sarılamaz. Yalnızca sohbet geri gider."
 
 msgid "Files changed"
 msgstr "Değişen dosyalar"
@@ -14422,6 +14428,9 @@ msgstr "Anahtarı iptal et"
 msgid "Rewind"
 msgstr "Geri sar"
 
+msgid "Rewind chat"
+msgstr "Sohbeti geri sar"
+
 msgid "Rewind chat and files"
 msgstr "Sohbeti ve dosyaları geri sar"
 
@@ -17465,6 +17474,9 @@ msgstr "Bir bulut çalışma alanının açıldığı başlangıç noktası — 
 msgid "The Superset desktop app is available for macOS and Linux."
 msgstr "Superset masaüstü uygulaması macOS ve Linux için kullanılabilir."
 
+msgid "The Superset host on this machine is out of date, so only the chat goes back and the agent is told the earlier conversation as text."
+msgstr "Bu makinedeki Superset ana makine hizmeti güncel değil; bu yüzden yalnızca sohbet geri gider ve önceki konuşma ajana metin olarak iletilir."
+
 msgid "The Superset host service for {organization} stopped unexpectedly ({cause}) and could not be restarted automatically."
 msgstr "{organization} için Superset host hizmeti beklenmedik şekilde durdu ({cause}) ve otomatik olarak yeniden başlatılamadı."
 
@@ -17557,6 +17569,9 @@ msgstr "Bu {plugin} hesabı zaten başka bir Superset kuruluşuna bağlı."
 
 msgid "This action is irreversible."
 msgstr "Bu işlem geri alınamaz."
+
+msgid "This agent"
+msgstr "Bu ajan"
 
 msgid "This agent can't be opened as a chat."
 msgstr "Bu aracı sohbet olarak açamazsınız."
@@ -17705,6 +17720,9 @@ msgstr "Bu Mac"
 
 msgid "This machine"
 msgstr "Bu bilgisayar"
+
+msgid "This message and everything after it leave the chat, and the message goes back to the composer. Files stay as they are."
+msgstr "Bu mesaj ve sonrasındaki her şey sohbetten çıkar, mesaj yazma alanına geri gelir. Dosyalar olduğu gibi kalır."
 
 msgid "This message and everything after it leave the chat, and the message goes back to the composer. Rewinding the files also undoes changes made since then. A snapshot of the current files is kept first."
 msgstr "Bu mesaj ve sonrasındaki her şey sohbetten çıkar, mesaj yazma alanına geri gelir. Dosyaları da geri sarmak, o zamandan beri yapılan değişiklikleri geri alır. Önce mevcut dosyaların anlık görüntüsü kaydedilir."

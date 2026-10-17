@@ -81,6 +81,7 @@ export type ComposerProps = {
 	};
 	rewind?: {
 		points: RewindPoint[];
+		notes: string[];
 		onPick: (point: RewindPoint) => void;
 	};
 };
@@ -281,6 +282,7 @@ export const Composer = memo(function Composer({
 				title: t({ message: "Rewind" }),
 				render: ({ close }) => (
 					<RewindPanel
+						notes={rewindRef.current?.notes ?? []}
 						points={rewindRef.current?.points ?? []}
 						onPick={(point) => {
 							close();
