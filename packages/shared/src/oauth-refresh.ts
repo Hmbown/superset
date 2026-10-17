@@ -41,6 +41,8 @@ export interface RefreshDeps<C extends OAuthConfig> {
 	pollMs: number;
 	/** How long after an unknown outcome the stored token may still be sent. Must stay below the server's grace window. */
 	retryWindowMs: number;
+	/** How long a rejected token is kept in case a client that takes no lock rotated it and is storing the result. */
+	rejectedSettleMs: number;
 	now: () => number;
 	sleep: (ms: number) => Promise<void>;
 }
@@ -62,6 +64,7 @@ export const REFRESH_TIMINGS = {
 	lockTimeoutMs: 75_000,
 	pollMs: 25,
 	retryWindowMs: 5 * 60 * 1000,
+	rejectedSettleMs: 3_000,
 } as const;
 
 export class RefreshInProgressError extends Error {
@@ -115,6 +118,13 @@ export async function refreshStoredAuth<C extends OAuthConfig>(
 			});
 			return null;
 		};
+		const awaitUnlockedWriter = async () => {
+			const deadline = deps.now() + deps.rejectedSettleMs;
+			while (deps.now() < deadline) {
+				if ((await deps.readConfig()).auth?.refreshToken !== sent) return;
+				await deps.sleep(deps.pollMs);
+			}
+		};
 		const dropRefreshToken = async () => {
 			const current = await updateOwnAuth({
 				refreshToken: undefined,
@@ -158,6 +168,7 @@ export async function refreshStoredAuth<C extends OAuthConfig>(
 					await updateOwnAuth({ refreshStartedAt: auth.refreshStartedAt });
 					throw new ServerUnreachableError(error);
 				case "rejected":
+					await awaitUnlockedWriter();
 					return await dropRefreshToken();
 				case "unknown":
 					throw error;

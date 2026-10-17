@@ -52,6 +52,7 @@ function makeHarness(initialAuth: SupersetConfig["auth"]) {
 		lockTimeoutMs: 500,
 		pollMs: 5,
 		retryWindowMs: 60_000,
+		rejectedSettleMs: 50,
 		now: () => Date.now(),
 		sleep: (ms) => {
 			sleepCalls += 1;
@@ -314,6 +315,31 @@ describe("refreshStoredAuth", () => {
 				SessionExpiredError,
 			);
 			expect(h.stored.auth?.refreshToken).toBeUndefined();
+		} finally {
+			h.cleanup();
+		}
+	});
+
+	it("uses the token an unlocked client stores after it rotated the one this caller sent", async () => {
+		const h = makeHarness(staleAuth());
+		h.deps.refresh = async () => {
+			throw httpError(400, "invalid_grant");
+		};
+		const sleep = h.deps.sleep;
+		h.deps.sleep = async (ms) => {
+			h.deps.writeConfig({
+				auth: {
+					accessToken: "old-cli-access",
+					refreshToken: "old-cli-refresh",
+					expiresAt: Date.now() + 60 * 60 * 1000,
+				},
+			});
+			await sleep(ms);
+		};
+		try {
+			const result = await refreshStoredAuth(h.deps);
+			expect(result.auth?.accessToken).toBe("old-cli-access");
+			expect(h.stored.auth?.refreshToken).toBe("old-cli-refresh");
 		} finally {
 			h.cleanup();
 		}
