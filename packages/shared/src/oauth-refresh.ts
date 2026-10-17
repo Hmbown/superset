@@ -54,8 +54,13 @@ export function isAuthFresh(auth: StoredOAuth, now: number): boolean {
 	return auth.expiresAt - AUTH_REFRESH_LEEWAY_MS > now;
 }
 
+/** Next to the file config.json resolves to, so every path that reaches the same file shares one lock. */
 export function refreshLockPath(configPath: string): string {
-	return join(dirname(configPath), "auth-refresh.lock");
+	let target = configPath;
+	try {
+		target = fs.realpathSync(configPath);
+	} catch {}
+	return join(dirname(target), "auth-refresh.lock");
 }
 
 export const REFRESH_TIMINGS = {

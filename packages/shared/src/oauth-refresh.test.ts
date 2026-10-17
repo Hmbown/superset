@@ -7,6 +7,7 @@ import {
 	type OAuthConfig,
 	type RefreshDeps,
 	RefreshInProgressError,
+	refreshLockPath,
 	refreshStoredAuth,
 	ServerUnreachableError,
 	SessionExpiredError,
@@ -342,6 +343,26 @@ describe("refreshStoredAuth", () => {
 			expect(h.stored.auth?.refreshToken).toBe("old-cli-refresh");
 		} finally {
 			h.cleanup();
+		}
+	});
+
+	it("shares one lock between a symlinked config path and its target", () => {
+		const dir = fs.mkdtempSync(path.join(os.tmpdir(), "oauth-lock-path-"));
+		try {
+			const real = path.join(dir, "real");
+			const linked = path.join(dir, "home");
+			fs.mkdirSync(real);
+			fs.mkdirSync(linked);
+			fs.writeFileSync(path.join(real, "superset-config.json"), "{}");
+			fs.symlinkSync(
+				path.join(real, "superset-config.json"),
+				path.join(linked, "config.json"),
+			);
+			expect(refreshLockPath(path.join(linked, "config.json"))).toBe(
+				refreshLockPath(path.join(real, "superset-config.json")),
+			);
+		} finally {
+			fs.rmSync(dir, { recursive: true, force: true });
 		}
 	});
 
