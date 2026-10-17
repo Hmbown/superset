@@ -72,36 +72,28 @@
 	--rail-top: 0.2em;
 	--rail-baseline: 0.24em;
 	--rail-max: max(0.4em, 20px);
-	--rail-span: 10;
 	position: relative;
 }
 
-@media (max-width: 640px) {
-	.headline-rise > .headline-marks {
-		--rail-span: 6;
-	}
-}
-
 .headline-rise > .headline-marks::after {
-	--rail-out: calc(var(--rail-len) * 2);
-	--rail-width: calc(var(--rail-len) * var(--rail-span));
+	--rail-width: calc(var(--rail-len) * 6);
 	content: "";
 	position: absolute;
 	pointer-events: none;
-	inset: calc(var(--rail-top) - 0.75px) calc(-2 * var(--rail-max))
+	inset: calc(var(--rail-top) - 0.75px) calc(-1 * var(--rail-max))
 		calc(var(--rail-baseline) - 0.75px);
 	background-image:
-		linear-gradient(90deg, transparent, var(--rail-color) 20%, transparent),
-		linear-gradient(270deg, transparent, var(--rail-color) 20%, transparent),
-		linear-gradient(90deg, transparent, var(--rail-color) 20%, transparent),
-		linear-gradient(270deg, transparent, var(--rail-color) 20%, transparent);
+		linear-gradient(90deg, transparent, var(--rail-color) 16.67%, transparent),
+		linear-gradient(270deg, transparent, var(--rail-color) 16.67%, transparent),
+		linear-gradient(90deg, transparent, var(--rail-color) 16.67%, transparent),
+		linear-gradient(270deg, transparent, var(--rail-color) 16.67%, transparent);
 	background-repeat: no-repeat;
 	background-size: var(--rail-width) 1.5px;
 	background-position:
-		left calc(2 * var(--rail-max) - var(--rail-out)) top,
-		right calc(2 * var(--rail-max) - var(--rail-out)) top,
-		left calc(2 * var(--rail-max) - var(--rail-out)) bottom,
-		right calc(2 * var(--rail-max) - var(--rail-out)) bottom;
+		left calc(var(--rail-max) - var(--rail-len)) top,
+		right calc(var(--rail-max) - var(--rail-len)) top,
+		left calc(var(--rail-max) - var(--rail-len)) bottom,
+		right calc(var(--rail-max) - var(--rail-len)) bottom;
 }
 
 .headline-rise-clip {
