@@ -940,6 +940,36 @@ describe("workspaceCleanup.destroy cleanup ordering", () => {
 		}
 	});
 
+	test("worktree and project repo both gone: destroy succeeds without running git", async () => {
+		const ctx = makeCtx({
+			workspace: {
+				id: "ws-1",
+				projectId: "p-1",
+				worktreePath: "/gone/wt",
+				branch: "feature",
+			},
+			project: { id: "p-1", repoPath: "/gone/repo" },
+			removeWorktree: () =>
+				Promise.reject(
+					new Error("Cannot use simple-git on a directory that does not exist"),
+				),
+			deleteBranch: async () => {
+				throw new Error("branch delete must not run");
+			},
+		});
+		const caller = workspaceCleanupRouter.createCaller(ctx);
+
+		const result = await caller.destroy({
+			workspaceId: "ws-1",
+			deleteBranch: true,
+			force: true,
+		});
+		expect(result.success).toBe(true);
+		expect(result.worktreeRemoved).toBe(true);
+		expect(result.branchDeleted).toBe(false);
+		expect(result.warnings).toEqual([]);
+	});
+
 	test("worktree-removal timeout carries its phase into the reported error", async () => {
 		// The Sentry event for HOST-SERVICE-17 / -47 is this TRPCError, and its
 		// message is the pool's timeout text verbatim — so a phase named there
