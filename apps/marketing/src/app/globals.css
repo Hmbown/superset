@@ -57,7 +57,19 @@
 
 /* Drawn from the full-width sizer copy so the marks are in place before the
    headline types into them. */
-.headline-sizer > .headline-marks {
+@property --mark-len {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0px;
+}
+
+@keyframes headline-marks-grow {
+	to {
+		--mark-len: var(--mark-arm);
+	}
+}
+
+.headline-rise > .headline-marks {
 	--mark-color: var(--foreground);
 	--mark-top: 0.2em;
 	--mark-baseline: 0.24em;
@@ -66,41 +78,87 @@
 	position: relative;
 }
 
-.headline-sizer > .headline-marks::after {
+.headline-rise > .headline-marks::after {
 	content: "";
-	visibility: visible;
 	position: absolute;
 	pointer-events: none;
 	inset: calc(var(--mark-top) - var(--mark-half)) calc(-1 * var(--mark-half))
 		calc(var(--mark-baseline) - var(--mark-half));
 	background-image:
-		linear-gradient(90deg, transparent, var(--mark-color), transparent),
+		linear-gradient(90deg, transparent, var(--mark-color) 20%, transparent),
 		linear-gradient(180deg, transparent, var(--mark-color), transparent),
-		linear-gradient(90deg, transparent, var(--mark-color), transparent),
+		linear-gradient(270deg, transparent, var(--mark-color) 20%, transparent),
 		linear-gradient(180deg, transparent, var(--mark-color), transparent),
-		linear-gradient(90deg, transparent, var(--mark-color), transparent),
+		linear-gradient(90deg, transparent, var(--mark-color) 20%, transparent),
 		linear-gradient(180deg, transparent, var(--mark-color), transparent),
-		linear-gradient(90deg, transparent, var(--mark-color), transparent),
+		linear-gradient(270deg, transparent, var(--mark-color) 20%, transparent),
 		linear-gradient(180deg, transparent, var(--mark-color), transparent);
 	background-repeat: no-repeat;
 	background-size:
-		var(--mark-arm) 1.5px,
-		1.5px var(--mark-arm),
-		var(--mark-arm) 1.5px,
-		1.5px var(--mark-arm),
-		var(--mark-arm) 1.5px,
-		1.5px var(--mark-arm),
-		var(--mark-arm) 1.5px,
-		1.5px var(--mark-arm);
+		calc(var(--mark-len) * 2.5) 1.5px,
+		1.5px var(--mark-len),
+		calc(var(--mark-len) * 2.5) 1.5px,
+		1.5px var(--mark-len),
+		calc(var(--mark-len) * 2.5) 1.5px,
+		1.5px var(--mark-len),
+		calc(var(--mark-len) * 2.5) 1.5px,
+		1.5px var(--mark-len);
 	background-position:
-		0 calc(var(--mark-half) - 0.75px),
-		calc(var(--mark-half) - 0.75px) 0,
-		100% calc(var(--mark-half) - 0.75px),
-		calc(100% - var(--mark-half) + 0.75px) 0,
-		0 calc(100% - var(--mark-half) + 0.75px),
-		calc(var(--mark-half) - 0.75px) 100%,
-		100% calc(100% - var(--mark-half) + 0.75px),
-		calc(100% - var(--mark-half) + 0.75px) 100%;
+		left calc(var(--mark-half) - var(--mark-len) / 2) top
+		calc(var(--mark-half) - 0.75px),
+		left calc(var(--mark-half) - 0.75px) top
+		calc(var(--mark-half) - var(--mark-len) / 2),
+		right calc(var(--mark-half) - var(--mark-len) / 2) top
+		calc(var(--mark-half) - 0.75px),
+		right calc(var(--mark-half) - 0.75px) top
+		calc(var(--mark-half) - var(--mark-len) / 2),
+		left calc(var(--mark-half) - var(--mark-len) / 2) bottom
+		calc(var(--mark-half) - 0.75px),
+		left calc(var(--mark-half) - 0.75px) bottom
+		calc(var(--mark-half) - var(--mark-len) / 2),
+		right calc(var(--mark-half) - var(--mark-len) / 2) bottom
+		calc(var(--mark-half) - 0.75px),
+		right calc(var(--mark-half) - 0.75px) bottom
+		calc(var(--mark-half) - var(--mark-len) / 2);
+}
+
+.headline-rise-clip {
+	display: inline-block;
+	overflow: hidden;
+	padding-bottom: 0.14em;
+	margin-bottom: -0.14em;
+	vertical-align: bottom;
+}
+
+.headline-rise-line {
+	display: inline-block;
+	animation: headline-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.headline-marks .headline-rise-line {
+	animation-delay: 120ms;
+}
+
+@keyframes headline-rise {
+	from {
+		transform: translateY(105%);
+	}
+}
+
+.headline-rise > .headline-marks::after {
+	animation: headline-marks-grow 900ms cubic-bezier(0.65, 0, 0.35, 1) 650ms
+		forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.headline-rise-line {
+		animation: none;
+	}
+
+	.headline-rise > .headline-marks::after {
+		--mark-len: var(--mark-arm);
+		animation: none;
+	}
 }
 
 @utility scrollbar-hide {
