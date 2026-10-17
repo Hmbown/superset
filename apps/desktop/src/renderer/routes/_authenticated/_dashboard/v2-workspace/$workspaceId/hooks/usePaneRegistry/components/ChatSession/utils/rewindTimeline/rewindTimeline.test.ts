@@ -1,6 +1,11 @@
 import { describe, expect, it } from "bun:test";
-import type { TurnGroup } from "@superset/chat/core";
-import { rewindPoints, timelineBefore } from "./rewindTimeline";
+import type { SessionSnapshot, TurnGroup } from "@superset/chat/core";
+import { buildChatRewindPrompt } from "@superset/shared/terminal-session-handoff";
+import {
+	rewindPoints,
+	rewindTranscript,
+	timelineBefore,
+} from "./rewindTimeline";
 
 function userItem(id: string, text: string, startedAtMs: number) {
 	return {
@@ -55,5 +60,62 @@ describe("rewindTimeline", () => {
 				(entry) => entry.kind === "item" && entry.item.id,
 			),
 		).toEqual(["u2", "a2"]);
+	});
+
+	it("hands on an earlier rewind's conversation instead of nesting its prompt", () => {
+		const earlier = "User: first\n\nClaude: done";
+		const rewound = [
+			{
+				turnId: "t3",
+				turn: null,
+				entries: [
+					userItem(
+						"h1",
+						buildChatRewindPrompt({ transcript: earlier, filesRestored: true }),
+						4,
+					),
+					agentItem("ack"),
+					userItem("u4", "again", 5),
+					agentItem("a4"),
+					userItem("u5", "latest", 6),
+				],
+			},
+		] as unknown as TurnGroup[];
+		const snapshot = {
+			items: new Map([
+				[
+					"ack",
+					{
+						item: {
+							id: "ack",
+							kind: "agent_message",
+							startedAtMs: 0,
+							text: "I have the context",
+						},
+					},
+				],
+				[
+					"a4",
+					{
+						item: {
+							id: "a4",
+							kind: "agent_message",
+							startedAtMs: 0,
+							text: "did it",
+						},
+					},
+				],
+			]),
+			liveStreams: new Map(),
+			turns: new Map(),
+			session: null,
+		} as unknown as SessionSnapshot;
+
+		expect(
+			rewindPoints(rewound, undefined).map((point) => point.itemId),
+		).toEqual(["u5", "u4"]);
+		expect(rewindTranscript(rewound, "u5", snapshot, "Claude")).toBe(
+			`${earlier}\n\nUser: again\n\nClaude: did it`,
+		);
 	});
 });

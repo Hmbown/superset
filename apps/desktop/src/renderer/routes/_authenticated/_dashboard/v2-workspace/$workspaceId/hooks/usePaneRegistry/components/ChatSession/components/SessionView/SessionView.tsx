@@ -35,7 +35,7 @@ import { buildChatHandoffTranscript } from "../../utils/chatHandoffTranscript";
 import { heldPromptQueue } from "../../utils/heldPromptQueue";
 import { promptHistory } from "../../utils/promptHistory";
 import { railMessages } from "../../utils/railMessages";
-import { rewindPoints, timelineBefore } from "../../utils/rewindTimeline";
+import { rewindPoints, rewindTranscript } from "../../utils/rewindTimeline";
 import {
 	type AgentChoice,
 	type AgentSwitcher,
@@ -314,8 +314,9 @@ export function SessionView({
 					onRewind({
 						itemId: point.itemId,
 						messageText: point.text,
-						transcript: buildChatHandoffTranscript(
-							timelineBefore(timelineRef.current, point.itemId),
+						transcript: rewindTranscript(
+							timelineRef.current,
+							point.itemId,
 							snapshotRef.current,
 							agentLabel ?? "Agent",
 						),
