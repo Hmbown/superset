@@ -120,6 +120,8 @@ export const agentMessageSchema = z.looseObject({
 	...itemBaseFields,
 	kind: z.literal("agent_message"),
 	text: z.string(),
+	/** The agent's own id for this message, where it gives one. */
+	agentMessageId: z.string().optional(),
 	attachments: z.array(itemAttachmentSchema).optional(),
 	model: z.string().optional(),
 });

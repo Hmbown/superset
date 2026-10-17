@@ -279,8 +279,8 @@ export class LiveSession {
 		);
 	}
 
-	fork(): Promise<string | null> {
-		return this.options.adapter.fork?.() ?? Promise.resolve(null);
+	fork(cut?: { upToMessageId: string }): Promise<string | null> {
+		return this.options.adapter.fork?.(cut) ?? Promise.resolve(null);
 	}
 
 	async dispose(): Promise<void> {

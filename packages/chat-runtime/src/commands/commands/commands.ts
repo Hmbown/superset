@@ -9,6 +9,7 @@ import {
 	type StoredItem,
 } from "@superset/chat/core";
 import type {
+	AgentMessage,
 	ApprovalRequest,
 	CancelTurnInput,
 	CloseSessionInput,
@@ -59,7 +60,16 @@ import type {
 
 export const createSessionCommandSchema = createSessionInputSchema
 	.omit({ workspaceId: true })
-	.extend({ scopeId: z.string().min(1), cwd: z.string().min(1) });
+	.extend({
+		scopeId: z.string().min(1),
+		cwd: z.string().min(1),
+		resume: z
+			.object({
+				harnessSessionId: z.string().min(1),
+				quiet: z.boolean().optional(),
+			})
+			.optional(),
+	});
 export type CreateSessionCommandInput = z.input<
 	typeof createSessionCommandSchema
 >;
@@ -80,6 +90,16 @@ export const rewindSessionCommandSchema = rewindSessionInputSchema.extend({
 export type RewindSessionCommandInput = z.input<
 	typeof rewindSessionCommandSchema
 >;
+
+function lastAgentMessageId(events: DurableEvent[]): string | null {
+	for (let i = events.length - 1; i >= 0; i--) {
+		const event = events[i];
+		if (event?.type !== "item" || event.item.kind !== "agent_message") continue;
+		const id = (event.item as AgentMessage).agentMessageId;
+		if (id) return id;
+	}
+	return null;
+}
 
 /** The finished turns and items shown before `itemId`, or null when it is not there. */
 export function transcriptBefore(
@@ -398,9 +418,10 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 		},
 
 		/**
-		 * A rewind continues in a new session: the transcript before the chosen
-		 * message is copied in, so the chat reads the same, and the agent — which
-		 * cannot be cut back — is told that conversation out of view.
+		 * A rewind continues in a new session with the transcript before the
+		 * chosen message copied in, so the chat reads the same. An agent that can
+		 * fork at a message resumes its own history cut there; any other is told
+		 * that conversation in a prompt the transcript does not show.
 		 */
 		async rewindSession(input) {
 			const parsed = rewindSessionCommandSchema.parse(input);
@@ -415,14 +436,31 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 					`message ${parsed.itemId} is not in chat session ${parsed.sessionId}`,
 				);
 			}
+			const sourceLive = options.live.get(parsed.sessionId);
+			const cutAt = lastAgentMessageId(seed);
+			const forked =
+				cutAt && sourceLive
+					? await sourceLive
+							.fork({ upToMessageId: cutAt })
+							.catch((error: unknown) => {
+								console.warn(
+									"[chat-runtime] could not fork the agent at the rewind point",
+									error,
+								);
+								return null;
+							})
+					: null;
 			const created = this.createSession({
 				commandId: parsed.commandId,
 				scopeId: source.scopeId,
 				cwd: parsed.cwd,
 				harness: source.harness,
-				modeId: parsed.modeId,
+				modeId: sourceLive?.state.modeId ?? parsed.modeId,
 				modelId: parsed.modelId,
-				terminalId: options.live.get(parsed.sessionId)?.terminalId,
+				terminalId: sourceLive?.terminalId,
+				...(forked
+					? { resume: { harnessSessionId: forked, quiet: true } }
+					: {}),
 			});
 			const live = options.live.require(created.sessionId);
 			live.seed(seed);
@@ -438,7 +476,7 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 						error,
 					),
 				);
-			if (parsed.handoffPrompt) {
+			if (parsed.handoffPrompt && !forked) {
 				live.prompt(
 					[{ type: "text", text: parsed.handoffPrompt }],
 					`rewind-${parsed.commandId}`,

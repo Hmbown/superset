@@ -11,6 +11,8 @@ export type AcpHarness = {
 	/** The agent's own id for its unrestricted mode; chats start in it. */
 	fullAccessModeId?: string;
 	clientApprovalModes?: boolean;
+	/** Forks a session up to a given message (JetBrains AIR fork point), so a rewind keeps the agent's own history. */
+	forkAtMessage?: boolean;
 	note: string;
 } & AcpTranslator;
 
@@ -26,6 +28,7 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		executableEnv: "CLAUDE_CODE_EXECUTABLE",
 		upgrade: "npm i -g @anthropic-ai/claude-code@latest",
 		fullAccessModeId: "bypassPermissions",
+		forkAtMessage: true,
 		note: "2.1.226 verified against adapter 0.85.0: session/new returns the same modes and configOptions as 2.1.286.",
 	},
 	"codex-acp": {
@@ -37,6 +40,7 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		executableEnv: "CODEX_PATH",
 		upgrade: "npm i -g @openai/codex@latest",
 		fullAccessModeId: "agent-full-access",
+		forkAtMessage: true,
 		note: "Conservative: the adapter drives `codex app-server`, and the release that introduced it is not pinned. The native codex adapter's MIN_CODEX_VERSION is 0.143.0, so this floor is probably lowerable once app-server is verified against an older build.",
 	},
 	"gemini-acp": {

@@ -340,7 +340,10 @@ describe("chat commands", () => {
 		let created = 0;
 		const runtime = createTestRuntime({
 			harnesses: new Map([
-				[FAKE_HARNESS, () => new FakeHarness(scripts[created++] ?? { turns: [] })],
+				[
+					FAKE_HARNESS,
+					() => new FakeHarness(scripts[created++] ?? { turns: [] }),
+				],
 			]),
 		});
 		const { sessionId } = createSession(runtime);
@@ -394,6 +397,99 @@ describe("chat commands", () => {
 				(envelope.event.item as UserMessage).hidden === true,
 		);
 		expect(handoff).toBeDefined();
+		await runtime.dispose();
+	});
+
+	test("rewindSession resumes an agent that can fork at a message, cut there, without a handoff", async () => {
+		const later = Date.now() + 60_000;
+		const reply = (turnId: string, messageId: string) => [
+			{ kind: "turn" as const, turn: turn(turnId, { startedAtMs: later }) },
+			{
+				kind: "item" as const,
+				item: {
+					...agentMessage(`${turnId}-reply`, "done"),
+					startedAtMs: later,
+					agentMessageId: messageId,
+				},
+				turnId,
+			},
+			{
+				kind: "turn" as const,
+				turn: turn(turnId, {
+					status: "completed",
+					startedAtMs: later,
+					completedAtMs: later,
+				}),
+			},
+			{ kind: "session" as const, session: { status: "idle" as const } },
+		];
+		const cuts: (string | undefined)[] = [];
+		const resumes: unknown[] = [];
+		class CuttingHarness extends FakeHarness {
+			override start(options: Parameters<FakeHarness["start"]>[0]) {
+				resumes.push(options.resume);
+				return super.start(options);
+			}
+			async fork(cut?: { upToMessageId: string }) {
+				cuts.push(cut?.upToMessageId);
+				return "agent-forked";
+			}
+		}
+		const runtime = createTestRuntime({
+			harnesses: new Map([
+				[
+					FAKE_HARNESS,
+					() =>
+						new CuttingHarness({
+							turns: [reply("t1", "msg_1"), reply("t2", "msg_2")],
+						}),
+				],
+			]),
+		});
+		const { sessionId } = createSession(runtime);
+		const send = (text: string) =>
+			runtime.commands.prompt({
+				commandId: randomUUID(),
+				sessionId,
+				clientId: text,
+				content: [{ type: "text", text }],
+			});
+		send("first");
+		await waitFor(() => runtime.sessions.get(sessionId)?.status === "idle");
+		const second = send("second");
+		await waitFor(
+			() =>
+				runtime.live.require(sessionId).turn?.id === "t2" &&
+				runtime.live.require(sessionId).turn?.status === "completed",
+		);
+
+		const rewound = await runtime.commands.rewindSession({
+			commandId: randomUUID(),
+			sessionId,
+			itemId: second.itemId,
+			handoffPrompt: "earlier conversation",
+			cwd: "/tmp/workspace",
+		});
+
+		expect(cuts).toEqual(["msg_1"]);
+		expect(resumes.at(-1)).toEqual({
+			harnessSessionId: "agent-forked",
+			quiet: true,
+		});
+		const envelopes = journalEnvelopes(runtime, rewound.sessionId);
+		expect(
+			envelopes.some(
+				(envelope) =>
+					envelope.event.type === "item" &&
+					envelope.event.item.kind === "user_message" &&
+					(envelope.event.item as UserMessage).hidden === true,
+			),
+		).toBe(false);
+		expect(
+			deriveTimeline(reduceMany(emptySnapshot(), envelopes)).map(
+				(group) => group.turnId,
+			),
+		).toContain("t1");
 		await runtime.dispose();
 	});
 });

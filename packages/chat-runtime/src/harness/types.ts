@@ -17,7 +17,8 @@ export type HarnessStartOptions = {
 	cwd: string;
 	modeId?: string;
 	modelId?: string;
-	resume?: { harnessSessionId: string };
+	/** `quiet` loads the agent's history without replaying it as items. */
+	resume?: { harnessSessionId: string; quiet?: boolean };
 };
 
 export interface HarnessAdapter {
@@ -34,7 +35,8 @@ export interface HarnessAdapter {
 	 * Branch this session, returning the harness id of the copy. Absent, or
 	 * null, when the harness cannot: the agent has to advertise it.
 	 */
-	fork?(): Promise<string | null>;
+	/** With `upToMessageId`, keeps the conversation only through that message, or returns null when it cannot. */
+	fork?(cut?: { upToMessageId: string }): Promise<string | null>;
 	stopBackgroundTask?(taskId: string): Promise<boolean>;
 	dispose(): Promise<void>;
 }

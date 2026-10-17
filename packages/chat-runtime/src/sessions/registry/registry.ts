@@ -11,7 +11,7 @@ export type HarnessFactoryOptions = {
 	cwd: string;
 	modeId?: string;
 	modelId?: string;
-	resume?: { harnessSessionId: string };
+	resume?: { harnessSessionId: string; quiet?: boolean };
 	terminalId?: string;
 };
 

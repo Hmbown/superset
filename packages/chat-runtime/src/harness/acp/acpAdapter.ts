@@ -30,6 +30,7 @@ import {
 	airAsyncTaskProgressSchema,
 	airAsyncTaskSpawnedSchema,
 	airAsyncTaskStateSchema,
+	airForkPointMeta,
 	airSubagentSpawnedSchema,
 	airSubagentStateSchema,
 	isSubagentControlCall,
@@ -239,6 +240,7 @@ export type AcpAdapterOptions = SpawnAcpOptions & {
 	/** Selected for a new session that asks for no mode, when the agent offers it. */
 	defaultModeId?: string;
 	clientApprovalModes?: boolean;
+	forkAtMessage?: boolean;
 	shellPollMs?: number;
 	startupTimeoutMs?: number;
 	requestTimeoutMs?: number;
@@ -458,6 +460,7 @@ export class AcpAdapter implements HarnessAdapter {
 	private configOptions: SessionConfigOption[] = [];
 	private replaying = false;
 	private agentName: string | null = null;
+	private quietReplay = false;
 	private unkeyedImageSequence = 0;
 	private queuedPrompts: UserContent[][] = [];
 	private disposed = false;
@@ -704,12 +707,18 @@ export class AcpAdapter implements HarnessAdapter {
 	 * advertise it. The agent copies its own session; the caller decides what to
 	 * attach to the id that comes back.
 	 */
-	async fork(): Promise<string | null> {
+	async fork(cut?: { upToMessageId: string }): Promise<string | null> {
 		if (!this.client || !this.sessionId) return null;
 		if (!this.supportsSessionCapability("fork")) return null;
+		if (cut && !this.options.forkAtMessage) return null;
 		const response = await this.client.request(
 			"session/fork",
-			{ sessionId: this.sessionId, cwd: this.cwd, mcpServers: [] },
+			{
+				sessionId: this.sessionId,
+				cwd: this.cwd,
+				mcpServers: [],
+				...(cut ? { _meta: airForkPointMeta(cut.upToMessageId) } : {}),
+			},
 			this.requestTimeoutMs(),
 		);
 		const parsed = acpNewSessionResponseSchema.safeParse(response);
@@ -810,6 +819,7 @@ export class AcpAdapter implements HarnessAdapter {
 			let resumed = false;
 			if (startOptions.resume) {
 				this.replaying = true;
+				this.quietReplay = startOptions.resume.quiet === true;
 				this.loadingSessionId = startOptions.resume.harnessSessionId;
 				try {
 					response = await client.request(
@@ -842,7 +852,9 @@ export class AcpAdapter implements HarnessAdapter {
 						startupTimeoutMs,
 					);
 				} finally {
+					if (this.quietReplay) this.openText = null;
 					this.replaying = false;
+					this.quietReplay = false;
 					this.loadingSessionId = null;
 					// Nothing follows the replay, so the last item it opened has no
 					// later turn to flush it.
@@ -1291,6 +1303,7 @@ export class AcpAdapter implements HarnessAdapter {
 					...base,
 					kind: "agent_message",
 					text: open.text,
+					...(open.messageId ? { agentMessageId: open.messageId } : {}),
 					...(open.attachments.length > 0
 						? { attachments: open.attachments }
 						: {}),
@@ -2266,6 +2279,8 @@ export class AcpAdapter implements HarnessAdapter {
 	}
 
 	private emit(event: AdapterEvent): void {
+		if (this.quietReplay && (event.kind === "item" || event.kind === "turn"))
+			return;
 		this.queue.push(event);
 	}
 
