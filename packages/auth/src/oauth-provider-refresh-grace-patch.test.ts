@@ -22,11 +22,15 @@ type Row = Record<string, unknown>;
 
 async function setup() {
 	const db: Record<string, Row[]> = {};
+	const warnings: string[] = [];
 	const auth = betterAuth({
 		baseURL: API_URL,
 		secret: "oauth-provider-patch-test-secret-0123456789",
 		database: memoryAdapter(db),
-		logger: { disabled: true },
+		logger: {
+			level: "warn",
+			log: (_level: string, message: string) => warnings.push(message),
+		},
 		plugins: [
 			jwt(),
 			oauthProvider({
@@ -89,7 +93,13 @@ async function setup() {
 			if (row.revoked) row.revoked = new Date(Date.now() - ms);
 		}
 	};
-	return { seedRefreshToken, refresh, liveTokens, backdateRevocations };
+	return {
+		seedRefreshToken,
+		refresh,
+		liveTokens,
+		backdateRevocations,
+		warnings,
+	};
 }
 
 describe("@better-auth/oauth-provider refresh reuse grace patch", () => {
@@ -120,6 +130,9 @@ describe("@better-auth/oauth-provider refresh reuse grace patch", () => {
 		expect(reuse.status).toBe(400);
 		expect((await reuse.json()).error).toBe("invalid_grant");
 		expect(t.liveTokens()).toBe(2);
+		expect(
+			t.warnings.filter((m) => m.includes("oauth-refresh-reuse-grace")),
+		).toHaveLength(1);
 		expect((await t.refresh("machine-b")).status).toBe(200);
 	});
 
