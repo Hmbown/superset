@@ -54,6 +54,11 @@ import { jwksAdapter } from "./lib/cached-jwks";
 import { generateMagicTokenForInvite } from "./lib/generate-magic-token";
 import { getActivationVariant } from "./lib/lifecycle";
 import { loadCustomSessionData } from "./lib/load-custom-session-data";
+import {
+	convertPendingShares,
+	removeInvitationShares,
+	removeMemberShares,
+} from "./lib/pending-shares";
 import { invitationRateLimit } from "./lib/rate-limit";
 import { resend } from "./lib/resend";
 import {
@@ -752,6 +757,19 @@ export const auth = betterAuth({
 				},
 
 				afterAddMember: async ({ member, user, organization }) => {
+					try {
+						await convertPendingShares({
+							organizationId: organization.id,
+							userId: member.userId,
+							email: user.email,
+						});
+					} catch (error) {
+						console.error(
+							"[org/after-add-member] Failed to convert pending shares:",
+							error,
+						);
+					}
+
 					// Linear-style: auto-add new org members to the oldest team so
 					// they aren't dropped into an empty teams view. Additional team
 					// memberships are added explicitly by admins.
@@ -906,6 +924,18 @@ export const auth = betterAuth({
 				},
 
 				afterRemoveMember: async ({ user, organization }) => {
+					try {
+						await removeMemberShares({
+							organizationId: organization.id,
+							userId: user.id,
+						});
+					} catch (error) {
+						console.error(
+							"[org/after-remove-member] Failed to remove shares:",
+							error,
+						);
+					}
+
 					await resend.emails.send({
 						from: NOREPLY_FROM,
 						to: user.email,
@@ -1018,6 +1048,24 @@ export const auth = betterAuth({
 							error,
 						);
 					}
+				},
+
+				afterCancelInvitation: async ({ invitation }) => {
+					await removeInvitationShares(invitation.id).catch((error) =>
+						console.error(
+							"[org/after-cancel-invitation] Failed to remove shares:",
+							error,
+						),
+					);
+				},
+
+				afterRejectInvitation: async ({ invitation }) => {
+					await removeInvitationShares(invitation.id).catch((error) =>
+						console.error(
+							"[org/after-reject-invitation] Failed to remove shares:",
+							error,
+						),
+					);
 				},
 			},
 		}),
