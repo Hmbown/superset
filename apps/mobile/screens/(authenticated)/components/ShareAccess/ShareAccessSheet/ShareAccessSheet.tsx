@@ -1,9 +1,10 @@
 import { useLingui } from "@lingui/react/macro";
-import type {
-	ShareGrantee,
-	ShareGranteeRef,
-	SharePerson,
-	ShareRoleOption,
+import {
+	type ShareGrantee,
+	type ShareGranteeRef,
+	type SharePerson,
+	type ShareRoleOption,
+	sortGrantees,
 } from "@superset/shared/sharing";
 import * as Clipboard from "expo-clipboard";
 import * as Haptics from "expo-haptics";
@@ -116,7 +117,6 @@ export function ShareAccessSheet({
 					style={{ maxHeight: Math.round(height * PEOPLE_MAX_HEIGHT) }}
 					nestedScrollEnabled
 				>
-					{grantees.filter((grantee) => grantee.kind === "team").map(row)}
 					{owner ? (
 						<OwnerRow owner={owner} isYou={owner.userId === currentUserId} />
 					) : loaded ? (
@@ -124,8 +124,7 @@ export function ShareAccessSheet({
 							{t({ message: "The owner's account no longer exists." })}
 						</Text>
 					) : null}
-					{grantees.filter((grantee) => grantee.kind === "user").map(row)}
-					{grantees.filter((grantee) => grantee.kind === "invitation").map(row)}
+					{sortGrantees(grantees).map(row)}
 				</ScrollView>
 				{loaded && !canManage ? (
 					<Text className="text-muted-foreground mt-2 text-xs">

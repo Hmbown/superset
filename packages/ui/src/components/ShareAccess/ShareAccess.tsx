@@ -2,7 +2,7 @@
 
 import { Trans, useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
-import { effectiveRole } from "@superset/shared/sharing";
+import { effectiveRole, sortGrantees } from "@superset/shared/sharing";
 import { Check, Link2 } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
@@ -206,7 +206,7 @@ export function ShareAccess({
 							<Trans>The owner's account no longer exists.</Trans>
 						</p>
 					)}
-					{grantees.map((grantee) => (
+					{sortGrantees(grantees).map((grantee) => (
 						<GranteeRow
 							key={keyOf(grantee)}
 							grantee={grantee}
