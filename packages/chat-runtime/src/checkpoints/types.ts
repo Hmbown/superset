@@ -12,4 +12,10 @@ export type RewindFilesResult = {
 export type ChatCheckpoints = {
 	capture(target: CheckpointTarget): Promise<void>;
 	restore(target: CheckpointTarget): Promise<"restored" | "missing">;
+	/** Lets a session opened by a rewind restore the checkpoints of the one it came from. */
+	fork?(input: {
+		cwd: string;
+		fromSessionId: string;
+		toSessionId: string;
+	}): Promise<void>;
 };

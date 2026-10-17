@@ -60,5 +60,18 @@ describe("createGitCheckpoints", () => {
 		expect(await checkpoints.restore({ ...target, itemId: "unknown" })).toBe(
 			"missing",
 		);
+
+		await checkpoints.fork?.({
+			cwd: repo,
+			fromSessionId: "session-1",
+			toSessionId: "session-2",
+		});
+		await writeFile(join(repo, "tracked.txt"), "after fork\n");
+		expect(
+			await checkpoints.restore({ ...target, sessionId: "session-2" }),
+		).toBe("restored");
+		expect(await readFile(join(repo, "tracked.txt"), "utf8")).toBe(
+			"edited before prompt\n",
+		);
 	});
 });

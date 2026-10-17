@@ -505,17 +505,49 @@ export function AcpChatPane({
 				}
 			}
 			if (!mounted.current) return;
+			const handoffPrompt = request.transcript.trim()
+				? buildChatRewindPrompt({
+						transcript: request.transcript,
+						...(agentLabel ? { sourceAgentLabel: agentLabel } : {}),
+						filesRestored: files === "restored",
+					})
+				: null;
+			let rewound: { sessionId: string } | null;
+			try {
+				rewound = await wiring.transport.rewindSession({
+					commandId: crypto.randomUUID(),
+					sessionId,
+					itemId: request.itemId,
+					workspaceId,
+					...(handoffPrompt ? { handoffPrompt } : {}),
+					...(modelId ? { modelId } : {}),
+					...(modeId ? { modeId } : {}),
+				});
+			} catch (error) {
+				// A host from before rewindSession: fall back to a fresh session
+				// that is handed the conversation in plain view.
+				if (
+					!(
+						error instanceof TRPCClientError &&
+						/No procedure/.test(error.message)
+					)
+				) {
+					console.error("[acp-chat] rewind failed", error);
+					toast.error(t({ message: "Couldn't rewind the chat" }), {
+						description: errorMessage(error, t({ message: "Unknown error" })),
+					});
+					return;
+				}
+				rewound = null;
+			}
+			if (!mounted.current) return;
 			prependToDraft(draftKey, [request.messageText]);
-			attaching.current = false;
-			onRewound(
-				request.transcript.trim()
-					? buildChatRewindPrompt({
-							transcript: request.transcript,
-							...(agentLabel ? { sourceAgentLabel: agentLabel } : {}),
-							filesRestored: files === "restored",
-						})
-					: null,
-			);
+			if (rewound) {
+				onSessionCreated(rewound.sessionId);
+			} else {
+				attaching.current = false;
+				onRewound(handoffPrompt);
+			}
 			void wiring.transport
 				.closeSession({ sessionId })
 				.catch((error: unknown) =>
@@ -525,11 +557,14 @@ export function AcpChatPane({
 		[
 			sessionId,
 			onRewound,
+			onSessionCreated,
 			wiring.transport,
 			workspaceId,
 			t,
 			draftKey,
 			agentLabel,
+			modelId,
+			modeId,
 		],
 	);
 	const rewind = useCallback(

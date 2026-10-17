@@ -144,6 +144,14 @@ export function createGitCheckpoints(): ChatCheckpoints {
 			);
 		},
 
+		async fork({ cwd: dir, fromSessionId, toSessionId }) {
+			const cwd = await workTreeRoot(dir);
+			if (!cwd) return;
+			const git = gitAt(cwd);
+			const head = await readRef(git, checkpointRef(fromSessionId));
+			if (head) await git.raw(["update-ref", checkpointRef(toSessionId), head]);
+		},
+
 		async restore({ cwd: dir, sessionId, itemId }: CheckpointTarget) {
 			const cwd = await workTreeRoot(dir);
 			if (!cwd) return "missing";

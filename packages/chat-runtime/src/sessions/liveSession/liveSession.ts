@@ -114,6 +114,7 @@ export class LiveSession {
 		content: UserContent[],
 		clientId: string,
 		steerTurnId?: string,
+		hidden = false,
 	): PromptResult {
 		const itemId = this.mintId();
 		const seq = ++this.sent;
@@ -148,6 +149,7 @@ export class LiveSession {
 			startedAtMs: this.now(),
 			content,
 			...(queued ? { queued: true } : {}),
+			...(hidden ? { hidden: true } : {}),
 		};
 		const turnId = this.mintId();
 		if (queued) {
@@ -165,6 +167,11 @@ export class LiveSession {
 		this.appendDurable({ type: "item", item, turnId });
 		this.deliver({ item, content, turnId, seq });
 		return { itemId, queued: false };
+	}
+
+	/** Writes finished turns and items from another session's transcript into this one. */
+	seed(events: DurableEvent[]): void {
+		for (const event of events) this.appendDurable(event);
 	}
 
 	removeQueued(itemId: string): void {

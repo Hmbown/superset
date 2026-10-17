@@ -103,6 +103,19 @@ export const rewindFilesInputSchema = z.object({
 export type RewindFilesInput = z.infer<typeof rewindFilesInputSchema>;
 
 /**
+ * Opens a new session holding the conversation before `itemId`, and hands the
+ * agent that conversation in a prompt the transcript does not show.
+ */
+export const rewindSessionInputSchema = z.object({
+	...commandBaseFields,
+	itemId: z.string().min(1),
+	handoffPrompt: z.string().min(1).optional(),
+	modeId: z.string().optional(),
+	modelId: z.string().optional(),
+});
+export type RewindSessionInput = z.infer<typeof rewindSessionInputSchema>;
+
+/**
  * Stops the session's harness process. The transcript stays readable; only the
  * live agent goes away, so a later `createSession` with `resume` picks it back
  * up. Closing an already-stopped session is not an error.
