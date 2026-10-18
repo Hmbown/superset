@@ -3,6 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { i18n } from "@superset/i18n";
 import { PROTOCOL_SCHEMES } from "@superset/shared/constants";
 import { clipboard, Menu, webContents } from "electron";
+import { writeClipboardImage } from "main/lib/clipboard-image";
 import { safeOpenExternal } from "main/lib/safe-url";
 import type {
 	DesignModeRect,
@@ -775,7 +776,7 @@ class BrowserManager extends EventEmitter {
 		paneId: string,
 	): Promise<{ image: Electron.NativeImage; url: string }> {
 		const image = await this.capturePageImage(paneId);
-		clipboard.writeImage(image);
+		await writeClipboardImage(image);
 		const wc = this.getWebContents(paneId);
 		return { image, url: wc?.getURL() ?? "" };
 	}
@@ -1067,7 +1068,7 @@ class BrowserManager extends EventEmitter {
 								message: "Copy Link Address",
 							}),
 						),
-						click: () => clipboard.writeText(linkURL),
+						click: () => void clipboard.writeText(linkURL),
 					},
 					{ type: "separator" },
 				);
@@ -1163,7 +1164,7 @@ class BrowserManager extends EventEmitter {
 							}),
 						),
 						click: () => {
-							if (pageURL) clipboard.writeText(pageURL);
+							if (pageURL) void clipboard.writeText(pageURL);
 						},
 						enabled: !!pageURL && pageURL !== "about:blank",
 					},
