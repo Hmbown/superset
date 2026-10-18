@@ -2,7 +2,8 @@ import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
 import type { ShareRoleOption } from "@superset/shared/sharing";
 import * as Haptics from "expo-haptics";
-import { Stack, useRouter } from "expo-router";
+import { Stack, useNavigation, useRouter } from "expo-router";
+import { useState } from "react";
 import { Alert, ScrollView } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { ListRow } from "../../ListRow";
@@ -26,6 +27,11 @@ export function ShareGeneralAccessSheet({
 }) {
 	const { t } = useLingui();
 	const router = useRouter();
+	const navigation = useNavigation();
+	const [saving, setSaving] = useState(false);
+	const closeIfOpen = () => {
+		if (navigation.isFocused()) router.back();
+	};
 	const choose = useChooseGeneralAccess(general);
 	const role = general.role;
 
@@ -75,11 +81,14 @@ export function ShareGeneralAccessSheet({
 									<ListRowCheck visible={option.value === general.value} />
 								}
 								isLast={index === general.options.length - 1}
-								onPress={() =>
+								onPress={() => {
+									if (saving) return;
+									setSaving(true);
 									void choose(option.value).then((applied) => {
-										if (applied) router.back();
-									})
-								}
+										setSaving(false);
+										if (applied) closeIfOpen();
+									});
+								}}
 							/>
 						))
 					: roles.map((option, index) => (
@@ -90,17 +99,23 @@ export function ShareGeneralAccessSheet({
 								trailing={<ListRowCheck visible={option.id === role?.value} />}
 								isLast={index === roles.length - 1}
 								onPress={() => {
-									if (!role || option.id === role.value) return;
+									if (!role || saving || option.id === role.value) return;
 									void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+									setSaving(true);
 									role.onChange(option.id).then(
-										() => router.back(),
-										(error: unknown) =>
+										() => {
+											setSaving(false);
+											closeIfOpen();
+										},
+										(error: unknown) => {
+											setSaving(false);
 											Alert.alert(
 												errorMessage(
 													error,
 													t({ message: "Could not change access" }),
 												),
-											),
+											);
+										},
 									);
 								}}
 							/>
