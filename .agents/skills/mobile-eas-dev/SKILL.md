@@ -16,8 +16,22 @@ apps/mobile/scripts/eas-dev.sh
 It reuses this checkout's running session when there is one. Otherwise it installs the finished
 simulator build whose native fingerprint matches this checkout and starts a session, about two minutes.
 It builds only when no such build exists (the first time, or after a native change), about fifteen
-minutes. Pass `--new` to stop the running session and start a fresh one. `apps/mobile/AGENTS.md`'s
-"Verifying in the real app" section records why the script does each step.
+minutes. `apps/mobile/AGENTS.md`'s "Verifying in the real app" section records why the script does
+each step.
+
+```bash
+apps/mobile/scripts/eas-dev.sh --reload   # load the app from Metro again; starts nothing
+apps/mobile/scripts/eas-dev.sh --new      # stop the running session and start a fresh one
+```
+
+- **Reload with `--reload`.** It opens the dev-client URL and waits for a new `iOS Bundled` line in the
+  Metro log, three tries. Never `agent-device open Superset`: that relaunches the app without the
+  Metro URL and it fails with "Could not connect to the server".
+- **Switch sessions with `--new`,** never `eas simulator` by hand. The egress client is bound to the
+  session it started with, so the script stops the old client and starts one for the new session.
+  With no flag it keeps a connected client and restarts one that died.
+- Each run that (re)starts the tunnel ends only when Metro has served the app a bundle; otherwise it
+  exits non-zero and names the Metro and egress logs.
 
 The session is tagged with the workspace id. The desktop Mobile pane lists the workspace's tagged
 sessions, so the person can watch the simulator there without a link. The script also prints an
@@ -40,6 +54,10 @@ agent-device help                               # the rest
 - Through `eas simulator:exec npx agent-device` each command takes about 25 s. Install it globally
   (`npm install -g agent-device`) when it is missing.
 - The dev-menu sheet covers the first screen on a fresh install: press `Continue`, then `Close`.
+- iOS's "slide to type" keyboard intro is already dismissed on a session the script started.
+- SwiftUI menu items (`@expo/ui` `Menu`) are not in `agent-device snapshot`. Open the menu, take a
+  screenshot, and tap the item by coordinate: `agent-device press <x> <y>`. This is a limit of the
+  tool, not of the app.
 - Source edits reach the app through fast refresh in about two seconds.
 
 ## Limits

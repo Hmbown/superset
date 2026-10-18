@@ -10,6 +10,7 @@
 # Usage:
 #   apps/mobile/scripts/eas-dev.sh             # reuse this checkout's running session, else start one
 #   apps/mobile/scripts/eas-dev.sh --new       # stop the running session and start a fresh one
+#   apps/mobile/scripts/eas-dev.sh --reload    # load the app from Metro again; starts nothing
 #   MOBILE_EAS_BUILD_ID=<id> apps/mobile/scripts/eas-dev.sh   # install this build, skip the lookup
 #
 # Requires: EXPO_TOKEN (or `eas login`), this repo's .env already written
@@ -21,9 +22,11 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$ROOT_DIR"
 
 NEW=0
+RELOAD=0
 for arg in "$@"; do
 	case "$arg" in
 	--new) NEW=1 ;;
+	--reload) RELOAD=1 ;;
 	*)
 		echo "Unknown argument: $arg" >&2
 		exit 1
@@ -46,7 +49,10 @@ BUILD_PROFILE=development-simulator
 IDLE_MINUTES="${MOBILE_EAS_IDLE_MINUTES:-15}"
 SESSION_FILE=apps/mobile/.env.eas-simulator
 EGRESS_LOG=/tmp/superset-eas-egress.log
+EGRESS_PID_FILE=/tmp/superset-eas-egress.pid
 METRO_LOG=/tmp/superset-metro.log
+LOAD_ATTEMPTS=3
+BUNDLE_WAIT_SECONDS=90
 
 cd apps/mobile
 
@@ -76,11 +82,131 @@ session_running() {
 	[ "$(eas simulator:get --id "$id" --json --non-interactive 2>/dev/null | json 'j.status')" = "IN_PROGRESS" ]
 }
 
-if ! curl -s "http://127.0.0.1:$METRO_PORT/status" 2>/dev/null | grep -q "packager-status:running"; then
+metro_running() {
+	curl -s "http://127.0.0.1:$METRO_PORT/status" 2>/dev/null | grep -q "packager-status:running"
+}
+
+agent_device() {
+	if command -v agent-device >/dev/null 2>&1; then
+		(
+			set -a
+			# shellcheck disable=SC1090
+			source "$ROOT_DIR/$SESSION_FILE"
+			set +a
+			agent-device "$@"
+		)
+	else
+		eas simulator:exec npx -y agent-device "$@"
+	fi
+}
+
+# The egress client reads .env.eas-simulator once, at start, so it stays bound
+# to the session that was current then.
+egress_pids() {
+	local pid
+	for pid in $(pgrep -f "eas simulator:egress" || true); do
+		if [ ! -d /proc ] || [ "$(readlink "/proc/$pid/cwd")" = "$PWD" ]; then echo "$pid"; fi
+	done
+}
+
+egress_healthy() {
+	local pid
+	pid="$(cat "$EGRESS_PID_FILE" 2>/dev/null || true)"
+	[ -n "$pid" ] && kill -0 "$pid" 2>/dev/null &&
+		grep -qF "simulator session $1." "$EGRESS_LOG" 2>/dev/null &&
+		grep -q "Egress tunnel connected" "$EGRESS_LOG"
+}
+
+stop_egress() {
+	local pid
+	for pid in $(egress_pids) $(cat "$EGRESS_PID_FILE" 2>/dev/null || true); do
+		pkill -P "$pid" 2>/dev/null || true
+		kill "$pid" 2>/dev/null || true
+	done
+	rm -f "$EGRESS_PID_FILE"
+}
+
+start_egress() {
+	stop_egress
+	echo "==> Egress for session $1"
+	nohup eas simulator:egress >"$EGRESS_LOG" 2>&1 </dev/null &
+	echo $! >"$EGRESS_PID_FILE"
+	for _ in $(seq 1 60); do
+		grep -q "Egress tunnel connected" "$EGRESS_LOG" && return 0
+		sleep 1
+	done
+	echo "The egress tunnel did not connect in 60 s. See $EGRESS_LOG." >&2
+	exit 1
+}
+
+bundle_count() {
+	local count
+	count="$(grep -c "iOS Bundled" "$METRO_LOG" 2>/dev/null || true)"
+	echo "${count:-0}"
+}
+
+# Proof the app reached Metro is a new "iOS Bundled" line in the Metro log.
+load_app() {
+	local attempt before
+	if [ ! -f "$METRO_LOG" ]; then
+		echo "==> Loading the app from Metro (not confirmed: Metro was not started by this script)"
+		agent_device open "$DEV_CLIENT_URL" >/dev/null 2>&1 || true
+		agent_device alert accept >/dev/null 2>&1 || true
+		return 0
+	fi
+	for attempt in $(seq 1 "$LOAD_ATTEMPTS"); do
+		echo "==> Loading the app from Metro (attempt $attempt of $LOAD_ATTEMPTS)"
+		before="$(bundle_count)"
+		agent_device open "$DEV_CLIENT_URL" >/dev/null 2>&1 || true
+		agent_device alert accept >/dev/null 2>&1 || true
+		for _ in $(seq 1 "$BUNDLE_WAIT_SECONDS"); do
+			if [ "$(bundle_count)" -gt "$before" ]; then
+				echo "==> Metro served the bundle"
+				return 0
+			fi
+			sleep 1
+		done
+	done
+	echo "Metro served no bundle after $LOAD_ATTEMPTS tries. See $METRO_LOG and $EGRESS_LOG." >&2
+	exit 1
+}
+
+# simctl is not reachable from here, so the intro cannot be turned off with
+# `defaults write`. Showing the keyboard once in Settings and pressing Continue
+# marks it as shown for the whole simulator.
+dismiss_keyboard_intro() {
+	local output
+	agent_device open com.apple.Preferences --relaunch >/dev/null 2>&1 || return 0
+	output="$(agent_device press 'role="search"' --settle 2>&1 || true)"
+	if [[ "$output" == *UIContinuousPathIntroductionView* ]]; then
+		echo "==> Dismissing the slide-to-type keyboard intro"
+		agent_device press 'label="Continue"' --settle >/dev/null 2>&1 || true
+	fi
+	agent_device close com.apple.Preferences >/dev/null 2>&1 || true
+}
+
+if [ "$RELOAD" = "1" ]; then
+	metro_running || {
+		echo "Metro is not running. Run apps/mobile/scripts/eas-dev.sh without --reload." >&2
+		exit 1
+	}
+	session_running || {
+		echo "No running simulator session. Run apps/mobile/scripts/eas-dev.sh without --reload." >&2
+		exit 1
+	}
+	egress_healthy "$(session_id)" || {
+		echo "The egress client is not connected to session $(session_id). Run apps/mobile/scripts/eas-dev.sh without --reload." >&2
+		exit 1
+	}
+	load_app
+	exit 0
+fi
+
+if ! metro_running; then
 	echo "==> Starting Metro"
 	nohup bunx expo start --dev-client --port "$METRO_PORT" >"$METRO_LOG" 2>&1 </dev/null &
 	for _ in $(seq 1 30); do
-		curl -s "http://127.0.0.1:$METRO_PORT/status" 2>/dev/null | grep -q "packager-status:running" && break
+		metro_running && break
 		sleep 2
 	done
 fi
@@ -90,9 +216,11 @@ if [ "$NEW" = "1" ] && session_running; then
 	eas simulator:stop --id "$(session_id)" --non-interactive >/dev/null
 fi
 
+STARTED=0
 if session_running; then
 	echo "==> Reusing session $(session_id)"
 else
+	STARTED=1
 	BUILD_ID="${MOBILE_EAS_BUILD_ID:-}"
 	if [ -z "$BUILD_ID" ]; then
 		HASH="$(without_dev_env eas fingerprint:generate -p ios --build-profile "$BUILD_PROFILE" --json --non-interactive | json 'j.hash')"
@@ -120,33 +248,13 @@ else
 		--out-config-type dotenv --non-interactive --force
 fi
 
-agent_device() {
-	if command -v agent-device >/dev/null 2>&1; then
-		(
-			set -a
-			# shellcheck disable=SC1090
-			source "$ROOT_DIR/$SESSION_FILE"
-			set +a
-			agent-device "$@"
-		)
-	else
-		eas simulator:exec npx -y agent-device "$@"
-	fi
-}
-
 # The simulator reaches this machine only while the egress client runs, and
 # the client needs the session, so the app's first load at session start
 # always fails. Load it again once the tunnel is up.
-if ! pgrep -f "eas simulator:egress" >/dev/null 2>&1; then
-	echo "==> Egress"
-	nohup eas simulator:egress >"$EGRESS_LOG" 2>&1 </dev/null &
-	for _ in $(seq 1 30); do
-		grep -q "Egress tunnel connected" "$EGRESS_LOG" 2>/dev/null && break
-		sleep 1
-	done
-	echo "==> Loading the app from Metro"
-	agent_device open "$DEV_CLIENT_URL" >/dev/null 2>&1 || true
-	agent_device alert accept >/dev/null 2>&1 || true
+if [ "$STARTED" = "1" ] || ! egress_healthy "$(session_id)"; then
+	start_egress "$(session_id)"
+	[ "$STARTED" = "1" ] && dismiss_keyboard_intro
+	load_app
 fi
 
 SESSION_ID="$(session_id)"
@@ -158,6 +266,7 @@ Ready.
   Session:     $SESSION_ID
   Preview:     $PREVIEW_URL
   Drive it:    (cd apps/mobile && set -a && . ./.env.eas-simulator && set +a && agent-device snapshot -i)
+  Reload it:   apps/mobile/scripts/eas-dev.sh --reload
                needs "npm install -g agent-device"; through npx each command takes about 25 s
   Stop it:     (cd apps/mobile && eas simulator:stop --id $SESSION_ID)
   Metro log:   $METRO_LOG
