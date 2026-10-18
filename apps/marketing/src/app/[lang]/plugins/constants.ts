@@ -200,7 +200,7 @@ export const FEATURES: PluginsItem[] = [
 		title: msg({ message: "Publish from your own repo" }),
 		description: msg({
 			message:
-				"Share plugins with your team from a GitHub repo. Every machine gets the same version.",
+				"Share plugins with your team from a GitHub repo. Each release is a git tag you can pin.",
 		}),
 	},
 ];
