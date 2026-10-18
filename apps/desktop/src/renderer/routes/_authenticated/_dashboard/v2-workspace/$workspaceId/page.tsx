@@ -236,6 +236,7 @@ function V2WorkspaceContent() {
 		terminalId,
 		focusRequestId,
 		consumeSearch,
+		isLayoutReady: isLayoutReady && isRightLayoutReady,
 	});
 	const subagentLink = useMemo(
 		() =>

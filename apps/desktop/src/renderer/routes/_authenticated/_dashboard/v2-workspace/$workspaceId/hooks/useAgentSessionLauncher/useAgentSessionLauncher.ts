@@ -6,6 +6,7 @@ import { toast } from "@superset/ui/sonner";
 import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
+import { useTerminalAgentBindings } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useAwaitAcpChatEnabled } from "renderer/hooks/useAcpChatEnabled";
 import { useTerminalAppearance } from "renderer/hooks/useTerminalAppearance";
 import {
@@ -19,7 +20,11 @@ import type {
 	PaneViewerData,
 	TerminalPaneData,
 } from "../../types";
-import { focusOrAddTerminalPane } from "../../utils/focusTerminalPane";
+import { chatPaneDataForBinding } from "../../utils/chatPaneDataForBinding";
+import {
+	focusOrAddTerminalPane,
+	focusTerminalPane,
+} from "../../utils/focusTerminalPane";
 
 export interface CreateNewAgentSessionInput {
 	configId: string;
@@ -62,6 +67,7 @@ export function useAgentSessionLauncher({
 	const { hostUrl } = useWorkspaceClient();
 	const { data: agentConfigs } = useV2AgentConfigs(hostUrl);
 	const queryClient = useQueryClient();
+	const bindings = useTerminalAgentBindings(workspaceId);
 
 	const openAgentChat = useCallback<OpenAgentChat>(
 		async (input) => {
@@ -173,9 +179,14 @@ export function useAgentSessionLauncher({
 
 	const focusAgentTerminal = useCallback(
 		(terminalId: string) => {
+			const chat = chatPaneDataForBinding(bindings.get(terminalId));
+			if (chat && !focusTerminalPane(store, terminalId)) {
+				store.getState().addTab({ panes: [{ kind: "chat-v3", data: chat }] });
+				return;
+			}
 			focusOrAddTerminalPane(store, terminalId);
 		},
-		[store],
+		[store, bindings],
 	);
 
 	return { createNewAgentSession, openAgentChat, focusAgentTerminal };

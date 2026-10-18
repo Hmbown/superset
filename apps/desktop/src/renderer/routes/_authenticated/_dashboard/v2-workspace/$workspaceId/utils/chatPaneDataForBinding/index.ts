@@ -1,0 +1,1 @@
+export { chatPaneDataForBinding } from "./chatPaneDataForBinding";
