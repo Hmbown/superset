@@ -9,6 +9,15 @@ fi
 
 export SUPERSET_POSTINSTALL_RUNNING=1
 
+# Each bun version names the node_modules/.bun store entries differently, and the
+# mobile runtime version is a fingerprint of those paths. EAS installs with the
+# pinned bun, so an install on another version gets a runtime no build has.
+pinned_bun="$(cat "$(dirname "$0")/../.bun-version")"
+if [ "$(bun --version)" != "$pinned_bun" ]; then
+  echo "postinstall: bun $(bun --version) installed these dependencies, but .bun-version pins $pinned_bun." >&2
+  echo "postinstall: apps/mobile will compute a different runtime version than EAS. Install bun $pinned_bun, then: rm -rf node_modules && bun install" >&2
+fi
+
 # Run sherif for workspace validation
 sherif
 
