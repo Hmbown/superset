@@ -24,7 +24,6 @@ export async function generateMetadata(): Promise<Metadata> {
 			}),
 		),
 		alternates: localizedAlternates(lang, "/plugins"),
-		robots: { index: false, follow: false },
 	};
 }
 
@@ -37,11 +36,8 @@ export default async function PluginsPage() {
 			<main className="mx-auto w-full max-w-6xl px-6 py-12 sm:px-8 sm:py-20">
 				<section>
 					<div className="max-w-3xl">
-						<p className="flex items-center gap-2 font-mono text-brand text-xs uppercase tracking-wider">
+						<p className="font-mono text-brand text-xs uppercase tracking-wider">
 							<Trans>Superset Plugins</Trans>
-							<span className="border border-border px-2 py-0.5 text-muted-foreground normal-case tracking-normal">
-								<Trans>Coming soon</Trans>
-							</span>
 						</p>
 						<h1 className="mt-4 font-medium text-balance text-4xl text-foreground tracking-tight sm:text-5xl">
 							<Trans>One plugin. Every coding agent.</Trans>

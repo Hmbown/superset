@@ -63,6 +63,11 @@ export const PRODUCT_SECTIONS: NavSection[] = [
 				description: <Trans>Agent-driven previews</Trans>,
 			},
 			{
+				href: "/plugins",
+				label: <Trans>Plugins</Trans>,
+				description: <Trans>Connect agents to your apps</Trans>,
+			},
+			{
 				href: "/marketplace",
 				label: <Trans>Marketplace</Trans>,
 				description: <Trans>Themes and agents</Trans>,
@@ -73,11 +78,6 @@ export const PRODUCT_SECTIONS: NavSection[] = [
 		id: "coming-soon",
 		title: <Trans>Coming soon</Trans>,
 		links: [
-			{
-				href: "/plugins",
-				label: <Trans>Plugins</Trans>,
-				description: <Trans>Connect agents to your apps</Trans>,
-			},
 			{
 				href: "/cloud",
 				label: <Trans>Cloud</Trans>,
