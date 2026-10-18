@@ -87,11 +87,7 @@ export function GeneralAccess({
 					{current ? iconOf(current) : null}
 				</span>
 				{canManage ? (
-					<Select
-						value={general.value}
-						disabled={busy}
-						onValueChange={choose}
-					>
+					<Select value={general.value} disabled={busy} onValueChange={choose}>
 						<SelectTrigger
 							size="sm"
 							className="h-7 min-w-0 gap-1 border-none bg-transparent px-1.5 shadow-none hover:bg-accent dark:bg-transparent dark:hover:bg-accent"
