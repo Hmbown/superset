@@ -32,9 +32,9 @@
 //                      the frame — points the reader at the feature.
 //   --hl-dim <n>       how much to dim outside the highlight, 0-1 (default
 //                      0.42; use ~0.2 when the dimmed area must stay readable)
-//   --hl-style rails   mark the highlight with the homepage headline's white
-//                      fading rails and a soft white glow instead of the
-//                      accent ring
+//   --hl-style rails   mark the highlight with a rounded white outline that
+//                      fades down from the top (the homepage headline's rail)
+//                      and a soft white glow instead of the accent ring
 //   --bleed            (card only) anchor the card near the top and let it run
 //                      off the bottom edge under a fade, the way Linear frames
 //                      a tall surface; the crop should be taller than 16:10
@@ -292,25 +292,20 @@ const html = `<!doctype html><html><head><meta charset="utf8"><style>
                 0 0 22px 2px ${accent}66,
                 inset 0 0 14px ${accent}22;
   }
-  /* rails: the homepage headline's 1.5px white rails, fading out past each
-     edge, over a hairline and a soft white glow */
+  /* rails: the homepage headline's white rail as a rounded outline, bright
+     along the top and fading down the sides, over a soft white glow */
   .hl.rails {
-    --rail: 1.5px; --rail-max: 64px; --rail-color: rgba(255,255,255,.7);
-    border:1px solid rgba(255,255,255,.14); border-radius:12px;
+    border:none; border-radius:14px;
     box-shadow: 0 0 0 9999px rgba(0,0,0,${Number(flags.get("hl-dim") ?? "0.42") || 0.42}),
                 0 0 28px 2px rgba(255,255,255,.10),
                 0 0 80px 8px rgba(255,255,255,.05);
   }
   .hl.rails::before {
-    content:""; position:absolute; pointer-events:none; background-repeat:no-repeat;
-    inset: calc(var(--rail) / -2 - 1px) calc(-1 * var(--rail-max));
-    background-image:
-      linear-gradient(90deg, transparent, var(--rail-color) 16.67%, transparent),
-      linear-gradient(270deg, transparent, var(--rail-color) 16.67%, transparent),
-      linear-gradient(90deg, transparent, var(--rail-color) 16.67%, transparent),
-      linear-gradient(270deg, transparent, var(--rail-color) 16.67%, transparent);
-    background-size: calc(var(--rail-max) * 6) var(--rail);
-    background-position: left 0 top, right 0 top, left 0 bottom, right 0 bottom;
+    content:""; position:absolute; inset:0; pointer-events:none;
+    border-radius:inherit; padding:1.5px;
+    background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.22) 35%, rgba(255,255,255,0) 75%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
   }
 
 </style></head><body class="${isCard ? "card" : ""}">
