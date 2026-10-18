@@ -188,11 +188,6 @@ export function InviteView({
 				event.preventDefault();
 				fill(item.email);
 			}
-		} else if (event.key === "Escape") {
-			event.preventDefault();
-			event.stopPropagation();
-			if (query) clearQuery();
-			else onBack();
 		} else if (event.key === "Backspace" && !query && staged.length) {
 			setStaged((current) => current.slice(0, -1));
 		}
@@ -221,7 +216,13 @@ export function InviteView({
 		}
 		setStaged((current) => {
 			const keys = new Set(current.map(stagedKey));
-			return [...current, ...picks.filter((p) => !keys.has(stagedKey(p)))];
+			const added = picks.filter((p) => {
+				const key = stagedKey(p);
+				if (keys.has(key)) return false;
+				keys.add(key);
+				return true;
+			});
+			return [...current, ...added];
 		});
 		if (blocked && inviteNew === "upgrade") onUpgrade();
 		else if (blocked) {
@@ -236,7 +237,17 @@ export function InviteView({
 	const newPeople = staged.some((p) => p.kind === "email");
 
 	return (
-		<div data-share-invite="">
+		// biome-ignore lint/a11y/noStaticElementInteractions: Escape from any control in the view goes back
+		<div
+			data-share-invite=""
+			onKeyDown={(event) => {
+				if (event.key !== "Escape") return;
+				event.preventDefault();
+				event.stopPropagation();
+				if (query) clearQuery();
+				else onBack();
+			}}
+		>
 			<div className="flex items-center gap-1 px-1.5 py-1.5">
 				<Button
 					size="icon-xs"
