@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import type { ShareRoleOption } from "@superset/shared/sharing";
-import { ChevronsUpDown } from "lucide-react-native";
+import { ChevronDown, ChevronsUpDown } from "lucide-react-native";
 import { Pressable, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
@@ -75,13 +75,11 @@ export function GeneralAccessRow({
 						accessibilityRole="button"
 						accessibilityLabel={t({ message: "What general access allows" })}
 						onPress={onOpenLevel}
-						className="bg-muted flex-row items-center gap-1 rounded-full px-3 py-1.5 active:opacity-60"
+						hitSlop={8}
+						className="shrink-0 flex-row items-center gap-1 active:opacity-60"
 					>
-						<Text className="text-sm">{role.label}</Text>
-						<Icon
-							as={ChevronsUpDown}
-							className="text-muted-foreground size-3"
-						/>
+						<Text className="text-muted-foreground text-sm">{role.label}</Text>
+						<Icon as={ChevronDown} className="text-muted-foreground size-3.5" />
 					</Pressable>
 				) : (
 					<Text className="text-muted-foreground shrink-0 text-sm">
