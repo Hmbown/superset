@@ -178,6 +178,7 @@ export async function provisionSandbox(args: {
 	providerSandboxId: string;
 	sandboxUrl: string;
 	hostTarget: string;
+	sessionEndsAt: Date | null;
 }> {
 	const kind = args.kind ?? "workspace";
 	const config = {
@@ -214,6 +215,7 @@ export async function provisionSandbox(args: {
 		providerSandboxId: args.name,
 		sandboxUrl: sandbox.domain(HOST_SERVICE_PORT),
 		hostTarget: sandbox.domain(HOST_SERVICE_PORT),
+		sessionEndsAt: sandbox.expiresAt ?? null,
 	};
 }
 
@@ -360,6 +362,7 @@ export async function wakeSandbox(args: {
 	hostTarget: string;
 	/** The session was stopped, so every process on the box started from this claim. */
 	booted: boolean;
+	sessionEndsAt: Date | null;
 }> {
 	try {
 		const sandbox = await Sandbox.get({
@@ -403,7 +406,11 @@ export async function wakeSandbox(args: {
 			hostTarget,
 			claim: args.claim,
 		});
-		return { hostTarget, booted: !wasRunning };
+		return {
+			hostTarget,
+			booted: !wasRunning,
+			sessionEndsAt: sandbox.expiresAt ?? null,
+		};
 	} catch (error) {
 		if (isUnavailable(error))
 			throw new SandboxUnavailableError(args.providerSandboxId, error);

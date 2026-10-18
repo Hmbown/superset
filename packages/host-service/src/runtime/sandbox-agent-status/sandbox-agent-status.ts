@@ -5,8 +5,11 @@ import {
 } from "@superset/shared/agent-status";
 import type { TerminalAgentStore } from "../../terminal-agents/store";
 
-const SETTLE_MS = 2_000;
-const MIN_INTERVAL_MS = 5_000;
+const DEFAULT_TIMING = {
+	settleMs: 2_000,
+	minIntervalMs: 5_000,
+	maxRetryMs: 60_000,
+};
 
 // A box is one workspace, so every binding on it counts.
 export function startSandboxAgentStatusReporter(args: {
@@ -14,9 +17,14 @@ export function startSandboxAgentStatusReporter(args: {
 	workspaceId: string;
 	hostSecret: string;
 	store: TerminalAgentStore;
+	timing?: typeof DEFAULT_TIMING;
 }): () => void {
+	const timing = args.timing ?? DEFAULT_TIMING;
 	let lastSent: ActiveAgentStatus | null | undefined;
 	let lastSentAt = 0;
+	let retryMs = 0;
+	let sending = false;
+	let stopped = false;
 	let timer: ReturnType<typeof setTimeout> | null = null;
 
 	const current = (): ActiveAgentStatus | null =>
@@ -30,7 +38,7 @@ export function startSandboxAgentStatusReporter(args: {
 		timer = null;
 		const status = current();
 		if (status === lastSent) return;
-		lastSent = status;
+		sending = true;
 		lastSentAt = Date.now();
 		try {
 			const response = await fetch(
@@ -46,20 +54,32 @@ export function startSandboxAgentStatusReporter(args: {
 				},
 			);
 			if (!response.ok) throw new Error(`answered ${response.status}`);
+			console.info(
+				`[sandbox-agent-status] reported ${lastSent === undefined ? "unreported" : (lastSent ?? "none")} -> ${status ?? "none"}`,
+			);
+			lastSent = status;
+			retryMs = 0;
 		} catch (error) {
+			retryMs = Math.min(
+				Math.max(retryMs * 2, timing.minIntervalMs),
+				timing.maxRetryMs,
+			);
 			console.warn(
-				"[sandbox-agent-status] report failed:",
+				`[sandbox-agent-status] report of ${status ?? "none"} failed, retrying in ${retryMs}ms:`,
 				error instanceof Error ? error.message : error,
 			);
-			lastSent = undefined;
+		} finally {
+			sending = false;
 		}
+		schedule();
 	};
 
 	const schedule = () => {
-		if (timer) return;
+		if (timer || sending || stopped) return;
 		const wait = Math.max(
-			SETTLE_MS,
-			MIN_INTERVAL_MS - (Date.now() - lastSentAt),
+			timing.settleMs,
+			timing.minIntervalMs - (Date.now() - lastSentAt),
+			retryMs,
 		);
 		timer = setTimeout(() => void send(), wait);
 	};
@@ -67,6 +87,7 @@ export function startSandboxAgentStatusReporter(args: {
 	args.store.on("change", schedule);
 	schedule();
 	return () => {
+		stopped = true;
 		args.store.off("change", schedule);
 		if (timer) clearTimeout(timer);
 	};
