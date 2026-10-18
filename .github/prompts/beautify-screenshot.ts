@@ -32,6 +32,9 @@
 //                      the frame — points the reader at the feature.
 //   --hl-dim <n>       how much to dim outside the highlight, 0-1 (default
 //                      0.42; use ~0.2 when the dimmed area must stay readable)
+//   --hl-style rails   mark the highlight with the homepage headline's white
+//                      fading rails and a soft white glow instead of the
+//                      accent ring
 //   --bleed            (card only) anchor the card near the top and let it run
 //                      off the bottom edge under a fade, the way Linear frames
 //                      a tall surface; the crop should be taller than 16:10
@@ -43,12 +46,14 @@ import { rmSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
 const args = process.argv.slice(2);
+const BOOLEAN_FLAGS = new Set(["bleed"]);
 const flags = new Map<string, string>();
 const positional: string[] = [];
 for (let i = 0; i < args.length; i++) {
 	const a = args[i];
 	if (a.startsWith("--")) {
-		flags.set(a.slice(2), args[++i] ?? "");
+		const name = a.slice(2);
+		flags.set(name, BOOLEAN_FLAGS.has(name) ? "" : (args[++i] ?? ""));
 	} else {
 		positional.push(a);
 	}
@@ -169,7 +174,8 @@ if (flags.has("highlight")) {
 	const k = frameW / view[2]; // source px -> frame px
 	const x = (hx - view[0]) * k;
 	const y = (hy - view[1]) * k;
-	highlight = `<div class="hl" style="left:${x.toFixed(1)}px; top:${y.toFixed(1)}px;
+	const hlClass = flags.get("hl-style") === "rails" ? "hl rails" : "hl";
+	highlight = `<div class="${hlClass}" style="left:${x.toFixed(1)}px; top:${y.toFixed(1)}px;
 		width:${(hw * k).toFixed(1)}px; height:${(hh * k).toFixed(1)}px;"></div>`;
 }
 
@@ -286,6 +292,27 @@ const html = `<!doctype html><html><head><meta charset="utf8"><style>
                 0 0 22px 2px ${accent}66,
                 inset 0 0 14px ${accent}22;
   }
+  /* rails: the homepage headline's 1.5px white rails, fading out past each
+     edge, over a hairline and a soft white glow */
+  .hl.rails {
+    --rail: 1.5px; --rail-max: 64px; --rail-color: rgba(255,255,255,.7);
+    border:1px solid rgba(255,255,255,.14); border-radius:12px;
+    box-shadow: 0 0 0 9999px rgba(0,0,0,${Number(flags.get("hl-dim") ?? "0.42") || 0.42}),
+                0 0 28px 2px rgba(255,255,255,.10),
+                0 0 80px 8px rgba(255,255,255,.05);
+  }
+  .hl.rails::before {
+    content:""; position:absolute; pointer-events:none; background-repeat:no-repeat;
+    inset: calc(var(--rail) / -2 - 1px) calc(-1 * var(--rail-max));
+    background-image:
+      linear-gradient(90deg, transparent, var(--rail-color) 16.67%, transparent),
+      linear-gradient(270deg, transparent, var(--rail-color) 16.67%, transparent),
+      linear-gradient(90deg, transparent, var(--rail-color) 16.67%, transparent),
+      linear-gradient(270deg, transparent, var(--rail-color) 16.67%, transparent);
+    background-size: calc(var(--rail-max) * 6) var(--rail);
+    background-position: left 0 top, right 0 top, left 0 bottom, right 0 bottom;
+  }
+
 </style></head><body class="${isCard ? "card" : ""}">
   <div class="stage">
     <div class="sheen"></div>
