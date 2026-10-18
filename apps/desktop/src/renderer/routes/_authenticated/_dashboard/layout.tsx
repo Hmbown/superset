@@ -30,7 +30,6 @@ import { usePortsDisplayMode } from "renderer/stores/inline-workspace-ports";
 import { useSidebarSectionsCollapseStore } from "renderer/stores/sidebar-sections-collapse";
 import { syncPersistedStoreAcrossWindows } from "renderer/stores/syncPersistedStoreAcrossWindows";
 import { useV2NotificationStore } from "renderer/stores/v2-notifications";
-import { useV2SetupCardDismissalsStore } from "renderer/stores/v2-setup-card-dismissals";
 import {
 	COLLAPSED_WORKSPACE_SIDEBAR_WIDTH,
 	DEFAULT_WORKSPACE_SIDEBAR_WIDTH,
@@ -81,9 +80,6 @@ function DashboardLayout() {
 		const stopAutomationFailuresSync = syncPersistedStoreAcrossWindows(
 			useAutomationFailuresStore,
 		);
-		const stopSetupCardDismissalsSync = syncPersistedStoreAcrossWindows(
-			useV2SetupCardDismissalsStore,
-		);
 
 		return () => {
 			stopWorkspaceSidebarSync();
@@ -91,7 +87,6 @@ function DashboardLayout() {
 			stopAgentStateSync();
 			stopCloudSidebarSync();
 			stopAutomationFailuresSync();
-			stopSetupCardDismissalsSync();
 		};
 	}, []);
 	// Get current workspace from route to pre-select project in new workspace modal
