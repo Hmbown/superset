@@ -33,45 +33,66 @@ export function SuggestionRow({
 	disabled?: boolean;
 	onPress?: () => void;
 }) {
+	const state = {
+		disabled: Boolean(disabled),
+		selected: Boolean(selected),
+	};
 	return (
-		<Pressable
-			accessibilityRole="button"
-			accessibilityState={{
-				disabled: Boolean(disabled),
-				selected: Boolean(selected),
-			}}
-			disabled={disabled || !onPress}
-			onPress={onPress}
+		<View
 			className={cn(
-				"min-h-14 flex-row items-center gap-3 py-2 active:opacity-60",
+				"min-h-14 flex-row items-center gap-3",
 				disabled && "opacity-55",
 			)}
 		>
-			{person ? (
-				<GranteeAvatar kind="person" name={person.name} image={person.image} />
-			) : icon ? (
-				<GranteeAvatar kind="icon" icon={icon} dashed={dashed} />
-			) : null}
-			<View className="min-w-0 flex-1">
-				<Text className="text-base" numberOfLines={1}>
-					{title}
-				</Text>
-				{detail ? (
-					<Text className="text-muted-foreground text-sm" numberOfLines={1}>
-						{detail}
+			<Pressable
+				accessibilityRole="button"
+				accessibilityState={state}
+				disabled={disabled || !onPress}
+				onPress={onPress}
+				className="min-w-0 flex-1 flex-row items-center gap-3 py-2 active:opacity-60"
+			>
+				{person ? (
+					<GranteeAvatar
+						kind="person"
+						name={person.name}
+						image={person.image}
+					/>
+				) : icon ? (
+					<GranteeAvatar kind="icon" icon={icon} dashed={dashed} />
+				) : null}
+				<View className="min-w-0 flex-1">
+					<Text className="text-base" numberOfLines={1}>
+						{title}
+					</Text>
+					{detail ? (
+						<Text className="text-muted-foreground text-sm" numberOfLines={1}>
+							{detail}
+						</Text>
+					) : null}
+					{error ? (
+						<Text className="text-destructive text-xs">{error}</Text>
+					) : null}
+				</View>
+				{trailing ? (
+					<Text className="text-muted-foreground shrink-0 text-xs">
+						{trailing}
 					</Text>
 				) : null}
-				{error ? (
-					<Text className="text-destructive text-xs">{error}</Text>
-				) : null}
-			</View>
-			{trailing ? (
-				<Text className="text-muted-foreground shrink-0 text-xs">
-					{trailing}
-				</Text>
-			) : null}
+			</Pressable>
 			{accessory}
-			{selected === undefined ? null : <SelectionTick selected={selected} />}
-		</Pressable>
+			{selected === undefined ? null : (
+				<Pressable
+					accessibilityRole="checkbox"
+					accessibilityLabel={title}
+					accessibilityState={{ ...state, checked: Boolean(selected) }}
+					disabled={disabled || !onPress}
+					onPress={onPress}
+					hitSlop={10}
+					className="active:opacity-60"
+				>
+					<SelectionTick selected={selected} />
+				</Pressable>
+			)}
+		</View>
 	);
 }
