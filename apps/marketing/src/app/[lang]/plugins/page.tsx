@@ -6,6 +6,8 @@ import { CTASection } from "@/app/[lang]/components/CTASection";
 import { ProductHeroActions } from "@/app/[lang]/components/ProductHeroActions";
 import { localizedAlternates } from "@/app/[lang]/metadata";
 import { initServerI18n } from "@/app/i18n-server";
+import { AgentStrip } from "./components/AgentStrip";
+import { BuildOnce } from "./components/BuildOnce";
 import { HowItWorks } from "./components/HowItWorks";
 import { PluginCatalog } from "./components/PluginCatalog";
 import { FEATURES } from "./constants";
@@ -18,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		description: i18n._(
 			msg({
 				message:
-					"A plugin adds one app's skills and tools to your agents. Install it once, and it works on every machine you sign into.",
+					"Write a plugin once and every coding agent can use it: Claude Code, Codex, Cursor, OpenCode, and more. Install it once, and it works on your machines and in the cloud.",
 			}),
 		),
 		alternates: localizedAlternates(lang, "/plugins"),
@@ -42,17 +44,17 @@ export default async function PluginsPage() {
 							</span>
 						</p>
 						<h1 className="mt-4 font-medium text-balance text-4xl text-foreground tracking-tight sm:text-5xl">
-							<Trans>
-								Connect your coding agents to the apps your team already uses.
-							</Trans>
+							<Trans>One plugin. Every coding agent.</Trans>
 						</h1>
 						<p className="mt-5 max-w-xl text-lg text-muted-foreground leading-relaxed">
 							<Trans>
-								A plugin adds one app's skills and tools to your agents. Install
-								it once, and it works on every machine you sign into.
+								Give your agents the apps your team already uses. Install a
+								plugin once, and every agent can use it, on your machines and in
+								the cloud.
 							</Trans>
 						</p>
 						<ProductHeroActions source="plugins" docsPath="/mcp-server" />
+						<AgentStrip />
 					</div>
 					<PluginCatalog />
 				</section>
@@ -81,6 +83,8 @@ export default async function PluginsPage() {
 						))}
 					</div>
 				</section>
+
+				<BuildOnce />
 			</main>
 			<CTASection />
 		</div>

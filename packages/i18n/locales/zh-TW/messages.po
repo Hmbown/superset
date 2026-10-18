@@ -1484,8 +1484,8 @@ msgstr "以該分支建立新工作區，並將對話交給新的代理"
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "頁面可以保存每位讀者的答案，所以不需要後端就能做投票。"
 
-msgid "A plugin adds one app's skills and tools to your agents. Install it once, and it works on every machine you sign into."
-msgstr "外掛會為你的代理程式加入某個應用程式的技能和工具。只需安裝一次，登入的每台裝置都能使用。"
+msgid "A plugin is a short manifest and a few skill files. Superset puts it where each agent looks, and you sign in once for all of them."
+msgstr "外掛只是一個簡短的資訊清單檔加上幾個技能檔案。Superset 會把它放到每個代理程式查找的位置，你只需登入一次即可供所有代理程式使用。"
 
 msgid "A practical TypeScript problem, like the ones we solve every day. No algorithm puzzles."
 msgstr "一道實用的 TypeScript 題目，和我們每天解決的問題類似。不考演算法謎題。"
@@ -3210,6 +3210,9 @@ msgstr "公開建構"
 msgid "Build the future of Superset in the cloud"
 msgstr "共創 Superset 的雲端未來"
 
+msgid "Build your own"
+msgstr "自己動手打造"
+
 msgid "Building the last piece of software"
 msgstr "打造最後一款軟體"
 
@@ -3573,6 +3576,9 @@ msgstr "檢查更新..."
 msgid "Check on running agents and read what they changed from your iPhone or iPad."
 msgstr "在 iPhone 或 iPad 上查看執行中的 agent，並閱讀它們做出的變更。"
 
+msgid "Check plans and balances"
+msgstr "查看方案和餘額"
+
 msgid "Check resources"
 msgstr "檢查資源"
 
@@ -3707,6 +3713,9 @@ msgstr "闡明這裡"
 
 msgid "Claude Code, Codex, and OpenCode are the agents; Superset is where you run many of them at once. Each task gets its own isolated Git worktree, so ten agents can work on ten branches simultaneously while you monitor, review, and merge from one place."
 msgstr "Claude Code、Codex和OpenCode是代理程式；Superset是你同時執行它們的地方。每個任務都有自己隔離的Git worktree，十個代理程式可以同時在十個分支上工作，而你在一處監控、審查併合併。"
+
+msgid "Claude Code, Codex, Cursor, OpenCode, and more use the same plugin. There is no setup per agent."
+msgstr "Claude Code、Codex、Cursor、OpenCode 等使用同一個外掛，無需為每個代理程式個別設定。"
 
 msgid "Claude Code, Codex, Cursor, OpenCode, and more."
 msgstr "Claude Code、Codex、Cursor、OpenCode等。"
@@ -4413,9 +4422,6 @@ msgstr "連線至這台電腦"
 
 msgid "Connect your {pluginLabel} account, then reload this page."
 msgstr "連線你的 {pluginLabel} 帳戶，然後重新載入此頁面。"
-
-msgid "Connect your coding agents to the apps your team already uses."
-msgstr "把你的程式碼代理程式連接到團隊已在使用的應用程式。"
 
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "連線你的GitHub儲存庫並同步拉取請求。追蹤整個團隊的CI狀態和程式碼審查。"
@@ -8111,6 +8117,9 @@ msgstr "GitHub使用者名稱…"
 msgid "Give me an example"
 msgstr "給我一個範例"
 
+msgid "Give your agents the apps your team already uses. Install a plugin once, and every agent can use it, on your machines and in the cloud."
+msgstr "讓你的代理程式用上團隊已經在用的應用程式。外掛只需安裝一次，無論在你的裝置上還是在雲端，所有代理程式都能使用。"
+
 msgid "Give your key a descriptive name to remember where it's used."
 msgstr "給金鑰起一個描述性的名稱，方便記住它用在哪裡。"
 
@@ -8871,14 +8880,11 @@ msgstr "安裝並重啟"
 msgid "Install & Restart"
 msgstr "安裝並重啟"
 
-msgid "Install a plugin once. Superset adds its skills on each machine where you use your account."
-msgstr "外掛只需安裝一次。在你使用該帳號的每台裝置上，Superset 都會加入其技能。"
+msgid "Install a plugin once. It is ready on each machine you sign into and in every cloud workspace you start."
+msgstr "外掛只需安裝一次。在你登入的每台裝置上，以及你啟動的每個雲端工作區中，它都已就緒。"
 
 msgid "Install failed"
 msgstr "安裝失敗"
-
-msgid "Install from the terminal"
-msgstr "從終端安裝"
 
 msgid "Install GitHub App"
 msgstr "安裝GitHub App"
@@ -11555,9 +11561,6 @@ msgstr "更早"
 msgid "on {offScopeHostName} — won't run here"
 msgstr "在{offScopeHostName}上，不會在這裡執行"
 
-msgid "On every machine you sign into"
-msgstr "在你登入的每台裝置上"
-
 msgid "On focus change"
 msgstr "焦點變更時"
 
@@ -11581,6 +11584,9 @@ msgstr "視窗變更時"
 
 msgid "On your machine. Repos, worktrees, terminal output, and agent sessions stay local by default; cloud sync covers account and organization metadata only. Superset doesn't proxy any API calls."
 msgstr "在你自己的機器上。儲存庫、worktree、終端輸出和代理程式會話預設都留在本地；雲端同步只涉及帳戶和組織的後設資料。Superset不代理任何API呼叫。"
+
+msgid "On your machines and in the cloud"
+msgstr "在你的裝置上，也在雲端"
 
 msgid "On-screen Keyboard"
 msgstr "螢幕鍵盤"
@@ -11614,6 +11620,9 @@ msgstr "榜單最早的一百人之一"
 
 msgid "one of the selected repositories"
 msgstr "所選儲存庫之一"
+
+msgid "One plugin. Every coding agent."
+msgstr "一個外掛，所有程式碼代理程式。"
 
 msgid "One step left"
 msgstr "還差一步"
@@ -13213,6 +13222,9 @@ msgstr "再次發布時連結不變。舊版本會保留在歷史紀錄中。"
 msgid "Publish from the Superset CLI or over MCP."
 msgstr "透過 Superset CLI 或 MCP 發布。"
 
+msgid "Publish from your own repo"
+msgstr "從你自己的儲存庫發布"
+
 msgid "Published"
 msgstr "發布時間"
 
@@ -13477,6 +13489,9 @@ msgstr "待審查"
 #. placeholder {0}: error.message
 msgid "Ready for review failed: {0}"
 msgstr "標記為可審查失敗：{0}"
+
+msgid "Ready in"
+msgstr "已就緒"
 
 msgid "Ready to Merge"
 msgstr "可以合併"
@@ -14514,9 +14529,6 @@ msgstr "執行設定指令碼"
 msgid "Run setup script in each imported workspace"
 msgstr "在每個匯入的工作區中執行初始化指令碼"
 
-msgid "Run superset plugins install linear from any shell. The plugin shows up in the app too."
-msgstr "在任意 shell 中執行 superset plugins install linear。該外掛也會顯示在應用程式中。"
-
 msgid "run tasks in workspaces"
 msgstr "在工作區中執行任務"
 
@@ -14912,6 +14924,9 @@ msgstr "在渲染的檔案檢視器中搜尋文字"
 
 msgid "Search the leaderboard for a fighter"
 msgstr "在排行榜中搜尋對手"
+
+msgid "Search the web"
+msgstr "搜尋網頁"
 
 msgid "Search triggers..."
 msgstr "搜尋觸發條件..."
@@ -15404,6 +15419,9 @@ msgstr "分享頁面"
 
 msgid "Share page (public)"
 msgstr "分享頁面（公開）"
+
+msgid "Share plugins with your team from a GitHub repo. Every machine gets the same version."
+msgstr "透過 GitHub 儲存庫與團隊共用外掛。每台裝置都會取得同一版本。"
 
 msgid "Share this page"
 msgstr "分享此頁面"
@@ -16618,9 +16636,6 @@ msgstr "Superset 頁面示範"
 
 msgid "Superset Plugins"
 msgstr "Superset 外掛"
-
-msgid "Superset puts plugin skills and tools where these agents look for them."
-msgstr "Superset 會把外掛的技能和工具放到這些代理程式會查找的位置。"
 
 msgid "Superset raised an $11.5M seed round led by Union Square Ventures, with Y Combinator and Paul Graham. TechCrunch named it one of the standout startups from YC Demo Day."
 msgstr "Superset 完成了 1,150 萬美元的種子輪募資，由 Union Square Ventures 領投，Y Combinator 與 Paul Graham 參投。TechCrunch 將其評為 YC Demo Day 的傑出新創公司之一。"
@@ -19257,14 +19272,17 @@ msgstr "已執行 {seconds} 秒"
 msgid "Working…"
 msgstr "處理中…"
 
+msgid "Works in"
+msgstr "支援"
+
+msgid "Works in every agent"
+msgstr "適用於所有代理程式"
+
 msgid "Works when environments are clean. Environments are rarely clean."
 msgstr "環境乾淨時可行。而環境很少乾淨。"
 
 msgid "Works with any agent"
 msgstr "適用於任何代理程式"
-
-msgid "Works with Claude Code and Codex"
-msgstr "支援 Claude Code 和 Codex"
 
 msgid "Works with your agents"
 msgstr "與你的代理程式搭配使用"
@@ -19409,6 +19427,12 @@ msgstr "寫下評論…"
 
 msgid "Write a note and pick an agent. Your note arrives with the element's code and a cropped screenshot."
 msgstr "寫一則備註並選擇代理程式。備註會連同該元素的程式碼和裁剪後的截圖一起送達。"
+
+msgid "Write a plugin once and every coding agent can use it: Claude Code, Codex, Cursor, OpenCode, and more. Install it once, and it works on your machines and in the cloud."
+msgstr "外掛只需撰寫一次，所有程式碼代理程式都能使用：Claude Code、Codex、Cursor、OpenCode 等。只需安裝一次，就能在你的裝置上和雲端運作。"
+
+msgid "Write a plugin once. Every agent can use it."
+msgstr "外掛只需撰寫一次，所有代理程式都能使用。"
 
 msgid "Write a prompt and pick a schedule or an event, like a pull request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
 msgstr "撰寫提示詞，然後選擇排程或事件，例如拉取請求、Slack 訊息、Linear 議題、Sentry 議題或 Webhook。每次執行都會開啟一個工作區，你可以審查並繼續工作。"

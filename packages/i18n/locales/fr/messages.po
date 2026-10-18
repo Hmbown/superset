@@ -1484,8 +1484,8 @@ msgstr "Un nouvel espace de travail issu de cette branche, la conversation étan
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "Une page peut enregistrer la réponse de chaque lecteur, donc un sondage fonctionne sans backend."
 
-msgid "A plugin adds one app's skills and tools to your agents. Install it once, and it works on every machine you sign into."
-msgstr "Un plugin ajoute les compétences et les outils d'une application à vos agents. Installez-le une fois, et il fonctionne sur chaque machine où vous vous connectez."
+msgid "A plugin is a short manifest and a few skill files. Superset puts it where each agent looks, and you sign in once for all of them."
+msgstr "Un plugin, c'est un court manifeste et quelques fichiers de compétences. Superset le place là où chaque agent le cherche, et vous vous connectez une seule fois pour tous."
 
 msgid "A practical TypeScript problem, like the ones we solve every day. No algorithm puzzles."
 msgstr "Un problème TypeScript concret, comme ceux que nous résolvons chaque jour. Pas de casse-têtes algorithmiques."
@@ -3210,6 +3210,9 @@ msgstr "Construire en public"
 msgid "Build the future of Superset in the cloud"
 msgstr "Construisez l’avenir de Superset dans le cloud"
 
+msgid "Build your own"
+msgstr "Créez le vôtre"
+
 msgid "Building the last piece of software"
 msgstr "Construire le dernier logiciel"
 
@@ -3573,6 +3576,9 @@ msgstr "Rechercher des mises à jour..."
 msgid "Check on running agents and read what they changed from your iPhone or iPad."
 msgstr "Suivez vos agents en cours et lisez ce qu'ils ont modifié depuis votre iPhone ou iPad."
 
+msgid "Check plans and balances"
+msgstr "Consultez offres et soldes"
+
 msgid "Check resources"
 msgstr "Vérifier les ressources"
 
@@ -3707,6 +3713,9 @@ msgstr "Clarifier ceci"
 
 msgid "Claude Code, Codex, and OpenCode are the agents; Superset is where you run many of them at once. Each task gets its own isolated Git worktree, so ten agents can work on ten branches simultaneously while you monitor, review, and merge from one place."
 msgstr "Claude Code, Codex et OpenCode sont les agents ; Superset est l'endroit où vous en faites tourner beaucoup à la fois. Chaque tâche obtient son propre worktree Git isolé : dix agents peuvent travailler sur dix branches en même temps pendant que vous surveillez, passez en revue et fusionnez depuis un seul endroit."
+
+msgid "Claude Code, Codex, Cursor, OpenCode, and more use the same plugin. There is no setup per agent."
+msgstr "Claude Code, Codex, Cursor, OpenCode et d'autres utilisent le même plugin. Aucune configuration par agent."
 
 msgid "Claude Code, Codex, Cursor, OpenCode, and more."
 msgstr "Claude Code, Codex, Cursor, OpenCode, et plus encore."
@@ -4413,9 +4422,6 @@ msgstr "Connecter cet ordinateur"
 
 msgid "Connect your {pluginLabel} account, then reload this page."
 msgstr "Connectez votre compte {pluginLabel}, puis rechargez cette page."
-
-msgid "Connect your coding agents to the apps your team already uses."
-msgstr "Connectez vos agents de code aux applications que votre équipe utilise déjà."
 
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "Connectez vos dépôts GitHub et synchronisez les pull requests. Suivez l'état de la CI et les revues au sein de votre équipe."
@@ -8111,6 +8117,9 @@ msgstr "Nom d'utilisateur GitHub…"
 msgid "Give me an example"
 msgstr "Donne-moi un exemple"
 
+msgid "Give your agents the apps your team already uses. Install a plugin once, and every agent can use it, on your machines and in the cloud."
+msgstr "Donnez à vos agents les applications que votre équipe utilise déjà. Installez un plugin une fois, et tous les agents peuvent l'utiliser, sur vos machines et dans le cloud."
+
 msgid "Give your key a descriptive name to remember where it's used."
 msgstr "Donnez à votre clé un nom explicite pour vous rappeler où elle est utilisée."
 
@@ -8871,14 +8880,11 @@ msgstr "Installer et redémarrer"
 msgid "Install & Restart"
 msgstr "Installer et redémarrer"
 
-msgid "Install a plugin once. Superset adds its skills on each machine where you use your account."
-msgstr "Installez un plugin une seule fois. Superset ajoute ses compétences sur chaque machine où vous utilisez votre compte."
+msgid "Install a plugin once. It is ready on each machine you sign into and in every cloud workspace you start."
+msgstr "Installez un plugin une seule fois. Il est prêt sur chaque machine où vous vous connectez et dans chaque espace de travail cloud que vous lancez."
 
 msgid "Install failed"
 msgstr "Échec de l'installation"
-
-msgid "Install from the terminal"
-msgstr "Installer depuis le terminal"
 
 msgid "Install GitHub App"
 msgstr "Installer la GitHub App"
@@ -11555,9 +11561,6 @@ msgstr "Plus ancien"
 msgid "on {offScopeHostName} — won't run here"
 msgstr "sur {offScopeHostName} — ne s'exécutera pas ici"
 
-msgid "On every machine you sign into"
-msgstr "Sur chaque machine où vous vous connectez"
-
 msgid "On focus change"
 msgstr "Lors du changement de focus"
 
@@ -11581,6 +11584,9 @@ msgstr "Lors du changement de fenêtre"
 
 msgid "On your machine. Repos, worktrees, terminal output, and agent sessions stay local by default; cloud sync covers account and organization metadata only. Superset doesn't proxy any API calls."
 msgstr "Sur votre machine. Les dépôts, les worktrees, la sortie du terminal et les sessions d'agents restent locaux par défaut ; la synchronisation cloud ne couvre que les métadonnées de compte et d'organisation. Superset ne relaie aucun appel d'API."
+
+msgid "On your machines and in the cloud"
+msgstr "Sur vos machines et dans le cloud"
 
 msgid "On-screen Keyboard"
 msgstr "Clavier virtuel"
@@ -11614,6 +11620,9 @@ msgstr "Parmi les cent premiers du classement"
 
 msgid "one of the selected repositories"
 msgstr "l'un des dépôts sélectionnés"
+
+msgid "One plugin. Every coding agent."
+msgstr "Un plugin. Tous les agents de code."
 
 msgid "One step left"
 msgstr "Plus qu'une étape"
@@ -13213,6 +13222,9 @@ msgstr "Publiez à nouveau, le lien reste le même. Les versions précédentes s
 msgid "Publish from the Superset CLI or over MCP."
 msgstr "Publiez depuis la CLI Superset ou via MCP."
 
+msgid "Publish from your own repo"
+msgstr "Publiez depuis votre propre dépôt"
+
 msgid "Published"
 msgstr "Publiée"
 
@@ -13477,6 +13489,9 @@ msgstr "Prêt pour la revue"
 #. placeholder {0}: error.message
 msgid "Ready for review failed: {0}"
 msgstr "Échec du marquage comme prêt pour la revue : {0}"
+
+msgid "Ready in"
+msgstr "Prêt dans"
 
 msgid "Ready to Merge"
 msgstr "Prête à fusionner"
@@ -14514,9 +14529,6 @@ msgstr "Exécuter le script d'installation"
 msgid "Run setup script in each imported workspace"
 msgstr "Exécuter le script de configuration dans chaque espace de travail importé"
 
-msgid "Run superset plugins install linear from any shell. The plugin shows up in the app too."
-msgstr "Exécutez superset plugins install linear depuis n'importe quel shell. Le plugin apparaît aussi dans l'application."
-
 msgid "run tasks in workspaces"
 msgstr "exécuter les tâches dans des espaces de travail"
 
@@ -14912,6 +14924,9 @@ msgstr "Rechercher du texte dans la visionneuse de fichiers"
 
 msgid "Search the leaderboard for a fighter"
 msgstr "Rechercher un adversaire dans le classement"
+
+msgid "Search the web"
+msgstr "Recherchez sur le web"
 
 msgid "Search triggers..."
 msgstr "Rechercher des déclencheurs..."
@@ -15404,6 +15419,9 @@ msgstr "Partager la page"
 
 msgid "Share page (public)"
 msgstr "Partager la page (publique)"
+
+msgid "Share plugins with your team from a GitHub repo. Every machine gets the same version."
+msgstr "Partagez des plugins avec votre équipe depuis un dépôt GitHub. Chaque machine reçoit la même version."
 
 msgid "Share this page"
 msgstr "Partager cette page"
@@ -16618,9 +16636,6 @@ msgstr "Démo de Superset Pages"
 
 msgid "Superset Plugins"
 msgstr "Plugins Superset"
-
-msgid "Superset puts plugin skills and tools where these agents look for them."
-msgstr "Superset place les compétences et les outils des plugins là où ces agents les cherchent."
 
 msgid "Superset raised an $11.5M seed round led by Union Square Ventures, with Y Combinator and Paul Graham. TechCrunch named it one of the standout startups from YC Demo Day."
 msgstr "Superset a levé un tour de table d’amorçage de 11,5 millions de dollars mené par Union Square Ventures, avec Y Combinator et Paul Graham. TechCrunch l’a cité parmi les startups les plus remarquables du YC Demo Day."
@@ -19257,14 +19272,17 @@ msgstr "En cours depuis {seconds} s"
 msgid "Working…"
 msgstr "Travail en cours…"
 
+msgid "Works in"
+msgstr "Fonctionne dans"
+
+msgid "Works in every agent"
+msgstr "Fonctionne dans tous les agents"
+
 msgid "Works when environments are clean. Environments are rarely clean."
 msgstr "Fonctionne quand les environnements sont propres. Ils le sont rarement."
 
 msgid "Works with any agent"
 msgstr "Compatible avec tous les agents"
-
-msgid "Works with Claude Code and Codex"
-msgstr "Compatible avec Claude Code et Codex"
 
 msgid "Works with your agents"
 msgstr "Compatible avec vos agents"
@@ -19409,6 +19427,12 @@ msgstr "Écrire un commentaire…"
 
 msgid "Write a note and pick an agent. Your note arrives with the element's code and a cropped screenshot."
 msgstr "Écrivez une note et choisissez un agent. Votre note arrive avec le code de l'élément et une capture d'écran recadrée."
+
+msgid "Write a plugin once and every coding agent can use it: Claude Code, Codex, Cursor, OpenCode, and more. Install it once, and it works on your machines and in the cloud."
+msgstr "Écrivez un plugin une seule fois et tous les agents de code peuvent l'utiliser : Claude Code, Codex, Cursor, OpenCode et d'autres. Installez-le une fois, et il fonctionne sur vos machines et dans le cloud."
+
+msgid "Write a plugin once. Every agent can use it."
+msgstr "Écrivez un plugin une seule fois. Tous les agents peuvent l'utiliser."
 
 msgid "Write a prompt and pick a schedule or an event, like a pull request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
 msgstr "Rédigez un prompt et choisissez une planification ou un événement, comme une pull request, un message Slack, une issue Linear, une issue Sentry ou un webhook. Chaque exécution ouvre un espace de travail que vous pouvez relire et poursuivre."

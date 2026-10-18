@@ -1484,8 +1484,8 @@ msgstr "基于该分支创建新工作区，并将对话交给新的智能体"
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "页面可以保存每位读者的答案，所以无需后端就能做投票。"
 
-msgid "A plugin adds one app's skills and tools to your agents. Install it once, and it works on every machine you sign into."
-msgstr "插件会为你的智能体添加某个应用的技能和工具。只需安装一次，登录的每台设备都能使用。"
+msgid "A plugin is a short manifest and a few skill files. Superset puts it where each agent looks, and you sign in once for all of them."
+msgstr "插件只是一个简短的清单文件加上几个技能文件。Superset 会把它放到每个智能体查找的位置，你只需登录一次即可供所有智能体使用。"
 
 msgid "A practical TypeScript problem, like the ones we solve every day. No algorithm puzzles."
 msgstr "一道实用的 TypeScript 题目，和我们每天解决的问题类似。不考算法谜题。"
@@ -3210,6 +3210,9 @@ msgstr "公开构建"
 msgid "Build the future of Superset in the cloud"
 msgstr "共创 Superset 的云端未来"
 
+msgid "Build your own"
+msgstr "自己动手构建"
+
 msgid "Building the last piece of software"
 msgstr "打造最后一款软件"
 
@@ -3573,6 +3576,9 @@ msgstr "检查更新..."
 msgid "Check on running agents and read what they changed from your iPhone or iPad."
 msgstr "在 iPhone 或 iPad 上查看运行中的智能体，并阅读它们做出的更改。"
 
+msgid "Check plans and balances"
+msgstr "查看套餐和余额"
+
 msgid "Check resources"
 msgstr "检查资源"
 
@@ -3707,6 +3713,9 @@ msgstr "阐明这里"
 
 msgid "Claude Code, Codex, and OpenCode are the agents; Superset is where you run many of them at once. Each task gets its own isolated Git worktree, so ten agents can work on ten branches simultaneously while you monitor, review, and merge from one place."
 msgstr "Claude Code、Codex和OpenCode是智能体；Superset是你同时运行它们的地方。每个任务都有自己隔离的Git worktree，十个智能体可以同时在十个分支上工作，而你在一处监控、审查并合并。"
+
+msgid "Claude Code, Codex, Cursor, OpenCode, and more use the same plugin. There is no setup per agent."
+msgstr "Claude Code、Codex、Cursor、OpenCode 等使用同一个插件，无需为每个智能体单独设置。"
 
 msgid "Claude Code, Codex, Cursor, OpenCode, and more."
 msgstr "Claude Code、Codex、Cursor、OpenCode等。"
@@ -4413,9 +4422,6 @@ msgstr "连接这台电脑"
 
 msgid "Connect your {pluginLabel} account, then reload this page."
 msgstr "连接你的 {pluginLabel} 账户，然后重新加载此页面。"
-
-msgid "Connect your coding agents to the apps your team already uses."
-msgstr "把你的编码智能体连接到团队已在使用的应用。"
 
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "连接你的GitHub仓库并同步拉取请求。跟踪整个团队的CI状态和代码审查。"
@@ -8111,6 +8117,9 @@ msgstr "GitHub用户名…"
 msgid "Give me an example"
 msgstr "给我一个示例"
 
+msgid "Give your agents the apps your team already uses. Install a plugin once, and every agent can use it, on your machines and in the cloud."
+msgstr "让你的智能体用上团队已经在用的应用。插件只需安装一次，无论在你的设备上还是在云端，所有智能体都能使用。"
+
 msgid "Give your key a descriptive name to remember where it's used."
 msgstr "给密钥起一个描述性的名称，方便记住它用在哪里。"
 
@@ -8871,14 +8880,11 @@ msgstr "安装并重启"
 msgid "Install & Restart"
 msgstr "安装并重启"
 
-msgid "Install a plugin once. Superset adds its skills on each machine where you use your account."
-msgstr "插件只需安装一次。在你使用该账号的每台设备上，Superset 都会添加其技能。"
+msgid "Install a plugin once. It is ready on each machine you sign into and in every cloud workspace you start."
+msgstr "插件只需安装一次。在你登录的每台设备上，以及你启动的每个云端工作区中，它都已就绪。"
 
 msgid "Install failed"
 msgstr "安装失败"
-
-msgid "Install from the terminal"
-msgstr "从终端安装"
 
 msgid "Install GitHub App"
 msgstr "安装GitHub App"
@@ -11555,9 +11561,6 @@ msgstr "更早"
 msgid "on {offScopeHostName} — won't run here"
 msgstr "在{offScopeHostName}上，不会在这里运行"
 
-msgid "On every machine you sign into"
-msgstr "在你登录的每台设备上"
-
 msgid "On focus change"
 msgstr "焦点更改时"
 
@@ -11581,6 +11584,9 @@ msgstr "窗口更改时"
 
 msgid "On your machine. Repos, worktrees, terminal output, and agent sessions stay local by default; cloud sync covers account and organization metadata only. Superset doesn't proxy any API calls."
 msgstr "在你自己的机器上。仓库、worktree、终端输出和智能体会话默认都留在本地；云端同步只涉及账户和组织的元数据。Superset不代理任何API调用。"
+
+msgid "On your machines and in the cloud"
+msgstr "在你的设备上，也在云端"
 
 msgid "On-screen Keyboard"
 msgstr "屏幕键盘"
@@ -11614,6 +11620,9 @@ msgstr "榜单最早的一百人之一"
 
 msgid "one of the selected repositories"
 msgstr "所选仓库之一"
+
+msgid "One plugin. Every coding agent."
+msgstr "一个插件，所有编码智能体。"
 
 msgid "One step left"
 msgstr "还差一步"
@@ -13213,6 +13222,9 @@ msgstr "再次发布时链接不变。旧版本会保留在历史记录中。"
 msgid "Publish from the Superset CLI or over MCP."
 msgstr "通过 Superset CLI 或 MCP 发布。"
 
+msgid "Publish from your own repo"
+msgstr "从你自己的仓库发布"
+
 msgid "Published"
 msgstr "发布时间"
 
@@ -13477,6 +13489,9 @@ msgstr "待审查"
 #. placeholder {0}: error.message
 msgid "Ready for review failed: {0}"
 msgstr "标记为可评审失败：{0}"
+
+msgid "Ready in"
+msgstr "已就绪"
 
 msgid "Ready to Merge"
 msgstr "可以合并"
@@ -14514,9 +14529,6 @@ msgstr "运行设置脚本"
 msgid "Run setup script in each imported workspace"
 msgstr "在每个导入的工作区中运行初始化脚本"
 
-msgid "Run superset plugins install linear from any shell. The plugin shows up in the app too."
-msgstr "在任意 shell 中运行 superset plugins install linear。该插件也会显示在应用中。"
-
 msgid "run tasks in workspaces"
 msgstr "在工作区中运行任务"
 
@@ -14912,6 +14924,9 @@ msgstr "在渲染的文件查看器中搜索文本"
 
 msgid "Search the leaderboard for a fighter"
 msgstr "在排行榜中搜索对手"
+
+msgid "Search the web"
+msgstr "搜索网页"
 
 msgid "Search triggers..."
 msgstr "搜索触发器..."
@@ -15404,6 +15419,9 @@ msgstr "分享页面"
 
 msgid "Share page (public)"
 msgstr "分享页面（公开）"
+
+msgid "Share plugins with your team from a GitHub repo. Every machine gets the same version."
+msgstr "通过 GitHub 仓库与团队共享插件。每台设备都会获得同一版本。"
 
 msgid "Share this page"
 msgstr "分享此页面"
@@ -16618,9 +16636,6 @@ msgstr "Superset 页面演示"
 
 msgid "Superset Plugins"
 msgstr "Superset 插件"
-
-msgid "Superset puts plugin skills and tools where these agents look for them."
-msgstr "Superset 会把插件的技能和工具放到这些智能体会查找的位置。"
 
 msgid "Superset raised an $11.5M seed round led by Union Square Ventures, with Y Combinator and Paul Graham. TechCrunch named it one of the standout startups from YC Demo Day."
 msgstr "Superset 完成了 1150 万美元的种子轮融资，由 Union Square Ventures 领投，Y Combinator 和 Paul Graham 参投。TechCrunch 将其评为 YC Demo Day 的杰出初创公司之一。"
@@ -19257,14 +19272,17 @@ msgstr "已运行 {seconds} 秒"
 msgid "Working…"
 msgstr "处理中…"
 
+msgid "Works in"
+msgstr "支持"
+
+msgid "Works in every agent"
+msgstr "适用于所有智能体"
+
 msgid "Works when environments are clean. Environments are rarely clean."
 msgstr "环境干净时可行。而环境很少干净。"
 
 msgid "Works with any agent"
 msgstr "适用于任何智能体"
-
-msgid "Works with Claude Code and Codex"
-msgstr "支持 Claude Code 和 Codex"
 
 msgid "Works with your agents"
 msgstr "与你的智能体配合使用"
@@ -19409,6 +19427,12 @@ msgstr "写下评论…"
 
 msgid "Write a note and pick an agent. Your note arrives with the element's code and a cropped screenshot."
 msgstr "写一条备注并选择智能体。备注会连同该元素的代码和裁剪后的截图一起送达。"
+
+msgid "Write a plugin once and every coding agent can use it: Claude Code, Codex, Cursor, OpenCode, and more. Install it once, and it works on your machines and in the cloud."
+msgstr "插件只需编写一次，所有编码智能体都能使用：Claude Code、Codex、Cursor、OpenCode 等。只需安装一次，就能在你的设备上和云端运行。"
+
+msgid "Write a plugin once. Every agent can use it."
+msgstr "插件只需编写一次，所有智能体都能使用。"
 
 msgid "Write a prompt and pick a schedule or an event, like a pull request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
 msgstr "编写提示词，然后选择一个计划或事件，例如拉取请求、Slack 消息、Linear 议题、Sentry 议题或 Webhook。每次运行都会打开一个工作区，你可以审查并继续工作。"

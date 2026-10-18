@@ -1484,8 +1484,8 @@ msgstr "このブランチから新しいワークスペースを作り、会話
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "ページは読み手ごとの回答を保存できるので、バックエンドなしでアンケートが作れます。"
 
-msgid "A plugin adds one app's skills and tools to your agents. Install it once, and it works on every machine you sign into."
-msgstr "プラグインは、1つのアプリのスキルとツールをエージェントに追加します。一度インストールすれば、サインインしているすべてのマシンで使えます。"
+msgid "A plugin is a short manifest and a few skill files. Superset puts it where each agent looks, and you sign in once for all of them."
+msgstr "プラグインは短いマニフェストと数個のスキルファイルだけです。Supersetが各エージェントの参照する場所に置くので、サインインは一度で済みます。"
 
 msgid "A practical TypeScript problem, like the ones we solve every day. No algorithm puzzles."
 msgstr "普段私たちが取り組んでいるような、実践的なTypeScriptの課題です。アルゴリズムパズルは出しません。"
@@ -3210,6 +3210,9 @@ msgstr "オープンに開発"
 msgid "Build the future of Superset in the cloud"
 msgstr "クラウドでSupersetの未来を築く"
 
+msgid "Build your own"
+msgstr "自分で作る"
+
 msgid "Building the last piece of software"
 msgstr "最後のソフトウェアを作る"
 
@@ -3573,6 +3576,9 @@ msgstr "アップデートを確認..."
 msgid "Check on running agents and read what they changed from your iPhone or iPad."
 msgstr "実行中のエージェントの状況を確認し、変更内容を iPhone や iPad から読めます。"
 
+msgid "Check plans and balances"
+msgstr "プランと残高を確認"
+
 msgid "Check resources"
 msgstr "リソースを確認"
 
@@ -3707,6 +3713,9 @@ msgstr "これを明確にして"
 
 msgid "Claude Code, Codex, and OpenCode are the agents; Superset is where you run many of them at once. Each task gets its own isolated Git worktree, so ten agents can work on ten branches simultaneously while you monitor, review, and merge from one place."
 msgstr "Claude Code、Codex、OpenCodeはエージェントであり、Supersetはそれらを同時に何体も動かす場所です。タスクごとに独立したGitワークツリーが割り当てられるので、10体のエージェントが10本のブランチで同時に作業する間、1か所から監視・レビュー・マージができます。"
+
+msgid "Claude Code, Codex, Cursor, OpenCode, and more use the same plugin. There is no setup per agent."
+msgstr "Claude Code、Codex、Cursor、OpenCodeなどが同じプラグインを使います。エージェントごとの設定は不要です。"
 
 msgid "Claude Code, Codex, Cursor, OpenCode, and more."
 msgstr "Claude Code、Codex、Cursor、OpenCodeなど。"
@@ -4413,9 +4422,6 @@ msgstr "このコンピューターに接続"
 
 msgid "Connect your {pluginLabel} account, then reload this page."
 msgstr "{pluginLabel} アカウントを接続してから、このページを再読み込みしてください。"
-
-msgid "Connect your coding agents to the apps your team already uses."
-msgstr "コーディングエージェントを、チームが普段使っているアプリにつなぎます。"
 
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "GitHubリポジトリを接続してプルリクエストを同期します。チーム全体のCIステータスとレビューを追跡できます。"
@@ -8111,6 +8117,9 @@ msgstr "GitHubユーザー名…"
 msgid "Give me an example"
 msgstr "例を挙げて"
 
+msgid "Give your agents the apps your team already uses. Install a plugin once, and every agent can use it, on your machines and in the cloud."
+msgstr "チームがすでに使っているアプリを、エージェントに。プラグインを一度インストールすれば、手元のマシンでもクラウドでも、どのエージェントからも使えます。"
+
 msgid "Give your key a descriptive name to remember where it's used."
 msgstr "どこで使うキーか分かる名前を付けてください。"
 
@@ -8871,14 +8880,11 @@ msgstr "インストールして再起動"
 msgid "Install & Restart"
 msgstr "インストールして再起動"
 
-msgid "Install a plugin once. Superset adds its skills on each machine where you use your account."
-msgstr "プラグインは一度インストールするだけです。アカウントを使うマシンごとに、Supersetがそのスキルを追加します。"
+msgid "Install a plugin once. It is ready on each machine you sign into and in every cloud workspace you start."
+msgstr "プラグインは一度インストールするだけ。サインインするすべてのマシンと、起動するすべてのクラウドワークスペースで使えます。"
 
 msgid "Install failed"
 msgstr "インストールに失敗しました"
-
-msgid "Install from the terminal"
-msgstr "ターミナルからインストール"
 
 msgid "Install GitHub App"
 msgstr "GitHub Appをインストール"
@@ -11555,9 +11561,6 @@ msgstr "それ以前"
 msgid "on {offScopeHostName} — won't run here"
 msgstr "{offScopeHostName}上 — ここでは実行されません"
 
-msgid "On every machine you sign into"
-msgstr "サインインしているすべてのマシンで"
-
 msgid "On focus change"
 msgstr "フォーカス変更時"
 
@@ -11581,6 +11584,9 @@ msgstr "ウィンドウ変更時"
 
 msgid "On your machine. Repos, worktrees, terminal output, and agent sessions stay local by default; cloud sync covers account and organization metadata only. Superset doesn't proxy any API calls."
 msgstr "お使いのマシンです。リポジトリ、ワークツリー、ターミナルの出力、エージェントのセッションは既定でローカルに留まります。クラウド同期の対象はアカウントと組織のメタデータのみです。SupersetはAPI呼び出しを一切中継しません。"
+
+msgid "On your machines and in the cloud"
+msgstr "手元のマシンでも、クラウドでも"
 
 msgid "On-screen Keyboard"
 msgstr "オンスクリーンキーボード"
@@ -11614,6 +11620,9 @@ msgstr "ボード最初の100人のひとり"
 
 msgid "one of the selected repositories"
 msgstr "選択したリポジトリのいずれか"
+
+msgid "One plugin. Every coding agent."
+msgstr "ひとつのプラグインを、すべてのコーディングエージェントで。"
 
 msgid "One step left"
 msgstr "あと1ステップ"
@@ -13213,6 +13222,9 @@ msgstr "もう一度公開してもリンクは変わりません。以前のバ
 msgid "Publish from the Superset CLI or over MCP."
 msgstr "Superset CLI か MCP 経由で公開できます。"
 
+msgid "Publish from your own repo"
+msgstr "自分のリポジトリから公開"
+
 msgid "Published"
 msgstr "公開日"
 
@@ -13477,6 +13489,9 @@ msgstr "レビュー待ち"
 #. placeholder {0}: error.message
 msgid "Ready for review failed: {0}"
 msgstr "レビュー準備完了にできませんでした: {0}"
+
+msgid "Ready in"
+msgstr "対応済み"
 
 msgid "Ready to Merge"
 msgstr "マージ可能"
@@ -14514,9 +14529,6 @@ msgstr "セットアップスクリプトを実行"
 msgid "Run setup script in each imported workspace"
 msgstr "インポートした各ワークスペースでセットアップスクリプトを実行"
 
-msgid "Run superset plugins install linear from any shell. The plugin shows up in the app too."
-msgstr "任意のシェルで superset plugins install linear を実行します。プラグインはアプリにも表示されます。"
-
 msgid "run tasks in workspaces"
 msgstr "タスクをワークスペースで実行する"
 
@@ -14912,6 +14924,9 @@ msgstr "レンダリングされたファイルビューア内でテキストを
 
 msgid "Search the leaderboard for a fighter"
 msgstr "ランキングで対戦相手を検索"
+
+msgid "Search the web"
+msgstr "Webを検索"
 
 msgid "Search triggers..."
 msgstr "トリガーを検索..."
@@ -15404,6 +15419,9 @@ msgstr "ページを共有"
 
 msgid "Share page (public)"
 msgstr "ページを共有（公開）"
+
+msgid "Share plugins with your team from a GitHub repo. Every machine gets the same version."
+msgstr "GitHubリポジトリからチームにプラグインを共有できます。すべてのマシンに同じバージョンが届きます。"
 
 msgid "Share this page"
 msgstr "このページを共有"
@@ -16618,9 +16636,6 @@ msgstr "Superset ページのデモ"
 
 msgid "Superset Plugins"
 msgstr "Superset プラグイン"
-
-msgid "Superset puts plugin skills and tools where these agents look for them."
-msgstr "Supersetは、これらのエージェントが参照する場所にプラグインのスキルとツールを配置します。"
 
 msgid "Superset raised an $11.5M seed round led by Union Square Ventures, with Y Combinator and Paul Graham. TechCrunch named it one of the standout startups from YC Demo Day."
 msgstr "Superset は、Union Square Ventures がリードし、Y Combinator と Paul Graham が参加した 1,150 万ドルのシードラウンドを調達しました。TechCrunch は Superset を YC Demo Day の注目スタートアップの 1 社に選びました。"
@@ -19257,14 +19272,17 @@ msgstr "作業時間 {seconds}秒"
 msgid "Working…"
 msgstr "処理中…"
 
+msgid "Works in"
+msgstr "対応"
+
+msgid "Works in every agent"
+msgstr "すべてのエージェントで動作"
+
 msgid "Works when environments are clean. Environments are rarely clean."
 msgstr "環境がきれいなら動きます。環境がきれいなことは滅多にありません。"
 
 msgid "Works with any agent"
 msgstr "どのエージェントでも使える"
-
-msgid "Works with Claude Code and Codex"
-msgstr "Claude CodeとCodexに対応"
 
 msgid "Works with your agents"
 msgstr "お使いのエージェントに対応"
@@ -19409,6 +19427,12 @@ msgstr "コメントを入力…"
 
 msgid "Write a note and pick an agent. Your note arrives with the element's code and a cropped screenshot."
 msgstr "メモを書いて、エージェントを選びます。メモは、要素のコードと切り抜いたスクリーンショットと一緒に届きます。"
+
+msgid "Write a plugin once and every coding agent can use it: Claude Code, Codex, Cursor, OpenCode, and more. Install it once, and it works on your machines and in the cloud."
+msgstr "プラグインは一度書くだけで、Claude Code、Codex、Cursor、OpenCodeなど、あらゆるコーディングエージェントで使えます。一度インストールすれば、手元のマシンでもクラウドでも動きます。"
+
+msgid "Write a plugin once. Every agent can use it."
+msgstr "プラグインは一度書くだけ。どのエージェントでも使えます。"
 
 msgid "Write a prompt and pick a schedule or an event, like a pull request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
 msgstr "プロンプトを書き、スケジュールまたはイベントを選びます。イベントには、プルリクエスト、Slackのメッセージ、LinearのIssue、SentryのIssue、Webhookなどがあります。実行ごとにワークスペースが開き、レビューして作業を続けられます。"
