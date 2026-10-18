@@ -1,26 +1,26 @@
-import { Button } from "@expo/ui/swift-ui";
 import { useLingui } from "@lingui/react/macro";
 import type { ShareRoleOption } from "@superset/shared/sharing";
-import { View } from "react-native";
+import { ChevronsUpDown } from "lucide-react-native";
+import { Pressable, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
-import { ValueMenu } from "../../../components/ValueMenu";
-import { useChooseGeneralAccess } from "../../../hooks/useChooseGeneralAccess";
+import { OrganizationAvatar } from "../../../../OrganizationAvatar";
 import type { GeneralAccess } from "../../../types";
-import { useChangeGeneralRole } from "./hooks/useChangeGeneralRole";
 
 export function GeneralAccessRow({
 	general,
 	roles,
 	canManage,
+	onOpenWho,
+	onOpenLevel,
 }: {
 	general: GeneralAccess;
 	roles: ShareRoleOption[];
 	canManage: boolean;
+	onOpenWho: () => void;
+	onOpenLevel: () => void;
 }) {
 	const { t } = useLingui();
-	const choose = useChooseGeneralAccess(general);
-	const changeRole = useChangeGeneralRole(general);
 	const current =
 		general.options.find((option) => option.value === general.value) ??
 		general.options[0];
@@ -34,65 +34,55 @@ export function GeneralAccessRow({
 				: roles.length === 1
 					? roles[0]
 					: undefined;
+	const roleIsChoice = canManage && general.role && roles.length > 1;
 
 	return (
 		<View className="min-h-14 flex-row items-center gap-3 py-2">
-			{current.mark ? (
-				<View className="bg-foreground size-9 shrink-0 items-center justify-center rounded-lg">
-					<Text className="text-background text-sm font-semibold">
-						{current.mark}
-					</Text>
-				</View>
+			{current.organization ? (
+				<OrganizationAvatar
+					name={current.organization.name}
+					logo={current.organization.logo}
+					size={36}
+				/>
 			) : (
 				<View className="bg-muted size-9 shrink-0 items-center justify-center rounded-lg">
 					<Icon as={current.icon} className="text-foreground size-[18px]" />
 				</View>
 			)}
 			<View className="min-w-0 flex-1 items-start">
-				{canManage ? (
-					<ValueMenu
-						label={current.label}
-						a11yLabel={t({ message: "Who can open it" })}
-						tone="foreground"
-						size={16}
-						chevron="chevron.up.chevron.down"
-					>
-						{general.options.map((option) => (
-							<Button
-								key={option.value}
-								label={option.label}
-								systemImage={
-									option.value === general.value ? "checkmark" : undefined
-								}
-								onPress={() => void choose(option.value)}
-							/>
-						))}
-					</ValueMenu>
-				) : (
-					<Text className="text-base" numberOfLines={1}>
+				<Pressable
+					accessibilityRole="button"
+					accessibilityLabel={t({ message: "Who can open it" })}
+					disabled={!canManage}
+					onPress={onOpenWho}
+					hitSlop={8}
+					className="max-w-full flex-row items-center gap-1 active:opacity-60"
+				>
+					<Text className="shrink text-base" numberOfLines={1}>
 						{current.label}
 					</Text>
-				)}
+					{canManage ? (
+						<Icon
+							as={ChevronsUpDown}
+							className="text-muted-foreground size-3.5"
+						/>
+					) : null}
+				</Pressable>
 			</View>
 			{role ? (
-				canManage && general.role && roles.length > 1 ? (
-					<ValueMenu
-						label={role.label}
-						a11yLabel={t({ message: "What general access allows" })}
-						tone="foreground"
-						size={14}
-						chevron="chevron.up.chevron.down"
-						pill
+				roleIsChoice ? (
+					<Pressable
+						accessibilityRole="button"
+						accessibilityLabel={t({ message: "What general access allows" })}
+						onPress={onOpenLevel}
+						className="bg-muted flex-row items-center gap-1 rounded-full px-3 py-1.5 active:opacity-60"
 					>
-						{roles.map((option) => (
-							<Button
-								key={option.id}
-								label={option.label}
-								systemImage={option.id === role.id ? "checkmark" : undefined}
-								onPress={() => void changeRole(option.id)}
-							/>
-						))}
-					</ValueMenu>
+						<Text className="text-sm">{role.label}</Text>
+						<Icon
+							as={ChevronsUpDown}
+							className="text-muted-foreground size-3"
+						/>
+					</Pressable>
 				) : (
 					<Text className="text-muted-foreground shrink-0 text-sm">
 						{role.label}

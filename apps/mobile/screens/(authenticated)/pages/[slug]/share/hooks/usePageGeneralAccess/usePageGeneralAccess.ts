@@ -21,6 +21,7 @@ export function usePageGeneralAccess(slug: string) {
 		value: page.data?.visibility ?? "just_me",
 		values: ["just_me", "org", "everyone"],
 		organizationName: share.organizationName,
+		organizationLogo: share.organizationLogo,
 		onChange: (next) => setVisibility.mutateAsync(next),
 		role: {
 			value: sharing.data?.organizationRole ?? "comment",

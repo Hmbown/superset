@@ -5,6 +5,7 @@ export {
 } from "./hooks/useGeneralAccess";
 export { useShareDirectory } from "./hooks/useShareDirectory";
 export { ShareAccessSheet } from "./ShareAccessSheet";
+export { ShareGeneralAccessSheet } from "./ShareGeneralAccessSheet";
 export { ShareGranteeSheet } from "./ShareGranteeSheet";
 export { ShareInviteScreen } from "./ShareInviteScreen";
 export type { GeneralAccess, GeneralAccessOption, ShareConfirm } from "./types";

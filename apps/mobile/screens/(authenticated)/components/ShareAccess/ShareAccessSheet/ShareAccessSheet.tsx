@@ -38,6 +38,8 @@ interface ShareAccessSheetProps {
 	/** Shown after general access, such as a page's shared version. */
 	extra?: ReactNode;
 	onInvite: () => void;
+	/** Opens the general access sheet: who can open it, or what they can do. */
+	onOpenGeneral: (mode: "who" | "level") => void;
 	onOpenGrantee: (grantee: ShareGranteeRef) => void;
 }
 
@@ -54,6 +56,7 @@ export function ShareAccessSheet({
 	extra,
 	onInvite,
 	onOpenGrantee,
+	onOpenGeneral,
 }: ShareAccessSheetProps) {
 	const { t } = useLingui();
 	const router = useRouter();
@@ -138,6 +141,8 @@ export function ShareAccessSheet({
 						general={general}
 						roles={roles}
 						canManage={canManage}
+						onOpenWho={() => onOpenGeneral("who")}
+						onOpenLevel={() => onOpenGeneral("level")}
 					/>
 				</View>
 

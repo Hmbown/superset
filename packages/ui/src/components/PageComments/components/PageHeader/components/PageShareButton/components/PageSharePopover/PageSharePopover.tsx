@@ -166,6 +166,7 @@ export function PageSharePopover({
 					roleNote=""
 					directory={sharing.directory}
 					organizationName={organizationName}
+					organizationLogo={sharing.organizationLogo ?? null}
 					inviteNew={sharing.inviteNew}
 					onUpgrade={sharing.onUpgrade}
 					onCopyLink={copyLink}

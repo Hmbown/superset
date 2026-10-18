@@ -15,6 +15,7 @@ export function useWorkspaceGeneralAccess(id: string | undefined) {
 		value: sharing.data?.visibility ?? "just_me",
 		values: ["just_me", "org"],
 		organizationName: share.organizationName,
+		organizationLogo: share.organizationLogo,
 		onChange: (next) => setVisibility.mutateAsync(next as WorkspaceVisibility),
 	});
 }

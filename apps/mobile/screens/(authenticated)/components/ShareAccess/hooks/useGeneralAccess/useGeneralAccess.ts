@@ -1,5 +1,4 @@
 import { useLingui } from "@lingui/react/macro";
-import { getInitials } from "@superset/shared/names";
 import { Building2, Globe, Lock } from "lucide-react-native";
 import type { GeneralAccess, GeneralAccessOption } from "../../types";
 
@@ -16,12 +15,14 @@ export function useGeneralAccess({
 	value,
 	values,
 	organizationName,
+	organizationLogo,
 	onChange,
 	role,
 }: {
 	value: GeneralAccessValue;
 	values: GeneralAccessValue[];
 	organizationName: string;
+	organizationLogo: string | null;
 	onChange: (next: GeneralAccessValue) => Promise<unknown>;
 	role?: GeneralAccess["role"];
 }): GeneralAccess {
@@ -42,7 +43,7 @@ export function useGeneralAccess({
 			}),
 			icon: Building2,
 			systemImage: "building.2",
-			mark: getInitials(organizationName).slice(0, 1) || undefined,
+			organization: { name: organizationName, logo: organizationLogo },
 		},
 		everyone: {
 			value: "everyone",

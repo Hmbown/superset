@@ -70,6 +70,8 @@ export function useShareDirectory() {
 		currentUserId: session?.user?.id ?? null,
 		organizationName:
 			organizations?.find((org) => org.id === organizationId)?.name ?? "",
+		organizationLogo:
+			organizations?.find((org) => org.id === organizationId)?.logo ?? null,
 		inviteNew,
 		onUpgrade,
 		inviteEmails,

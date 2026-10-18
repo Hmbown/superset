@@ -22,6 +22,7 @@ export default function PageShareLayout() {
 				options={{ title: t({ message: "Invite" }) }}
 			/>
 			<Stack.Screen name="access" options={accessSheetOptions} />
+			<Stack.Screen name="general" options={accessSheetOptions} />
 		</Stack>
 	);
 }

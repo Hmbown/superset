@@ -93,6 +93,9 @@ export function usePageSharing(pageId: string): PageHeaderSharing {
 		directory,
 		organizationName:
 			organizations?.find((org) => org.id === activeOrganizationId)?.name ?? "",
+		organizationLogo:
+			organizations?.find((org) => org.id === activeOrganizationId)?.logo ??
+			null,
 		inviteNew,
 		onUpgrade: () => router.push("/settings/billing"),
 		onAdd: async ({ grantees: picked, emails, role: shareRole }) => {

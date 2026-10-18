@@ -9,8 +9,8 @@ export interface GeneralAccessOption {
 	icon: LucideIcon;
 	/** SF Symbol shown beside the option in the menu. */
 	systemImage: ComponentProps<typeof Button>["systemImage"];
-	/** The organization's initial, shown instead of `icon`. */
-	mark?: string;
+	/** Shown with the organization's avatar instead of `icon`. */
+	organization?: { name: string; logo: string | null };
 }
 
 export interface ShareConfirm {

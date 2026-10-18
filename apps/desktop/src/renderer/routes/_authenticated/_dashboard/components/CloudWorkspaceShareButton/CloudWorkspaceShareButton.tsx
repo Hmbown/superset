@@ -102,6 +102,7 @@ export function CloudWorkspaceShareButton({
 					roleNote={fullAccess.label}
 					directory={share.directory}
 					organizationName={share.organizationName}
+					organizationLogo={share.organizationLogo}
 					inviteNew={share.inviteNew}
 					onUpgrade={share.onUpgrade}
 					onCopyLink={() => copyToClipboard(linkUrl)}

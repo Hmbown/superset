@@ -44,6 +44,7 @@ export interface PageHeaderSharing {
 	organizationRole: PageShareRole;
 	directory: ShareDirectory;
 	organizationName: string;
+	organizationLogo?: string | null;
 	inviteNew: InviteNewMode;
 	onUpgrade: () => void;
 	onAdd: (request: ShareAddRequest) => Promise<void>;

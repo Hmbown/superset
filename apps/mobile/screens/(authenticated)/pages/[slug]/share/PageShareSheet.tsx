@@ -69,6 +69,12 @@ export function PageShareSheet() {
 					params: { slug, grantee: granteeKey(grantee) },
 				})
 			}
+			onOpenGeneral={(mode) =>
+				router.push({
+					pathname: "/(authenticated)/pages/[slug]/share/general",
+					params: { slug, mode },
+				})
+			}
 		/>
 	);
 }

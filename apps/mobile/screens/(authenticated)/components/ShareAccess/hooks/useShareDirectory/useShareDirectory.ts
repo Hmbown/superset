@@ -116,6 +116,7 @@ export function useShareDirectory() {
 		currentUserId: session?.user.id,
 		directory,
 		organizationName,
+		organizationLogo: activeOrganization?.logo ?? null,
 		inviteNew,
 		onUpgrade,
 		share,

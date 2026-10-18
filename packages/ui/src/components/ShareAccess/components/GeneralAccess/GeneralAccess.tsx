@@ -30,12 +30,14 @@ interface GeneralAccessProps {
 	general: ShareGeneralAccess;
 	canManage: boolean;
 	organizationName: string;
+	organizationLogo: string | null;
 }
 
 export function GeneralAccess({
 	general,
 	canManage,
 	organizationName,
+	organizationLogo,
 }: GeneralAccessProps) {
 	const { t } = useLingui();
 	const [busy, setBusy] = useState(false);
@@ -72,7 +74,7 @@ export function GeneralAccess({
 	const currentRole = role?.options.find((option) => option.id === role.value);
 	const iconOf = (option: ShareGeneralOption) =>
 		option.organization ? (
-			<OrganizationMark name={organizationName} />
+			<OrganizationMark name={organizationName} logo={organizationLogo} />
 		) : (
 			option.icon
 		);

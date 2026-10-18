@@ -44,6 +44,12 @@ export function WorkspaceShareSheet() {
 					params: { id, grantee: granteeKey(grantee) },
 				})
 			}
+			onOpenGeneral={() =>
+				router.push({
+					pathname: "/(authenticated)/workspace/[id]/share/general",
+					params: { id },
+				})
+			}
 		/>
 	);
 }

@@ -38,6 +38,8 @@ export interface ShareAccessProps {
 	roleNote: string;
 	directory: ShareDirectory;
 	organizationName: string;
+	/** The organization's logo, shown for the organization's general access option. */
+	organizationLogo?: string | null;
 	inviteNew: InviteNewMode;
 	onUpgrade: () => void;
 	general: ShareGeneralAccess;
@@ -77,6 +79,7 @@ export function ShareAccess({
 	roleNote,
 	directory,
 	organizationName,
+	organizationLogo = null,
 	inviteNew,
 	onUpgrade,
 	general,
@@ -290,6 +293,7 @@ export function ShareAccess({
 					general={general}
 					canManage={canManage}
 					organizationName={organizationName}
+					organizationLogo={organizationLogo}
 				/>
 			</div>
 			{children}

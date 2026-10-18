@@ -74,6 +74,7 @@ export function usePageHeaderData(data: PageHeaderTarget): PageHeaderData {
 		organizationRole: sharingQuery.data?.organizationRole ?? "comment",
 		directory: share.directory,
 		organizationName: share.organizationName,
+		organizationLogo: share.organizationLogo,
 		inviteNew: share.inviteNew,
 		onUpgrade: share.onUpgrade,
 		onAdd: async ({ grantees: picked, emails, role }) => {
