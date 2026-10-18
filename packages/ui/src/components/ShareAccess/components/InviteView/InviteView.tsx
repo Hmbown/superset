@@ -354,7 +354,7 @@ export function InviteView({
 					))}
 				</div>
 				{newPeople ? (
-					<p className="pb-2 text-muted-foreground text-xs">
+					<p className="-mx-3 border-t px-3 py-2 text-muted-foreground text-xs">
 						<Trans>
 							New people get an email invite to {organizationName}. They see
 							this once they join.

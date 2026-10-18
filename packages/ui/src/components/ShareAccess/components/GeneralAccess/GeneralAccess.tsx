@@ -86,42 +86,46 @@ export function GeneralAccess({
 				<span className="grid size-7 shrink-0 place-items-center rounded-md bg-muted [&_svg]:size-3.5">
 					{current ? iconOf(current) : null}
 				</span>
-				<Select
-					value={general.value}
-					disabled={!canManage || busy}
-					onValueChange={choose}
-				>
-					<SelectTrigger
-						size="sm"
-						className="h-7 min-w-0 gap-1 border-none bg-transparent px-1.5 shadow-none hover:bg-accent dark:bg-transparent dark:hover:bg-accent disabled:opacity-100"
-						aria-label={t({ message: "Who can open it" })}
+				{canManage ? (
+					<Select
+						value={general.value}
+						disabled={busy}
+						onValueChange={choose}
 					>
-						<SelectValue>
-							<span className="truncate">{current?.label}</span>
-						</SelectValue>
-					</SelectTrigger>
-					<SelectContent align="start">
-						{general.options.map((option) => (
-							<SelectItem key={option.value} value={option.value}>
-								<span className="grid size-5 place-items-center [&_svg]:size-3.5">
-									{iconOf(option)}
-								</span>
-								{option.label}
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
+						<SelectTrigger
+							size="sm"
+							className="h-7 min-w-0 gap-1 border-none bg-transparent px-1.5 shadow-none hover:bg-accent dark:bg-transparent dark:hover:bg-accent"
+							aria-label={t({ message: "Who can open it" })}
+						>
+							<SelectValue>
+								<span className="truncate">{current?.label}</span>
+							</SelectValue>
+						</SelectTrigger>
+						<SelectContent align="start">
+							{general.options.map((option) => (
+								<SelectItem key={option.value} value={option.value}>
+									<span className="grid size-5 place-items-center [&_svg]:size-3.5">
+										{iconOf(option)}
+									</span>
+									{option.label}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
+				) : (
+					<span className="truncate px-1.5 text-sm">{current?.label}</span>
+				)}
 				<span className="flex-1" />
 				{role && showRole && currentRole ? (
-					role.options.length > 1 ? (
+					canManage && role.options.length > 1 ? (
 						<Select
 							value={role.value}
-							disabled={!canManage || busy}
+							disabled={busy}
 							onValueChange={(value) => void run(() => role.onChange(value))}
 						>
 							<SelectTrigger
 								size="sm"
-								className="h-7 shrink-0 gap-1 border-none bg-muted px-2.5 shadow-none hover:bg-accent dark:bg-muted dark:hover:bg-accent disabled:opacity-100"
+								className="h-7 shrink-0 gap-1 border-none bg-muted px-2.5 shadow-none hover:bg-accent dark:bg-muted dark:hover:bg-accent"
 								aria-label={t({ message: "What general access allows" })}
 							>
 								<SelectValue>{currentRole.label}</SelectValue>
