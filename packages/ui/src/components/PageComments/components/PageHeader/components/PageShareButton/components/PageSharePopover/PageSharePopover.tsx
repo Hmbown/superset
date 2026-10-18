@@ -6,6 +6,7 @@ import { Building2, Globe, Lock } from "lucide-react";
 import { type ReactNode, useCallback, useState } from "react";
 import {
 	keepOpenForToasts,
+	keepOpenWhileInviting,
 	ShareAccess,
 	type ShareConfirmation,
 	type ShareRoleOption,
@@ -143,6 +144,7 @@ export function PageSharePopover({
 				align="end"
 				className="w-[32rem] p-0"
 				onInteractOutside={keepOpenForToasts}
+				onEscapeKeyDown={keepOpenWhileInviting}
 			>
 				<ShareAccess
 					title={<Trans>Share page</Trans>}
@@ -175,7 +177,6 @@ export function PageSharePopover({
 					onResendInvite={sharing.onResendInvite}
 					general={{
 						value: page.visibility,
-						hint: t({ message: "Who can open this page from its link" }),
 						options: [
 							{
 								value: "just_me",
@@ -184,8 +185,9 @@ export function PageSharePopover({
 							},
 							{
 								value: "org",
-								label: t({ message: "Anyone in your organization" }),
+								label: t({ message: `Anyone in ${organizationName}` }),
 								icon: <Building2 className="size-3.5 text-muted-foreground" />,
+								organization: true,
 							},
 							{
 								value: "everyone",

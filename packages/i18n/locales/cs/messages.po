@@ -1563,6 +1563,9 @@ msgstr "Přístup pro: {name}"
 msgid "Access for the people you add"
 msgstr "Přístup pro lidi, které přidáte"
 
+msgid "Access for this person"
+msgstr "Přístup této osoby"
+
 msgid "Access your email address"
 msgstr "číst vaši e-mailovou adresu"
 
@@ -2375,6 +2378,9 @@ msgstr "Kdokoli"
 #. placeholder {0}: share.organizationName
 msgid "Anyone in {0} who isn't listed here loses access, including anyone who has it open now."
 msgstr "Kdokoli v {0}, kdo tu není uveden, ztratí přístup, a to i ten, kdo ho má právě otevřený."
+
+msgid "Anyone in {organizationName}"
+msgstr "Kdokoli v {organizationName}"
 
 msgid "Anyone in {organizationName} who isn't listed here loses access."
 msgstr "Kdokoli v {organizationName}, kdo tu není uveden, ztratí přístup."
@@ -8042,6 +8048,9 @@ msgstr "Využijte Pro naplno"
 msgid "Get the iPhone and iPad app"
 msgstr "Stáhnout aplikaci pro iPhone a iPad"
 
+msgid "Gets an invite to join {organizationName}"
+msgstr "Dostane pozvánku do {organizationName}"
+
 msgid "Ghost"
 msgstr "Ghost"
 
@@ -9001,8 +9010,8 @@ msgstr "Pozvánka odeslána na {email}"
 msgid "Invite"
 msgstr "Pozvat"
 
-msgid "Invite {label} to join {organizationName}"
-msgstr "Pozvat {label} do {organizationName}"
+msgid "Invite ({pickCount})"
+msgstr "Pozvat ({pickCount})"
 
 msgid "Invite and manage members, assign roles, and control permissions"
 msgstr "Zvěte a spravujte členy, přidělujte role a řiďte oprávnění"
@@ -10452,6 +10461,9 @@ msgstr "Název se nepodařilo přeložit"
 msgid "Name updated!"
 msgstr "Jméno aktualizováno!"
 
+msgid "Name, email, or team"
+msgstr "Jméno, e-mail nebo tým"
+
 msgid "Nameless Foreman"
 msgstr "Bezejmenný mistr"
 
@@ -10597,6 +10609,9 @@ msgstr "Nová issue"
 
 msgid "New page"
 msgstr "Nová stránka"
+
+msgid "New people get an email invite to {organizationName}. They see this once they join."
+msgstr "Noví lidé dostanou e-mailem pozvánku do {organizationName}. Uvidí to, jakmile se připojí."
 
 msgid "New project"
 msgstr "Nový projekt"
@@ -11054,8 +11069,8 @@ msgstr "Zde není k dispozici žádný mobilní simulátor. Je potřeba simulát
 msgid "No name on file"
 msgstr "Není uloženo žádné jméno"
 
-msgid "No one in {organizationName} matches"
-msgstr "V {organizationName} nikdo neodpovídá"
+msgid "No one in {organizationName} matches. Type a full email to invite someone new."
+msgstr "V {organizationName} nikdo neodpovídá. Zadejte celou e-mailovou adresu a pozvěte někoho nového."
 
 msgid "No open issues found."
 msgstr "Nenalezeny žádné otevřené issues."
@@ -12589,9 +12604,6 @@ msgstr "„{projectName}“ trvale smazán"
 #. placeholder {0}: team.name
 msgid "Permanently remove <0>{0}</0> and all of its members. This can't be undone."
 msgstr "Trvale odstranit <0>{0}</0> a všechny jeho členy. Nelze vrátit zpět."
-
-msgid "Permission level"
-msgstr "Úroveň oprávnění"
 
 msgid "Permissions"
 msgstr "Oprávnění"
@@ -15021,9 +15033,6 @@ msgstr "Podívejte se, kde se vašich posledních 30 dní umístí ve veřejném
 msgid "Select"
 msgstr "Výběr"
 
-msgid "Select a person"
-msgstr "Vyberte osobu"
-
 msgid "Select a project"
 msgstr "Vyberte projekt"
 
@@ -15155,9 +15164,6 @@ msgstr "Vyberte adresář terminálového skriptu"
 
 msgid "Select worktree location"
 msgstr "Vyberte umístění worktree"
-
-msgid "Selected"
-msgstr "Vybráno"
 
 msgid "Selected agent is not available on this host"
 msgstr "Vybraný agent není na tomto hostu dostupný"
@@ -17477,9 +17483,6 @@ msgstr "Tyto složky stále obsahují vaše soubory, ale do nového Supersetu se
 msgid "These ports are still in use"
 msgstr "Tyto porty se stále používají"
 
-msgid "They get full access"
-msgstr "Získají plný přístup"
-
 msgid "Thinking"
 msgstr "Uvažování"
 
@@ -19174,11 +19177,8 @@ msgstr "Kteří agenti jsou podporovaní?"
 msgid "Which AI coding agents are supported?"
 msgstr "Kteří AI kódovací agenti jsou podporovaní?"
 
-msgid "Who can open this page from its link"
-msgstr "Kdo může tuto stránku otevřít z odkazu"
-
-msgid "Who can open this workspace"
-msgstr "Kdo může otevřít tento pracovní prostor"
+msgid "Who can open it"
+msgstr "Kdo to může otevřít"
 
 msgid "Whole Task"
 msgstr "Celý úkol"

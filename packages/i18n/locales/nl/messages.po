@@ -1563,6 +1563,9 @@ msgstr "Toegang voor {name}"
 msgid "Access for the people you add"
 msgstr "Toegang voor de personen die je toevoegt"
 
+msgid "Access for this person"
+msgstr "Toegang voor deze persoon"
+
 msgid "Access your email address"
 msgstr "Je e-mailadres inzien"
 
@@ -2375,6 +2378,9 @@ msgstr "Iedereen"
 #. placeholder {0}: share.organizationName
 msgid "Anyone in {0} who isn't listed here loses access, including anyone who has it open now."
 msgstr "Iedereen in {0} die hier niet staat, verliest de toegang, ook wie het nu open heeft."
+
+msgid "Anyone in {organizationName}"
+msgstr "Iedereen in {organizationName}"
 
 msgid "Anyone in {organizationName} who isn't listed here loses access."
 msgstr "Iedereen in {organizationName} die hier niet staat, verliest de toegang."
@@ -8042,6 +8048,9 @@ msgstr "Haal het beste uit Pro"
 msgid "Get the iPhone and iPad app"
 msgstr "Download de iPhone- en iPad-app"
 
+msgid "Gets an invite to join {organizationName}"
+msgstr "Krijgt een uitnodiging voor {organizationName}"
+
 msgid "Ghost"
 msgstr "Ghost"
 
@@ -9001,8 +9010,8 @@ msgstr "Uitnodiging verstuurd naar {email}"
 msgid "Invite"
 msgstr "Uitnodigen"
 
-msgid "Invite {label} to join {organizationName}"
-msgstr "{label} uitnodigen voor {organizationName}"
+msgid "Invite ({pickCount})"
+msgstr "Uitnodigen ({pickCount})"
 
 msgid "Invite and manage members, assign roles, and control permissions"
 msgstr "Nodig leden uit en beheer ze, wijs rollen toe en regel rechten"
@@ -10452,6 +10461,9 @@ msgstr "Naam niet omgezet"
 msgid "Name updated!"
 msgstr "Naam bijgewerkt!"
 
+msgid "Name, email, or team"
+msgstr "Naam, e-mail of team"
+
 msgid "Nameless Foreman"
 msgstr "Naamloze Voorman"
 
@@ -10597,6 +10609,9 @@ msgstr "Nieuwe issue"
 
 msgid "New page"
 msgstr "Nieuwe pagina"
+
+msgid "New people get an email invite to {organizationName}. They see this once they join."
+msgstr "Nieuwe personen krijgen een uitnodiging per e-mail voor {organizationName}. Ze zien dit zodra ze lid zijn."
 
 msgid "New project"
 msgstr "Nieuw project"
@@ -11054,8 +11069,8 @@ msgstr "Hier is geen mobiele simulator beschikbaar. Hiervoor is een EAS-simulato
 msgid "No name on file"
 msgstr "Geen naam bekend"
 
-msgid "No one in {organizationName} matches"
-msgstr "Niemand in {organizationName} komt overeen"
+msgid "No one in {organizationName} matches. Type a full email to invite someone new."
+msgstr "Niemand in {organizationName} komt overeen. Typ een volledig e-mailadres om iemand nieuw uit te nodigen."
 
 msgid "No open issues found."
 msgstr "Geen open issues gevonden."
@@ -12589,9 +12604,6 @@ msgstr "\"{projectName}\" definitief verwijderd"
 #. placeholder {0}: team.name
 msgid "Permanently remove <0>{0}</0> and all of its members. This can't be undone."
 msgstr "Verwijder <0>{0}</0> en al zijn leden definitief. Dit kan niet ongedaan worden gemaakt."
-
-msgid "Permission level"
-msgstr "Machtigingsniveau"
 
 msgid "Permissions"
 msgstr "Rechten"
@@ -15021,9 +15033,6 @@ msgstr "Bekijk waar je laatste 30 dagen staan op de publieke ranglijst. Alleen t
 msgid "Select"
 msgstr "Select"
 
-msgid "Select a person"
-msgstr "Selecteer een persoon"
-
 msgid "Select a project"
 msgstr "Kies een project"
 
@@ -15155,9 +15164,6 @@ msgstr "Map voor terminalscript kiezen"
 
 msgid "Select worktree location"
 msgstr "Locatie voor worktree kiezen"
-
-msgid "Selected"
-msgstr "Geselecteerd"
 
 msgid "Selected agent is not available on this host"
 msgstr "De gekozen agent is niet beschikbaar op deze host"
@@ -17477,9 +17483,6 @@ msgstr "Deze mappen bevatten nog je bestanden, maar zijn niet vanzelf naar het n
 msgid "These ports are still in use"
 msgstr "Deze poorten zijn nog in gebruik"
 
-msgid "They get full access"
-msgstr "Ze krijgen volledige toegang"
-
 msgid "Thinking"
 msgstr "Redenering"
 
@@ -19174,11 +19177,8 @@ msgstr "Welke agents worden ondersteund?"
 msgid "Which AI coding agents are supported?"
 msgstr "Welke AI-coding agents worden ondersteund?"
 
-msgid "Who can open this page from its link"
-msgstr "Wie deze pagina via de link kan openen"
-
-msgid "Who can open this workspace"
-msgstr "Wie deze werkruimte kan openen"
+msgid "Who can open it"
+msgstr "Wie het kan openen"
 
 msgid "Whole Task"
 msgstr "Hele taak"

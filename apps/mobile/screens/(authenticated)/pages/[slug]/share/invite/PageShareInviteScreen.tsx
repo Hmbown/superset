@@ -1,4 +1,4 @@
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import {
 	ShareInviteScreen,
 	useShareDirectory,
@@ -11,7 +11,6 @@ import {
 import { usePageShareRoles } from "../hooks/usePageShareRoles";
 
 export function PageShareInviteScreen() {
-	const router = useRouter();
 	const { slug } = useLocalSearchParams<{ slug: string }>();
 	const page = usePageQuery(slug);
 	const sharing = usePageGranteesQuery(page.data?.id);
@@ -29,12 +28,6 @@ export function PageShareInviteScreen() {
 			roles={roles}
 			defaultRole="comment"
 			onUpgrade={share.onUpgrade}
-			onOpenPermission={() =>
-				router.push({
-					pathname: "/(authenticated)/pages/[slug]/share/permission",
-					params: { slug },
-				})
-			}
 			onSubmit={(request) =>
 				share.share(request, (grantees, role) =>
 					mutations.add.mutateAsync({

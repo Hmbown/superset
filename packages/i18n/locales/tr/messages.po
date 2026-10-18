@@ -1563,6 +1563,9 @@ msgstr "{name} için erişim"
 msgid "Access for the people you add"
 msgstr "Eklediğiniz kişiler için erişim"
 
+msgid "Access for this person"
+msgstr "Bu kişinin erişimi"
+
 msgid "Access your email address"
 msgstr "E-posta adresinize erişme"
 
@@ -2375,6 +2378,9 @@ msgstr "Herkes"
 #. placeholder {0}: share.organizationName
 msgid "Anyone in {0} who isn't listed here loses access, including anyone who has it open now."
 msgstr "{0} içinde burada listelenmeyen herkes, şu anda açık olanlar dahil, erişimini kaybeder."
+
+msgid "Anyone in {organizationName}"
+msgstr "{organizationName} içindeki herkes"
 
 msgid "Anyone in {organizationName} who isn't listed here loses access."
 msgstr "{organizationName} içinde burada listelenmeyen herkes erişimini kaybeder."
@@ -8042,6 +8048,9 @@ msgstr "Pro’dan en iyi şekilde yararlanın"
 msgid "Get the iPhone and iPad app"
 msgstr "iPhone ve iPad uygulamasını edinin"
 
+msgid "Gets an invite to join {organizationName}"
+msgstr "{organizationName} kuruluşuna katılma daveti alır"
+
 msgid "Ghost"
 msgstr "Hayalet"
 
@@ -9001,8 +9010,8 @@ msgstr "{email} adresine davet gönderildi"
 msgid "Invite"
 msgstr "Davet et"
 
-msgid "Invite {label} to join {organizationName}"
-msgstr "{label} kişisini {organizationName} kuruluşuna davet et"
+msgid "Invite ({pickCount})"
+msgstr "Davet et ({pickCount})"
 
 msgid "Invite and manage members, assign roles, and control permissions"
 msgstr "Üyeleri davet edin ve yönetin, roller atayın ve izinleri denetleyin"
@@ -10452,6 +10461,9 @@ msgstr "Ad çözümlenemedi"
 msgid "Name updated!"
 msgstr "Ad güncellendi!"
 
+msgid "Name, email, or team"
+msgstr "Ad, e-posta veya ekip"
+
 msgid "Nameless Foreman"
 msgstr "İsimsiz Ustabaşı"
 
@@ -10597,6 +10609,9 @@ msgstr "Yeni issue"
 
 msgid "New page"
 msgstr "Yeni sayfa"
+
+msgid "New people get an email invite to {organizationName}. They see this once they join."
+msgstr "Yeni kişiler {organizationName} kuruluşuna katılmak için e-posta daveti alır. Katıldıklarında bunu görürler."
 
 msgid "New project"
 msgstr "Yeni proje"
@@ -11054,8 +11069,8 @@ msgstr "Burada kullanılabilir bir mobil simülatör yok. Bulut korumalı alanı
 msgid "No name on file"
 msgstr "Kayıtlı ad yok"
 
-msgid "No one in {organizationName} matches"
-msgstr "{organizationName} içinde eşleşen kimse yok"
+msgid "No one in {organizationName} matches. Type a full email to invite someone new."
+msgstr "{organizationName} içinde eşleşen kimse yok. Yeni birini davet etmek için tam bir e-posta adresi yazın."
 
 msgid "No open issues found."
 msgstr "Açık issue bulunamadı."
@@ -12589,9 +12604,6 @@ msgstr "\"{projectName}\" kalıcı olarak silindi"
 #. placeholder {0}: team.name
 msgid "Permanently remove <0>{0}</0> and all of its members. This can't be undone."
 msgstr "<0>{0}</0> takımını ve tüm üyelerini kalıcı olarak kaldırın. Bu geri alınamaz."
-
-msgid "Permission level"
-msgstr "İzin düzeyi"
 
 msgid "Permissions"
 msgstr "İzinler"
@@ -15021,9 +15033,6 @@ msgstr "Son 30 gününüzün herkese açık liderlik tablosunda nereye düştü�
 msgid "Select"
 msgstr "Seçim"
 
-msgid "Select a person"
-msgstr "Bir kişi seçin"
-
 msgid "Select a project"
 msgstr "Bir proje seçin"
 
@@ -15155,9 +15164,6 @@ msgstr "Terminal betiği dizinini seçin"
 
 msgid "Select worktree location"
 msgstr "Worktree konumunu seçin"
-
-msgid "Selected"
-msgstr "Seçilenler"
 
 msgid "Selected agent is not available on this host"
 msgstr "Seçili ajan bu host'ta kullanılamıyor"
@@ -17477,9 +17483,6 @@ msgstr "Bu klasörlerde hâlâ dosyalarınız var, ancak yeni Superset'e kendili
 msgid "These ports are still in use"
 msgstr "Bu portlar hâlâ kullanımda"
 
-msgid "They get full access"
-msgstr "Tam erişim alırlar"
-
 msgid "Thinking"
 msgstr "Düşünme"
 
@@ -19174,11 +19177,8 @@ msgstr "Hangi ajanlar destekleniyor?"
 msgid "Which AI coding agents are supported?"
 msgstr "Hangi AI kodlama ajanları destekleniyor?"
 
-msgid "Who can open this page from its link"
-msgstr "Bu sayfayı bağlantısından kimlerin açabileceği"
-
-msgid "Who can open this workspace"
-msgstr "Bu çalışma alanını kimler açabilir"
+msgid "Who can open it"
+msgstr "Kimler açabilir"
 
 msgid "Whole Task"
 msgstr "Tüm görev"

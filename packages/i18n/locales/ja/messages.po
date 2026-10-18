@@ -1563,6 +1563,9 @@ msgstr "{name}のアクセス"
 msgid "Access for the people you add"
 msgstr "追加するユーザーのアクセス"
 
+msgid "Access for this person"
+msgstr "この人のアクセス"
+
 msgid "Access your email address"
 msgstr "メールアドレスへのアクセス"
 
@@ -2375,6 +2378,9 @@ msgstr "全員"
 #. placeholder {0}: share.organizationName
 msgid "Anyone in {0} who isn't listed here loses access, including anyone who has it open now."
 msgstr "ここに表示されていない{0}のメンバーは、現在開いている人も含めてアクセスできなくなります。"
+
+msgid "Anyone in {organizationName}"
+msgstr "{organizationName}の全員"
 
 msgid "Anyone in {organizationName} who isn't listed here loses access."
 msgstr "ここに表示されていない{organizationName}のメンバーはアクセスできなくなります。"
@@ -8042,6 +8048,9 @@ msgstr "Proを最大限に活用する"
 msgid "Get the iPhone and iPad app"
 msgstr "iPhone・iPad アプリを入手"
 
+msgid "Gets an invite to join {organizationName}"
+msgstr "{organizationName}への招待が届きます"
+
 msgid "Ghost"
 msgstr "Ghost"
 
@@ -9001,8 +9010,8 @@ msgstr "{email}に招待を送信しました"
 msgid "Invite"
 msgstr "招待"
 
-msgid "Invite {label} to join {organizationName}"
-msgstr "{label}を{organizationName}に招待"
+msgid "Invite ({pickCount})"
+msgstr "招待 ({pickCount})"
 
 msgid "Invite and manage members, assign roles, and control permissions"
 msgstr "メンバーの招待と管理、ロールの割り当て、権限の設定"
@@ -10452,6 +10461,9 @@ msgstr "名前を解決できません"
 msgid "Name updated!"
 msgstr "名前を更新しました!"
 
+msgid "Name, email, or team"
+msgstr "名前、メール、またはチーム"
+
 msgid "Nameless Foreman"
 msgstr "名無しの職長"
 
@@ -10597,6 +10609,9 @@ msgstr "新規issue"
 
 msgid "New page"
 msgstr "新しいページ"
+
+msgid "New people get an email invite to {organizationName}. They see this once they join."
+msgstr "新しいユーザーには{organizationName}への招待メールが届きます。参加後に表示されます。"
 
 msgid "New project"
 msgstr "新規プロジェクト"
@@ -11054,8 +11069,8 @@ msgstr "ここで利用できるモバイルシミュレーターがありませ
 msgid "No name on file"
 msgstr "登録された名前はありません"
 
-msgid "No one in {organizationName} matches"
-msgstr "{organizationName}に一致するユーザーはいません"
+msgid "No one in {organizationName} matches. Type a full email to invite someone new."
+msgstr "{organizationName}に一致するユーザーはいません。新しいユーザーを招待するには、メールアドレスをすべて入力してください。"
 
 msgid "No open issues found."
 msgstr "オープンなIssueが見つかりません。"
@@ -12589,9 +12604,6 @@ msgstr "「{projectName}」を完全に削除しました"
 #. placeholder {0}: team.name
 msgid "Permanently remove <0>{0}</0> and all of its members. This can't be undone."
 msgstr "<0>{0}</0>とそのすべてのメンバーを完全に削除します。この操作は元に戻せません。"
-
-msgid "Permission level"
-msgstr "権限レベル"
 
 msgid "Permissions"
 msgstr "権限"
@@ -15021,9 +15033,6 @@ msgstr "直近30日の実績が公開リーダーボードでどの位置にな�
 msgid "Select"
 msgstr "Select"
 
-msgid "Select a person"
-msgstr "メンバーを選択"
-
 msgid "Select a project"
 msgstr "プロジェクトを選択してください"
 
@@ -15155,9 +15164,6 @@ msgstr "ターミナルスクリプトのディレクトリを選択"
 
 msgid "Select worktree location"
 msgstr "ワークツリーの場所を選択"
-
-msgid "Selected"
-msgstr "選択済み"
 
 msgid "Selected agent is not available on this host"
 msgstr "選択したエージェントはこのホストで利用できません"
@@ -17477,9 +17483,6 @@ msgstr "これらのフォルダにはファイルが残っていますが、新
 msgid "These ports are still in use"
 msgstr "これらのポートはまだ使用中です"
 
-msgid "They get full access"
-msgstr "フルアクセスが付与されます"
-
 msgid "Thinking"
 msgstr "思考"
 
@@ -19174,11 +19177,8 @@ msgstr "どのエージェントに対応していますか?"
 msgid "Which AI coding agents are supported?"
 msgstr "どのAIコーディングエージェントに対応していますか?"
 
-msgid "Who can open this page from its link"
-msgstr "リンクからこのページを開ける人"
-
-msgid "Who can open this workspace"
-msgstr "このワークスペースを開ける人"
+msgid "Who can open it"
+msgstr "開ける人"
 
 msgid "Whole Task"
 msgstr "タスク完遂"

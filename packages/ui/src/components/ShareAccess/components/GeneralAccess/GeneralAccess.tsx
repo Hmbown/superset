@@ -11,7 +11,6 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 } from "../../../ui/alert-dialog";
-import { Label } from "../../../ui/label";
 import {
 	Select,
 	SelectContent,
@@ -20,14 +19,24 @@ import {
 	SelectValue,
 } from "../../../ui/select";
 import { toast } from "../../../ui/sonner";
-import type { ShareConfirmation, ShareGeneralAccess } from "../../types";
+import type {
+	ShareConfirmation,
+	ShareGeneralAccess,
+	ShareGeneralOption,
+} from "../../types";
+import { OrganizationMark } from "./components/OrganizationMark";
 
 interface GeneralAccessProps {
 	general: ShareGeneralAccess;
 	canManage: boolean;
+	organizationName: string;
 }
 
-export function GeneralAccess({ general, canManage }: GeneralAccessProps) {
+export function GeneralAccess({
+	general,
+	canManage,
+	organizationName,
+}: GeneralAccessProps) {
 	const { t } = useLingui();
 	const [busy, setBusy] = useState(false);
 	const [pending, setPending] = useState<{
@@ -55,64 +64,93 @@ export function GeneralAccess({ general, canManage }: GeneralAccessProps) {
 		else void run(() => general.onChange(to));
 	};
 
+	const current = general.options.find(
+		(option) => option.value === general.value,
+	);
 	const role = general.role;
 	const showRole = role?.appliesTo.includes(general.value) ?? false;
+	const currentRole = role?.options.find((option) => option.id === role.value);
+	const iconOf = (option: ShareGeneralOption) =>
+		option.organization ? (
+			<OrganizationMark name={organizationName} />
+		) : (
+			option.icon
+		);
 
 	return (
-		<div className="space-y-2">
-			<div className="space-y-0.5">
-				<Label className="font-medium text-sm">
-					<Trans>General access</Trans>
-				</Label>
-				<p className="text-muted-foreground text-xs">
-					{canManage ? (
-						general.hint
-					) : (
-						<Trans>Only the owner can change this</Trans>
-					)}
-				</p>
-			</div>
-			<div className="flex flex-wrap items-center gap-2">
+		<div className="space-y-1.5">
+			<p className="text-muted-foreground text-xs">
+				<Trans>General access</Trans>
+			</p>
+			<div className="flex min-h-8 items-center gap-2">
+				<span className="grid size-7 shrink-0 place-items-center rounded-md bg-muted [&_svg]:size-3.5">
+					{current ? iconOf(current) : null}
+				</span>
 				<Select
 					value={general.value}
 					disabled={!canManage || busy}
 					onValueChange={choose}
 				>
-					<SelectTrigger size="sm" className="w-auto max-w-full">
-						<SelectValue />
+					<SelectTrigger
+						size="sm"
+						className="h-7 min-w-0 gap-1 border-none bg-transparent px-1.5 shadow-none hover:bg-accent dark:bg-transparent dark:hover:bg-accent disabled:opacity-100"
+						aria-label={t({ message: "Who can open it" })}
+					>
+						<SelectValue>
+							<span className="truncate">{current?.label}</span>
+						</SelectValue>
 					</SelectTrigger>
-					<SelectContent>
+					<SelectContent align="start">
 						{general.options.map((option) => (
 							<SelectItem key={option.value} value={option.value}>
-								{option.icon}
+								<span className="grid size-5 place-items-center [&_svg]:size-3.5">
+									{iconOf(option)}
+								</span>
 								{option.label}
 							</SelectItem>
 						))}
 					</SelectContent>
 				</Select>
-				{role && showRole ? (
-					<Select
-						value={role.value}
-						disabled={!canManage || busy}
-						onValueChange={(value) => void run(() => role.onChange(value))}
-					>
-						<SelectTrigger
-							size="sm"
-							className="text-muted-foreground hover:text-foreground shrink-0 border-none bg-transparent px-1.5 text-xs shadow-none dark:bg-transparent dark:hover:bg-accent"
-							aria-label={t({ message: "What general access allows" })}
+				<span className="flex-1" />
+				{role && showRole && currentRole ? (
+					role.options.length > 1 ? (
+						<Select
+							value={role.value}
+							disabled={!canManage || busy}
+							onValueChange={(value) => void run(() => role.onChange(value))}
 						>
-							<SelectValue />
-						</SelectTrigger>
-						<SelectContent align="end">
-							{role.options.map((option) => (
-								<SelectItem key={option.id} value={option.id}>
-									{option.label}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
+							<SelectTrigger
+								size="sm"
+								className="h-7 shrink-0 gap-1 border-none bg-muted px-2.5 shadow-none hover:bg-accent dark:bg-muted dark:hover:bg-accent disabled:opacity-100"
+								aria-label={t({ message: "What general access allows" })}
+							>
+								<SelectValue>{currentRole.label}</SelectValue>
+							</SelectTrigger>
+							<SelectContent align="end" className="max-w-72">
+								{role.options.map((option) => (
+									<SelectItem key={option.id} value={option.id}>
+										<span className="flex flex-col items-start">
+											<span>{option.label}</span>
+											<span className="text-muted-foreground text-xs">
+												{option.description}
+											</span>
+										</span>
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					) : (
+						<span className="shrink-0 px-1.5 text-muted-foreground text-sm">
+							{currentRole.label}
+						</span>
+					)
 				) : null}
 			</div>
+			{canManage ? null : (
+				<p className="text-muted-foreground text-xs">
+					<Trans>Only the owner can change this</Trans>
+				</p>
+			)}
 			<AlertDialog
 				open={pending !== null}
 				onOpenChange={(open) => {

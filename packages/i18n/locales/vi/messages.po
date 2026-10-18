@@ -1563,6 +1563,9 @@ msgstr "Quyền truy cập của {name}"
 msgid "Access for the people you add"
 msgstr "Quyền truy cập cho những người bạn thêm"
 
+msgid "Access for this person"
+msgstr "Quyền truy cập của người này"
+
 msgid "Access your email address"
 msgstr "Truy cập địa chỉ email của bạn"
 
@@ -2375,6 +2378,9 @@ msgstr "Bất kỳ ai"
 #. placeholder {0}: share.organizationName
 msgid "Anyone in {0} who isn't listed here loses access, including anyone who has it open now."
 msgstr "Bất kỳ ai trong {0} không có trong danh sách này sẽ mất quyền truy cập, kể cả người đang mở nó."
+
+msgid "Anyone in {organizationName}"
+msgstr "Bất kỳ ai trong {organizationName}"
 
 msgid "Anyone in {organizationName} who isn't listed here loses access."
 msgstr "Bất kỳ ai trong {organizationName} không có trong danh sách này sẽ mất quyền truy cập."
@@ -8042,6 +8048,9 @@ msgstr "Tận dụng tối đa Pro"
 msgid "Get the iPhone and iPad app"
 msgstr "Tải ứng dụng cho iPhone và iPad"
 
+msgid "Gets an invite to join {organizationName}"
+msgstr "Sẽ nhận lời mời tham gia {organizationName}"
+
 msgid "Ghost"
 msgstr "Ghost"
 
@@ -9001,8 +9010,8 @@ msgstr "Đã gửi lời mời tới {email}"
 msgid "Invite"
 msgstr "Mời"
 
-msgid "Invite {label} to join {organizationName}"
-msgstr "Mời {label} tham gia {organizationName}"
+msgid "Invite ({pickCount})"
+msgstr "Mời ({pickCount})"
 
 msgid "Invite and manage members, assign roles, and control permissions"
 msgstr "Mời và quản lý thành viên, gán vai trò và kiểm soát quyền"
@@ -10452,6 +10461,9 @@ msgstr "Không phân giải được tên"
 msgid "Name updated!"
 msgstr "Đã cập nhật tên!"
 
+msgid "Name, email, or team"
+msgstr "Tên, email hoặc nhóm"
+
 msgid "Nameless Foreman"
 msgstr "Quản đốc vô danh"
 
@@ -10597,6 +10609,9 @@ msgstr "Issue mới"
 
 msgid "New page"
 msgstr "Trang mới"
+
+msgid "New people get an email invite to {organizationName}. They see this once they join."
+msgstr "Người mới sẽ nhận email mời tham gia {organizationName}. Họ sẽ thấy nội dung này sau khi tham gia."
 
 msgid "New project"
 msgstr "Dự án mới"
@@ -11054,8 +11069,8 @@ msgstr "Không có trình giả lập di động nào khả dụng ở đây. C�
 msgid "No name on file"
 msgstr "Chưa có tên nào được lưu"
 
-msgid "No one in {organizationName} matches"
-msgstr "Không có ai trong {organizationName} khớp"
+msgid "No one in {organizationName} matches. Type a full email to invite someone new."
+msgstr "Không có ai trong {organizationName} khớp. Nhập đầy đủ email để mời người mới."
 
 msgid "No open issues found."
 msgstr "Không có issue nào đang mở."
@@ -12589,9 +12604,6 @@ msgstr "Đã xóa vĩnh viễn \"{projectName}\""
 #. placeholder {0}: team.name
 msgid "Permanently remove <0>{0}</0> and all of its members. This can't be undone."
 msgstr "Xóa vĩnh viễn <0>{0}</0> và toàn bộ thành viên. Không thể hoàn tác."
-
-msgid "Permission level"
-msgstr "Mức quyền"
 
 msgid "Permissions"
 msgstr "Quyền"
@@ -15021,9 +15033,6 @@ msgstr "Xem 30 ngày qua của bạn đứng ở đâu trên bảng xếp hạng
 msgid "Select"
 msgstr "Select"
 
-msgid "Select a person"
-msgstr "Chọn một người"
-
 msgid "Select a project"
 msgstr "Chọn một dự án"
 
@@ -15155,9 +15164,6 @@ msgstr "Chọn thư mục cho script terminal"
 
 msgid "Select worktree location"
 msgstr "Chọn vị trí worktree"
-
-msgid "Selected"
-msgstr "Đã chọn"
 
 msgid "Selected agent is not available on this host"
 msgstr "Agent đã chọn không khả dụng trên host này"
@@ -17477,9 +17483,6 @@ msgstr "Các thư mục này vẫn còn tệp của bạn, nhưng chưa tự chu
 msgid "These ports are still in use"
 msgstr "Các cổng này vẫn đang được dùng"
 
-msgid "They get full access"
-msgstr "Họ sẽ có toàn quyền truy cập"
-
 msgid "Thinking"
 msgstr "Suy luận"
 
@@ -19174,11 +19177,8 @@ msgstr "Những agent nào được hỗ trợ?"
 msgid "Which AI coding agents are supported?"
 msgstr "Những coding agent AI nào được hỗ trợ?"
 
-msgid "Who can open this page from its link"
-msgstr "Ai có thể mở trang này từ liên kết của nó"
-
-msgid "Who can open this workspace"
-msgstr "Ai có thể mở workspace này"
+msgid "Who can open it"
+msgstr "Ai có thể mở"
 
 msgid "Whole Task"
 msgstr "Trọn tác vụ"

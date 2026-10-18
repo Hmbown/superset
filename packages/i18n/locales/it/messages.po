@@ -1563,6 +1563,9 @@ msgstr "Accesso per {name}"
 msgid "Access for the people you add"
 msgstr "Accesso per le persone che aggiungi"
 
+msgid "Access for this person"
+msgstr "Accesso di questa persona"
+
 msgid "Access your email address"
 msgstr "Accedere al tuo indirizzo email"
 
@@ -2375,6 +2378,9 @@ msgstr "Chiunque"
 #. placeholder {0}: share.organizationName
 msgid "Anyone in {0} who isn't listed here loses access, including anyone who has it open now."
 msgstr "Chiunque in {0} non sia elencato qui perde l’accesso, anche chi lo ha aperto in questo momento."
+
+msgid "Anyone in {organizationName}"
+msgstr "Chiunque in {organizationName}"
 
 msgid "Anyone in {organizationName} who isn't listed here loses access."
 msgstr "Chiunque in {organizationName} non sia elencato qui perde l’accesso."
@@ -8042,6 +8048,9 @@ msgstr "Sfrutta al massimo Pro"
 msgid "Get the iPhone and iPad app"
 msgstr "Scarica l'app per iPhone e iPad"
 
+msgid "Gets an invite to join {organizationName}"
+msgstr "Riceverà un invito a unirsi a {organizationName}"
+
 msgid "Ghost"
 msgstr "Ghost"
 
@@ -9001,8 +9010,8 @@ msgstr "Invito inviato a {email}"
 msgid "Invite"
 msgstr "Invita"
 
-msgid "Invite {label} to join {organizationName}"
-msgstr "Invita {label} a entrare in {organizationName}"
+msgid "Invite ({pickCount})"
+msgstr "Invita ({pickCount})"
 
 msgid "Invite and manage members, assign roles, and control permissions"
 msgstr "Invita e gestisci i membri, assegna i ruoli e controlla i permessi"
@@ -10452,6 +10461,9 @@ msgstr "Nome non risolto"
 msgid "Name updated!"
 msgstr "Nome aggiornato!"
 
+msgid "Name, email, or team"
+msgstr "Nome, email o team"
+
 msgid "Nameless Foreman"
 msgstr "Capofficina Senza Nome"
 
@@ -10597,6 +10609,9 @@ msgstr "Nuova issue"
 
 msgid "New page"
 msgstr "Nuova pagina"
+
+msgid "New people get an email invite to {organizationName}. They see this once they join."
+msgstr "Le nuove persone ricevono un invito via email a unirsi a {organizationName}. Lo vedranno una volta entrate."
 
 msgid "New project"
 msgstr "Nuovo progetto"
@@ -11054,8 +11069,8 @@ msgstr "Nessun simulatore mobile disponibile qui. Serve un simulatore EAS in un 
 msgid "No name on file"
 msgstr "Nessun nome registrato"
 
-msgid "No one in {organizationName} matches"
-msgstr "Nessuno in {organizationName} corrisponde"
+msgid "No one in {organizationName} matches. Type a full email to invite someone new."
+msgstr "Nessuno in {organizationName} corrisponde. Inserisci un indirizzo email completo per invitare qualcuno di nuovo."
 
 msgid "No open issues found."
 msgstr "Nessuna issue aperta trovata."
@@ -12589,9 +12604,6 @@ msgstr "\"{projectName}\" eliminato definitivamente"
 #. placeholder {0}: team.name
 msgid "Permanently remove <0>{0}</0> and all of its members. This can't be undone."
 msgstr "Rimuovi definitivamente <0>{0}</0> e tutti i suoi membri. L'operazione non può essere annullata."
-
-msgid "Permission level"
-msgstr "Livello di autorizzazione"
 
 msgid "Permissions"
 msgstr "Autorizzazioni"
@@ -15021,9 +15033,6 @@ msgstr "Scopri dove si collocano i tuoi ultimi 30 giorni nella classifica pubbli
 msgid "Select"
 msgstr "Select"
 
-msgid "Select a person"
-msgstr "Seleziona una persona"
-
 msgid "Select a project"
 msgstr "Seleziona un progetto"
 
@@ -15155,9 +15164,6 @@ msgstr "Seleziona la directory dello script del terminale"
 
 msgid "Select worktree location"
 msgstr "Seleziona la posizione dei worktree"
-
-msgid "Selected"
-msgstr "Selezionati"
 
 msgid "Selected agent is not available on this host"
 msgstr "L'agente selezionato non è disponibile su questo host"
@@ -17477,9 +17483,6 @@ msgstr "Queste cartelle contengono ancora i tuoi file, ma non sono state trasfer
 msgid "These ports are still in use"
 msgstr "Queste porte sono ancora in uso"
 
-msgid "They get full access"
-msgstr "Ottengono l’accesso completo"
-
 msgid "Thinking"
 msgstr "Ragionamento"
 
@@ -19174,11 +19177,8 @@ msgstr "Quali agenti sono supportati?"
 msgid "Which AI coding agents are supported?"
 msgstr "Quali agenti di programmazione AI sono supportati?"
 
-msgid "Who can open this page from its link"
-msgstr "Chi può aprire questa pagina dal suo link"
-
-msgid "Who can open this workspace"
-msgstr "Chi può aprire questo workspace"
+msgid "Who can open it"
+msgstr "Chi può aprirlo"
 
 msgid "Whole Task"
 msgstr "Task intero"

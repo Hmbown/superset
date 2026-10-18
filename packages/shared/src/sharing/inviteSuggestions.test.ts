@@ -55,60 +55,100 @@ const suggest = (
 		...overrides,
 	});
 
+const label = (i: ReturnType<typeof suggest>[number]) =>
+	i.kind === "section"
+		? `#${i.section}`
+		: i.kind === "team"
+			? i.team.name
+			: i.kind === "member"
+				? i.person.name
+				: i.kind === "invite"
+					? i.email
+					: i.kind;
+
 describe("inviteSuggestions", () => {
+	test("an empty query lists people, then teams, with access holders last", () => {
+		expect(suggest("").map(label)).toEqual([
+			"#people",
+			"Kenji Tanaka",
+			"Maya Rivera",
+			"Dev Okafor",
+			"#teams",
+			"Design",
+		]);
+	});
+
 	test("members who already have access stay listed but can't be picked", () => {
 		const items = suggest("k");
-		expect(items.map((i) => i.kind)).toEqual(["member", "member"]);
-		expect(items[0]).toMatchObject({
-			person: { userId: "do" },
-			hasAccess: true,
-		});
+		expect(items.map(label)).toEqual(["#people", "Kenji Tanaka", "Dev Okafor"]);
+		expect(items[2]).toMatchObject({ hasAccess: true });
 		expect(pickableIndexes(items)).toEqual([1]);
 	});
 
 	test("the owner counts as having access", () => {
-		expect(suggest("maya")[0]).toMatchObject({ hasAccess: true });
+		expect(suggest("maya")[1]).toMatchObject({ hasAccess: true });
 	});
 
-	test("teams match by name and come before people", () => {
-		expect(suggest("de").map((i) => i.kind)).toEqual(["team", "member"]);
+	test("picks stay listed and are marked selected", () => {
+		const items = suggest("kenji", {
+			staged: [{ kind: "user", person: kenji }],
+		});
+		expect(items[1]).toMatchObject({ kind: "member", selected: true });
+		expect(pickableIndexes(items)).toEqual([1]);
 	});
 
 	test("an address being typed offers completions, the org domain first", () => {
 		const items = suggest("ana@");
 		expect(items[0]).toEqual({ kind: "heading" });
-		expect(items.slice(1).map((i) => i.kind === "invite" && i.email)).toEqual([
+		expect(items.slice(1).map(label)).toEqual([
 			"ana@acme.dev",
 			"ana@gmail.com",
 		]);
 	});
 
 	test("completions narrow by the typed domain and skip existing members", () => {
-		expect(suggest("dev@").filter((i) => i.kind === "invite")).toEqual([
-			{
-				kind: "invite",
-				email: "dev@gmail.com",
-				completion: true,
-				invited: false,
-			},
-		]);
+		expect(
+			suggest("dev@")
+				.filter((i) => i.kind === "invite")
+				.map(label),
+		).toEqual(["dev@gmail.com"]);
 		expect(suggest("ana@g").filter((i) => i.kind === "invite")).toHaveLength(1);
 	});
 
-	test("a full address becomes one invite, marked when already invited", () => {
+	test("a full address becomes one invite under its own heading, marked when already invited", () => {
 		expect(suggest("Ana@Globex.com")).toEqual([
+			{ kind: "section", section: "invite" },
 			{
 				kind: "invite",
 				email: "ana@globex.com",
 				completion: false,
 				invited: false,
+				selected: false,
 			},
 		]);
-		expect(suggest("sam@studio.design")[0]).toMatchObject({ invited: true });
+		expect(suggest("sam@studio.design")[1]).toMatchObject({ invited: true });
+	});
+
+	test("a picked address stays listed while the query is empty", () => {
+		expect(
+			suggest("", {
+				staged: [{ kind: "email", email: "ana@globex.com" }],
+			}).slice(0, 2),
+		).toEqual([
+			{ kind: "section", section: "invite" },
+			{
+				kind: "invite",
+				email: "ana@globex.com",
+				completion: false,
+				invited: false,
+				selected: true,
+			},
+		]);
 	});
 
 	test("an address that can't be completed stays as a row that explains itself", () => {
 		expect(suggest("sam@studio")).toEqual([
+			{ kind: "section", section: "invite" },
 			{ kind: "invalid", text: "sam@studio" },
 		]);
 	});
@@ -119,27 +159,7 @@ describe("inviteSuggestions", () => {
 		]);
 	});
 
-	test("staged picks drop out of the list", () => {
-		const items = suggest("kenji", {
-			staged: [{ kind: "user", person: kenji }],
-		});
-		expect(items.every((i) => i.kind !== "member")).toBe(true);
-	});
-
 	test("no match and no address yet says nothing matched", () => {
 		expect(suggest("zz z")).toEqual([{ kind: "empty" }]);
-	});
-
-	test("an empty query lists nothing, or everyone when browsing", () => {
-		expect(suggest("")).toEqual([]);
-		expect(
-			suggest("", { browse: true }).map((i) =>
-				i.kind === "team"
-					? i.team.name
-					: i.kind === "member"
-						? i.person.name
-						: i.kind,
-			),
-		).toEqual(["Design", "Maya Rivera", "Dev Okafor", "Kenji Tanaka"]);
 	});
 });

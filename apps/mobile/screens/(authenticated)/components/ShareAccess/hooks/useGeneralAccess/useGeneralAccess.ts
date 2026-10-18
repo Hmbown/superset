@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { getInitials } from "@superset/shared/names";
 import { Building2, Globe, Lock } from "lucide-react-native";
 import type { GeneralAccess, GeneralAccessOption } from "../../types";
 
@@ -35,12 +36,13 @@ export function useGeneralAccess({
 		},
 		org: {
 			value: "org",
-			label: t({ message: "Anyone in your organization" }),
+			label: t({ message: `Anyone in ${organizationName}` }),
 			description: t({
 				message: `Anyone in ${organizationName} with the link can open it`,
 			}),
 			icon: Building2,
 			systemImage: "building.2",
+			mark: getInitials(organizationName).slice(0, 1) || undefined,
 		},
 		everyone: {
 			value: "everyone",

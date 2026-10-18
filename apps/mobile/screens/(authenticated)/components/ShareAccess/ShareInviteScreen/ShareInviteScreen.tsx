@@ -1,14 +1,17 @@
+import { Button } from "@expo/ui/swift-ui";
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import {
 	type InviteNewMode,
 	inviteSuggestions,
+	pickOf,
 	type ShareAddRequest,
 	type ShareDirectory,
 	type ShareGrantee,
 	type ShareGranteeRef,
 	type ShareRoleOption,
 	type StagedPick,
+	type SuggestionItem,
 	stagedKey,
 } from "@superset/shared/sharing";
 import * as Haptics from "expo-haptics";
@@ -25,7 +28,7 @@ import type { SearchBarCommands } from "react-native-screens";
 import { Text } from "@/components/ui/text";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
-import { useShareInviteStore } from "../stores/shareInviteStore";
+import { ValueMenu } from "../components/ValueMenu";
 import { SuggestionRow } from "./components/SuggestionRow";
 
 interface ShareInviteScreenProps {
@@ -37,8 +40,6 @@ interface ShareInviteScreenProps {
 	roles: ShareRoleOption[];
 	defaultRole: string;
 	onUpgrade: () => void;
-	/** Opens the permission picker for the pick being edited. */
-	onOpenPermission: () => void;
 	/** Shares with one role's worth of picks; resolves true once they have access. */
 	onSubmit: (request: ShareAddRequest) => Promise<boolean>;
 }
@@ -52,7 +53,6 @@ export function ShareInviteScreen({
 	roles,
 	defaultRole,
 	onUpgrade,
-	onOpenPermission,
 	onSubmit,
 }: ShareInviteScreenProps) {
 	const { t } = useLingui();
@@ -62,16 +62,10 @@ export function ShareInviteScreen({
 	const theme = useTheme();
 	const searchBarRef = useRef<SearchBarCommands>(null);
 	const [query, setQuery] = useState("");
-	const staged = useShareInviteStore((state) => state.staged);
-	const pickRoles = useShareInviteStore((state) => state.roles);
-	const stageInStore = useShareInviteStore((state) => state.stage);
-	const unstageInStore = useShareInviteStore((state) => state.unstage);
-	const reset = useShareInviteStore((state) => state.reset);
-	const edit = useShareInviteStore((state) => state.edit);
+	const [staged, setStaged] = useState<StagedPick[]>([]);
+	const [pickRoles, setPickRoles] = useState<Record<string, string>>({});
 	const [inviteError, setInviteError] = useState(false);
 	const [busy, setBusy] = useState(false);
-
-	useEffect(() => reset(), [reset]);
 
 	// The search bar only exists once the push has finished.
 	useEffect(
@@ -91,14 +85,21 @@ export function ShareInviteScreen({
 				staged,
 				ownerId,
 				inviteNew,
-				browse: true,
 			}),
 		[query, directory, grantees, staged, ownerId, inviteNew],
 	);
 
-	const stage = (pick: StagedPick) => {
+	const roleOf = (pick: StagedPick) =>
+		pickRoles[stagedKey(pick)] ?? defaultRole;
+
+	const toggle = (pick: StagedPick) => {
 		void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-		stageInStore(pick, defaultRole);
+		const key = stagedKey(pick);
+		setStaged((current) =>
+			current.some((p) => stagedKey(p) === key)
+				? current.filter((p) => stagedKey(p) !== key)
+				: [...current, pick],
+		);
 		setInviteError(false);
 		if (query) {
 			searchBarRef.current?.clearText();
@@ -106,16 +107,9 @@ export function ShareInviteScreen({
 		}
 	};
 
-	const openPick = (pick: StagedPick) => {
-		edit(stagedKey(pick));
-		onOpenPermission();
-	};
-
 	const submit = async () => {
 		if (!staged.length || busy) return;
 		setBusy(true);
-		const roleOf = (pick: StagedPick) =>
-			pickRoles[stagedKey(pick)] ?? defaultRole;
 		const groups = [...new Set(staged.map(roleOf))];
 		let shared = true;
 		for (const role of groups) {
@@ -132,24 +126,52 @@ export function ShareInviteScreen({
 				role,
 			});
 			if (!shared) break;
-			for (const pick of picks) unstageInStore(stagedKey(pick));
+			const done = new Set(picks.map(stagedKey));
+			setStaged((current) => current.filter((p) => !done.has(stagedKey(p))));
 		}
 		setBusy(false);
 		if (shared) router.back();
 	};
 
 	const newPeople = staged.some((p) => p.kind === "email");
-	const inviteTitle = (label: string) =>
-		t({ message: `Invite ${label} to join ${organizationName}` });
-	const roleLabel = (pick: StagedPick) =>
-		(
-			roles.find(
-				(option) => option.id === (pickRoles[stagedKey(pick)] ?? defaultRole),
-			) ?? roles[0]
-		)?.label;
+	const pickCount = staged.length;
+
+	const roleMenu = (item: SuggestionItem) => {
+		const pick = pickOf(item);
+		if (!pick || roles.length < 2) return null;
+		const key = stagedKey(pick);
+		const current =
+			roles.find((option) => option.id === roleOf(pick)) ?? roles[0];
+		return (
+			<ValueMenu
+				label={current?.label}
+				a11yLabel={t({ message: "Access for this person" })}
+				size={14}
+				chevron="chevron.up.chevron.down"
+			>
+				{roles.map((option) => (
+					<Button
+						key={option.id}
+						label={option.label}
+						systemImage={option.id === current?.id ? "checkmark" : undefined}
+						onPress={() =>
+							setPickRoles((all) => ({ ...all, [key]: option.id }))
+						}
+					/>
+				))}
+			</ValueMenu>
+		);
+	};
 
 	return (
 		<>
+			<Stack.Screen
+				options={{
+					title: pickCount
+						? t({ message: `Invite (${pickCount})` })
+						: t({ message: "Invite" }),
+				}}
+			/>
 			<Stack.Toolbar placement="right">
 				<Stack.Toolbar.Button
 					accessibilityLabel={
@@ -187,66 +209,27 @@ export function ShareInviteScreen({
 				keyboardShouldPersistTaps="handled"
 				keyboardDismissMode="on-drag"
 			>
-				{staged.length ? (
-					<>
-						<Text className="text-muted-foreground mb-1 text-[15px]">
-							{t({ message: "Selected" })}
-						</Text>
-						{staged.map((pick) =>
-							pick.kind === "user" ? (
-								<SuggestionRow
-									key={stagedKey(pick)}
-									person={pick.person}
-									title={pick.person.name}
-									detail={pick.person.email}
-									trailing={roleLabel(pick)}
-									chevron
-									onPress={() => openPick(pick)}
-								/>
-							) : pick.kind === "team" ? (
-								<SuggestionRow
-									key={stagedKey(pick)}
-									icon={Users}
-									title={pick.team.name}
-									detail={t({
-										message: plural(pick.team.memberIds.length, {
-											one: "# person",
-											other: "# people",
-										}),
-									})}
-									trailing={roleLabel(pick)}
-									chevron
-									onPress={() => openPick(pick)}
-								/>
-							) : (
-								<SuggestionRow
-									key={stagedKey(pick)}
-									icon={UserPlus}
-									dashed
-									title={pick.email}
-									detail={t({ message: `Invite to ${organizationName}` })}
-									trailing={roleLabel(pick)}
-									chevron
-									onPress={() => openPick(pick)}
-								/>
-							),
-						)}
-					</>
-				) : null}
-
-				<Text
-					className={cn(
-						"text-muted-foreground mb-1 text-[15px]",
-						staged.length > 0 && "mt-6",
-					)}
-				>
-					{query
-						? t({ message: "Results" })
-						: t({ message: "Select a person" })}
-				</Text>
 				{items.map((item, index) => {
 					const key = `${item.kind}-${index}`;
 					switch (item.kind) {
+						case "section":
+							return (
+								<Text
+									key={key}
+									className={cn(
+										"text-muted-foreground mb-1 text-[15px]",
+										index > 0 && "mt-4",
+									)}
+								>
+									{item.section === "invite"
+										? t({ message: `Invite to ${organizationName}` })
+										: item.section === "teams"
+											? t({ message: "Teams" })
+											: query
+												? t({ message: "People" })
+												: t({ message: "Suggested" })}
+								</Text>
+							);
 						case "heading":
 							return (
 								<Text
@@ -262,7 +245,9 @@ export function ShareInviteScreen({
 									key={key}
 									className="text-muted-foreground py-2.5 text-xs"
 								>
-									{t({ message: `No one in ${organizationName} matches` })}
+									{t({
+										message: `No one in ${organizationName} matches. Type a full email to invite someone new.`,
+									})}
 								</Text>
 							);
 						case "blocked":
@@ -280,45 +265,60 @@ export function ShareInviteScreen({
 						case "team":
 							return (
 								<SuggestionRow
-									key={key}
+									key={`team:${item.team.teamId}`}
 									icon={Users}
 									title={item.team.name}
+									detail={t({
+										message: plural(item.team.memberIds.length, {
+											one: "# person",
+											other: "# people",
+										}),
+									})}
 									trailing={
 										item.hasAccess ? t({ message: "Has access" }) : undefined
 									}
+									selected={item.hasAccess ? undefined : item.selected}
+									accessory={item.selected ? roleMenu(item) : null}
 									disabled={item.hasAccess}
-									onPress={() => stage({ kind: "team", team: item.team })}
+									onPress={() => toggle({ kind: "team", team: item.team })}
 								/>
 							);
 						case "member":
 							return (
 								<SuggestionRow
-									key={key}
+									key={`user:${item.person.userId}`}
 									person={item.person}
 									title={item.person.name}
 									detail={item.person.email}
 									trailing={
 										item.hasAccess ? t({ message: "Has access" }) : undefined
 									}
+									selected={item.hasAccess ? undefined : item.selected}
+									accessory={item.selected ? roleMenu(item) : null}
 									disabled={item.hasAccess}
-									onPress={() => stage({ kind: "user", person: item.person })}
+									onPress={() => toggle({ kind: "user", person: item.person })}
 								/>
 							);
 						case "invite":
 							return (
 								<SuggestionRow
-									key={key}
+									key={`email:${item.email}`}
 									icon={UserPlus}
 									dashed
-									title={item.completion ? item.email : inviteTitle(item.email)}
+									title={item.email}
+									detail={t({
+										message: `Gets an invite to join ${organizationName}`,
+									})}
 									trailing={
 										item.invited ? t({ message: "Invited" }) : undefined
 									}
+									selected={item.invited ? undefined : item.selected}
+									accessory={item.selected ? roleMenu(item) : null}
 									disabled={item.invited}
 									onPress={() =>
 										inviteNew === "upgrade"
 											? onUpgrade()
-											: stage({ kind: "email", email: item.email })
+											: toggle({ kind: "email", email: item.email })
 									}
 								/>
 							);
@@ -328,7 +328,7 @@ export function ShareInviteScreen({
 									key={key}
 									icon={UserPlus}
 									dashed
-									title={inviteTitle(item.text)}
+									title={item.text}
 									error={
 										inviteError
 											? t({ message: "Enter a full email address" })

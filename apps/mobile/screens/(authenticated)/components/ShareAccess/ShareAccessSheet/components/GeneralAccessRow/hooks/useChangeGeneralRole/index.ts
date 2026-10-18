@@ -1,0 +1,1 @@
+export { useChangeGeneralRole } from "./useChangeGeneralRole";

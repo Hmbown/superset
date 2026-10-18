@@ -6,13 +6,12 @@ import { effectiveRole, sortGrantees } from "@superset/shared/sharing";
 import { Check, Link2 } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
-import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 import { toast } from "../ui/sonner";
 import { GeneralAccess } from "./components/GeneralAccess";
 import { GranteeAvatar } from "./components/GranteeAvatar";
 import { GranteeRow } from "./components/GranteeRow";
-import { InviteField } from "./components/InviteField";
+import { InviteView } from "./components/InviteView";
 import type {
 	InviteNewMode,
 	ShareAddRequest,
@@ -90,6 +89,7 @@ export function ShareAccess({
 }: ShareAccessProps) {
 	const { t } = useLingui();
 	const [copied, setCopied] = useState(false);
+	const [view, setView] = useState<{ query: string } | null>(null);
 	const highlighted = useNewKeys(grantees.map(keyOf));
 
 	const copyLink = async () => {
@@ -139,6 +139,26 @@ export function ShareAccess({
 				}
 			: null;
 
+	if (view !== null) {
+		return (
+			<InviteView
+				directory={directory}
+				grantees={grantees}
+				ownerId={owner?.userId ?? null}
+				organizationName={organizationName}
+				inviteNew={inviteNew}
+				roles={roles}
+				defaultRole={defaultRole}
+				roleNote={roleNote}
+				initialQuery={view.query}
+				onAdd={onAdd}
+				onUpgrade={onUpgrade}
+				onBack={() => setView(null)}
+				onDone={() => setView(null)}
+			/>
+		);
+	}
+
 	return (
 		<div>
 			<div className="flex items-center justify-between gap-2 px-3 py-2.5">
@@ -155,27 +175,39 @@ export function ShareAccess({
 			<Separator />
 			{canManage ? (
 				<>
-					<div className="px-3 py-2.5">
-						<InviteField
-							directory={directory}
-							grantees={grantees}
-							ownerId={owner?.userId ?? null}
-							organizationName={organizationName}
-							inviteNew={inviteNew}
-							roles={roles}
-							defaultRole={defaultRole}
-							roleNote={roleNote}
-							onAdd={onAdd}
-							onUpgrade={onUpgrade}
-						/>
+					<div className="flex gap-2 px-3 py-2.5">
+						<button
+							type="button"
+							onClick={() => setView({ query: "" })}
+							onKeyDown={(event) => {
+								if (
+									event.key.length === 1 &&
+									event.key !== " " &&
+									!event.metaKey &&
+									!event.ctrlKey &&
+									!event.altKey
+								) {
+									event.preventDefault();
+									setView({ query: event.key });
+								}
+							}}
+							className="flex h-8 min-w-0 flex-1 items-center rounded-md border px-2.5 text-left text-muted-foreground text-sm hover:border-ring/60 focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+						>
+							<span className="truncate">
+								<Trans>Add people or teams by name or email</Trans>
+							</span>
+						</button>
+						<Button size="sm" onClick={() => setView({ query: "" })}>
+							<Trans>Invite</Trans>
+						</Button>
 					</div>
 					<Separator />
 				</>
 			) : null}
 			<div className="space-y-1.5 px-3 py-2.5">
-				<Label className="font-medium text-sm">
+				<p className="text-muted-foreground text-xs">
 					<Trans>People with access</Trans>
-				</Label>
+				</p>
 				<div className="-mx-3 max-h-60 space-y-1 overflow-y-auto px-3">
 					{owner ? (
 						<div className="flex items-center gap-2 py-1">
@@ -254,7 +286,11 @@ export function ShareAccess({
 			</div>
 			<Separator />
 			<div className="px-3 py-2.5">
-				<GeneralAccess general={general} canManage={canManage} />
+				<GeneralAccess
+					general={general}
+					canManage={canManage}
+					organizationName={organizationName}
+				/>
 			</div>
 			{children}
 		</div>
@@ -281,6 +317,13 @@ function useNewKeys(keys: string[]): Set<string> {
 	}, [signature]);
 
 	return fresh;
+}
+
+/** For the popover around ShareAccess: Escape in the invite view goes back instead of closing. */
+export function keepOpenWhileInviting(event: { preventDefault: () => void }) {
+	if (document.activeElement?.closest("[data-share-invite]")) {
+		event.preventDefault();
+	}
 }
 
 /** For the popover around ShareAccess: pressing Undo on a toast shouldn't close it. */

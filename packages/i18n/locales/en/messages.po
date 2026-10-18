@@ -1563,6 +1563,9 @@ msgstr "Access for {name}"
 msgid "Access for the people you add"
 msgstr "Access for the people you add"
 
+msgid "Access for this person"
+msgstr "Access for this person"
+
 msgid "Access your email address"
 msgstr "Access your email address"
 
@@ -2375,6 +2378,9 @@ msgstr "Anyone"
 #. placeholder {0}: share.organizationName
 msgid "Anyone in {0} who isn't listed here loses access, including anyone who has it open now."
 msgstr "Anyone in {0} who isn't listed here loses access, including anyone who has it open now."
+
+msgid "Anyone in {organizationName}"
+msgstr "Anyone in {organizationName}"
 
 msgid "Anyone in {organizationName} who isn't listed here loses access."
 msgstr "Anyone in {organizationName} who isn't listed here loses access."
@@ -8042,6 +8048,9 @@ msgstr "Get the best out of Pro"
 msgid "Get the iPhone and iPad app"
 msgstr "Get the iPhone and iPad app"
 
+msgid "Gets an invite to join {organizationName}"
+msgstr "Gets an invite to join {organizationName}"
+
 msgid "Ghost"
 msgstr "Ghost"
 
@@ -9001,8 +9010,8 @@ msgstr "Invitation sent to {email}"
 msgid "Invite"
 msgstr "Invite"
 
-msgid "Invite {label} to join {organizationName}"
-msgstr "Invite {label} to join {organizationName}"
+msgid "Invite ({pickCount})"
+msgstr "Invite ({pickCount})"
 
 msgid "Invite and manage members, assign roles, and control permissions"
 msgstr "Invite and manage members, assign roles, and control permissions"
@@ -10452,6 +10461,9 @@ msgstr "Name Not Resolved"
 msgid "Name updated!"
 msgstr "Name updated!"
 
+msgid "Name, email, or team"
+msgstr "Name, email, or team"
+
 msgid "Nameless Foreman"
 msgstr "Nameless Foreman"
 
@@ -10597,6 +10609,9 @@ msgstr "New issue"
 
 msgid "New page"
 msgstr "New page"
+
+msgid "New people get an email invite to {organizationName}. They see this once they join."
+msgstr "New people get an email invite to {organizationName}. They see this once they join."
 
 msgid "New project"
 msgstr "New project"
@@ -11054,8 +11069,8 @@ msgstr "No mobile simulator available here. This needs either an EAS simulator o
 msgid "No name on file"
 msgstr "No name on file"
 
-msgid "No one in {organizationName} matches"
-msgstr "No one in {organizationName} matches"
+msgid "No one in {organizationName} matches. Type a full email to invite someone new."
+msgstr "No one in {organizationName} matches. Type a full email to invite someone new."
 
 msgid "No open issues found."
 msgstr "No open issues found."
@@ -12589,9 +12604,6 @@ msgstr "Permanently deleted \"{projectName}\""
 #. placeholder {0}: team.name
 msgid "Permanently remove <0>{0}</0> and all of its members. This can't be undone."
 msgstr "Permanently remove <0>{0}</0> and all of its members. This can't be undone."
-
-msgid "Permission level"
-msgstr "Permission level"
 
 msgid "Permissions"
 msgstr "Permissions"
@@ -15021,9 +15033,6 @@ msgstr "See where your last 30 days land on the public leaderboard. Token counts
 msgid "Select"
 msgstr "Select"
 
-msgid "Select a person"
-msgstr "Select a person"
-
 msgid "Select a project"
 msgstr "Select a project"
 
@@ -15155,9 +15164,6 @@ msgstr "Select terminal script directory"
 
 msgid "Select worktree location"
 msgstr "Select worktree location"
-
-msgid "Selected"
-msgstr "Selected"
 
 msgid "Selected agent is not available on this host"
 msgstr "Selected agent is not available on this host"
@@ -17477,9 +17483,6 @@ msgstr "These folders still have your files, but they did not come over to the n
 msgid "These ports are still in use"
 msgstr "These ports are still in use"
 
-msgid "They get full access"
-msgstr "They get full access"
-
 msgid "Thinking"
 msgstr "Thinking"
 
@@ -19174,11 +19177,8 @@ msgstr "Which agents are supported?"
 msgid "Which AI coding agents are supported?"
 msgstr "Which AI coding agents are supported?"
 
-msgid "Who can open this page from its link"
-msgstr "Who can open this page from its link"
-
-msgid "Who can open this workspace"
-msgstr "Who can open this workspace"
+msgid "Who can open it"
+msgstr "Who can open it"
 
 msgid "Whole Task"
 msgstr "Whole Task"

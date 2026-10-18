@@ -3,6 +3,7 @@ import { Button } from "@superset/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@superset/ui/popover";
 import {
 	keepOpenForToasts,
+	keepOpenWhileInviting,
 	ShareAccess,
 	type ShareGranteeRef,
 } from "@superset/ui/share-access";
@@ -69,6 +70,13 @@ export function CloudWorkspaceShareButton({
 			<LuBuilding2 className="size-3.5" />
 		);
 
+	const organizationName = share.organizationName;
+	const fullAccess = {
+		id: "full",
+		label: t({ message: "Full access" }),
+		description: t({ message: "Open terminals and prompt agents" }),
+	};
+
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
@@ -81,6 +89,7 @@ export function CloudWorkspaceShareButton({
 				align="end"
 				className="w-[32rem] p-0"
 				onInteractOutside={keepOpenForToasts}
+				onEscapeKeyDown={keepOpenWhileInviting}
 			>
 				<ShareAccess
 					title={<Trans>Share workspace</Trans>}
@@ -88,15 +97,9 @@ export function CloudWorkspaceShareButton({
 					currentUserId={share.currentUserId}
 					grantees={grantees}
 					canManage={sharing.data?.canManage ?? canEdit}
-					roles={[
-						{
-							id: "full",
-							label: t({ message: "Full access" }),
-							description: t({ message: "Open terminals and prompt agents" }),
-						},
-					]}
+					roles={[fullAccess]}
 					defaultRole="full"
-					roleNote={t({ message: "They get full access" })}
+					roleNote={fullAccess.label}
 					directory={share.directory}
 					organizationName={share.organizationName}
 					inviteNew={share.inviteNew}
@@ -130,7 +133,6 @@ export function CloudWorkspaceShareButton({
 					}}
 					general={{
 						value: visibility,
-						hint: t({ message: "Who can open this workspace" }),
 						options: [
 							{
 								value: "just_me",
@@ -139,10 +141,11 @@ export function CloudWorkspaceShareButton({
 							},
 							{
 								value: "org",
-								label: t({ message: "Anyone in your organization" }),
+								label: t({ message: `Anyone in ${organizationName}` }),
 								icon: (
 									<LuBuilding2 className="size-3.5 text-muted-foreground" />
 								),
+								organization: true,
 							},
 						],
 						onChange: async (next) => {
@@ -159,6 +162,12 @@ export function CloudWorkspaceShareButton({
 										actionLabel: t({ message: "Limit access" }),
 									}
 								: null,
+						role: {
+							value: "full",
+							options: [fullAccess],
+							appliesTo: ["org"],
+							onChange: async () => {},
+						},
 					}}
 				/>
 			</PopoverContent>

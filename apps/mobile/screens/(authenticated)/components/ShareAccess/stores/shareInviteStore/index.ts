@@ -1,1 +1,0 @@
-export { useShareInviteStore } from "./shareInviteStore";

@@ -1563,6 +1563,9 @@ msgstr "{name} 的存取權限"
 msgid "Access for the people you add"
 msgstr "你新增的人的存取權限"
 
+msgid "Access for this person"
+msgstr "此人的存取權限"
+
 msgid "Access your email address"
 msgstr "存取你的電子郵件地址"
 
@@ -2375,6 +2378,9 @@ msgstr "任何人"
 #. placeholder {0}: share.organizationName
 msgid "Anyone in {0} who isn't listed here loses access, including anyone who has it open now."
 msgstr "{0} 中未列在此處的任何人都將失去存取權限，包括目前正在開啟它的人。"
+
+msgid "Anyone in {organizationName}"
+msgstr "{organizationName} 中的任何人"
 
 msgid "Anyone in {organizationName} who isn't listed here loses access."
 msgstr "{organizationName} 中未列在此處的任何人都將失去存取權限。"
@@ -8042,6 +8048,9 @@ msgstr "充分運用 Pro"
 msgid "Get the iPhone and iPad app"
 msgstr "取得 iPhone 和 iPad 應用程式"
 
+msgid "Gets an invite to join {organizationName}"
+msgstr "將收到加入 {organizationName} 的邀請"
+
 msgid "Ghost"
 msgstr "幽靈"
 
@@ -9001,8 +9010,8 @@ msgstr "邀請已傳送至{email}"
 msgid "Invite"
 msgstr "邀請"
 
-msgid "Invite {label} to join {organizationName}"
-msgstr "邀請 {label} 加入 {organizationName}"
+msgid "Invite ({pickCount})"
+msgstr "邀請 ({pickCount})"
 
 msgid "Invite and manage members, assign roles, and control permissions"
 msgstr "邀請和管理成員、分配角色並控制權限"
@@ -10452,6 +10461,9 @@ msgstr "域名無法解析"
 msgid "Name updated!"
 msgstr "姓名已更新！"
 
+msgid "Name, email, or team"
+msgstr "姓名、電子郵件或團隊"
+
 msgid "Nameless Foreman"
 msgstr "無名工頭"
 
@@ -10597,6 +10609,9 @@ msgstr "新建議題"
 
 msgid "New page"
 msgstr "新增頁面"
+
+msgid "New people get an email invite to {organizationName}. They see this once they join."
+msgstr "新成員會收到加入 {organizationName} 的電子郵件邀請，加入後即可看到。"
 
 msgid "New project"
 msgstr "新建專案"
@@ -11054,8 +11069,8 @@ msgstr "此處沒有可用的行動模擬器。需要雲端沙盒上的 EAS 模�
 msgid "No name on file"
 msgstr "未登記姓名"
 
-msgid "No one in {organizationName} matches"
-msgstr "{organizationName} 中沒有相符的人"
+msgid "No one in {organizationName} matches. Type a full email to invite someone new."
+msgstr "{organizationName} 中沒有相符的人。輸入完整電子郵件地址即可邀請新成員。"
 
 msgid "No open issues found."
 msgstr "未找到開啟的議題。"
@@ -12589,9 +12604,6 @@ msgstr "已永久刪除「{projectName}」"
 #. placeholder {0}: team.name
 msgid "Permanently remove <0>{0}</0> and all of its members. This can't be undone."
 msgstr "永久移除<0>{0}</0>及其所有成員。此操作無法復原。"
-
-msgid "Permission level"
-msgstr "權限等級"
 
 msgid "Permissions"
 msgstr "權限"
@@ -15021,9 +15033,6 @@ msgstr "看看你最近 30 天的表現在公開排行榜上的位置。僅包�
 msgid "Select"
 msgstr "選擇框"
 
-msgid "Select a person"
-msgstr "選擇成員"
-
 msgid "Select a project"
 msgstr "請選擇專案"
 
@@ -15155,9 +15164,6 @@ msgstr "選擇終端指令碼目錄"
 
 msgid "Select worktree location"
 msgstr "選擇worktree位置"
-
-msgid "Selected"
-msgstr "已選取"
 
 msgid "Selected agent is not available on this host"
 msgstr "所選代理程式在此主機上不可用"
@@ -17477,9 +17483,6 @@ msgstr "這些資料夾中仍有你的檔案，但沒有自動移轉到新版 Su
 msgid "These ports are still in use"
 msgstr "這些埠仍在使用中"
 
-msgid "They get full access"
-msgstr "他們將獲得完整存取權限"
-
 msgid "Thinking"
 msgstr "思考"
 
@@ -19174,11 +19177,8 @@ msgstr "支援哪些代理程式？"
 msgid "Which AI coding agents are supported?"
 msgstr "支援哪些AI編碼代理程式？"
 
-msgid "Who can open this page from its link"
-msgstr "誰可以通過連結開啟這個頁面"
-
-msgid "Who can open this workspace"
-msgstr "誰可以開啟此工作區"
+msgid "Who can open it"
+msgstr "誰可以開啟"
 
 msgid "Whole Task"
 msgstr "整任務"

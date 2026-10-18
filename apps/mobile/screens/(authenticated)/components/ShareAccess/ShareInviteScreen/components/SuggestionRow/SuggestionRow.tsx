@@ -1,9 +1,10 @@
-import { ChevronRight, type LucideIcon } from "lucide-react-native";
+import type { LucideIcon } from "lucide-react-native";
+import type { ReactNode } from "react";
 import { Pressable, View } from "react-native";
-import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
 import { GranteeAvatar } from "../../../components/GranteeAvatar";
+import { SelectionTick } from "./components/SelectionTick";
 
 export function SuggestionRow({
 	icon,
@@ -13,7 +14,8 @@ export function SuggestionRow({
 	detail,
 	trailing,
 	error,
-	chevron,
+	selected,
+	accessory,
 	disabled,
 	onPress,
 }: {
@@ -24,14 +26,20 @@ export function SuggestionRow({
 	detail?: string;
 	trailing?: string;
 	error?: string;
-	chevron?: boolean;
+	/** Shows a tick circle, filled when true. */
+	selected?: boolean;
+	/** Shown before the tick, such as the pick's role. */
+	accessory?: ReactNode;
 	disabled?: boolean;
 	onPress?: () => void;
 }) {
 	return (
 		<Pressable
 			accessibilityRole="button"
-			accessibilityState={{ disabled: Boolean(disabled) }}
+			accessibilityState={{
+				disabled: Boolean(disabled),
+				selected: Boolean(selected),
+			}}
 			disabled={disabled || !onPress}
 			onPress={onPress}
 			className={cn(
@@ -62,9 +70,8 @@ export function SuggestionRow({
 					{trailing}
 				</Text>
 			) : null}
-			{chevron ? (
-				<Icon as={ChevronRight} className="text-muted-foreground size-4" />
-			) : null}
+			{accessory}
+			{selected === undefined ? null : <SelectionTick selected={selected} />}
 		</Pressable>
 	);
 }

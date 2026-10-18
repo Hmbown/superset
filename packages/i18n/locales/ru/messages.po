@@ -1563,6 +1563,9 @@ msgstr "Доступ для {name}"
 msgid "Access for the people you add"
 msgstr "Доступ для добавляемых людей"
 
+msgid "Access for this person"
+msgstr "Доступ для этого человека"
+
 msgid "Access your email address"
 msgstr "получить доступ к вашему адресу email"
 
@@ -2375,6 +2378,9 @@ msgstr "Кто угодно"
 #. placeholder {0}: share.organizationName
 msgid "Anyone in {0} who isn't listed here loses access, including anyone who has it open now."
 msgstr "Все в {0}, кого нет в этом списке, потеряют доступ, включая тех, у кого она сейчас открыта."
+
+msgid "Anyone in {organizationName}"
+msgstr "Любой в {organizationName}"
 
 msgid "Anyone in {organizationName} who isn't listed here loses access."
 msgstr "Все в {organizationName}, кого нет в этом списке, потеряют доступ."
@@ -8042,6 +8048,9 @@ msgstr "Используйте Pro по максимуму"
 msgid "Get the iPhone and iPad app"
 msgstr "Скачать приложение для iPhone и iPad"
 
+msgid "Gets an invite to join {organizationName}"
+msgstr "Получит приглашение в {organizationName}"
+
 msgid "Ghost"
 msgstr "Ghost"
 
@@ -9001,8 +9010,8 @@ msgstr "Приглашение отправлено на {email}"
 msgid "Invite"
 msgstr "Пригласить"
 
-msgid "Invite {label} to join {organizationName}"
-msgstr "Пригласить {label} в {organizationName}"
+msgid "Invite ({pickCount})"
+msgstr "Пригласить ({pickCount})"
 
 msgid "Invite and manage members, assign roles, and control permissions"
 msgstr "Приглашайте участников и управляйте ими, назначайте роли и контролируйте права"
@@ -10452,6 +10461,9 @@ msgstr "Имя не разрешено"
 msgid "Name updated!"
 msgstr "Имя обновлено!"
 
+msgid "Name, email, or team"
+msgstr "Имя, email или команда"
+
 msgid "Nameless Foreman"
 msgstr "Безымянный бригадир"
 
@@ -10597,6 +10609,9 @@ msgstr "Новая задача"
 
 msgid "New page"
 msgstr "Новая страница"
+
+msgid "New people get an email invite to {organizationName}. They see this once they join."
+msgstr "Новые люди получат приглашение в {organizationName} по email. Они увидят это после того, как присоединятся."
 
 msgid "New project"
 msgstr "Новый проект"
@@ -11054,8 +11069,8 @@ msgstr "Здесь нет доступного мобильного симуля
 msgid "No name on file"
 msgstr "Имя не указано"
 
-msgid "No one in {organizationName} matches"
-msgstr "В {organizationName} нет совпадений"
+msgid "No one in {organizationName} matches. Type a full email to invite someone new."
+msgstr "В {organizationName} никто не найден. Введите полный email, чтобы пригласить нового человека."
 
 msgid "No open issues found."
 msgstr "Открытых задач не найдено."
@@ -12589,9 +12604,6 @@ msgstr "«{projectName}» удалён навсегда"
 #. placeholder {0}: team.name
 msgid "Permanently remove <0>{0}</0> and all of its members. This can't be undone."
 msgstr "Безвозвратно удалить <0>{0}</0> и всех её участников. Отменить нельзя."
-
-msgid "Permission level"
-msgstr "Уровень доступа"
 
 msgid "Permissions"
 msgstr "Разрешения"
@@ -15021,9 +15033,6 @@ msgstr "Посмотрите, какое место ваши последние 
 msgid "Select"
 msgstr "Селект"
 
-msgid "Select a person"
-msgstr "Выберите человека"
-
 msgid "Select a project"
 msgstr "Выберите проект"
 
@@ -15155,9 +15164,6 @@ msgstr "Выберите папку скрипта терминала"
 
 msgid "Select worktree location"
 msgstr "Выберите расположение worktree"
-
-msgid "Selected"
-msgstr "Выбрано"
 
 msgid "Selected agent is not available on this host"
 msgstr "Выбранный агент недоступен на этом хосте"
@@ -17477,9 +17483,6 @@ msgstr "В этих папках всё ещё есть ваши файлы, н�
 msgid "These ports are still in use"
 msgstr "Эти порты ещё используются"
 
-msgid "They get full access"
-msgstr "Они получат полный доступ"
-
 msgid "Thinking"
 msgstr "Размышление"
 
@@ -19174,11 +19177,8 @@ msgstr "Какие агенты поддерживаются?"
 msgid "Which AI coding agents are supported?"
 msgstr "Какие AI-агенты для кода поддерживаются?"
 
-msgid "Who can open this page from its link"
-msgstr "Кто может открыть эту страницу по ссылке"
-
-msgid "Who can open this workspace"
-msgstr "Кто может открыть эту рабочую область"
+msgid "Who can open it"
+msgstr "Кто может открыть"
 
 msgid "Whole Task"
 msgstr "Задача целиком"

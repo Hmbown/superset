@@ -1,4 +1,4 @@
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import {
 	ShareInviteScreen,
 	useShareDirectory,
@@ -7,7 +7,6 @@ import { useWorkspaceShareRoles } from "../hooks/useWorkspaceShareRoles";
 import { useWorkspaceSharing } from "../hooks/useWorkspaceSharing";
 
 export function WorkspaceShareInviteScreen() {
-	const router = useRouter();
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const { sharing, add } = useWorkspaceSharing(id);
 	const share = useShareDirectory();
@@ -23,12 +22,6 @@ export function WorkspaceShareInviteScreen() {
 			roles={roles}
 			defaultRole="full"
 			onUpgrade={share.onUpgrade}
-			onOpenPermission={() =>
-				router.push({
-					pathname: "/(authenticated)/workspace/[id]/share/permission",
-					params: { id },
-				})
-			}
 			onSubmit={(request) =>
 				share.share(request, (grantees) => add.mutateAsync(grantees))
 			}

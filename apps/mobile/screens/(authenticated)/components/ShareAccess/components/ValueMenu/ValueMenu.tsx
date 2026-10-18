@@ -1,11 +1,14 @@
 import { Host, HStack, Image, Menu, Text } from "@expo/ui/swift-ui";
 import {
 	accessibilityLabel,
+	background,
+	clipShape,
 	disabled as disabledModifier,
 	font,
 	foregroundStyle,
 	frame,
 	lineLimit,
+	padding,
 } from "@expo/ui/swift-ui/modifiers";
 import type { ReactNode } from "react";
 import { useTheme } from "@/hooks/useTheme";
@@ -22,6 +25,7 @@ export function ValueMenu({
 	size = 13,
 	weight = "regular",
 	chevron = "chevron.down",
+	pill = false,
 	disabled = false,
 	children,
 }: {
@@ -30,7 +34,9 @@ export function ValueMenu({
 	tone?: "muted" | "foreground";
 	size?: number;
 	weight?: "regular" | "medium" | "semibold";
-	chevron?: "chevron.down" | "chevron.right";
+	chevron?: "chevron.down" | "chevron.right" | "chevron.up.chevron.down";
+	/** Draws the label on a filled capsule, like a button. */
+	pill?: boolean;
 	disabled?: boolean;
 	children: ReactNode;
 }) {
@@ -48,7 +54,18 @@ export function ValueMenu({
 							modifiers={[frame({ width: 36, height: 36 })]}
 						/>
 					) : (
-						<HStack spacing={4}>
+						<HStack
+							spacing={4}
+							modifiers={
+								pill
+									? [
+											padding({ horizontal: 11, vertical: 6 }),
+											background(theme.muted),
+											clipShape("capsule"),
+										]
+									: []
+							}
+						>
 							<Text
 								modifiers={[
 									font({ size, weight }),

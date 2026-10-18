@@ -39,7 +39,6 @@ interface ShareAccessSheetProps {
 	extra?: ReactNode;
 	onInvite: () => void;
 	onOpenGrantee: (grantee: ShareGranteeRef) => void;
-	onOpenGeneral: (mode: "who" | "level") => void;
 }
 
 export function ShareAccessSheet({
@@ -55,7 +54,6 @@ export function ShareAccessSheet({
 	extra,
 	onInvite,
 	onOpenGrantee,
-	onOpenGeneral,
 }: ShareAccessSheetProps) {
 	const { t } = useLingui();
 	const router = useRouter();
@@ -140,8 +138,6 @@ export function ShareAccessSheet({
 						general={general}
 						roles={roles}
 						canManage={canManage}
-						onOpenWho={() => onOpenGeneral("who")}
-						onOpenLevel={() => onOpenGeneral("level")}
 					/>
 				</View>
 

@@ -1563,6 +1563,9 @@ msgstr "Akses untuk {name}"
 msgid "Access for the people you add"
 msgstr "Akses untuk orang yang Anda tambahkan"
 
+msgid "Access for this person"
+msgstr "Akses untuk orang ini"
+
 msgid "Access your email address"
 msgstr "Mengakses alamat email Anda"
 
@@ -2375,6 +2378,9 @@ msgstr "Siapa pun"
 #. placeholder {0}: share.organizationName
 msgid "Anyone in {0} who isn't listed here loses access, including anyone who has it open now."
 msgstr "Siapa pun di {0} yang tidak tercantum di sini kehilangan akses, termasuk yang sedang membukanya."
+
+msgid "Anyone in {organizationName}"
+msgstr "Siapa pun di {organizationName}"
 
 msgid "Anyone in {organizationName} who isn't listed here loses access."
 msgstr "Siapa pun di {organizationName} yang tidak tercantum di sini kehilangan akses."
@@ -8042,6 +8048,9 @@ msgstr "Maksimalkan Pro"
 msgid "Get the iPhone and iPad app"
 msgstr "Dapatkan aplikasi iPhone dan iPad"
 
+msgid "Gets an invite to join {organizationName}"
+msgstr "Akan menerima undangan untuk bergabung ke {organizationName}"
+
 msgid "Ghost"
 msgstr "Ghost"
 
@@ -9001,8 +9010,8 @@ msgstr "Undangan dikirim ke {email}"
 msgid "Invite"
 msgstr "Undang"
 
-msgid "Invite {label} to join {organizationName}"
-msgstr "Undang {label} untuk bergabung ke {organizationName}"
+msgid "Invite ({pickCount})"
+msgstr "Undang ({pickCount})"
 
 msgid "Invite and manage members, assign roles, and control permissions"
 msgstr "Undang dan kelola anggota, tetapkan peran, dan atur izin"
@@ -10452,6 +10461,9 @@ msgstr "Nama Tidak Ditemukan"
 msgid "Name updated!"
 msgstr "Nama diperbarui!"
 
+msgid "Name, email, or team"
+msgstr "Nama, email, atau tim"
+
 msgid "Nameless Foreman"
 msgstr "Mandor Tanpa Nama"
 
@@ -10597,6 +10609,9 @@ msgstr "Issue baru"
 
 msgid "New page"
 msgstr "Halaman baru"
+
+msgid "New people get an email invite to {organizationName}. They see this once they join."
+msgstr "Orang baru akan menerima undangan email untuk bergabung ke {organizationName}. Mereka akan melihatnya setelah bergabung."
 
 msgid "New project"
 msgstr "Proyek baru"
@@ -11054,8 +11069,8 @@ msgstr "Tidak ada simulator seluler yang tersedia di sini. Diperlukan simulator 
 msgid "No name on file"
 msgstr "Tidak ada nama tersimpan"
 
-msgid "No one in {organizationName} matches"
-msgstr "Tidak ada yang cocok di {organizationName}"
+msgid "No one in {organizationName} matches. Type a full email to invite someone new."
+msgstr "Tidak ada yang cocok di {organizationName}. Ketik email lengkap untuk mengundang orang baru."
 
 msgid "No open issues found."
 msgstr "Tidak ada issue terbuka."
@@ -12589,9 +12604,6 @@ msgstr "\"{projectName}\" dihapus secara permanen"
 #. placeholder {0}: team.name
 msgid "Permanently remove <0>{0}</0> and all of its members. This can't be undone."
 msgstr "Hapus <0>{0}</0> beserta semua anggotanya secara permanen. Ini tidak bisa dibatalkan."
-
-msgid "Permission level"
-msgstr "Tingkat izin"
 
 msgid "Permissions"
 msgstr "Izin"
@@ -15021,9 +15033,6 @@ msgstr "Lihat posisi 30 hari terakhir Anda di papan peringkat publik. Hanya juml
 msgid "Select"
 msgstr "Select"
 
-msgid "Select a person"
-msgstr "Pilih orang"
-
 msgid "Select a project"
 msgstr "Pilih sebuah proyek"
 
@@ -15155,9 +15164,6 @@ msgstr "Pilih direktori skrip terminal"
 
 msgid "Select worktree location"
 msgstr "Pilih lokasi worktree"
-
-msgid "Selected"
-msgstr "Dipilih"
 
 msgid "Selected agent is not available on this host"
 msgstr "Agen yang dipilih tidak tersedia di host ini"
@@ -17477,9 +17483,6 @@ msgstr "Folder ini masih berisi file Anda, tetapi tidak otomatis dipindahkan ke 
 msgid "These ports are still in use"
 msgstr "Port ini masih dipakai"
 
-msgid "They get full access"
-msgstr "Mereka mendapat akses penuh"
-
 msgid "Thinking"
 msgstr "Pemikiran"
 
@@ -19174,11 +19177,8 @@ msgstr "Agen mana saja yang didukung?"
 msgid "Which AI coding agents are supported?"
 msgstr "Agen coding AI mana saja yang didukung?"
 
-msgid "Who can open this page from its link"
-msgstr "Siapa yang bisa membuka halaman ini dari tautannya"
-
-msgid "Who can open this workspace"
-msgstr "Siapa yang dapat membuka workspace ini"
+msgid "Who can open it"
+msgstr "Siapa yang bisa membuka"
 
 msgid "Whole Task"
 msgstr "Tugas utuh"

@@ -1563,6 +1563,9 @@ msgstr "Dostęp dla: {name}"
 msgid "Access for the people you add"
 msgstr "Dostęp dla dodawanych osób"
 
+msgid "Access for this person"
+msgstr "Dostęp tej osoby"
+
 msgid "Access your email address"
 msgstr "Uzyskać dostęp do Twojego adresu e-mail"
 
@@ -2375,6 +2378,9 @@ msgstr "Ktokolwiek"
 #. placeholder {0}: share.organizationName
 msgid "Anyone in {0} who isn't listed here loses access, including anyone who has it open now."
 msgstr "Wszyscy w {0}, których nie ma na tej liście, stracą dostęp, także ci, którzy mają go teraz otwartego."
+
+msgid "Anyone in {organizationName}"
+msgstr "Wszyscy w {organizationName}"
 
 msgid "Anyone in {organizationName} who isn't listed here loses access."
 msgstr "Wszyscy w {organizationName}, których nie ma na tej liście, stracą dostęp."
@@ -8042,6 +8048,9 @@ msgstr "Wykorzystaj w pełni Pro"
 msgid "Get the iPhone and iPad app"
 msgstr "Pobierz aplikację na iPhone’a i iPada"
 
+msgid "Gets an invite to join {organizationName}"
+msgstr "Otrzyma zaproszenie do {organizationName}"
+
 msgid "Ghost"
 msgstr "Ghost"
 
@@ -9001,8 +9010,8 @@ msgstr "Zaproszenie wysłane na {email}"
 msgid "Invite"
 msgstr "Zaproś"
 
-msgid "Invite {label} to join {organizationName}"
-msgstr "Zaproś {label} do {organizationName}"
+msgid "Invite ({pickCount})"
+msgstr "Zaproś ({pickCount})"
 
 msgid "Invite and manage members, assign roles, and control permissions"
 msgstr "Zapraszaj członków i zarządzaj nimi, przypisuj role i kontroluj uprawnienia"
@@ -10452,6 +10461,9 @@ msgstr "Nie rozwiązano nazwy"
 msgid "Name updated!"
 msgstr "Nazwa zaktualizowana!"
 
+msgid "Name, email, or team"
+msgstr "Imię, e-mail lub zespół"
+
 msgid "Nameless Foreman"
 msgstr "Bezimienny Brygadzista"
 
@@ -10597,6 +10609,9 @@ msgstr "Nowe zgłoszenie"
 
 msgid "New page"
 msgstr "Nowa strona"
+
+msgid "New people get an email invite to {organizationName}. They see this once they join."
+msgstr "Nowe osoby otrzymają e-mailem zaproszenie do {organizationName}. Zobaczą to po dołączeniu."
 
 msgid "New project"
 msgstr "Nowy projekt"
@@ -11054,8 +11069,8 @@ msgstr "Brak dostępnego symulatora mobilnego. Wymagany jest symulator EAS w pia
 msgid "No name on file"
 msgstr "Brak zapisanej nazwy"
 
-msgid "No one in {organizationName} matches"
-msgstr "Nikt w {organizationName} nie pasuje"
+msgid "No one in {organizationName} matches. Type a full email to invite someone new."
+msgstr "Nikt w {organizationName} nie pasuje. Wpisz pełny adres e-mail, aby zaprosić nową osobę."
 
 msgid "No open issues found."
 msgstr "Nie znaleziono otwartych zgłoszeń."
@@ -12589,9 +12604,6 @@ msgstr "Trwale usunięto „{projectName}”"
 #. placeholder {0}: team.name
 msgid "Permanently remove <0>{0}</0> and all of its members. This can't be undone."
 msgstr "Trwale usuwa <0>{0}</0> i wszystkich jego członków. Tej operacji nie można cofnąć."
-
-msgid "Permission level"
-msgstr "Poziom uprawnień"
 
 msgid "Permissions"
 msgstr "Uprawnienia"
@@ -15021,9 +15033,6 @@ msgstr "Zobacz, jak twoje ostatnie 30 dni wypada w publicznym rankingu. Tylko li
 msgid "Select"
 msgstr "Select"
 
-msgid "Select a person"
-msgstr "Wybierz osobę"
-
 msgid "Select a project"
 msgstr "Wybierz projekt"
 
@@ -15155,9 +15164,6 @@ msgstr "Wybierz katalog skryptu terminala"
 
 msgid "Select worktree location"
 msgstr "Wybierz lokalizację worktree"
-
-msgid "Selected"
-msgstr "Wybrane"
 
 msgid "Selected agent is not available on this host"
 msgstr "Wybrany agent jest niedostępny na tym hoście"
@@ -17477,9 +17483,6 @@ msgstr "Te foldery nadal zawierają Twoje pliki, ale nie zostały same przeniesi
 msgid "These ports are still in use"
 msgstr "Te porty są nadal używane"
 
-msgid "They get full access"
-msgstr "Otrzymają pełny dostęp"
-
 msgid "Thinking"
 msgstr "Rozumowanie"
 
@@ -19174,11 +19177,8 @@ msgstr "Które agenty są obsługiwane?"
 msgid "Which AI coding agents are supported?"
 msgstr "Które agenty kodujące AI są obsługiwane?"
 
-msgid "Who can open this page from its link"
-msgstr "Kto może otworzyć tę stronę z linku"
-
-msgid "Who can open this workspace"
-msgstr "Kto może otworzyć ten obszar roboczy"
+msgid "Who can open it"
+msgstr "Kto może otworzyć"
 
 msgid "Whole Task"
 msgstr "Całe zadanie"

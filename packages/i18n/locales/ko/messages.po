@@ -1563,6 +1563,9 @@ msgstr "{name}의 접근 권한"
 msgid "Access for the people you add"
 msgstr "추가할 사람의 접근 권한"
 
+msgid "Access for this person"
+msgstr "이 사람의 접근 권한"
+
 msgid "Access your email address"
 msgstr "이메일 주소 접근"
 
@@ -2375,6 +2378,9 @@ msgstr "모든 사람"
 #. placeholder {0}: share.organizationName
 msgid "Anyone in {0} who isn't listed here loses access, including anyone who has it open now."
 msgstr "여기에 없는 {0}의 모든 사람은 접근 권한을 잃습니다. 지금 열어 둔 사람도 포함됩니다."
+
+msgid "Anyone in {organizationName}"
+msgstr "{organizationName}의 모든 사람"
 
 msgid "Anyone in {organizationName} who isn't listed here loses access."
 msgstr "여기에 없는 {organizationName}의 모든 사람은 접근 권한을 잃습니다."
@@ -8042,6 +8048,9 @@ msgstr "Pro를 최대한 활용하기"
 msgid "Get the iPhone and iPad app"
 msgstr "iPhone 및 iPad 앱 받기"
 
+msgid "Gets an invite to join {organizationName}"
+msgstr "{organizationName} 가입 초대를 받습니다"
+
 msgid "Ghost"
 msgstr "고스트"
 
@@ -9001,8 +9010,8 @@ msgstr "{email}(으)로 초대를 보냈습니다"
 msgid "Invite"
 msgstr "초대"
 
-msgid "Invite {label} to join {organizationName}"
-msgstr "{label} 님을 {organizationName}에 초대"
+msgid "Invite ({pickCount})"
+msgstr "초대 ({pickCount})"
 
 msgid "Invite and manage members, assign roles, and control permissions"
 msgstr "멤버를 초대하고 관리하며 역할과 권한을 설정합니다"
@@ -10452,6 +10461,9 @@ msgstr "이름을 확인할 수 없음"
 msgid "Name updated!"
 msgstr "이름이 업데이트되었습니다!"
 
+msgid "Name, email, or team"
+msgstr "이름, 이메일 또는 팀"
+
 msgid "Nameless Foreman"
 msgstr "이름 없는 작업반장"
 
@@ -10597,6 +10609,9 @@ msgstr "새 이슈"
 
 msgid "New page"
 msgstr "새 페이지"
+
+msgid "New people get an email invite to {organizationName}. They see this once they join."
+msgstr "새로운 사람은 {organizationName} 가입 초대 이메일을 받습니다. 가입하면 볼 수 있습니다."
 
 msgid "New project"
 msgstr "새 프로젝트"
@@ -11054,8 +11069,8 @@ msgstr "여기에서 사용할 수 있는 모바일 시뮬레이터가 없습니
 msgid "No name on file"
 msgstr "등록된 이름 없음"
 
-msgid "No one in {organizationName} matches"
-msgstr "{organizationName}에서 일치하는 사람이 없습니다"
+msgid "No one in {organizationName} matches. Type a full email to invite someone new."
+msgstr "{organizationName}에 일치하는 사람이 없습니다. 새로운 사람을 초대하려면 전체 이메일 주소를 입력하세요."
 
 msgid "No open issues found."
 msgstr "열린 이슈를 찾을 수 없습니다."
@@ -12589,9 +12604,6 @@ msgstr "\"{projectName}\"을(를) 영구 삭제했습니다"
 #. placeholder {0}: team.name
 msgid "Permanently remove <0>{0}</0> and all of its members. This can't be undone."
 msgstr "<0>{0}</0>과(와) 모든 멤버를 영구적으로 제거합니다. 되돌릴 수 없습니다."
-
-msgid "Permission level"
-msgstr "권한 수준"
 
 msgid "Permissions"
 msgstr "권한"
@@ -15021,9 +15033,6 @@ msgstr "최근 30일 사용량이 공개 리더보드에서 어디쯤인지 확�
 msgid "Select"
 msgstr "선택"
 
-msgid "Select a person"
-msgstr "사람 선택"
-
 msgid "Select a project"
 msgstr "프로젝트를 선택하세요"
 
@@ -15155,9 +15164,6 @@ msgstr "터미널 스크립트 디렉터리 선택"
 
 msgid "Select worktree location"
 msgstr "worktree 위치 선택"
-
-msgid "Selected"
-msgstr "선택됨"
 
 msgid "Selected agent is not available on this host"
 msgstr "선택한 에이전트를 이 호스트에서 사용할 수 없습니다"
@@ -17477,9 +17483,6 @@ msgstr "이 폴더들에는 아직 파일이 있지만 새 Superset으로 자동
 msgid "These ports are still in use"
 msgstr "이 포트들은 아직 사용 중입니다"
 
-msgid "They get full access"
-msgstr "전체 접근 권한이 부여됩니다"
-
 msgid "Thinking"
 msgstr "생각"
 
@@ -19174,11 +19177,8 @@ msgstr "어떤 에이전트를 지원하나요?"
 msgid "Which AI coding agents are supported?"
 msgstr "어떤 AI 코딩 에이전트를 지원하나요?"
 
-msgid "Who can open this page from its link"
-msgstr "링크로 이 페이지를 열 수 있는 사람"
-
-msgid "Who can open this workspace"
-msgstr "이 워크스페이스를 열 수 있는 사람"
+msgid "Who can open it"
+msgstr "열 수 있는 사람"
 
 msgid "Whole Task"
 msgstr "작업 완수"

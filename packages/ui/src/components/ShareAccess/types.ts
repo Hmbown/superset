@@ -17,6 +17,8 @@ export interface ShareGeneralOption {
 	value: string;
 	label: string;
 	icon: ReactNode;
+	/** Shown with the organization's mark instead of `icon`. */
+	organization?: boolean;
 }
 
 export interface ShareConfirmation {
@@ -28,7 +30,6 @@ export interface ShareConfirmation {
 export interface ShareGeneralAccess {
 	value: string;
 	options: ShareGeneralOption[];
-	hint: string;
 	onChange: (value: string) => Promise<void>;
 	/** Asked before a change; return null to apply it without asking. */
 	confirm?: (from: string, to: string) => ShareConfirmation | null;
