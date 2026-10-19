@@ -18,6 +18,7 @@ import { useTerminalAgentBindings } from "renderer/hooks/host-service/useTermina
 import { useWorkspaceEvent } from "renderer/hooks/host-service/useWorkspaceEvent";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import type { OpenFile } from "../../../../../../types";
+import { saveLastChatAgent } from "../../../../../../utils/lastChatAgent";
 import { prependToDraft } from "../../../ChatSession/components/Composer";
 import { SessionView } from "../../../ChatSession/components/SessionView";
 import { useSessionClient } from "../../../ChatSession/hooks/useSessionClient";
@@ -432,7 +433,8 @@ export function AcpChatPane({
 			recoveryInFlight.current = false;
 			setReplacement(null);
 			setFailure(
-				t({ message: "The agent stopped while resuming the conversation." }),
+				replacementState?.lastError ??
+					t({ message: "The agent stopped while resuming the conversation." }),
 			);
 			return;
 		}
@@ -676,7 +678,7 @@ export function AcpChatPane({
 	if (harness && sessionId && (sessionDead || sessionStopped) && !recovering) {
 		return (
 			<AcpRecovery
-				detail={failure ?? undefined}
+				detail={failure ?? stored?.lastError ?? undefined}
 				onStartNew={startFresh}
 				{...(continuedInTerminal ? {} : { onResume: retryRecovery })}
 				reason={continuedInTerminal ? "in-terminal" : "stopped"}
@@ -733,6 +735,7 @@ export function AcpChatPane({
 			isActive={isActive}
 			onFork={fork}
 			onRewind={onRewound ? rewind : undefined}
+			onUserPrompt={agent ? () => saveLastChatAgent(agent.id) : undefined}
 			rewindNotes={rewindNotes}
 			openFile={onOpenFile}
 			openPage={onOpenPage}

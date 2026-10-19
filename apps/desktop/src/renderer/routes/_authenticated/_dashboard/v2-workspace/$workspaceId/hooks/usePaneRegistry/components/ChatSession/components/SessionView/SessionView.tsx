@@ -76,6 +76,7 @@ export function SessionView({
 	onPendingPromptsSent,
 	onFork,
 	onRewind,
+	onUserPrompt,
 	rewindNotes,
 	onSessionState,
 	openFile,
@@ -109,6 +110,8 @@ export function SessionView({
 	onFork?: ((target: ChatForkTarget, transcript: string) => void) | undefined;
 	canForkToWorktree?: boolean;
 	onRewind?: (request: ChatRewindRequest) => void;
+	/** Called when the user sends a message, as opposed to anything sent for them. */
+	onUserPrompt?: () => void;
 	/** Shown in the rewind picker when this agent or host cannot rewind fully. */
 	rewindNotes?: string[];
 	/** Names the speaker in a handed-over transcript. */
@@ -334,6 +337,7 @@ export function SessionView({
 	const holdPrompt = held?.onQueue;
 	const onSend = useCallback(
 		(content: UserContent[], { steer }: { steer: boolean }) => {
+			onUserPrompt?.();
 			if (holdPrompt) return holdPrompt(content);
 			const pending = loaded ? approvals : [];
 			const [question] = pending;
@@ -371,6 +375,7 @@ export function SessionView({
 			sendPrompt,
 			runningTurnId,
 			t,
+			onUserPrompt,
 		],
 	);
 	const awaitingBackground = sessionState?.awaitingBackground === true;
