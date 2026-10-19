@@ -98,7 +98,9 @@ export default function AuthenticatedLayout() {
     so after a new session a running client still tunnels to the old one and the app shows "Could
     not connect to the server". `--new` replaces the client; never start a session by hand.
   - **Reload with `eas-dev.sh --reload`, not `agent-device open Superset`.** A plain launch has no
-    Metro URL and fails; only `superset://expo-development-client/?url=...` loads the app.
+    Metro URL and fails; only
+    `superset://expo-development-client/?url=...&disableAutoLaunch=1&disableFab=1` loads the app
+    without the dev menu and its gear button.
   - **The "slide to type" keyboard intro** covers the screen the first time a keyboard opens.
     `simctl` is out of reach, so the script opens the keyboard once in Settings and presses Continue.
   - **SwiftUI menu items (`@expo/ui` `Menu`) are not in `agent-device snapshot`.** Tap them by

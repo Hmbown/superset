@@ -30,8 +30,17 @@ apps/mobile/scripts/eas-dev.sh --new      # stop the running session and start a
 - **Switch sessions with `--new`,** never `eas simulator` by hand. The egress client is bound to the
   session it started with, so the script stops the old client and starts one for the new session.
   With no flag it keeps a connected client and restarts one that died.
-- Each run that (re)starts the tunnel ends only when Metro has served the app a bundle; otherwise it
-  exits non-zero and names the Metro and egress logs.
+- When the script started Metro, each run that (re)starts the tunnel ends only when Metro has served
+  the app a bundle; otherwise it exits non-zero and names the Metro and egress logs. With a Metro
+  started some other way it opens the app but cannot confirm the load.
+- The dev-client URL carries `disableAutoLaunch=1&disableFab=1`, so no dev menu opens at launch and
+  no gear button covers the toolbar. Each session is a fresh install, so every load passes them.
+- Logs and PID files are in `.tmp/eas-dev/` of the checkout, so two checkouts do not stop each
+  other's tunnel.
+- The fingerprint lookup refuses to run when `bun --version` differs from `.bun-version`. The
+  dependencies that bun installs give a fingerprint no build has, and EAS would start a 15-minute
+  build that also fails. A cloud workspace made before the pin changed has the old bun: make a new
+  one.
 
 The session is tagged with the workspace id. The desktop Mobile pane lists the workspace's tagged
 sessions, so the person can watch the simulator there without a link. The script also prints an
