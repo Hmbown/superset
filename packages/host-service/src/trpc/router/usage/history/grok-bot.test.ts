@@ -68,9 +68,9 @@ describe("readGrokBotAgents", () => {
 	});
 
 	test("returns nothing when the app was never installed", async () => {
-		expect((await readGrokBotAgents(join(tmpdir(), "no-grok-bot"))).size).toBe(
-			0,
-		);
+		expect(
+			(await readGrokBotAgents([join(tmpdir(), "no-grok-bot")])).size,
+		).toBe(0);
 	});
 
 	test("merges the Windows legacy Sand folder with the current one", async () => {
