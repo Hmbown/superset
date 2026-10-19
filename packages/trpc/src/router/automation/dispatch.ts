@@ -35,6 +35,7 @@ import {
 	previousRunTerminal,
 	type RunWorkspace,
 	replacePin,
+	runSessionColumns,
 } from "./run";
 import { promptWithTriggerContext } from "./triggerContext";
 
@@ -330,9 +331,8 @@ async function dispatchRun(
 			.update(automationRuns)
 			.set({
 				status: "dispatched",
-				sessionKind: session?.kind ?? null,
+				...runSessionColumns(session),
 				chatSessionId: null,
-				terminalSessionId: session?.sessionId ?? null,
 				...workspace,
 				dispatchedAt: new Date(),
 			})

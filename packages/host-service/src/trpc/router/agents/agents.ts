@@ -685,6 +685,7 @@ function continueChatAgent(
 		kind: "terminal",
 		sessionId: target.terminalId,
 		label: target.label,
+		chatSessionId: target.chatSessionId,
 	};
 }
 

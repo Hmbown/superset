@@ -2,7 +2,7 @@ import { db } from "@superset/db/client";
 import type { AutomationRunErrorCode } from "@superset/db/enums";
 import { automationRuns, automations } from "@superset/db/schema";
 import { TRPCError } from "@trpc/server";
-import { and, desc, eq, isNotNull } from "drizzle-orm";
+import { and, desc, eq, inArray, isNotNull } from "drizzle-orm";
 import { isI18nErrorCause } from "../../i18n-error";
 import { SandboxNotReadyError } from "../../lib/sandbox";
 import { RelayDispatchError } from "./relay-client";
@@ -11,7 +11,25 @@ export type AgentRunResult = {
 	kind: "terminal";
 	sessionId: string;
 	label: string;
+	/** Set by a host that ran the agent as a chat; `sessionId` is then the chat's terminal id. */
+	chatSessionId?: string;
 };
+
+/**
+ * The session columns a dispatched run records. A chat's session id changes
+ * each time the chat is resumed, so the run keeps the chat's terminal id,
+ * which stays the same; `chat_session_id` refers to cloud chats.
+ */
+export function runSessionColumns(result: AgentRunResult | null): {
+	sessionKind: "terminal" | "chat" | null;
+	terminalSessionId: string | null;
+} {
+	if (!result) return { sessionKind: null, terminalSessionId: null };
+	return {
+		sessionKind: result.chatSessionId ? "chat" : "terminal",
+		terminalSessionId: result.sessionId,
+	};
+}
 
 /** Where a run's agent lives: a host's workspace or a cloud workspace. */
 export type RunWorkspace =
@@ -55,7 +73,7 @@ export async function previousRunTerminal(
 					? eq(automationRuns.cloudWorkspaceId, workspace.cloudWorkspaceId)
 					: eq(automationRuns.v2WorkspaceId, workspace.v2WorkspaceId),
 				eq(automationRuns.status, "dispatched"),
-				eq(automationRuns.sessionKind, "terminal"),
+				inArray(automationRuns.sessionKind, ["terminal", "chat"]),
 				isNotNull(automationRuns.terminalSessionId),
 			),
 		)
