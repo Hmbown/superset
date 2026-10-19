@@ -128,7 +128,7 @@ egress_pids() {
 }
 
 egress_connected() {
-	grep -E "Egress tunnel (connected|disconnected)" "$EGRESS_LOG" 2>/dev/null | tail -n 1 | grep -q "connected\."
+	grep -E "Egress tunnel (connected|disconnected)" "$EGRESS_LOG" 2>/dev/null | tail -n 1 | grep -q "Egress tunnel connected"
 }
 
 egress_healthy() {
