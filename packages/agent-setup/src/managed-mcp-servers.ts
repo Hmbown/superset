@@ -17,9 +17,8 @@ import { resolveSupersetHomeDir } from "./paths";
 
 /**
  * Materializes the MCP servers of installed Superset plugins into agent
- * configs, and reaps them on uninstall. MVP targets: Claude Code
- * (`~/.claude.json`, the state file where `mcpServers` lives — see
- * provider-profiles.ts) and Codex (`~/.codex/config.toml`).
+ * configs, and reaps them on uninstall. Targets: Claude Code (`~/.claude.json`),
+ * Codex (`~/.codex/config.toml`), and pdev (`~/.paradev/agent/mcp.json`).
  *
  * Ownership models differ per dialect because an MCP entry has no natural
  * fingerprint (unlike hooks, recognized by their notify-script path):
@@ -43,6 +42,25 @@ export interface SyncManagedMcpServersOptions {
 	homeDir?: string;
 	/** Override for tests; production resolves ~/.superset. */
 	supersetHomeDir?: string;
+	pdevAgentDir?: string;
+}
+
+export function getPdevMcpConfigPath(
+	options: SyncManagedMcpServersOptions = {},
+): string {
+	const homeDir = options.homeDir ?? os.homedir();
+	const override =
+		options.pdevAgentDir ||
+		(options.homeDir ? undefined : process.env.PDEV_CODING_AGENT_DIR);
+	const agentDir = override || path.join(homeDir, ".paradev", "agent");
+	const expanded =
+		agentDir === "~"
+			? homeDir
+			: agentDir.startsWith("~/") ||
+					(process.platform === "win32" && agentDir.startsWith("~\\"))
+				? path.join(homeDir, agentDir.slice(2))
+				: agentDir;
+	return path.join(expanded, "mcp.json");
 }
 
 interface McpLedger {
@@ -103,8 +121,8 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 	return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-/** Claude's `.mcp.json` dialect: stdio entries carry an explicit type. */
-function toClaudeServerValue(
+/** Claude and pdev accept explicit stdio transport types. */
+export function toJsonMcpServerValue(
 	config: PluginMcpServerConfig,
 ): Record<string, unknown> {
 	if ("url" in config) {
@@ -124,16 +142,15 @@ function toClaudeServerValue(
 }
 
 /**
- * Merges desired entries into `~/.claude.json`'s `mcpServers` map under
- * ledger ownership. Serializes only on semantic change so a converged sync
- * never reformats Claude's own state file.
+ * Merges desired entries under ledger ownership without reformatting a
+ * converged config.
  */
-function syncClaudeMcpServers(
+function syncJsonMcpServers(
 	desired: Record<string, PluginMcpServerConfig>,
-	homeDir: string,
+	filePath: string,
+	agent: string,
 	ledger: McpLedger,
 ): void {
-	const filePath = path.join(homeDir, ".claude.json");
 	const tracked = ledger.files[filePath] ?? {};
 
 	let rawAtRead: string | null = null;
@@ -144,14 +161,14 @@ function syncClaudeMcpServers(
 			const parsed = JSON.parse(rawAtRead);
 			if (!isPlainObject(parsed)) {
 				console.warn(
-					`[agent-setup] Expected ${filePath} to contain a JSON object; skipping Claude MCP sync`,
+					`[agent-setup] Expected ${filePath} to contain a JSON object; skipping ${agent} MCP sync`,
 				);
 				return;
 			}
 			root = parsed;
 		} catch (error) {
 			console.warn(
-				`[agent-setup] Could not parse existing ${filePath}; skipping Claude MCP sync:`,
+				`[agent-setup] Could not parse existing ${filePath}; skipping ${agent} MCP sync:`,
 				error,
 			);
 			return;
@@ -170,7 +187,7 @@ function syncClaudeMcpServers(
 		: {};
 	if (hadContainer && !isPlainObject(root.mcpServers)) {
 		console.warn(
-			`[agent-setup] ${filePath} has a non-object mcpServers; skipping Claude MCP sync`,
+			`[agent-setup] ${filePath} has a non-object mcpServers; skipping ${agent} MCP sync`,
 		);
 		return;
 	}
@@ -190,7 +207,7 @@ function syncClaudeMcpServers(
 	}
 
 	for (const [name, config] of Object.entries(desired)) {
-		const value = toClaudeServerValue(config);
+		const value = toJsonMcpServerValue(config);
 		const valueHash = hashMcpServerValue(value);
 		const current = container[name];
 
@@ -250,8 +267,9 @@ function syncClaudeMcpServers(
 		root.mcpServers = container;
 	}
 
+	fs.mkdirSync(path.dirname(filePath), { recursive: true });
 	writeFileIfChanged(filePath, JSON.stringify(root, null, 2), 0o600);
-	console.log("[agent-setup] Updated Claude mcpServers");
+	console.log(`[agent-setup] Updated ${agent} mcpServers`);
 }
 
 export const CODEX_MARKER_START = "# >>> superset managed mcp servers >>>";
@@ -393,6 +411,17 @@ export function readExternallyConfiguredMcpServers(
 		}
 	}
 
+	const pdevPath = getPdevMcpConfigPath(options);
+	try {
+		const root = JSON.parse(fs.readFileSync(pdevPath, "utf-8"));
+		if (isPlainObject(root) && isPlainObject(root.mcpServers)) {
+			const pdevTracked = ledger.files[pdevPath] ?? {};
+			for (const [name, config] of Object.entries(root.mcpServers)) {
+				if (!(name in pdevTracked)) record(name, config, "pdev");
+			}
+		}
+	} catch {}
+
 	// Cursor's global config; tolerate the JSONC comments Cursor allows.
 	const cursorPath = path.join(homeDir, ".cursor", "mcp.json");
 	if (fs.existsSync(cursorPath)) {
@@ -502,9 +531,29 @@ export function syncManagedMcpServers(
 	};
 
 	const ledger = readLedger(supersetHomeDir);
-	syncClaudeMcpServers(
+	syncJsonMcpServers(
 		desiredForScope((source) => source === "Claude Code"),
-		homeDir,
+		path.join(homeDir, ".claude.json"),
+		"Claude",
+		ledger,
+	);
+	const pdevDesired = Object.fromEntries(
+		Object.entries(desiredForScope((source) => source === "pdev")).filter(
+			([name, config]) => {
+				if ("url" in config && config.type === "sse") {
+					console.warn(
+						`[agent-setup] pdev does not support SSE server ${name}`,
+					);
+					return false;
+				}
+				return true;
+			},
+		),
+	);
+	syncJsonMcpServers(
+		pdevDesired,
+		getPdevMcpConfigPath(options),
+		"pdev",
 		ledger,
 	);
 	writeLedger(supersetHomeDir, ledger);

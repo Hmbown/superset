@@ -111,6 +111,14 @@ Skills land in `~/.agents/skills` (what Codex, Cursor, OpenCode, Gemini CLI, Vib
 natively) and are mirrored into `~/.claude/skills` as a plugin directory, because Claude does not
 read the shared convention.
 
+Plugin MCP servers are also synced to Claude's `~/.claude.json`, Codex's
+`~/.codex/config.toml`, and pdev's `~/.paradev/agent/mcp.json`. pdev honors
+`PDEV_CODING_AGENT_DIR` when set. Claude and pdev entries share the ownership ledger at
+`$SUPERSET_HOME_DIR/plugins/mcp-ledger.json`: user-defined or user-edited servers are
+left alone, while disabling or uninstalling a plugin removes unchanged managed entries.
+Superset proxy entries use `headersHelper` to read current auth at connection time rather
+than store a token. pdev needs a build with `headersHelper` support; older builds ignore it.
+
 ## Command surface
 
 ```

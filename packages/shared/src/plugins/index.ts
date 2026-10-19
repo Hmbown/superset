@@ -44,10 +44,8 @@ export type PluginMcpServerConfig =
 			headers?: Record<string, string>;
 			/**
 			 * A command printing a JSON object of headers on stdout, run per
-			 * connection. Both supported agents have this and it is the only way to
-			 * attach a credential without writing one to disk: Claude calls it
-			 * `headersHelper`, Codex `http_headers_helper`, so the dialect writers
-			 * rename it rather than this type carrying both spellings.
+			 * connection without persisting credentials. Claude and pdev call it
+			 * `headersHelper`; Codex calls it `http_headers_helper`.
 			 */
 			headersHelper?: string;
 	  }
