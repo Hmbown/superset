@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	const description = i18n._(
 		msg({
 			message:
-				"Write a plugin once and every coding agent can use it: Claude Code, Codex, Cursor, OpenCode, and more. Install it once, and it works on your machines and in the cloud.",
+				"One plugin, every coding agent: Claude Code, Codex, Cursor, OpenCode and more. Install once, use it on your machines and in the cloud.",
 		}),
 	);
 	const image = {
@@ -69,9 +69,8 @@ export default async function PluginsPage() {
 						</h1>
 						<p className="mt-5 max-w-xl text-lg text-muted-foreground leading-relaxed">
 							<Trans>
-								Give your agents the apps your team already uses. Install a
-								plugin once, and every agent can use it, on your machines and in
-								the cloud.
+								Install once. Every agent gets it, on your machines and in the
+								cloud.
 							</Trans>
 						</p>
 						<ProductHeroActions source="plugins" docsPath="/mcp-server" />
@@ -87,7 +86,7 @@ export default async function PluginsPage() {
 						<Trans>How it works</Trans>
 					</p>
 					<h2 className="mt-4 font-medium text-3xl text-foreground tracking-tight sm:text-4xl">
-						<Trans>Install it once. Then mention it in any prompt.</Trans>
+						<Trans>Install once. Mention it in any prompt.</Trans>
 					</h2>
 					<HowItWorks />
 					<div className="mt-10 grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">

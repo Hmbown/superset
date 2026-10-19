@@ -1475,6 +1475,9 @@ msgstr "진행 중인 작업, 다음 순서, 그리고 {company}이(가) 향하�
 msgid "A majority of production changes merge without any human reading the diff."
 msgstr "프로덕션 변경의 과반이 사람이 차이를 읽지 않은 채 머지됩니다."
 
+msgid "A manifest and a few skill files. Superset puts it where every agent looks."
+msgstr "매니페스트와 스킬 파일 몇 개면 됩니다. Superset이 각 에이전트가 찾는 위치에 배치합니다."
+
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "계속하려면 새 버전의 Superset이 필요합니다. 최신 버전으로 업데이트해 주세요."
 
@@ -1483,9 +1486,6 @@ msgstr "이 브랜치에서 새 워크스페이스를 만들고 대화를 새 �
 
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "페이지가 독자별 답변을 저장하므로 백엔드 없이 투표를 만들 수 있습니다."
-
-msgid "A plugin is a short manifest and a few skill files. Superset puts it where each agent looks, and you sign in once for all of them."
-msgstr "플러그인은 짧은 매니페스트와 스킬 파일 몇 개로 이루어집니다. Superset이 각 에이전트가 찾는 위치에 배치하므로, 로그인은 한 번이면 됩니다."
 
 msgid "A practical TypeScript problem, like the ones we solve every day. No algorithm puzzles."
 msgstr "우리가 매일 해결하는 것과 비슷한 실전 TypeScript 문제입니다. 알고리즘 퍼즐은 없습니다."
@@ -3723,8 +3723,8 @@ msgstr "이것을 명확히 해 주세요"
 msgid "Claude Code, Codex, and OpenCode are the agents; Superset is where you run many of them at once. Each task gets its own isolated Git worktree, so ten agents can work on ten branches simultaneously while you monitor, review, and merge from one place."
 msgstr "Claude Code, Codex, OpenCode는 에이전트이고, Superset은 그 여럿을 한꺼번에 돌리는 곳입니다. 작업마다 격리된 Git worktree가 생기므로 에이전트 열 개가 브랜치 열 개에서 동시에 작업하는 동안 한곳에서 관찰하고, 리뷰하고, 머지할 수 있습니다."
 
-msgid "Claude Code, Codex, Cursor, OpenCode, and more use the same plugin. There is no setup per agent."
-msgstr "Claude Code, Codex, Cursor, OpenCode 등이 같은 플러그인을 씁니다. 에이전트별 설정이 필요 없습니다."
+msgid "Claude Code, Codex, Cursor, OpenCode and more. No setup per agent."
+msgstr "Claude Code, Codex, Cursor, OpenCode 등. 에이전트별 설정이 필요 없습니다."
 
 msgid "Claude Code, Codex, Cursor, OpenCode, and more."
 msgstr "Claude Code, Codex, Cursor, OpenCode 등이 있습니다."
@@ -8132,9 +8132,6 @@ msgstr "GitHub 사용자 이름…"
 msgid "Give me an example"
 msgstr "예시를 보여주세요"
 
-msgid "Give your agents the apps your team already uses. Install a plugin once, and every agent can use it, on your machines and in the cloud."
-msgstr "팀이 이미 쓰는 앱을 에이전트에 연결하세요. 플러그인을 한 번 설치하면 내 머신과 클라우드에서 모든 에이전트가 쓸 수 있습니다."
-
 msgid "Give your key a descriptive name to remember where it's used."
 msgstr "어디에 사용하는 키인지 알 수 있도록 설명이 담긴 이름을 지정하세요."
 
@@ -8895,20 +8892,20 @@ msgstr "설치 후 재시작"
 msgid "Install & Restart"
 msgstr "설치 후 재시작"
 
-msgid "Install a plugin once. It is ready on each machine you sign into and in every cloud workspace you start."
-msgstr "플러그인은 한 번만 설치하세요. 로그인하는 모든 머신과 시작하는 모든 클라우드 워크스페이스에서 바로 쓸 수 있습니다."
-
 msgid "Install failed"
 msgstr "설치 실패"
 
 msgid "Install GitHub App"
 msgstr "GitHub App 설치"
 
-msgid "Install it once. Then mention it in any prompt."
-msgstr "한 번만 설치하세요. 그다음엔 어떤 프롬프트에서든 멘션하면 됩니다."
-
 msgid "Install on your iPhone"
 msgstr "iPhone에 설치"
+
+msgid "Install once. Every agent gets it, on your machines and in the cloud."
+msgstr "한 번 설치하면 내 머신과 클라우드에서 모든 에이전트가 씁니다."
+
+msgid "Install once. Mention it in any prompt."
+msgstr "한 번 설치하고, 어떤 프롬프트에서든 언급하세요."
 
 msgid "Install plugin"
 msgstr "플러그인 설치"
@@ -9816,6 +9813,9 @@ msgstr "불러오는 중…"
 
 msgid "Local"
 msgstr "로컬"
+
+msgid "Local and cloud"
+msgstr "로컬과 클라우드"
 
 msgid "Local Device"
 msgstr "로컬 기기"
@@ -11609,9 +11609,6 @@ msgstr "창 변경 시"
 msgid "On your machine. Repos, worktrees, terminal output, and agent sessions stay local by default; cloud sync covers account and organization metadata only. Superset doesn't proxy any API calls."
 msgstr "본인의 머신에서 실행됩니다. 리포지토리, worktree, 터미널 출력, 에이전트 세션은 기본적으로 로컬에 머물고, 클라우드 동기화는 계정과 조직 메타데이터만 다룹니다. Superset은 어떤 API 호출도 중계하지 않습니다."
 
-msgid "On your machines and in the cloud"
-msgstr "내 머신과 클라우드에서"
-
 msgid "On-screen Keyboard"
 msgstr "화면 키보드"
 
@@ -11644,6 +11641,9 @@ msgstr "보드의 첫 100명 중 한 명"
 
 msgid "one of the selected repositories"
 msgstr "선택한 리포지토리 중 하나"
+
+msgid "One plugin, every coding agent: Claude Code, Codex, Cursor, OpenCode and more. Install once, use it on your machines and in the cloud."
+msgstr "하나의 플러그인, 모든 코딩 에이전트: Claude Code, Codex, Cursor, OpenCode 등. 한 번 설치하면 내 머신과 클라우드에서 씁니다."
 
 msgid "One plugin. Every coding agent."
 msgstr "하나의 플러그인. 모든 코딩 에이전트."
@@ -12038,9 +12038,6 @@ msgstr "기본 브라우저에서 페이지 열기"
 
 msgid "Open pages and reply to comments from the Superset app on iPhone and iPad."
 msgstr "iPhone 및 iPad용 Superset 앱에서 페이지를 열고 댓글에 답글을 남기세요."
-
-msgid "Open Plugins in the Superset app and pick one. The install is saved to your account."
-msgstr "Superset 앱에서 플러그인을 열고 하나를 고르세요. 설치 내역은 계정에 저장됩니다."
 
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
@@ -12691,6 +12688,9 @@ msgstr "아이콘과 색상을 고르거나 직접 만든 이미지를 업로드
 
 msgid "Pick how {label} signs in inside a sandbox. The credential is handed to the agent process when it launches and is not stored in the sandbox."
 msgstr "샌드박스 안에서 {label}이(가) 로그인하는 방식을 고르세요. 자격 증명은 실행될 때 에이전트 프로세스로 전달되며 샌드박스에는 저장되지 않습니다."
+
+msgid "Pick one in the Superset app. It's saved to your account."
+msgstr "Superset 앱에서 하나를 고르세요. 계정에 저장됩니다."
 
 msgid "Pick the best agent."
 msgstr "최고의 에이전트를 고르세요."
@@ -13516,6 +13516,9 @@ msgstr "리뷰 준비 완료 표시 실패: {0}"
 
 msgid "Ready in"
 msgstr "준비 완료"
+
+msgid "Ready on every machine you sign into and in every cloud workspace."
+msgstr "로그인하는 모든 머신과 모든 클라우드 워크스페이스에서 바로 쓸 수 있습니다."
 
 msgid "Ready to Merge"
 msgstr "머지 준비됨"
@@ -15438,8 +15441,8 @@ msgstr "페이지 공유"
 msgid "Share page (public)"
 msgstr "페이지 공유(공개)"
 
-msgid "Share plugins with your team from a GitHub repo. Each release is a git tag you can pin."
-msgstr "GitHub 저장소로 팀과 플러그인을 공유하세요. 각 릴리스는 고정할 수 있는 git 태그입니다."
+msgid "Share plugins from a GitHub repo. Pin releases with git tags."
+msgstr "GitHub 저장소에서 플러그인을 공유하세요. git 태그로 릴리스를 고정합니다."
 
 msgid "Share this page"
 msgstr "이 페이지 공유"
@@ -15703,6 +15706,9 @@ msgstr "받아쓰기를 사용하려면 다시 로그인하세요"
 msgid "Sign in as Local Admin (dev)"
 msgstr "로컬 관리자로 로그인 (dev)"
 
+msgid "Sign in once. Superset keeps the connection."
+msgstr "한 번만 로그인하세요. 연결은 Superset이 유지합니다."
+
 #. placeholder {0}: activeOrganization?.name ?? t({ message: "this organization", })
 msgid "Sign in to {0}"
 msgstr "{0}에 로그인"
@@ -15712,9 +15718,6 @@ msgstr "Superset을 계속 사용하려면 로그인하세요"
 
 msgid "Sign in to get started"
 msgstr "로그인하고 시작하세요"
-
-msgid "Sign in to the app once. Superset keeps the connection for you."
-msgstr "앱에 한 번만 로그인하세요. 연결은 Superset이 유지합니다."
 
 msgid "Sign in to view this page"
 msgstr "이 페이지를 보려면 로그인하세요"
@@ -16550,6 +16553,9 @@ msgstr "Superset은 Fortune 500 기업 8곳 중 1곳이 사용한 적이 있습�
 msgid "Superset hit an unexpected error. Reload to try again."
 msgstr "Superset에서 예기치 않은 오류가 발생했습니다. 다시 로드해 보세요."
 
+msgid "Superset holds the token and makes the calls. Agents never see it."
+msgstr "토큰은 Superset이 보관하고 호출도 대신합니다. 에이전트는 토큰을 보지 못합니다."
+
 msgid "Superset hooks"
 msgstr "Superset 훅"
 
@@ -16666,9 +16672,6 @@ msgstr "Superset은 개발자의 로컬 머신에서 실행됩니다. 코드나 
 
 msgid "Superset started as a hackathon project in November 2025. It was a simple desktop app for managing worktrees."
 msgstr "Superset은 2025년 11월 해커톤 프로젝트로 시작했습니다. worktree를 관리하는 간단한 데스크톱 앱이었습니다."
-
-msgid "Superset stores each connection encrypted. Tool calls go out from Superset, so the agent never sees a token."
-msgstr "Superset은 각 연결을 암호화해 저장합니다. 도구 호출은 Superset에서 나가므로 에이전트는 토큰을 볼 수 없습니다."
 
 msgid "Superset Teams"
 msgstr "Superset 팀"
@@ -17158,9 +17161,6 @@ msgstr "에이전트가 같은 패널에서 클릭하고 입력하며 변경 사
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "에이전트가 대화를 복사하고 분기는 여기서 열립니다"
 
-msgid "The agent follows the plugin's skills and calls its tools. The issue shows up in Linear."
-msgstr "에이전트는 플러그인의 스킬을 따라 도구를 호출합니다. 이슈가 Linear에 나타납니다."
-
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "에이전트가 티켓부터 차이까지 작업을 맡습니다. 사람은 키 입력이 아니라 결과를 리뷰합니다. 관심은 코드를 쓰는 데서 일을 명세하고 판단하는 데로 옮겨 갑니다. 엔지니어 한 명이 격리된 워크스페이스에서 여러 에이전트를 동시에 돌립니다."
 
@@ -17169,6 +17169,9 @@ msgstr "대화를 재개하는 중에 에이전트가 중지되었습니다."
 
 msgid "The agent this automation was set to run no longer exists on its host — the host's agents may have been reset or removed. Re-select an agent in the automation's settings."
 msgstr "이 자동화가 실행하도록 설정된 에이전트가 해당 호스트에 더 이상 존재하지 않습니다. 호스트의 에이전트가 초기화되었거나 제거되었을 수 있습니다. 자동화 설정에서 에이전트를 다시 선택하세요."
+
+msgid "The agent uses its skills and tools. The issue lands in Linear."
+msgstr "에이전트가 스킬과 도구를 사용하고, 이슈가 Linear에 생성됩니다."
 
 msgid "The agent watching the page reads each comment. It updates the page and replies in the thread."
 msgstr "페이지를 지켜보는 에이전트가 각 댓글을 읽고 페이지를 업데이트한 뒤 스레드에 답합니다."
@@ -18220,8 +18223,8 @@ msgstr "양손"
 msgid "Type"
 msgstr "타입"
 
-msgid "Type @linear in a prompt to point the agent at the plugin."
-msgstr "프롬프트에 @linear를 입력하면 에이전트가 해당 플러그인을 사용합니다."
+msgid "Type @linear in any prompt."
+msgstr "어떤 프롬프트에서든 @linear를 입력하세요."
 
 msgid "Type <0>{hostName}</0> to confirm"
 msgstr "확인하려면 <0>{hostName}</0>을(를) 입력하세요"
@@ -19443,12 +19446,6 @@ msgstr "댓글을 작성하세요…"
 msgid "Write a note and pick an agent. Your note arrives with the element's code and a cropped screenshot."
 msgstr "메모를 쓰고 에이전트를 고르세요. 메모는 요소의 코드와 잘라낸 스크린샷과 함께 전달됩니다."
 
-msgid "Write a plugin once and every coding agent can use it: Claude Code, Codex, Cursor, OpenCode, and more. Install it once, and it works on your machines and in the cloud."
-msgstr "플러그인을 한 번만 작성하면 Claude Code, Codex, Cursor, OpenCode 등 모든 코딩 에이전트가 쓸 수 있습니다. 한 번 설치하면 내 머신과 클라우드에서 동작합니다."
-
-msgid "Write a plugin once. Every agent can use it."
-msgstr "플러그인은 한 번만 작성하세요. 모든 에이전트가 쓸 수 있습니다."
-
 msgid "Write a prompt and pick a schedule or an event, like a pull request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
 msgstr "프롬프트를 작성하고 일정이나 이벤트를 고르세요. 이벤트로는 풀 리퀘스트, Slack 메시지, Linear 이슈, Sentry 이슈, 웹훅 등이 있습니다. 실행할 때마다 검토하고 이어서 작업할 수 있는 워크스페이스가 열립니다."
 
@@ -19460,6 +19457,9 @@ msgstr "답글 작성…"
 
 msgid "Write docs for the part everyone asks about…"
 msgstr "모두가 궁금해하는 부분에 문서 작성…"
+
+msgid "Write once. Runs in every agent."
+msgstr "한 번 작성하면 모든 에이전트에서 실행됩니다."
 
 msgid "Write setup and teardown scripts so every new workspace starts ready to run."
 msgstr "설정 및 정리 스크립트를 작성해 새 워크스페이스가 항상 바로 실행 가능한 상태로 시작되게 합니다."
