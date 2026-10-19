@@ -62,7 +62,7 @@ describe("Grok Bot events", () => {
 		tokenUsage: { inputTokens: 430, outputTokens: 537 },
 	};
 
-	test("a conversation in the Grok Bot roster is grok-bot usage", () => {
+	test("a Grok Bot conversation is grok-bot usage", () => {
 		const entries = cursorEventsToEntries(
 			[
 				{ ...event, conversationId: "bot-1" },
@@ -70,21 +70,6 @@ describe("Grok Bot events", () => {
 			],
 			0,
 			new Set(["bot-1"]),
-		);
-		expect(entries.map((entry) => entry.agent)).toEqual(["grok-bot", "cursor"]);
-	});
-
-	test("a sand credit grant is grok-bot usage without a roster", () => {
-		const entries = cursorEventsToEntries(
-			[
-				{
-					...event,
-					conversationId: "bot-2",
-					subscriptionProductId: "credit-grant-sand-free-trial",
-				},
-				{ ...event, conversationId: "chat-2", subscriptionProductId: "free" },
-			],
-			0,
 		);
 		expect(entries.map((entry) => entry.agent)).toEqual(["grok-bot", "cursor"]);
 	});

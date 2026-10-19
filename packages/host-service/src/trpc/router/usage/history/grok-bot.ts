@@ -1,10 +1,8 @@
 /**
- * Grok Bot (xAI's cloud teammates, built by Cursor) keeps no usage on disk:
- * every Bot works on a cloud computer, and its turns are billed to the
- * Cursor account, so they arrive in Cursor's usage-event feed. The desktop
- * app caches the Bot roster in `sand-client-persistence/<base32 key>.blob`;
- * the roster gives the agent ids those events carry as `conversationId`,
- * and the names to label them with.
+ * Grok Bot keeps no usage on disk; its turns arrive in Cursor's usage-event
+ * feed (see cursor.ts). The desktop app caches the Bot roster in
+ * `sand-client-persistence/<base32 key>.blob`, which names the agent ids
+ * those events carry as `conversationId`.
  */
 
 import { readdir, readFile } from "node:fs/promises";
@@ -14,20 +12,23 @@ import { join } from "node:path";
 const ROSTER_KEY = /^sand\.client\.slice\.account\..+\.roster\.last-roster$/;
 const BASE32_ALPHABET = "abcdefghijklmnopqrstuvwxyz234567";
 
-export function grokBotDataDir(): string {
+/** Windows installs from before the rename keep `%APPDATA%\Sand` until the
+ * app migrates it on an update. */
+export function grokBotDataDirs(): string[] {
 	if (process.platform === "darwin") {
-		return join(homedir(), "Library", "Application Support", "Grok Bot");
+		return [join(homedir(), "Library", "Application Support", "Grok Bot")];
 	}
 	if (process.platform === "win32") {
-		return join(
-			process.env.APPDATA ?? join(homedir(), "AppData", "Roaming"),
-			"Grok Bot",
-		);
+		const appData =
+			process.env.APPDATA ?? join(homedir(), "AppData", "Roaming");
+		return [join(appData, "Grok Bot"), join(appData, "Sand")];
 	}
-	return join(
-		process.env.XDG_CONFIG_HOME?.trim() || join(homedir(), ".config"),
-		"Grok Bot",
-	);
+	return [
+		join(
+			process.env.XDG_CONFIG_HOME?.trim() || join(homedir(), ".config"),
+			"Grok Bot",
+		),
+	];
 }
 
 export function decodeBase32(encoded: string): string | null {
@@ -55,15 +56,24 @@ interface RosterRow {
 
 /** Bot agent id → Bot name, across every account signed in to the app. */
 export async function readGrokBotAgents(
-	dataDir: string = grokBotDataDir(),
+	dataDirs: readonly string[] = grokBotDataDirs(),
 ): Promise<Map<string, string>> {
 	const agents = new Map<string, string>();
-	const persistenceDir = join(dataDir, "sand-client-persistence");
+	for (const dataDir of dataDirs) {
+		await readRoster(join(dataDir, "sand-client-persistence"), agents);
+	}
+	return agents;
+}
+
+async function readRoster(
+	persistenceDir: string,
+	agents: Map<string, string>,
+): Promise<void> {
 	let files: string[];
 	try {
 		files = await readdir(persistenceDir);
 	} catch {
-		return agents;
+		return;
 	}
 	for (const file of files) {
 		if (!file.endsWith(".blob")) continue;
@@ -90,5 +100,4 @@ export async function readGrokBotAgents(
 			}
 		}
 	}
-	return agents;
 }

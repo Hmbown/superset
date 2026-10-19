@@ -13,26 +13,12 @@ export interface CursorUsageEvent {
 		totalCents?: number;
 	};
 	chargedCents?: number;
-	subscriptionProductId?: string;
-}
-
-/** Grok Bot runs on Cursor accounts, so its turns arrive in the same feed.
- * The conversation is the Bot's agent id; trial credit grants are `sand-`
- * products even when the desktop app's roster is absent. */
-export function isGrokBotEvent(
-	event: CursorUsageEvent,
-	grokBotAgentIds: ReadonlySet<string>,
-): boolean {
-	if (event.conversationId && grokBotAgentIds.has(event.conversationId)) {
-		return true;
-	}
-	return /(^|-)sand(-|$)/.test(event.subscriptionProductId ?? "");
 }
 
 export function cursorEventsToEntries(
 	events: CursorUsageEvent[],
 	cutoffMs: number,
-	grokBotAgentIds: ReadonlySet<string> = new Set(),
+	grokBotConversationIds: ReadonlySet<string> = new Set(),
 ): UsageLogEntry[] {
 	const entries: UsageLogEntry[] = [];
 	for (const event of events) {
@@ -46,7 +32,10 @@ export function cursorEventsToEntries(
 				? cents / 100
 				: undefined;
 		entries.push({
-			agent: isGrokBotEvent(event, grokBotAgentIds) ? "grok-bot" : "cursor",
+			agent:
+				event.conversationId && grokBotConversationIds.has(event.conversationId)
+					? "grok-bot"
+					: "cursor",
 			model: event.model || "unknown",
 			timestampMs,
 			cwd: null,

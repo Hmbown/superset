@@ -59,7 +59,7 @@ describe("readGrokBotAgents", () => {
 			rows: [{ id: "not-a-bot", name: "ignored" }],
 		});
 
-		const agents = await readGrokBotAgents(dataDir);
+		const agents = await readGrokBotAgents([dataDir]);
 		expect([...agents.entries()]).toEqual([
 			["bot-1", "Engineer"],
 			["group-1", "Standup"],
@@ -71,5 +71,26 @@ describe("readGrokBotAgents", () => {
 		expect((await readGrokBotAgents(join(tmpdir(), "no-grok-bot"))).size).toBe(
 			0,
 		);
+	});
+
+	test("merges the Windows legacy Sand folder with the current one", async () => {
+		const root = mkdtempSync(join(tmpdir(), "grok-bot-"));
+		dirs.push(root);
+		const roster = "sand.client.slice.account.a.roster.last-roster";
+		writeSlice(join(root, "Grok Bot"), roster, {
+			rows: [{ id: "bot-1", name: "New" }],
+		});
+		writeSlice(join(root, "Sand"), roster, {
+			rows: [{ id: "bot-2", name: "Old" }],
+		});
+
+		const agents = await readGrokBotAgents([
+			join(root, "Grok Bot"),
+			join(root, "Sand"),
+		]);
+		expect(Object.fromEntries(agents)).toEqual({
+			"bot-1": "New",
+			"bot-2": "Old",
+		});
 	});
 });
