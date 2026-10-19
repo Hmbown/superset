@@ -246,9 +246,11 @@ function findUnreadableRepoAbove(path: string): string | undefined {
 export async function tryRevParseGitRoot(path: string): Promise<string | null> {
 	let error: unknown;
 	try {
-		return (
-			await createUserSimpleGit(path).revparse(["--show-toplevel"])
-		).trim();
+		const stdout = await createUserSimpleGit(path).raw([
+			"rev-parse",
+			"--show-toplevel",
+		]);
+		return stdout.replace(/\n$/, "");
 	} catch (err) {
 		error = err;
 	}

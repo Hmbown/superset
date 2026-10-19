@@ -49,9 +49,11 @@ export async function resolveGithubRepo(
 
 	let gitRoot: string;
 	try {
-		gitRoot = (
-			await createUserSimpleGit(local.repoPath).revparse(["--show-toplevel"])
-		).trim();
+		const stdout = await createUserSimpleGit(local.repoPath).raw([
+			"rev-parse",
+			"--show-toplevel",
+		]);
+		gitRoot = stdout.replace(/\n$/, "");
 	} catch (err) {
 		throw new TRPCError({
 			code: "BAD_REQUEST",
