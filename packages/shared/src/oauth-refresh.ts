@@ -2,7 +2,6 @@ import { createHash, randomUUID } from "node:crypto";
 import fs from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { clearInterval, setInterval } from "node:timers";
 
 /**
  * The token endpoint rotates the refresh token on every call. Sending a
@@ -300,7 +299,7 @@ async function acquireLock<C extends OAuthConfig>(
 					fs.utimesSync(lockPath, now, now);
 				} catch {}
 			}, deps.lockHeartbeatMs);
-			heartbeat.unref();
+			unrefTimer(heartbeat);
 			return {
 				state: "held",
 				stillHeld: ownsLock,
@@ -344,5 +343,17 @@ async function acquireLock<C extends OAuthConfig>(
 			}
 		} catch {}
 		await deps.sleep(deps.pollMs);
+	}
+}
+
+/** Mobile type-checks this file with DOM timers, where an interval id is a number. */
+function unrefTimer(timer: unknown): void {
+	if (
+		typeof timer === "object" &&
+		timer !== null &&
+		"unref" in timer &&
+		typeof timer.unref === "function"
+	) {
+		timer.unref();
 	}
 }
