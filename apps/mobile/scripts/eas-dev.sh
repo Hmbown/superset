@@ -114,17 +114,15 @@ process_cwd() {
 	fi
 }
 
-is_egress_client() {
-	ps -o command= -p "$1" 2>/dev/null | grep -q "simulator:egress"
+is_own_egress_client() {
+	[ "$(process_cwd "$1")" = "$PWD" ] && ps -o command= -p "$1" 2>/dev/null | grep -q "simulator:egress"
 }
 
 egress_pids() {
 	local pid
 	for pid in $(pgrep -f "eas simulator:egress" || true); do
-		if [ "$(process_cwd "$pid")" = "$PWD" ]; then echo "$pid"; fi
+		if is_own_egress_client "$pid"; then echo "$pid"; fi
 	done
-	pid="$(cat "$EGRESS_PID_FILE" 2>/dev/null || true)"
-	if [ -n "$pid" ] && is_egress_client "$pid"; then echo "$pid"; fi
 }
 
 egress_connected() {
@@ -134,14 +132,14 @@ egress_connected() {
 egress_healthy() {
 	local pid
 	pid="$(cat "$EGRESS_PID_FILE" 2>/dev/null || true)"
-	[ -n "$pid" ] && is_egress_client "$pid" &&
+	[ -n "$pid" ] && is_own_egress_client "$pid" &&
 		grep -qF "simulator session $1." "$EGRESS_LOG" 2>/dev/null &&
 		egress_connected
 }
 
 stop_egress() {
 	local pid
-	for pid in $(egress_pids | sort -u); do
+	for pid in $(egress_pids); do
 		pkill -P "$pid" 2>/dev/null || true
 		kill "$pid" 2>/dev/null || true
 	done
