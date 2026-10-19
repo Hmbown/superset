@@ -2,6 +2,7 @@ import { createHash, randomUUID } from "node:crypto";
 import fs from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
+import { clearInterval, setInterval } from "node:timers";
 
 /**
  * The token endpoint rotates the refresh token on every call. Sending a
@@ -299,7 +300,7 @@ async function acquireLock<C extends OAuthConfig>(
 					fs.utimesSync(lockPath, now, now);
 				} catch {}
 			}, deps.lockHeartbeatMs);
-			heartbeat.unref?.();
+			heartbeat.unref();
 			return {
 				state: "held",
 				stillHeld: ownsLock,
