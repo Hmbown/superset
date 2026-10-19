@@ -2,7 +2,7 @@
 
 import { useLingui } from "@lingui/react/macro";
 import { useReducedMotion } from "framer-motion";
-import { Pause, Play } from "lucide-react";
+import { Pause, Play, Volume2, VolumeX } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 
@@ -13,6 +13,7 @@ export function LaunchFilm() {
 	const reducedMotion = useReducedMotion();
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const [paused, setPaused] = useState(false);
+	const [muted, setMuted] = useState(true);
 
 	const toggle = () => {
 		const video = videoRef.current;
@@ -22,6 +23,14 @@ export function LaunchFilm() {
 		} else {
 			video.pause();
 		}
+	};
+
+	const toggleSound = () => {
+		const video = videoRef.current;
+		if (!video) return;
+		video.muted = !video.muted;
+		setMuted(video.muted);
+		if (!video.muted && video.paused) void video.play().catch(() => {});
 	};
 
 	return (
@@ -51,22 +60,39 @@ export function LaunchFilm() {
 						aria-hidden="true"
 						className="block size-full"
 					/>
-					<button
-						type="button"
-						onClick={toggle}
-						aria-label={
-							paused
-								? t({ message: "Play the animation" })
-								: t({ message: "Pause the animation" })
-						}
-						className="absolute right-3 bottom-3 flex size-8 items-center justify-center rounded-full border border-border bg-background/80 text-foreground backdrop-blur-sm transition-colors hover:bg-background"
-					>
-						{paused ? (
-							<Play className="size-3.5" />
-						) : (
-							<Pause className="size-3.5" />
-						)}
-					</button>
+					<div className="absolute right-3 bottom-3 flex gap-2">
+						<button
+							type="button"
+							onClick={toggleSound}
+							aria-label={
+								muted ? t({ message: "Unmute" }) : t({ message: "Mute" })
+							}
+							aria-pressed={!muted}
+							className="flex size-8 items-center justify-center rounded-full border border-border bg-background/80 text-foreground backdrop-blur-sm transition-colors hover:bg-background"
+						>
+							{muted ? (
+								<VolumeX className="size-3.5" />
+							) : (
+								<Volume2 className="size-3.5" />
+							)}
+						</button>
+						<button
+							type="button"
+							onClick={toggle}
+							aria-label={
+								paused
+									? t({ message: "Play the animation" })
+									: t({ message: "Pause the animation" })
+							}
+							className="flex size-8 items-center justify-center rounded-full border border-border bg-background/80 text-foreground backdrop-blur-sm transition-colors hover:bg-background"
+						>
+							{paused ? (
+								<Play className="size-3.5" />
+							) : (
+								<Pause className="size-3.5" />
+							)}
+						</button>
+					</div>
 				</>
 			)}
 		</div>
