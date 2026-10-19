@@ -13,7 +13,7 @@ export function PluginCatalog() {
 				className="pointer-events-none absolute -inset-px z-10 rounded-lg p-px"
 				style={{
 					background:
-						"radial-gradient(520px circle at 0% 0%, rgba(255,255,255,0.6), rgba(255,255,255,0.14) 45%, transparent 75%)",
+						"radial-gradient(520px circle at 0% 0%, rgba(255,255,255,0.28), rgba(255,255,255,0.07) 45%, transparent 75%)",
 					WebkitMask:
 						"linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
 					WebkitMaskComposite: "xor",
