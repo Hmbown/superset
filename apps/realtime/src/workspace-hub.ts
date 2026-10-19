@@ -1,0 +1,190 @@
+import {
+	MAX_PRESENCE_VISITORS,
+	type PagePresenceViewer,
+	type PresenceVisitor,
+} from "@superset/shared/page-presence";
+import { type Connection, type ConnectionContext, Server } from "partyserver";
+import type { RealtimeEnv } from "./types";
+
+interface Viewer {
+	userId: string;
+	name: string;
+	image: string | null;
+	observer: boolean;
+	connectedAt: number;
+}
+
+export const WORKSPACE_CLAIMS_HEADER = "x-superset-workspace-claims";
+
+const SWEEP_MS = 30_000;
+const SILENT_MS = 75_000;
+
+/**
+ * One object per cloud workspace: who is in it now and who has been. An
+ * observer (the workspace's record view) sees both without counting as a
+ * visit.
+ */
+export class WorkspaceHub extends Server<RealtimeEnv> {
+	static options = { hibernate: true };
+
+	private ready = false;
+
+	constructor(ctx: DurableObjectState, env: RealtimeEnv) {
+		super(ctx, env);
+		ctx.setWebSocketAutoResponse(
+			new WebSocketRequestResponsePair("ping", "pong"),
+		);
+	}
+
+	private schema(): void {
+		if (this.ready) return;
+		this.ctx.storage.sql.exec(
+			`CREATE TABLE IF NOT EXISTS visits (
+				user_id TEXT PRIMARY KEY,
+				name TEXT NOT NULL,
+				image TEXT,
+				first_seen_at INTEGER NOT NULL,
+				last_seen_at INTEGER NOT NULL
+			)`,
+		);
+		this.ready = true;
+	}
+
+	async onConnect(
+		connection: Connection<Viewer>,
+		ctx: ConnectionContext,
+	): Promise<void> {
+		this.schema();
+		let claims: {
+			userId?: unknown;
+			name?: unknown;
+			image?: unknown;
+			observer?: unknown;
+		};
+		try {
+			claims = JSON.parse(
+				ctx.request.headers.get(WORKSPACE_CLAIMS_HEADER) ?? "",
+			);
+		} catch {
+			connection.close(4401, "unauthorized");
+			return;
+		}
+		if (typeof claims.userId !== "string" || typeof claims.name !== "string") {
+			connection.close(4401, "unauthorized");
+			return;
+		}
+		const now = Date.now();
+		const viewer: Viewer = {
+			userId: claims.userId,
+			name: claims.name,
+			image: typeof claims.image === "string" ? claims.image : null,
+			observer: claims.observer === true,
+			connectedAt: now,
+		};
+		connection.setState(viewer);
+		if (!viewer.observer) {
+			this.ctx.storage.sql.exec(
+				`INSERT INTO visits (user_id, name, image, first_seen_at, last_seen_at)
+				 VALUES (?, ?, ?, ?, ?)
+				 ON CONFLICT (user_id) DO UPDATE SET
+					name = excluded.name,
+					image = excluded.image,
+					last_seen_at = excluded.last_seen_at`,
+				viewer.userId,
+				viewer.name,
+				viewer.image,
+				now,
+				now,
+			);
+		}
+		this.announce();
+		if ((await this.ctx.storage.getAlarm()) === null) {
+			await this.ctx.storage.setAlarm(now + SWEEP_MS);
+		}
+	}
+
+	async onClose(connection: Connection<Viewer>): Promise<void> {
+		const viewer = connection.state;
+		if (!viewer) return;
+		this.schema();
+		if (!viewer.observer) {
+			this.ctx.storage.sql.exec(
+				"UPDATE visits SET last_seen_at = ? WHERE user_id = ?",
+				Date.now(),
+				viewer.userId,
+			);
+		}
+		this.announce(connection.id);
+	}
+
+	async onAlarm(): Promise<void> {
+		const now = Date.now();
+		let remaining = 0;
+		let evicted = false;
+		for (const connection of this.getConnections<Viewer>()) {
+			const heardAt =
+				this.ctx.getWebSocketAutoResponseTimestamp(connection)?.getTime() ??
+				connection.state?.connectedAt;
+			if (heardAt && now - heardAt > SILENT_MS) {
+				try {
+					connection.close(4408, "silent");
+				} catch {}
+				evicted = true;
+				continue;
+			}
+			remaining++;
+		}
+		if (evicted) {
+			this.schema();
+			this.announce();
+		}
+		if (remaining > 0) await this.ctx.storage.setAlarm(now + SWEEP_MS);
+	}
+
+	private announce(leaving?: string): void {
+		const connections = [...this.getConnections<Viewer>()].filter(
+			(connection) => connection.state && connection.id !== leaving,
+		);
+		const present = connections.filter(
+			(connection) => connection.state?.observer === false,
+		);
+		const here = new Set(present.map((connection) => connection.state?.userId));
+		const visitors: PresenceVisitor[] = this.ctx.storage.sql
+			.exec<{
+				user_id: string;
+				name: string;
+				image: string | null;
+				last_seen_at: number;
+			}>(
+				"SELECT user_id, name, image, last_seen_at FROM visits ORDER BY last_seen_at DESC LIMIT ?",
+				MAX_PRESENCE_VISITORS,
+			)
+			.toArray()
+			.map((row) => ({
+				userId: row.user_id,
+				name: row.name,
+				image: row.image,
+				lastSeenAt: row.last_seen_at,
+				active: here.has(row.user_id),
+			}));
+		for (const connection of connections) {
+			const userId = connection.state?.userId;
+			const viewers: PagePresenceViewer[] = present
+				.filter((other) => other.state?.userId !== userId)
+				.map((other) => ({
+					id: other.id,
+					key: other.state?.userId ?? other.id,
+					name: other.state?.name ?? "",
+					image: other.state?.image ?? null,
+					guest: false,
+					guestNumber: null,
+					color: 0,
+				}));
+			try {
+				connection.send(
+					JSON.stringify({ type: "presence", viewers, visitors }),
+				);
+			} catch {}
+		}
+	}
+}

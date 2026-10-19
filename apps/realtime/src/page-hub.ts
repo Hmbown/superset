@@ -1,5 +1,6 @@
 import {
 	MAX_PAGE_GUESTS,
+	MAX_PRESENCE_VISITORS,
 	type PagePresenceViewer,
 	PRESENCE_COLOR_COUNT,
 } from "@superset/shared/page-presence";
@@ -301,6 +302,12 @@ export class PageHub extends Server<RealtimeEnv> {
 		} finally {
 			if (claims.guest) this.connectingGuests--;
 		}
+		if (!claims.guest) {
+			this.records.recordVisit(
+				{ userId: claims.userId, name: claims.name, image: claims.image },
+				Date.now(),
+			);
+		}
 		this.announce();
 		if ((await this.ctx.storage.getAlarm()) === null) {
 			await this.ctx.storage.setAlarm(Date.now() + SWEEP_MS);
@@ -324,19 +331,19 @@ export class PageHub extends Server<RealtimeEnv> {
 			}
 			remaining++;
 		}
-		if (evicted) this.announce();
+		if (evicted) {
+			this.schema();
+			this.announce();
+		}
 		if (remaining > 0) await this.ctx.storage.setAlarm(now + SWEEP_MS);
 	}
 
 	async onClose(connection: Connection<Pinned>): Promise<void> {
 		const pinned = connection.state;
 		if (!pinned) return;
-		if (pinned.presence) {
-			this.announce(connection.id);
-			return;
-		}
 		this.schema();
-		this.records.touchVisit(pinned.userId, Date.now());
+		if (!pinned.guest) this.records.touchVisit(pinned.userId, Date.now());
+		if (pinned.presence) this.announce(connection.id);
 	}
 
 	async onMessage(
@@ -639,13 +646,25 @@ export class PageHub extends Server<RealtimeEnv> {
 				},
 			});
 		}
+		const here = new Set(
+			present.map(({ connection }) => connection.state?.userId),
+		);
+		const visitors = this.records
+			.recentVisits(MAX_PRESENCE_VISITORS)
+			.map((visit) => ({ ...visit, active: here.has(visit.userId) }));
 		for (const { connection } of present) {
 			const userId = connection.state?.userId;
 			const viewers = present
 				.filter((other) => other.connection.state?.userId !== userId)
 				.map((other) => other.viewer);
 			try {
-				connection.send(JSON.stringify({ type: "presence", viewers }));
+				connection.send(
+					JSON.stringify(
+						connection.state?.guest
+							? { type: "presence", viewers }
+							: { type: "presence", viewers, visitors },
+					),
+				);
 			} catch {}
 		}
 	}

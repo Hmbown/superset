@@ -1,3 +1,4 @@
+import type { PresenceVisitor } from "./page-presence";
 import {
 	type PageStorageKeySummary,
 	type PageStorageListEntry,
@@ -134,6 +135,26 @@ export class PageStorageRecords {
 			now,
 			userId,
 		);
+	}
+
+	recentVisits(limit: number): Omit<PresenceVisitor, "active">[] {
+		return this.sql
+			.exec<{
+				user_id: string;
+				name: string;
+				image: string | null;
+				last_seen_at: number;
+			}>(
+				"SELECT user_id, name, image, last_seen_at FROM visits ORDER BY last_seen_at DESC LIMIT ?",
+				limit,
+			)
+			.toArray()
+			.map((row) => ({
+				userId: row.user_id,
+				name: row.name,
+				image: row.image,
+				lastSeenAt: row.last_seen_at,
+			}));
 	}
 
 	get(scope: PageStorageScope, key: string, userId: string): unknown {
