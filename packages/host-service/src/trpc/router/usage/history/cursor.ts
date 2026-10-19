@@ -22,6 +22,7 @@ import { join } from "node:path";
 import { promisify } from "node:util";
 import Database from "better-sqlite3";
 import { type CursorUsageEvent, cursorEventsToEntries } from "./cursor-events";
+import { readGrokBotAgents } from "./grok-bot";
 import type { UsageLogEntry } from "./parse";
 
 export { type CursorUsageEvent, cursorEventsToEntries } from "./cursor-events";
@@ -224,7 +225,12 @@ export async function collectCursorEntries(
 		cachedEvents = { cutoffMs, fetchedAt: Date.now(), events };
 	}
 
-	const entries = cursorEventsToEntries(events, cutoffMs);
+	const grokBotAgents = await readGrokBotAgents();
+	const entries = cursorEventsToEntries(
+		events,
+		cutoffMs,
+		new Set(grokBotAgents.keys()),
+	);
 	if (entries.length === 0) return;
 
 	const { hashByConversation, dbByConversation } =
@@ -237,6 +243,14 @@ export async function collectCursorEntries(
 	let labelOpens = 0;
 	const labeled = new Set<string>();
 	for (const entry of entries) {
+		if (entry.agent === "grok-bot") {
+			const name = grokBotAgents.get(entry.sessionId);
+			if (sessionLabels && name && !sessionLabels.has(entry.sessionId)) {
+				sessionLabels.set(entry.sessionId, name);
+			}
+			out.push(entry);
+			continue;
+		}
 		const hash = hashByConversation.get(entry.sessionId);
 		if (hash) {
 			entry.cwd = cwdByHash.get(hash) ?? null;

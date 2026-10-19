@@ -54,3 +54,38 @@ describe("cursorEventsToEntries", () => {
 		expect(entries).toHaveLength(0);
 	});
 });
+
+describe("Grok Bot events", () => {
+	const event = {
+		timestamp: "1787948440926",
+		model: "cursor-grok-4.6-high-fast",
+		tokenUsage: { inputTokens: 430, outputTokens: 537 },
+	};
+
+	test("a conversation in the Grok Bot roster is grok-bot usage", () => {
+		const entries = cursorEventsToEntries(
+			[
+				{ ...event, conversationId: "bot-1" },
+				{ ...event, conversationId: "chat-1" },
+			],
+			0,
+			new Set(["bot-1"]),
+		);
+		expect(entries.map((entry) => entry.agent)).toEqual(["grok-bot", "cursor"]);
+	});
+
+	test("a sand credit grant is grok-bot usage without a roster", () => {
+		const entries = cursorEventsToEntries(
+			[
+				{
+					...event,
+					conversationId: "bot-2",
+					subscriptionProductId: "credit-grant-sand-free-trial",
+				},
+				{ ...event, conversationId: "chat-2", subscriptionProductId: "free" },
+			],
+			0,
+		);
+		expect(entries.map((entry) => entry.agent)).toEqual(["grok-bot", "cursor"]);
+	});
+});
