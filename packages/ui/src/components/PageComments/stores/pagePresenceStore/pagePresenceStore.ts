@@ -1,6 +1,9 @@
 "use client";
 
-import type { PagePresenceViewer } from "@superset/shared/page-presence";
+import type {
+	PagePresenceViewer,
+	PresenceVisitor,
+} from "@superset/shared/page-presence";
 import {
 	openPagePresence,
 	type PagePresenceClient,
@@ -10,10 +13,12 @@ import { useCallback, useSyncExternalStore } from "react";
 interface Room {
 	client: PagePresenceClient;
 	viewers: PagePresenceViewer[];
+	visitors: PresenceVisitor[];
 	holders: number;
 }
 
 const NONE: PagePresenceViewer[] = [];
+const NO_VISITORS: PresenceVisitor[] = [];
 const rooms = new Map<string, Room>();
 const listeners = new Set<() => void>();
 
@@ -27,11 +32,19 @@ export function joinPagePresence(
 ): () => void {
 	let room = rooms.get(pageId);
 	if (!room) {
-		const created = { viewers: NONE, holders: 0 } as Room;
+		const created = {
+			viewers: NONE,
+			visitors: NO_VISITORS,
+			holders: 0,
+		} as Room;
 		created.client = openPagePresence({
 			url,
 			onViewers: (viewers) => {
 				created.viewers = viewers;
+				notify();
+			},
+			onVisitors: (visitors) => {
+				created.visitors = visitors;
 				notify();
 			},
 		});
@@ -66,4 +79,14 @@ export function usePageViewers(
 		[pageId],
 	);
 	return useSyncExternalStore(subscribe, read, () => NONE);
+}
+
+export function usePresenceVisitors(
+	roomId: string | undefined,
+): PresenceVisitor[] {
+	const read = useCallback(
+		() => (roomId ? (rooms.get(roomId)?.visitors ?? NO_VISITORS) : NO_VISITORS),
+		[roomId],
+	);
+	return useSyncExternalStore(subscribe, read, () => NO_VISITORS);
 }

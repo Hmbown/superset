@@ -49,3 +49,4 @@ export {
 	type PageCommentUser,
 	useComments,
 } from "./providers/CommentProvider";
+export { usePresenceVisitors } from "./stores/pagePresenceStore";

@@ -1,36 +1,34 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useFormat } from "@superset/i18n/react";
+import type { PresenceVisitor } from "@superset/shared/page-presence";
 import { AvatarStack } from "@superset/ui/atoms/AvatarStack";
 import {
 	HoverCard,
 	HoverCardContent,
 	HoverCardTrigger,
 } from "@superset/ui/hover-card";
-import type { CloudWorkspaceRow } from "renderer/hooks/useCloudWorkspaces";
-import { CloudWorkspacePresenceOverflow } from "./components/CloudWorkspacePresenceOverflow";
+import { PresenceOverflow } from "./components/PresenceOverflow";
 import { isViewerAlone } from "./utils/isViewerAlone";
 
-interface CloudWorkspacePresenceStackProps {
-	people: CloudWorkspaceRow["presence"];
+interface PresenceStackProps {
+	people: PresenceVisitor[];
 	viewerId: string | undefined;
 	now: Date;
-	activeWithinMs: number;
-	onOpenPerson: (userId: string) => void;
+	overflowLabel: string;
+	onOpenPerson?: (userId: string) => void;
 }
 
-export function CloudWorkspacePresenceStack({
+export function PresenceStack({
 	people,
 	viewerId,
 	now,
-	activeWithinMs,
+	overflowLabel,
 	onOpenPerson,
-}: CloudWorkspacePresenceStackProps) {
+}: PresenceStackProps) {
 	const { t } = useLingui();
 	const { formatCompactRelativeTime } = useFormat();
 	if (isViewerAlone(people, viewerId)) return null;
 	const byId = new Map(people.map((person) => [person.userId, person]));
-	const isActive = (lastSeenAt: Date) =>
-		now.getTime() - lastSeenAt.getTime() < activeWithinMs;
 
 	return (
 		<AvatarStack
@@ -38,30 +36,33 @@ export function CloudWorkspacePresenceStack({
 				id: person.userId,
 				name: person.name,
 				image: person.image,
-				isActive: isActive(person.lastSeenAt),
+				isActive: person.active,
 			}))}
 			size={20}
 			className="px-1"
 			renderOverflow={(hidden, count) => (
-				<CloudWorkspacePresenceOverflow
+				<PresenceOverflow
 					people={hidden.flatMap((stacked) => byId.get(stacked.id) ?? [])}
 					label={String(count)}
+					ariaLabel={overflowLabel}
 					now={now}
-					isActive={isActive}
 					onOpenPerson={onOpenPerson}
 				/>
 			)}
 			renderPerson={(stacked, avatar) => {
 				const person = byId.get(stacked.id);
 				if (!person) return avatar;
-				const active = isActive(person.lastSeenAt);
-				const lastSeen = formatCompactRelativeTime(person.lastSeenAt, now);
+				const active = person.active;
+				const lastSeen = formatCompactRelativeTime(
+					new Date(person.lastSeenAt),
+					now,
+				);
 				return (
 					<HoverCard openDelay={200} closeDelay={100}>
 						<HoverCardTrigger asChild>
 							<button
 								type="button"
-								onClick={() => onOpenPerson(person.userId)}
+								onClick={() => onOpenPerson?.(person.userId)}
 								aria-label={person.name}
 								className="block size-full cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 							>
