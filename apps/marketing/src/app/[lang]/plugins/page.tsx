@@ -9,6 +9,7 @@ import { initServerI18n } from "@/app/i18n-server";
 import { AgentStrip } from "./components/AgentStrip";
 import { BuildOnce } from "./components/BuildOnce";
 import { HowItWorks } from "./components/HowItWorks";
+import { LaunchFilm } from "./components/LaunchFilm";
 import { PluginCatalog } from "./components/PluginCatalog";
 import { FEATURES } from "./constants";
 
@@ -54,6 +55,8 @@ export default async function PluginsPage() {
 					</div>
 					<PluginCatalog />
 				</section>
+
+				<LaunchFilm />
 
 				<section className="mt-24 sm:mt-32">
 					<p className="font-mono text-brand text-xs uppercase tracking-wider">
