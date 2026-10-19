@@ -1,3 +1,5 @@
+import { billingUsesAutumn } from "@superset/auth/autumn";
+import { organizationPlanFromAutumn } from "@superset/auth/billing";
 import { db } from "@superset/db/client";
 import {
 	automations,
@@ -57,6 +59,15 @@ async function organizationPlans(
 ): Promise<Map<string, PlanTier>> {
 	const plans = new Map<string, PlanTier>();
 	if (organizationIds.length === 0) return plans;
+	if (billingUsesAutumn) {
+		const tiers = await Promise.all(
+			organizationIds.map((id) => organizationPlanFromAutumn(id)),
+		);
+		for (const [index, id] of organizationIds.entries()) {
+			plans.set(id, tiers[index] ?? "free");
+		}
+		return plans;
+	}
 	const rows = await db
 		.select({
 			organizationId: subscriptions.referenceId,

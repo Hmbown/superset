@@ -1,3 +1,4 @@
+import { billingUsesAutumn } from "@superset/auth/autumn";
 import { db, dbWs } from "@superset/db/client";
 import {
 	members,
@@ -21,6 +22,7 @@ import { and, count, desc, eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 import { env } from "../../env";
 import { emitAppFirstOpened } from "../../lib/activation-events";
+import { organizationPlan } from "../../lib/billing/plan";
 import { nudge } from "../../lib/realtime";
 import { fetchRelayPresence } from "../../lib/relay-presence";
 import { jwtProcedure, userError } from "../../trpc";
@@ -272,8 +274,10 @@ export const hostRouter = {
 			const allowed = !!row;
 			const paidPlan =
 				!!row &&
-				isPaidPlan(row.subscriptionPlan) &&
-				isActiveSubscriptionStatus(row.subscriptionStatus);
+				(billingUsesAutumn
+					? (await organizationPlan(parsed.organizationId)) !== "free"
+					: isPaidPlan(row.subscriptionPlan) &&
+						isActiveSubscriptionStatus(row.subscriptionStatus));
 			return { allowed, paidPlan };
 		}),
 

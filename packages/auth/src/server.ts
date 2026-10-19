@@ -1111,7 +1111,12 @@ export const auth = betterAuth({
 				// reached, so an "active"-only read here would strand trialing
 				// and past_due organizations on a cold start.
 				let plan: string | null = null;
-				if (activeOrganizationId === data.planOrganizationId) {
+				if (billingUsesAutumn) {
+					const tier = activeOrganizationId
+						? await organizationPlanFromAutumn(activeOrganizationId)
+						: "free";
+					plan = tier === "free" ? null : tier;
+				} else if (activeOrganizationId === data.planOrganizationId) {
 					plan = data.plan;
 				} else if (activeOrganizationId) {
 					// A concurrent request moved the session's active organization
