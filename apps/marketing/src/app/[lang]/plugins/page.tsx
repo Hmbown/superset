@@ -1,6 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { getI18nInstance } from "@superset/i18n/server";
+import { COMPANY } from "@superset/shared/constants";
 import type { Metadata } from "next";
 import { CTASection } from "@/app/[lang]/components/CTASection";
 import { ProductHeroActions } from "@/app/[lang]/components/ProductHeroActions";
@@ -16,15 +17,38 @@ import { FEATURES } from "./constants";
 export async function generateMetadata(): Promise<Metadata> {
 	const lang = await initServerI18n();
 	const i18n = getI18nInstance(lang);
+	const title = i18n._(msg({ message: "Superset Plugins" }));
+	const description = i18n._(
+		msg({
+			message:
+				"Write a plugin once and every coding agent can use it: Claude Code, Codex, Cursor, OpenCode, and more. Install it once, and it works on your machines and in the cloud.",
+		}),
+	);
+	const image = {
+		url: "/plugins/og.jpg",
+		width: 2400,
+		height: 1258,
+		alt: title,
+	};
 	return {
-		title: i18n._(msg({ message: "Superset Plugins" })),
-		description: i18n._(
-			msg({
-				message:
-					"Write a plugin once and every coding agent can use it: Claude Code, Codex, Cursor, OpenCode, and more. Install it once, and it works on your machines and in the cloud.",
-			}),
-		),
+		title,
+		description,
 		alternates: localizedAlternates(lang, "/plugins"),
+		openGraph: {
+			title,
+			description,
+			type: "website",
+			url: `${COMPANY.MARKETING_URL}/plugins`,
+			siteName: COMPANY.NAME,
+			images: [image],
+		},
+		twitter: {
+			card: "summary_large_image",
+			title,
+			description,
+			images: [image.url],
+			creator: "@superset_sh",
+		},
 	};
 }
 
