@@ -1,6 +1,5 @@
 import { randomUUID } from "node:crypto";
 import type { DiscoverSessionsResult, Envelope } from "@superset/chat/protocol";
-import type { ChatCheckpoints } from "../../checkpoints";
 import type {
 	DiscoverNativeSessionsInput,
 	HarnessAdapter,
@@ -34,7 +33,6 @@ export type LiveSessionRegistryOptions = {
 	publish: (envelope: Envelope) => void;
 	harnesses: HarnessRegistry;
 	observer?: LiveSessionObserver;
-	checkpoints?: ChatCheckpoints;
 	mintId?: () => string;
 	now?: () => number;
 };
@@ -104,7 +102,6 @@ export class LiveSessionRegistry {
 		}
 
 		const observer = this.options.observer;
-		const checkpoints = this.options.checkpoints;
 		const session = new LiveSession({
 			sessionId: options.sessionId,
 			scopeId: options.scopeId,
@@ -116,16 +113,6 @@ export class LiveSessionRegistry {
 				this.observe(() => observer?.published(envelope, session));
 			},
 			adapter: factory(options),
-			...(checkpoints
-				? {
-						checkpoint: (itemId: string) =>
-							checkpoints.capture({
-								cwd: options.cwd,
-								sessionId: options.sessionId,
-								itemId,
-							}),
-					}
-				: {}),
 			mintId: this.options.mintId,
 			now: this.options.now,
 		});

@@ -13,7 +13,6 @@ type Mutation =
 	| "setConfigOption"
 	| "closeSession"
 	| "forkSession"
-	| "rewindFiles"
 	| "rewindSession";
 
 type Query =
@@ -23,9 +22,7 @@ type Query =
 	| "discoverSessions"
 	| "getItems"
 	| "getOutline"
-	| "getItemBodies"
-	| "getRewindChanges"
-	| "getRewindSupport";
+	| "getItemBodies";
 
 /** A tRPC client for the chat router, by shape rather than by router type. */
 export type ChatTrpcClient = {
@@ -49,7 +46,6 @@ export function chatTransportFromTrpc(client: ChatTrpcClient): ChatTransport {
 		setConfigOption: (input) => client.setConfigOption.mutate(input),
 		closeSession: (input) => client.closeSession.mutate(input),
 		forkSession: (input) => client.forkSession.mutate(input),
-		rewindFiles: (input) => client.rewindFiles.mutate(input),
 		rewindSession: (input) => client.rewindSession.mutate(input),
 		getSession: (input) => client.getSession.query(input),
 		getQueue: (input) => client.getQueue.query(input),
@@ -58,7 +54,5 @@ export function chatTransportFromTrpc(client: ChatTrpcClient): ChatTransport {
 		getItems: (input) => client.getItems.query(input),
 		getOutline: (input) => client.getOutline.query(input),
 		getItemBodies: (input) => client.getItemBodies.query(input),
-		getRewindChanges: (input) => client.getRewindChanges.query(input),
-		getRewindSupport: (input) => client.getRewindSupport.query(input),
 	};
 }

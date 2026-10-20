@@ -7,15 +7,12 @@ import {
 	getItemBodiesInputSchema,
 	getItemsInputSchema,
 	getOutlineInputSchema,
-	getRewindChangesInputSchema,
-	getRewindSupportInputSchema,
 	getSessionInputSchema,
 	listSessionsInputSchema,
 	promptInputSchema,
 	queuedPromptInputSchema,
 	respondToApprovalInputSchema,
 	resumeQueueInputSchema,
-	rewindFilesInputSchema,
 	rewindSessionInputSchema,
 	setConfigOptionInputSchema,
 	setModeInputSchema,
@@ -37,7 +34,6 @@ export type ChatRouterOptions = {
 const UNKNOWN_HARNESS = /^unknown harness /;
 const NOT_RUNNING = /^chat session (.+) is not running$/;
 const NOT_QUEUED = /^prompt .+ is not queued$/;
-const STILL_WORKING = /^chat session .+ is still working$/;
 
 function mapCommandError(runtime: ChatRuntime, error: unknown): unknown {
 	if (error instanceof TRPCError) return error;
@@ -45,13 +41,6 @@ function mapCommandError(runtime: ChatRuntime, error: unknown): unknown {
 	if (UNKNOWN_HARNESS.test(error.message)) {
 		return new TRPCError({
 			code: "BAD_REQUEST",
-			message: error.message,
-			cause: error,
-		});
-	}
-	if (STILL_WORKING.test(error.message)) {
-		return new TRPCError({
-			code: "CONFLICT",
 			message: error.message,
 			cause: error,
 		});
@@ -165,14 +154,6 @@ export function createChatRouter(
 				return guarded(() => runtime.commands.forkSession({ ...rest, cwd }));
 			}),
 
-		rewindFiles: t.procedure
-			.input(rewindFilesInputSchema.extend({ workspaceId: z.string().min(1) }))
-			.mutation(async ({ input }) => {
-				const { workspaceId, ...rest } = input;
-				const cwd = await options.resolveCwd(workspaceId);
-				return guarded(() => runtime.commands.rewindFiles({ ...rest, cwd }));
-			}),
-
 		rewindSession: t.procedure
 			.input(
 				rewindSessionInputSchema.extend({ workspaceId: z.string().min(1) }),
@@ -181,28 +162,6 @@ export function createChatRouter(
 				const { workspaceId, ...rest } = input;
 				const cwd = await options.resolveCwd(workspaceId);
 				return guarded(() => runtime.commands.rewindSession({ ...rest, cwd }));
-			}),
-
-		getRewindChanges: t.procedure
-			.input(
-				getRewindChangesInputSchema.extend({ workspaceId: z.string().min(1) }),
-			)
-			.query(async ({ input }) => {
-				const cwd = await options.resolveCwd(input.workspaceId);
-				return runtime.commands.getRewindChanges({
-					sessionId: input.sessionId,
-					itemId: input.itemId,
-					cwd,
-				});
-			}),
-
-		getRewindSupport: t.procedure
-			.input(
-				getRewindSupportInputSchema.extend({ workspaceId: z.string().min(1) }),
-			)
-			.query(async ({ input }) => {
-				const cwd = await options.resolveCwd(input.workspaceId);
-				return runtime.commands.getRewindSupport({ cwd });
 			}),
 
 		closeSession: t.procedure

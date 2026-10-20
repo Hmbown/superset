@@ -551,40 +551,36 @@ describe("chat commands", () => {
 	});
 
 	test("rewindSession closes the session it opened when setting it up fails", async () => {
+		const reply = [
+			{ kind: "turn" as const, turn: turn("t1") },
+			{
+				kind: "item" as const,
+				item: agentMessage("t1-reply", "hi"),
+				turnId: "t1",
+			},
+			{
+				kind: "turn" as const,
+				turn: turn("t1", { status: "completed" }),
+			},
+			{ kind: "session" as const, session: { status: "idle" as const } },
+		];
+		let created = 0;
+		class UnreachableHarness extends FakeHarness {
+			override prompt(content: Parameters<FakeHarness["prompt"]>[0]) {
+				if (created > 1) throw new Error("agent unreachable");
+				return super.prompt(content);
+			}
+		}
 		const runtime = createTestRuntime({
 			harnesses: new Map([
 				[
 					FAKE_HARNESS,
-					() =>
-						new FakeHarness({
-							turns: [
-								[
-									{ kind: "turn" as const, turn: turn("t1") },
-									{
-										kind: "item" as const,
-										item: agentMessage("t1-reply", "hi"),
-										turnId: "t1",
-									},
-									{
-										kind: "turn" as const,
-										turn: turn("t1", { status: "completed" }),
-									},
-									{
-										kind: "session" as const,
-										session: { status: "idle" as const },
-									},
-								],
-							],
-						}),
+					() => {
+						created += 1;
+						return new UnreachableHarness({ turns: [reply] });
+					},
 				],
 			]),
-			checkpoints: {
-				capture: async () => undefined,
-				restore: async () => "missing",
-				fork: () => {
-					throw new Error("checkpoint store unavailable");
-				},
-			},
 		});
 		const { sessionId } = createSession(runtime);
 		const sent = runtime.commands.prompt({
@@ -600,63 +596,15 @@ describe("chat commands", () => {
 				commandId: randomUUID(),
 				sessionId,
 				itemId: sent.itemId,
+				handoffPrompt: "earlier conversation",
 				cwd: "/tmp/workspace",
 			}),
-		).rejects.toThrow("checkpoint store unavailable");
+		).rejects.toThrow("agent unreachable");
 		const opened = runtime.commands
 			.listSessions({})
 			.filter((session) => session.sessionId !== sessionId);
 		expect(opened).toHaveLength(1);
 		expect(runtime.live.get(opened[0]?.sessionId ?? "")).toBeNull();
-		await runtime.dispose();
-	});
-
-	test("rewindFiles refuses while the agent is still working", async () => {
-		const restored: string[] = [];
-		const runtime = createTestRuntime({
-			harnesses: new Map([
-				[
-					FAKE_HARNESS,
-					() =>
-						new FakeHarness({
-							turns: [[{ kind: "turn" as const, turn: turn("t1") }]],
-						}),
-				],
-			]),
-			checkpoints: {
-				capture: async () => undefined,
-				restore: async ({ itemId }) => {
-					restored.push(itemId);
-					return "restored";
-				},
-			},
-		});
-		const { sessionId } = createSession(runtime);
-		const sent = runtime.commands.prompt({
-			commandId: randomUUID(),
-			sessionId,
-			clientId: "client-1",
-			content: [{ type: "text", text: "hello" }],
-		});
-		await waitFor(() => runtime.live.require(sessionId).turn?.id === "t1");
-
-		await expect(
-			runtime.commands.rewindFiles({
-				commandId: randomUUID(),
-				sessionId,
-				itemId: sent.itemId,
-				cwd: "/tmp/workspace",
-			}),
-		).rejects.toThrow("is still working");
-		expect(restored).toEqual([]);
-		await runtime.dispose();
-	});
-
-	test("getRewindSupport reports whether files can be rewound in this folder", async () => {
-		const { runtime } = newRuntime();
-		expect(
-			await runtime.commands.getRewindSupport({ cwd: "/tmp/workspace" }),
-		).toEqual({ files: false });
 		await runtime.dispose();
 	});
 

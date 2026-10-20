@@ -138,11 +138,9 @@ describe("buildTerminalSessionHandoffPrompt", () => {
 describe("parseChatRewindPrompt", () => {
 	it("returns the conversation a rewind prompt carried", () => {
 		const transcript = "User: add a test\n\nClaude: ```ts\ntest()\n```";
-		expect(
-			parseChatRewindPrompt(
-				buildChatRewindPrompt({ transcript, filesRestored: true }),
-			),
-		).toBe(transcript);
+		expect(parseChatRewindPrompt(buildChatRewindPrompt({ transcript }))).toBe(
+			transcript,
+		);
 		expect(parseChatRewindPrompt("User: add a test")).toBeNull();
 	});
 });

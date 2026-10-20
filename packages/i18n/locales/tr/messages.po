@@ -144,10 +144,6 @@ msgstr "{0, plural, one {# başarısız} other {# başarısız}}"
 msgid "{0, plural, one {# failing} other {# failing}}"
 msgstr "{0, plural, one {# başarısız} other {# başarısız}}"
 
-#. placeholder {0}: plan.changes.length
-msgid "{0, plural, one {# file changed since this message} other {# files changed since this message}}"
-msgstr "{0, plural, one {Bu mesajdan beri # dosya değişti} other {Bu mesajdan beri # dosya değişti}}"
-
 #. placeholder {0}: detail.pullRequest.changedFiles
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {# dosya değişti} other {# dosya değişti}}"
@@ -2249,9 +2245,6 @@ msgstr "Bilinmeyen bir hata oluştu"
 
 msgid "An update is ready to install."
 msgstr "Yüklenmeye hazır bir güncelleme var."
-
-msgid "and {hidden} more"
-msgstr "ve {hidden} tane daha"
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android yolda. Çıktığında ilk siz haberdar olun."
@@ -5112,9 +5105,6 @@ msgstr "Yeni bir worktree'ye çatallanamadı"
 msgid "Couldn't branch the conversation"
 msgstr "Konuşma çatallanamadı"
 
-msgid "Couldn't check the files"
-msgstr "Dosyalar kontrol edilemedi"
-
 msgid "Couldn't check what removing this member affects"
 msgstr "Bu üyeyi kaldırmanın nelere etki edeceği kontrol edilemedi"
 
@@ -5257,9 +5247,6 @@ msgstr "\"{projectName}\" geri yüklenemedi"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "\"{workspaceName}\" geri yüklenemedi"
-
-msgid "Couldn't restore the files"
-msgstr "Dosyalar geri yüklenemedi"
 
 msgid "Couldn't save"
 msgstr "Kaydedilemedi"
@@ -5940,9 +5927,6 @@ msgstr "Çalışma alanını sil"
 msgid "Delete workspace \"{workspaceName}\"?"
 msgstr "\"{workspaceName}\" çalışma alanı silinsin mi?"
 
-msgid "deleted"
-msgstr "silindi"
-
 msgid "Deleted"
 msgstr "Silindi"
 
@@ -6581,9 +6565,6 @@ msgstr "{name} ×{tier} kazanıldı"
 msgid "Edit"
 msgstr "Düzenle"
 
-msgid "Edit and restore files"
-msgstr "Düzenle ve dosyaları geri yükle"
-
 msgid "Edit comment"
 msgstr "Yorumu düzenle"
 
@@ -6613,9 +6594,6 @@ msgstr "Betiği düzenle"
 
 msgid "Edit your comment…"
 msgstr "Yorumunu düzenle…"
-
-msgid "Edit, keep files"
-msgstr "Düzenle, dosyaları koru"
 
 msgid "Edited"
 msgstr "Düzenlendi"
@@ -7595,9 +7573,6 @@ msgstr "Dosyalar ve Düzenleyici"
 
 msgid "Files changed"
 msgstr "Değişen dosyalar"
-
-msgid "Files restored to before that message"
-msgstr "Dosyalar o mesajdan önceki haline geri yüklendi"
 
 msgid "files to exclude (glob)"
 msgstr "hariç tutulacak dosyalar (glob)"
@@ -9404,8 +9379,8 @@ msgstr "Gecikme"
 msgid "Later"
 msgstr "Daha sonra"
 
-msgid "Later messages and their file changes are removed."
-msgstr "Sonraki mesajlar ve bunların dosya değişiklikleri kaldırılacak."
+msgid "Later messages are removed."
+msgstr "Sonraki mesajlar kaldırılacak."
 
 msgid "Latest"
 msgstr "En son"
@@ -10559,9 +10534,6 @@ msgstr "Hiç"
 
 msgid "Never asks before acting"
 msgstr "Hiç sormadan çalışır"
-
-msgid "new"
-msgstr "yeni"
 
 msgid "New"
 msgstr "Yeni"
@@ -14283,9 +14255,6 @@ msgstr "\"{workspaceName}\" geri yüklendi"
 msgid "Restoring \"{workspaceName}\"…"
 msgstr "\"{workspaceName}\" geri yükleniyor…"
 
-msgid "Restoring puts them back as they were before this message, including changes you made yourself. A snapshot of the current files is kept first."
-msgstr "Geri yükleme, kendi yaptığınız değişiklikler dahil, onları bu mesajdan önceki haline döndürür. Önce mevcut dosyaların anlık görüntüsü saklanır."
-
 msgid "Restoring your session"
 msgstr "Oturumunuz geri yükleniyor"
 
@@ -17543,9 +17512,6 @@ msgstr "Temalar"
 
 msgid "Themes and agents"
 msgstr "Temalar ve ajanlar"
-
-msgid "There was no file snapshot for that message, so the files were left as they are."
-msgstr "O mesaj için dosya anlık görüntüsü yoktu, bu yüzden dosyalar olduğu gibi bırakıldı."
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Bu komutlar bir çalışma alanı oluşturulduğunda otomatik olarak çalışır. <0>Belgelerimizi okuyun<1/></0>"

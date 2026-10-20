@@ -144,10 +144,6 @@ msgstr "{0, plural, one {# selhalo} few {# selhalo} many {# selhalo} other {# se
 msgid "{0, plural, one {# failing} other {# failing}}"
 msgstr "{0, plural, one {# selhává} few {# selhávají} many {# selhává} other {# selhává}}"
 
-#. placeholder {0}: plan.changes.length
-msgid "{0, plural, one {# file changed since this message} other {# files changed since this message}}"
-msgstr "{0, plural, one {Od této zprávy se změnil # soubor} few {Od této zprávy se změnily # soubory} many {Od této zprávy se změnilo # souboru} other {Od této zprávy se změnilo # souborů}}"
-
 #. placeholder {0}: detail.pullRequest.changedFiles
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {# změněný soubor} few {# změněné soubory} many {# změněného souboru} other {# změněných souborů}}"
@@ -2249,9 +2245,6 @@ msgstr "Došlo k neznámé chybě"
 
 msgid "An update is ready to install."
 msgstr "Aktualizace je připravena k instalaci."
-
-msgid "and {hidden} more"
-msgstr "a {hidden} dalších"
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android je na cestě. Dozvíte se jako první, až vyjde."
@@ -5112,9 +5105,6 @@ msgstr "Nepodařilo se rozvětvit do nového worktree"
 msgid "Couldn't branch the conversation"
 msgstr "Konverzaci se nepodařilo rozvětvit"
 
-msgid "Couldn't check the files"
-msgstr "Soubory se nepodařilo zkontrolovat"
-
 msgid "Couldn't check what removing this member affects"
 msgstr "Nepodařilo se zjistit, čeho se odebrání tohoto člena dotkne"
 
@@ -5257,9 +5247,6 @@ msgstr "„{projectName}“ se nepodařilo obnovit"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "„{workspaceName}“ se nepodařilo obnovit"
-
-msgid "Couldn't restore the files"
-msgstr "Soubory se nepodařilo obnovit"
 
 msgid "Couldn't save"
 msgstr "Nepodařilo se uložit"
@@ -5940,9 +5927,6 @@ msgstr "Smazat pracovní prostor"
 msgid "Delete workspace \"{workspaceName}\"?"
 msgstr "Smazat pracovní prostor „{workspaceName}“?"
 
-msgid "deleted"
-msgstr "smazáno"
-
 msgid "Deleted"
 msgstr "Smazáno"
 
@@ -6581,9 +6565,6 @@ msgstr "Získáno: {name} ×{tier}"
 msgid "Edit"
 msgstr "Upravit"
 
-msgid "Edit and restore files"
-msgstr "Upravit a obnovit soubory"
-
 msgid "Edit comment"
 msgstr "Upravit komentář"
 
@@ -6613,9 +6594,6 @@ msgstr "Upravit skript"
 
 msgid "Edit your comment…"
 msgstr "Upravte komentář…"
-
-msgid "Edit, keep files"
-msgstr "Upravit, ponechat soubory"
 
 msgid "Edited"
 msgstr "Upraveno"
@@ -7595,9 +7573,6 @@ msgstr "Soubory a editor"
 
 msgid "Files changed"
 msgstr "Změněné soubory"
-
-msgid "Files restored to before that message"
-msgstr "Soubory byly obnoveny do stavu před touto zprávou"
 
 msgid "files to exclude (glob)"
 msgstr "soubory k vyloučení (glob)"
@@ -9404,8 +9379,8 @@ msgstr "Latence"
 msgid "Later"
 msgstr "Později"
 
-msgid "Later messages and their file changes are removed."
-msgstr "Pozdější zprávy a jejich změny souborů budou odstraněny."
+msgid "Later messages are removed."
+msgstr "Pozdější zprávy budou odstraněny."
 
 msgid "Latest"
 msgstr "Nejnovější"
@@ -10559,9 +10534,6 @@ msgstr "Nikdy"
 
 msgid "Never asks before acting"
 msgstr "Nikdy se neptá"
-
-msgid "new"
-msgstr "nový"
 
 msgid "New"
 msgstr "Novinka"
@@ -14283,9 +14255,6 @@ msgstr "„{workspaceName}“ obnoven"
 msgid "Restoring \"{workspaceName}\"…"
 msgstr "Obnovuji „{workspaceName}“…"
 
-msgid "Restoring puts them back as they were before this message, including changes you made yourself. A snapshot of the current files is kept first."
-msgstr "Obnovení je vrátí do stavu před touto zprávou, včetně změn, které jste provedli sami. Nejprve se uloží snímek aktuálních souborů."
-
 msgid "Restoring your session"
 msgstr "Obnovuji vaši relaci"
 
@@ -17543,9 +17512,6 @@ msgstr "Motivy"
 
 msgid "Themes and agents"
 msgstr "Motivy a agenti"
-
-msgid "There was no file snapshot for that message, so the files were left as they are."
-msgstr "Pro tuto zprávu neexistuje snímek souborů, takže soubory zůstaly beze změny."
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Tyto příkazy se spustí automaticky při vytvoření pracovního prostoru. <0>Přečtěte si dokumentaci<1/></0>"

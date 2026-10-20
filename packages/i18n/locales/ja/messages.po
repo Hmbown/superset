@@ -144,10 +144,6 @@ msgstr "{0, plural, one {#件失敗} other {#件失敗}}"
 msgid "{0, plural, one {# failing} other {# failing}}"
 msgstr "{0, plural, one {#件失敗} other {#件失敗}}"
 
-#. placeholder {0}: plan.changes.length
-msgid "{0, plural, one {# file changed since this message} other {# files changed since this message}}"
-msgstr "{0, plural, other {このメッセージ以降に # 個のファイルが変更されました}}"
-
 #. placeholder {0}: detail.pullRequest.changedFiles
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {#件のファイルを変更} other {#件のファイルを変更}}"
@@ -2249,9 +2245,6 @@ msgstr "不明なエラーが発生しました"
 
 msgid "An update is ready to install."
 msgstr "アップデートをインストールする準備ができました。"
-
-msgid "and {hidden} more"
-msgstr "ほか {hidden} 件"
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android 版を準備中です。リリース時にいち早くお知らせします。"
@@ -5112,9 +5105,6 @@ msgstr "新しい worktree へ分岐できませんでした"
 msgid "Couldn't branch the conversation"
 msgstr "会話を分岐できませんでした"
 
-msgid "Couldn't check the files"
-msgstr "ファイルを確認できませんでした"
-
 msgid "Couldn't check what removing this member affects"
 msgstr "このメンバーの削除による影響を確認できませんでした"
 
@@ -5257,9 +5247,6 @@ msgstr "「{projectName}」を復元できませんでした"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "「{workspaceName}」を復元できませんでした"
-
-msgid "Couldn't restore the files"
-msgstr "ファイルを復元できませんでした"
 
 msgid "Couldn't save"
 msgstr "保存できませんでした"
@@ -5940,9 +5927,6 @@ msgstr "ワークスペースを削除"
 msgid "Delete workspace \"{workspaceName}\"?"
 msgstr "ワークスペース「{workspaceName}」を削除しますか?"
 
-msgid "deleted"
-msgstr "削除"
-
 msgid "Deleted"
 msgstr "削除済み"
 
@@ -6581,9 +6565,6 @@ msgstr "「{name}」×{tier} を獲得"
 msgid "Edit"
 msgstr "編集"
 
-msgid "Edit and restore files"
-msgstr "編集してファイルを復元"
-
 msgid "Edit comment"
 msgstr "コメントを編集"
 
@@ -6613,9 +6594,6 @@ msgstr "スクリプトを編集"
 
 msgid "Edit your comment…"
 msgstr "コメントを編集…"
-
-msgid "Edit, keep files"
-msgstr "編集してファイルを保持"
 
 msgid "Edited"
 msgstr "編集"
@@ -7595,9 +7573,6 @@ msgstr "ファイルとエディター"
 
 msgid "Files changed"
 msgstr "変更されたファイル"
-
-msgid "Files restored to before that message"
-msgstr "ファイルをそのメッセージの前の状態に復元しました"
 
 msgid "files to exclude (glob)"
 msgstr "除外するファイル（glob）"
@@ -9404,8 +9379,8 @@ msgstr "レイテンシ"
 msgid "Later"
 msgstr "後で"
 
-msgid "Later messages and their file changes are removed."
-msgstr "以降のメッセージとそのファイル変更は削除されます。"
+msgid "Later messages are removed."
+msgstr "以降のメッセージは削除されます。"
 
 msgid "Latest"
 msgstr "最新"
@@ -10559,9 +10534,6 @@ msgstr "未使用"
 
 msgid "Never asks before acting"
 msgstr "確認なしで実行"
-
-msgid "new"
-msgstr "新規"
 
 msgid "New"
 msgstr "新着"
@@ -14283,9 +14255,6 @@ msgstr "「{workspaceName}」を復元しました"
 msgid "Restoring \"{workspaceName}\"…"
 msgstr "「{workspaceName}」を復元中…"
 
-msgid "Restoring puts them back as they were before this message, including changes you made yourself. A snapshot of the current files is kept first."
-msgstr "復元すると、ご自身で行った変更も含めて、このメッセージより前の状態に戻ります。先に現在のファイルのスナップショットが保存されます。"
-
 msgid "Restoring your session"
 msgstr "セッションを復元中"
 
@@ -17543,9 +17512,6 @@ msgstr "テーマ"
 
 msgid "Themes and agents"
 msgstr "テーマとエージェント"
-
-msgid "There was no file snapshot for that message, so the files were left as they are."
-msgstr "そのメッセージのファイルスナップショットがないため、ファイルはそのままです。"
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "これらのコマンドはワークスペース作成時に自動的に実行されます。<0>ドキュメントを読む<1/></0>"

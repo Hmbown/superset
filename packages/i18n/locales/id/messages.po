@@ -144,10 +144,6 @@ msgstr "{0, plural, one {# gagal} other {# gagal}}"
 msgid "{0, plural, one {# failing} other {# failing}}"
 msgstr "{0, plural, one {# gagal} other {# gagal}}"
 
-#. placeholder {0}: plan.changes.length
-msgid "{0, plural, one {# file changed since this message} other {# files changed since this message}}"
-msgstr "{0, plural, other {# file berubah sejak pesan ini}}"
-
 #. placeholder {0}: detail.pullRequest.changedFiles
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {# file berubah} other {# file berubah}}"
@@ -2249,9 +2245,6 @@ msgstr "Terjadi kesalahan yang tidak diketahui"
 
 msgid "An update is ready to install."
 msgstr "Pembaruan siap dipasang."
-
-msgid "and {hidden} more"
-msgstr "dan {hidden} lainnya"
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android sedang dalam perjalanan. Jadilah yang pertama tahu saat dirilis."
@@ -5112,9 +5105,6 @@ msgstr "Tidak dapat mencabangkan ke worktree baru"
 msgid "Couldn't branch the conversation"
 msgstr "Tidak dapat mencabangkan percakapan"
 
-msgid "Couldn't check the files"
-msgstr "Tidak dapat memeriksa file"
-
 msgid "Couldn't check what removing this member affects"
 msgstr "Tidak dapat memeriksa apa yang terdampak jika anggota ini dihapus"
 
@@ -5257,9 +5247,6 @@ msgstr "Tidak dapat memulihkan \"{projectName}\""
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "Tidak dapat memulihkan \"{workspaceName}\""
-
-msgid "Couldn't restore the files"
-msgstr "Tidak dapat memulihkan file"
 
 msgid "Couldn't save"
 msgstr "Tidak bisa menyimpan"
@@ -5940,9 +5927,6 @@ msgstr "Hapus workspace"
 msgid "Delete workspace \"{workspaceName}\"?"
 msgstr "Hapus workspace \"{workspaceName}\"?"
 
-msgid "deleted"
-msgstr "dihapus"
-
 msgid "Deleted"
 msgstr "Dihapus"
 
@@ -6581,9 +6565,6 @@ msgstr "{name} ×{tier} diraih"
 msgid "Edit"
 msgstr "Edit"
 
-msgid "Edit and restore files"
-msgstr "Edit dan pulihkan file"
-
 msgid "Edit comment"
 msgstr "Edit komentar"
 
@@ -6613,9 +6594,6 @@ msgstr "Edit skrip"
 
 msgid "Edit your comment…"
 msgstr "Edit komentar Anda…"
-
-msgid "Edit, keep files"
-msgstr "Edit, simpan file"
 
 msgid "Edited"
 msgstr "Diedit"
@@ -7595,9 +7573,6 @@ msgstr "File & Editor"
 
 msgid "Files changed"
 msgstr "File yang berubah"
-
-msgid "Files restored to before that message"
-msgstr "File dipulihkan ke sebelum pesan itu"
 
 msgid "files to exclude (glob)"
 msgstr "file yang dikecualikan (glob)"
@@ -9404,8 +9379,8 @@ msgstr "Latensi"
 msgid "Later"
 msgstr "Nanti"
 
-msgid "Later messages and their file changes are removed."
-msgstr "Pesan berikutnya dan perubahan filenya akan dihapus."
+msgid "Later messages are removed."
+msgstr "Pesan berikutnya akan dihapus."
 
 msgid "Latest"
 msgstr "Terbaru"
@@ -10559,9 +10534,6 @@ msgstr "Tidak pernah"
 
 msgid "Never asks before acting"
 msgstr "Tidak pernah bertanya dulu"
-
-msgid "new"
-msgstr "baru"
 
 msgid "New"
 msgstr "Baru"
@@ -14283,9 +14255,6 @@ msgstr "\"{workspaceName}\" dipulihkan"
 msgid "Restoring \"{workspaceName}\"…"
 msgstr "Memulihkan \"{workspaceName}\"…"
 
-msgid "Restoring puts them back as they were before this message, including changes you made yourself. A snapshot of the current files is kept first."
-msgstr "Memulihkan akan mengembalikannya seperti sebelum pesan ini, termasuk perubahan yang Anda buat sendiri. Snapshot file saat ini disimpan terlebih dahulu."
-
 msgid "Restoring your session"
 msgstr "Memulihkan sesi Anda"
 
@@ -17543,9 +17512,6 @@ msgstr "Tema"
 
 msgid "Themes and agents"
 msgstr "Tema dan agen"
-
-msgid "There was no file snapshot for that message, so the files were left as they are."
-msgstr "Tidak ada snapshot file untuk pesan itu, jadi file dibiarkan apa adanya."
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Perintah ini berjalan otomatis saat workspace dibuat. <0>Baca dokumentasi kami<1/></0>"

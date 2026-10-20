@@ -25,7 +25,6 @@ export type LiveSessionOptions = {
 	journal: ChatJournal;
 	publish: (envelope: Envelope) => void;
 	adapter: HarnessAdapter;
-	checkpoint?: (itemId: string) => Promise<void>;
 	mintId?: () => string;
 	now?: () => number;
 };
@@ -64,7 +63,6 @@ export class LiveSession {
 	private steering: Promise<void> = Promise.resolve();
 	private sent = 0;
 	private awaitingTurn: PendingPrompt | null = null;
-	private capturing: PendingPrompt | null = null;
 	private steerTarget: string | null = null;
 	private queuePaused = false;
 	private sessionState: SessionState;
@@ -163,7 +161,7 @@ export class LiveSession {
 			});
 			return { itemId, queued: false };
 		}
-		const queued = this.busy;
+		const queued = this.isBusy();
 		const item: UserMessage = {
 			id: itemId,
 			kind: "user_message",
@@ -266,20 +264,6 @@ export class LiveSession {
 
 	cancelTurn(turnId?: string, pauseQueue = false): void {
 		if (turnId && this.currentTurn && this.currentTurn.id !== turnId) return;
-		const capturing = this.capturing;
-		if (capturing && !turnId) {
-			this.capturing = null;
-			this.awaitingTurn = null;
-			this.discard(capturing);
-			if (pauseQueue && this.queue.length > 0 && !this.queuePaused) {
-				this.queuePaused = true;
-				this.emitSession({ queuePaused: true });
-				return;
-			}
-			this.emitSession({});
-			this.deliverNextQueued();
-			return;
-		}
 		const steering =
 			this.steerTarget !== null && this.queue[0]?.item.id === this.steerTarget;
 		const waiting = this.queue.length + this.pendingSteers.length;
@@ -411,26 +395,7 @@ export class LiveSession {
 
 	private deliver(prompt: PendingPrompt): void {
 		this.awaitingTurn = prompt;
-		const checkpoint = this.options.checkpoint;
-		if (!checkpoint) {
-			this.send(prompt);
-			return;
-		}
-		this.capturing = prompt;
-		void checkpoint(prompt.item.id)
-			.catch((error: unknown) =>
-				console.warn("[chat-runtime] checkpoint failed", error),
-			)
-			.then(() => {
-				if (this.capturing !== prompt) return;
-				this.capturing = null;
-				if (this.stopped || this.awaitingTurn !== prompt) return;
-				try {
-					this.send(prompt);
-				} catch (error) {
-					this.fail(error);
-				}
-			});
+		this.send(prompt);
 	}
 
 	private send(prompt: PendingPrompt): void {
@@ -472,12 +437,6 @@ export class LiveSession {
 		this.appendDurable({ type: "item", item: prompt.item, turnId: turn.id });
 		this.pendingSteers.push(prompt);
 		this.steering = this.steering.then(async () => {
-			if (this.stopped) return;
-			await this.options
-				.checkpoint?.(prompt.item.id)
-				.catch((error: unknown) =>
-					console.warn("[chat-runtime] checkpoint failed", error),
-				);
 			if (this.stopped) return;
 			const mayDispatch =
 				this.currentTurn?.id === turn.id &&
@@ -599,7 +558,7 @@ export class LiveSession {
 		);
 	}
 
-	get busy(): boolean {
+	private isBusy(): boolean {
 		return (
 			this.currentTurn?.status === "running" ||
 			this.hasPendingWork() ||

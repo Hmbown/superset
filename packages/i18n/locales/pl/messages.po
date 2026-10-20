@@ -144,10 +144,6 @@ msgstr "{0, plural, one {# nieudany} few {# nieudane} many {# nieudanych} other 
 msgid "{0, plural, one {# failing} other {# failing}}"
 msgstr "{0, plural, one {# nieudana} few {# nieudane} many {# nieudanych} other {# nieudanego}}"
 
-#. placeholder {0}: plan.changes.length
-msgid "{0, plural, one {# file changed since this message} other {# files changed since this message}}"
-msgstr "{0, plural, one {# plik zmieniony od tej wiadomości} few {# pliki zmienione od tej wiadomości} many {# plików zmienionych od tej wiadomości} other {# pliku zmienionego od tej wiadomości}}"
-
 #. placeholder {0}: detail.pullRequest.changedFiles
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {# zmieniony plik} few {# zmienione pliki} many {# zmienionych plików} other {# zmienionego pliku}}"
@@ -2249,9 +2245,6 @@ msgstr "Wystąpił nieznany błąd"
 
 msgid "An update is ready to install."
 msgstr "Aktualizacja jest gotowa do zainstalowania."
-
-msgid "and {hidden} more"
-msgstr "i {hidden} więcej"
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android jest w drodze. Dowiedz się jako pierwszy, gdy się pojawi."
@@ -5112,9 +5105,6 @@ msgstr "Nie udało się rozgałęzić do nowego worktree"
 msgid "Couldn't branch the conversation"
 msgstr "Nie udało się rozgałęzić rozmowy"
 
-msgid "Couldn't check the files"
-msgstr "Nie udało się sprawdzić plików"
-
 msgid "Couldn't check what removing this member affects"
 msgstr "Nie udało się sprawdzić, na co wpłynie usunięcie tego członka"
 
@@ -5257,9 +5247,6 @@ msgstr "Nie udało się przywrócić „{projectName}”"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "Nie udało się przywrócić „{workspaceName}”"
-
-msgid "Couldn't restore the files"
-msgstr "Nie udało się przywrócić plików"
 
 msgid "Couldn't save"
 msgstr "Nie udało się zapisać"
@@ -5940,9 +5927,6 @@ msgstr "Usuń obszar roboczy"
 msgid "Delete workspace \"{workspaceName}\"?"
 msgstr "Usunąć obszar roboczy „{workspaceName}”?"
 
-msgid "deleted"
-msgstr "usunięty"
-
 msgid "Deleted"
 msgstr "Usunięte"
 
@@ -6581,9 +6565,6 @@ msgstr "Zdobyto: {name} ×{tier}"
 msgid "Edit"
 msgstr "Edytuj"
 
-msgid "Edit and restore files"
-msgstr "Edytuj i przywróć pliki"
-
 msgid "Edit comment"
 msgstr "Edytuj komentarz"
 
@@ -6613,9 +6594,6 @@ msgstr "Edytuj skrypt"
 
 msgid "Edit your comment…"
 msgstr "Edytuj komentarz…"
-
-msgid "Edit, keep files"
-msgstr "Edytuj, zachowaj pliki"
 
 msgid "Edited"
 msgstr "Edytowano"
@@ -7595,9 +7573,6 @@ msgstr "Pliki i edytor"
 
 msgid "Files changed"
 msgstr "Zmienione pliki"
-
-msgid "Files restored to before that message"
-msgstr "Przywrócono pliki do stanu sprzed tej wiadomości"
 
 msgid "files to exclude (glob)"
 msgstr "pliki do wykluczenia (glob)"
@@ -9404,8 +9379,8 @@ msgstr "Opóźnienie"
 msgid "Later"
 msgstr "Później"
 
-msgid "Later messages and their file changes are removed."
-msgstr "Późniejsze wiadomości i ich zmiany w plikach zostaną usunięte."
+msgid "Later messages are removed."
+msgstr "Późniejsze wiadomości zostaną usunięte."
 
 msgid "Latest"
 msgstr "Najnowsza"
@@ -10559,9 +10534,6 @@ msgstr "Nigdy"
 
 msgid "Never asks before acting"
 msgstr "Nigdy nie pyta przed działaniem"
-
-msgid "new"
-msgstr "nowy"
 
 msgid "New"
 msgstr "Nowość"
@@ -14283,9 +14255,6 @@ msgstr "Przywrócono „{workspaceName}”"
 msgid "Restoring \"{workspaceName}\"…"
 msgstr "Przywracanie „{workspaceName}”…"
 
-msgid "Restoring puts them back as they were before this message, including changes you made yourself. A snapshot of the current files is kept first."
-msgstr "Przywrócenie ustawi je tak jak przed tą wiadomością, łącznie ze zmianami wprowadzonymi przez Ciebie. Najpierw zapisywana jest migawka bieżących plików."
-
 msgid "Restoring your session"
 msgstr "Przywracanie sesji"
 
@@ -17543,9 +17512,6 @@ msgstr "Motywy"
 
 msgid "Themes and agents"
 msgstr "Motywy i agenci"
-
-msgid "There was no file snapshot for that message, so the files were left as they are."
-msgstr "Dla tej wiadomości nie było migawki plików, więc pliki pozostały bez zmian."
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Te polecenia uruchamiają się automatycznie przy tworzeniu obszaru roboczego. <0>Przeczytaj dokumentację<1/></0>"

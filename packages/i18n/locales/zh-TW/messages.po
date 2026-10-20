@@ -144,10 +144,6 @@ msgstr "{0, plural, one {#項失敗} other {#項失敗}}"
 msgid "{0, plural, one {# failing} other {# failing}}"
 msgstr "{0, plural, one {#項失敗} other {#項失敗}}"
 
-#. placeholder {0}: plan.changes.length
-msgid "{0, plural, one {# file changed since this message} other {# files changed since this message}}"
-msgstr "{0, plural, other {自此訊息以來有 # 個檔案已變更}}"
-
 #. placeholder {0}: detail.pullRequest.changedFiles
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {#個檔案已更改} other {#個檔案已更改}}"
@@ -2249,9 +2245,6 @@ msgstr "發生未知錯誤"
 
 msgid "An update is ready to install."
 msgstr "更新已準備好安裝。"
-
-msgid "and {hidden} more"
-msgstr "以及另外 {hidden} 個"
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android 版即將推出。發布時第一時間通知你。"
@@ -5112,9 +5105,6 @@ msgstr "無法分叉到新的 worktree"
 msgid "Couldn't branch the conversation"
 msgstr "無法分叉對話"
 
-msgid "Couldn't check the files"
-msgstr "無法檢查檔案"
-
 msgid "Couldn't check what removing this member affects"
 msgstr "無法檢查移除此成員會影響哪些內容"
 
@@ -5257,9 +5247,6 @@ msgstr "無法還原「{projectName}」"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "無法還原「{workspaceName}」"
-
-msgid "Couldn't restore the files"
-msgstr "無法還原檔案"
 
 msgid "Couldn't save"
 msgstr "儲存失敗"
@@ -5940,9 +5927,6 @@ msgstr "刪除工作區"
 msgid "Delete workspace \"{workspaceName}\"?"
 msgstr "刪除工作區「{workspaceName}」？"
 
-msgid "deleted"
-msgstr "已刪除"
-
 msgid "Deleted"
 msgstr "已刪除"
 
@@ -6581,9 +6565,6 @@ msgstr "已獲得「{name}」×{tier}"
 msgid "Edit"
 msgstr "編輯"
 
-msgid "Edit and restore files"
-msgstr "編輯並還原檔案"
-
 msgid "Edit comment"
 msgstr "編輯評論"
 
@@ -6613,9 +6594,6 @@ msgstr "編輯指令碼"
 
 msgid "Edit your comment…"
 msgstr "編輯你的留言…"
-
-msgid "Edit, keep files"
-msgstr "編輯並保留檔案"
 
 msgid "Edited"
 msgstr "已編輯"
@@ -7595,9 +7573,6 @@ msgstr "檔案與編輯器"
 
 msgid "Files changed"
 msgstr "更改的檔案"
-
-msgid "Files restored to before that message"
-msgstr "檔案已還原至該訊息之前的狀態"
 
 msgid "files to exclude (glob)"
 msgstr "排除的檔案（glob）"
@@ -9404,8 +9379,8 @@ msgstr "延遲"
 msgid "Later"
 msgstr "稍後"
 
-msgid "Later messages and their file changes are removed."
-msgstr "之後的訊息及其檔案變更將被移除。"
+msgid "Later messages are removed."
+msgstr "之後的訊息將被移除。"
 
 msgid "Latest"
 msgstr "最新"
@@ -10559,9 +10534,6 @@ msgstr "從未"
 
 msgid "Never asks before acting"
 msgstr "執行前從不詢問"
-
-msgid "new"
-msgstr "新增"
 
 msgid "New"
 msgstr "新功能"
@@ -14283,9 +14255,6 @@ msgstr "已還原「{workspaceName}」"
 msgid "Restoring \"{workspaceName}\"…"
 msgstr "正在還原「{workspaceName}」…"
 
-msgid "Restoring puts them back as they were before this message, including changes you made yourself. A snapshot of the current files is kept first."
-msgstr "還原會將它們恢復到此訊息之前的狀態，包括你自己做的變更。會先儲存目前檔案的快照。"
-
 msgid "Restoring your session"
 msgstr "正在恢復你的會話"
 
@@ -17543,9 +17512,6 @@ msgstr "主題"
 
 msgid "Themes and agents"
 msgstr "主題與代理程式"
-
-msgid "There was no file snapshot for that message, so the files were left as they are."
-msgstr "該訊息沒有檔案快照，因此檔案保持不變。"
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "建立工作區時會自動執行這些命令。<0>閱讀文件<1/></0>"

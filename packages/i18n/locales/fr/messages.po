@@ -144,10 +144,6 @@ msgstr "{0, plural, one {# en échec} other {# en échec}}"
 msgid "{0, plural, one {# failing} other {# failing}}"
 msgstr "{0, plural, one {# en échec} other {# en échec}}"
 
-#. placeholder {0}: plan.changes.length
-msgid "{0, plural, one {# file changed since this message} other {# files changed since this message}}"
-msgstr "{0, plural, one {# fichier modifié depuis ce message} other {# fichiers modifiés depuis ce message}}"
-
 #. placeholder {0}: detail.pullRequest.changedFiles
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {# fichier modifié} other {# fichiers modifiés}}"
@@ -2249,9 +2245,6 @@ msgstr "Une erreur inconnue est survenue"
 
 msgid "An update is ready to install."
 msgstr "Une mise à jour est prête à être installée."
-
-msgid "and {hidden} more"
-msgstr "et {hidden} de plus"
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android arrive. Soyez le premier informé de sa sortie."
@@ -5112,9 +5105,6 @@ msgstr "Impossible de dupliquer dans un nouveau worktree"
 msgid "Couldn't branch the conversation"
 msgstr "Impossible de dupliquer la conversation"
 
-msgid "Couldn't check the files"
-msgstr "Impossible de vérifier les fichiers"
-
 msgid "Couldn't check what removing this member affects"
 msgstr "Impossible de vérifier ce que le retrait de ce membre affecte"
 
@@ -5257,9 +5247,6 @@ msgstr "Impossible de restaurer « {projectName} »"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "Impossible de restaurer « {workspaceName} »"
-
-msgid "Couldn't restore the files"
-msgstr "Impossible de restaurer les fichiers"
 
 msgid "Couldn't save"
 msgstr "Échec de l'enregistrement"
@@ -5940,9 +5927,6 @@ msgstr "Supprimer l'espace de travail"
 msgid "Delete workspace \"{workspaceName}\"?"
 msgstr "Supprimer l'espace de travail \"{workspaceName}\" ?"
 
-msgid "deleted"
-msgstr "supprimé"
-
 msgid "Deleted"
 msgstr "Supprimés"
 
@@ -6581,9 +6565,6 @@ msgstr "{name} ×{tier} obtenu"
 msgid "Edit"
 msgstr "Modifier"
 
-msgid "Edit and restore files"
-msgstr "Modifier et restaurer les fichiers"
-
 msgid "Edit comment"
 msgstr "Modifier le commentaire"
 
@@ -6613,9 +6594,6 @@ msgstr "Modifier le script"
 
 msgid "Edit your comment…"
 msgstr "Modifiez votre commentaire…"
-
-msgid "Edit, keep files"
-msgstr "Modifier, garder les fichiers"
 
 msgid "Edited"
 msgstr "Modifié"
@@ -7595,9 +7573,6 @@ msgstr "Fichiers et éditeur"
 
 msgid "Files changed"
 msgstr "Fichiers modifiés"
-
-msgid "Files restored to before that message"
-msgstr "Fichiers restaurés à leur état avant ce message"
 
 msgid "files to exclude (glob)"
 msgstr "fichiers à exclure (glob)"
@@ -9404,8 +9379,8 @@ msgstr "Latence"
 msgid "Later"
 msgstr "Plus tard"
 
-msgid "Later messages and their file changes are removed."
-msgstr "Les messages suivants et leurs modifications de fichiers seront supprimés."
+msgid "Later messages are removed."
+msgstr "Les messages suivants seront supprimés."
 
 msgid "Latest"
 msgstr "Dernière"
@@ -10559,9 +10534,6 @@ msgstr "Jamais"
 
 msgid "Never asks before acting"
 msgstr "Ne demande jamais avant d'agir"
-
-msgid "new"
-msgstr "nouveau"
 
 msgid "New"
 msgstr "Nouveau"
@@ -14283,9 +14255,6 @@ msgstr "« {workspaceName} » restauré"
 msgid "Restoring \"{workspaceName}\"…"
 msgstr "Restauration de « {workspaceName} »…"
 
-msgid "Restoring puts them back as they were before this message, including changes you made yourself. A snapshot of the current files is kept first."
-msgstr "La restauration les remet dans l'état d'avant ce message, y compris les modifications que vous avez faites vous-même. Un instantané des fichiers actuels est conservé d'abord."
-
 msgid "Restoring your session"
 msgstr "Restauration de votre session"
 
@@ -17543,9 +17512,6 @@ msgstr "Thèmes"
 
 msgid "Themes and agents"
 msgstr "Thèmes et agents"
-
-msgid "There was no file snapshot for that message, so the files were left as they are."
-msgstr "Aucun instantané des fichiers n'existait pour ce message, les fichiers ont donc été laissés tels quels."
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Ces commandes s'exécutent automatiquement lorsqu'un espace de travail est créé. <0>Lire notre documentation<1/></0>"

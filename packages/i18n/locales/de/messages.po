@@ -144,10 +144,6 @@ msgstr "{0, plural, one {# fehlgeschlagen} other {# fehlgeschlagen}}"
 msgid "{0, plural, one {# failing} other {# failing}}"
 msgstr "{0, plural, one {# fehlgeschlagen} other {# fehlgeschlagen}}"
 
-#. placeholder {0}: plan.changes.length
-msgid "{0, plural, one {# file changed since this message} other {# files changed since this message}}"
-msgstr "{0, plural, one {# Datei seit dieser Nachricht geändert} other {# Dateien seit dieser Nachricht geändert}}"
-
 #. placeholder {0}: detail.pullRequest.changedFiles
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {# Datei geändert} other {# Dateien geändert}}"
@@ -2249,9 +2245,6 @@ msgstr "Ein unbekannter Fehler ist aufgetreten"
 
 msgid "An update is ready to install."
 msgstr "Ein Update ist bereit zur Installation."
-
-msgid "and {hidden} more"
-msgstr "und {hidden} weitere"
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android ist unterwegs. Erfahre als Erstes, wenn es erscheint."
@@ -5112,9 +5105,6 @@ msgstr "Verzweigen in einen neuen Worktree fehlgeschlagen"
 msgid "Couldn't branch the conversation"
 msgstr "Unterhaltung konnte nicht verzweigt werden"
 
-msgid "Couldn't check the files"
-msgstr "Die Dateien konnten nicht geprüft werden"
-
 msgid "Couldn't check what removing this member affects"
 msgstr "Die Auswirkungen der Entfernung dieses Mitglieds konnten nicht geprüft werden"
 
@@ -5257,9 +5247,6 @@ msgstr "„{projectName}“ konnte nicht wiederhergestellt werden"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "„{workspaceName}“ konnte nicht wiederhergestellt werden"
-
-msgid "Couldn't restore the files"
-msgstr "Dateien konnten nicht wiederhergestellt werden"
 
 msgid "Couldn't save"
 msgstr "Konnte nicht gespeichert werden"
@@ -5940,9 +5927,6 @@ msgstr "Arbeitsbereich löschen"
 msgid "Delete workspace \"{workspaceName}\"?"
 msgstr "Arbeitsbereich \"{workspaceName}\" löschen?"
 
-msgid "deleted"
-msgstr "gelöscht"
-
 msgid "Deleted"
 msgstr "Gelöscht"
 
@@ -6581,9 +6565,6 @@ msgstr "{name} ×{tier} erhalten"
 msgid "Edit"
 msgstr "Bearbeiten"
 
-msgid "Edit and restore files"
-msgstr "Bearbeiten und Dateien wiederherstellen"
-
 msgid "Edit comment"
 msgstr "Kommentar bearbeiten"
 
@@ -6613,9 +6594,6 @@ msgstr "Skript bearbeiten"
 
 msgid "Edit your comment…"
 msgstr "Kommentar bearbeiten…"
-
-msgid "Edit, keep files"
-msgstr "Bearbeiten, Dateien behalten"
 
 msgid "Edited"
 msgstr "Bearbeitet"
@@ -7595,9 +7573,6 @@ msgstr "Dateien & Editor"
 
 msgid "Files changed"
 msgstr "Geänderte Dateien"
-
-msgid "Files restored to before that message"
-msgstr "Dateien auf den Stand vor dieser Nachricht zurückgesetzt"
 
 msgid "files to exclude (glob)"
 msgstr "Auszuschließende Dateien (Glob)"
@@ -9404,8 +9379,8 @@ msgstr "Latenz"
 msgid "Later"
 msgstr "Später"
 
-msgid "Later messages and their file changes are removed."
-msgstr "Spätere Nachrichten und ihre Dateiänderungen werden entfernt."
+msgid "Later messages are removed."
+msgstr "Spätere Nachrichten werden entfernt."
 
 msgid "Latest"
 msgstr "Neueste"
@@ -10559,9 +10534,6 @@ msgstr "Nie"
 
 msgid "Never asks before acting"
 msgstr "Fragt nie vor dem Handeln"
-
-msgid "new"
-msgstr "neu"
 
 msgid "New"
 msgstr "Neu"
@@ -14283,9 +14255,6 @@ msgstr "„{workspaceName}“ wiederhergestellt"
 msgid "Restoring \"{workspaceName}\"…"
 msgstr "„{workspaceName}“ wird wiederhergestellt…"
 
-msgid "Restoring puts them back as they were before this message, including changes you made yourself. A snapshot of the current files is kept first."
-msgstr "Beim Wiederherstellen werden sie auf den Stand vor dieser Nachricht zurückgesetzt, auch Änderungen, die du selbst gemacht hast. Vorher wird ein Snapshot der aktuellen Dateien gespeichert."
-
 msgid "Restoring your session"
 msgstr "Sitzung wird wiederhergestellt"
 
@@ -17543,9 +17512,6 @@ msgstr "Themes"
 
 msgid "Themes and agents"
 msgstr "Themes und Agenten"
-
-msgid "There was no file snapshot for that message, so the files were left as they are."
-msgstr "Für diese Nachricht gab es keinen Datei-Snapshot, daher wurden die Dateien nicht verändert."
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Diese Befehle laufen automatisch, wenn ein Arbeitsbereich erstellt wird. <0>Zur Doku<1/></0>"

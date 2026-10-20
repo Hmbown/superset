@@ -69,11 +69,7 @@ describe("rewindTimeline", () => {
 				turnId: "t3",
 				turn: null,
 				entries: [
-					userItem(
-						"h1",
-						buildChatRewindPrompt({ transcript: earlier, filesRestored: true }),
-						4,
-					),
+					userItem("h1", buildChatRewindPrompt({ transcript: earlier }), 4),
 					agentItem("ack"),
 					userItem("u4", "again", 5),
 					agentItem("a4"),

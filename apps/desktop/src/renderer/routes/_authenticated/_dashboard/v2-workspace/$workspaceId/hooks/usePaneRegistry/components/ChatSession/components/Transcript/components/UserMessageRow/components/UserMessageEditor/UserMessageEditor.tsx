@@ -45,7 +45,7 @@ export function UserMessageEditor({
 			/>
 			<div className="flex items-center justify-end gap-2">
 				<span className="mr-auto text-muted-foreground text-xs">
-					<Trans>Later messages and their file changes are removed.</Trans>
+					<Trans>Later messages are removed.</Trans>
 				</span>
 				<Button onClick={onCancel} size="sm" variant="ghost">
 					<Trans>Cancel</Trans>

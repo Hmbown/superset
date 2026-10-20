@@ -41,19 +41,12 @@ import {
 	queuedPromptInputSchema,
 	respondToApprovalInputSchema,
 	resumeQueueInputSchema,
-	rewindFilesInputSchema,
 	rewindSessionInputSchema,
 	setConfigOptionInputSchema,
 	setModeInputSchema,
 	stopBackgroundTaskInputSchema,
 } from "@superset/chat/protocol";
 import { z } from "zod";
-import type {
-	ChatCheckpoints,
-	RewindChangesResult,
-	RewindFilesResult,
-	RewindSupport,
-} from "../../checkpoints";
 import type { ChatDb, ChatSessionRow } from "../../db";
 import type { ChatJournal } from "../../journal";
 import type { ChatSessionStore } from "../../projection";
@@ -85,11 +78,6 @@ export const forkSessionCommandSchema = forkSessionInputSchema.extend({
 	cwd: z.string().min(1),
 });
 export type ForkSessionCommandInput = z.input<typeof forkSessionCommandSchema>;
-
-export const rewindFilesCommandSchema = rewindFilesInputSchema.extend({
-	cwd: z.string().min(1),
-});
-export type RewindFilesCommandInput = z.input<typeof rewindFilesCommandSchema>;
 
 export const rewindSessionCommandSchema = rewindSessionInputSchema.extend({
 	cwd: z.string().min(1),
@@ -196,14 +184,7 @@ export type ChatCommands = {
 	forkSession(
 		input: ForkSessionCommandInput,
 	): Promise<CreateSessionResult | null>;
-	rewindFiles(input: RewindFilesCommandInput): Promise<RewindFilesResult>;
-	getRewindChanges(input: {
-		sessionId: string;
-		itemId: string;
-		cwd: string;
-	}): Promise<RewindChangesResult>;
 	rewindSession(input: RewindSessionCommandInput): Promise<CreateSessionResult>;
-	getRewindSupport(input: { cwd: string }): Promise<RewindSupport>;
 	getSession(input: GetSessionInput): GetSessionResult;
 	getQueue(input: GetSessionInput): GetQueueResult;
 	listSessions(input: ListSessionsCommandInput): ChatSessionListEntry[];
@@ -230,7 +211,6 @@ export type CommandsOptions = {
 	db: ChatDb;
 	sessions: ChatSessionStore;
 	live: LiveSessionRegistry;
-	checkpoints?: ChatCheckpoints;
 	dedupe: { run<T>(commandId: string, execute: () => T): T };
 	mintSessionId?: () => string;
 };
@@ -452,30 +432,6 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 			});
 		},
 
-		async rewindFiles(input) {
-			const parsed = rewindFilesCommandSchema.parse(input);
-			if (!options.checkpoints) return { files: "unsupported" };
-			if (options.live.get(parsed.sessionId)?.busy) {
-				throw new Error(`chat session ${parsed.sessionId} is still working`);
-			}
-			const files = await options.checkpoints.restore({
-				cwd: parsed.cwd,
-				sessionId: parsed.sessionId,
-				itemId: parsed.itemId,
-			});
-			return { files };
-		},
-
-		async getRewindChanges({ sessionId, itemId, cwd }) {
-			if (!options.checkpoints?.changes) return { files: "unsupported" };
-			const changes = await options.checkpoints.changes({
-				cwd,
-				sessionId,
-				itemId,
-			});
-			return changes ? { files: "listed", changes } : { files: "missing" };
-		},
-
 		/**
 		 * A rewind continues in a new session with the transcript before the
 		 * chosen message copied in, so the chat reads the same. An agent that can
@@ -530,18 +486,6 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 					try {
 						const live = options.live.require(created.sessionId);
 						live.seed(before.events);
-						await options.checkpoints
-							?.fork?.({
-								cwd: parsed.cwd,
-								fromSessionId: parsed.sessionId,
-								toSessionId: created.sessionId,
-							})
-							.catch((error: unknown) =>
-								console.warn(
-									"[chat-runtime] could not carry checkpoints over",
-									error,
-								),
-							);
 						if (parsed.handoffPrompt && !forked) {
 							live.prompt(
 								[{ type: "text", text: parsed.handoffPrompt }],
@@ -559,13 +503,6 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 					return created;
 				},
 			);
-		},
-
-		async getRewindSupport({ cwd }) {
-			const files = options.checkpoints
-				? await (options.checkpoints.available?.(cwd) ?? Promise.resolve(true))
-				: false;
-			return { files };
 		},
 
 		async closeSession(input) {

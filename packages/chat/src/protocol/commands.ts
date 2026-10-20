@@ -95,13 +95,6 @@ export const forkSessionInputSchema = z.object({
 });
 export type ForkSessionInput = z.infer<typeof forkSessionInputSchema>;
 
-/** Puts the working tree back as it was just before `itemId` reached the agent. */
-export const rewindFilesInputSchema = z.object({
-	...commandBaseFields,
-	itemId: z.string().min(1),
-});
-export type RewindFilesInput = z.infer<typeof rewindFilesInputSchema>;
-
 /**
  * Opens a new session holding the conversation before `itemId`, and hands the
  * agent that conversation in a prompt the transcript does not show.
@@ -114,18 +107,6 @@ export const rewindSessionInputSchema = z.object({
 	modelId: z.string().optional(),
 });
 export type RewindSessionInput = z.infer<typeof rewindSessionInputSchema>;
-
-/** Lists what a files rewind to `itemId` would undo, without undoing it. */
-export const getRewindChangesInputSchema = z.object({
-	sessionId: z.string().min(1),
-	itemId: z.string().min(1),
-});
-export type GetRewindChangesInput = z.infer<typeof getRewindChangesInputSchema>;
-
-export const getRewindSupportInputSchema = z.object({
-	sessionId: z.string().min(1),
-});
-export type GetRewindSupportInput = z.infer<typeof getRewindSupportInputSchema>;
 
 /**
  * Stops the session's harness process. The transcript stays readable; only the

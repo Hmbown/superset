@@ -144,10 +144,6 @@ msgstr "{0, plural, one {# mislukt} other {# mislukt}}"
 msgid "{0, plural, one {# failing} other {# failing}}"
 msgstr "{0, plural, one {# mislukt} other {# mislukt}}"
 
-#. placeholder {0}: plan.changes.length
-msgid "{0, plural, one {# file changed since this message} other {# files changed since this message}}"
-msgstr "{0, plural, one {# bestand gewijzigd sinds dit bericht} other {# bestanden gewijzigd sinds dit bericht}}"
-
 #. placeholder {0}: detail.pullRequest.changedFiles
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {# bestand gewijzigd} other {# bestanden gewijzigd}}"
@@ -2249,9 +2245,6 @@ msgstr "Er is een onbekende fout opgetreden"
 
 msgid "An update is ready to install."
 msgstr "Er staat een update klaar om te installeren."
-
-msgid "and {hidden} more"
-msgstr "en nog {hidden}"
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android komt eraan. Hoor het als eerste wanneer het uitkomt."
@@ -5112,9 +5105,6 @@ msgstr "Kon niet afsplitsen naar een nieuwe worktree"
 msgid "Couldn't branch the conversation"
 msgstr "Kon het gesprek niet afsplitsen"
 
-msgid "Couldn't check the files"
-msgstr "Kan de bestanden niet controleren"
-
 msgid "Couldn't check what removing this member affects"
 msgstr "Kon niet controleren wat het verwijderen van dit lid beïnvloedt"
 
@@ -5257,9 +5247,6 @@ msgstr "Kan \"{projectName}\" niet herstellen"
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "Kan \"{workspaceName}\" niet herstellen"
-
-msgid "Couldn't restore the files"
-msgstr "Kan de bestanden niet herstellen"
 
 msgid "Couldn't save"
 msgstr "Kan niet opslaan"
@@ -5940,9 +5927,6 @@ msgstr "Werkruimte verwijderen"
 msgid "Delete workspace \"{workspaceName}\"?"
 msgstr "Werkruimte \"{workspaceName}\" verwijderen?"
 
-msgid "deleted"
-msgstr "verwijderd"
-
 msgid "Deleted"
 msgstr "Verwijderd"
 
@@ -6581,9 +6565,6 @@ msgstr "{name} ×{tier} behaald"
 msgid "Edit"
 msgstr "Bewerken"
 
-msgid "Edit and restore files"
-msgstr "Bewerken en bestanden herstellen"
-
 msgid "Edit comment"
 msgstr "Opmerking bewerken"
 
@@ -6613,9 +6594,6 @@ msgstr "Script bewerken"
 
 msgid "Edit your comment…"
 msgstr "Bewerk je reactie…"
-
-msgid "Edit, keep files"
-msgstr "Bewerken, bestanden behouden"
 
 msgid "Edited"
 msgstr "Bewerkt"
@@ -7595,9 +7573,6 @@ msgstr "Bestanden en editor"
 
 msgid "Files changed"
 msgstr "Gewijzigde bestanden"
-
-msgid "Files restored to before that message"
-msgstr "Bestanden hersteld naar vóór dat bericht"
 
 msgid "files to exclude (glob)"
 msgstr "uit te sluiten bestanden (glob)"
@@ -9404,8 +9379,8 @@ msgstr "Latentie"
 msgid "Later"
 msgstr "Later"
 
-msgid "Later messages and their file changes are removed."
-msgstr "Latere berichten en hun bestandswijzigingen worden verwijderd."
+msgid "Later messages are removed."
+msgstr "Latere berichten worden verwijderd."
 
 msgid "Latest"
 msgstr "Nieuwste"
@@ -10559,9 +10534,6 @@ msgstr "Nooit"
 
 msgid "Never asks before acting"
 msgstr "Vraagt nooit vooraf"
-
-msgid "new"
-msgstr "nieuw"
 
 msgid "New"
 msgstr "Nieuw"
@@ -14283,9 +14255,6 @@ msgstr "\"{workspaceName}\" hersteld"
 msgid "Restoring \"{workspaceName}\"…"
 msgstr "\"{workspaceName}\" wordt hersteld…"
 
-msgid "Restoring puts them back as they were before this message, including changes you made yourself. A snapshot of the current files is kept first."
-msgstr "Herstellen zet ze terug zoals ze vóór dit bericht waren, inclusief wijzigingen die je zelf hebt gemaakt. Eerst wordt een snapshot van de huidige bestanden bewaard."
-
 msgid "Restoring your session"
 msgstr "Je sessie wordt hersteld"
 
@@ -17543,9 +17512,6 @@ msgstr "Thema's"
 
 msgid "Themes and agents"
 msgstr "Thema's en agents"
-
-msgid "There was no file snapshot for that message, so the files were left as they are."
-msgstr "Er was geen bestandssnapshot voor dat bericht, dus de bestanden zijn ongewijzigd gelaten."
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Deze commando's draaien automatisch wanneer een werkruimte wordt aangemaakt. <0>Lees onze docs<1/></0>"

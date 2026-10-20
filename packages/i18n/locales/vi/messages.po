@@ -144,10 +144,6 @@ msgstr "{0, plural, one {# thất bại} other {# thất bại}}"
 msgid "{0, plural, one {# failing} other {# failing}}"
 msgstr "{0, plural, one {# thất bại} other {# thất bại}}"
 
-#. placeholder {0}: plan.changes.length
-msgid "{0, plural, one {# file changed since this message} other {# files changed since this message}}"
-msgstr "{0, plural, other {# tệp đã thay đổi kể từ tin nhắn này}}"
-
 #. placeholder {0}: detail.pullRequest.changedFiles
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {# tệp thay đổi} other {# tệp thay đổi}}"
@@ -2249,9 +2245,6 @@ msgstr "Đã xảy ra lỗi không xác định"
 
 msgid "An update is ready to install."
 msgstr "Đã có bản cập nhật sẵn sàng để cài đặt."
-
-msgid "and {hidden} more"
-msgstr "và {hidden} tệp khác"
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Bản Android đang đến. Hãy là người đầu tiên biết khi nó ra mắt."
@@ -5112,9 +5105,6 @@ msgstr "Không thể tạo nhánh sang worktree mới"
 msgid "Couldn't branch the conversation"
 msgstr "Không thể tạo nhánh hội thoại"
 
-msgid "Couldn't check the files"
-msgstr "Không thể kiểm tra các tệp"
-
 msgid "Couldn't check what removing this member affects"
 msgstr "Không kiểm tra được việc gỡ thành viên này ảnh hưởng đến những gì"
 
@@ -5257,9 +5247,6 @@ msgstr "Không thể khôi phục \"{projectName}\""
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "Không thể khôi phục \"{workspaceName}\""
-
-msgid "Couldn't restore the files"
-msgstr "Không thể khôi phục tệp"
 
 msgid "Couldn't save"
 msgstr "Không lưu được"
@@ -5940,9 +5927,6 @@ msgstr "Xóa workspace"
 msgid "Delete workspace \"{workspaceName}\"?"
 msgstr "Xóa workspace \"{workspaceName}\"?"
 
-msgid "deleted"
-msgstr "đã xóa"
-
 msgid "Deleted"
 msgstr "Đã xóa"
 
@@ -6581,9 +6565,6 @@ msgstr "Đã đạt {name} ×{tier}"
 msgid "Edit"
 msgstr "Sửa"
 
-msgid "Edit and restore files"
-msgstr "Chỉnh sửa và khôi phục tệp"
-
 msgid "Edit comment"
 msgstr "Sửa bình luận"
 
@@ -6613,9 +6594,6 @@ msgstr "Sửa script"
 
 msgid "Edit your comment…"
 msgstr "Sửa bình luận của bạn…"
-
-msgid "Edit, keep files"
-msgstr "Chỉnh sửa, giữ tệp"
 
 msgid "Edited"
 msgstr "Đã sửa"
@@ -7595,9 +7573,6 @@ msgstr "Tệp và trình soạn thảo"
 
 msgid "Files changed"
 msgstr "Tệp đã thay đổi"
-
-msgid "Files restored to before that message"
-msgstr "Đã khôi phục tệp về trước tin nhắn đó"
 
 msgid "files to exclude (glob)"
 msgstr "tệp cần loại trừ (glob)"
@@ -9404,8 +9379,8 @@ msgstr "Độ trễ"
 msgid "Later"
 msgstr "Để sau"
 
-msgid "Later messages and their file changes are removed."
-msgstr "Các tin nhắn sau và thay đổi tệp của chúng sẽ bị xóa."
+msgid "Later messages are removed."
+msgstr "Các tin nhắn sau sẽ bị xóa."
 
 msgid "Latest"
 msgstr "Mới nhất"
@@ -10559,9 +10534,6 @@ msgstr "Chưa bao giờ"
 
 msgid "Never asks before acting"
 msgstr "Không bao giờ hỏi trước"
-
-msgid "new"
-msgstr "mới"
 
 msgid "New"
 msgstr "Mới"
@@ -14283,9 +14255,6 @@ msgstr "Đã khôi phục \"{workspaceName}\""
 msgid "Restoring \"{workspaceName}\"…"
 msgstr "Đang khôi phục \"{workspaceName}\"…"
 
-msgid "Restoring puts them back as they were before this message, including changes you made yourself. A snapshot of the current files is kept first."
-msgstr "Khôi phục sẽ đưa chúng về như trước tin nhắn này, kể cả thay đổi do bạn tự thực hiện. Ảnh chụp các tệp hiện tại được lưu trước."
-
 msgid "Restoring your session"
 msgstr "Đang khôi phục phiên của bạn"
 
@@ -17543,9 +17512,6 @@ msgstr "Chủ đề"
 
 msgid "Themes and agents"
 msgstr "Giao diện và agent"
-
-msgid "There was no file snapshot for that message, so the files were left as they are."
-msgstr "Không có ảnh chụp tệp cho tin nhắn đó, nên các tệp được giữ nguyên."
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Các lệnh này chạy tự động khi một workspace được tạo. <0>Đọc tài liệu<1/></0>"

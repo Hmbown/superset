@@ -144,10 +144,6 @@ msgstr "{0, plural, one {# failed} other {# failed}}"
 msgid "{0, plural, one {# failing} other {# failing}}"
 msgstr "{0, plural, one {# failing} other {# failing}}"
 
-#. placeholder {0}: plan.changes.length
-msgid "{0, plural, one {# file changed since this message} other {# files changed since this message}}"
-msgstr "{0, plural, one {# file changed since this message} other {# files changed since this message}}"
-
 #. placeholder {0}: detail.pullRequest.changedFiles
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {# file changed} other {# files changed}}"
@@ -2249,9 +2245,6 @@ msgstr "An unknown error occurred"
 
 msgid "An update is ready to install."
 msgstr "An update is ready to install."
-
-msgid "and {hidden} more"
-msgstr "and {hidden} more"
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android is on the way. Be first to know when it ships."
@@ -5112,9 +5105,6 @@ msgstr "Couldn't branch into a new worktree"
 msgid "Couldn't branch the conversation"
 msgstr "Couldn't branch the conversation"
 
-msgid "Couldn't check the files"
-msgstr "Couldn't check the files"
-
 msgid "Couldn't check what removing this member affects"
 msgstr "Couldn't check what removing this member affects"
 
@@ -5257,9 +5247,6 @@ msgstr "Couldn't restore \"{projectName}\""
 
 msgid "Couldn't restore \"{workspaceName}\""
 msgstr "Couldn't restore \"{workspaceName}\""
-
-msgid "Couldn't restore the files"
-msgstr "Couldn't restore the files"
 
 msgid "Couldn't save"
 msgstr "Couldn't save"
@@ -5940,9 +5927,6 @@ msgstr "Delete workspace"
 msgid "Delete workspace \"{workspaceName}\"?"
 msgstr "Delete workspace \"{workspaceName}\"?"
 
-msgid "deleted"
-msgstr "deleted"
-
 msgid "Deleted"
 msgstr "Deleted"
 
@@ -6581,9 +6565,6 @@ msgstr "Earned {name} ×{tier}"
 msgid "Edit"
 msgstr "Edit"
 
-msgid "Edit and restore files"
-msgstr "Edit and restore files"
-
 msgid "Edit comment"
 msgstr "Edit comment"
 
@@ -6613,9 +6594,6 @@ msgstr "Edit script"
 
 msgid "Edit your comment…"
 msgstr "Edit your comment…"
-
-msgid "Edit, keep files"
-msgstr "Edit, keep files"
 
 msgid "Edited"
 msgstr "Edited"
@@ -7595,9 +7573,6 @@ msgstr "Files & Editor"
 
 msgid "Files changed"
 msgstr "Files changed"
-
-msgid "Files restored to before that message"
-msgstr "Files restored to before that message"
 
 msgid "files to exclude (glob)"
 msgstr "files to exclude (glob)"
@@ -9404,8 +9379,8 @@ msgstr "Latency"
 msgid "Later"
 msgstr "Later"
 
-msgid "Later messages and their file changes are removed."
-msgstr "Later messages and their file changes are removed."
+msgid "Later messages are removed."
+msgstr "Later messages are removed."
 
 msgid "Latest"
 msgstr "Latest"
@@ -10559,9 +10534,6 @@ msgstr "Never"
 
 msgid "Never asks before acting"
 msgstr "Never asks before acting"
-
-msgid "new"
-msgstr "new"
 
 msgid "New"
 msgstr "New"
@@ -14283,9 +14255,6 @@ msgstr "Restored \"{workspaceName}\""
 msgid "Restoring \"{workspaceName}\"…"
 msgstr "Restoring \"{workspaceName}\"…"
 
-msgid "Restoring puts them back as they were before this message, including changes you made yourself. A snapshot of the current files is kept first."
-msgstr "Restoring puts them back as they were before this message, including changes you made yourself. A snapshot of the current files is kept first."
-
 msgid "Restoring your session"
 msgstr "Restoring your session"
 
@@ -17543,9 +17512,6 @@ msgstr "Themes"
 
 msgid "Themes and agents"
 msgstr "Themes and agents"
-
-msgid "There was no file snapshot for that message, so the files were left as they are."
-msgstr "There was no file snapshot for that message, so the files were left as they are."
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
