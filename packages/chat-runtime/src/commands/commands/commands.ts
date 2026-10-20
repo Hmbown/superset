@@ -436,7 +436,7 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 		 * A rewind continues in a new session with the transcript before the
 		 * chosen message copied in, so the chat reads the same. An agent that can
 		 * fork at a message resumes its own history cut there; any other is told
-		 * that conversation in a prompt the transcript does not show.
+		 * that conversation in a hidden part of the edited prompt.
 		 */
 		async rewindSession(input) {
 			const parsed = rewindSessionCommandSchema.parse(input);
@@ -486,14 +486,21 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 					try {
 						const live = options.live.require(created.sessionId);
 						live.seed(before.events);
-						if (parsed.handoffPrompt && !forked) {
-							live.prompt(
-								[{ type: "text", text: parsed.handoffPrompt }],
-								`rewind-${parsed.commandId}`,
-								undefined,
-								true,
-							);
-						}
+						live.prompt(
+							[
+								...(parsed.handoffPrompt && !forked
+									? [
+											{
+												type: "text" as const,
+												text: parsed.handoffPrompt,
+												hidden: true,
+											},
+										]
+									: []),
+								{ type: "text", text: parsed.prompt },
+							],
+							`rewind-${parsed.commandId}`,
+						);
 					} catch (error) {
 						await this.closeSession({ sessionId: created.sessionId }).catch(
 							() => undefined,

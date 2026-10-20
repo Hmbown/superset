@@ -96,12 +96,14 @@ export const forkSessionInputSchema = z.object({
 export type ForkSessionInput = z.infer<typeof forkSessionInputSchema>;
 
 /**
- * Opens a new session holding the conversation before `itemId`, and hands the
- * agent that conversation in a prompt the transcript does not show.
+ * Opens a new session holding the conversation before `itemId` and sends
+ * `prompt` there. An agent that cannot fork at that message also gets
+ * `handoffPrompt`, as a hidden part of the same prompt.
  */
 export const rewindSessionInputSchema = z.object({
 	...commandBaseFields,
 	itemId: z.string().min(1),
+	prompt: z.string().min(1),
 	handoffPrompt: z.string().min(1).optional(),
 	modeId: z.string().optional(),
 	modelId: z.string().optional(),

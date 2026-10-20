@@ -6,7 +6,7 @@ import { getAgentModelSupport } from "@superset/shared/agent-models";
 import {
 	buildChatRewindPrompt,
 	buildChatSessionHandoffPrompt,
-} from "@superset/shared/terminal-session-handoff";
+} from "@superset/shared/session-handoff";
 import { alert } from "@superset/ui/atoms/Alert";
 import { toast } from "@superset/ui/sonner";
 import { useWorkspaceClient } from "@superset/workspace-client";
@@ -95,7 +95,7 @@ export function AcpChatPane({
 	onOpenLink?: OpenLink;
 	onSwitchAgent?: (target: AgentSwitchTarget) => void;
 	onOpenAgentChat?: (target: AgentSwitchTarget) => void;
-	onRewound?: (handoffPrompt: string | null, editedPrompt: string) => void;
+	onRewound?: (prompt: string) => void;
 	modelId?: string;
 	modelLabel?: string;
 	modeId?: string;
@@ -482,6 +482,7 @@ export function AcpChatPane({
 					sessionId,
 					itemId: request.itemId,
 					workspaceId,
+					prompt: request.messageText,
 					...(handoffPrompt ? { handoffPrompt } : {}),
 					...(modelId ? { modelId } : {}),
 					...(modeId ? { modeId } : {}),
@@ -505,10 +506,14 @@ export function AcpChatPane({
 			}
 			if (!mounted.current) return;
 			if (rewound) {
-				onSessionCreated(rewound.sessionId, request.messageText);
+				onSessionCreated(rewound.sessionId);
 			} else {
 				attaching.current = false;
-				onRewound(handoffPrompt, request.messageText);
+				onRewound(
+					handoffPrompt
+						? `${handoffPrompt}\n\n${request.messageText}`
+						: request.messageText,
+				);
 			}
 			void wiring.transport
 				.closeSession({ sessionId })

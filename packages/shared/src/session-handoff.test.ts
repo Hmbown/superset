@@ -2,11 +2,9 @@ import { describe, expect, it } from "bun:test";
 import {
 	boundTranscriptText,
 	buildBoundedTerminalSessionTranscript,
-	buildChatRewindPrompt,
 	buildTerminalSessionHandoffPrompt,
-	parseChatRewindPrompt,
 	TERMINAL_HANDOFF_MAX_CHARS,
-} from "./terminal-session-handoff";
+} from "./session-handoff";
 
 const LONE_SURROGATE =
 	/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/;
@@ -132,15 +130,5 @@ describe("buildTerminalSessionHandoffPrompt", () => {
 		expect(prompt).toStartWith(
 			"Continue the work from a previous terminal session.",
 		);
-	});
-});
-
-describe("parseChatRewindPrompt", () => {
-	it("returns the conversation a rewind prompt carried", () => {
-		const transcript = "User: add a test\n\nClaude: ```ts\ntest()\n```";
-		expect(parseChatRewindPrompt(buildChatRewindPrompt({ transcript }))).toBe(
-			transcript,
-		);
-		expect(parseChatRewindPrompt("User: add a test")).toBeNull();
 	});
 });

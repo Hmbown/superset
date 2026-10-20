@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { randomUUID } from "node:crypto";
 import { deriveTimeline, emptySnapshot, reduceMany } from "@superset/chat/core";
-import type { UserMessage } from "@superset/chat/protocol";
+import { type UserMessage, wrapHiddenText } from "@superset/chat/protocol";
 import type { FakeHarnessScript } from "../../harness/fake";
 import { FakeHarness } from "../../harness/fake";
 import type { ChatRuntime } from "../../index";
@@ -314,7 +314,7 @@ describe("chat commands", () => {
 		await runtime.dispose();
 	});
 
-	test("rewindSession opens a session holding the transcript before a message, with the handoff out of view", async () => {
+	test("rewindSession sends the edited message with the earlier conversation hidden in the same prompt", async () => {
 		const later = Date.now() + 60_000;
 		const scriptedTurn = (turnId: string, text: string) => [
 			{ kind: "turn" as const, turn: turn(turnId, { startedAtMs: later }) },
@@ -338,11 +338,18 @@ describe("chat commands", () => {
 			{ turns: [scriptedTurn("t3", "got it")] },
 		];
 		let created = 0;
+		const sent: unknown[] = [];
+		class RecordingHarness extends FakeHarness {
+			override prompt(content: Parameters<FakeHarness["prompt"]>[0]) {
+				sent.push(content);
+				return super.prompt(content);
+			}
+		}
 		const runtime = createTestRuntime({
 			harnesses: new Map([
 				[
 					FAKE_HARNESS,
-					() => new FakeHarness(scripts[created++] ?? { turns: [] }),
+					() => new RecordingHarness(scripts[created++] ?? { turns: [] }),
 				],
 			]),
 		});
@@ -367,6 +374,7 @@ describe("chat commands", () => {
 			commandId: randomUUID(),
 			sessionId,
 			itemId: second.itemId,
+			prompt: "second, edited",
 			handoffPrompt: "earlier conversation",
 			cwd: "/tmp/workspace",
 		});
@@ -389,14 +397,16 @@ describe("chat commands", () => {
 					? (item as UserMessage).content[0]
 					: item.id,
 			),
-		).toEqual([{ type: "text", text: "first" }, "t1-reply"]);
-		const handoff = envelopes.find(
-			(envelope) =>
-				envelope.event.type === "item" &&
-				envelope.event.item.kind === "user_message" &&
-				(envelope.event.item as UserMessage).hidden === true,
-		);
-		expect(handoff).toBeDefined();
+		).toEqual([
+			{ type: "text", text: "first" },
+			"t1-reply",
+			{ type: "text", text: "second, edited" },
+			"t3-reply",
+		]);
+		expect(sent.at(-1)).toEqual([
+			{ type: "text", text: wrapHiddenText("earlier conversation") },
+			{ type: "text", text: "second, edited" },
+		]);
 		await runtime.dispose();
 	});
 
@@ -425,10 +435,15 @@ describe("chat commands", () => {
 		];
 		const cuts: (string | undefined)[] = [];
 		const resumes: unknown[] = [];
+		const sent: unknown[] = [];
 		class CuttingHarness extends FakeHarness {
 			override start(options: Parameters<FakeHarness["start"]>[0]) {
 				resumes.push(options.resume);
 				return super.start(options);
+			}
+			override prompt(content: Parameters<FakeHarness["prompt"]>[0]) {
+				sent.push(content);
+				return super.prompt(content);
 			}
 			async fork(cut?: { upToMessageId: string }) {
 				cuts.push(cut?.upToMessageId);
@@ -467,6 +482,7 @@ describe("chat commands", () => {
 			commandId: randomUUID(),
 			sessionId,
 			itemId: second.itemId,
+			prompt: "second, edited",
 			handoffPrompt: "earlier conversation",
 			cwd: "/tmp/workspace",
 		};
@@ -479,15 +495,9 @@ describe("chat commands", () => {
 			harnessSessionId: "agent-forked",
 			quiet: true,
 		});
+		await waitFor(() => sent.length === 3);
+		expect(sent.at(-1)).toEqual([{ type: "text", text: "second, edited" }]);
 		const envelopes = journalEnvelopes(runtime, rewound.sessionId);
-		expect(
-			envelopes.some(
-				(envelope) =>
-					envelope.event.type === "item" &&
-					envelope.event.item.kind === "user_message" &&
-					(envelope.event.item as UserMessage).hidden === true,
-			),
-		).toBe(false);
 		expect(
 			deriveTimeline(reduceMany(emptySnapshot(), envelopes)).map(
 				(group) => group.turnId,
@@ -542,6 +552,7 @@ describe("chat commands", () => {
 			commandId: randomUUID(),
 			sessionId,
 			itemId: "u2",
+			prompt: "second, edited",
 			handoffPrompt: "earlier conversation",
 			cwd: "/tmp/workspace",
 		});
@@ -596,6 +607,7 @@ describe("chat commands", () => {
 				commandId: randomUUID(),
 				sessionId,
 				itemId: sent.itemId,
+				prompt: "second, edited",
 				handoffPrompt: "earlier conversation",
 				cwd: "/tmp/workspace",
 			}),

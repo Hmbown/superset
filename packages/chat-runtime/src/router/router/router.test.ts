@@ -161,6 +161,7 @@ describe("createChatRouter", () => {
 				commandId: randomUUID(),
 				sessionId: "missing",
 				itemId: "item-1",
+				prompt: "edited",
 				workspaceId: "workspace-1",
 			}),
 		).rejects.toMatchObject({ code: "NOT_FOUND" });

@@ -135,7 +135,6 @@ export class LiveSession {
 		content: UserContent[],
 		clientId: string,
 		steerTurnId?: string,
-		hidden = false,
 	): PromptResult {
 		const itemId = this.mintId();
 		const seq = ++this.sent;
@@ -178,7 +177,6 @@ export class LiveSession {
 			startedAtMs: this.now(),
 			content: shown,
 			...(queued ? { queued: true } : {}),
-			...(hidden ? { hidden: true } : {}),
 		};
 		const turnId = this.mintId();
 		if (queued) {

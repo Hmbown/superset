@@ -123,7 +123,7 @@ export function ChatPane({
 						],
 					})
 				}
-				onRewound={(handoffPrompt, editedPrompt) => {
+				onRewound={(prompt) => {
 					const { agent, chatModelId, chatModelLabel, chatModeId } =
 						latest.current;
 					ctx.actions.updateData({
@@ -133,12 +133,7 @@ export function ChatPane({
 						...(chatModelId ? { chatModelId } : {}),
 						...(chatModelLabel ? { chatModelLabel } : {}),
 						...(chatModeId ? { chatModeId } : {}),
-						...(handoffPrompt
-							? {
-									pendingPrompt: handoffPrompt,
-									queuedPrompts: [[{ type: "text", text: editedPrompt }]],
-								}
-							: { pendingPrompt: editedPrompt }),
+						pendingPrompt: prompt,
 					});
 				}}
 				onModeChange={(chatModeId) => {
