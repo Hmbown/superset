@@ -122,6 +122,111 @@ describe("transcriptRows", () => {
 		expect(rows[0]?.groupStart).toBe(true);
 	});
 
+	test("a message sent mid-turn moves the clock under it", () => {
+		const steer = { ...prompt, id: "u2", clientId: "c2" };
+		const rows = transcriptRows(
+			[
+				{
+					turnId: "t1",
+					turn: { id: "t1", status: "running", startedAtMs: 2 },
+					entries: [
+						{ kind: "item", item: prompt },
+						{ kind: "tool_run", items: [publish("b1", 3)] },
+						{ kind: "item", item: steer },
+					],
+				},
+			],
+			[],
+			new Set(),
+			find,
+		);
+		expect(rows.map((row) => row.kind)).toEqual([
+			"item",
+			"tool_run",
+			"item",
+			"working",
+		]);
+	});
+
+	test("the newest tool run stays open while its turn works, and closes once the turn moves on", () => {
+		const run = (id: string) => ({
+			kind: "tool_run" as const,
+			items: [{ ...publish(id, 3), status: "running" as const }],
+		});
+		const reply = {
+			kind: "item" as const,
+			item: {
+				id: "a1",
+				kind: "agent_message" as const,
+				text: "ok",
+				startedAtMs: 4,
+			},
+		};
+		const liveFlags = (
+			status: "running" | "completed",
+			entries: TurnGroup["entries"],
+		) =>
+			transcriptRows(
+				[
+					{
+						turnId: "t1",
+						turn: { id: "t1", status, startedAtMs: 2 },
+						entries,
+					},
+				],
+				[],
+				new Set(),
+				find,
+			).flatMap((row) => (row.kind === "tool_run" ? [row.live] : []));
+
+		expect(liveFlags("running", [run("b1"), reply, run("b2")])).toEqual([
+			false,
+			true,
+		]);
+		expect(liveFlags("running", [run("b1"), reply])).toEqual([false]);
+		expect(liveFlags("completed", [run("b1")])).toEqual([false]);
+	});
+
+	test("thinking around tool runs folds into one run, in order", () => {
+		const thought = (id: string) => ({
+			kind: "item" as const,
+			item: {
+				id,
+				kind: "reasoning" as const,
+				text: "thinking",
+				startedAtMs: 3,
+			},
+		});
+		const rows = transcriptRows(
+			[
+				{
+					turnId: "t1",
+					turn: { id: "t1", status: "completed", startedAtMs: 2 },
+					entries: [
+						thought("r1"),
+						{ kind: "tool_run", items: [publish("b1", 3)] },
+						thought("r2"),
+						{ kind: "tool_run", items: [publish("b2", 4)] },
+						thought("r3"),
+					],
+				},
+			],
+			[],
+			new Set(),
+			find,
+		);
+
+		expect(
+			rows.flatMap((row) =>
+				row.kind === "tool_run"
+					? [row.steps.map((step) => step.id).join(" ")]
+					: row.kind === "item"
+						? [row.item.id]
+						: [],
+			),
+		).toEqual(["r1 b1 r2 b2 r3"]);
+	});
+
 	test("a tool run starts collapsed unless it waits on an approval", () => {
 		const running = { id: "t1", status: "running" as const, startedAtMs: 2 };
 		const collapsedFlags = (pendingApprovalTargets: ReadonlySet<string>) =>

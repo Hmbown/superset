@@ -146,10 +146,17 @@ export function TurnGroupSection({
 			return (
 				<>
 					<ToolRunRow
-						collapsed={isEntryCollapsed(row.key, row.defaultCollapsed)}
+						collapsed={isEntryCollapsed(
+							row.key,
+							row.defaultCollapsed && !row.live,
+						)}
 						items={row.items}
 						onToggle={onToggleEntry}
 						rowKey={row.key}
+						steps={row.steps}
+						stepTexts={row.steps.map((step) =>
+							step.kind === "reasoning" ? displayText(snapshot, step.id) : "",
+						)}
 					/>
 					{imageRail(row.items)}
 					{pageCards(row.pages)}

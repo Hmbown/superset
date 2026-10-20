@@ -40,7 +40,11 @@ export type TranscriptRow =
 			key: string;
 			groupStart: boolean;
 			items: ToolCall[];
+			/** The run's tool calls with the agent's thinking between them, in order. */
+			steps: Item[];
 			defaultCollapsed: boolean;
+			/** The newest run of a turn still working: shown open until the turn moves on. */
+			live: boolean;
 			/** Pages to show as cards under the run, so a collapsed run still shows them. */
 			pages?: readonly PageLink[];
 	  }
@@ -84,12 +88,30 @@ export function transcriptRows(
 		};
 		const turnSettled = turn !== null && turn.status !== "running";
 		const links = turnPageLinks(group.entries, turnSettled, findPageLinks);
-		group.entries.forEach((entry, index) => {
-			if (entry.kind !== "item" || entry.item.kind !== "user_message") {
-				placeClock();
+		const lastPrompt = group.entries.findLastIndex(
+			(entry) => entry.kind === "item" && entry.item.kind === "user_message",
+		);
+		let run: Extract<TranscriptRow, { kind: "tool_run" }> | null = null;
+		let thoughts: Item[] = [];
+		const flushThoughts = () => {
+			for (const item of thoughts) {
+				push({ kind: "item", key: transcriptItemKey(item), groupStart, item });
 			}
+			thoughts = [];
+		};
+		for (let index = 0; index < group.entries.length; index++) {
+			const entry = group.entries[index];
+			if (!entry) continue;
+			if (index > lastPrompt) placeClock();
 			if (entry.kind === "item") {
-				if (hiddenToolIds.has(entry.item.id)) return;
+				if (hiddenToolIds.has(entry.item.id)) continue;
+				if (entry.item.kind === "reasoning") {
+					if (run) run.steps.push(entry.item);
+					else thoughts.push(entry.item);
+					continue;
+				}
+				flushThoughts();
+				run = null;
 				const clientId =
 					entry.item.kind === "user_message"
 						? (entry.item as UserMessage).clientId
@@ -116,22 +138,36 @@ export function transcriptRows(
 					...(pagesShownEarlier ? { pagesShownEarlier } : {}),
 					...(afterTarget ? { afterTarget } : {}),
 				});
-				return;
+				continue;
 			}
 			const items = entry.items.filter((tool) => !hiddenToolIds.has(tool.id));
-			if (items.length === 0) return;
+			if (items.length === 0) continue;
 			const pages = items.flatMap((tool) => links.fromTools.get(tool.id) ?? []);
-			push({
+			const waiting = items.some((tool) => pendingApprovalTargets.has(tool.id));
+			if (run) {
+				run.items.push(...items);
+				run.steps.push(...items);
+				if (waiting) run.defaultCollapsed = false;
+				if (pages.length > 0) run.pages = [...(run.pages ?? []), ...pages];
+				continue;
+			}
+			run = {
 				kind: "tool_run",
 				key: toolRunKey(group.turnId, entry.items, index),
 				groupStart,
-				items,
-				defaultCollapsed: !items.some((tool) =>
-					pendingApprovalTargets.has(tool.id),
-				),
+				items: [...items],
+				steps: [...thoughts, ...items],
+				defaultCollapsed: !waiting,
+				live: false,
 				...(pages.length > 0 ? { pages } : {}),
-			});
-		});
+			};
+			thoughts = [];
+			push(run);
+		}
+		flushThoughts();
+		if (run && turn?.status === "running" && rows.at(-1) === run) {
+			run.live = true;
+		}
 		placeClock();
 		if (turn?.status === "failed" || turn?.status === "interrupted") {
 			push({

@@ -166,6 +166,8 @@ test("jumping into a collapsed run of tool calls opens it", async () => {
 		groupStart: false,
 		items: [tool, { ...tool, id: "tool-2", title: "Ran tests" }],
 		defaultCollapsed: true,
+		live: false,
+		steps: [tool, { ...tool, id: "tool-2", title: "Ran tests" }],
 	};
 	const { result, onToggleEntry, scrollToMessage } = renderFind({
 		rows: [itemRow(ask), run],
