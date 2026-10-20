@@ -11,7 +11,7 @@ export const USE_CASES: {
 		name: msg({ message: "Launch watch" }),
 		outcome: msg({
 			message:
-				"Every hour after a release, and whenever Sentry reports a new error, the agent checks what broke and opens draft fixes.",
+				"Fixes each new Sentry error, with a daily run for any it missed.",
 		}),
 	},
 	{
@@ -19,7 +19,7 @@ export const USE_CASES: {
 		name: msg({ message: "PR review" }),
 		outcome: msg({
 			message:
-				"When someone requests your review, the agent runs the tests and posts a review.",
+				"Runs the tests and reviews each pull request you're asked to review.",
 		}),
 	},
 	{
@@ -27,15 +27,14 @@ export const USE_CASES: {
 		name: msg({ message: "Nightly audit" }),
 		outcome: msg({
 			message:
-				"Every night, the agent applies the safe dependency updates, runs the tests, and lists what needs a decision.",
+				"Applies safe dependency updates every night and lists the rest.",
 		}),
 	},
 	{
 		path: "/recipes/slack-bug-reports",
 		name: msg({ message: "Bug reports" }),
 		outcome: msg({
-			message:
-				"When someone posts in #bugs, the agent finds the code and tries to fix it.",
+			message: "Tries a fix for each bug someone posts in #bugs.",
 		}),
 	},
 ];

@@ -1306,17 +1306,8 @@ msgstr "1 Std."
 msgid "1 user"
 msgstr "1 Nutzer"
 
-msgid "1 week ago"
-msgstr "vor 1 Woche"
-
 msgid "10+ concurrent workstreams without dropped state"
 msgstr "10+ parallele Arbeitsstränge ohne Kontrollverlust"
-
-msgid "10h ago"
-msgstr "vor 10 Std."
-
-msgid "12 packages have a newer version"
-msgstr "Für 12 Pakete gibt es eine neuere Version"
 
 msgid "12m ago"
 msgstr "vor 12 Min."
@@ -1324,20 +1315,11 @@ msgstr "vor 12 Min."
 msgid "15 min"
 msgstr "15 Min."
 
-msgid "16h ago"
-msgstr "vor 16 Std."
-
 msgid "1d ago"
 msgstr "vor 1 Tag"
 
 msgid "2 agents · 14 files changed"
 msgstr "2 Agenten · 14 Dateien geändert"
-
-msgid "2 min ago"
-msgstr "vor 2 Min."
-
-msgid "2 weeks ago"
-msgstr "vor 2 Wochen"
 
 msgid "2021 to 2023"
 msgstr "2021 bis 2023"
@@ -1351,9 +1333,6 @@ msgstr "2025 bis heute"
 msgid "2027"
 msgstr "2027"
 
-msgid "2d ago"
-msgstr "vor 2 Tagen"
-
 msgid "2h ago"
 msgstr "vor 2 Std."
 
@@ -1362,9 +1341,6 @@ msgstr "3 archivierte Arbeitsbereiche"
 
 msgid "3 files changed, 2 tests passing"
 msgstr "3 Dateien geändert, 2 Tests bestanden"
-
-msgid "3 weeks ago"
-msgstr "vor 3 Wochen"
 
 msgid "3+ concurrent workstreams per engineer"
 msgstr "3+ parallele Arbeitsstränge pro Ingenieur"
@@ -1383,9 +1359,6 @@ msgstr "42ms"
 
 msgid "45 files · +82 −172"
 msgstr "45 Dateien · +82 −172"
-
-msgid "4d ago"
-msgstr "vor 4 Tagen"
 
 msgid "5 days"
 msgstr "5 Tage"
@@ -1478,9 +1451,6 @@ msgstr "Ein neuer Workspace von diesem Branch, die Unterhaltung wird an einen ne
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "Eine Seite kann die Antwort jedes Lesers speichern, also funktioniert eine Umfrage ohne Backend."
 
-msgid "A POST to the automation's URL"
-msgstr "Ein POST an die URL der Automatisierung"
-
 msgid "A practical TypeScript problem, like the ones we solve every day. No algorithm puzzles."
 msgstr "Eine praxisnahe TypeScript-Aufgabe, wie wir sie jeden Tag lösen. Keine Algorithmus-Rätsel."
 
@@ -1490,6 +1460,9 @@ msgstr "In diesem Tab läuft noch ein Prozess"
 msgid "A process is still running in this terminal"
 msgstr "In diesem Terminal läuft noch ein Prozess"
 
+msgid "A prompt, some triggers, and a workspace for each run"
+msgstr "Ein Prompt, ein paar Auslöser und ein Arbeitsbereich pro Ausführung"
+
 msgid "A pull request always gets its own worktree"
 msgstr "Ein Pull Request bekommt immer einen eigenen Worktree"
 
@@ -1498,9 +1471,6 @@ msgstr "Eine neu gebaute Chat-Oberfläche zum Steuern von Agenten: reichere Tool
 
 msgid "A repository is not connected to this organization, or the repositories come from different GitHub installations"
 msgstr "Ein Repository ist nicht mit dieser Organisation verbunden, oder die Repositories stammen aus verschiedenen GitHub-Installationen"
-
-msgid "A review gets requested, an issue gets filed, someone posts in #bugs. Pick the event and the run starts when it comes in, with no schedule to wait for. The agent gets the event in its prompt, so it knows which PR or issue to look at."
-msgstr "Ein Review wird angefordert, ein Issue wird angelegt, jemand postet in #bugs. Wähle das Ereignis, und der Lauf startet, sobald es eintrifft, ohne auf einen Zeitplan zu warten. Der Agent erhält das Ereignis in seinem Prompt und weiß so, welchen PR oder welches Issue er sich ansehen soll."
 
 msgid "A run for this automation is already in progress."
 msgstr "Für diese Automatisierung läuft bereits ein Durchlauf."
@@ -1750,9 +1720,6 @@ msgstr "Zuhörenden Agenten hinzufügen"
 msgid "Add member"
 msgstr "Mitglied hinzufügen"
 
-msgid "Add more agents in Settings."
-msgstr "Füge in den Einstellungen weitere Agenten hinzu."
-
 msgid "Add more…"
 msgstr "Weitere hinzufügen…"
 
@@ -1827,9 +1794,6 @@ msgstr "Zur Seitenleiste hinzufügen"
 
 msgid "Add to workspace"
 msgstr "Zum Arbeitsbereich hinzufügen"
-
-msgid "Add Trigger"
-msgstr "Auslöser hinzufügen"
 
 msgid "Add your own terminal agent to this device."
 msgstr "Füge diesem Gerät einen eigenen Terminal-Agenten hinzu."
@@ -2327,14 +2291,14 @@ msgstr "Anthropic hat diesen Token abgelehnt."
 msgid "any account"
 msgstr "beliebiges Konto"
 
+msgid "Any agent you've set up in Superset, such as Claude Code or Codex."
+msgstr "Jeder Agent, den du in Superset eingerichtet hast, etwa Claude Code oder Codex."
+
 msgid "Any channel"
 msgstr "Beliebiger Channel"
 
 msgid "Any conclusion"
 msgstr "Beliebiges Ergebnis"
-
-msgid "Any custom RRule"
-msgstr "Beliebige eigene RRule"
 
 msgid "Any data source"
 msgstr "Beliebige Datenquelle"
@@ -2469,6 +2433,9 @@ msgstr "Apple-Logo"
 
 msgid "Application menu"
 msgstr "Anwendungsmenü"
+
+msgid "Applies safe dependency updates every night and lists the rest."
+msgstr "Spielt jede Nacht die sicheren Abhängigkeits-Updates ein und listet den Rest auf."
 
 msgid "Applies to"
 msgstr "Gilt für"
@@ -2827,9 +2794,6 @@ msgstr "Automatisierungen ({myFailedCount} fehlgeschlagen)"
 
 msgid "Automations & event triggers"
 msgstr "Automatisierungen & Ereignis-Trigger"
-
-msgid "Automations need a Pro or Enterprise plan; Microsoft Teams triggers need Enterprise. If you downgrade, your automations stay but stop running."
-msgstr "Automatisierungen erfordern einen Pro- oder Enterprise-Tarif; Microsoft-Teams-Auslöser erfordern Enterprise. Wenn du herabstufst, bleiben deine Automatisierungen erhalten, laufen aber nicht mehr."
 
 msgid "Automations require the Pro plan."
 msgstr "Automatisierungen erfordern den Pro-Plan."
@@ -3216,6 +3180,9 @@ msgstr "Browserverlauf"
 msgid "Bug"
 msgstr "Bug"
 
+msgid "Bug reports"
+msgstr "Fehlerberichte"
+
 msgid "Build in public"
 msgstr "Öffentlich entwickeln"
 
@@ -3339,6 +3306,9 @@ msgstr "Kamera ist nicht verfügbar"
 
 msgid "Can comment"
 msgstr "Kann kommentieren"
+
+msgid "Can I create automations from a script?"
+msgstr "Kann ich Automatisierungen per Skript erstellen?"
 
 msgid "Can I switch plans or cancel anytime?"
 msgstr "Kann ich jederzeit den Tarif wechseln oder kündigen?"
@@ -3572,9 +3542,6 @@ msgstr "Chat-Oberflächen: Nachrichten, Reasoning, Vorschläge"
 
 msgid "Check again"
 msgstr "Erneut prüfen"
-
-msgid "Check each package for a newer version. Update the safe ones and open a pull request."
-msgstr "Prüfe jedes Paket auf eine neuere Version. Aktualisiere die unbedenklichen und öffne einen Pull Request."
 
 msgid "Check for Update"
 msgstr "Nach Update suchen"
@@ -4215,9 +4182,6 @@ msgstr "Kommentar hinzugefügt"
 
 msgid "Comment mentions user"
 msgstr "Kommentar erwähnt Nutzer"
-
-msgid "Comment mentions you"
-msgstr "Kommentar erwähnt dich"
 
 msgid "Comment not found"
 msgstr "Kommentar nicht gefunden"
@@ -5512,9 +5476,6 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Erstellt"
 
-msgid "created · 2m ago"
-msgstr "erstellt · vor 2 Min."
-
 #. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
@@ -6044,9 +6005,6 @@ msgstr "Ablehnen"
 msgid "Dependencies"
 msgstr "Abhängigkeiten"
 
-msgid "Dependency sweep"
-msgstr "Abhängigkeits-Check"
-
 msgid "Depth"
 msgstr "Tiefe"
 
@@ -6339,9 +6297,6 @@ msgstr "Brauche ich eigene Abos für Coding-Agenten?"
 msgid "Do nothing"
 msgstr "Nichts tun"
 
-msgid "Do the React upgrade too."
-msgstr "Mach auch das React-Upgrade."
-
 msgid "Do you sponsor visas?"
 msgstr "Bietet ihr Visa-Sponsoring an?"
 
@@ -6470,6 +6425,9 @@ msgstr "Entwurf · Zeile {0}"
 msgid "Draft opened"
 msgstr "Entwurf geöffnet"
 
+msgid "Draft PR #2841"
+msgstr "Draft-PR #2841"
+
 msgid "drafted 3 support replies"
 msgstr "3 Support-Antworten entworfen"
 
@@ -6548,9 +6506,6 @@ msgstr "Jeder Agent läuft in seinem eigenen isolierten Git-Worktree. Keiner üb
 #. placeholder {0}: formatNumber(MAX_ATTACHMENT_BYTES / 1024 / 1024)
 msgid "Each attachment is at most {0} MB."
 msgstr "Jeder Anhang darf höchstens {0} MB groß sein."
-
-msgid "Each automation runs on the machine you pick. If it is offline when the automation fires, that run is missed."
-msgstr "Jede Automatisierung läuft auf der Maschine, die du auswählst. Ist sie offline, wenn die Automatisierung auslöst, entfällt dieser Lauf."
 
 msgid "Each in its own new tab"
 msgstr "Jeder in einem eigenen neuen Tab"
@@ -6776,9 +6731,6 @@ msgstr "URL eingeben..."
 msgid "Enterprise"
 msgstr "Enterprise"
 
-msgid "Enterprise plan"
-msgstr "Enterprise-Tarif"
-
 msgid "Environment"
 msgstr "Umgebung"
 
@@ -6833,17 +6785,11 @@ msgstr "Jede Achse trägt ihren Teil zur nächsten Stufe bei. Halte dieses Nivea
 msgid "Every day at <0>9:00 AM</0>"
 msgstr "Jeden Tag um <0>9:00 Uhr</0>"
 
-msgid "Every day at 3:00 AM"
-msgstr "Jeden Tag um 3:00 Uhr"
-
 msgid "Every Friday at 4pm, draft release notes from this week's merged PRs."
 msgstr "Jeden Freitag um 16 Uhr Release Notes aus den diese Woche gemergten PRs entwerfen."
 
 msgid "Every minute"
 msgstr "Jede Minute"
-
-msgid "Every Monday at 8:00 AM"
-msgstr "Jeden Montag um 8:00 Uhr"
 
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Alle Ziele tragen zur nächsten Stufe bei. Gemessen über die letzten 30 Tage."
@@ -7037,9 +6983,6 @@ msgstr "Fehlgeschlagen"
 msgctxt "agent status"
 msgid "Failed"
 msgstr "Fehlgeschlagen"
-
-msgid "Failed runs"
-msgstr "Fehlgeschlagene Ausführungen"
 
 msgid "Failed runs <0>· 7d</0>"
 msgstr "Fehlgeschlagene Läufe <0>· 7 T.</0>"
@@ -7736,6 +7679,9 @@ msgstr "Erstes Repository nach Name"
 msgid "Fix all failing checks"
 msgstr "Alle fehlgeschlagenen Prüfungen beheben"
 
+msgid "Fix cart total for empty carts. Adds a test that reproduces the TypeError."
+msgstr "Behebt die Warenkorbsumme für leere Warenkörbe. Fügt einen Test hinzu, der den TypeError reproduziert."
+
 msgid "Fix Check with Agent"
 msgstr "Prüfung mit Agent beheben"
 
@@ -7748,8 +7694,14 @@ msgstr "CI-Fehler beheben"
 msgid "Fix findings"
 msgstr "Befunde beheben"
 
+msgid "Fix new errors in web. Reproduce each one in a test and open a draft pull request."
+msgstr "Behebe neue Fehler in web. Reproduziere jeden in einem Test und öffne einen Draft-Pull-Request."
+
 msgid "fix-auth-redirect"
 msgstr "fix-auth-redirect"
+
+msgid "Fixes each new Sentry error, with a daily run for any it missed."
+msgstr "Behebt jeden neuen Sentry-Fehler, mit einer täglichen Ausführung für verpasste."
 
 msgid "FK"
 msgstr "FK"
@@ -8484,9 +8436,6 @@ msgstr "HotkeyTooltip.tsx"
 msgid "Hourly"
 msgstr "Stündlich"
 
-msgid "Hourly, daily, or weekly"
-msgstr "Stündlich, täglich oder wöchentlich"
-
 msgid "Hover Card"
 msgstr "Hover Card"
 
@@ -8522,6 +8471,9 @@ msgstr "So funktioniert's"
 
 msgid "How many hidden terminals stay fully loaded ({MIN_TERMINAL_PARKED_RUNTIME_CAP}–{MAX_TERMINAL_PARKED_RUNTIME_CAP}); older ones keep running but reload their last 1,000 lines when reopened"
 msgstr "Wie viele ausgeblendete Terminals vollständig geladen bleiben ({MIN_TERMINAL_PARKED_RUNTIME_CAP}–{MAX_TERMINAL_PARKED_RUNTIME_CAP}); ältere laufen weiter, laden beim Wiederöffnen aber nur ihre letzten 1.000 Zeilen"
+
+msgid "How many triggers can one automation have?"
+msgstr "Wie viele Auslöser kann eine Automatisierung haben?"
 
 msgid "How much agent work engineers are actually running — tokens, cost, models and sessions, published by people who opted in."
 msgstr "Wie viel Agent-Arbeit Engineers tatsächlich laufen lassen — Tokens, Kosten, Modelle und Sessions, veröffentlicht von Personen, die sich dafür entschieden haben."
@@ -8588,9 +8540,6 @@ msgstr "Ich kann mit meinem Kaffee im Café sitzen, während die Arbeit weiterge
 
 msgid "I start my morning walks with an idea, and end with a pull request."
 msgstr "Ich beginne meine Morgenspaziergänge mit einer Idee und beende sie mit einem Pull Request."
-
-msgid "I updated 9 packages and opened a pull request. React needs a major upgrade, so I left it for you."
-msgstr "Ich habe 9 Pakete aktualisiert und einen Pull Request geöffnet. React braucht ein Major-Upgrade, das habe ich dir überlassen."
 
 msgid "I'm #{rank} on the {company} leaderboard with {tokens} tokens of agent usage."
 msgstr "Ich bin #{rank} im {company}-Leaderboard mit {tokens} Tokens Agenten-Nutzung."
@@ -8755,15 +8704,6 @@ msgstr "Die Agenten-Anweisungen verbessern"
 msgid "Improved diff viewer"
 msgstr "Verbesserter Diff-Betrachter"
 
-msgid "in 14h"
-msgstr "in 14 Std."
-
-msgid "in 3d"
-msgstr "in 3 Tagen"
-
-msgid "in 8h"
-msgstr "in 8 Std."
-
 msgid "in a new session"
 msgstr "in einer neuen Sitzung"
 
@@ -8806,9 +8746,6 @@ msgstr "Integrierter Browser"
 
 msgid "In-app PR merge"
 msgstr "PR-Merge in der App"
-
-msgid "Inbox triage"
-msgstr "Posteingang sortieren"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Nimm die Linear-Ticket-ID aus dem Prompt in den Branch-Namen auf (z. B. bin-344-fix-login). Setze je nach Aufgabe fix/ oder feat/ als Präfix."
@@ -9118,9 +9055,6 @@ msgstr "Issue-Kommentar"
 
 msgid "Issue created"
 msgstr "Issue erstellt"
-
-msgid "Issue moved"
-msgstr "Issue verschoben"
 
 msgid "Issue not found."
 msgstr "Issue nicht gefunden."
@@ -9441,6 +9375,9 @@ msgstr "Dieses Terminal-Skript starten, wenn ein neuer Arbeitsbereich erstellt w
 
 msgid "Launch this terminal script whenever a new terminal tab opens."
 msgstr "Dieses Terminal-Skript starten, sobald ein neuer Terminal-Tab geöffnet wird."
+
+msgid "Launch watch"
+msgstr "Launch-Überwachung"
 
 msgid "Layout"
 msgstr "Layout"
@@ -10411,9 +10348,6 @@ msgstr "Mehr als die Hälfte der gemergten Änderungen stammt von Agenten, ohne 
 msgid "serverError.plugins.ambiguousConnection"
 msgstr "Mehrere {connector}-Verbindungen passen; trenne die, die du nicht willst."
 
-msgid "Morning standup summary"
-msgstr "Zusammenfassung des Morgen-Standups"
-
 msgid "most developers"
 msgstr "die meisten Entwickler"
 
@@ -10731,12 +10665,6 @@ msgstr "Nächstes Release"
 msgid "Next run {0}"
 msgstr "Nächster Lauf {0}"
 
-msgid "Next run in 14h"
-msgstr "Nächste Ausführung in 14 Std."
-
-msgid "Next run in 3d"
-msgstr "Nächste Ausführung in 3 Tagen"
-
 msgid "Next slide"
 msgstr "Nächste Folie"
 
@@ -10763,6 +10691,9 @@ msgstr "Guter Ansatz"
 
 msgid "Nice, open a PR when ready."
 msgstr "Super, öffne einen PR, wenn es so weit ist."
+
+msgid "Nightly audit"
+msgstr "Nächtliches Audit"
 
 msgid "No"
 msgstr "Nein"
@@ -12168,9 +12099,6 @@ msgstr "Den Dialog für einen neuen Arbeitsbereich öffnen"
 msgid "Open the resource usage view in the command palette"
 msgstr "Die Ressourcen-Ansicht in der Befehlspalette öffnen"
 
-msgid "Open the run from Run History to see what the agent did. Reply in the same session to keep going."
-msgstr "Öffne die Ausführung im Ausführungsverlauf, um zu sehen, was der Agent getan hat. Antworte in derselben Sitzung, um weiterzumachen."
-
 msgid "Open the run's workspace"
 msgstr "Arbeitsbereich des Laufs öffnen"
 
@@ -12504,9 +12432,6 @@ msgstr "Übergeordnetes Verzeichnis"
 msgid "Parent directory on {hostName}"
 msgstr "Übergeordnetes Verzeichnis auf {hostName}"
 
-msgid "Part of Superset Pro"
-msgstr "Teil von Superset Pro"
-
 msgid "Part record, part bet. The first two entries are already happening. The rest is stated concretely enough to be wrong about."
 msgstr "Teils Protokoll, teils Wette. Die ersten beiden Einträge passieren bereits. Der Rest ist konkret genug formuliert, um falsch sein zu können."
 
@@ -12694,9 +12619,6 @@ msgstr "Arbeitsbereich auswählen"
 
 msgid "Pick a workspace whose agent is waiting for your input, has finished since you last looked, or is still running"
 msgstr "Wähle einen Arbeitsbereich, dessen Agent auf deine Eingabe wartet, seit deinem letzten Blick fertig geworden ist oder noch läuft"
-
-msgid "Pick an event, like a review request or a new Sentry issue, or a schedule. One automation can have up to 25 triggers."
-msgstr "Wähle ein Ereignis, etwa eine Review-Anfrage oder ein neues Sentry-Issue, oder einen Zeitplan. Eine Automation kann bis zu 25 Auslöser haben."
 
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "Wähle ein Icon und eine Farbe oder lade ein eigenes Bild hoch. Standard ist der Avatar des verknüpften GitHub-Eigentümers."
@@ -13076,6 +12998,9 @@ msgstr "Pro"
 msgid "PRO"
 msgstr "PRO"
 
+msgid "Pro and Enterprise. Microsoft Teams triggers need Enterprise. If you downgrade, your automations stay but stop running."
+msgstr "Pro und Enterprise. Auslöser für Microsoft Teams brauchen Enterprise. Wenn du downgradest, bleiben deine Automatisierungen erhalten, laufen aber nicht mehr."
+
 msgid "Pro Features"
 msgstr "Pro-Funktionen"
 
@@ -13308,9 +13233,6 @@ msgstr "Titel des Pull Requests"
 
 msgid "Pull request…"
 msgstr "Pull Request…"
-
-msgid "Pull request… › Review requested"
-msgstr "Pull Request… › Review angefordert"
 
 msgid "Pull requests"
 msgstr "Pull Requests"
@@ -13706,9 +13628,6 @@ msgstr "Relay-Zugriff aktiviert, Verbindung zum Relay wird hergestellt…"
 
 msgid "Release control"
 msgstr "Steuerung freigeben"
-
-msgid "Release published"
-msgstr "Release veröffentlicht"
 
 msgid "Release…"
 msgstr "Release…"
@@ -14314,9 +14233,6 @@ msgstr "Erneut versuchen"
 msgid "Retry after the connection refreshes."
 msgstr "Versuche es erneut, sobald die Verbindung aufgefrischt ist."
 
-msgid "Retry all"
-msgstr "Alle erneut versuchen"
-
 msgid "Retry dictation"
 msgstr "Diktat erneut versuchen"
 
@@ -14393,20 +14309,11 @@ msgstr "Review ausstehend"
 msgid "Review pending changes."
 msgstr "Offene Änderungen reviewen."
 
-msgid "Review PRs the moment you're asked"
-msgstr "Prüfe PRs, sobald du angefragt wirst"
-
 msgid "Review pull requests inside Superset: diff pane, agent-assisted review, act on comments directly."
 msgstr "Pull Requests direkt in Superset reviewen: Diff-Bereich, agentenunterstütztes Review, Kommentare direkt bearbeiten."
 
 msgid "Review requested"
 msgstr "Review angefordert"
-
-msgid "Review requested from <0>Me</0> in <1>acme/web</1> by <2>Anyone</2>"
-msgstr "Review angefordert von <0>mir</0> in <1>acme/web</1> durch <2>Beliebige Person</2>"
-
-msgid "Review requested on acme/web #482"
-msgstr "Review angefordert in acme/web #482"
 
 msgid "Review required"
 msgstr "Review erforderlich"
@@ -14422,9 +14329,6 @@ msgstr "Diese Ausführungen unter „Alle Ausführungen“ prüfen"
 
 msgid "Review thread…"
 msgstr "Review-Thread…"
-
-msgid "Review."
-msgstr "Prüfen."
 
 msgid "reviewed"
 msgstr "hat reviewt"
@@ -14532,6 +14436,9 @@ msgstr "Betreibe 10+ parallele Coding-Agenten auf deinem Rechner."
 msgid "Run again"
 msgstr "Erneut ausführen"
 
+msgid "Run agents on a schedule or when something happens."
+msgstr "Agenten nach Zeitplan oder bei Ereignissen ausführen."
+
 msgid "Run agents side by side"
 msgstr "Führe Agenten nebeneinander aus"
 
@@ -14541,9 +14448,6 @@ msgstr "Starte eine Armee aus"
 
 msgid "Run an iOS simulator in a workspace pane so you and your agents can test mobile apps."
 msgstr "Führe einen iOS-Simulator in einem Bereich des Arbeitsbereichs aus, damit du und deine Agenten mobile Apps testen könnt."
-
-msgid "Run any agent you set up in Superset, such as Claude or Codex."
-msgstr "Führe jeden Agenten aus, den du in Superset eingerichtet hast, etwa Claude oder Codex."
 
 msgid "Run any coding agent"
 msgstr "Führe jeden Coding-Agenten aus"
@@ -14659,14 +14563,14 @@ msgstr "Läuft in der Superset-App auf diesem Gerät; ein Update bedeutet also, 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Läufe landen in einem Arbeitsbereich. Prüfe den Diff, führe zusammen, was passt."
 
-msgid "Runs on a device you choose"
-msgstr "Läuft auf einem Gerät deiner Wahl"
-
 msgid "Runs that found no host online"
 msgstr "Läufe, die keinen Host online fanden"
 
 msgid "Runs that started their workspace in the last 7 days"
 msgstr "Läufe, die ihren Workspace in den letzten 7 Tagen gestartet haben"
+
+msgid "Runs the tests and reviews each pull request you're asked to review."
+msgstr "Führt die Tests aus und reviewt jeden Pull Request, für den du angefragt wirst."
 
 msgid "Runs when a new workspace is created."
 msgstr "Wird beim Erstellen eines Arbeitsbereichs ausgeführt."
@@ -14768,9 +14672,6 @@ msgstr "Plane eine tägliche Automatisierung, die um 9 Uhr neue Linear-Issues tr
 msgid "Schedule meetings"
 msgstr "Meetings planen"
 
-msgid "Scheduled"
-msgstr "Geplant"
-
 msgid "Scheduled and event-triggered agents (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhooks) with ready-made templates."
 msgstr "Geplante und ereignisgesteuerte Agenten (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, Webhooks) mit fertigen Vorlagen."
 
@@ -14804,9 +14705,6 @@ msgstr "Screenshots"
 
 msgid "Script editor with file drop support"
 msgstr "Skript-Editor mit Dateiablage"
-
-msgid "Scriptable from the CLI"
-msgstr "Per CLI skriptbar"
 
 msgid "Scroll Area"
 msgstr "Scroll Area"
@@ -15027,9 +14925,6 @@ msgstr "Abschnitte"
 
 msgid "Security"
 msgstr "Sicherheit"
-
-msgid "Security audit"
-msgstr "Sicherheitsaudit"
 
 msgid "See all downloads"
 msgstr "Alle Downloads ansehen"
@@ -15314,8 +15209,8 @@ msgstr "An Agenten gesendet"
 msgid "Sent to the pull request's workspace"
 msgstr "An den Arbeitsbereich des Pull Requests gesendet"
 
-msgid "Sentry issue created in <0>web</0> with level <1>Error</1>"
-msgstr "Sentry-Issue erstellt in <0>web</0> mit Level <1>Error</1>"
+msgid "Sentry issue created in <0>web</0>"
+msgstr "Sentry-Issue erstellt in <0>web</0>"
 
 msgid "Sentry rejected the token"
 msgstr "Sentry hat den Token abgelehnt"
@@ -16232,12 +16127,6 @@ msgstr "Bei jedem Lauf eine neue Agent-Sitzung starten"
 msgid "Start a new chat"
 msgstr "Neuen Chat starten"
 
-msgid "Start a run from any service"
-msgstr "Starte einen Lauf aus jedem Dienst"
-
-msgid "Start a run when something happens."
-msgstr "Starte einen Lauf, wenn etwas passiert."
-
 msgid "Start a session"
 msgstr "Sitzung starten"
 
@@ -16246,6 +16135,9 @@ msgstr "Starte Agenten bei Ereignissen oder nach Zeitplan"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "Agents starten, live verfolgen und den Diff auf iPhone oder iPad prüfen. Dein Code bleibt auf deinen Rechnern."
+
+msgid "Start an agent from a schedule, an event in your tools, or a webhook. Each run opens a workspace you can review."
+msgstr "Starte einen Agenten nach Zeitplan, bei einem Ereignis in deinen Tools oder per Webhook. Jede Ausführung öffnet einen Arbeitsbereich, den du prüfen kannst."
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Starte einen Agenten oder ein Terminal, um in diesem Arbeitsbereich zu arbeiten."
@@ -16267,9 +16159,6 @@ msgstr "Kostenlos testen"
 
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Starte kostenlos. Upgrade, wenn dein Team herauswächst. Enterprise-Tarife für Organisationen mit erhöhten Sicherheits- und Compliance-Anforderungen."
-
-msgid "Start from a guide:"
-msgstr "Starte mit einer Anleitung:"
 
 msgid "Start from a template"
 msgstr "Mit einer Vorlage starten"
@@ -16365,9 +16254,6 @@ msgstr "Steuern"
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
 msgstr "Schritt {0} von 2"
-
-msgid "Steps 3 and 4 repeat each time a trigger fires."
-msgstr "Schritte 3 und 4 wiederholen sich bei jedem Auslösen."
 
 msgid "Steps 3 and 4 repeat until the page is right."
 msgstr "Schritte 3 und 4 wiederholen sich, bis die Seite passt."
@@ -16487,9 +16373,6 @@ msgstr "Erfolgreich"
 
 msgid "Success!"
 msgstr "Geschafft!"
-
-msgid "Successful runs"
-msgstr "Erfolgreiche Ausführungen"
 
 msgid "Successful runs <0>· 7d</0>"
 msgstr "Erfolgreiche Läufe <0>· 7 T.</0>"
@@ -17192,6 +17075,9 @@ msgstr "Dieser Rechner ist nicht mehr verfügbar"
 msgid "That name isn't allowed."
 msgstr "Dieser Name ist nicht erlaubt."
 
+msgid "That run is missed and isn't retried. Use Run now to start it later."
+msgstr "Diese Ausführung fällt aus und wird nicht wiederholt. Starte sie später mit Jetzt ausführen."
+
 msgid "The 2026 bet"
 msgstr "Die Wette für 2026"
 
@@ -17266,9 +17152,6 @@ msgstr "Die Desktop-App läuft auf macOS, dazu ein experimentelles Linux-AppImag
 
 msgid "The device that hosts this project is unavailable."
 msgstr "Das Gerät, das dieses Projekt hostet, ist nicht verfügbar."
-
-msgid "The device was offline at the scheduled time."
-msgstr "Das Gerät war zum geplanten Zeitpunkt offline."
 
 msgid "The diff is still up to date — only comments failed to load."
 msgstr "Der Diff ist weiterhin aktuell — nur die Kommentare konnten nicht geladen werden."
@@ -17367,6 +17250,9 @@ msgstr "Die neuesten Updates, Verbesserungen und Funktionen in Superset."
 
 msgid "The latest updates, improvements, and new features in Superset. Updated weekly. For detailed release notes, see <0>GitHub Releases<1/></0>"
 msgstr "Die neuesten Updates, Verbesserungen und Funktionen in Superset. Wöchentlich aktualisiert. Ausführliche Release Notes findest du unter <0>GitHub Releases<1/></0>"
+
+msgid "The Launch watch automation with a Sentry trigger and a daily schedule, its two runs, and the draft pull request the agent opened."
+msgstr "Die Automatisierung Launch watch mit einem Sentry-Auslöser und einem täglichen Zeitplan, ihre zwei Ausführungen und der Draft-Pull-Request, den der Agent geöffnet hat."
 
 msgid "The link may be wrong, or whatever was here has moved."
 msgstr "Der Link ist womöglich falsch, oder was hier war, ist umgezogen."
@@ -18179,11 +18065,11 @@ msgstr "E-Mails sichten und Antworten entwerfen"
 msgid "Triage new issues"
 msgstr "Neue Issues triagieren"
 
-msgid "Triage new Sentry issues"
-msgstr "Neue Sentry-Issues sichten"
-
 msgid "triaging 12 new issues…"
 msgstr "12 neue Issues werden triagiert…"
+
+msgid "Tries a fix for each bug someone posts in #bugs."
+msgstr "Versucht, jeden Fehler zu beheben, den jemand in #bugs postet."
 
 msgid "Trigger"
 msgstr "Auslöser"
@@ -18202,9 +18088,6 @@ msgstr "Automatisierungen aus Nachrichten in Teams-Kanälen auslösen."
 
 msgid "Trigger not found"
 msgstr "Trigger nicht gefunden"
-
-msgid "Trigger."
-msgstr "Auslöser."
 
 msgid "Triggers"
 msgstr "Auslöser"
@@ -18259,9 +18142,6 @@ msgstr "Aktiviere „Fernzugriff auf dieses Gerät über den Relay erlauben“"
 
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "Schalte Design ein und klicke auf den Teil der Seite, den du ändern willst."
-
-msgid "Turn Slack bug reports into fixes"
-msgstr "Mach aus Slack-Fehlerberichten Fixes"
 
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Mach aus Slack-Unterhaltungen Aufgaben, starte Agenten aus deinem Arbeitsbereich und halte dein Team dort auf dem Laufenden, wo die Arbeit beginnt."
@@ -18544,6 +18424,9 @@ msgstr "Als Nächstes"
 msgid "Up Next"
 msgstr "Als Nächstes"
 
+msgid "Up to 25. A run starts when any one of them fires."
+msgstr "Bis zu 25. Eine Ausführung startet, wenn einer davon feuert."
+
 msgid "Up to date"
 msgstr "Aktuell"
 
@@ -18701,6 +18584,9 @@ msgstr "Beliebige Agenten nutzen"
 msgid "Use as workspace run"
 msgstr "Als Arbeitsbereich-Run verwenden"
 
+msgid "Use cases"
+msgstr "Anwendungsfälle"
+
 msgid "Use Claude Code, Codex, OpenCode, or any coding agent for each task. Your workspaces, branches, and review flow stay the same."
 msgstr "Nutze Claude Code, Codex, OpenCode oder einen beliebigen Coding-Agenten für jede Aufgabe. Deine Arbeitsbereiche, Branches und dein Review-Ablauf bleiben gleich."
 
@@ -18712,9 +18598,6 @@ msgstr "Für neue Agenten verwenden"
 
 msgid "Use global default"
 msgstr "Globalen Standard verwenden"
-
-msgid "Use superset automations to create and run automations from a script or from another agent."
-msgstr "Nutze superset automations, um Automatisierungen aus einem Skript oder von einem anderen Agenten zu erstellen und auszuführen."
 
 msgid "Use Superset on mobile"
 msgstr "Superset auf dem Handy nutzen"
@@ -19112,9 +18995,6 @@ msgstr "Werktags"
 msgid "Weekdays at {time}"
 msgstr "Werktags um {time}"
 
-msgid "Weekdays at 9:00 AM"
-msgstr "Werktags um 9:00 Uhr"
-
 msgid "Weekends"
 msgstr "Am Wochenende"
 
@@ -19163,6 +19043,9 @@ msgstr "Was der allgemeine Zugriff erlaubt"
 msgid "What has to become true"
 msgstr "Was wahr werden muss"
 
+msgid "What if my Mac is offline when a trigger fires?"
+msgstr "Was passiert, wenn mein Mac offline ist, wenn ein Auslöser feuert?"
+
 msgid "What is a workspace?"
 msgstr "Was ist ein Arbeitsbereich?"
 
@@ -19181,8 +19064,8 @@ msgstr "Welches Problem willst du lösen?"
 msgid "What shipped"
 msgstr "Was ausgeliefert wurde"
 
-msgid "What should run on its own?"
-msgstr "Was soll von selbst laufen?"
+msgid "What should run automatically?"
+msgstr "Was soll automatisch laufen?"
 
 msgid "What should the page show?"
 msgstr "Was soll die Seite zeigen?"
@@ -19192,6 +19075,9 @@ msgstr "Was bauen wir als Nächstes?"
 
 msgid "What Superset is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Was Superset ist, wer es baut und für wen es gedacht ist. Ein Team aus San Francisco unter der Leitung von drei ehemaligen YC-CTOs, das den Arbeitsbereich für parallele Coding-Agents baut."
+
+msgid "What teams automate"
+msgstr "Was Teams automatisieren"
 
 msgid "What these were written against is no longer on the page, so they have no pin."
 msgstr "Worauf sie sich bezogen, steht nicht mehr auf der Seite, daher haben sie keine Markierung."
@@ -19226,11 +19112,11 @@ msgstr "Was ist neu"
 msgid "What's next"
 msgstr "Was als Nächstes kommt"
 
+msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
+msgstr "Wenn ein Auslöser feuert, öffnet der gewählte Mac einen neuen Arbeitsbereich und der Agent startet mit deinem Prompt. Ausführungen durch Ereignisse enthalten das Ereignis, sodass der Agent weiß, worauf er schauen soll. Antworte in der Ausführung, um weiterzumachen."
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Wenn deaktiviert, kann nichts anderes auf die Dateien und Tools dieses Geräts zugreifen. Du kannst dich von hier aus weiterhin mit Remote-Sandboxes verbinden. <0>Mehr erfahren<1/></0>"
-
-msgid "When the event comes in or the schedule fires, the device you picked creates a new workspace. The agent starts on your prompt there."
-msgstr "Wenn das Ereignis eintrifft oder der Zeitplan auslöst, erstellt das gewählte Gerät einen neuen Arbeitsbereich. Der Agent startet dort mit deinem Prompt."
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Wo Port-Badges in der Seitenleiste beim Klick geöffnet werden."
@@ -19259,8 +19145,14 @@ msgstr "Wo du als Nächstes suchst"
 msgid "Which agents are supported?"
 msgstr "Welche Agenten werden unterstützt?"
 
+msgid "Which agents can run an automation?"
+msgstr "Welche Agenten können eine Automatisierung ausführen?"
+
 msgid "Which AI coding agents are supported?"
 msgstr "Welche KI-Coding-Agenten werden unterstützt?"
+
+msgid "Which plans include automations?"
+msgstr "Welche Pläne enthalten Automatisierungen?"
 
 msgid "Who can open it"
 msgstr "Wer es öffnen kann"
@@ -19359,9 +19251,6 @@ msgstr "Funktioniert, wenn die Umgebungen sauber sind. Umgebungen sind selten sa
 
 msgid "Works with any agent"
 msgstr "Funktioniert mit jedem Agenten"
-
-msgid "Works with your agents"
-msgstr "Funktioniert mit deinen Agenten"
 
 msgid "workspace"
 msgstr "Arbeitsbereich"
@@ -19522,15 +19411,6 @@ msgstr "Einmal schreiben. Läuft in jedem Agenten."
 msgid "Write setup and teardown scripts so every new workspace starts ready to run."
 msgstr "Setup- und Teardown-Skripte schreiben, damit jeder neue Arbeitsbereich startklar ist."
 
-msgid "Write the prompt and pick the agent. Choose a project to work in, or run without one."
-msgstr "Schreibe den Prompt und wähle den Agenten. Wähle ein Projekt zum Arbeiten oder starte ohne eins."
-
-msgid "Write the prompt once. Every run gets its own workspace."
-msgstr "Schreibe den Prompt einmal. Jede Ausführung bekommt ihren eigenen Arbeitsbereich."
-
-msgid "Write."
-msgstr "Schreiben."
-
 msgid "Writing code is no longer where engineer hours go. Reading it is. Teams that adopted parallel agents in 2025 hit the wall first: ten agents can produce more diffs before lunch than a team can honestly review by Friday."
 msgstr "Code zu schreiben ist nicht mehr das, wofür Entwicklerstunden draufgehen. Ihn zu lesen schon. Teams, die 2025 auf parallele Agenten umgestiegen sind, laufen zuerst gegen die Wand: Zehn Agenten produzieren vor dem Mittagessen mehr Diffs, als ein Team bis Freitag ehrlich reviewen kann."
 
@@ -19569,6 +19449,9 @@ msgstr "Ja. Superset hat ein SOC-2-Type-II-Audit bei einem unabhängigen Prüfer
 
 msgid "Yes. Superset is the workspace your agents run in, not a model provider. Bring Claude Code, Codex, OpenCode, or any CLI agent, and use your existing accounts or API keys on every plan."
 msgstr "Ja. Superset ist der Arbeitsbereich, in dem deine Agenten laufen, kein Modellanbieter. Bring Claude Code, Codex, OpenCode oder einen beliebigen CLI-Agenten mit und nutze in jedem Tarif deine bestehenden Konten oder API-Schlüssel."
+
+msgid "Yes. Use superset automations in the CLI to create, run, and pause them."
+msgstr "Ja. Mit superset automations in der CLI kannst du sie erstellen, ausführen und pausieren."
 
 msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Changes take effect at the end of your current billing period."
 msgstr "Ja. Du kannst jederzeit in den Abrechnungseinstellungen in der App upgraden, downgraden oder kündigen. Änderungen greifen zum Ende deines aktuellen Abrechnungszeitraums."
@@ -19717,9 +19600,6 @@ msgstr "Dein Agent veröffentlicht Designs und Berichte, die dein Team prüft. S
 
 msgid "Your agent publishes designs and reports. Your team comments, and it gets to work."
 msgstr "Dein Agent veröffentlicht Designs und Berichte. Dein Team kommentiert, und der Agent legt los."
-
-msgid "Your agents start when something happens, or on a schedule."
-msgstr "Deine Agenten starten, wenn etwas passiert, oder nach Zeitplan."
 
 msgid "Your Agents, Your Accounts"
 msgstr "Deine Agenten, deine Konten"

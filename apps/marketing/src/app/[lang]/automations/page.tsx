@@ -1,5 +1,5 @@
 import { msg } from "@lingui/core/macro";
-import { Trans, useLingui } from "@lingui/react/macro";
+import { Trans } from "@lingui/react/macro";
 import { getI18nInstance } from "@superset/i18n/server";
 import { COMPANY } from "@superset/shared/constants";
 import { ArrowUpRight } from "lucide-react";
@@ -8,12 +8,10 @@ import { CTASection } from "@/app/[lang]/components/CTASection";
 import { ProductHeroActions } from "@/app/[lang]/components/ProductHeroActions";
 import { localizedAlternates } from "@/app/[lang]/metadata";
 import { initServerI18n } from "@/app/i18n-server";
-import { AutomationsListWindow } from "./components/AutomationsListWindow";
+import { AutomationsFAQ } from "./components/AutomationsFAQ";
 import { HowItWorks } from "./components/HowItWorks";
-import { TriggerGuides } from "./components/TriggerGuides";
-import { TriggerSources } from "./components/TriggerSources";
-import { TriggersCard } from "./components/TriggersCard";
-import { DETAILS } from "./constants";
+import { LaunchWatchDemo } from "./components/LaunchWatchDemo";
+import { UseCases } from "./components/UseCases";
 
 const VIDEO_URL = "https://www.youtube.com/watch?v=ixe-PiRJTag";
 
@@ -57,7 +55,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AutomationsPage() {
 	await initServerI18n();
-	const { t } = useLingui();
 
 	return (
 		<div className="overflow-x-clip">
@@ -68,20 +65,17 @@ export default async function AutomationsPage() {
 							<Trans>Superset Automations</Trans>
 						</p>
 						<h1 className="mt-4 font-medium text-balance text-4xl text-foreground tracking-tight sm:text-5xl">
-							<Trans>
-								Your agents start when something happens, or on a schedule.
-							</Trans>
+							<Trans>Run agents on a schedule or when something happens.</Trans>
 						</h1>
 						<p className="mt-5 max-w-xl text-lg text-muted-foreground leading-relaxed">
 							<Trans>
-								Write a prompt and pick an event or a schedule, like a review
-								request, a Slack message, a Linear issue, a Sentry issue, or a
-								webhook. Each run opens a workspace you can review and continue.
+								Start an agent from a schedule, an event in your tools, or a
+								webhook. Each run opens a workspace you can review.
 							</Trans>
 						</p>
 						<ProductHeroActions source="automations" docsPath="/automations" />
 					</div>
-					<AutomationsListWindow />
+					<LaunchWatchDemo />
 					<a
 						href={VIDEO_URL}
 						target="_blank"
@@ -95,50 +89,25 @@ export default async function AutomationsPage() {
 
 				<section className="mt-24 sm:mt-32">
 					<p className="font-mono text-brand text-xs uppercase tracking-wider">
-						<Trans>Triggers</Trans>
+						<Trans>How it works</Trans>
 					</p>
 					<h2 className="mt-4 font-medium text-3xl text-foreground tracking-tight sm:text-4xl">
-						<Trans>Start a run when something happens.</Trans>
+						<Trans>A prompt, some triggers, and a workspace for each run</Trans>
 					</h2>
-					<p className="mt-5 max-w-2xl text-lg text-muted-foreground leading-relaxed">
-						<Trans>
-							A review gets requested, an issue gets filed, someone posts in
-							#bugs. Pick the event and the run starts when it comes in, with no
-							schedule to wait for. The agent gets the event in its prompt, so
-							it knows which PR or issue to look at.
-						</Trans>
-					</p>
-					<TriggersCard />
-					<TriggerSources />
-					<TriggerGuides />
+					<HowItWorks />
 				</section>
 
 				<section className="mt-24 sm:mt-32">
 					<p className="font-mono text-brand text-xs uppercase tracking-wider">
-						<Trans>How it works</Trans>
+						<Trans>Use cases</Trans>
 					</p>
 					<h2 className="mt-4 font-medium text-3xl text-foreground tracking-tight sm:text-4xl">
-						<Trans>
-							Write the prompt once. Every run gets its own workspace.
-						</Trans>
+						<Trans>What teams automate</Trans>
 					</h2>
-					<HowItWorks />
-					<div className="mt-10 grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
-						{DETAILS.map((detail) => (
-							<div
-								key={detail.title.id}
-								className="border-border border-t pt-4"
-							>
-								<h3 className="font-medium text-foreground">
-									{t(detail.title)}
-								</h3>
-								<p className="mt-2 text-muted-foreground text-sm leading-relaxed">
-									{t(detail.description)}
-								</p>
-							</div>
-						))}
-					</div>
+					<UseCases />
 				</section>
+
+				<AutomationsFAQ />
 			</main>
 			<CTASection />
 		</div>
