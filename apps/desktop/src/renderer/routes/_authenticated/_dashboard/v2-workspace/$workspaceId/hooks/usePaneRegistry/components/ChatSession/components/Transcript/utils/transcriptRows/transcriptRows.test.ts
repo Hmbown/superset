@@ -1,7 +1,12 @@
 import { describe, expect, test } from "bun:test";
-import type { OutboxEntry, TurnGroup } from "@superset/chat/core";
+import {
+	collapseWorkLog,
+	type OutboxEntry,
+	type TurnGroup,
+} from "@superset/chat/core";
 import type {
 	ApprovalRequest,
+	Item,
 	ToolCall,
 	UserMessage,
 } from "@superset/chat/protocol";
@@ -131,7 +136,7 @@ describe("transcriptRows", () => {
 					turn: { id: "t1", status: "running", startedAtMs: 2 },
 					entries: [
 						{ kind: "item", item: prompt },
-						{ kind: "tool_run", items: [publish("b1", 3)] },
+						{ kind: "item", item: publish("b1", 3) },
 						{ kind: "item", item: steer },
 					],
 				},
@@ -142,89 +147,49 @@ describe("transcriptRows", () => {
 		);
 		expect(rows.map((row) => row.kind)).toEqual([
 			"item",
-			"tool_run",
+			"item",
 			"item",
 			"working",
 		]);
 	});
 
-	test("the newest tool run stays open while its turn works, and closes once the turn moves on", () => {
-		const run = (id: string) => ({
-			kind: "tool_run" as const,
-			items: [{ ...publish(id, 3), status: "running" as const }],
+	test("thinking between tool calls folds into one run, and a lone call stays a row", () => {
+		const thought = (id: string, startedAtMs: number) => ({
+			id,
+			kind: "reasoning" as const,
+			text: "thinking",
+			startedAtMs,
 		});
-		const reply = {
-			kind: "item" as const,
-			item: {
-				id: "a1",
-				kind: "agent_message" as const,
-				text: "ok",
-				startedAtMs: 4,
-			},
-		};
-		const liveFlags = (
-			status: "running" | "completed",
-			entries: TurnGroup["entries"],
-		) =>
+		const steps = (items: Item[]) =>
 			transcriptRows(
 				[
 					{
 						turnId: "t1",
-						turn: { id: "t1", status, startedAtMs: 2 },
-						entries,
+						turn: { id: "t1", status: "completed", startedAtMs: 1 },
+						entries: collapseWorkLog(items),
 					},
 				],
 				[],
 				new Set(),
 				find,
-			).flatMap((row) => (row.kind === "tool_run" ? [row.live] : []));
-
-		expect(liveFlags("running", [run("b1"), reply, run("b2")])).toEqual([
-			false,
-			true,
-		]);
-		expect(liveFlags("running", [run("b1"), reply])).toEqual([false]);
-		expect(liveFlags("completed", [run("b1")])).toEqual([false]);
-	});
-
-	test("thinking after a tool run folds into it, in order", () => {
-		const thought = (id: string) => ({
-			kind: "item" as const,
-			item: {
-				id,
-				kind: "reasoning" as const,
-				text: "thinking",
-				startedAtMs: 3,
-			},
-		});
-		const rows = transcriptRows(
-			[
-				{
-					turnId: "t1",
-					turn: { id: "t1", status: "completed", startedAtMs: 2 },
-					entries: [
-						thought("r1"),
-						{ kind: "tool_run", items: [publish("b1", 3)] },
-						thought("r2"),
-						{ kind: "tool_run", items: [publish("b2", 4)] },
-						thought("r3"),
-					],
-				},
-			],
-			[],
-			new Set(),
-			find,
-		);
-
-		expect(
-			rows.flatMap((row) =>
+			).flatMap((row) =>
 				row.kind === "tool_run"
 					? [row.steps.map((step) => step.id).join(" ")]
 					: row.kind === "item"
 						? [row.item.id]
 						: [],
-			),
+			);
+
+		expect(
+			steps([
+				thought("r1", 2),
+				publish("b1", 3),
+				thought("r2", 4),
+				publish("b2", 5),
+				thought("r3", 6),
+			]),
 		).toEqual(["r1", "b1 r2 b2 r3"]);
+		expect(steps([publish("b1", 3)])).toEqual(["b1"]);
 	});
 
 	test("a tool run starts collapsed unless it waits on an approval", () => {
@@ -249,6 +214,7 @@ describe("transcriptRows", () => {
 										content: [],
 										startedAtMs: 3,
 									},
+									publish("b2", 4),
 								],
 							},
 						],

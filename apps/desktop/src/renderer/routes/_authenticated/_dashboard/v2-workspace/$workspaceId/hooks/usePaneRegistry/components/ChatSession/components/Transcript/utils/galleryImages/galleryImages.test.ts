@@ -49,7 +49,6 @@ describe("galleryImages", () => {
 				key: "tools:t1:c1",
 				groupStart: false,
 				defaultCollapsed: true,
-				live: false,
 				steps: [],
 				items: [
 					tool("c1", [`${DIR}/two.png`]),

@@ -146,10 +146,7 @@ export function TurnGroupSection({
 			return (
 				<>
 					<ToolRunRow
-						collapsed={isEntryCollapsed(
-							row.key,
-							row.defaultCollapsed && !row.live,
-						)}
+						collapsed={isEntryCollapsed(row.key, row.defaultCollapsed)}
 						items={row.items}
 						onToggle={onToggleEntry}
 						rowKey={row.key}

@@ -15,6 +15,7 @@ import { usePluginMentionOptions } from "renderer/hooks/usePluginMentionOptions"
 import { toolTitle } from "../../utils/toolTitle";
 import { ToolContentList } from "../ToolContentList";
 import { FileChangeTitle } from "./components/FileChangeTitle";
+import { RunningTime } from "./components/RunningTime";
 import { StatusWord } from "./components/StatusWord";
 
 const TITLE_SWEEP_SECONDS = 1.6;
@@ -101,6 +102,7 @@ export function ToolCallRow({ item }: { item: ToolCall }) {
 					>
 						{title}
 					</span>
+					{running && <RunningTime startedAtMs={item.startedAtMs} />}
 					<StatusWord status={item.status} />
 					{hasBody && (
 						<ChevronRight

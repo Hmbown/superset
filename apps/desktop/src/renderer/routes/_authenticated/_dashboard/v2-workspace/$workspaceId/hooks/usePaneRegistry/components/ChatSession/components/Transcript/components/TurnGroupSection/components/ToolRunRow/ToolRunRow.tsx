@@ -50,8 +50,12 @@ export const ToolRunRow = memo(function ToolRunRow({
 	steps,
 	stepTexts,
 }: ToolRunRowProps) {
-	const live = items.some((tool) => tool.status === "running");
-	const summary = stepSummary(items);
+	const done = items.filter((tool) => tool.status !== "running");
+	const live = done.length === 0;
+	const summary = stepSummary(live ? items : done);
+	const current = collapsed
+		? items.find((tool) => tool.status === "running")
+		: undefined;
 	const Icon = toolKindIcon(dominantKind(items));
 	return (
 		<Collapsible
@@ -82,6 +86,11 @@ export const ToolRunRow = memo(function ToolRunRow({
 					</span>
 				)}
 			</CollapsibleTrigger>
+			{current && (
+				<RailStep>
+					<ToolCallRow item={current} />
+				</RailStep>
+			)}
 			<CollapsibleContent>
 				{steps.map((step, index) => (
 					<RailStep key={step.id}>

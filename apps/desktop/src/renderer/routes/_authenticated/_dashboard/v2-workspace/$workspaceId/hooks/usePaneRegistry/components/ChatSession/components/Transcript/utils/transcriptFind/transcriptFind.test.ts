@@ -94,7 +94,6 @@ const rows: TranscriptRow[] = [
 		groupStart: false,
 		items: [tool("tool-1", "Edited login.ts"), tool("tool-2", "Ran tests")],
 		defaultCollapsed: true,
-		live: false,
 		steps: [tool("tool-1", "Edited login.ts"), tool("tool-2", "Ran tests")],
 	},
 	itemRow(plan),
@@ -193,7 +192,6 @@ test("searches file change labels and filenames inside a collapsed tool run", ()
 			groupStart: false,
 			items: [edit],
 			defaultCollapsed: true,
-			live: false,
 			steps: [edit],
 		},
 	];
