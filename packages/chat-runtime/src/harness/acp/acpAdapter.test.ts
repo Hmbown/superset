@@ -859,6 +859,11 @@ describe("AcpAdapter", () => {
 				messageId: "msg_1",
 				content: { type: "text", text: "earlier reply" },
 			},
+			{
+				sessionUpdate: "agent_message_chunk",
+				messageId: "msg_1",
+				content: { type: "text", text: ", continued" },
+			},
 		];
 		const quiet = new AcpAdapter({
 			command: "fake",
@@ -877,6 +882,7 @@ describe("AcpAdapter", () => {
 		await flush(40);
 		expect(replayed.sent.map((f) => f.method)).toContain("session/load");
 		expect(itemsOf(quietEvents)).toEqual([]);
+		expect(quietEvents.filter((event) => event.kind === "delta")).toEqual([]);
 		await quiet.dispose();
 	});
 
