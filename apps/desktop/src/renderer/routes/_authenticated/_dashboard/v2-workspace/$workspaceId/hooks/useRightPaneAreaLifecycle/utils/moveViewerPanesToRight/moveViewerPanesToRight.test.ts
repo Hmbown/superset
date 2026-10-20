@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { createWorkspaceStore } from "@superset/panes";
-import type { PaneViewerData } from "../../types";
+import type { PaneViewerData } from "../../../../types";
 import { moveViewerPanesToRight } from "./moveViewerPanesToRight";
 
 function pane(id: string, kind: string) {

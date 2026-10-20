@@ -26,9 +26,9 @@ import type {
 	PaneViewerData,
 	TerminalPaneData,
 } from "../../types";
-import { splitWithViewer } from "../../utils/splitWithViewer";
 import { useDefaultBrowserUrl } from "../useDefaultBrowserUrl";
 import type { TerminalLauncher } from "../useV2TerminalLauncher";
+import { splitWithViewer } from "./utils/splitWithViewer";
 
 export function useDefaultContextMenuActions({
 	paneRegistry,

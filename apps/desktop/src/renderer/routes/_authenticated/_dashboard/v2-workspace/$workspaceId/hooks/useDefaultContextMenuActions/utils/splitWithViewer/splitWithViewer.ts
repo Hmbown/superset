@@ -4,7 +4,7 @@ import type {
 	WorkspaceStore,
 } from "@superset/panes";
 import type { StoreApi } from "zustand/vanilla";
-import type { PaneTarget, PaneViewerData } from "../../types";
+import type { PaneTarget, PaneViewerData } from "../../../../types";
 
 /** Opens a viewer pane where viewers live: beside this pane, or in the right area. */
 export function splitWithViewer(

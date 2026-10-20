@@ -1,1 +1,0 @@
-export { isSessionPaneKind } from "./isSessionPaneKind";

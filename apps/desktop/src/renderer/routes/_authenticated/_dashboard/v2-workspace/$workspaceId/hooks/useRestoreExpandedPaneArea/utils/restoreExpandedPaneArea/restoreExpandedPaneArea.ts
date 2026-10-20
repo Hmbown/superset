@@ -1,10 +1,9 @@
 import { transferTabToIndex, type WorkspaceStore } from "@superset/panes";
 import type { StoreApi } from "zustand/vanilla";
-import type { PaneViewerData } from "../../types";
+import type { PaneViewerData } from "../../../../types";
 
 type Store = StoreApi<WorkspaceStore<PaneViewerData>>;
 
-/** Undoes an expansion saved by builds that expanded by moving the center's tabs right. */
 export function restoreExpandedPaneArea({
 	center,
 	right,

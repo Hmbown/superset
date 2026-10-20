@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useCollections } from "renderer/routes/_authenticated/providers/CollectionsProvider";
 import type { StoreApi } from "zustand/vanilla";
 import type { PaneViewerData } from "../../types";
-import { restoreExpandedPaneArea } from "../../utils/restoreExpandedPaneArea";
+import { restoreExpandedPaneArea } from "./utils/restoreExpandedPaneArea";
 
 export function useRestoreExpandedPaneArea({
 	workspaceId,

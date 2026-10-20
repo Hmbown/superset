@@ -210,8 +210,7 @@ export const workspaceLocalStateSchema = z.object({
 	paneLayout: paneWorkspaceStateSchema,
 	rightPaneLayout: paneWorkspaceStateSchema.optional(),
 	rightSidebarOpen: z.boolean().optional(),
-	// Left by builds that expanded the right area by moving the center's tabs
-	// into it; read once on load to move them back, then deleted.
+	// TODO(2027-01-31): delete with useRestoreExpandedPaneArea / restoreExpandedPaneArea once builds that wrote it are gone.
 	rightPaneAreaExpansion: z
 		.object({
 			movedTabIds: z.array(z.string()),

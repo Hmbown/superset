@@ -1,6 +1,6 @@
 import { describe, expect, it, mock } from "bun:test";
 import { createWorkspaceStore } from "@superset/panes";
-import type { BrowserPaneData, PaneViewerData } from "../../types";
+import type { BrowserPaneData, PaneViewerData } from "../../../../types";
 import { splitWithViewer } from "./splitWithViewer";
 
 const browser = {
