@@ -700,6 +700,9 @@ msgstr "{agents} のセッションは、そのワークスペースを開くと
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {mainより#コミット遅れています。リベースが必要です} other {mainより#コミット遅れています。リベースが必要です}}"
 
+msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
+msgstr "{boxHoursPerHour, plural, other {1 時間あたり # box 時間を使用}}"
+
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{totalBranches}件中{branchPosition}件目"
 
@@ -1151,6 +1154,9 @@ msgstr "{uploading, plural, other {# 件のファイルをアップロード中�
 
 msgid "{used} used"
 msgstr "{used} 使用済み"
+
+msgid "{vcpuCount} vCPU · {memory} GB"
+msgstr "{vcpuCount} vCPU · {memory} GB"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting}件待機中"
@@ -9339,6 +9345,10 @@ msgstr "言語はこのデバイスに保存しましたが、アカウントへ
 msgid "Large"
 msgstr "大"
 
+msgctxt "machine size"
+msgid "Large"
+msgstr "大"
+
 msgid "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 msgstr "多数の永続ターミナルはCPU/メモリ使用量を増やす可能性があります。動作が遅い場合は古いセッションの終了を検討してください。"
 
@@ -9908,6 +9918,9 @@ msgstr "重要度: 低"
 msgid "Machine resources"
 msgstr "マシンリソース"
 
+msgid "Machine size: {label}"
+msgstr "マシンサイズ: {label}"
+
 msgid "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 msgstr "マシンに縛られないクラウドワークスペース。数秒で立ち上がり、チームメイトと共有できます。"
 
@@ -10096,6 +10109,10 @@ msgstr "定型作業のチケットから本番までの時間が中央値で1�
 msgid "Medical and dental at no cost to you, a 401(k), unlimited time off, a $5K desk stipend, and free meals in the office."
 msgstr "自己負担なしの医療・歯科保険、401(k)、無制限の休暇、$5Kのデスク手当、オフィスでの無料の食事。"
 
+msgid "Medium"
+msgstr "中"
+
+msgctxt "machine size"
 msgid "Medium"
 msgstr "中"
 
@@ -15890,6 +15907,10 @@ msgstr "スラッグ"
 msgid "Small"
 msgstr "小"
 
+msgctxt "machine size"
+msgid "Small"
+msgstr "小"
+
 msgid "Smoother onboarding"
 msgstr "よりスムーズなオンボーディング"
 
@@ -19219,6 +19240,10 @@ msgstr "幅 · 並列セッション数"
 
 msgid "Window"
 msgstr "ウィンドウ"
+
+msgctxt "before a machine size"
+msgid "with"
+msgstr "サイズ"
 
 msgid "With action"
 msgstr "アクションあり"

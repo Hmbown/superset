@@ -700,6 +700,9 @@ msgstr "{agents}-sessies worden hervat wanneer je hun workspace opent."
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {# commit achter op main, rebase nodig} other {# commits achter op main, rebase nodig}}"
 
+msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
+msgstr "{boxHoursPerHour, plural, one {Gebruikt # box-uur per uur} other {Gebruikt # box-uren per uur}}"
+
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} van {totalBranches}"
 
@@ -1151,6 +1154,9 @@ msgstr "{uploading, plural, one {# bestand uploaden…} other {# bestanden uploa
 
 msgid "{used} used"
 msgstr "{used} gebruikt"
+
+msgid "{vcpuCount} vCPU · {memory} GB"
+msgstr "{vcpuCount} vCPU · {memory} GB"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} wachten"
@@ -9339,6 +9345,10 @@ msgstr "Taal opgeslagen op dit apparaat, maar synchroniseren naar je account is 
 msgid "Large"
 msgstr "Groot"
 
+msgctxt "machine size"
+msgid "Large"
+msgstr "Groot"
+
 msgid "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 msgstr "Veel blijvende terminals kunnen het CPU- en geheugengebruik verhogen. Beëindig oude sessies als je vertraging merkt."
 
@@ -9908,6 +9918,9 @@ msgstr "Lage ernst"
 msgid "Machine resources"
 msgstr "Machineresources"
 
+msgid "Machine size: {label}"
+msgstr "Machinegrootte: {label}"
+
 msgid "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 msgstr "Machine-onafhankelijke cloudwerkruimtes die in seconden opstarten en met teamgenoten te delen zijn."
 
@@ -10098,6 +10111,10 @@ msgstr "Gratis medische en tandartsverzekering, een 401(k), onbeperkt vrij, een 
 
 msgid "Medium"
 msgstr "Gemiddeld"
+
+msgctxt "machine size"
+msgid "Medium"
+msgstr "Middel"
 
 msgid "Medium severity"
 msgstr "Gemiddelde ernst"
@@ -15890,6 +15907,10 @@ msgstr "Slug"
 msgid "Small"
 msgstr "Klein"
 
+msgctxt "machine size"
+msgid "Small"
+msgstr "Klein"
+
 msgid "Smoother onboarding"
 msgstr "Soepelere onboarding"
 
@@ -19219,6 +19240,10 @@ msgstr "Breedte · parallelle sessies"
 
 msgid "Window"
 msgstr "Venster"
+
+msgctxt "before a machine size"
+msgid "with"
+msgstr "met grootte"
 
 msgid "With action"
 msgstr "Met actie"

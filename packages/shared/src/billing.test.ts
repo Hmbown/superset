@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import {
 	autumnProPlanId,
 	isCloudUsageRefusal,
+	machineSizeSpec,
 	machineSizeVcpus,
 	offeredMachineSize,
 	planAllowsAutomations,
@@ -181,5 +182,15 @@ describe("machine sizes", () => {
 		expect(offeredMachineSize("medium")).toBe("medium");
 		expect(offeredMachineSize("xlarge")).toBeUndefined();
 		expect(offeredMachineSize(null)).toBeUndefined();
+	});
+
+	test("one box hour is one hour of the medium box", () => {
+		expect(machineSizeSpec("small")).toEqual({
+			vcpus: 2,
+			memoryGb: 4,
+			boxHoursPerHour: 0.5,
+		});
+		expect(machineSizeSpec("medium").boxHoursPerHour).toBe(1);
+		expect(machineSizeSpec("large").boxHoursPerHour).toBe(2);
 	});
 });

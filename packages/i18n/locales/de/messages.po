@@ -700,6 +700,9 @@ msgstr "{agents}-Sitzungen werden fortgesetzt, wenn du ihren Workspace öffnest.
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {# Commit hinter main, Rebase nötig} other {# Commits hinter main, Rebase nötig}}"
 
+msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
+msgstr "{boxHoursPerHour, plural, one {Verbraucht # Box-Stunde pro Stunde} other {Verbraucht # Box-Stunden pro Stunde}}"
+
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} von {totalBranches}"
 
@@ -1151,6 +1154,9 @@ msgstr "{uploading, plural, one {# Datei wird hochgeladen…} other {# Dateien w
 
 msgid "{used} used"
 msgstr "{used} verbraucht"
+
+msgid "{vcpuCount} vCPU · {memory} GB"
+msgstr "{vcpuCount} vCPU · {memory} GB"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} ausstehend"
@@ -9339,6 +9345,10 @@ msgstr "Sprache auf diesem Gerät gespeichert, aber die Synchronisierung mit dei
 msgid "Large"
 msgstr "Groß"
 
+msgctxt "machine size"
+msgid "Large"
+msgstr "Groß"
+
 msgid "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 msgstr "Viele dauerhafte Terminals können CPU- und Speicherverbrauch erhöhen. Beende alte Sitzungen, wenn dir Verzögerungen auffallen."
 
@@ -9908,6 +9918,9 @@ msgstr "Niedriger Schweregrad"
 msgid "Machine resources"
 msgstr "Rechnerressourcen"
 
+msgid "Machine size: {label}"
+msgstr "Maschinengröße: {label}"
+
 msgid "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 msgstr "Maschinenunabhängige Cloud-Arbeitsbereiche, die in Sekunden hochfahren und sich mit dem Team teilen lassen."
 
@@ -10096,6 +10109,10 @@ msgstr "Mediane Zeit vom Ticket zur Produktion unter einem Tag bei Routinearbeit
 msgid "Medical and dental at no cost to you, a 401(k), unlimited time off, a $5K desk stipend, and free meals in the office."
 msgstr "Kostenlose Kranken- und Zahnversicherung, ein 401(k), unbegrenzter Urlaub, ein $5K-Budget für deinen Arbeitsplatz und kostenloses Essen im Büro."
 
+msgid "Medium"
+msgstr "Mittel"
+
+msgctxt "machine size"
 msgid "Medium"
 msgstr "Mittel"
 
@@ -15890,6 +15907,10 @@ msgstr "Slug"
 msgid "Small"
 msgstr "Klein"
 
+msgctxt "machine size"
+msgid "Small"
+msgstr "Klein"
+
 msgid "Smoother onboarding"
 msgstr "Reibungsloseres Onboarding"
 
@@ -19219,6 +19240,10 @@ msgstr "Breite · parallele Sitzungen"
 
 msgid "Window"
 msgstr "Fenster"
+
+msgctxt "before a machine size"
+msgid "with"
+msgstr "Größe"
 
 msgid "With action"
 msgstr "Mit Aktion"

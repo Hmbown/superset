@@ -700,6 +700,9 @@ msgstr "As sessões de {agents} são retomadas quando você abre o workspace del
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {# commit atrás da main, precisa de rebase} other {# commits atrás da main, precisa de rebase}}"
 
+msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
+msgstr "{boxHoursPerHour, plural, one {Usa # hora de box por hora} other {Usa # horas de box por hora}}"
+
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} de {totalBranches}"
 
@@ -1151,6 +1154,9 @@ msgstr "{uploading, plural, one {Enviando # arquivo…} other {Enviando # arquiv
 
 msgid "{used} used"
 msgstr "{used} usado"
+
+msgid "{vcpuCount} vCPU · {memory} GB"
+msgstr "{vcpuCount} vCPU · {memory} GB"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} aguardando"
@@ -9339,6 +9345,10 @@ msgstr "O idioma foi salvo neste dispositivo, mas a sincronização com sua cont
 msgid "Large"
 msgstr "Grande"
 
+msgctxt "machine size"
+msgid "Large"
+msgstr "Grande"
+
 msgid "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 msgstr "Muitos terminais persistentes podem aumentar o uso de CPU e memória. Considere encerrar sessões antigas se notar lentidão."
 
@@ -9908,6 +9918,9 @@ msgstr "Gravidade baixa"
 msgid "Machine resources"
 msgstr "Recursos da máquina"
 
+msgid "Machine size: {label}"
+msgstr "Tamanho da máquina: {label}"
+
 msgid "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 msgstr "Áreas de trabalho na nuvem sem máquina fixa, que sobem em segundos e podem ser compartilhadas com o time."
 
@@ -10096,6 +10109,10 @@ msgstr "Tempo mediano do ticket à produção abaixo de um dia para trabalho rot
 msgid "Medical and dental at no cost to you, a 401(k), unlimited time off, a $5K desk stipend, and free meals in the office."
 msgstr "Plano médico e odontológico sem custo para você, um 401(k), folgas ilimitadas, $5K para montar seu espaço de trabalho e refeições grátis no escritório."
 
+msgid "Medium"
+msgstr "Média"
+
+msgctxt "machine size"
 msgid "Medium"
 msgstr "Média"
 
@@ -15890,6 +15907,10 @@ msgstr "Slug"
 msgid "Small"
 msgstr "Pequeno"
 
+msgctxt "machine size"
+msgid "Small"
+msgstr "Pequena"
+
 msgid "Smoother onboarding"
 msgstr "Introdução mais fluida"
 
@@ -19219,6 +19240,10 @@ msgstr "Amplitude · sessões paralelas"
 
 msgid "Window"
 msgstr "Janela"
+
+msgctxt "before a machine size"
+msgid "with"
+msgstr "com tamanho"
 
 msgid "With action"
 msgstr "Com ação"

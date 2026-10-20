@@ -1,8 +1,13 @@
+import { Trans } from "@lingui/react/macro";
 import { useFormat } from "@superset/i18n/react";
 import type {
 	DraftTrigger,
 	TriggerProblem,
 } from "@superset/shared/automation-triggers";
+import {
+	DEFAULT_MACHINE_SIZE,
+	type OfferedMachineSize,
+} from "@superset/shared/billing";
 import { startableCloudEnvironments } from "@superset/shared/cloud-environments";
 import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { CLOUD_HOST_ID } from "@superset/shared/host-routing";
@@ -26,6 +31,7 @@ import { WorkspacePicker } from "../../../components/WorkspacePicker";
 import { AutomationTagsPicker } from "./components/AutomationTagsPicker";
 import { CloudWorkspacePicker } from "./components/CloudWorkspacePicker";
 import { EnvironmentPicker } from "./components/EnvironmentPicker";
+import { MachineSizePicker } from "./components/MachineSizePicker";
 import { SessionModePicker } from "./components/SessionModePicker";
 
 export type AutomationUpdatePatch = Partial<
@@ -40,6 +46,7 @@ export interface ScopeDraft {
 	v2WorkspaceId: string | null;
 	cloudWorkspaceId: string | null;
 	environmentId: string | null;
+	machineSize: OfferedMachineSize | null;
 	continueAgentSession: boolean;
 	tags: string[];
 }
@@ -229,6 +236,19 @@ export function TriggersCard({
 								})
 							}
 						/>
+					)}
+					{cloud && !scope.cloudWorkspaceId && (
+						<>
+							<span>
+								<Trans context="before a machine size">with</Trans>
+							</span>
+							<MachineSizePicker
+								className={SCOPE_CHIP}
+								value={scope.machineSize ?? DEFAULT_MACHINE_SIZE}
+								disabled={readOnly}
+								onChange={(machineSize) => onScopeChange({ machineSize })}
+							/>
+						</>
 					)}
 					{!cloud && (
 						<>

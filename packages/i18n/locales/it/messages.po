@@ -700,6 +700,9 @@ msgstr "Le sessioni di {agents} riprendono quando apri il loro workspace."
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Indietro di # commit rispetto a main, serve un rebase} other {Indietro di # commit rispetto a main, serve un rebase}}"
 
+msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
+msgstr "{boxHoursPerHour, plural, one {Usa # ora di box all'ora} other {Usa # ore di box all'ora}}"
+
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} di {totalBranches}"
 
@@ -1151,6 +1154,9 @@ msgstr "{uploading, plural, one {Caricamento di # file…} other {Caricamento di
 
 msgid "{used} used"
 msgstr "{used} utilizzato"
+
+msgid "{vcpuCount} vCPU · {memory} GB"
+msgstr "{vcpuCount} vCPU · {memory} GB"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} in attesa"
@@ -9339,6 +9345,10 @@ msgstr "Lingua salvata su questo dispositivo, ma la sincronizzazione con il tuo 
 msgid "Large"
 msgstr "Grande"
 
+msgctxt "machine size"
+msgid "Large"
+msgstr "Grande"
+
 msgid "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 msgstr "Un gran numero di terminali persistenti può aumentare l'uso di CPU e memoria. Valuta di terminare le sessioni vecchie se noti rallentamenti."
 
@@ -9908,6 +9918,9 @@ msgstr "Gravità bassa"
 msgid "Machine resources"
 msgstr "Risorse della macchina"
 
+msgid "Machine size: {label}"
+msgstr "Dimensione della macchina: {label}"
+
 msgid "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 msgstr "Workspace cloud slegati dalla macchina, pronti in pochi secondi e condivisibili con i colleghi."
 
@@ -10096,6 +10109,10 @@ msgstr "Tempo mediano dal ticket alla produzione sotto un giorno per il lavoro d
 msgid "Medical and dental at no cost to you, a 401(k), unlimited time off, a $5K desk stipend, and free meals in the office."
 msgstr "Assicurazione medica e dentistica senza costi per te, un 401(k), ferie illimitate, $5K per allestire la tua postazione e pasti gratuiti in ufficio."
 
+msgid "Medium"
+msgstr "Media"
+
+msgctxt "machine size"
 msgid "Medium"
 msgstr "Media"
 
@@ -15890,6 +15907,10 @@ msgstr "Slug"
 msgid "Small"
 msgstr "Piccolo"
 
+msgctxt "machine size"
+msgid "Small"
+msgstr "Piccola"
+
 msgid "Smoother onboarding"
 msgstr "Onboarding più fluido"
 
@@ -19219,6 +19240,10 @@ msgstr "Ampiezza · sessioni parallele"
 
 msgid "Window"
 msgstr "Finestra"
+
+msgctxt "before a machine size"
+msgid "with"
+msgstr "di dimensione"
 
 msgid "With action"
 msgstr "Con azione"

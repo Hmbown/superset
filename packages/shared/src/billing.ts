@@ -180,12 +180,28 @@ export const MACHINE_SIZE_VCPUS = {
 export type MachineSize = keyof typeof MACHINE_SIZE_VCPUS;
 /** X-large waits on a Vercel plan that allows 16 vCPU per sandbox. */
 export const OFFERED_MACHINE_SIZES = ["small", "medium", "large"] as const;
-export const DEFAULT_MACHINE_SIZE: MachineSize = "medium";
+export type OfferedMachineSize = (typeof OFFERED_MACHINE_SIZES)[number];
+export const DEFAULT_MACHINE_SIZE: OfferedMachineSize = "medium";
 export const BOX_HOUR_GB_MINUTES = 480;
+export const MEMORY_GB_PER_VCPU = 2;
+
+export function machineSizeSpec(size: MachineSize): {
+	vcpus: number;
+	memoryGb: number;
+	boxHoursPerHour: number;
+} {
+	const vcpus = MACHINE_SIZE_VCPUS[size];
+	const memoryGb = vcpus * MEMORY_GB_PER_VCPU;
+	return {
+		vcpus,
+		memoryGb,
+		boxHoursPerHour: (memoryGb * 60) / BOX_HOUR_GB_MINUTES,
+	};
+}
 
 export function offeredMachineSize(
 	value: string | null | undefined,
-): (typeof OFFERED_MACHINE_SIZES)[number] | undefined {
+): OfferedMachineSize | undefined {
 	return OFFERED_MACHINE_SIZES.find((size) => size === value);
 }
 

@@ -700,6 +700,9 @@ msgstr "打开对应工作区时，{agents} 会话会恢复。"
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {落后main #个提交，需要变基} other {落后main #个提交，需要变基}}"
 
+msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
+msgstr "{boxHoursPerHour, plural, other {每小时消耗 # 个 box 小时}}"
+
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition}/{totalBranches}"
 
@@ -1151,6 +1154,9 @@ msgstr "{uploading, plural, other {正在上传 # 个文件…}}"
 
 msgid "{used} used"
 msgstr "已使用 {used}"
+
+msgid "{vcpuCount} vCPU · {memory} GB"
+msgstr "{vcpuCount} vCPU · {memory} GB"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting}人等待"
@@ -9339,6 +9345,10 @@ msgstr "语言已在此设备上保存，但同步到你的账户失败。"
 msgid "Large"
 msgstr "大"
 
+msgctxt "machine size"
+msgid "Large"
+msgstr "大型"
+
 msgid "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 msgstr "大量持久化终端会增加CPU/内存占用。如果发现变慢，可以考虑终止旧会话。"
 
@@ -9908,6 +9918,9 @@ msgstr "低严重性"
 msgid "Machine resources"
 msgstr "机器资源"
 
+msgid "Machine size: {label}"
+msgstr "机器规格：{label}"
+
 msgid "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 msgstr "不绑定机器的云端工作区，几秒即可启动，还能分享给队友。"
 
@@ -10098,6 +10111,10 @@ msgstr "免费的医疗和牙科保险、401(k)、无限假期、$5K 办公设�
 
 msgid "Medium"
 msgstr "中"
+
+msgctxt "machine size"
+msgid "Medium"
+msgstr "中型"
 
 msgid "Medium severity"
 msgstr "中严重性"
@@ -15890,6 +15907,10 @@ msgstr "Slug"
 msgid "Small"
 msgstr "小"
 
+msgctxt "machine size"
+msgid "Small"
+msgstr "小型"
+
 msgid "Smoother onboarding"
 msgstr "更顺畅的上手流程"
 
@@ -19219,6 +19240,10 @@ msgstr "宽度 · 并行会话数"
 
 msgid "Window"
 msgstr "窗口"
+
+msgctxt "before a machine size"
+msgid "with"
+msgstr "规格"
 
 msgid "With action"
 msgstr "带操作"

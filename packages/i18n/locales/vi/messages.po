@@ -700,6 +700,9 @@ msgstr "Các phiên {agents} sẽ tiếp tục khi bạn mở workspace của ch
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Chậm hơn main # commit, cần rebase} other {Chậm hơn main # commit, cần rebase}}"
 
+msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
+msgstr "{boxHoursPerHour, plural, other {Dùng # giờ box mỗi giờ}}"
+
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} trong {totalBranches}"
 
@@ -1151,6 +1154,9 @@ msgstr "{uploading, plural, other {Đang tải lên # tệp…}}"
 
 msgid "{used} used"
 msgstr "Đã dùng {used}"
+
+msgid "{vcpuCount} vCPU · {memory} GB"
+msgstr "{vcpuCount} vCPU · {memory} GB"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} đang chờ"
@@ -9339,6 +9345,10 @@ msgstr "Đã lưu ngôn ngữ trên thiết bị này, nhưng không đồng b�
 msgid "Large"
 msgstr "Lớn"
 
+msgctxt "machine size"
+msgid "Large"
+msgstr "Lớn"
+
 msgid "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 msgstr "Quá nhiều terminal duy trì có thể làm tăng mức dùng CPU/bộ nhớ. Hãy cân nhắc kết thúc các phiên cũ nếu thấy máy chậm."
 
@@ -9908,6 +9918,9 @@ msgstr "Mức độ nghiêm trọng thấp"
 msgid "Machine resources"
 msgstr "Tài nguyên máy"
 
+msgid "Machine size: {label}"
+msgstr "Kích thước máy: {label}"
+
 msgid "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 msgstr "Workspace trên cloud không phụ thuộc máy, dựng trong vài giây và chia sẻ được với đồng đội."
 
@@ -10098,6 +10111,10 @@ msgstr "Bảo hiểm y tế và nha khoa miễn phí cho bạn, 401(k), nghỉ p
 
 msgid "Medium"
 msgstr "Trung bình"
+
+msgctxt "machine size"
+msgid "Medium"
+msgstr "Vừa"
 
 msgid "Medium severity"
 msgstr "Mức độ nghiêm trọng trung bình"
@@ -15890,6 +15907,10 @@ msgstr "Slug"
 msgid "Small"
 msgstr "Nhỏ"
 
+msgctxt "machine size"
+msgid "Small"
+msgstr "Nhỏ"
+
 msgid "Smoother onboarding"
 msgstr "Onboarding mượt hơn"
 
@@ -19219,6 +19240,10 @@ msgstr "Chiều rộng · các phiên song song"
 
 msgid "Window"
 msgstr "Cửa sổ"
+
+msgctxt "before a machine size"
+msgid "with"
+msgstr "kích thước"
 
 msgid "With action"
 msgstr "Có hành động"

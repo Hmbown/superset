@@ -700,6 +700,9 @@ msgstr "{agents} sessions resume when you open their workspace."
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 
+msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
+msgstr "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
+
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} of {totalBranches}"
 
@@ -1151,6 +1154,9 @@ msgstr "{uploading, plural, one {Uploading # file…} other {Uploading # files�
 
 msgid "{used} used"
 msgstr "{used} used"
+
+msgid "{vcpuCount} vCPU · {memory} GB"
+msgstr "{vcpuCount} vCPU · {memory} GB"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} Waiting"
@@ -9339,6 +9345,10 @@ msgstr "Language saved on this device, but syncing it to your account failed."
 msgid "Large"
 msgstr "Large"
 
+msgctxt "machine size"
+msgid "Large"
+msgstr "Large"
+
 msgid "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 msgstr "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 
@@ -9908,6 +9918,9 @@ msgstr "Low severity"
 msgid "Machine resources"
 msgstr "Machine resources"
 
+msgid "Machine size: {label}"
+msgstr "Machine size: {label}"
+
 msgid "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 msgstr "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 
@@ -10096,6 +10109,10 @@ msgstr "Median ticket-to-production time under one day for routine work."
 msgid "Medical and dental at no cost to you, a 401(k), unlimited time off, a $5K desk stipend, and free meals in the office."
 msgstr "Medical and dental at no cost to you, a 401(k), unlimited time off, a $5K desk stipend, and free meals in the office."
 
+msgid "Medium"
+msgstr "Medium"
+
+msgctxt "machine size"
 msgid "Medium"
 msgstr "Medium"
 
@@ -15890,6 +15907,10 @@ msgstr "Slug"
 msgid "Small"
 msgstr "Small"
 
+msgctxt "machine size"
+msgid "Small"
+msgstr "Small"
+
 msgid "Smoother onboarding"
 msgstr "Smoother onboarding"
 
@@ -19219,6 +19240,10 @@ msgstr "Width · parallel sessions"
 
 msgid "Window"
 msgstr "Window"
+
+msgctxt "before a machine size"
+msgid "with"
+msgstr "with"
 
 msgid "With action"
 msgstr "With action"

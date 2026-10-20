@@ -700,6 +700,9 @@ msgstr "Sesi {agents} dilanjutkan saat Anda membuka workspace-nya."
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Tertinggal # commit dari main, perlu rebase} other {Tertinggal # commit dari main, perlu rebase}}"
 
+msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
+msgstr "{boxHoursPerHour, plural, other {Memakai # jam box per jam}}"
+
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} dari {totalBranches}"
 
@@ -1151,6 +1154,9 @@ msgstr "{uploading, plural, other {Mengunggah # file…}}"
 
 msgid "{used} used"
 msgstr "{used} terpakai"
+
+msgid "{vcpuCount} vCPU · {memory} GB"
+msgstr "{vcpuCount} vCPU · {memory} GB"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} Menunggu"
@@ -9339,6 +9345,10 @@ msgstr "Bahasa tersimpan di perangkat ini, tapi sinkronisasi ke akun Anda gagal.
 msgid "Large"
 msgstr "Besar"
 
+msgctxt "machine size"
+msgid "Large"
+msgstr "Besar"
+
 msgid "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 msgstr "Terminal persisten dalam jumlah besar bisa menaikkan penggunaan CPU/memori. Pertimbangkan mematikan sesi lama kalau Anda merasakan perlambatan."
 
@@ -9908,6 +9918,9 @@ msgstr "Tingkat keparahan rendah"
 msgid "Machine resources"
 msgstr "Sumber daya mesin"
 
+msgid "Machine size: {label}"
+msgstr "Ukuran mesin: {label}"
+
 msgid "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 msgstr "Workspace cloud yang tidak terikat mesin, siap dalam hitungan detik dan bisa dibagikan ke rekan tim."
 
@@ -10096,6 +10109,10 @@ msgstr "Waktu median dari tiket ke produksi di bawah satu hari untuk pekerjaan r
 msgid "Medical and dental at no cost to you, a 401(k), unlimited time off, a $5K desk stipend, and free meals in the office."
 msgstr "Asuransi kesehatan dan gigi tanpa biaya, 401(k), cuti tanpa batas, tunjangan meja kerja $5K, dan makan gratis di kantor."
 
+msgid "Medium"
+msgstr "Sedang"
+
+msgctxt "machine size"
 msgid "Medium"
 msgstr "Sedang"
 
@@ -15890,6 +15907,10 @@ msgstr "Slug"
 msgid "Small"
 msgstr "Kecil"
 
+msgctxt "machine size"
+msgid "Small"
+msgstr "Kecil"
+
 msgid "Smoother onboarding"
 msgstr "Onboarding yang lebih mulus"
 
@@ -19219,6 +19240,10 @@ msgstr "Lebar · sesi paralel"
 
 msgid "Window"
 msgstr "Jendela"
+
+msgctxt "before a machine size"
+msgid "with"
+msgstr "dengan ukuran"
 
 msgid "With action"
 msgstr "Dengan aksi"

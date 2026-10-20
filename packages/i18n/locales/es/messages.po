@@ -700,6 +700,9 @@ msgstr "Las sesiones de {agents} se reanudan cuando abres su espacio de trabajo.
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {# commit por detrás de main, necesita rebase} other {# commits por detrás de main, necesita rebase}}"
 
+msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
+msgstr "{boxHoursPerHour, plural, one {Usa # hora de box por hora} other {Usa # horas de box por hora}}"
+
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} de {totalBranches}"
 
@@ -1151,6 +1154,9 @@ msgstr "{uploading, plural, one {Subiendo # archivo…} other {Subiendo # archiv
 
 msgid "{used} used"
 msgstr "{used} usado"
+
+msgid "{vcpuCount} vCPU · {memory} GB"
+msgstr "{vcpuCount} vCPU · {memory} GB"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} en espera"
@@ -9339,6 +9345,10 @@ msgstr "El idioma se guardó en este dispositivo, pero no se pudo sincronizar co
 msgid "Large"
 msgstr "Grande"
 
+msgctxt "machine size"
+msgid "Large"
+msgstr "Grande"
+
 msgid "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 msgstr "Tener muchas terminales persistentes puede aumentar el uso de CPU y memoria. Si notas lentitud, plantéate terminar las sesiones antiguas."
 
@@ -9908,6 +9918,9 @@ msgstr "Gravedad baja"
 msgid "Machine resources"
 msgstr "Recursos de la máquina"
 
+msgid "Machine size: {label}"
+msgstr "Tamaño de la máquina: {label}"
+
 msgid "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 msgstr "Espacios de trabajo en la nube, sin atarse a una máquina, que arrancan en segundos y se pueden compartir con el equipo."
 
@@ -10098,6 +10111,10 @@ msgstr "Seguro médico y dental sin costo para ti, un 401(k), vacaciones ilimita
 
 msgid "Medium"
 msgstr "Media"
+
+msgctxt "machine size"
+msgid "Medium"
+msgstr "Mediana"
 
 msgid "Medium severity"
 msgstr "Gravedad media"
@@ -15890,6 +15907,10 @@ msgstr "Slug"
 msgid "Small"
 msgstr "Pequeño"
 
+msgctxt "machine size"
+msgid "Small"
+msgstr "Pequeña"
+
 msgid "Smoother onboarding"
 msgstr "Puesta en marcha más fluida"
 
@@ -19219,6 +19240,10 @@ msgstr "Amplitud · sesiones paralelas"
 
 msgid "Window"
 msgstr "Ventana"
+
+msgctxt "before a machine size"
+msgid "with"
+msgstr "con tamaño"
 
 msgid "With action"
 msgstr "Con acción"

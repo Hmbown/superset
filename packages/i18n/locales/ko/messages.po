@@ -700,6 +700,9 @@ msgstr "{agents} 세션은 해당 워크스페이스를 열면 재개됩니다."
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {main보다 커밋 #개 뒤처짐, 리베이스 필요} other {main보다 커밋 #개 뒤처짐, 리베이스 필요}}"
 
+msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
+msgstr "{boxHoursPerHour, plural, other {시간당 # box 시간 사용}}"
+
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{totalBranches}개 중 {branchPosition}번째"
 
@@ -1151,6 +1154,9 @@ msgstr "{uploading, plural, other {파일 #개 업로드 중…}}"
 
 msgid "{used} used"
 msgstr "{used} 사용됨"
+
+msgid "{vcpuCount} vCPU · {memory} GB"
+msgstr "{vcpuCount} vCPU · {memory} GB"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting}명 대기 중"
@@ -9339,6 +9345,10 @@ msgstr "이 기기에는 언어를 저장했지만 계정에 동기화하지 못
 msgid "Large"
 msgstr "큼"
 
+msgctxt "machine size"
+msgid "Large"
+msgstr "대형"
+
 msgid "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 msgstr "지속 실행 터미널이 많으면 CPU/메모리 사용량이 늘어날 수 있습니다. 느려진다면 오래된 세션을 종료해 보세요."
 
@@ -9908,6 +9918,9 @@ msgstr "심각도 낮음"
 msgid "Machine resources"
 msgstr "머신 리소스"
 
+msgid "Machine size: {label}"
+msgstr "머신 크기: {label}"
+
 msgid "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 msgstr "머신에 묶이지 않는 클라우드 워크스페이스를 몇 초 만에 띄우고 팀원과 공유할 수 있습니다."
 
@@ -10098,6 +10111,10 @@ msgstr "본인 부담 없는 의료 및 치과 보험, 401(k), 무제한 휴가,
 
 msgid "Medium"
 msgstr "보통"
+
+msgctxt "machine size"
+msgid "Medium"
+msgstr "중형"
 
 msgid "Medium severity"
 msgstr "심각도 보통"
@@ -15890,6 +15907,10 @@ msgstr "슬러그"
 msgid "Small"
 msgstr "작음"
 
+msgctxt "machine size"
+msgid "Small"
+msgstr "소형"
+
 msgid "Smoother onboarding"
 msgstr "더 매끄러운 온보딩"
 
@@ -19219,6 +19240,10 @@ msgstr "너비 · 병렬 세션"
 
 msgid "Window"
 msgstr "창"
+
+msgctxt "before a machine size"
+msgid "with"
+msgstr "크기"
 
 msgid "With action"
 msgstr "동작 포함"

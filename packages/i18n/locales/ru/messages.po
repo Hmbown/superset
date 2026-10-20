@@ -700,6 +700,9 @@ msgstr "Сеансы {agents} возобновятся, когда вы откр
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Отстаёт от main на # коммит, нужен rebase} few {Отстаёт от main на # коммита, нужен rebase} many {Отстаёт от main на # коммитов, нужен rebase} other {Отстаёт от main на # коммитов, нужен rebase}}"
 
+msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
+msgstr "{boxHoursPerHour, plural, one {Расходует # box-час в час} few {Расходует # box-часа в час} many {Расходует # box-часов в час} other {Расходует # box-часа в час}}"
+
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} из {totalBranches}"
 
@@ -1151,6 +1154,9 @@ msgstr "{uploading, plural, one {Загрузка # файла…} few {Загр
 
 msgid "{used} used"
 msgstr "Использовано {used}"
+
+msgid "{vcpuCount} vCPU · {memory} GB"
+msgstr "{vcpuCount} vCPU · {memory} ГБ"
 
 msgid "{waiting} Waiting"
 msgstr "Ожидают: {waiting}"
@@ -9339,6 +9345,10 @@ msgstr "Язык сохранён на этом устройстве, но си�
 msgid "Large"
 msgstr "Большой"
 
+msgctxt "machine size"
+msgid "Large"
+msgstr "Большая"
+
 msgid "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 msgstr "Большое количество постоянных терминалов может увеличить нагрузку на CPU и память. Если заметили замедление, стоит завершить старые сессии."
 
@@ -9908,6 +9918,9 @@ msgstr "Низкая серьёзность"
 msgid "Machine resources"
 msgstr "Ресурсы машины"
 
+msgid "Machine size: {label}"
+msgstr "Размер машины: {label}"
+
 msgid "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 msgstr "Облачные рабочие области, не привязанные к машине: поднимаются за секунды, и ими можно делиться с коллегами."
 
@@ -10098,6 +10111,10 @@ msgstr "Бесплатная медицинская и стоматологич�
 
 msgid "Medium"
 msgstr "Средний"
+
+msgctxt "machine size"
+msgid "Medium"
+msgstr "Средняя"
 
 msgid "Medium severity"
 msgstr "Средняя серьёзность"
@@ -15890,6 +15907,10 @@ msgstr "Slug"
 msgid "Small"
 msgstr "Маленький"
 
+msgctxt "machine size"
+msgid "Small"
+msgstr "Малая"
+
 msgid "Smoother onboarding"
 msgstr "Более гладкий онбординг"
 
@@ -19219,6 +19240,10 @@ msgstr "Ширина · параллельных сессий"
 
 msgid "Window"
 msgstr "Окно"
+
+msgctxt "before a machine size"
+msgid "with"
+msgstr "размер"
 
 msgid "With action"
 msgstr "С действием"
