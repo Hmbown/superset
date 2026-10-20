@@ -92,10 +92,6 @@ msgstr "（無輸出）"
 msgid "(you)"
 msgstr "（你）"
 
-#. placeholder {0}: connections.length
-msgid "{0, plural, one {# account connected} other {# accounts connected}}"
-msgstr "{0, plural, other {已連接 # 個帳號}}"
-
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {#個活動埠 — 隱藏詳情} other {#個活動埠 — 隱藏詳情}}"
@@ -391,16 +387,14 @@ msgstr "{0}還不能用這種方式登入。"
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "已有 {0} 位開發者依 agent 用量排名。你最近 30 天的資料已計入，只是尚未公開。僅包含 token 數量與模型名稱，不含儲存庫名稱、檔案路徑或提示詞。"
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: variables.name
 msgid "{0} disabled"
 msgstr "{0}已停用"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "{0} Documentation"
 msgstr "{0} 文件"
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: skill.name
 #. placeholder {0}: variables.name
 msgid "{0} enabled"
@@ -1196,7 +1190,7 @@ msgstr "#{0} {1}\n"
 msgid "#engineering"
 msgstr "#engineering"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.NAME
 msgid "%s | {0} Docs"
 msgstr "%s | {0} 文件"
 
@@ -1532,6 +1526,9 @@ msgstr "Aa"
 
 msgid "About"
 msgstr "關於"
+
+msgid "About {displayName}"
+msgstr "關於 {displayName}"
 
 msgid "About Superset"
 msgstr "關於Superset"
@@ -2111,8 +2108,8 @@ msgstr "你的所有資料將在{ACCOUNT_DELETION_GRACE_DAYS}天後被永久刪�
 msgid "All of your data will be permanently deleted after {ACCOUNT_DELETION_GRACE_DAYS} days. Sign back in before then to restore your account."
 msgstr "你的所有資料將在{ACCOUNT_DELETION_GRACE_DAYS}天後被永久刪除。在此之前重新登入即可恢復帳戶。"
 
-msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close Superset” instead if you want services to keep running for the next launch."
-msgstr "所有開啟的終端會話都會被結束，正在執行的主機服務也會停止。如果希望服務繼續執行以便下次啟動，請改用「關閉Superset」。"
+msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close {displayName}” instead if you want services to keep running for the next launch."
+msgstr "所有開啟的終端會話都會被結束，正在執行的主機服務也會停止。如果希望服務繼續執行以便下次啟動，請改用「關閉{displayName}」。"
 
 msgid "All pages"
 msgstr "所有頁面"
@@ -2578,6 +2575,9 @@ msgstr "請代理程式寫一份設計文件或報告。它會建立頁面並發
 
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "請代理程式從桌面應用程式發佈一個頁面。"
+
+msgid "Ask before you close a terminal, tab, or port that still has a process running in it"
+msgstr "關閉仍有程序在執行的終端機、分頁或連接埠前先詢問"
 
 msgid "Ask for approval"
 msgstr "要求批准"
@@ -3859,9 +3859,6 @@ msgstr "點擊開啟拉取請求"
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "點選複製會話ID（使用`claude --resume <id>`恢復）。"
 
-msgid "Click to open on GitHub"
-msgstr "點選在GitHub上開啟"
-
 msgid "Click to open the pull request"
 msgstr "點擊開啟拉取請求"
 
@@ -3905,6 +3902,9 @@ msgstr "關閉（Esc）"
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "關閉{0}"
+
+msgid "Close {displayName}"
+msgstr "關閉{displayName}"
 
 #. placeholder {0}: data.number
 msgid "Close #{0}?"
@@ -4004,9 +4004,6 @@ msgstr "關閉審查篩選"
 
 msgid "Close session"
 msgstr "關閉會話"
-
-msgid "Close Superset"
-msgstr "關閉Superset"
 
 msgid "Close tab"
 msgstr "關閉分頁"
@@ -6191,9 +6188,6 @@ msgstr "直接模式"
 msgid "Directory"
 msgstr "目錄"
 
-msgid "Disable"
-msgstr "停用"
-
 msgid "Disable skill"
 msgstr "停用技能"
 
@@ -6699,9 +6693,6 @@ msgstr "空命令"
 
 msgid "Emulator"
 msgstr "模擬器"
-
-msgid "Enable"
-msgstr "啟用"
 
 #. placeholder {0}: preset.label
 msgid "Enable {0}"
@@ -8310,6 +8301,9 @@ msgstr "加入後才會顯示"
 msgid "Hide"
 msgstr "隱藏"
 
+msgid "Hide {displayName}"
+msgstr "隱藏 {displayName}"
+
 msgid "Hide checks"
 msgstr "隱藏檢查"
 
@@ -8916,9 +8910,6 @@ msgstr "在你的客戶端裡安裝Superset MCP"
 msgid "Install the desktop app"
 msgstr "安裝桌面應用程式"
 
-msgid "Install the plugin to connect"
-msgstr "安裝外掛後即可連線"
-
 msgid "Install the Superset GitHub App to connect your repositories."
 msgstr "安裝Superset GitHub App以連線你的儲存庫。"
 
@@ -9160,6 +9151,9 @@ msgstr "迭代。"
 
 msgid "Its comments and history go with it."
 msgstr "其留言和歷史記錄也會一併刪除。"
+
+msgid "Its connected accounts were disconnected."
+msgstr "其已連接的帳號已中斷連線。"
 
 msgid "Its own branch and copy of the files"
 msgstr "獨立的分支和檔案副本"
@@ -9955,9 +9949,6 @@ msgstr "管理"
 
 msgid "Manage {title}"
 msgstr "管理 {title}"
-
-msgid "Manage accounts"
-msgstr "管理帳號"
 
 msgid "Manage accounts…"
 msgstr "管理帳號…"
@@ -11559,11 +11550,11 @@ msgstr "佔全部token"
 msgid "Off"
 msgstr "關閉"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
 msgstr "{0} 官方文件。這款應用程式可並行運行 100 多個編程代理。"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}. Learn how to run 100+ coding agents in parallel on your machine."
 msgstr "{0} 官方文件。瞭解如何在您的設備上並行運行 100 多個編程代理。"
 
@@ -11777,6 +11768,9 @@ msgstr "開啟{0}"
 #. placeholder {0}: plugin.interface.displayName
 msgid "Open {0} website"
 msgstr "開啟 {0} 官網"
+
+msgid "Open {displayName}"
+msgstr "開啟{displayName}"
 
 msgid "Open {filePath}"
 msgstr "開啟{filePath}"
@@ -12098,9 +12092,6 @@ msgstr "開啟側邊面板"
 
 msgid "Open ship options"
 msgstr "開啟發布選項"
-
-msgid "Open Superset"
-msgstr "開啟Superset"
 
 msgid "Open Superset on that computer"
 msgstr "在那台電腦上開啟Superset"
@@ -13381,17 +13372,21 @@ msgstr "輕"
 msgid "Quit"
 msgstr "退出"
 
+msgid "Quit {displayName}"
+msgstr "結束 {displayName}"
+
+msgctxt "quit confirmation dialog title"
+msgid "Quit {displayName}"
+msgstr "退出{displayName}"
+
+msgid "Quit {displayName} and stop all background services?"
+msgstr "退出{displayName}並停止所有背景服務？"
+
+msgid "Quit {displayName} Completely"
+msgstr "完全退出{displayName}"
+
 msgid "Quit Completely"
 msgstr "完全退出"
-
-msgid "Quit Superset"
-msgstr "退出Superset"
-
-msgid "Quit Superset and stop all background services?"
-msgstr "退出Superset並停止所有背景服務？"
-
-msgid "Quit Superset Completely"
-msgstr "完全退出Superset"
 
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "請先退出源瀏覽器，讓它把登入資訊寫入磁碟。系統會請求你允許存取鑰匙圈。"
@@ -15292,8 +15287,8 @@ msgstr "在你重新連線之前，Sentry觸發器會停止觸發。該整合仍
 msgid "Separator"
 msgstr "分隔線"
 
-msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
-msgstr "服務可用性發布在<0>status.superset.sh</0>，安全與合規文件在<1>trust.superset.sh</1>。"
+msgid "Service availability is published at <0>{statusHost}</0>, and security and compliance documentation at <1>{trustHost}</1>."
+msgstr "服務可用性發布在<0>{statusHost}</0>，安全與合規文件在<1>{trustHost}</1>。"
 
 msgid "Session"
 msgstr "會話"
@@ -18939,6 +18934,9 @@ msgstr "正在喚醒工作區"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "想讓某件事早點做？<0>在Discord上告訴我們</0>。這裡的很多條目最初都來自使用者的請求。"
+
+msgid "Warn before closing a running terminal"
+msgstr "關閉正在執行的終端機前發出警告"
 
 msgid "Warning"
 msgstr "警告"

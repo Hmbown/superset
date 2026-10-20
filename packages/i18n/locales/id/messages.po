@@ -92,10 +92,6 @@ msgstr "(tidak ada keluaran)"
 msgid "(you)"
 msgstr "(Anda)"
 
-#. placeholder {0}: connections.length
-msgid "{0, plural, one {# account connected} other {# accounts connected}}"
-msgstr "{0, plural, other {# akun terhubung}}"
-
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# port aktif — sembunyikan detail} other {# port aktif — sembunyikan detail}}"
@@ -391,16 +387,14 @@ msgstr "{0} belum bisa masuk dengan cara ini."
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} developer diperingkat berdasarkan penggunaan agen. 30 hari terakhir Anda sudah dihitung, hanya disembunyikan. Hanya jumlah token dan nama model, tanpa nama repo, path file, atau prompt."
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: variables.name
 msgid "{0} disabled"
 msgstr "{0} dinonaktifkan"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "{0} Documentation"
 msgstr "Dokumentasi {0}"
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: skill.name
 #. placeholder {0}: variables.name
 msgid "{0} enabled"
@@ -1196,7 +1190,7 @@ msgstr "#{0} {1}\n"
 msgid "#engineering"
 msgstr "#engineering"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.NAME
 msgid "%s | {0} Docs"
 msgstr "%s | Dokumentasi {0}"
 
@@ -1532,6 +1526,9 @@ msgstr "Aa"
 
 msgid "About"
 msgstr "Tentang"
+
+msgid "About {displayName}"
+msgstr "Tentang {displayName}"
 
 msgid "About Superset"
 msgstr "Tentang Superset"
@@ -2111,8 +2108,8 @@ msgstr "Semua data Anda akan dihapus permanen setelah {ACCOUNT_DELETION_GRACE_DA
 msgid "All of your data will be permanently deleted after {ACCOUNT_DELETION_GRACE_DAYS} days. Sign back in before then to restore your account."
 msgstr "Semua data Anda akan dihapus permanen setelah {ACCOUNT_DELETION_GRACE_DAYS} hari. Masuk lagi sebelum itu untuk memulihkan akun Anda."
 
-msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close Superset” instead if you want services to keep running for the next launch."
-msgstr "Semua sesi terminal yang terbuka akan dimatikan dan host-service yang berjalan akan dihentikan. Pakai “Close Superset” kalau Anda ingin layanannya tetap berjalan untuk peluncuran berikutnya."
+msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close {displayName}” instead if you want services to keep running for the next launch."
+msgstr "Semua sesi terminal yang terbuka akan dimatikan dan host-service yang berjalan akan dihentikan. Pakai “Close {displayName}” kalau Anda ingin layanannya tetap berjalan untuk peluncuran berikutnya."
 
 msgid "All pages"
 msgstr "Semua halaman"
@@ -2578,6 +2575,9 @@ msgstr "Minta agen membuat dokumen desain atau laporan. Agen membuat halamannya 
 
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Minta agen untuk memublikasikan satu dari aplikasi desktop."
+
+msgid "Ask before you close a terminal, tab, or port that still has a process running in it"
+msgstr "Tanyakan sebelum menutup terminal, tab, atau port yang masih menjalankan proses"
 
 msgid "Ask for approval"
 msgstr "Minta persetujuan"
@@ -3859,9 +3859,6 @@ msgstr "Klik chip untuk membuka pull request"
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Klik untuk menyalin ID sesi (lanjutkan dengan `claude --resume <id>`)."
 
-msgid "Click to open on GitHub"
-msgstr "Klik untuk membuka di GitHub"
-
 msgid "Click to open the pull request"
 msgstr "Klik untuk membuka pull request"
 
@@ -3905,6 +3902,9 @@ msgstr "Tutup (Esc)"
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "Tutup {0}"
+
+msgid "Close {displayName}"
+msgstr "Tutup {displayName}"
 
 #. placeholder {0}: data.number
 msgid "Close #{0}?"
@@ -4004,9 +4004,6 @@ msgstr "Tutup filter review"
 
 msgid "Close session"
 msgstr "Tutup sesi"
-
-msgid "Close Superset"
-msgstr "Tutup Superset"
 
 msgid "Close tab"
 msgstr "Tutup tab"
@@ -6191,9 +6188,6 @@ msgstr "Mode langsung"
 msgid "Directory"
 msgstr "Direktori"
 
-msgid "Disable"
-msgstr "Nonaktifkan"
-
 msgid "Disable skill"
 msgstr "Nonaktifkan skill"
 
@@ -6699,9 +6693,6 @@ msgstr "Perintah kosong"
 
 msgid "Emulator"
 msgstr "Emulator"
-
-msgid "Enable"
-msgstr "Aktifkan"
 
 #. placeholder {0}: preset.label
 msgid "Enable {0}"
@@ -8310,6 +8301,9 @@ msgstr "Tersembunyi sampai Anda bergabung"
 msgid "Hide"
 msgstr "Sembunyikan"
 
+msgid "Hide {displayName}"
+msgstr "Sembunyikan {displayName}"
+
 msgid "Hide checks"
 msgstr "Sembunyikan check"
 
@@ -8916,9 +8910,6 @@ msgstr "Pasang Superset MCP di klien Anda"
 msgid "Install the desktop app"
 msgstr "Pasang aplikasi desktop"
 
-msgid "Install the plugin to connect"
-msgstr "Instal plugin untuk menghubungkan"
-
 msgid "Install the Superset GitHub App to connect your repositories."
 msgstr "Pasang GitHub App Superset untuk menghubungkan repositori Anda."
 
@@ -9160,6 +9151,9 @@ msgstr "Iterasi."
 
 msgid "Its comments and history go with it."
 msgstr "Komentar dan riwayatnya ikut terhapus."
+
+msgid "Its connected accounts were disconnected."
+msgstr "Akun yang terhubung telah diputuskan."
 
 msgid "Its own branch and copy of the files"
 msgstr "Branch dan salinan file tersendiri"
@@ -9955,9 +9949,6 @@ msgstr "Kelola"
 
 msgid "Manage {title}"
 msgstr "Kelola {title}"
-
-msgid "Manage accounts"
-msgstr "Kelola akun"
 
 msgid "Manage accounts…"
 msgstr "Kelola akun…"
@@ -11559,11 +11550,11 @@ msgstr "dari semua token"
 msgid "Off"
 msgstr "Mati"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
 msgstr "Dokumentasi resmi {0}, aplikasi untuk menjalankan lebih dari 100 agen pemrograman secara paralel."
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}. Learn how to run 100+ coding agents in parallel on your machine."
 msgstr "Dokumentasi resmi {0}. Pelajari cara menjalankan lebih dari 100 agen pemrograman secara paralel di perangkat Anda."
 
@@ -11777,6 +11768,9 @@ msgstr "Buka {0}"
 #. placeholder {0}: plugin.interface.displayName
 msgid "Open {0} website"
 msgstr "Buka situs web {0}"
+
+msgid "Open {displayName}"
+msgstr "Buka {displayName}"
 
 msgid "Open {filePath}"
 msgstr "Buka {filePath}"
@@ -12098,9 +12092,6 @@ msgstr "Buka sheet"
 
 msgid "Open ship options"
 msgstr "Buka opsi pengiriman"
-
-msgid "Open Superset"
-msgstr "Buka Superset"
 
 msgid "Open Superset on that computer"
 msgstr "Buka Superset di komputer itu"
@@ -13381,17 +13372,21 @@ msgstr "Pelan"
 msgid "Quit"
 msgstr "Keluar"
 
+msgid "Quit {displayName}"
+msgstr "Keluar dari {displayName}"
+
+msgctxt "quit confirmation dialog title"
+msgid "Quit {displayName}"
+msgstr "Keluar dari {displayName}"
+
+msgid "Quit {displayName} and stop all background services?"
+msgstr "Keluar dari {displayName} dan hentikan semua layanan latar belakang?"
+
+msgid "Quit {displayName} Completely"
+msgstr "Keluar dari {displayName} Sepenuhnya"
+
 msgid "Quit Completely"
 msgstr "Keluar Sepenuhnya"
-
-msgid "Quit Superset"
-msgstr "Keluar dari Superset"
-
-msgid "Quit Superset and stop all background services?"
-msgstr "Keluar dari Superset dan hentikan semua layanan latar belakang?"
-
-msgid "Quit Superset Completely"
-msgstr "Keluar dari Superset Sepenuhnya"
 
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "Tutup dulu browser sumbernya agar login-nya tersimpan ke disk. Anda akan diminta mengizinkan akses Keychain."
@@ -15292,8 +15287,8 @@ msgstr "Pemicu Sentry berhenti berjalan sampai Anda menghubungkan lagi. Integras
 msgid "Separator"
 msgstr "Separator"
 
-msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
-msgstr "Ketersediaan layanan dipublikasikan di <0>status.superset.sh</0>, dan dokumentasi keamanan serta kepatuhan di <1>trust.superset.sh</1>."
+msgid "Service availability is published at <0>{statusHost}</0>, and security and compliance documentation at <1>{trustHost}</1>."
+msgstr "Ketersediaan layanan dipublikasikan di <0>{statusHost}</0>, dan dokumentasi keamanan serta kepatuhan di <1>{trustHost}</1>."
 
 msgid "Session"
 msgstr "Sesi"
@@ -18939,6 +18934,9 @@ msgstr "Membangunkan workspace"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Ingin sesuatu lebih cepat? <0>Beri tahu kami di Discord</0>. Banyak yang ada di sini bermula dari permintaan pengguna."
+
+msgid "Warn before closing a running terminal"
+msgstr "Peringatkan sebelum menutup terminal yang sedang berjalan"
 
 msgid "Warning"
 msgstr "Warning"
