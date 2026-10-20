@@ -1,4 +1,5 @@
 import { boolean, CLIError, positional, string } from "@superset/cli-framework";
+import { OFFERED_MACHINE_SIZES } from "@superset/shared/billing";
 import { CLOUD_HOST_ID } from "@superset/shared/host-routing";
 import { command } from "../../../lib/command";
 import { resolveHostFilter } from "../../../lib/host-target";
@@ -38,6 +39,11 @@ export default command({
 		environment: string().desc(
 			"Id of the environment each run's cloud workspace starts from. Implies --cloud",
 		),
+		machine: string()
+			.enum(...OFFERED_MACHINE_SIZES)
+			.desc(
+				"Machine size of each run's new cloud workspace: `small` (2 vCPU, 4 GB), `medium` (4 vCPU, 8 GB; default), or `large` (8 vCPU, 16 GB). Only for a cloud automation",
+			),
 		continueSession: boolean().desc(
 			"Continue the agent session the previous run left (--continue-session) or start a new one each run (--no-continue-session). Requires a pinned workspace",
 		),
@@ -100,11 +106,18 @@ export default command({
 				options.session ||
 				options.tag?.length ||
 				options.clearTags ||
+				options.machine ||
 				(options.cloud && !options.environment))
 				? await ctx.api.automation.get.query({ id })
 				: null;
 		const alreadyCloud = current?.targetHostId === CLOUD_HOST_ID;
 		const cloud = Boolean(options.cloud || options.environment || alreadyCloud);
+		if (options.machine && !cloud) {
+			throw new CLIError(
+				"--machine applies to cloud automations",
+				"Pass --cloud to run it in the cloud, or drop --machine",
+			);
+		}
 		if (cloud) {
 			refuseHostFlagsForCloud({
 				"--host": options.host,
@@ -186,6 +199,7 @@ export default command({
 			...(options.continueSession === undefined
 				? {}
 				: { continueAgentSession: options.continueSession }),
+			...(options.machine ? { machineSize: options.machine } : {}),
 			// --tag replaces the whole set; --clear-tags empties it.
 			...(options.clearTags
 				? { tags: [] }

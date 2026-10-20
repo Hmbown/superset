@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { boolean, CLIError, string } from "@superset/cli-framework";
+import { OFFERED_MACHINE_SIZES } from "@superset/shared/billing";
 import { command } from "../../../lib/command";
 import { resolveHostFilter } from "../../../lib/host-target";
 import { formatAutomationDate } from "../format";
@@ -42,6 +43,11 @@ export default command({
 		environment: string().desc(
 			"Id of the environment each run's cloud workspace starts from. Implies --cloud; required when several environments have repositories",
 		),
+		machine: string()
+			.enum(...OFFERED_MACHINE_SIZES)
+			.desc(
+				"Machine size of each run's new cloud workspace: `small` (2 vCPU, 4 GB), `medium` (4 vCPU, 8 GB; default), or `large` (8 vCPU, 16 GB). Implies --cloud",
+			),
 		continueSession: boolean().desc(
 			"Deliver each run's prompt into the agent session the previous run left, instead of starting another. Requires --workspace",
 		),
@@ -80,7 +86,9 @@ export default command({
 		if (!organizationId) {
 			throw new CLIError("No active organization", "Run: superset auth login");
 		}
-		const cloud = Boolean(options.cloud || options.environment);
+		const cloud = Boolean(
+			options.cloud || options.environment || options.machine,
+		);
 		if (cloud) {
 			refuseHostFlagsForCloud({
 				"--host": options.host,
@@ -121,6 +129,7 @@ export default command({
 			agent: options.agent,
 			...target,
 			continueAgentSession: options.continueSession ?? undefined,
+			...(options.machine ? { machineSize: options.machine } : {}),
 			rrule: options.rrule ?? undefined,
 			dtstart: options.dtstart ? new Date(options.dtstart) : undefined,
 			timezone: options.timezone ?? DEFAULT_TIMEZONE,
