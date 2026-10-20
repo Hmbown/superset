@@ -7,6 +7,8 @@ export interface ImageDimensions {
 	height: number;
 }
 
+// Every image format keeps its size in the header
+const HEADER_BYTES = 64 * 1024;
 const cache = new Map<string, ImageDimensions | null>();
 
 // Functions do not bundle public/images (see next.config.ts), so a render
@@ -30,7 +32,15 @@ export function getPublicImageSize(
 
 	let dimensions: ImageDimensions | null = null;
 	try {
-		const { width, height } = imageSize(fs.readFileSync(filePath));
+		const header = Buffer.alloc(HEADER_BYTES);
+		const fd = fs.openSync(filePath, "r");
+		let bytesRead: number;
+		try {
+			bytesRead = fs.readSync(fd, header, 0, HEADER_BYTES, 0);
+		} finally {
+			fs.closeSync(fd);
+		}
+		const { width, height } = imageSize(header.subarray(0, bytesRead));
 		if (width && height) dimensions = { width, height };
 	} catch {}
 	cache.set(filePath, dimensions);

@@ -42,7 +42,7 @@ const inter = Inter({
 	display: "swap",
 	axes: ["opsz"],
 	adjustFontFallback: false,
-	fallback: ["Inter Fallback"],
+	fallback: [],
 });
 
 const siteDescription =
