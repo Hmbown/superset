@@ -7,7 +7,8 @@ export interface ImageDimensions {
 	height: number;
 }
 
-// Every image format keeps its size in the header
+// Most images keep their size in the first bytes; a JPEG with large metadata
+// can keep it further in, so a failed parse falls back to the whole file
 const HEADER_BYTES = 64 * 1024;
 const cache = new Map<string, ImageDimensions | null>();
 
@@ -32,17 +33,25 @@ export function getPublicImageSize(
 
 	let dimensions: ImageDimensions | null = null;
 	try {
-		const header = Buffer.alloc(HEADER_BYTES);
-		const fd = fs.openSync(filePath, "r");
-		let bytesRead: number;
-		try {
-			bytesRead = fs.readSync(fd, header, 0, HEADER_BYTES, 0);
-		} finally {
-			fs.closeSync(fd);
-		}
-		const { width, height } = imageSize(header.subarray(0, bytesRead));
+		const { width, height } = readImageSize(filePath);
 		if (width && height) dimensions = { width, height };
 	} catch {}
 	cache.set(filePath, dimensions);
 	return dimensions;
+}
+
+function readImageSize(filePath: string) {
+	const header = Buffer.alloc(HEADER_BYTES);
+	const fd = fs.openSync(filePath, "r");
+	let bytesRead: number;
+	try {
+		bytesRead = fs.readSync(fd, header, 0, HEADER_BYTES, 0);
+	} finally {
+		fs.closeSync(fd);
+	}
+	try {
+		return imageSize(header.subarray(0, bytesRead));
+	} catch {
+		return imageSize(fs.readFileSync(filePath));
+	}
 }
