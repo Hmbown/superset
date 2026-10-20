@@ -16,6 +16,7 @@ import { Switch } from "@superset/ui/switch";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useTRPC } from "@/trpc/react";
+import { CloudUsageCard } from "./components/CloudUsageCard";
 import { useBillingActions } from "./hooks/useBillingActions";
 
 interface BillingSettingsProps {
@@ -210,6 +211,8 @@ export function BillingSettings({ organizationId }: BillingSettingsProps) {
 					</div>
 				)}
 			</div>
+
+			<CloudUsageCard />
 
 			{plan === "free" && (
 				<div className="space-y-4 border-t pt-6">

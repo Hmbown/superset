@@ -1,0 +1,64 @@
+import { Trans } from "@lingui/react/macro";
+import { useFormat } from "@superset/i18n/react";
+import { BOX_HOUR_GB_MINUTES } from "@superset/shared/billing";
+import { Progress } from "@superset/ui/progress";
+import { cloudTrpc } from "renderer/lib/cloud-trpc";
+
+export function CloudUsageCard() {
+	const { formatNumber, formatDate } = useFormat();
+	const { data: usage } = cloudTrpc.billing.cloudUsage.useQuery(undefined);
+
+	if (!usage) return null;
+
+	const boxHours = (gbMinutes: number) =>
+		formatNumber(gbMinutes / BOX_HOUR_GB_MINUTES, {
+			maximumFractionDigits: 1,
+		});
+	const used = boxHours(usage.usedGbMinutes);
+	const included =
+		usage.includedGbMinutes === null ? null : boxHours(usage.includedGbMinutes);
+	const overage =
+		usage.overageGbMinutes > 0 ? boxHours(usage.overageGbMinutes) : null;
+	const resetDate = usage.resetsAt
+		? formatDate(new Date(usage.resetsAt))
+		: null;
+	const percentUsed =
+		usage.includedGbMinutes && usage.includedGbMinutes > 0
+			? Math.min(100, (usage.usedGbMinutes / usage.includedGbMinutes) * 100)
+			: 100;
+
+	return (
+		<div>
+			<h3 className="text-sm font-medium mb-2">
+				<Trans>Cloud usage</Trans>
+			</h3>
+			<div className="space-y-2 py-3">
+				<div className="flex items-baseline justify-between gap-4 text-sm">
+					<span className="tabular-nums">
+						{included === null ? (
+							<Trans>{used} box hours used</Trans>
+						) : (
+							<Trans>
+								{used} of {included} box hours used
+							</Trans>
+						)}
+					</span>
+					{resetDate && (
+						<span className="text-xs text-muted-foreground">
+							<Trans>Resets {resetDate}</Trans>
+						</span>
+					)}
+				</div>
+				{included !== null && <Progress value={percentUsed} />}
+				{overage && (
+					<div className="text-xs text-warning tabular-nums">
+						<Trans>Overage: {overage} box hours</Trans>
+					</div>
+				)}
+				<div className="text-xs text-muted-foreground">
+					<Trans>Small uses ½, medium 1, large 2 box hours an hour</Trans>
+				</div>
+			</div>
+		</div>
+	);
+}

@@ -1152,6 +1152,12 @@ msgstr "{updatedLabel}이(가) 기본값으로 복원되었습니다"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {파일 #개 업로드 중…}}"
 
+msgid "{used} box hours used"
+msgstr "{used} 박스 시간 사용"
+
+msgid "{used} of {included} box hours used"
+msgstr "{included} 박스 시간 중 {used} 사용"
+
 msgid "{used} used"
 msgstr "{used} 사용됨"
 
@@ -4072,6 +4078,9 @@ msgstr "클라우드 샌드박스"
 #. js-lingui-explicit-id
 msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
 msgstr "{account}에는 클라우드 샌드박스가 활성화되어 있지 않습니다. Superset 팀에 액세스를 요청하세요."
+
+msgid "Cloud usage"
+msgstr "클라우드 사용량"
 
 msgid "Cloud workspace"
 msgstr "클라우드 워크스페이스"
@@ -12363,6 +12372,9 @@ msgstr "출력 스키마"
 msgid "Output truncated"
 msgstr "출력이 잘렸습니다"
 
+msgid "Overage: {overage} box hours"
+msgstr "초과: {overage} 박스 시간"
+
 msgid "Overflow Fade"
 msgstr "오버플로 페이드"
 
@@ -14102,6 +14114,9 @@ msgstr "확대/축소 초기화"
 
 msgid "Reset Zoom"
 msgstr "확대/축소 초기화"
+
+msgid "Resets {resetDate}"
+msgstr "{resetDate}에 초기화"
 
 msgid "Resets at {until}"
 msgstr "{until}에 재설정"
@@ -15910,6 +15925,9 @@ msgstr "작음"
 msgctxt "machine size"
 msgid "Small"
 msgstr "소형"
+
+msgid "Small uses ½, medium 1, large 2 box hours an hour"
+msgstr "시간당 소형은 ½, 중형은 1, 대형은 2 박스 시간을 사용합니다"
 
 msgid "Smoother onboarding"
 msgstr "더 매끄러운 온보딩"

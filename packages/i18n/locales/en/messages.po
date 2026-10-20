@@ -1152,6 +1152,12 @@ msgstr "{updatedLabel} restored to defaults"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 
+msgid "{used} box hours used"
+msgstr "{used} box hours used"
+
+msgid "{used} of {included} box hours used"
+msgstr "{used} of {included} box hours used"
+
 msgid "{used} used"
 msgstr "{used} used"
 
@@ -4072,6 +4078,9 @@ msgstr "Cloud sandboxes"
 #. js-lingui-explicit-id
 msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
 msgstr "Cloud sandboxes are not enabled for {account}. Ask the Superset team for access."
+
+msgid "Cloud usage"
+msgstr "Cloud usage"
 
 msgid "Cloud workspace"
 msgstr "Cloud workspace"
@@ -12363,6 +12372,9 @@ msgstr "Output Schema"
 msgid "Output truncated"
 msgstr "Output truncated"
 
+msgid "Overage: {overage} box hours"
+msgstr "Overage: {overage} box hours"
+
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -14102,6 +14114,9 @@ msgstr "Reset zoom"
 
 msgid "Reset Zoom"
 msgstr "Reset Zoom"
+
+msgid "Resets {resetDate}"
+msgstr "Resets {resetDate}"
 
 msgid "Resets at {until}"
 msgstr "Resets at {until}"
@@ -15910,6 +15925,9 @@ msgstr "Small"
 msgctxt "machine size"
 msgid "Small"
 msgstr "Small"
+
+msgid "Small uses ½, medium 1, large 2 box hours an hour"
+msgstr "Small uses ½, medium 1, large 2 box hours an hour"
 
 msgid "Smoother onboarding"
 msgstr "Smoother onboarding"

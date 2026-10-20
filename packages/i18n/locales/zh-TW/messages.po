@@ -1152,6 +1152,12 @@ msgstr "{updatedLabel}已恢復為預設值"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {正在上傳 # 個檔案…}}"
 
+msgid "{used} box hours used"
+msgstr "已使用 {used} 盒時"
+
+msgid "{used} of {included} box hours used"
+msgstr "已使用 {used} / {included} 盒時"
+
 msgid "{used} used"
 msgstr "已使用 {used}"
 
@@ -4072,6 +4078,9 @@ msgstr "雲端沙箱"
 #. js-lingui-explicit-id
 msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
 msgstr "{account} 尚未啟用雲端沙箱。請向 Superset 團隊申請存取權限。"
+
+msgid "Cloud usage"
+msgstr "雲端用量"
 
 msgid "Cloud workspace"
 msgstr "雲端工作區"
@@ -12363,6 +12372,9 @@ msgstr "輸出結構"
 msgid "Output truncated"
 msgstr "輸出已截斷"
 
+msgid "Overage: {overage} box hours"
+msgstr "超額：{overage} 盒時"
+
 msgid "Overflow Fade"
 msgstr "溢位漸隱"
 
@@ -14102,6 +14114,9 @@ msgstr "重置縮放"
 
 msgid "Reset Zoom"
 msgstr "重置縮放"
+
+msgid "Resets {resetDate}"
+msgstr "{resetDate} 重設"
 
 msgid "Resets at {until}"
 msgstr "將於 {until} 重設"
@@ -15910,6 +15925,9 @@ msgstr "小"
 msgctxt "machine size"
 msgid "Small"
 msgstr "小型"
+
+msgid "Small uses ½, medium 1, large 2 box hours an hour"
+msgstr "每小時用量：小型 ½、中型 1、大型 2 盒時"
 
 msgid "Smoother onboarding"
 msgstr "更順暢的上手流程"

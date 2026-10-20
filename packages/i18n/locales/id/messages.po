@@ -1152,6 +1152,12 @@ msgstr "{updatedLabel} dipulihkan ke setelan bawaan"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {Mengunggah # file…}}"
 
+msgid "{used} box hours used"
+msgstr "{used} jam box terpakai"
+
+msgid "{used} of {included} box hours used"
+msgstr "{used} dari {included} jam box terpakai"
+
 msgid "{used} used"
 msgstr "{used} terpakai"
 
@@ -4072,6 +4078,9 @@ msgstr "Sandbox cloud"
 #. js-lingui-explicit-id
 msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
 msgstr "Sandbox cloud belum diaktifkan untuk {account}. Minta akses kepada tim Superset."
+
+msgid "Cloud usage"
+msgstr "Penggunaan cloud"
 
 msgid "Cloud workspace"
 msgstr "Workspace cloud"
@@ -12363,6 +12372,9 @@ msgstr "Skema Output"
 msgid "Output truncated"
 msgstr "Output dipotong"
 
+msgid "Overage: {overage} box hours"
+msgstr "Kelebihan: {overage} jam box"
+
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -14102,6 +14114,9 @@ msgstr "Reset zoom"
 
 msgid "Reset Zoom"
 msgstr "Reset zoom"
+
+msgid "Resets {resetDate}"
+msgstr "Direset pada {resetDate}"
 
 msgid "Resets at {until}"
 msgstr "Direset pada {until}"
@@ -15910,6 +15925,9 @@ msgstr "Kecil"
 msgctxt "machine size"
 msgid "Small"
 msgstr "Kecil"
+
+msgid "Small uses ½, medium 1, large 2 box hours an hour"
+msgstr "Per jam, kecil memakai ½, sedang 1, besar 2 jam box"
 
 msgid "Smoother onboarding"
 msgstr "Onboarding yang lebih mulus"

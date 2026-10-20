@@ -1152,6 +1152,12 @@ msgstr "{updatedLabel} przywrócono do ustawień domyślnych"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Przesyłanie # pliku…} few {Przesyłanie # plików…} many {Przesyłanie # plików…} other {Przesyłanie # pliku…}}"
 
+msgid "{used} box hours used"
+msgstr "Użyto godzin box: {used}"
+
+msgid "{used} of {included} box hours used"
+msgstr "Użyto {used} z {included} godzin box"
+
 msgid "{used} used"
 msgstr "Wykorzystano {used}"
 
@@ -4072,6 +4078,9 @@ msgstr "Piaskownice w chmurze"
 #. js-lingui-explicit-id
 msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
 msgstr "Piaskownice w chmurze nie są włączone dla {account}. Poproś zespół Superset o dostęp."
+
+msgid "Cloud usage"
+msgstr "Użycie chmury"
 
 msgid "Cloud workspace"
 msgstr "Obszar roboczy w chmurze"
@@ -12363,6 +12372,9 @@ msgstr "Schemat wyjścia"
 msgid "Output truncated"
 msgstr "Wyjście skrócone"
 
+msgid "Overage: {overage} box hours"
+msgstr "Przekroczenie: {overage} godzin box"
+
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -14102,6 +14114,9 @@ msgstr "Zresetuj powiększenie"
 
 msgid "Reset Zoom"
 msgstr "Zresetuj powiększenie"
+
+msgid "Resets {resetDate}"
+msgstr "Reset {resetDate}"
 
 msgid "Resets at {until}"
 msgstr "Reset o {until}"
@@ -15910,6 +15925,9 @@ msgstr "Mały"
 msgctxt "machine size"
 msgid "Small"
 msgstr "Mała"
+
+msgid "Small uses ½, medium 1, large 2 box hours an hour"
+msgstr "Na godzinę mały zużywa ½, średni 1, duży 2 godziny box"
 
 msgid "Smoother onboarding"
 msgstr "Płynniejszy onboarding"

@@ -1152,6 +1152,12 @@ msgstr "{updatedLabel} восстановлен к значениям по ум�
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Загрузка # файла…} few {Загрузка # файлов…} many {Загрузка # файлов…} other {Загрузка # файла…}}"
 
+msgid "{used} box hours used"
+msgstr "Использовано box-часов: {used}"
+
+msgid "{used} of {included} box hours used"
+msgstr "Использовано {used} из {included} box-часов"
+
 msgid "{used} used"
 msgstr "Использовано {used}"
 
@@ -4072,6 +4078,9 @@ msgstr "Облачные песочницы"
 #. js-lingui-explicit-id
 msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
 msgstr "Облачные песочницы не включены для {account}. Запросите доступ у команды Superset."
+
+msgid "Cloud usage"
+msgstr "Использование облака"
 
 msgid "Cloud workspace"
 msgstr "Облачная рабочая область"
@@ -12363,6 +12372,9 @@ msgstr "Схема вывода"
 msgid "Output truncated"
 msgstr "Вывод обрезан"
 
+msgid "Overage: {overage} box hours"
+msgstr "Перерасход: {overage} box-часов"
+
 msgid "Overflow Fade"
 msgstr "Затухание переполнения"
 
@@ -14102,6 +14114,9 @@ msgstr "Сбросить масштаб"
 
 msgid "Reset Zoom"
 msgstr "Сбросить масштаб"
+
+msgid "Resets {resetDate}"
+msgstr "Сброс {resetDate}"
 
 msgid "Resets at {until}"
 msgstr "Сброс в {until}"
@@ -15910,6 +15925,9 @@ msgstr "Маленький"
 msgctxt "machine size"
 msgid "Small"
 msgstr "Малая"
+
+msgid "Small uses ½, medium 1, large 2 box hours an hour"
+msgstr "За час малый использует ½, средний 1, большой 2 box-часа"
 
 msgid "Smoother onboarding"
 msgstr "Более гладкий онбординг"

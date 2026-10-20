@@ -18,6 +18,7 @@ const FREE: OrganizationBilling = {
 	billingInterval: null,
 	lapsed: false,
 	paymentState: { kind: "ok" },
+	cloudUsage: null,
 };
 
 const FAIL_OPEN: OrganizationBilling = {
@@ -29,6 +30,7 @@ const FAIL_OPEN: OrganizationBilling = {
 	billingInterval: null,
 	lapsed: false,
 	paymentState: { kind: "ok" },
+	cloudUsage: null,
 };
 
 const redis = new Redis({

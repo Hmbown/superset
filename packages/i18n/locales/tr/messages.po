@@ -1152,6 +1152,12 @@ msgstr "{updatedLabel} varsayılanlara geri yüklendi"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {# dosya yükleniyor…}}"
 
+msgid "{used} box hours used"
+msgstr "{used} kutu saati kullanıldı"
+
+msgid "{used} of {included} box hours used"
+msgstr "{included} kutu saatinin {used} kadarı kullanıldı"
+
 msgid "{used} used"
 msgstr "{used} kullanıldı"
 
@@ -4072,6 +4078,9 @@ msgstr "Bulut sandbox'ları"
 #. js-lingui-explicit-id
 msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
 msgstr "Bulut sandbox'ları {account} için etkin değil. Erişim için Superset ekibine başvurun."
+
+msgid "Cloud usage"
+msgstr "Bulut kullanımı"
 
 msgid "Cloud workspace"
 msgstr "Bulut çalışma alanı"
@@ -12363,6 +12372,9 @@ msgstr "Çıktı şeması"
 msgid "Output truncated"
 msgstr "Çıktı kısaltıldı"
 
+msgid "Overage: {overage} box hours"
+msgstr "Aşım: {overage} kutu saati"
+
 msgid "Overflow Fade"
 msgstr "Taşma solması"
 
@@ -14102,6 +14114,9 @@ msgstr "Yakınlaştırmayı sıfırla"
 
 msgid "Reset Zoom"
 msgstr "Yakınlaştırmayı sıfırla"
+
+msgid "Resets {resetDate}"
+msgstr "{resetDate} tarihinde sıfırlanır"
 
 msgid "Resets at {until}"
 msgstr "{until} saatinde sıfırlanır"
@@ -15910,6 +15925,9 @@ msgstr "Küçük"
 msgctxt "machine size"
 msgid "Small"
 msgstr "Küçük"
+
+msgid "Small uses ½, medium 1, large 2 box hours an hour"
+msgstr "Saat başına küçük ½, orta 1, büyük 2 kutu saati kullanır"
 
 msgid "Smoother onboarding"
 msgstr "Daha akıcı ilk kurulum"

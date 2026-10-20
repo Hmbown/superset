@@ -1152,6 +1152,12 @@ msgstr "{updatedLabel} ripristinato ai valori predefiniti"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Caricamento di # file…} other {Caricamento di # file…}}"
 
+msgid "{used} box hours used"
+msgstr "{used} ore box utilizzate"
+
+msgid "{used} of {included} box hours used"
+msgstr "{used} di {included} ore box utilizzate"
+
 msgid "{used} used"
 msgstr "{used} utilizzato"
 
@@ -4072,6 +4078,9 @@ msgstr "Sandbox nel cloud"
 #. js-lingui-explicit-id
 msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
 msgstr "Le sandbox nel cloud non sono abilitate per {account}. Richiedi l'accesso al team Superset."
+
+msgid "Cloud usage"
+msgstr "Utilizzo del cloud"
 
 msgid "Cloud workspace"
 msgstr "Workspace cloud"
@@ -12363,6 +12372,9 @@ msgstr "Schema di output"
 msgid "Output truncated"
 msgstr "Output troncato"
 
+msgid "Overage: {overage} box hours"
+msgstr "Eccedenza: {overage} ore box"
+
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -14102,6 +14114,9 @@ msgstr "Reimposta lo zoom"
 
 msgid "Reset Zoom"
 msgstr "Reimposta lo zoom"
+
+msgid "Resets {resetDate}"
+msgstr "Si azzera il {resetDate}"
 
 msgid "Resets at {until}"
 msgstr "Si azzera alle {until}"
@@ -15910,6 +15925,9 @@ msgstr "Piccolo"
 msgctxt "machine size"
 msgid "Small"
 msgstr "Piccola"
+
+msgid "Small uses ½, medium 1, large 2 box hours an hour"
+msgstr "Ogni ora, piccola usa ½, media 1 e grande 2 ore box"
 
 msgid "Smoother onboarding"
 msgstr "Onboarding più fluido"

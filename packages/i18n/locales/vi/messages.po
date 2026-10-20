@@ -1152,6 +1152,12 @@ msgstr "Đã khôi phục {updatedLabel} về mặc định"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {Đang tải lên # tệp…}}"
 
+msgid "{used} box hours used"
+msgstr "Đã dùng {used} giờ box"
+
+msgid "{used} of {included} box hours used"
+msgstr "Đã dùng {used} trên {included} giờ box"
+
 msgid "{used} used"
 msgstr "Đã dùng {used}"
 
@@ -4072,6 +4078,9 @@ msgstr "Sandbox trên cloud"
 #. js-lingui-explicit-id
 msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
 msgstr "Sandbox trên cloud chưa được bật cho {account}. Hãy yêu cầu nhóm Superset cấp quyền truy cập."
+
+msgid "Cloud usage"
+msgstr "Mức sử dụng đám mây"
 
 msgid "Cloud workspace"
 msgstr "Workspace cloud"
@@ -12363,6 +12372,9 @@ msgstr "Schema đầu ra"
 msgid "Output truncated"
 msgstr "Kết quả đã bị cắt bớt"
 
+msgid "Overage: {overage} box hours"
+msgstr "Vượt mức: {overage} giờ box"
+
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -14102,6 +14114,9 @@ msgstr "Đặt lại thu phóng"
 
 msgid "Reset Zoom"
 msgstr "Đặt lại thu phóng"
+
+msgid "Resets {resetDate}"
+msgstr "Đặt lại vào {resetDate}"
 
 msgid "Resets at {until}"
 msgstr "Đặt lại lúc {until}"
@@ -15910,6 +15925,9 @@ msgstr "Nhỏ"
 msgctxt "machine size"
 msgid "Small"
 msgstr "Nhỏ"
+
+msgid "Small uses ½, medium 1, large 2 box hours an hour"
+msgstr "Mỗi giờ, nhỏ dùng ½, vừa 1, lớn 2 giờ box"
 
 msgid "Smoother onboarding"
 msgstr "Onboarding mượt hơn"

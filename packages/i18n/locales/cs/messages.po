@@ -1152,6 +1152,12 @@ msgstr "{updatedLabel} obnoveno na výchozí"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Nahrává se # soubor…} few {Nahrávají se # soubory…} many {Nahrává se # souboru…} other {Nahrává se # souborů…}}"
 
+msgid "{used} box hours used"
+msgstr "Využito hodin boxu: {used}"
+
+msgid "{used} of {included} box hours used"
+msgstr "Využito {used} z {included} hodin boxu"
+
 msgid "{used} used"
 msgstr "Využito {used}"
 
@@ -4072,6 +4078,9 @@ msgstr "Cloudové sandboxy"
 #. js-lingui-explicit-id
 msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
 msgstr "Cloudové sandboxy nejsou pro {account} povoleny. Požádejte tým Superset o přístup."
+
+msgid "Cloud usage"
+msgstr "Využití cloudu"
 
 msgid "Cloud workspace"
 msgstr "Cloudový pracovní prostor"
@@ -12363,6 +12372,9 @@ msgstr "Výstupní schéma"
 msgid "Output truncated"
 msgstr "Výstup zkrácen"
 
+msgid "Overage: {overage} box hours"
+msgstr "Překročení: {overage} hodin boxu"
+
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -14102,6 +14114,9 @@ msgstr "Obnovit přiblížení"
 
 msgid "Reset Zoom"
 msgstr "Obnovit přiblížení"
+
+msgid "Resets {resetDate}"
+msgstr "Obnoví se {resetDate}"
 
 msgid "Resets at {until}"
 msgstr "Obnoví se v {until}"
@@ -15910,6 +15925,9 @@ msgstr "Malé"
 msgctxt "machine size"
 msgid "Small"
 msgstr "Malý"
+
+msgid "Small uses ½, medium 1, large 2 box hours an hour"
+msgstr "Za hodinu malý využije ½, střední 1 a velký 2 hodiny boxu"
 
 msgid "Smoother onboarding"
 msgstr "Plynulejší onboarding"

@@ -1152,6 +1152,12 @@ msgstr "{updatedLabel} restauré aux valeurs par défaut"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Envoi de # fichier…} other {Envoi de # fichiers…}}"
 
+msgid "{used} box hours used"
+msgstr "{used} heures de box utilisées"
+
+msgid "{used} of {included} box hours used"
+msgstr "{used} heures de box utilisées sur {included}"
+
 msgid "{used} used"
 msgstr "{used} utilisés"
 
@@ -4072,6 +4078,9 @@ msgstr "Bacs à sable cloud"
 #. js-lingui-explicit-id
 msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
 msgstr "Les bacs à sable cloud ne sont pas activés pour {account}. Demandez l'accès à l'équipe Superset."
+
+msgid "Cloud usage"
+msgstr "Utilisation du cloud"
 
 msgid "Cloud workspace"
 msgstr "Espace de travail cloud"
@@ -12363,6 +12372,9 @@ msgstr "Schéma de sortie"
 msgid "Output truncated"
 msgstr "Sortie tronquée"
 
+msgid "Overage: {overage} box hours"
+msgstr "Dépassement : {overage} heures de box"
+
 msgid "Overflow Fade"
 msgstr "Fondu de débordement"
 
@@ -14102,6 +14114,9 @@ msgstr "Réinitialiser le zoom"
 
 msgid "Reset Zoom"
 msgstr "Réinitialiser le zoom"
+
+msgid "Resets {resetDate}"
+msgstr "Réinitialisation le {resetDate}"
 
 msgid "Resets at {until}"
 msgstr "Réinitialisation à {until}"
@@ -15910,6 +15925,9 @@ msgstr "Petit"
 msgctxt "machine size"
 msgid "Small"
 msgstr "Petite"
+
+msgid "Small uses ½, medium 1, large 2 box hours an hour"
+msgstr "Par heure, petite utilise ½, moyenne 1 et grande 2 heures de box"
 
 msgid "Smoother onboarding"
 msgstr "Prise en main plus fluide"

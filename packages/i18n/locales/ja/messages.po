@@ -1152,6 +1152,12 @@ msgstr "{updatedLabel}をデフォルトに復元しました"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {# 件のファイルをアップロード中…}}"
 
+msgid "{used} box hours used"
+msgstr "{used} ボックス時間を使用済み"
+
+msgid "{used} of {included} box hours used"
+msgstr "{included} ボックス時間中 {used} を使用済み"
+
 msgid "{used} used"
 msgstr "{used} 使用済み"
 
@@ -4072,6 +4078,9 @@ msgstr "クラウドサンドボックス"
 #. js-lingui-explicit-id
 msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
 msgstr "クラウドサンドボックスは {account} では有効になっていません。Superset チームにアクセス権をリクエストしてください。"
+
+msgid "Cloud usage"
+msgstr "クラウド使用量"
 
 msgid "Cloud workspace"
 msgstr "クラウドワークスペース"
@@ -12363,6 +12372,9 @@ msgstr "出力スキーマ"
 msgid "Output truncated"
 msgstr "出力は省略されました"
 
+msgid "Overage: {overage} box hours"
+msgstr "超過分: {overage} ボックス時間"
+
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -14102,6 +14114,9 @@ msgstr "ズームをリセット"
 
 msgid "Reset Zoom"
 msgstr "ズームをリセット"
+
+msgid "Resets {resetDate}"
+msgstr "{resetDate} にリセット"
 
 msgid "Resets at {until}"
 msgstr "{until} にリセット"
@@ -15910,6 +15925,9 @@ msgstr "小"
 msgctxt "machine size"
 msgid "Small"
 msgstr "小"
+
+msgid "Small uses ½, medium 1, large 2 box hours an hour"
+msgstr "1時間あたり、小は ½、中は 1、大は 2 ボックス時間を使用します"
 
 msgid "Smoother onboarding"
 msgstr "よりスムーズなオンボーディング"
