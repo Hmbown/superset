@@ -6,7 +6,7 @@ import {
 	reduceMany,
 } from "@superset/chat/core";
 import type { DurableEnvelope, UserMessage } from "@superset/chat/protocol";
-import { isDurableEnvelope } from "@superset/chat/protocol";
+import { isDurableEnvelope, wrapHiddenText } from "@superset/chat/protocol";
 import type { FakeHarnessScript } from "../../harness/fake";
 import type { ChatRuntime } from "../../index";
 import {
@@ -134,7 +134,9 @@ describe("LiveSession", () => {
 
 		await waitFor(() => runtime.sessions.get(sessionId)?.status === "idle");
 
-		expect(adapters[0]?.prompted).toEqual([[visible, hint]]);
+		expect(adapters[0]?.prompted).toEqual([
+			[visible, { type: "text", text: wrapHiddenText("MCP context") }],
+		]);
 		const prompts = userMessages(journalEnvelopes(runtime, sessionId));
 		expect(prompts.map((prompt) => prompt.item.id)).toContain(result.itemId);
 		for (const prompt of prompts)

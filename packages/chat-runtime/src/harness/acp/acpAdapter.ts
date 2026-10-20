@@ -16,7 +16,7 @@ import type {
 	Turn,
 	UserContent,
 } from "@superset/chat/protocol";
-import { AGENT_DEFAULT_MODE } from "@superset/chat/protocol";
+import { AGENT_DEFAULT_MODE, isHiddenText } from "@superset/chat/protocol";
 import { z } from "zod";
 import { BackgroundTasks } from "../backgroundTasks";
 import { EventQueue } from "../eventQueue";
@@ -1054,6 +1054,8 @@ export class AcpAdapter implements HarnessAdapter {
 		// whole replay lands in one group whose order comes down to item id.
 		if (variant === "user_message_chunk" || variant === "user_message") {
 			if (!this.replaying) return;
+			const block = this.contentBlock(raw.content);
+			if (block?.text !== undefined && isHiddenText(block.text)) return;
 			if (this.openText?.kind !== "user_message") {
 				this.flushOpenText();
 				// emitTurn leaves the history turn as `currentTurn`, which
@@ -1068,7 +1070,7 @@ export class AcpAdapter implements HarnessAdapter {
 			else
 				this.appendText(
 					"user_message",
-					this.contentBlock(raw.content),
+					block,
 					replayTurnId,
 					this.messageIdOf(outer.data.update),
 				);

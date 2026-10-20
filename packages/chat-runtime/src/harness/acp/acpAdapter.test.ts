@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { spawn } from "node:child_process";
 import type { Item } from "@superset/chat/protocol";
-import { AGENT_DEFAULT_MODE } from "@superset/chat/protocol";
+import { AGENT_DEFAULT_MODE, wrapHiddenText } from "@superset/chat/protocol";
 import type { AdapterEvent } from "../types";
 import {
 	AcpAdapter,
@@ -297,6 +297,10 @@ class FakeAcpAgent {
 				this.notify(sessionId, {
 					sessionUpdate: "user_message_chunk",
 					content: { type: "text", text: "now ship it" },
+				});
+				this.notify(sessionId, {
+					sessionUpdate: "user_message_chunk",
+					content: { type: "text", text: wrapHiddenText("MCP context") },
 				});
 				this.notify(sessionId, {
 					sessionUpdate: "agent_message_chunk",

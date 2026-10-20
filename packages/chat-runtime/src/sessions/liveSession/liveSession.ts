@@ -8,6 +8,7 @@ import {
 	type Turn,
 	type UserContent,
 	type UserMessage,
+	wrapHiddenText,
 } from "@superset/chat/protocol";
 import type {
 	AdapterEvent,
@@ -141,6 +142,11 @@ export class LiveSession {
 		const shown = content.filter(
 			(part) => !(part.type === "text" && part.hidden),
 		);
+		const sent = content.map((part) =>
+			part.type === "text" && part.hidden
+				? { type: "text" as const, text: wrapHiddenText(part.text) }
+				: part,
+		);
 		const wantsSteer =
 			steerTurnId !== undefined ||
 			this.sessionState.awaitingBackground === true;
@@ -158,7 +164,7 @@ export class LiveSession {
 			};
 			this.injectInto(running, {
 				item,
-				content,
+				content: sent,
 				turnId: this.mintId(),
 				seq,
 			});
@@ -176,7 +182,7 @@ export class LiveSession {
 		};
 		const turnId = this.mintId();
 		if (queued) {
-			this.queue.push({ item, content, turnId, seq });
+			this.queue.push({ item, content: sent, turnId, seq });
 			this.appendDurable({ type: "item", item, turnId });
 			if (
 				steerTurnId &&
@@ -188,7 +194,7 @@ export class LiveSession {
 			return { itemId, queued: true };
 		}
 		this.appendDurable({ type: "item", item, turnId });
-		this.deliver({ item, content, turnId, seq });
+		this.deliver({ item, content: sent, turnId, seq });
 		return { itemId, queued: false };
 	}
 
