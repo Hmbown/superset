@@ -1152,12 +1152,6 @@ msgstr "{updatedLabel}已恢復為預設值"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {正在上傳 # 個檔案…}}"
 
-msgid "{used} box hours used"
-msgstr "已使用 {used} 盒時"
-
-msgid "{used} of {included} box hours used"
-msgstr "已使用 {used} / {included} 盒時"
-
 msgid "{used} used"
 msgstr "已使用 {used}"
 
@@ -3083,6 +3077,15 @@ msgstr "底部抽屜，在觸控螢幕裝置上便於滑動操作。"
 
 msgid "Box"
 msgstr "Box"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "超出方案的盒時：{overage}"
+
+msgid "Box hours used: {used}"
+msgstr "已用盒時：{used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "已用盒時：{used} / {included}"
 
 msgid "Branch"
 msgstr "分支"
@@ -12369,9 +12372,6 @@ msgstr "輸出結構"
 msgid "Output truncated"
 msgstr "輸出已截斷"
 
-msgid "Overage: {overage} box hours"
-msgstr "超額：{overage} 盒時"
-
 msgid "Overflow Fade"
 msgstr "溢位漸隱"
 
@@ -19255,10 +19255,6 @@ msgstr "寬度 · 並行工作階段數"
 
 msgid "Window"
 msgstr "視窗"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "規格"
 
 msgid "With action"
 msgstr "帶操作"

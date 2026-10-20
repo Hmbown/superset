@@ -1152,12 +1152,6 @@ msgstr "{updatedLabel} ripristinato ai valori predefiniti"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Caricamento di # file…} other {Caricamento di # file…}}"
 
-msgid "{used} box hours used"
-msgstr "{used} ore box utilizzate"
-
-msgid "{used} of {included} box hours used"
-msgstr "{used} di {included} ore box utilizzate"
-
 msgid "{used} used"
 msgstr "{used} utilizzato"
 
@@ -3083,6 +3077,15 @@ msgstr "Cassetto inferiore, comodo da scorrere sui dispositivi touch."
 
 msgid "Box"
 msgstr "Box"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "Ore box oltre il piano: {overage}"
+
+msgid "Box hours used: {used}"
+msgstr "Ore box usate: {used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "Ore box usate: {used} su {included}"
 
 msgid "Branch"
 msgstr "Branch"
@@ -12369,9 +12372,6 @@ msgstr "Schema di output"
 msgid "Output truncated"
 msgstr "Output troncato"
 
-msgid "Overage: {overage} box hours"
-msgstr "Eccedenza: {overage} ore box"
-
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -19255,10 +19255,6 @@ msgstr "Ampiezza · sessioni parallele"
 
 msgid "Window"
 msgstr "Finestra"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "di dimensione"
 
 msgid "With action"
 msgstr "Con azione"

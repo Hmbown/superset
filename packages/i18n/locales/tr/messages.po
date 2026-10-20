@@ -1152,12 +1152,6 @@ msgstr "{updatedLabel} varsayılanlara geri yüklendi"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {# dosya yükleniyor…}}"
 
-msgid "{used} box hours used"
-msgstr "{used} kutu saati kullanıldı"
-
-msgid "{used} of {included} box hours used"
-msgstr "{included} kutu saatinin {used} kadarı kullanıldı"
-
 msgid "{used} used"
 msgstr "{used} kullanıldı"
 
@@ -3083,6 +3077,15 @@ msgstr "Alt çekmece, dokunmatik cihazlarda kaydırmaya uygun."
 
 msgid "Box"
 msgstr "Kutu"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "Plan dışı kutu saati: {overage}"
+
+msgid "Box hours used: {used}"
+msgstr "Kullanılan kutu saati: {used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "Kullanılan kutu saati: {used} / {included}"
 
 msgid "Branch"
 msgstr "Dal"
@@ -12369,9 +12372,6 @@ msgstr "Çıktı şeması"
 msgid "Output truncated"
 msgstr "Çıktı kısaltıldı"
 
-msgid "Overage: {overage} box hours"
-msgstr "Aşım: {overage} kutu saati"
-
 msgid "Overflow Fade"
 msgstr "Taşma solması"
 
@@ -19255,10 +19255,6 @@ msgstr "Genişlik · paralel oturumlar"
 
 msgid "Window"
 msgstr "Pencere"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "boyut"
 
 msgid "With action"
 msgstr "Eylemli"

@@ -1152,12 +1152,6 @@ msgstr "{updatedLabel} przywrócono do ustawień domyślnych"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Przesyłanie # pliku…} few {Przesyłanie # plików…} many {Przesyłanie # plików…} other {Przesyłanie # pliku…}}"
 
-msgid "{used} box hours used"
-msgstr "Użyto godzin box: {used}"
-
-msgid "{used} of {included} box hours used"
-msgstr "Użyto {used} z {included} godzin box"
-
 msgid "{used} used"
 msgstr "Wykorzystano {used}"
 
@@ -3083,6 +3077,15 @@ msgstr "Dolna szuflada, przyjazna gestom na urządzeniach dotykowych."
 
 msgid "Box"
 msgstr "Box"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "Godziny box ponad plan: {overage}"
+
+msgid "Box hours used: {used}"
+msgstr "Wykorzystane godziny box: {used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "Wykorzystane godziny box: {used} z {included}"
 
 msgid "Branch"
 msgstr "Gałąź"
@@ -12369,9 +12372,6 @@ msgstr "Schemat wyjścia"
 msgid "Output truncated"
 msgstr "Wyjście skrócone"
 
-msgid "Overage: {overage} box hours"
-msgstr "Przekroczenie: {overage} godzin box"
-
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -19255,10 +19255,6 @@ msgstr "Szerokość · równoległe sesje"
 
 msgid "Window"
 msgstr "Okno"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "rozmiar"
 
 msgid "With action"
 msgstr "Z akcją"

@@ -14,10 +14,11 @@ export function CloudUsageCard() {
 
 	if (!usage) return null;
 
-	const boxHours = (gbMinutes: number) =>
-		formatNumber(gbMinutes / BOX_HOUR_GB_MINUTES, {
-			maximumFractionDigits: 1,
-		});
+	const boxHours = (gbMinutes: number) => {
+		const hours = gbMinutes / BOX_HOUR_GB_MINUTES;
+		if (hours > 0 && hours < 0.1) return `<${formatNumber(0.1)}`;
+		return formatNumber(hours, { maximumFractionDigits: 1 });
+	};
 	const used = boxHours(usage.usedGbMinutes);
 	const included =
 		usage.includedGbMinutes === null ? null : boxHours(usage.includedGbMinutes);
@@ -45,10 +46,10 @@ export function CloudUsageCard() {
 			</div>
 			<div className="text-sm tabular-nums">
 				{included === null ? (
-					<Trans>{used} box hours used</Trans>
+					<Trans>Box hours used: {used}</Trans>
 				) : (
 					<Trans>
-						{used} of {included} box hours used
+						Box hours used: {used} of {included}
 					</Trans>
 				)}
 			</div>
@@ -57,7 +58,7 @@ export function CloudUsageCard() {
 			)}
 			{overage && (
 				<div className="text-sm text-warning tabular-nums">
-					<Trans>Overage: {overage} box hours</Trans>
+					<Trans>Box hours over the plan: {overage}</Trans>
 				</div>
 			)}
 			<div className="text-sm text-muted-foreground">

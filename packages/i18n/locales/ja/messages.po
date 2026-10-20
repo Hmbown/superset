@@ -701,7 +701,7 @@ msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {
 msgstr "{behindCount, plural, one {mainより#コミット遅れています。リベースが必要です} other {mainより#コミット遅れています。リベースが必要です}}"
 
 msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
-msgstr "{boxHoursPerHour, plural, other {1 時間あたり # box 時間を使用}}"
+msgstr "{boxHoursPerHour, plural, other {1 時間あたり # ボックス時間を使用}}"
 
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{totalBranches}件中{branchPosition}件目"
@@ -1151,12 +1151,6 @@ msgstr "{updatedLabel}をデフォルトに復元しました"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {# 件のファイルをアップロード中…}}"
-
-msgid "{used} box hours used"
-msgstr "{used} ボックス時間を使用済み"
-
-msgid "{used} of {included} box hours used"
-msgstr "{included} ボックス時間中 {used} を使用済み"
 
 msgid "{used} used"
 msgstr "{used} 使用済み"
@@ -3083,6 +3077,15 @@ msgstr "下部ドロワー。タッチデバイスではスワイプで操作で
 
 msgid "Box"
 msgstr "Box"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "プランを超えたボックス時間: {overage}"
+
+msgid "Box hours used: {used}"
+msgstr "使用したボックス時間: {used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "使用したボックス時間: {included} のうち {used}"
 
 msgid "Branch"
 msgstr "ブランチ"
@@ -12369,9 +12372,6 @@ msgstr "出力スキーマ"
 msgid "Output truncated"
 msgstr "出力は省略されました"
 
-msgid "Overage: {overage} box hours"
-msgstr "超過分: {overage} ボックス時間"
-
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -19255,10 +19255,6 @@ msgstr "幅 · 並列セッション数"
 
 msgid "Window"
 msgstr "ウィンドウ"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "サイズ"
 
 msgid "With action"
 msgstr "アクションあり"

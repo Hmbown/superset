@@ -1152,12 +1152,6 @@ msgstr "{updatedLabel} teruggezet naar standaardwaarden"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {# bestand uploaden…} other {# bestanden uploaden…}}"
 
-msgid "{used} box hours used"
-msgstr "{used} box-uren gebruikt"
-
-msgid "{used} of {included} box hours used"
-msgstr "{used} van {included} box-uren gebruikt"
-
 msgid "{used} used"
 msgstr "{used} gebruikt"
 
@@ -3083,6 +3077,15 @@ msgstr "Lade onderaan, swipevriendelijk op touchapparaten."
 
 msgid "Box"
 msgstr "Box"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "Box-uren boven het abonnement: {overage}"
+
+msgid "Box hours used: {used}"
+msgstr "Gebruikte box-uren: {used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "Gebruikte box-uren: {used} van {included}"
 
 msgid "Branch"
 msgstr "Branch"
@@ -12369,9 +12372,6 @@ msgstr "Outputschema"
 msgid "Output truncated"
 msgstr "Uitvoer afgekapt"
 
-msgid "Overage: {overage} box hours"
-msgstr "Overschrijding: {overage} box-uren"
-
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -19255,10 +19255,6 @@ msgstr "Breedte · parallelle sessies"
 
 msgid "Window"
 msgstr "Venster"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "met grootte"
 
 msgid "With action"
 msgstr "Met actie"

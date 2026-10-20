@@ -1152,12 +1152,6 @@ msgstr "{updatedLabel} dipulihkan ke setelan bawaan"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {Mengunggah # file…}}"
 
-msgid "{used} box hours used"
-msgstr "{used} jam box terpakai"
-
-msgid "{used} of {included} box hours used"
-msgstr "{used} dari {included} jam box terpakai"
-
 msgid "{used} used"
 msgstr "{used} terpakai"
 
@@ -3083,6 +3077,15 @@ msgstr "Laci bawah, ramah geser di perangkat sentuh."
 
 msgid "Box"
 msgstr "Box"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "Jam box di atas paket: {overage}"
+
+msgid "Box hours used: {used}"
+msgstr "Jam box terpakai: {used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "Jam box terpakai: {used} dari {included}"
 
 msgid "Branch"
 msgstr "Branch"
@@ -12369,9 +12372,6 @@ msgstr "Skema Output"
 msgid "Output truncated"
 msgstr "Output dipotong"
 
-msgid "Overage: {overage} box hours"
-msgstr "Kelebihan: {overage} jam box"
-
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -19255,10 +19255,6 @@ msgstr "Lebar · sesi paralel"
 
 msgid "Window"
 msgstr "Jendela"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "dengan ukuran"
 
 msgid "With action"
 msgstr "Dengan aksi"

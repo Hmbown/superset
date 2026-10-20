@@ -1152,12 +1152,6 @@ msgstr "{updatedLabel} restauré aux valeurs par défaut"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Envoi de # fichier…} other {Envoi de # fichiers…}}"
 
-msgid "{used} box hours used"
-msgstr "{used} heures de box utilisées"
-
-msgid "{used} of {included} box hours used"
-msgstr "{used} heures de box utilisées sur {included}"
-
 msgid "{used} used"
 msgstr "{used} utilisés"
 
@@ -3083,6 +3077,15 @@ msgstr "Tiroir inférieur, adapté au balayage sur les appareils tactiles."
 
 msgid "Box"
 msgstr "Box"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "Heures de box au-delà du forfait : {overage}"
+
+msgid "Box hours used: {used}"
+msgstr "Heures de box utilisées : {used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "Heures de box utilisées : {used} sur {included}"
 
 msgid "Branch"
 msgstr "Branche"
@@ -12369,9 +12372,6 @@ msgstr "Schéma de sortie"
 msgid "Output truncated"
 msgstr "Sortie tronquée"
 
-msgid "Overage: {overage} box hours"
-msgstr "Dépassement : {overage} heures de box"
-
 msgid "Overflow Fade"
 msgstr "Fondu de débordement"
 
@@ -19255,10 +19255,6 @@ msgstr "Largeur · sessions parallèles"
 
 msgid "Window"
 msgstr "Fenêtre"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "de taille"
 
 msgid "With action"
 msgstr "Avec action"

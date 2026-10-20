@@ -1152,12 +1152,6 @@ msgstr "{updatedLabel}已恢复为默认值"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {正在上传 # 个文件…}}"
 
-msgid "{used} box hours used"
-msgstr "已使用 {used} 盒时"
-
-msgid "{used} of {included} box hours used"
-msgstr "已使用 {used} / {included} 盒时"
-
 msgid "{used} used"
 msgstr "已使用 {used}"
 
@@ -3083,6 +3077,15 @@ msgstr "底部抽屉，在触屏设备上便于滑动操作。"
 
 msgid "Box"
 msgstr "Box"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "超出套餐的盒时：{overage}"
+
+msgid "Box hours used: {used}"
+msgstr "已用盒时：{used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "已用盒时：{used} / {included}"
 
 msgid "Branch"
 msgstr "分支"
@@ -12369,9 +12372,6 @@ msgstr "输出结构"
 msgid "Output truncated"
 msgstr "输出已截断"
 
-msgid "Overage: {overage} box hours"
-msgstr "超额：{overage} 盒时"
-
 msgid "Overflow Fade"
 msgstr "溢出渐隐"
 
@@ -19255,10 +19255,6 @@ msgstr "宽度 · 并行会话数"
 
 msgid "Window"
 msgstr "窗口"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "规格"
 
 msgid "With action"
 msgstr "带操作"

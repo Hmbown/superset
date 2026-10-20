@@ -1152,12 +1152,6 @@ msgstr "{updatedLabel} restaurado para os padrões"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Enviando # arquivo…} other {Enviando # arquivos…}}"
 
-msgid "{used} box hours used"
-msgstr "{used} horas de box usadas"
-
-msgid "{used} of {included} box hours used"
-msgstr "{used} de {included} horas de box usadas"
-
 msgid "{used} used"
 msgstr "{used} usado"
 
@@ -3083,6 +3077,15 @@ msgstr "Gaveta inferior, com suporte a gestos em dispositivos de toque."
 
 msgid "Box"
 msgstr "Box"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "Horas de box acima do plano: {overage}"
+
+msgid "Box hours used: {used}"
+msgstr "Horas de box usadas: {used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "Horas de box usadas: {used} de {included}"
 
 msgid "Branch"
 msgstr "Branch"
@@ -12369,9 +12372,6 @@ msgstr "Esquema de saída"
 msgid "Output truncated"
 msgstr "Saída truncada"
 
-msgid "Overage: {overage} box hours"
-msgstr "Excedente: {overage} horas de box"
-
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -19255,10 +19255,6 @@ msgstr "Amplitude · sessões paralelas"
 
 msgid "Window"
 msgstr "Janela"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "com tamanho"
 
 msgid "With action"
 msgstr "Com ação"

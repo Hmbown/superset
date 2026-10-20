@@ -1,4 +1,3 @@
-import { Trans } from "@lingui/react/macro";
 import { useFormat } from "@superset/i18n/react";
 import type {
 	DraftTrigger,
@@ -238,17 +237,12 @@ export function TriggersCard({
 						/>
 					)}
 					{cloud && !scope.cloudWorkspaceId && (
-						<>
-							<span>
-								<Trans context="before a machine size">with</Trans>
-							</span>
-							<MachineSizePicker
-								className={SCOPE_CHIP}
-								value={scope.machineSize ?? DEFAULT_MACHINE_SIZE}
-								disabled={readOnly}
-								onChange={(machineSize) => onScopeChange({ machineSize })}
-							/>
-						</>
+						<MachineSizePicker
+							className={SCOPE_CHIP}
+							value={scope.machineSize ?? DEFAULT_MACHINE_SIZE}
+							disabled={readOnly}
+							onChange={(machineSize) => onScopeChange({ machineSize })}
+						/>
 					)}
 					{!cloud && (
 						<>

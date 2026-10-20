@@ -1152,12 +1152,6 @@ msgstr "{updatedLabel} restored to defaults"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 
-msgid "{used} box hours used"
-msgstr "{used} box hours used"
-
-msgid "{used} of {included} box hours used"
-msgstr "{used} of {included} box hours used"
-
 msgid "{used} used"
 msgstr "{used} used"
 
@@ -3083,6 +3077,15 @@ msgstr "Bottom drawer, swipe-friendly on touch devices."
 
 msgid "Box"
 msgstr "Box"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "Box hours over the plan: {overage}"
+
+msgid "Box hours used: {used}"
+msgstr "Box hours used: {used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "Box hours used: {used} of {included}"
 
 msgid "Branch"
 msgstr "Branch"
@@ -12369,9 +12372,6 @@ msgstr "Output Schema"
 msgid "Output truncated"
 msgstr "Output truncated"
 
-msgid "Overage: {overage} box hours"
-msgstr "Overage: {overage} box hours"
-
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -19255,10 +19255,6 @@ msgstr "Width · parallel sessions"
 
 msgid "Window"
 msgstr "Window"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "with"
 
 msgid "With action"
 msgstr "With action"

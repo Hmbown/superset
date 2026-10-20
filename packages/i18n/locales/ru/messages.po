@@ -1152,12 +1152,6 @@ msgstr "{updatedLabel} восстановлен к значениям по ум�
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Загрузка # файла…} few {Загрузка # файлов…} many {Загрузка # файлов…} other {Загрузка # файла…}}"
 
-msgid "{used} box hours used"
-msgstr "Использовано box-часов: {used}"
-
-msgid "{used} of {included} box hours used"
-msgstr "Использовано {used} из {included} box-часов"
-
 msgid "{used} used"
 msgstr "Использовано {used}"
 
@@ -3083,6 +3077,15 @@ msgstr "Нижняя шторка, удобная для свайпов на с�
 
 msgid "Box"
 msgstr "Box"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "Box-часы сверх тарифа: {overage}"
+
+msgid "Box hours used: {used}"
+msgstr "Использовано box-часов: {used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "Использовано box-часов: {used} из {included}"
 
 msgid "Branch"
 msgstr "Ветка"
@@ -12369,9 +12372,6 @@ msgstr "Схема вывода"
 msgid "Output truncated"
 msgstr "Вывод обрезан"
 
-msgid "Overage: {overage} box hours"
-msgstr "Перерасход: {overage} box-часов"
-
 msgid "Overflow Fade"
 msgstr "Затухание переполнения"
 
@@ -19255,10 +19255,6 @@ msgstr "Ширина · параллельных сессий"
 
 msgid "Window"
 msgstr "Окно"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "размер"
 
 msgid "With action"
 msgstr "С действием"

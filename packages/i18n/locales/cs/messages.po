@@ -1152,12 +1152,6 @@ msgstr "{updatedLabel} obnoveno na výchozí"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Nahrává se # soubor…} few {Nahrávají se # soubory…} many {Nahrává se # souboru…} other {Nahrává se # souborů…}}"
 
-msgid "{used} box hours used"
-msgstr "Využito hodin boxu: {used}"
-
-msgid "{used} of {included} box hours used"
-msgstr "Využito {used} z {included} hodin boxu"
-
 msgid "{used} used"
 msgstr "Využito {used}"
 
@@ -3083,6 +3077,15 @@ msgstr "Spodní drawer, na dotykových zařízeních ovladatelný přejetím prs
 
 msgid "Box"
 msgstr "Box"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "Hodiny boxu nad rámec plánu: {overage}"
+
+msgid "Box hours used: {used}"
+msgstr "Využité hodiny boxu: {used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "Využité hodiny boxu: {used} z {included}"
 
 msgid "Branch"
 msgstr "Větev"
@@ -12369,9 +12372,6 @@ msgstr "Výstupní schéma"
 msgid "Output truncated"
 msgstr "Výstup zkrácen"
 
-msgid "Overage: {overage} box hours"
-msgstr "Překročení: {overage} hodin boxu"
-
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -19255,10 +19255,6 @@ msgstr "Šířka · souběžné relace"
 
 msgid "Window"
 msgstr "Okno"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "velikost"
 
 msgid "With action"
 msgstr "S akcí"

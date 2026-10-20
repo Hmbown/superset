@@ -1152,12 +1152,6 @@ msgstr "Đã khôi phục {updatedLabel} về mặc định"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {Đang tải lên # tệp…}}"
 
-msgid "{used} box hours used"
-msgstr "Đã dùng {used} giờ box"
-
-msgid "{used} of {included} box hours used"
-msgstr "Đã dùng {used} trên {included} giờ box"
-
 msgid "{used} used"
 msgstr "Đã dùng {used}"
 
@@ -3083,6 +3077,15 @@ msgstr "Ngăn kéo dưới đáy, vuốt tiện trên thiết bị cảm ứng."
 
 msgid "Box"
 msgstr "Box"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "Giờ box vượt gói: {overage}"
+
+msgid "Box hours used: {used}"
+msgstr "Giờ box đã dùng: {used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "Giờ box đã dùng: {used} trên {included}"
 
 msgid "Branch"
 msgstr "Nhánh"
@@ -12369,9 +12372,6 @@ msgstr "Schema đầu ra"
 msgid "Output truncated"
 msgstr "Kết quả đã bị cắt bớt"
 
-msgid "Overage: {overage} box hours"
-msgstr "Vượt mức: {overage} giờ box"
-
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
 
@@ -19255,10 +19255,6 @@ msgstr "Chiều rộng · các phiên song song"
 
 msgid "Window"
 msgstr "Cửa sổ"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "kích thước"
 
 msgid "With action"
 msgstr "Có hành động"

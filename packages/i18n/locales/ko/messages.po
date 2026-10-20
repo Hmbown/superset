@@ -701,7 +701,7 @@ msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {
 msgstr "{behindCount, plural, one {main보다 커밋 #개 뒤처짐, 리베이스 필요} other {main보다 커밋 #개 뒤처짐, 리베이스 필요}}"
 
 msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
-msgstr "{boxHoursPerHour, plural, other {시간당 # box 시간 사용}}"
+msgstr "{boxHoursPerHour, plural, other {시간당 # 박스 시간 사용}}"
 
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{totalBranches}개 중 {branchPosition}번째"
@@ -1151,12 +1151,6 @@ msgstr "{updatedLabel}이(가) 기본값으로 복원되었습니다"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {파일 #개 업로드 중…}}"
-
-msgid "{used} box hours used"
-msgstr "{used} 박스 시간 사용"
-
-msgid "{used} of {included} box hours used"
-msgstr "{included} 박스 시간 중 {used} 사용"
 
 msgid "{used} used"
 msgstr "{used} 사용됨"
@@ -3083,6 +3077,15 @@ msgstr "하단 드로어로, 터치 기기에서 스와이프하기 좋습니다
 
 msgid "Box"
 msgstr "박스"
+
+msgid "Box hours over the plan: {overage}"
+msgstr "플랜 초과 박스 시간: {overage}"
+
+msgid "Box hours used: {used}"
+msgstr "사용한 박스 시간: {used}"
+
+msgid "Box hours used: {used} of {included}"
+msgstr "사용한 박스 시간: {included} 중 {used}"
 
 msgid "Branch"
 msgstr "브랜치"
@@ -12369,9 +12372,6 @@ msgstr "출력 스키마"
 msgid "Output truncated"
 msgstr "출력이 잘렸습니다"
 
-msgid "Overage: {overage} box hours"
-msgstr "초과: {overage} 박스 시간"
-
 msgid "Overflow Fade"
 msgstr "오버플로 페이드"
 
@@ -19255,10 +19255,6 @@ msgstr "너비 · 병렬 세션"
 
 msgid "Window"
 msgstr "창"
-
-msgctxt "before a machine size"
-msgid "with"
-msgstr "크기"
 
 msgid "With action"
 msgstr "동작 포함"
