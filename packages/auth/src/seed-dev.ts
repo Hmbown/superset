@@ -88,7 +88,13 @@ async function seedDevMember(email: string, organizationId: string) {
 		throw new Error(`${email}: dev members must be @local.test accounts`);
 	}
 	let user = await db.query.users.findFirst({ where: eq(users.email, email) });
-	if (!user) {
+	if (user) {
+		const context = await auth.$context;
+		await context.internalAdapter.updatePassword(
+			user.id,
+			await context.password.hash(DEV_PASSWORD),
+		);
+	} else {
 		await auth.api.signUpEmail({
 			body: {
 				email,

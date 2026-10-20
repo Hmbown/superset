@@ -25,15 +25,20 @@ cd "$ROOT_DIR"
 NEW=0
 RELOAD=0
 SIGN_IN_EMAIL=""
+USER_FLAG=0
 while [ $# -gt 0 ]; do
 	case "$1" in
 	--new) NEW=1 ;;
 	--reload) RELOAD=1 ;;
 	--user)
+		USER_FLAG=1
 		SIGN_IN_EMAIL="${2:-}"
-		shift
+		[ $# -gt 1 ] && shift
 		;;
-	--user=*) SIGN_IN_EMAIL="${1#--user=}" ;;
+	--user=*)
+		USER_FLAG=1
+		SIGN_IN_EMAIL="${1#--user=}"
+		;;
 	*)
 		echo "Unknown argument: $1" >&2
 		exit 1
@@ -42,7 +47,7 @@ while [ $# -gt 0 ]; do
 	shift
 done
 SIGN_IN_EMAIL="$(printf '%s' "$SIGN_IN_EMAIL" | tr '[:upper:]' '[:lower:]')"
-if [ -n "$SIGN_IN_EMAIL" ] && ! [[ "$SIGN_IN_EMAIL" =~ ^[a-z0-9._+-]+@local\.test$ ]]; then
+if [ "$USER_FLAG" = "1" ] && ! [[ "$SIGN_IN_EMAIL" =~ ^[a-z0-9._+-]+@local\.test$ ]]; then
 	echo "--user takes a dev account (name@local.test). seed-dev creates it on first use." >&2
 	exit 1
 fi
@@ -72,6 +77,7 @@ METRO_LOG="$STATE_DIR/metro.log"
 METRO_PID_FILE="$STATE_DIR/metro.pid"
 LOAD_ATTEMPTS=3
 BUNDLE_WAIT_SECONDS=90
+SIGN_IN_SCREEN_TRIES=10
 
 cd apps/mobile
 
@@ -227,21 +233,30 @@ sign_in_as() {
 		exit 1
 	}
 	echo "==> Signing in as $email"
-	if ! agent_device is visible 'label="Sign in with email (dev)"' >/dev/null 2>&1; then
-		agent_device open "superset://settings" >/dev/null 2>&1 || true
-		agent_device find "Sign out" click >/dev/null 2>&1 ||
-			{ agent_device scroll down >/dev/null 2>&1 && agent_device find "Sign out" click >/dev/null 2>&1; } ||
-			sign_in_step_failed "$email" '"Sign out" in Settings'
-		agent_device press 'label="Log out"' >/dev/null 2>&1 || sign_in_step_failed "$email" '"Log out" in the confirmation'
-		agent_device wait 'label="Sign in with email (dev)"' 15000 >/dev/null 2>&1 ||
-			sign_in_step_failed "$email" "the sign-in screen after logging out"
-	fi
+	# Settings when signed in, the sign-in screen when not. A freshly loaded app
+	# shows neither for a few seconds.
+	agent_device open "superset://settings" >/dev/null 2>&1 || true
+	for _ in $(seq 1 "$SIGN_IN_SCREEN_TRIES"); do
+		agent_device is visible 'label="Sign in with email (dev)"' >/dev/null 2>&1 && break
+		if agent_device find "Sign out" click >/dev/null 2>&1 ||
+			{ agent_device scroll down >/dev/null 2>&1 && agent_device find "Sign out" click >/dev/null 2>&1; }; then
+			agent_device press 'label="Log out"' >/dev/null 2>&1 || sign_in_step_failed "$email" '"Log out" in the confirmation'
+			agent_device wait 'label="Sign in with email (dev)"' 15000 >/dev/null 2>&1 ||
+				sign_in_step_failed "$email" "the sign-in screen after logging out"
+			break
+		fi
+	done
+	agent_device is visible 'label="Sign in with email (dev)"' >/dev/null 2>&1 ||
+		sign_in_step_failed "$email" "Settings or the sign-in screen, which did not appear"
 	agent_device press 'label="Sign in with email (dev)"' >/dev/null 2>&1 || sign_in_step_failed "$email" '"Sign in with email (dev)"'
 	agent_device fill 'role="text-field" editable=true' "$email" >/dev/null 2>&1 || sign_in_step_failed "$email" "the email prompt"
 	agent_device press 'label="Next"' >/dev/null 2>&1 || sign_in_step_failed "$email" '"Next" in the email prompt'
 	agent_device press 'label="Sign in"' >/dev/null 2>&1 || sign_in_step_failed "$email" '"Sign in" in the password prompt'
 	agent_device wait absent 'label="Sign in with email (dev)"' 20000 >/dev/null 2>&1 ||
 		sign_in_step_failed "$email" "the sign-in screen, which is still showing"
+	agent_device open "superset://settings" >/dev/null 2>&1 || true
+	agent_device wait text "$email" 20000 >/dev/null 2>&1 ||
+		sign_in_step_failed "$email" "Settings, which does not show $email"
 	echo "==> Signed in as $email"
 }
 
