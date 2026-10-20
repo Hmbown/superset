@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn, userEvent, within } from "storybook/test";
-import { CloudWorkspacePresenceStack } from "./CloudWorkspacePresenceStack";
+import { PresenceStack } from "./PresenceStack";
 
 const meta = {
-	component: CloudWorkspacePresenceStack,
+	component: PresenceStack,
 	decorators: [
 		(Story) => (
 			<div className="flex h-[160px] w-[420px] justify-end">
@@ -13,31 +13,34 @@ const meta = {
 	],
 	args: {
 		now: new Date("2026-09-25T12:00:00Z"),
-		activeWithinMs: 15 * 60 * 1000,
 		viewerId: "satya",
+		overflowLabel: "Show everyone who opened this workspace",
 		onOpenPerson: fn(),
 		people: [
 			{
 				userId: "satya",
 				name: "Satya Patel",
 				image: "https://github.com/github.png",
-				lastSeenAt: new Date("2026-09-25T11:59:00Z"),
+				lastSeenAt: Date.parse("2026-09-25T11:59:00Z"),
+				active: true,
 			},
 			{
 				userId: "kiet",
 				name: "Kiet Ho",
 				image: null,
-				lastSeenAt: new Date("2026-09-25T11:55:00Z"),
+				lastSeenAt: Date.parse("2026-09-25T11:55:00Z"),
+				active: true,
 			},
 			{
 				userId: "avi",
 				name: "Avi Peltz",
 				image: null,
-				lastSeenAt: new Date("2026-09-24T12:00:00Z"),
+				lastSeenAt: Date.parse("2026-09-24T12:00:00Z"),
+				active: false,
 			},
 		],
 	},
-} satisfies Meta<typeof CloudWorkspacePresenceStack>;
+} satisfies Meta<typeof PresenceStack>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

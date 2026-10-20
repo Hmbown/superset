@@ -1,5 +1,5 @@
 {
-  "id": "1ebeb4f5-429e-4891-b509-6ac8a60d7506",
+  "id": "3f4ef9cc-8e59-4420-999b-404c80571372",
   "prevId": "82943a79-54a2-41bf-a849-71a56e5ed447",
   "version": "7",
   "dialect": "postgresql",
@@ -6022,12 +6022,6 @@
           "notNull": true,
           "default": false
         },
-        "machine_size": {
-          "name": "machine_size",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "enabled": {
           "name": "enabled",
           "type": "boolean",
@@ -6932,97 +6926,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.cloud_workspace_presence": {
-      "name": "cloud_workspace_presence",
-      "schema": "",
-      "columns": {
-        "cloud_workspace_id": {
-          "name": "cloud_workspace_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "first_seen_at": {
-          "name": "first_seen_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "last_seen_at": {
-          "name": "last_seen_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "cloud_workspace_presence_user_id_idx": {
-          "name": "cloud_workspace_presence_user_id_idx",
-          "columns": [
-            {
-              "expression": "user_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "cloud_workspace_presence_cloud_workspace_id_cloud_workspaces_id_fk": {
-          "name": "cloud_workspace_presence_cloud_workspace_id_cloud_workspaces_id_fk",
-          "tableFrom": "cloud_workspace_presence",
-          "tableTo": "cloud_workspaces",
-          "columnsFrom": [
-            "cloud_workspace_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "cloud_workspace_presence_user_id_users_id_fk": {
-          "name": "cloud_workspace_presence_user_id_users_id_fk",
-          "tableFrom": "cloud_workspace_presence",
-          "tableTo": "users",
-          "schemaTo": "auth",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "cloud_workspace_presence_cloud_workspace_id_user_id_pk": {
-          "name": "cloud_workspace_presence_cloud_workspace_id_user_id_pk",
-          "columns": [
-            "cloud_workspace_id",
-            "user_id"
-          ]
-        }
-      },
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.cloud_workspace_repositories": {
       "name": "cloud_workspace_repositories",
       "schema": "",
@@ -7606,12 +7509,6 @@
         "usage_stop_at": {
           "name": "usage_stop_at",
           "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "machine_size": {
-          "name": "machine_size",
-          "type": "text",
           "primaryKey": false,
           "notNull": false
         },

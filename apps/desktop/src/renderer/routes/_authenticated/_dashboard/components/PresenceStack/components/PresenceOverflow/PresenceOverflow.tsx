@@ -1,24 +1,24 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useFormat } from "@superset/i18n/react";
+import type { PresenceVisitor } from "@superset/shared/page-presence";
 import { AvatarStack } from "@superset/ui/atoms/AvatarStack";
 import { Popover, PopoverContent, PopoverTrigger } from "@superset/ui/popover";
-import type { CloudWorkspaceRow } from "renderer/hooks/useCloudWorkspaces";
 
-interface CloudWorkspacePresenceOverflowProps {
-	people: CloudWorkspaceRow["presence"];
+interface PresenceOverflowProps {
+	people: PresenceVisitor[];
 	label: string;
+	ariaLabel: string;
 	now: Date;
-	isActive: (lastSeenAt: Date) => boolean;
-	onOpenPerson: (userId: string) => void;
+	onOpenPerson?: (userId: string) => void;
 }
 
-export function CloudWorkspacePresenceOverflow({
+export function PresenceOverflow({
 	people,
 	label,
+	ariaLabel,
 	now,
-	isActive,
 	onOpenPerson,
-}: CloudWorkspacePresenceOverflowProps) {
+}: PresenceOverflowProps) {
 	const { t } = useLingui();
 	const { formatCompactRelativeTime } = useFormat();
 	return (
@@ -26,7 +26,7 @@ export function CloudWorkspacePresenceOverflow({
 			<PopoverTrigger asChild>
 				<button
 					type="button"
-					aria-label={t({ message: "Show everyone who opened this workspace" })}
+					aria-label={ariaLabel}
 					className="text-[10px] tabular-nums text-muted-foreground underline-offset-2 hover:text-foreground hover:underline focus-visible:text-foreground focus-visible:underline focus-visible:outline-none"
 				>
 					{label}
@@ -34,13 +34,16 @@ export function CloudWorkspacePresenceOverflow({
 			</PopoverTrigger>
 			<PopoverContent align="end" className="w-60 p-1">
 				{people.map((person) => {
-					const active = isActive(person.lastSeenAt);
-					const lastSeen = formatCompactRelativeTime(person.lastSeenAt, now);
+					const active = person.active;
+					const lastSeen = formatCompactRelativeTime(
+						new Date(person.lastSeenAt),
+						now,
+					);
 					return (
 						<button
 							key={person.userId}
 							type="button"
-							onClick={() => onOpenPerson(person.userId)}
+							onClick={() => onOpenPerson?.(person.userId)}
 							className="flex h-8 w-full items-center gap-2 rounded-sm px-2 text-left text-xs hover:bg-fill-hover"
 						>
 							<AvatarStack

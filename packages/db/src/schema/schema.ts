@@ -1050,29 +1050,6 @@ export const cloudWorkspaceRepositories = pgTable(
 	],
 );
 
-/** Who has opened a cloud workspace, and when they were last in it. */
-export const cloudWorkspacePresence = pgTable(
-	"cloud_workspace_presence",
-	{
-		cloudWorkspaceId: uuid("cloud_workspace_id")
-			.notNull()
-			.references(() => cloudWorkspaces.id, { onDelete: "cascade" }),
-		userId: uuid("user_id")
-			.notNull()
-			.references(() => users.id, { onDelete: "cascade" }),
-		firstSeenAt: timestamp("first_seen_at", { withTimezone: true })
-			.notNull()
-			.defaultNow(),
-		lastSeenAt: timestamp("last_seen_at", { withTimezone: true })
-			.notNull()
-			.defaultNow(),
-	},
-	(table) => [
-		primaryKey({ columns: [table.cloudWorkspaceId, table.userId] }),
-		index("cloud_workspace_presence_user_id_idx").on(table.userId),
-	],
-);
-
 export const cloudWorkspaceBoots = pgTable(
 	"cloud_workspace_boots",
 	{

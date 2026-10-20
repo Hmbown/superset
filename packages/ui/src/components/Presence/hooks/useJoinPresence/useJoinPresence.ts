@@ -1,30 +1,27 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import {
-	joinPagePresence,
-	wakePagePresence,
-} from "../../stores/pagePresenceStore";
+import { joinPresence, wakePresence } from "../../stores/presenceStore";
 
-export function useJoinPagePresence({
-	pageId,
+export function useJoinPresence({
+	roomId,
 	url,
 }: {
-	pageId: string | undefined;
+	roomId: string | undefined;
 	url: (() => Promise<string | null>) | undefined;
 }): void {
 	const urlRef = useRef(url);
 	urlRef.current = url;
-	const enabled = Boolean(pageId && url);
+	const enabled = Boolean(roomId && url);
 
 	useEffect(() => {
-		if (!pageId || !enabled) return;
-		const leave = joinPagePresence(
-			pageId,
+		if (!roomId || !enabled) return;
+		const leave = joinPresence(
+			roomId,
 			async () => (await urlRef.current?.()) ?? null,
 		);
 		const wake = () => {
-			if (document.visibilityState === "visible") wakePagePresence();
+			if (document.visibilityState === "visible") wakePresence();
 		};
 		window.addEventListener("online", wake);
 		document.addEventListener("visibilitychange", wake);
@@ -33,5 +30,5 @@ export function useJoinPagePresence({
 			document.removeEventListener("visibilitychange", wake);
 			leave();
 		};
-	}, [pageId, enabled]);
+	}, [roomId, enabled]);
 }
