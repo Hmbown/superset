@@ -128,11 +128,11 @@ Control Claude Code, Codex, and other terminal agents in cloud workspaces or on 
 
 ### Automations
 
-Run agent sessions on a schedule: triage issues overnight, draft the weekly changelog, keep dependencies fresh.
+Run agent sessions on a schedule or when something happens: review a PR when you're asked, triage a new Sentry issue, pick up a bug report from Slack, draft the weekly changelog.
 
 [Docs →](https://docs.superset.sh/automations)
 
-<a href="https://docs.superset.sh/automations"><img src="apps/marketing/public/images/readme/automations.png" alt="Scheduled agent automations" width="100%" /></a>
+<a href="https://docs.superset.sh/automations"><img src="apps/marketing/public/images/readme/automations.png" alt="Agent automations on a schedule or an event" width="100%" /></a>
 
 ### Remote Access
 

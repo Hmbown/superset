@@ -11,6 +11,7 @@
 #   apps/mobile/scripts/eas-dev.sh             # reuse this checkout's running session, else start one
 #   apps/mobile/scripts/eas-dev.sh --new       # stop the running session and start a fresh one
 #   apps/mobile/scripts/eas-dev.sh --reload    # load the app from Metro again; starts nothing
+#   apps/mobile/scripts/eas-dev.sh --user maya@local.test   # also sign the app in as this dev account
 #   MOBILE_EAS_BUILD_ID=<id> apps/mobile/scripts/eas-dev.sh   # install this build, skip the lookup
 #
 # Requires: EXPO_TOKEN (or `eas login`), this repo's .env already written
@@ -23,16 +24,33 @@ cd "$ROOT_DIR"
 
 NEW=0
 RELOAD=0
-for arg in "$@"; do
-	case "$arg" in
+SIGN_IN_EMAIL=""
+USER_FLAG=0
+while [ $# -gt 0 ]; do
+	case "$1" in
 	--new) NEW=1 ;;
 	--reload) RELOAD=1 ;;
+	--user)
+		USER_FLAG=1
+		SIGN_IN_EMAIL="${2:-}"
+		[ $# -gt 1 ] && shift
+		;;
+	--user=*)
+		USER_FLAG=1
+		SIGN_IN_EMAIL="${1#--user=}"
+		;;
 	*)
-		echo "Unknown argument: $arg" >&2
+		echo "Unknown argument: $1" >&2
 		exit 1
 		;;
 	esac
+	shift
 done
+SIGN_IN_EMAIL="$(printf '%s' "$SIGN_IN_EMAIL" | tr '[:upper:]' '[:lower:]')"
+if [ "$USER_FLAG" = "1" ] && ! [[ "$SIGN_IN_EMAIL" =~ ^[a-z0-9._+-]+@local\.test$ ]]; then
+	echo "--user takes a dev account (name@local.test). seed-dev creates it on first use." >&2
+	exit 1
+fi
 if [ "$NEW" = "1" ] && [ "$RELOAD" = "1" ]; then
 	echo "--new and --reload cannot be used together." >&2
 	exit 1
@@ -59,6 +77,7 @@ METRO_LOG="$STATE_DIR/metro.log"
 METRO_PID_FILE="$STATE_DIR/metro.pid"
 LOAD_ATTEMPTS=3
 BUNDLE_WAIT_SECONDS=90
+SIGN_IN_SCREEN_SECONDS=30
 
 cd apps/mobile
 
@@ -198,6 +217,51 @@ load_app() {
 	exit 1
 }
 
+sign_in_step_failed() {
+	echo "Sign-in as $1 stopped at $2. Take a snapshot to see the screen: (cd apps/mobile && set -a && . ./.env.eas-simulator && set +a && agent-device snapshot -i)" >&2
+	exit 1
+}
+
+# Signs in through the app's own dev sign-in prompt, whose password field is
+# already filled with the shared dev password. seed-dev first makes the account
+# an onboarded member of the dev account's organization, which has the Pro plan.
+sign_in_as() {
+	local email="$1"
+	echo "==> Seeding $email"
+	NODE_ENV=development bun run "$ROOT_DIR/packages/auth/src/seed-dev.ts" "$email" >/dev/null || {
+		echo "seed-dev failed for $email." >&2
+		exit 1
+	}
+	echo "==> Signing in as $email"
+	# Settings when signed in, the sign-in screen when not. A freshly loaded app
+	# shows neither for a few seconds.
+	agent_device open "superset://settings" >/dev/null 2>&1 || true
+	local deadline=$((SECONDS + SIGN_IN_SCREEN_SECONDS))
+	while [ "$SECONDS" -lt "$deadline" ]; do
+		agent_device is visible 'label="Sign in with email (dev)"' >/dev/null 2>&1 && break
+		if agent_device find "Sign out" click >/dev/null 2>&1 ||
+			{ agent_device scroll down >/dev/null 2>&1 && agent_device find "Sign out" click >/dev/null 2>&1; }; then
+			agent_device press 'label="Log out"' >/dev/null 2>&1 || sign_in_step_failed "$email" '"Log out" in the confirmation'
+			agent_device wait 'label="Sign in with email (dev)"' 15000 >/dev/null 2>&1 ||
+				sign_in_step_failed "$email" "the sign-in screen after logging out"
+			break
+		fi
+		sleep 1
+	done
+	agent_device is visible 'label="Sign in with email (dev)"' >/dev/null 2>&1 ||
+		sign_in_step_failed "$email" "Settings or the sign-in screen, which did not appear"
+	agent_device press 'label="Sign in with email (dev)"' >/dev/null 2>&1 || sign_in_step_failed "$email" '"Sign in with email (dev)"'
+	agent_device fill 'role="text-field" editable=true' "$email" >/dev/null 2>&1 || sign_in_step_failed "$email" "the email prompt"
+	agent_device press 'label="Next"' >/dev/null 2>&1 || sign_in_step_failed "$email" '"Next" in the email prompt'
+	agent_device press 'label="Sign in"' >/dev/null 2>&1 || sign_in_step_failed "$email" '"Sign in" in the password prompt'
+	agent_device wait absent 'label="Sign in with email (dev)"' 20000 >/dev/null 2>&1 ||
+		sign_in_step_failed "$email" "the sign-in screen, which is still showing"
+	agent_device open "superset://settings" >/dev/null 2>&1 || true
+	agent_device wait text "$email" 20000 >/dev/null 2>&1 ||
+		sign_in_step_failed "$email" "Settings, which does not show $email"
+	echo "==> Signed in as $email"
+}
+
 # simctl is not reachable from here, so the intro cannot be turned off with
 # `defaults write`. Showing the keyboard once in Settings and pressing Continue
 # marks it as shown for the whole simulator.
@@ -230,6 +294,7 @@ if [ "$RELOAD" = "1" ]; then
 		exit 1
 	}
 	load_app
+	[ -n "$SIGN_IN_EMAIL" ] && sign_in_as "$SIGN_IN_EMAIL"
 	exit 0
 fi
 
@@ -295,6 +360,8 @@ if [ "$STARTED" = "1" ] || ! egress_healthy "$(session_id)"; then
 	[ "$STARTED" = "1" ] && dismiss_keyboard_intro
 	load_app
 fi
+
+[ -n "$SIGN_IN_EMAIL" ] && sign_in_as "$SIGN_IN_EMAIL"
 
 SESSION_ID="$(session_id)"
 PREVIEW_URL="$(eas simulator:get --id "$SESSION_ID" --json --non-interactive 2>/dev/null | json 'j.remoteConfig?.webPreviewUrl')"

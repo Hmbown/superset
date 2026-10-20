@@ -13,6 +13,10 @@ import {
 	WebsiteJsonLd,
 } from "@/components/JsonLd";
 import { REDDIT_PIXEL_ID } from "@/lib/constants";
+import {
+	APPLY_HEADLINE_VARIANT_SCRIPT,
+	HEADLINE_VARIANT_STYLE,
+} from "@/lib/hero-headline";
 
 import { CTAButtons } from "./components/CTAButtons";
 import { Footer } from "./components/Footer";
@@ -37,6 +41,8 @@ const inter = Inter({
 	variable: "--font-inter",
 	display: "swap",
 	axes: ["opsz"],
+	adjustFontFallback: false,
+	fallback: [],
 });
 
 const siteDescription =
@@ -132,6 +138,14 @@ export default async function RootLayout({
 			suppressHydrationWarning
 		>
 			<head>
+				<script
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: static script built from constants
+					dangerouslySetInnerHTML={{ __html: APPLY_HEADLINE_VARIANT_SCRIPT }}
+				/>
+				<style
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: static rules built from constants
+					dangerouslySetInnerHTML={{ __html: HEADLINE_VARIANT_STYLE }}
+				/>
 				<OrganizationJsonLd />
 				<SoftwareApplicationJsonLd />
 				<WebsiteJsonLd />
