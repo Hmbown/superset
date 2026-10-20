@@ -80,6 +80,26 @@ describe("reconcileMcpServers", () => {
 		expect(reports.map((report) => report.agent)).toContain("pdev");
 	});
 
+	test("does not report a matching pdev user alias as stale", () => {
+		const file = path.join(home, ".paradev", "agent", "mcp.json");
+		fs.mkdirSync(path.dirname(file), { recursive: true });
+		const config = JSON.stringify({ mcpServers: { customLinear: LINEAR } });
+		fs.writeFileSync(file, config);
+
+		const reports = reconcileMcpServers({ linear: LINEAR }, opts());
+		expect(reports.find((report) => report.agent === "pdev")).toEqual({
+			agent: "pdev",
+			stale: [],
+			wrote: false,
+		});
+		expect(
+			reconcileMcpServers({ linear: LINEAR }, opts()).every(
+				(report) => !report.wrote,
+			),
+		).toBe(true);
+		expect(fs.readFileSync(file, "utf-8")).toBe(config);
+	});
+
 	test("reaps an entry the desired set no longer names", () => {
 		reconcileMcpServers({ linear: LINEAR, notion: NOTION }, opts());
 		expect(claudeServers().sort()).toEqual(["linear", "notion"]);

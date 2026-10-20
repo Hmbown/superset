@@ -5,6 +5,7 @@ import type { PluginMcpServerConfig } from "@superset/shared/plugins";
 import {
 	CODEX_MARKER_END,
 	CODEX_MARKER_START,
+	getDesiredMcpServersByAgent,
 	getPdevMcpConfigPath,
 	hashMcpServerValue,
 	type SyncManagedMcpServersOptions,
@@ -110,9 +111,6 @@ function codexStale(
  * and installs from the web, the CLI or a cloud box never reach the desktop
  * process that writes config at all. Running this before a session starts makes
  * the config converge wherever the install happened.
- *
- * Cheap by construction — it reads two files and compares hashes, and does no
- * work when everything is in place, which is the usual case.
  */
 export function reconcileMcpServers(
 	desired: Record<string, PluginMcpServerConfig>,
@@ -120,20 +118,17 @@ export function reconcileMcpServers(
 ): McpReconcileReport[] {
 	const homeDir = options.homeDir ?? os.homedir();
 	const supersetHomeDir = options.supersetHomeDir ?? resolveSupersetHomeDir();
+	const scoped = getDesiredMcpServersByAgent(desired, options);
 
 	const stale: Record<(typeof AGENTS)[number], string[]> = {
 		claude: jsonMcpServersStale(
-			desired,
+			scoped.claude,
 			path.join(homeDir, ".claude.json"),
 			supersetHomeDir,
 		),
-		codex: codexStale(desired, homeDir),
+		codex: codexStale(scoped.codex, homeDir),
 		pdev: jsonMcpServersStale(
-			Object.fromEntries(
-				Object.entries(desired).filter(
-					([, config]) => !("url" in config && config.type === "sse"),
-				),
-			),
+			scoped.pdev,
 			getPdevMcpConfigPath(options),
 			supersetHomeDir,
 		),

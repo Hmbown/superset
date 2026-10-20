@@ -265,6 +265,36 @@ describe("syncManagedMcpServers — pdev", () => {
 		expect(existsSync(pdevJson)).toBe(false);
 	});
 
+	it("stores absolute ledger keys for relative pdev directories", () => {
+		const agentDir = path.join(TEST_ROOT, "relative-agent");
+		const options = {
+			homeDir: HOME_DIR,
+			supersetHomeDir: SUPERSET_HOME,
+			pdevAgentDir: path.relative(process.cwd(), agentDir),
+		};
+		const configPath = path.join(agentDir, "mcp.json");
+		expect(getPdevMcpConfigPath(options)).toBe(configPath);
+		syncManagedMcpServers({ linear: LINEAR }, options);
+		const ledger = JSON.parse(readFileSync(ledgerPath, "utf-8"));
+		expect(Object.keys(ledger.files[configPath])).toEqual(["linear"]);
+	});
+
+	it("saves Claude ownership and syncs Codex when pdev cannot be written", () => {
+		writeFileSync(path.join(HOME_DIR, ".paradev"), "not a directory");
+
+		expect(() => run({ linear: LINEAR })).toThrow();
+
+		expect(readClaude().mcpServers).toEqual({ linear: LINEAR });
+		const ledger = JSON.parse(readFileSync(ledgerPath, "utf-8"));
+		expect(Object.keys(ledger.files[claudeJson])).toEqual(["linear"]);
+		expect(ledger.files[pdevJson]).toBeUndefined();
+		expect(readFileSync(codexToml, "utf-8")).toContain("[mcp_servers.linear]");
+
+		run({});
+		expect(readClaude().mcpServers).toEqual({});
+		expect(existsSync(codexToml)).toBe(false);
+	});
+
 	it("resolves the pdev environment override without escaping a test home", () => {
 		const previous = process.env.PDEV_CODING_AGENT_DIR;
 		try {
@@ -276,6 +306,10 @@ describe("syncManagedMcpServers — pdev", () => {
 			expect(
 				getPdevMcpConfigPath({ homeDir: HOME_DIR, pdevAgentDir: "~/custom" }),
 			).toBe(path.join(HOME_DIR, "custom", "mcp.json"));
+			process.env.PDEV_CODING_AGENT_DIR = "relative-agent";
+			expect(getPdevMcpConfigPath()).toBe(
+				path.resolve("relative-agent", "mcp.json"),
+			);
 			process.env.PDEV_CODING_AGENT_DIR = "";
 			expect(getPdevMcpConfigPath()).toBe(
 				path.join(os.homedir(), ".paradev", "agent", "mcp.json"),
@@ -364,6 +398,31 @@ describe("syncManagedMcpServers — Codex", () => {
 });
 
 describe("syncManagedMcpServers — per-agent external scoping", () => {
+	it("keeps matching aliases in pdev and Codex separate", () => {
+		mkdirSync(path.dirname(pdevJson), { recursive: true });
+		writeFileSync(pdevJson, JSON.stringify({ mcpServers: { custom: LINEAR } }));
+		mkdirSync(path.dirname(codexToml), { recursive: true });
+		const codexConfig =
+			'[mcp_servers.custom]\nurl = "https://mcp.linear.app/mcp"\n';
+		writeFileSync(codexToml, codexConfig);
+
+		run({ linear: LINEAR });
+
+		expect(JSON.parse(readFileSync(pdevJson, "utf-8")).mcpServers).toEqual({
+			custom: LINEAR,
+		});
+		expect(readFileSync(codexToml, "utf-8")).toBe(codexConfig);
+		expect(
+			readExternallyConfiguredMcpServers({
+				homeDir: HOME_DIR,
+				supersetHomeDir: SUPERSET_HOME,
+			}),
+		).toEqual([
+			{ name: "custom", url: LINEAR.url, source: "Codex" },
+			{ name: "custom", url: LINEAR.url, source: "pdev" },
+		]);
+	});
+
 	it("a Codex-only user server does not suppress the Claude write", () => {
 		mkdirSync(path.dirname(codexToml), { recursive: true });
 		writeFileSync(
