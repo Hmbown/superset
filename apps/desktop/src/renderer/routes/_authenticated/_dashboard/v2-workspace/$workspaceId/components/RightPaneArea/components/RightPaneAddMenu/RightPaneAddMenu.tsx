@@ -11,17 +11,19 @@ import {
 	LuFolderTree,
 	LuGitPullRequestArrow,
 } from "react-icons/lu";
-import { TbWorld } from "react-icons/tb";
+import { TbDeviceDesktop, TbWorld } from "react-icons/tb";
 import type { RightPaneKind } from "../../types";
 
 interface RightPaneAddMenuProps {
 	onAdd: (kind: RightPaneKind) => void;
 	runAfterClose: (action: () => void) => void;
+	canAddDesktop: boolean;
 }
 
 export function RightPaneAddMenu({
 	onAdd,
 	runAfterClose,
+	canAddDesktop,
 }: RightPaneAddMenuProps) {
 	return (
 		<>
@@ -62,6 +64,14 @@ export function RightPaneAddMenu({
 					<Trans>Browser</Trans>
 				</span>
 			</DropdownMenuItem>
+			{canAddDesktop && (
+				<DropdownMenuItem className="gap-2" onClick={() => onAdd("desktop")}>
+					<TbDeviceDesktop className="size-4" />
+					<span>
+						<Trans>Desktop</Trans>
+					</span>
+				</DropdownMenuItem>
+			)}
 			<DropdownMenuItem
 				className="gap-2"
 				onClick={() => runAfterClose(() => onAdd("terminal"))}

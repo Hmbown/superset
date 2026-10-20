@@ -948,6 +948,9 @@ msgstr "контраст {minimumContrast}:1"
 msgid "{minutes}m"
 msgstr "{minutes} мин."
 
+msgid "{minutes}m {rest}s"
+msgstr "{minutes} мин {rest} с"
+
 msgid "{minutes}m ago"
 msgstr "{minutes} мин. назад"
 
@@ -980,6 +983,9 @@ msgstr "{name} встроен и не может быть заменён"
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} не добавлен"
+
+msgid "{name} plugin"
+msgstr "Плагин {name}"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Укажите хотя бы одного человека или выберите {choice}.} sender {Укажите хотя бы одного отправителя или выберите {choice}.} other {Укажите хотя бы одно значение или выберите {choice}.}}"
@@ -1071,6 +1077,9 @@ msgstr "{repositoryFullName} не находится в {installedAccountLogin},
 
 msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
 msgstr "{repositoryFullName} ещё не открыт для GitHub App Superset."
+
+msgid "{seconds}s"
+msgstr "{seconds} с"
 
 msgid "{seconds}s ago"
 msgstr "{seconds} с назад"
@@ -1397,8 +1406,8 @@ msgstr "Свой CDP-эндпоинт для каждой панели"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "Changelog выходит каждую неделю. Большинство новых сотрудников выпускают свой первый код для пользователей уже в первые дни."
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "Чат нельзя переключить на другого провайдера посреди разговора. Вместо этого создайте ответвление этого разговора в новом чате {label}. Этот чат {currentLabel} останется открытым."
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "Чат нельзя переключить на другого провайдера посреди разговора. Начните новый чат {label} или ответвите этот разговор в новый чат. Этот чат {currentLabel} останется открытым."
 
 msgid "A chat takes its name from the agent."
 msgstr "Чат получает имя от агента."
@@ -3538,6 +3547,9 @@ msgstr "Чат"
 msgid "Chat closed"
 msgstr "Чат закрыт"
 
+msgid "Chat history"
+msgstr "История чатов"
+
 msgid "Chat is being reworked"
 msgstr "Чат перерабатывается"
 
@@ -3603,6 +3615,9 @@ msgstr "Проверка окружений…"
 
 msgid "Checking host…"
 msgstr "Проверка хоста…"
+
+msgid "Checking MCP servers…"
+msgstr "Проверка серверов MCP…"
 
 msgid "Checking out a PR requires a project"
 msgstr "Для переключения на PR нужен проект"
@@ -3673,6 +3688,9 @@ msgstr "Выберите агента"
 msgid "Choose an existing repo folder"
 msgstr "Выберите папку существующего репозитория"
 
+msgid "Choose an MCP server"
+msgstr "Выберите сервер MCP"
+
 msgid "Choose app"
 msgstr "Выберите приложение"
 
@@ -3684,6 +3702,9 @@ msgstr "Выберите, как открывается представлени
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Выберите, как открывать пути файлов при Cmd+клике в терминале"
+
+msgid "Choose MCP servers for this message"
+msgstr "Выбрать серверы MCP для этого сообщения"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Выберите, что очистить во встроенном браузере."
@@ -4324,6 +4345,9 @@ msgstr "Настройте, какие агенты появляются в за
 msgid "Configure workspace run command"
 msgstr "Настроить команду запуска рабочей области"
 
+msgid "Configured for {agent}"
+msgstr "Настроен для {agent}"
+
 msgid "Confirm before quitting"
 msgstr "Подтверждать выход"
 
@@ -4571,9 +4595,6 @@ msgstr "Контекстное меню"
 
 msgid "Continue"
 msgstr "Продолжить"
-
-msgid "Continue in a new {label} chat?"
-msgstr "Продолжить в новом чате {label}?"
 
 msgid "Continue or fork session"
 msgstr "Продолжить или форкнуть сессию"
@@ -4979,6 +5000,9 @@ msgstr "Не удалось связаться с машиной этой раб
 msgid "Could not reactivate"
 msgstr "Не удалось активировать заново"
 
+msgid "Could not read MCP servers."
+msgstr "Не удалось прочитать серверы MCP."
+
 msgid "Could not read selected file"
 msgstr "Не удалось прочитать выбранный файл"
 
@@ -5133,6 +5157,9 @@ msgstr "Не удалось отменить проиндексированны�
 msgid "Couldn't discard unstaged changes"
 msgstr "Не удалось отменить непроиндексированные изменения"
 
+msgid "Couldn't edit the message"
+msgstr "Не удалось изменить сообщение"
+
 msgid "Couldn’t finish deleting workspaces"
 msgstr "Не удалось завершить удаление рабочих областей"
 
@@ -5221,9 +5248,6 @@ msgstr "Не удалось прочитать историю использов
 msgid "Couldn't remove the local sign-in"
 msgstr "Не удалось удалить локальный вход"
 
-msgid "Couldn't reopen the agent in a terminal"
-msgstr "Не удалось снова открыть агента в терминале"
-
 msgid "Couldn't restart terminals"
 msgstr "Не удалось перезапустить терминалы"
 
@@ -5293,9 +5317,6 @@ msgstr "Не удалось запустить голосовой режим"
 
 msgid "Couldn't start workspace"
 msgstr "Не удалось запустить рабочую область"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "Не удалось остановить терминал агента"
 
 msgid "Couldn't stop the background task"
 msgstr "Не удалось остановить фоновую задачу"
@@ -6174,6 +6195,9 @@ msgstr "Отключить навык"
 msgid "Disabled"
 msgstr "Отключён"
 
+msgid "Disabled in agent config"
+msgstr "Отключён в конфигурации агента"
+
 msgid "Disabled toggle"
 msgstr "Отключённый переключатель"
 
@@ -6565,6 +6589,9 @@ msgstr "Изменить окружение"
 
 msgid "Edit files without asking; ask before commands"
 msgstr "Править файлы без вопросов; спрашивать перед командами"
+
+msgid "Edit message"
+msgstr "Изменить сообщение"
 
 msgid "Edit name"
 msgstr "Изменить имя"
@@ -7878,14 +7905,14 @@ msgstr "Забыть {domain}"
 msgid "Fork args"
 msgstr "Аргументы форка"
 
+msgid "Fork conversation"
+msgstr "Ответвить разговор"
+
 msgid "Fork session"
 msgstr "Форкнуть сессию"
 
 msgid "Fork session…"
 msgstr "Форкнуть сессию…"
-
-msgid "Fork to new chat"
-msgstr "Ответвить в новый чат"
 
 msgid "Form controls and field composition"
 msgstr "Элементы формы и композиция полей"
@@ -8757,6 +8784,9 @@ msgstr "В десктопном приложении Superset откройте �
 msgid "In under a year, more than 145,000 developers across 180 countries have run Superset and created over 1.85 million agent workspaces."
 msgstr "Меньше чем за год более 145 000 разработчиков из 180 стран запускали Superset и создали более 1,85 млн рабочих областей агентов."
 
+msgid "In your next chat"
+msgstr "В следующем чате"
+
 msgid "In your terminal"
 msgstr "В вашем терминале"
 
@@ -9375,6 +9405,9 @@ msgstr "Задержка"
 msgid "Later"
 msgstr "Позже"
 
+msgid "Later messages are removed."
+msgstr "Последующие сообщения будут удалены."
+
 msgid "Latest"
 msgstr "Последняя"
 
@@ -9783,6 +9816,10 @@ msgstr "Загрузка..."
 msgid "Loading…"
 msgstr "Загрузка…"
 
+msgctxt "MCP server scope"
+msgid "local"
+msgstr "локальный"
+
 msgid "Local"
 msgstr "Локальная"
 
@@ -9956,6 +9993,9 @@ msgstr "Управление тарифом"
 msgid "Manage plan on the web"
 msgstr "Управление тарифом в веб-версии"
 
+msgid "Manage plugins…"
+msgstr "Управление плагинами…"
+
 msgid "Manage sessions"
 msgstr "Управление сессиями"
 
@@ -10055,6 +10095,9 @@ msgstr "Сервер MCP"
 msgid "MCP Server Commands"
 msgstr "Команды сервера MCP"
 
+msgid "MCP servers"
+msgstr "Серверы MCP"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Измерено за последние 30 дней"
 
@@ -10139,9 +10182,6 @@ msgstr "Коммит слияния"
 #. placeholder {0}: error.message
 msgid "Merge failed: {0}"
 msgstr "Не удалось объединить: {0}"
-
-msgid "Merge into center"
-msgstr "Объединить с центром"
 
 msgid "Merge pull request"
 msgstr "Объединить пул-реквест"
@@ -10387,9 +10427,6 @@ msgstr "Почти вся история софта"
 msgid "Move {count} to Group"
 msgstr "Переместить {count} в группу"
 
-msgid "Move to Center"
-msgstr "Переместить в центр"
-
 msgid "Move to group"
 msgstr "Переместить в группу"
 
@@ -10561,6 +10598,9 @@ msgstr "Новый браузер"
 
 msgid "new challengers"
 msgstr "другие соперники"
+
+msgid "New Chat"
+msgstr "Новый чат"
 
 msgid "New cloud workspace"
 msgstr "Новая облачная рабочая область"
@@ -10811,6 +10851,9 @@ msgstr "В этой ветке пока нет изменений."
 msgid "No changes to display."
 msgstr "Нет изменений для показа."
 
+msgid "No chats found"
+msgstr "Чаты не найдены"
+
 msgid "No checks"
 msgstr "Без проверок"
 
@@ -10970,6 +11013,9 @@ msgstr "Без иконки"
 msgid "No icons match."
 msgstr "Нет подходящих значков."
 
+msgid "No installed agent can be opened as a chat"
+msgstr "Ни один установленный агент нельзя открыть как чат"
+
 msgid "No Internet Connection"
 msgstr "Нет подключения к интернету"
 
@@ -11018,6 +11064,9 @@ msgstr "Нет совпадений"
 msgid "No matching files"
 msgstr "Нет подходящих файлов"
 
+msgid "No matching MCP servers"
+msgstr "Нет подходящих серверов MCP"
+
 msgid "No matching models"
 msgstr "Нет подходящих моделей"
 
@@ -11029,6 +11078,9 @@ msgstr "Нет подходящих страниц"
 
 msgid "No matching repositories."
 msgstr "Нет подходящих репозиториев."
+
+msgid "No MCP servers found"
+msgstr "Серверы MCP не найдены"
 
 msgid "No members yet"
 msgstr "Участников пока нет"
@@ -11765,6 +11817,9 @@ msgstr "Открыть {path} в панели файла"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "Открыть многострочный редактор промпта для активного терминала"
+
+msgid "Open a new {label} chat?"
+msgstr "Открыть новый чат {label}?"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "Откройте панель или перетащите её сюда из центра."
@@ -13070,6 +13125,10 @@ msgstr "Прогресс"
 msgid "Progress · Spinner"
 msgstr "Прогресс · спиннер"
 
+msgctxt "MCP server scope"
+msgid "project"
+msgstr "проект"
+
 msgid "Project"
 msgstr "Проект"
 
@@ -13102,6 +13161,9 @@ msgstr "Проект не найден."
 
 msgid "Project not set up on this host"
 msgstr "Проект не настроен на этом хосте"
+
+msgid "Project not trusted in Codex"
+msgstr "Проект не помечен как доверенный в Codex"
 
 msgid "Project ready — open it from the sidebar."
 msgstr "Проект готов — откройте его из боковой панели."
@@ -13435,6 +13497,9 @@ msgstr "Чтение логов деплоя и сборки"
 
 msgid "Read it on your phone"
 msgstr "Читайте на телефоне"
+
+msgid "Read MCP servers again"
+msgstr "Перечитать серверы MCP"
 
 msgid "Read the changelog"
 msgstr "Читать changelog"
@@ -14797,6 +14862,9 @@ msgstr "Поиск по имени ключа..."
 msgid "Search changed files"
 msgstr "Поиск изменённых файлов"
 
+msgid "Search chats..."
+msgstr "Поиск чатов..."
+
 msgid "Search developers"
 msgstr "Поиск разработчиков"
 
@@ -14847,6 +14915,9 @@ msgstr "Поиск в Linear"
 
 msgid "Search Linear…"
 msgstr "Поиск в Linear…"
+
+msgid "Search MCP servers…"
+msgstr "Поиск серверов MCP…"
 
 msgid "Search models"
 msgstr "Поиск моделей"
@@ -15885,6 +15956,9 @@ msgstr "Соответствие SOC 2 Type II. Запросите отчёт."
 msgid "SOC 2 Type II report"
 msgstr "Отчёт SOC 2 Type II"
 
+msgid "Some chat history could not be loaded."
+msgstr "Не удалось загрузить часть истории чатов."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "Некоторые файлы не подходят по типу и не были добавлены."
 
@@ -16200,6 +16274,9 @@ msgstr "Начать бесплатный пробный период"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Начните бесплатно. Переходите на платный, когда команда вырастет. Enterprise — для организаций с повышенными требованиями к безопасности и соответствию."
 
+msgid "Start fresh"
+msgstr "Начать заново"
+
 msgid "Start from a template"
 msgstr "Начать с шаблона"
 
@@ -16338,6 +16415,9 @@ msgstr "Остановите Superset здесь, чтобы удалить с �
 
 msgid "Stop the agent and send this now"
 msgstr "Остановить агента и отправить сейчас"
+
+msgid "Stop the agent before you edit a message"
+msgstr "Остановите агента, прежде чем изменять сообщение"
 
 msgid "Stop watching"
 msgstr "Прекратить отслеживание"
@@ -17515,6 +17595,9 @@ msgstr "Этот агент не может работать в облачной
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Этого агента больше нет на выбранном устройстве (возможно, его агенты были сброшены). Запуски будут падать, пока не выберете нового."
 
+msgid "This agent only shows chats saved in Superset."
+msgstr "Этот агент показывает только чаты, сохранённые в Superset."
+
 msgid "This also:"
 msgstr "Также:"
 
@@ -18452,6 +18535,9 @@ msgstr "Неподдерживаемый элемент «{0}»"
 msgid "Untitled"
 msgstr "Без названия"
 
+msgid "Untitled chat"
+msgstr "Чат без названия"
+
 msgid "Untitled Page"
 msgstr "Страница без названия"
 
@@ -18689,6 +18775,10 @@ msgstr "Используется, когда система в тёмном ре
 
 msgid "Used when your system is in light mode."
 msgstr "Используется, когда система в светлом режиме."
+
+msgctxt "MCP server scope"
+msgid "user"
+msgstr "пользователь"
 
 msgid "User already has access to this host"
 msgstr "У пользователя уже есть доступ к этому хосту"

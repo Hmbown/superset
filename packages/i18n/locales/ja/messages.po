@@ -948,6 +948,9 @@ msgstr "コントラスト {minimumContrast}:1"
 msgid "{minutes}m"
 msgstr "{minutes}分"
 
+msgid "{minutes}m {rest}s"
+msgstr "{minutes}分{rest}秒"
+
 msgid "{minutes}m ago"
 msgstr "{minutes}分前"
 
@@ -980,6 +983,9 @@ msgstr "{name} は組み込みのため置き換えられません"
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} は追加されていません"
+
+msgid "{name} plugin"
+msgstr "{name} プラグイン"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {人を1人以上指定するか、{choice}を選択してください。} sender {送信者を1人以上指定するか、{choice}を選択してください。} other {項目を1つ以上指定するか、{choice}を選択してください。}}"
@@ -1071,6 +1077,9 @@ msgstr "{repositoryFullName} は、この組織の GitHub App がインストー
 
 msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
 msgstr "{repositoryFullName} はまだ Superset の GitHub App と共有されていません。"
+
+msgid "{seconds}s"
+msgstr "{seconds}秒"
 
 msgid "{seconds}s ago"
 msgstr "{seconds}秒前"
@@ -1397,8 +1406,8 @@ msgstr "ペインごとに専用のCDPエンドポイント"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "毎週Changelogを公開しています。ほとんどの新メンバーが入社して数日のうちにユーザーへリリースします。"
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "チャットの途中で別のプロバイダーに切り替えることはできません。代わりに、この会話を新しい {label} チャットにフォークしてください。この {currentLabel} チャットは開いたままです。"
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "チャットの途中で別のプロバイダーに切り替えることはできません。新しい {label} チャットを始めるか、この会話を新しいチャットに分岐してください。この {currentLabel} チャットは開いたままです。"
 
 msgid "A chat takes its name from the agent."
 msgstr "チャットの名前はエージェントから付けられます。"
@@ -3538,6 +3547,9 @@ msgstr "チャット"
 msgid "Chat closed"
 msgstr "チャットを閉じました"
 
+msgid "Chat history"
+msgstr "チャット履歴"
+
 msgid "Chat is being reworked"
 msgstr "チャットは再構築中です"
 
@@ -3603,6 +3615,9 @@ msgstr "環境を確認中…"
 
 msgid "Checking host…"
 msgstr "ホストを確認中…"
+
+msgid "Checking MCP servers…"
+msgstr "MCPサーバーを確認中…"
 
 msgid "Checking out a PR requires a project"
 msgstr "PRのチェックアウトにはプロジェクトが必要です"
@@ -3673,6 +3688,9 @@ msgstr "エージェントを選択"
 msgid "Choose an existing repo folder"
 msgstr "既存のリポジトリフォルダを選択"
 
+msgid "Choose an MCP server"
+msgstr "MCPサーバーを選択"
+
 msgid "Choose app"
 msgstr "アプリを選択"
 
@@ -3684,6 +3702,9 @@ msgstr "トップバーから変更ビューをどのように開くかを選択
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "ターミナルでCmd+クリックしたときのファイルパスの開き方"
+
+msgid "Choose MCP servers for this message"
+msgstr "このメッセージで使うMCPサーバーを選択"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "アプリ内ブラウザから消去する項目を選択してください。"
@@ -4324,6 +4345,9 @@ msgstr "ランチャーに表示するエージェントと起動方法を設定
 msgid "Configure workspace run command"
 msgstr "ワークスペースの実行コマンドを設定"
 
+msgid "Configured for {agent}"
+msgstr "{agent} 用に設定済み"
+
 msgid "Confirm before quitting"
 msgstr "終了前に確認"
 
@@ -4571,9 +4595,6 @@ msgstr "Context Menu"
 
 msgid "Continue"
 msgstr "続行"
-
-msgid "Continue in a new {label} chat?"
-msgstr "新しい {label} チャットで続けますか？"
 
 msgid "Continue or fork session"
 msgstr "セッションを続行またはフォーク"
@@ -4979,6 +5000,9 @@ msgstr "このワークスペースのマシンに接続できませんでした
 msgid "Could not reactivate"
 msgstr "再有効化できませんでした"
 
+msgid "Could not read MCP servers."
+msgstr "MCPサーバーを読み込めませんでした。"
+
 msgid "Could not read selected file"
 msgstr "選択したファイルを読み取れませんでした"
 
@@ -5133,6 +5157,9 @@ msgstr "ステージ済みの変更を破棄できませんでした"
 msgid "Couldn't discard unstaged changes"
 msgstr "未ステージの変更を破棄できませんでした"
 
+msgid "Couldn't edit the message"
+msgstr "メッセージを編集できませんでした"
+
 msgid "Couldn’t finish deleting workspaces"
 msgstr "ワークスペースの削除を完了できませんでした"
 
@@ -5221,9 +5248,6 @@ msgstr "このホストから使用履歴を読み取れませんでした。"
 msgid "Couldn't remove the local sign-in"
 msgstr "ローカルのサインインを削除できませんでした"
 
-msgid "Couldn't reopen the agent in a terminal"
-msgstr "エージェントをターミナルで再度開けませんでした"
-
 msgid "Couldn't restart terminals"
 msgstr "ターミナルを再起動できませんでした"
 
@@ -5293,9 +5317,6 @@ msgstr "音声モードを開始できませんでした"
 
 msgid "Couldn't start workspace"
 msgstr "ワークスペースを開始できませんでした"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "エージェントのターミナルを停止できませんでした"
 
 msgid "Couldn't stop the background task"
 msgstr "バックグラウンドタスクを停止できませんでした"
@@ -6174,6 +6195,9 @@ msgstr "スキルを無効にする"
 msgid "Disabled"
 msgstr "無効"
 
+msgid "Disabled in agent config"
+msgstr "エージェントの設定で無効"
+
 msgid "Disabled toggle"
 msgstr "無効なトグル"
 
@@ -6565,6 +6589,9 @@ msgstr "環境を編集"
 
 msgid "Edit files without asking; ask before commands"
 msgstr "ファイルは確認なしで編集し、コマンドは事前に確認"
+
+msgid "Edit message"
+msgstr "メッセージを編集"
 
 msgid "Edit name"
 msgstr "名前を編集"
@@ -7878,14 +7905,14 @@ msgstr "{domain}を削除"
 msgid "Fork args"
 msgstr "フォーク引数"
 
+msgid "Fork conversation"
+msgstr "会話を分岐"
+
 msgid "Fork session"
 msgstr "セッションをフォーク"
 
 msgid "Fork session…"
 msgstr "セッションをフォーク…"
-
-msgid "Fork to new chat"
-msgstr "新しいチャットにフォーク"
 
 msgid "Form controls and field composition"
 msgstr "フォームコントロールとフィールドの組み立て"
@@ -8757,6 +8784,9 @@ msgstr "Supersetデスクトップアプリで設定 → リモートアクセ�
 msgid "In under a year, more than 145,000 developers across 180 countries have run Superset and created over 1.85 million agent workspaces."
 msgstr "公開から 1 年足らずで、180 か国の 14 万 5,000 人以上の開発者が Superset を使い、185 万以上のエージェントワークスペースが作成されました。"
 
+msgid "In your next chat"
+msgstr "次のチャットから"
+
 msgid "In your terminal"
 msgstr "ターミナルで"
 
@@ -9375,6 +9405,9 @@ msgstr "レイテンシ"
 msgid "Later"
 msgstr "後で"
 
+msgid "Later messages are removed."
+msgstr "以降のメッセージは削除されます。"
+
 msgid "Latest"
 msgstr "最新"
 
@@ -9783,6 +9816,10 @@ msgstr "読み込み中..."
 msgid "Loading…"
 msgstr "読み込み中…"
 
+msgctxt "MCP server scope"
+msgid "local"
+msgstr "ローカル"
+
 msgid "Local"
 msgstr "ローカル"
 
@@ -9956,6 +9993,9 @@ msgstr "プランを管理"
 msgid "Manage plan on the web"
 msgstr "プランはWebで管理"
 
+msgid "Manage plugins…"
+msgstr "プラグインを管理…"
+
 msgid "Manage sessions"
 msgstr "セッションを管理"
 
@@ -10055,6 +10095,9 @@ msgstr "MCPサーバー"
 msgid "MCP Server Commands"
 msgstr "MCPサーバーのコマンド"
 
+msgid "MCP servers"
+msgstr "MCPサーバー"
+
 msgid "Measured over the trailing 30 days"
 msgstr "直近30日間で計測"
 
@@ -10139,9 +10182,6 @@ msgstr "マージコミット"
 #. placeholder {0}: error.message
 msgid "Merge failed: {0}"
 msgstr "マージに失敗しました: {0}"
-
-msgid "Merge into center"
-msgstr "中央に統合"
 
 msgid "Merge pull request"
 msgstr "プルリクエストをマージ"
@@ -10387,9 +10427,6 @@ msgstr "ソフトウェアの歴史のほとんど"
 msgid "Move {count} to Group"
 msgstr "{count}件をグループへ移動"
 
-msgid "Move to Center"
-msgstr "中央に移動"
-
 msgid "Move to group"
 msgstr "グループへ移動"
 
@@ -10561,6 +10598,9 @@ msgstr "新規ブラウザ"
 
 msgid "new challengers"
 msgstr "別の対戦相手"
+
+msgid "New Chat"
+msgstr "新規チャット"
 
 msgid "New cloud workspace"
 msgstr "新規クラウドワークスペース"
@@ -10811,6 +10851,9 @@ msgstr "このブランチにはまだ変更がありません。"
 msgid "No changes to display."
 msgstr "表示する変更がありません。"
 
+msgid "No chats found"
+msgstr "チャットが見つかりません"
+
 msgid "No checks"
 msgstr "チェックなし"
 
@@ -10970,6 +11013,9 @@ msgstr "アイコンなし"
 msgid "No icons match."
 msgstr "一致するアイコンはありません。"
 
+msgid "No installed agent can be opened as a chat"
+msgstr "チャットとして開けるエージェントがインストールされていません"
+
 msgid "No Internet Connection"
 msgstr "インターネット接続がありません"
 
@@ -11018,6 +11064,9 @@ msgstr "一致なし"
 msgid "No matching files"
 msgstr "一致するファイルはありません"
 
+msgid "No matching MCP servers"
+msgstr "一致するMCPサーバーはありません"
+
 msgid "No matching models"
 msgstr "一致するモデルがありません"
 
@@ -11029,6 +11078,9 @@ msgstr "一致するページはありません"
 
 msgid "No matching repositories."
 msgstr "一致するリポジトリがありません。"
+
+msgid "No MCP servers found"
+msgstr "MCPサーバーが見つかりません"
 
 msgid "No members yet"
 msgstr "メンバーはまだいません"
@@ -11765,6 +11817,9 @@ msgstr "{path}をファイルペインで開く"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "アクティブなターミナル用の複数行プロンプト入力を開く"
+
+msgid "Open a new {label} chat?"
+msgstr "新しい {label} チャットを開きますか？"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "ペインを開くか、中央からここへドラッグしてください。"
@@ -13070,6 +13125,10 @@ msgstr "進捗"
 msgid "Progress · Spinner"
 msgstr "Progress · Spinner"
 
+msgctxt "MCP server scope"
+msgid "project"
+msgstr "プロジェクト"
+
 msgid "Project"
 msgstr "プロジェクト"
 
@@ -13102,6 +13161,9 @@ msgstr "プロジェクトが見つかりません。"
 
 msgid "Project not set up on this host"
 msgstr "このホストにプロジェクトがセットアップされていません"
+
+msgid "Project not trusted in Codex"
+msgstr "Codexで信頼されていないプロジェクト"
 
 msgid "Project ready — open it from the sidebar."
 msgstr "プロジェクトの準備ができました — サイドバーから開いてください。"
@@ -13435,6 +13497,9 @@ msgstr "デプロイとビルドのログを確認"
 
 msgid "Read it on your phone"
 msgstr "スマートフォンで読める"
+
+msgid "Read MCP servers again"
+msgstr "MCPサーバーを再読み込み"
 
 msgid "Read the changelog"
 msgstr "Changelogを読む"
@@ -14797,6 +14862,9 @@ msgstr "キー名で検索..."
 msgid "Search changed files"
 msgstr "変更されたファイルを検索"
 
+msgid "Search chats..."
+msgstr "チャットを検索..."
+
 msgid "Search developers"
 msgstr "開発者を検索"
 
@@ -14847,6 +14915,9 @@ msgstr "Linearを検索"
 
 msgid "Search Linear…"
 msgstr "Linearを検索…"
+
+msgid "Search MCP servers…"
+msgstr "MCPサーバーを検索…"
 
 msgid "Search models"
 msgstr "モデルを検索"
@@ -15885,6 +15956,9 @@ msgstr "SOC 2 Type II準拠。レポートをご請求ください。"
 msgid "SOC 2 Type II report"
 msgstr "SOC 2 Type IIレポート"
 
+msgid "Some chat history could not be loaded."
+msgstr "一部のチャット履歴を読み込めませんでした。"
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "一部のファイルは対応していない形式のため追加されませんでした。"
 
@@ -16200,6 +16274,9 @@ msgstr "無料トライアルを開始"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "無料で始められます。チームの規模に合わなくなったらアップグレードを。高度なセキュリティとコンプライアンスが必要な組織にはEnterpriseプランがあります。"
 
+msgid "Start fresh"
+msgstr "新しく始める"
+
 msgid "Start from a template"
 msgstr "テンプレートから開始"
 
@@ -16338,6 +16415,9 @@ msgstr "別のデバイスから削除するには、ここでSupersetを停止�
 
 msgid "Stop the agent and send this now"
 msgstr "エージェントを停止して今すぐ送信"
+
+msgid "Stop the agent before you edit a message"
+msgstr "メッセージを編集する前にエージェントを停止してください"
 
 msgid "Stop watching"
 msgstr "監視を停止"
@@ -17515,6 +17595,9 @@ msgstr "このエージェントはクラウドワークスペースで実行で
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "選択したデバイスにこのエージェントは存在しません(エージェントがリセットされた可能性があります)。新しいエージェントを選ぶまで実行は失敗します。"
 
+msgid "This agent only shows chats saved in Superset."
+msgstr "このエージェントは Superset に保存されたチャットのみ表示します。"
+
 msgid "This also:"
 msgstr "さらに次の処理も行われます:"
 
@@ -18452,6 +18535,9 @@ msgstr "未対応のアイテム「{0}」"
 msgid "Untitled"
 msgstr "無題"
 
+msgid "Untitled chat"
+msgstr "無題のチャット"
+
 msgid "Untitled Page"
 msgstr "無題のページ"
 
@@ -18689,6 +18775,10 @@ msgstr "システムがダークモードのときに使用します。"
 
 msgid "Used when your system is in light mode."
 msgstr "システムがライトモードのときに使用します。"
+
+msgctxt "MCP server scope"
+msgid "user"
+msgstr "ユーザー"
 
 msgid "User already has access to this host"
 msgstr "ユーザーはすでにこのホストへのアクセス権を持っています"

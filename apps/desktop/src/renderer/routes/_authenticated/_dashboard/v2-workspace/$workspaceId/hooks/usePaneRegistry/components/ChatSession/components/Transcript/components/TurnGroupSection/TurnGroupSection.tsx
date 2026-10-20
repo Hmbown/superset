@@ -150,6 +150,10 @@ export function TurnGroupSection({
 						items={row.items}
 						onToggle={onToggleEntry}
 						rowKey={row.key}
+						steps={row.steps}
+						stepTexts={row.steps.map((step) =>
+							step.kind === "reasoning" ? displayText(snapshot, step.id) : "",
+						)}
 					/>
 					{imageRail(row.items)}
 					{pageCards(row.pages)}

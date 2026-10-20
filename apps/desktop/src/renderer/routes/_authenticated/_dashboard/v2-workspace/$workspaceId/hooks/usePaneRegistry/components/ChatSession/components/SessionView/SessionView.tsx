@@ -4,6 +4,7 @@ import {
 	deriveQueuedPrompts,
 	runningTurnId as findRunningTurnId,
 	launchConfigSelections,
+	userMessageText,
 } from "@superset/chat/core";
 import type {
 	AvailableCommand,
@@ -30,9 +31,10 @@ import {
 	type OpenLink,
 	type OpenPage,
 } from "../../providers/ChatPaneActionsProvider";
-import type { ChatForkTarget } from "../../types";
+import type { ChatEditRequest, ChatForkTarget } from "../../types";
 import { buildChatHandoffTranscript } from "../../utils/chatHandoffTranscript";
 import { heldPromptQueue } from "../../utils/heldPromptQueue";
+import { editableMessageIds, rewindTranscript } from "../../utils/messageEdit";
 import { promptHistory } from "../../utils/promptHistory";
 import { railMessages } from "../../utils/railMessages";
 import {
@@ -54,12 +56,11 @@ const NO_CONFIG_OPTIONS: SessionConfigOption[] = [];
 const MODEL_OPTIONS_GRACE_MS = 1000;
 
 function contentText(content: UserContent[]): string {
-	return content
-		.flatMap((part) => (part.type === "text" ? [part.text] : []))
-		.join("\n");
+	return userMessageText({ content });
 }
 
 export function SessionView({
+	presetId,
 	agentLabel,
 	agentSwitch,
 	canForkToWorktree,
@@ -73,6 +74,8 @@ export function SessionView({
 	preferredModelLabel,
 	onPendingPromptsSent,
 	onFork,
+	onEditMessage,
+	onUserPrompt,
 	onSessionState,
 	openFile,
 	openPage,
@@ -80,6 +83,7 @@ export function SessionView({
 	workspaceId,
 }: {
 	client: SessionClient;
+	presetId?: string;
 	draftKey: string;
 	workspaceId: string;
 	headerLeft?: ReactNode;
@@ -103,6 +107,9 @@ export function SessionView({
 	 */
 	onFork?: ((target: ChatForkTarget, transcript: string) => void) | undefined;
 	canForkToWorktree?: boolean;
+	onEditMessage?: (request: ChatEditRequest) => void;
+	/** Called when the user sends a message, as opposed to anything sent for them. */
+	onUserPrompt?: () => void;
 	/** Names the speaker in a handed-over transcript. */
 	agentLabel?: string;
 	/** The transcript goes with the switch: the next agent cannot load this session. */
@@ -294,9 +301,39 @@ export function SessionView({
 		},
 		[onModeChange, setMode],
 	);
+	const editableIds = useMemo(
+		() => editableMessageIds(timeline, harness),
+		[timeline, harness],
+	);
+	const editable = onEditMessage !== undefined && held === undefined;
+	const editMessage = useMemo(
+		() =>
+			editable && onEditMessage
+				? (itemId: string, text: string) => {
+						if (runningTurnId) {
+							toast.error(
+								t({ message: "Stop the agent before you edit a message" }),
+							);
+							return;
+						}
+						onEditMessage({
+							itemId,
+							messageText: text,
+							transcript: rewindTranscript(
+								timelineRef.current,
+								itemId,
+								snapshotRef.current,
+								agentLabel ?? "Agent",
+							),
+						});
+					}
+				: undefined,
+		[editable, onEditMessage, runningTurnId, agentLabel, t],
+	);
 	const holdPrompt = held?.onQueue;
 	const onSend = useCallback(
 		(content: UserContent[], { steer }: { steer: boolean }) => {
+			onUserPrompt?.();
 			if (holdPrompt) return holdPrompt(content);
 			const pending = loaded ? approvals : [];
 			const [question] = pending;
@@ -334,6 +371,7 @@ export function SessionView({
 			sendPrompt,
 			runningTurnId,
 			t,
+			onUserPrompt,
 		],
 	);
 	const awaitingBackground = sessionState?.awaitingBackground === true;
@@ -374,6 +412,8 @@ export function SessionView({
 	// sizes to its content and leaves the right of the pane empty.
 	return (
 		<ChatPaneActionsProvider
+			editMessage={editMessage}
+			editableMessageIds={editableIds}
 			openFile={openFile}
 			openPage={openPage}
 			openLink={openLink}
@@ -435,6 +475,7 @@ export function SessionView({
 					)
 				)}
 				<Composer
+					presetId={presetId}
 					agentSwitcher={agentSwitcher}
 					availableCommands={sessionState?.availableCommands ?? NO_COMMANDS}
 					configOptions={sessionState?.configOptions ?? NO_CONFIG_OPTIONS}

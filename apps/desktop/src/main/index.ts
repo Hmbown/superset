@@ -173,7 +173,7 @@ async function processDeepLink(url: string): Promise<void> {
 
 	// Non-auth deep links: extract path and navigate in renderer
 	// e.g. superset://tasks/my-slug -> /tasks/my-slug
-	const path = `/${url.split("://")[1]}`;
+	const path = `/${url.slice(url.indexOf("://") + 3)}`;
 	focusMainWindow();
 
 	const target = getFocusedOrLastWindow();

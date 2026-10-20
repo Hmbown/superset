@@ -948,6 +948,9 @@ msgstr "kontrast {minimumContrast}:1"
 msgid "{minutes}m"
 msgstr "{minutes} m"
 
+msgid "{minutes}m {rest}s"
+msgstr "{minutes} m {rest} s"
+
 msgid "{minutes}m ago"
 msgstr "před {minutes} m"
 
@@ -980,6 +983,9 @@ msgstr "{name} je vestavěný a nelze jej nahradit"
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} není přidán"
+
+msgid "{name} plugin"
+msgstr "Plugin {name}"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Zadejte alespoň jednu osobu, nebo zvolte {choice}.} sender {Zadejte alespoň jednoho odesílatele, nebo zvolte {choice}.} other {Zadejte alespoň jednu položku, nebo zvolte {choice}.}}"
@@ -1071,6 +1077,9 @@ msgstr "{repositoryFullName} není v účtu {installedAccountLogin}, kde je nain
 
 msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
 msgstr "{repositoryFullName} zatím není sdílený s GitHub App Superset."
+
+msgid "{seconds}s"
+msgstr "{seconds} s"
 
 msgid "{seconds}s ago"
 msgstr "před {seconds} s"
@@ -1397,8 +1406,8 @@ msgstr "Jeden CDP endpoint na panel"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "Každý týden vydáváme changelog. Většina nových kolegů dodá něco uživatelům už během prvních pár dní."
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "Chat nemůže uprostřed konverzace přejít k jinému poskytovateli. Místo toho tuto konverzaci rozvětvěte do nového chatu {label}. Tento chat {currentLabel} zůstane otevřený."
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "Chat nemůže uprostřed přejít k jinému poskytovateli. Začněte nový chat {label}, nebo tuto konverzaci rozvětvete do nového chatu. Tento chat {currentLabel} zůstane otevřený."
 
 msgid "A chat takes its name from the agent."
 msgstr "Chat přebírá název od agenta."
@@ -3538,6 +3547,9 @@ msgstr "Chat"
 msgid "Chat closed"
 msgstr "Chat zavřen"
 
+msgid "Chat history"
+msgstr "Historie chatů"
+
 msgid "Chat is being reworked"
 msgstr "Chat se předělává"
 
@@ -3603,6 +3615,9 @@ msgstr "Kontrola prostředí…"
 
 msgid "Checking host…"
 msgstr "Kontroluji hosta…"
+
+msgid "Checking MCP servers…"
+msgstr "Kontrolují se MCP servery…"
 
 msgid "Checking out a PR requires a project"
 msgstr "Checkout PR vyžaduje projekt"
@@ -3673,6 +3688,9 @@ msgstr "Vyberte agenta"
 msgid "Choose an existing repo folder"
 msgstr "Vyberte složku s existujícím repozitářem"
 
+msgid "Choose an MCP server"
+msgstr "Vyberte MCP server"
+
 msgid "Choose app"
 msgstr "Vyberte aplikaci"
 
@@ -3684,6 +3702,9 @@ msgstr "Zvolte, jak se zobrazení změn otevírá z horní lišty"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Zvolte, jak se otevírají cesty k souborům při Cmd+kliknutí v terminálu"
+
+msgid "Choose MCP servers for this message"
+msgstr "Vyberte MCP servery pro tuto zprávu"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Vyberte, co se má z vestavěného prohlížeče vymazat."
@@ -4324,6 +4345,9 @@ msgstr "Nastavte, kteří agenti se zobrazují ve spouštěčích a jak se jejic
 msgid "Configure workspace run command"
 msgstr "Nastavit spouštěcí příkaz pracovního prostoru"
 
+msgid "Configured for {agent}"
+msgstr "Nastaveno pro {agent}"
+
 msgid "Confirm before quitting"
 msgstr "Potvrdit před ukončením"
 
@@ -4571,9 +4595,6 @@ msgstr "Kontextová nabídka"
 
 msgid "Continue"
 msgstr "Pokračovat"
-
-msgid "Continue in a new {label} chat?"
-msgstr "Pokračovat v novém chatu {label}?"
 
 msgid "Continue or fork session"
 msgstr "Pokračovat nebo forkovat relaci"
@@ -4979,6 +5000,9 @@ msgstr "Nepodařilo se spojit s počítačem tohoto pracovního prostoru"
 msgid "Could not reactivate"
 msgstr "Nepodařilo se obnovit"
 
+msgid "Could not read MCP servers."
+msgstr "MCP servery se nepodařilo načíst."
+
 msgid "Could not read selected file"
 msgstr "Vybraný soubor se nepodařilo přečíst"
 
@@ -5133,6 +5157,9 @@ msgstr "Nepodařilo se zahodit připravené změny"
 msgid "Couldn't discard unstaged changes"
 msgstr "Nepodařilo se zahodit nepřipravené změny"
 
+msgid "Couldn't edit the message"
+msgstr "Zprávu se nepodařilo upravit"
+
 msgid "Couldn’t finish deleting workspaces"
 msgstr "Mazání pracovních prostorů se nepodařilo dokončit"
 
@@ -5221,9 +5248,6 @@ msgstr "Nepodařilo se z tohoto hosta načíst historii využití."
 msgid "Couldn't remove the local sign-in"
 msgstr "Nepodařilo se odebrat místní přihlášení"
 
-msgid "Couldn't reopen the agent in a terminal"
-msgstr "Agenta se nepodařilo znovu otevřít v terminálu"
-
 msgid "Couldn't restart terminals"
 msgstr "Nepodařilo se restartovat terminály"
 
@@ -5293,9 +5317,6 @@ msgstr "Hlasový režim se nepodařilo spustit"
 
 msgid "Couldn't start workspace"
 msgstr "Pracovní prostor se nepodařilo spustit"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "Terminál agenta se nepodařilo zastavit"
 
 msgid "Couldn't stop the background task"
 msgstr "Úlohu na pozadí se nepodařilo zastavit"
@@ -6174,6 +6195,9 @@ msgstr "Vypnout skill"
 msgid "Disabled"
 msgstr "Vypnuto"
 
+msgid "Disabled in agent config"
+msgstr "Vypnuto v konfiguraci agenta"
+
 msgid "Disabled toggle"
 msgstr "Vypnutý přepínač"
 
@@ -6565,6 +6589,9 @@ msgstr "Upravit prostředí"
 
 msgid "Edit files without asking; ask before commands"
 msgstr "Upravovat soubory bez ptaní; ptát se před příkazy"
+
+msgid "Edit message"
+msgstr "Upravit zprávu"
 
 msgid "Edit name"
 msgstr "Upravit název"
@@ -7878,14 +7905,14 @@ msgstr "Zapomenout {domain}"
 msgid "Fork args"
 msgstr "Argumenty pro fork"
 
+msgid "Fork conversation"
+msgstr "Rozvětvit konverzaci"
+
 msgid "Fork session"
 msgstr "Forkovat relaci"
 
 msgid "Fork session…"
 msgstr "Forkovat relaci…"
-
-msgid "Fork to new chat"
-msgstr "Rozvětvit do nového chatu"
 
 msgid "Form controls and field composition"
 msgstr "Prvky formuláře a skládání polí"
@@ -8757,6 +8784,9 @@ msgstr "V desktopové aplikaci Superset otevřete Nastavení → Vzdálený př�
 msgid "In under a year, more than 145,000 developers across 180 countries have run Superset and created over 1.85 million agent workspaces."
 msgstr "Za méně než rok spustilo Superset více než 145 000 vývojářů ze 180 zemí a vytvořilo přes 1,85 milionu pracovních prostorů agentů."
 
+msgid "In your next chat"
+msgstr "V příštím chatu"
+
 msgid "In your terminal"
 msgstr "Ve vašem terminálu"
 
@@ -9375,6 +9405,9 @@ msgstr "Latence"
 msgid "Later"
 msgstr "Později"
 
+msgid "Later messages are removed."
+msgstr "Pozdější zprávy budou odstraněny."
+
 msgid "Latest"
 msgstr "Nejnovější"
 
@@ -9783,6 +9816,10 @@ msgstr "Načítám..."
 msgid "Loading…"
 msgstr "Načítání…"
 
+msgctxt "MCP server scope"
+msgid "local"
+msgstr "místní"
+
 msgid "Local"
 msgstr "Lokální"
 
@@ -9956,6 +9993,9 @@ msgstr "Spravovat tarif"
 msgid "Manage plan on the web"
 msgstr "Správa tarifu na webu"
 
+msgid "Manage plugins…"
+msgstr "Spravovat pluginy…"
+
 msgid "Manage sessions"
 msgstr "Spravovat relace"
 
@@ -10055,6 +10095,9 @@ msgstr "MCP server"
 msgid "MCP Server Commands"
 msgstr "Příkazy MCP serveru"
 
+msgid "MCP servers"
+msgstr "MCP servery"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Měřeno za posledních 30 dní"
 
@@ -10139,9 +10182,6 @@ msgstr "Merge commit"
 #. placeholder {0}: error.message
 msgid "Merge failed: {0}"
 msgstr "Sloučení selhalo: {0}"
-
-msgid "Merge into center"
-msgstr "Sloučit do středu"
 
 msgid "Merge pull request"
 msgstr "Sloučit pull request"
@@ -10387,9 +10427,6 @@ msgstr "Většina historie softwaru"
 msgid "Move {count} to Group"
 msgstr "Přesunout {count} do skupiny"
 
-msgid "Move to Center"
-msgstr "Přesunout do středu"
-
 msgid "Move to group"
 msgstr "Přesunout do skupiny"
 
@@ -10561,6 +10598,9 @@ msgstr "Nový prohlížeč"
 
 msgid "new challengers"
 msgstr "noví vyzyvatelé"
+
+msgid "New Chat"
+msgstr "Nový chat"
 
 msgid "New cloud workspace"
 msgstr "Nový cloudový pracovní prostor"
@@ -10811,6 +10851,9 @@ msgstr "V této větvi zatím nejsou žádné změny."
 msgid "No changes to display."
 msgstr "Žádné změny k zobrazení."
 
+msgid "No chats found"
+msgstr "Nebyly nalezeny žádné chaty"
+
 msgid "No checks"
 msgstr "Žádné kontroly"
 
@@ -10970,6 +11013,9 @@ msgstr "Bez ikony"
 msgid "No icons match."
 msgstr "Žádné ikony neodpovídají."
 
+msgid "No installed agent can be opened as a chat"
+msgstr "Žádného nainstalovaného agenta nelze otevřít jako chat"
+
 msgid "No Internet Connection"
 msgstr "Bez připojení k internetu"
 
@@ -11018,6 +11064,9 @@ msgstr "Žádné shody"
 msgid "No matching files"
 msgstr "Žádné odpovídající soubory"
 
+msgid "No matching MCP servers"
+msgstr "Žádné odpovídající MCP servery"
+
 msgid "No matching models"
 msgstr "Žádné odpovídající modely"
 
@@ -11029,6 +11078,9 @@ msgstr "Žádné odpovídající stránky"
 
 msgid "No matching repositories."
 msgstr "Žádné odpovídající repozitáře."
+
+msgid "No MCP servers found"
+msgstr "Nenalezeny žádné MCP servery"
 
 msgid "No members yet"
 msgstr "Zatím žádní členové"
@@ -11765,6 +11817,9 @@ msgstr "Otevřít {path} v panelu souboru"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "Otevřít víceřádkový editor promptu pro aktivní terminál"
+
+msgid "Open a new {label} chat?"
+msgstr "Otevřít nový chat {label}?"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "Otevřete panel nebo sem nějaký přetáhněte ze středu."
@@ -13070,6 +13125,10 @@ msgstr "Průběh"
 msgid "Progress · Spinner"
 msgstr "Průběh · Spinner"
 
+msgctxt "MCP server scope"
+msgid "project"
+msgstr "projekt"
+
 msgid "Project"
 msgstr "Projekt"
 
@@ -13102,6 +13161,9 @@ msgstr "Projekt nenalezen."
 
 msgid "Project not set up on this host"
 msgstr "Projekt není na tomto hostu nastaven"
+
+msgid "Project not trusted in Codex"
+msgstr "Projekt není v Codexu důvěryhodný"
 
 msgid "Project ready — open it from the sidebar."
 msgstr "Projekt je připravený — otevřete ho v postranním panelu."
@@ -13435,6 +13497,9 @@ msgstr "Čtení logů nasazení a buildů"
 
 msgid "Read it on your phone"
 msgstr "Čtěte na telefonu"
+
+msgid "Read MCP servers again"
+msgstr "Znovu načíst MCP servery"
 
 msgid "Read the changelog"
 msgstr "Přečíst changelog"
@@ -14797,6 +14862,9 @@ msgstr "Hledat podle názvu klíče..."
 msgid "Search changed files"
 msgstr "Hledat změněné soubory"
 
+msgid "Search chats..."
+msgstr "Hledat chaty..."
+
 msgid "Search developers"
 msgstr "Hledat vývojáře"
 
@@ -14847,6 +14915,9 @@ msgstr "Hledat v Linearu"
 
 msgid "Search Linear…"
 msgstr "Hledat v Linearu…"
+
+msgid "Search MCP servers…"
+msgstr "Hledat MCP servery…"
 
 msgid "Search models"
 msgstr "Hledat modely"
@@ -15885,6 +15956,9 @@ msgstr "V souladu se SOC 2 Type II. Vyžádejte si naši zprávu."
 msgid "SOC 2 Type II report"
 msgstr "Zpráva SOC 2 Type II"
 
+msgid "Some chat history could not be loaded."
+msgstr "Část historie chatů se nepodařilo načíst."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "Některé soubory nemají povolený typ a nebyly přidány."
 
@@ -16200,6 +16274,9 @@ msgstr "Začít zkušební verzi zdarma"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Začněte zdarma. Až vám to jako týmu přestane stačit, přejděte výš. Pro organizace s náročnými požadavky na bezpečnost a compliance máme tarify Enterprise."
 
+msgid "Start fresh"
+msgstr "Začít znovu"
+
 msgid "Start from a template"
 msgstr "Začít ze šablony"
 
@@ -16338,6 +16415,9 @@ msgstr "Ukončete tady Superset, ať ho smažete z jiného zařízení."
 
 msgid "Stop the agent and send this now"
 msgstr "Zastavit agenta a odeslat hned"
+
+msgid "Stop the agent before you edit a message"
+msgstr "Před úpravou zprávy zastavte agenta"
 
 msgid "Stop watching"
 msgstr "Přestat sledovat"
@@ -17515,6 +17595,9 @@ msgstr "Tento agent nemůže běžet v cloudovém pracovním prostoru"
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Tento agent už na vybraném zařízení neexistuje (jeho agenti mohli být resetováni). Běhy budou selhávat, dokud nevyberete jiného."
 
+msgid "This agent only shows chats saved in Superset."
+msgstr "Tento agent zobrazuje pouze chaty uložené v Superset."
+
 msgid "This also:"
 msgstr "Zároveň:"
 
@@ -18452,6 +18535,9 @@ msgstr "Nepodporovaná položka „{0}“"
 msgid "Untitled"
 msgstr "Bez názvu"
 
+msgid "Untitled chat"
+msgstr "Chat bez názvu"
+
 msgid "Untitled Page"
 msgstr "Stránka bez názvu"
 
@@ -18689,6 +18775,10 @@ msgstr "Použije se, když je systém v tmavém režimu."
 
 msgid "Used when your system is in light mode."
 msgstr "Použije se, když je systém ve světlém režimu."
+
+msgctxt "MCP server scope"
+msgid "user"
+msgstr "uživatel"
 
 msgid "User already has access to this host"
 msgstr "Uživatel už k tomuto hostu má přístup"

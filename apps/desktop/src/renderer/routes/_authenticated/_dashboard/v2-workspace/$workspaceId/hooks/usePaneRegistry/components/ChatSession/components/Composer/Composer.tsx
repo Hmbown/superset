@@ -35,6 +35,7 @@ import { pagesListInput } from "renderer/routes/_authenticated/_dashboard/utils/
 import { AgentComposer } from "renderer/routes/_authenticated/components/AgentComposer";
 import { CHAT_COLUMN_CLASSNAME, CHAT_GUTTER_CLASSNAME } from "../../constants";
 import { commandChip, LEADING_COMMAND } from "../../utils/commandChip";
+import { mcpContextLine } from "../../utils/mcpServerChips";
 import { elementsForChips } from "../../utils/messageElements";
 import { type AgentSwitcher, ModelPicker } from "./components/ModelPicker";
 import { ModePicker, type SessionMode } from "./components/ModePicker";
@@ -45,11 +46,13 @@ import {
 	useComposerDraft,
 } from "./hooks/useComposerDraft";
 import { useFooterTier } from "./hooks/useFooterTier";
+import { useMcpServerPicker } from "./hooks/useMcpServerPicker";
 import { useQueueActions } from "./hooks/useQueueActions";
 import { useUploadAttachments } from "./hooks/useUploadAttachments";
 
 export type ComposerProps = {
 	workspaceId: string;
+	presetId?: string;
 	draftKey: string;
 	inputRef?: Ref<Pick<PromptInputHandle, "appendText" | "focus">>;
 	availableCommands: AvailableCommand[];
@@ -74,6 +77,8 @@ export type ComposerProps = {
 		steer: (itemId: string) => Promise<void>;
 	};
 };
+
+const HIDDEN_AGENT_COMMANDS = new Set(["rewind"]);
 
 /**
  * The agent's own slash commands, in the shape the composer's menu takes.
@@ -100,6 +105,7 @@ const FOCUS_HANDOFF_MS = 1000;
 let focusHandoff: { draftKey: string; at: number } | null = null;
 
 export const Composer = memo(function Composer({
+	presetId,
 	agentSwitcher,
 	availableCommands,
 	configOptions,
@@ -126,6 +132,7 @@ export const Composer = memo(function Composer({
 	const { storedDraft, onChange, clearDraft } = useComposerDraft(draftKey);
 	const promptInputRef = useRef<PromptInputHandle>(null);
 	const queueActions = useQueueActions(promptQueue, promptInputRef);
+	const mcpPicker = useMcpServerPicker({ workspaceId, presetId });
 	useImperativeHandle(
 		inputRef,
 		() => ({
@@ -258,14 +265,22 @@ export const Composer = memo(function Composer({
 		[searchFiles, searchPages, t],
 	);
 
-	const commands = useMemo(
-		() =>
-			toMenuCommands(availableCommands, {
+	const mcpCommand = mcpPicker.command;
+	const commands = useMemo(() => {
+		const local: PromptInputCommand[] = [...(mcpCommand ? [mcpCommand] : [])];
+		const agentCommands = toMenuCommands(
+			availableCommands.filter(
+				(command) =>
+					!(mcpCommand && command.name === "mcp") &&
+					!HIDDEN_AGENT_COMMANDS.has(command.name),
+			),
+			{
 				commands: t({ message: "Commands" }),
 				mcp: t({ message: "MCP Server Commands" }),
-			}),
-		[availableCommands, t],
-	);
+			},
+		);
+		return [...local, ...agentCommands];
+	}, [availableCommands, mcpCommand, t]);
 
 	const send = useCallback(
 		async (
@@ -280,23 +295,30 @@ export const Composer = memo(function Composer({
 				promptInputRef.current?.appendText(appendPastedText(text, pastedTexts));
 				return;
 			}
-			const elements = elementsForChips(text.trim(), mentions);
+			const message = text.trim();
+			const elements = elementsForChips(message, mentions);
+			const mcpContext = mcpContextLine(
+				mentions.flatMap((chip) => mcpPicker.serverNameOf(chip) ?? []),
+			);
 			onSend(
 				[
 					{
 						type: "text",
 						text: appendPastedText(
-							[text.trim(), ...tags].filter(Boolean).join("\n"),
+							[message, ...tags].filter(Boolean).join("\n"),
 							pastedTexts,
 						),
 						...(elements.length > 0 ? { elements } : {}),
 					},
+					...(mcpContext
+						? [{ type: "text" as const, text: mcpContext, hidden: true }]
+						: []),
 				],
 				{ steer },
 			);
 			clearDraft();
 		},
-		[onSend, uploadAttachments, clearDraft],
+		[onSend, uploadAttachments, clearDraft, mcpPicker.serverNameOf],
 	);
 
 	const handleSubmit = useCallback(
@@ -313,6 +335,18 @@ export const Composer = memo(function Composer({
 			)
 				return;
 			const name = LEADING_COMMAND.exec(text.trim())?.[1];
+			const input = promptInputRef.current;
+			if (text.trim() === "/mcp" && mcpPicker.command && input) {
+				queueMicrotask(() =>
+					mcpPicker.open.current({
+						insertChip: input.insertChip,
+						attachFiles: input.openFileDialog,
+						openPanel: input.openPanel,
+						query: "",
+					}),
+				);
+				return;
+			}
 			if (
 				name &&
 				availableCommands.length > 0 &&
@@ -323,7 +357,7 @@ export const Composer = memo(function Composer({
 			}
 			return send(text, files, mentions, pastedTexts, steer);
 		},
-		[availableCommands, disabled, send, t],
+		[availableCommands, disabled, send, t, mcpPicker],
 	);
 
 	const queueListRef = useRef<HTMLUListElement>(null);
@@ -368,6 +402,7 @@ export const Composer = memo(function Composer({
 				collapseLargePastes
 				commands={commands}
 				defaultValue={storedDraft}
+				findChips={mcpPicker.findChips}
 				history={history}
 				key={draftKey}
 				mentionProviders={mentionProviders}
@@ -405,6 +440,7 @@ export const Composer = memo(function Composer({
 				}
 			/>
 			{attachmentPreview.overlay}
+			{mcpPicker.dialog}
 		</div>
 	);
 });

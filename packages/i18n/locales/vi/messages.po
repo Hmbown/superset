@@ -948,6 +948,9 @@ msgstr "độ tương phản {minimumContrast}:1"
 msgid "{minutes}m"
 msgstr "{minutes} phút"
 
+msgid "{minutes}m {rest}s"
+msgstr "{minutes} phút {rest} giây"
+
 msgid "{minutes}m ago"
 msgstr "{minutes} phút trước"
 
@@ -980,6 +983,9 @@ msgstr "{name} là tích hợp sẵn nên không thể thay thế"
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} chưa được thêm"
+
+msgid "{name} plugin"
+msgstr "Plugin {name}"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Hãy chỉ định ít nhất một người, hoặc chọn {choice}.} sender {Hãy chỉ định ít nhất một người gửi, hoặc chọn {choice}.} other {Hãy chỉ định ít nhất một mục, hoặc chọn {choice}.}}"
@@ -1071,6 +1077,9 @@ msgstr "{repositoryFullName} không nằm trong {installedAccountLogin}, nơi Gi
 
 msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
 msgstr "{repositoryFullName} chưa được chia sẻ với GitHub App của Superset."
+
+msgid "{seconds}s"
+msgstr "{seconds} giây"
 
 msgid "{seconds}s ago"
 msgstr "{seconds} giây trước"
@@ -1397,8 +1406,8 @@ msgstr "Một endpoint CDP cho mỗi ngăn"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "Changelog được phát hành mỗi tuần. Hầu hết nhân sự mới đã phát hành tới người dùng ngay trong vài ngày đầu."
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "Cuộc trò chuyện không thể chuyển sang nhà cung cấp khác giữa chừng. Thay vào đó, hãy tách cuộc trò chuyện này sang một cuộc trò chuyện {label} mới. Cuộc trò chuyện {currentLabel} này vẫn mở."
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "Không thể chuyển chat sang nhà cung cấp khác giữa chừng. Hãy bắt đầu một chat {label} mới, hoặc tách cuộc trò chuyện này sang một chat mới. Chat {currentLabel} này vẫn mở."
 
 msgid "A chat takes its name from the agent."
 msgstr "Chat lấy tên từ agent."
@@ -3538,6 +3547,9 @@ msgstr "Chat"
 msgid "Chat closed"
 msgstr "Đã đóng cuộc trò chuyện"
 
+msgid "Chat history"
+msgstr "Lịch sử trò chuyện"
+
 msgid "Chat is being reworked"
 msgstr "Chat đang được làm lại"
 
@@ -3603,6 +3615,9 @@ msgstr "Đang kiểm tra môi trường…"
 
 msgid "Checking host…"
 msgstr "Đang kiểm tra host…"
+
+msgid "Checking MCP servers…"
+msgstr "Đang kiểm tra server MCP…"
 
 msgid "Checking out a PR requires a project"
 msgstr "Checkout một PR cần có dự án"
@@ -3673,6 +3688,9 @@ msgstr "Chọn agent"
 msgid "Choose an existing repo folder"
 msgstr "Chọn một thư mục repo có sẵn"
 
+msgid "Choose an MCP server"
+msgstr "Chọn một server MCP"
+
 msgid "Choose app"
 msgstr "Chọn ứng dụng"
 
@@ -3684,6 +3702,9 @@ msgstr "Chọn cách chế độ xem thay đổi mở từ thanh trên cùng"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Chọn cách mở đường dẫn tệp khi Cmd+nhấp trong terminal"
+
+msgid "Choose MCP servers for this message"
+msgstr "Chọn server MCP cho tin nhắn này"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Chọn thứ cần xóa khỏi trình duyệt trong ứng dụng."
@@ -4324,6 +4345,9 @@ msgstr "Chọn agent nào xuất hiện trong trình khởi chạy và cách d�
 msgid "Configure workspace run command"
 msgstr "Cấu hình lệnh chạy của workspace"
 
+msgid "Configured for {agent}"
+msgstr "Đã cấu hình cho {agent}"
+
 msgid "Confirm before quitting"
 msgstr "Xác nhận trước khi thoát"
 
@@ -4571,9 +4595,6 @@ msgstr "Context Menu"
 
 msgid "Continue"
 msgstr "Tiếp tục"
-
-msgid "Continue in a new {label} chat?"
-msgstr "Tiếp tục trong cuộc trò chuyện {label} mới?"
 
 msgid "Continue or fork session"
 msgstr "Tiếp tục hoặc fork phiên"
@@ -4979,6 +5000,9 @@ msgstr "Không kết nối được tới máy của workspace này"
 msgid "Could not reactivate"
 msgstr "Không thể kích hoạt lại"
 
+msgid "Could not read MCP servers."
+msgstr "Không đọc được các server MCP."
+
 msgid "Could not read selected file"
 msgstr "Không thể đọc tệp đã chọn"
 
@@ -5133,6 +5157,9 @@ msgstr "Không thể bỏ các thay đổi đã stage"
 msgid "Couldn't discard unstaged changes"
 msgstr "Không thể bỏ các thay đổi chưa stage"
 
+msgid "Couldn't edit the message"
+msgstr "Không thể chỉnh sửa tin nhắn"
+
 msgid "Couldn’t finish deleting workspaces"
 msgstr "Không xóa xong các workspace"
 
@@ -5221,9 +5248,6 @@ msgstr "Không đọc được lịch sử sử dụng từ host này."
 msgid "Couldn't remove the local sign-in"
 msgstr "Không thể xóa phiên đăng nhập cục bộ"
 
-msgid "Couldn't reopen the agent in a terminal"
-msgstr "Không thể mở lại tác nhân trong terminal"
-
 msgid "Couldn't restart terminals"
 msgstr "Không thể khởi động lại terminal"
 
@@ -5293,9 +5317,6 @@ msgstr "Không thể bắt đầu chế độ giọng nói"
 
 msgid "Couldn't start workspace"
 msgstr "Không khởi động được workspace"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "Không thể dừng terminal của tác nhân"
 
 msgid "Couldn't stop the background task"
 msgstr "Không thể dừng tác vụ nền"
@@ -6174,6 +6195,9 @@ msgstr "Tắt skill"
 msgid "Disabled"
 msgstr "Đã tắt"
 
+msgid "Disabled in agent config"
+msgstr "Đã tắt trong cấu hình agent"
+
 msgid "Disabled toggle"
 msgstr "Công tắc đã tắt"
 
@@ -6565,6 +6589,9 @@ msgstr "Chỉnh sửa environment"
 
 msgid "Edit files without asking; ask before commands"
 msgstr "Sửa tệp không cần hỏi; hỏi trước khi chạy lệnh"
+
+msgid "Edit message"
+msgstr "Chỉnh sửa tin nhắn"
 
 msgid "Edit name"
 msgstr "Sửa tên"
@@ -7878,14 +7905,14 @@ msgstr "Quên {domain}"
 msgid "Fork args"
 msgstr "Tham số fork"
 
+msgid "Fork conversation"
+msgstr "Tách cuộc trò chuyện"
+
 msgid "Fork session"
 msgstr "Fork phiên"
 
 msgid "Fork session…"
 msgstr "Fork phiên…"
-
-msgid "Fork to new chat"
-msgstr "Tách sang cuộc trò chuyện mới"
 
 msgid "Form controls and field composition"
 msgstr "Các điều khiển form và cách ghép trường"
@@ -8757,6 +8784,9 @@ msgstr "Trong ứng dụng Superset trên máy tính, mở Cài đặt → Truy 
 msgid "In under a year, more than 145,000 developers across 180 countries have run Superset and created over 1.85 million agent workspaces."
 msgstr "Chưa đầy một năm, hơn 145.000 nhà phát triển tại 180 quốc gia đã chạy Superset và tạo hơn 1,85 triệu workspace agent."
 
+msgid "In your next chat"
+msgstr "Trong cuộc trò chuyện sau"
+
 msgid "In your terminal"
 msgstr "Trong terminal của bạn"
 
@@ -9375,6 +9405,9 @@ msgstr "Độ trễ"
 msgid "Later"
 msgstr "Để sau"
 
+msgid "Later messages are removed."
+msgstr "Các tin nhắn sau sẽ bị xóa."
+
 msgid "Latest"
 msgstr "Mới nhất"
 
@@ -9783,6 +9816,10 @@ msgstr "Đang tải..."
 msgid "Loading…"
 msgstr "Đang tải…"
 
+msgctxt "MCP server scope"
+msgid "local"
+msgstr "cục bộ"
+
 msgid "Local"
 msgstr "Cục bộ"
 
@@ -9956,6 +9993,9 @@ msgstr "Quản lý gói"
 msgid "Manage plan on the web"
 msgstr "Quản lý gói trên web"
 
+msgid "Manage plugins…"
+msgstr "Quản lý plugin…"
+
 msgid "Manage sessions"
 msgstr "Quản lý phiên"
 
@@ -10055,6 +10095,9 @@ msgstr "Server MCP"
 msgid "MCP Server Commands"
 msgstr "Lệnh server MCP"
 
+msgid "MCP servers"
+msgstr "Server MCP"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Đo trong 30 ngày gần nhất"
 
@@ -10139,9 +10182,6 @@ msgstr "Merge commit"
 #. placeholder {0}: error.message
 msgid "Merge failed: {0}"
 msgstr "Merge thất bại: {0}"
-
-msgid "Merge into center"
-msgstr "Gộp vào giữa"
 
 msgid "Merge pull request"
 msgstr "Merge pull request"
@@ -10387,9 +10427,6 @@ msgstr "Gần như suốt lịch sử phần mềm"
 msgid "Move {count} to Group"
 msgstr "Chuyển {count} vào nhóm"
 
-msgid "Move to Center"
-msgstr "Chuyển vào giữa"
-
 msgid "Move to group"
 msgstr "Chuyển vào nhóm"
 
@@ -10561,6 +10598,9 @@ msgstr "Trình duyệt mới"
 
 msgid "new challengers"
 msgstr "đối thủ mới"
+
+msgid "New Chat"
+msgstr "Chat mới"
 
 msgid "New cloud workspace"
 msgstr "Workspace cloud mới"
@@ -10811,6 +10851,9 @@ msgstr "Chưa có thay đổi nào trên nhánh này."
 msgid "No changes to display."
 msgstr "Không có thay đổi nào để hiển thị."
 
+msgid "No chats found"
+msgstr "Không tìm thấy cuộc trò chuyện"
+
 msgid "No checks"
 msgstr "Không có check"
 
@@ -10970,6 +11013,9 @@ msgstr "Không có biểu tượng"
 msgid "No icons match."
 msgstr "Không có biểu tượng phù hợp."
 
+msgid "No installed agent can be opened as a chat"
+msgstr "Không có tác tử nào đã cài có thể mở dưới dạng chat"
+
 msgid "No Internet Connection"
 msgstr "Không có kết nối internet"
 
@@ -11018,6 +11064,9 @@ msgstr "Không có kết quả khớp"
 msgid "No matching files"
 msgstr "Không có tệp phù hợp"
 
+msgid "No matching MCP servers"
+msgstr "Không có server MCP phù hợp"
+
 msgid "No matching models"
 msgstr "Không có mô hình phù hợp"
 
@@ -11029,6 +11078,9 @@ msgstr "Không có trang phù hợp"
 
 msgid "No matching repositories."
 msgstr "Không có repository nào khớp."
+
+msgid "No MCP servers found"
+msgstr "Không tìm thấy server MCP"
 
 msgid "No members yet"
 msgstr "Chưa có thành viên nào"
@@ -11765,6 +11817,9 @@ msgstr "Mở {path} trong khung tệp"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "Mở ô soạn prompt nhiều dòng cho terminal đang mở"
+
+msgid "Open a new {label} chat?"
+msgstr "Mở một chat {label} mới?"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "Mở một ngăn, hoặc kéo một ngăn từ giữa vào đây."
@@ -13070,6 +13125,10 @@ msgstr "Tiến độ"
 msgid "Progress · Spinner"
 msgstr "Progress · Spinner"
 
+msgctxt "MCP server scope"
+msgid "project"
+msgstr "dự án"
+
 msgid "Project"
 msgstr "Dự án"
 
@@ -13102,6 +13161,9 @@ msgstr "Không tìm thấy dự án."
 
 msgid "Project not set up on this host"
 msgstr "Dự án chưa được thiết lập trên host này"
+
+msgid "Project not trusted in Codex"
+msgstr "Dự án chưa được tin cậy trong Codex"
 
 msgid "Project ready — open it from the sidebar."
 msgstr "Dự án đã sẵn sàng — mở nó từ thanh bên."
@@ -13435,6 +13497,9 @@ msgstr "Đọc log deployment và build"
 
 msgid "Read it on your phone"
 msgstr "Đọc trên điện thoại"
+
+msgid "Read MCP servers again"
+msgstr "Đọc lại các server MCP"
 
 msgid "Read the changelog"
 msgstr "Đọc changelog"
@@ -14797,6 +14862,9 @@ msgstr "Tìm theo tên khóa..."
 msgid "Search changed files"
 msgstr "Tìm tệp đã thay đổi"
 
+msgid "Search chats..."
+msgstr "Tìm cuộc trò chuyện..."
+
 msgid "Search developers"
 msgstr "Tìm nhà phát triển"
 
@@ -14847,6 +14915,9 @@ msgstr "Tìm trong Linear"
 
 msgid "Search Linear…"
 msgstr "Tìm trong Linear…"
+
+msgid "Search MCP servers…"
+msgstr "Tìm server MCP…"
 
 msgid "Search models"
 msgstr "Tìm mô hình"
@@ -15885,6 +15956,9 @@ msgstr "Tuân thủ SOC 2 Type II. Yêu cầu báo cáo của chúng tôi."
 msgid "SOC 2 Type II report"
 msgstr "Báo cáo SOC 2 Type II"
 
+msgid "Some chat history could not be loaded."
+msgstr "Không thể tải một phần lịch sử trò chuyện."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "Một số tệp không thuộc loại được chấp nhận nên không được thêm."
 
@@ -16200,6 +16274,9 @@ msgstr "Dùng thử miễn phí"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Bắt đầu miễn phí. Nâng cấp khi đội của bạn lớn hơn. Gói Enterprise dành cho tổ chức có nhu cầu bảo mật và tuân thủ nâng cao."
 
+msgid "Start fresh"
+msgstr "Bắt đầu lại"
+
 msgid "Start from a template"
 msgstr "Bắt đầu từ mẫu"
 
@@ -16338,6 +16415,9 @@ msgstr "Hãy dừng Superset ở đây để xóa từ thiết bị khác."
 
 msgid "Stop the agent and send this now"
 msgstr "Dừng tác tử và gửi ngay"
+
+msgid "Stop the agent before you edit a message"
+msgstr "Hãy dừng tác tử trước khi chỉnh sửa tin nhắn"
 
 msgid "Stop watching"
 msgstr "Ngừng theo dõi"
@@ -17515,6 +17595,9 @@ msgstr "Agent này không thể chạy trong workspace cloud"
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Agent này không còn tồn tại trên thiết bị đã chọn (agent trên đó có thể đã bị đặt lại). Các lần chạy sẽ thất bại cho đến khi bạn chọn agent khác."
 
+msgid "This agent only shows chats saved in Superset."
+msgstr "Tác tử này chỉ hiển thị các cuộc trò chuyện được lưu trong Superset."
+
 msgid "This also:"
 msgstr "Thao tác này cũng sẽ:"
 
@@ -18452,6 +18535,9 @@ msgstr "Mục không được hỗ trợ \"{0}\""
 msgid "Untitled"
 msgstr "Không tiêu đề"
 
+msgid "Untitled chat"
+msgstr "Cuộc trò chuyện chưa có tiêu đề"
+
 msgid "Untitled Page"
 msgstr "Trang chưa đặt tên"
 
@@ -18689,6 +18775,10 @@ msgstr "Dùng khi hệ thống ở chế độ tối."
 
 msgid "Used when your system is in light mode."
 msgstr "Dùng khi hệ thống ở chế độ sáng."
+
+msgctxt "MCP server scope"
+msgid "user"
+msgstr "người dùng"
 
 msgid "User already has access to this host"
 msgstr "Người dùng đã có quyền truy cập host này"

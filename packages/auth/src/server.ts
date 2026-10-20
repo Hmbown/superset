@@ -1098,6 +1098,7 @@ export const auth = betterAuth({
 				const data = await loadCustomSessionData({
 					userId,
 					activeOrganizationId: session.activeOrganizationId ?? null,
+					withPlan: !billingUsesAutumn,
 				});
 
 				const { activeOrganizationId, allMemberships, membership } =

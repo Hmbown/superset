@@ -112,7 +112,9 @@ export async function organizationBilling(
 			`[billing/plan-state] Autumn unavailable for ${organizationId}; serving ${lastKnown ? "last known" : "fail-open"} state`,
 			error,
 		);
-		const fallback = lastKnown ?? FAIL_OPEN;
+		const fallback = lastKnown
+			? { ...lastKnown, gatedMachineSizes: [] }
+			: FAIL_OPEN;
 		memory.set(organizationId, {
 			value: fallback,
 			expiresAt: Date.now() + MEMORY_TTL_MS,

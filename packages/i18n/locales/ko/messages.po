@@ -948,6 +948,9 @@ msgstr "대비 {minimumContrast}:1"
 msgid "{minutes}m"
 msgstr "{minutes}분"
 
+msgid "{minutes}m {rest}s"
+msgstr "{minutes}분 {rest}초"
+
 msgid "{minutes}m ago"
 msgstr "{minutes}분 전"
 
@@ -980,6 +983,9 @@ msgstr "{name}은(는) 기본 제공이라 교체할 수 없습니다"
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name}이(가) 추가되지 않았습니다"
+
+msgid "{name} plugin"
+msgstr "{name} 플러그인"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {사람을 한 명 이상 지정하거나 {choice} 옵션을 선택하세요.} sender {발신자를 한 명 이상 지정하거나 {choice} 옵션을 선택하세요.} other {항목을 하나 이상 지정하거나 {choice} 옵션을 선택하세요.}}"
@@ -1071,6 +1077,9 @@ msgstr "{repositoryFullName}은(는) 이 조직의 GitHub App이 설치된 {inst
 
 msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
 msgstr "{repositoryFullName}은(는) 아직 Superset GitHub App과 공유되지 않았습니다."
+
+msgid "{seconds}s"
+msgstr "{seconds}초"
 
 msgid "{seconds}s ago"
 msgstr "{seconds}초 전"
@@ -1397,8 +1406,8 @@ msgstr "패널마다 전용 CDP 엔드포인트"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "매주 변경 로그를 발행합니다. 대부분의 신규 입사자가 입사 후 며칠 안에 사용자에게 출시합니다."
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "채팅 도중에는 다른 제공자로 전환할 수 없습니다. 대신 이 대화를 새 {label} 채팅으로 포크하세요. 이 {currentLabel} 채팅은 계속 열려 있습니다."
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "채팅 도중에는 다른 제공자로 전환할 수 없습니다. 새 {label} 채팅을 시작하거나 이 대화를 새 채팅으로 분기하세요. 이 {currentLabel} 채팅은 계속 열려 있습니다."
 
 msgid "A chat takes its name from the agent."
 msgstr "채팅 이름은 에이전트 이름을 따릅니다."
@@ -3538,6 +3547,9 @@ msgstr "채팅"
 msgid "Chat closed"
 msgstr "채팅을 닫았습니다"
 
+msgid "Chat history"
+msgstr "채팅 기록"
+
 msgid "Chat is being reworked"
 msgstr "채팅을 개편하는 중입니다"
 
@@ -3603,6 +3615,9 @@ msgstr "환경 확인 중…"
 
 msgid "Checking host…"
 msgstr "호스트 확인하는 중…"
+
+msgid "Checking MCP servers…"
+msgstr "MCP 서버 확인 중…"
 
 msgid "Checking out a PR requires a project"
 msgstr "PR을 체크아웃하려면 프로젝트가 필요합니다"
@@ -3673,6 +3688,9 @@ msgstr "에이전트 선택"
 msgid "Choose an existing repo folder"
 msgstr "기존 리포지토리 폴더 선택"
 
+msgid "Choose an MCP server"
+msgstr "MCP 서버 선택"
+
 msgid "Choose app"
 msgstr "앱 선택"
 
@@ -3684,6 +3702,9 @@ msgstr "상단 바에서 변경 사항 보기를 여는 방식을 선택합니�
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "터미널에서 Cmd+클릭할 때 파일 경로를 여는 방식을 선택하세요"
+
+msgid "Choose MCP servers for this message"
+msgstr "이 메시지에 사용할 MCP 서버 선택"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "인앱 브라우저에서 삭제할 항목을 선택하세요."
@@ -4324,6 +4345,9 @@ msgstr "실행기에 표시할 에이전트와 실행 구성 방식을 설정합
 msgid "Configure workspace run command"
 msgstr "워크스페이스 실행 명령 구성"
 
+msgid "Configured for {agent}"
+msgstr "{agent}용으로 설정됨"
+
 msgid "Confirm before quitting"
 msgstr "종료 전 확인"
 
@@ -4571,9 +4595,6 @@ msgstr "컨텍스트 메뉴"
 
 msgid "Continue"
 msgstr "계속"
-
-msgid "Continue in a new {label} chat?"
-msgstr "새 {label} 채팅에서 계속할까요?"
 
 msgid "Continue or fork session"
 msgstr "세션 계속하기 또는 포크"
@@ -4979,6 +5000,9 @@ msgstr "이 워크스페이스의 컴퓨터에 연결할 수 없습니다"
 msgid "Could not reactivate"
 msgstr "다시 활성화하지 못했습니다"
 
+msgid "Could not read MCP servers."
+msgstr "MCP 서버를 읽을 수 없습니다."
+
 msgid "Could not read selected file"
 msgstr "선택한 파일을 읽을 수 없습니다"
 
@@ -5133,6 +5157,9 @@ msgstr "스테이징된 변경 사항을 버리지 못했습니다"
 msgid "Couldn't discard unstaged changes"
 msgstr "스테이징되지 않은 변경 사항을 버리지 못했습니다"
 
+msgid "Couldn't edit the message"
+msgstr "메시지를 편집할 수 없습니다"
+
 msgid "Couldn’t finish deleting workspaces"
 msgstr "워크스페이스 삭제를 끝내지 못했습니다"
 
@@ -5221,9 +5248,6 @@ msgstr "이 호스트에서 사용량 기록을 읽지 못했습니다."
 msgid "Couldn't remove the local sign-in"
 msgstr "로컬 로그인 정보를 제거하지 못했습니다"
 
-msgid "Couldn't reopen the agent in a terminal"
-msgstr "터미널에서 에이전트를 다시 열 수 없습니다"
-
 msgid "Couldn't restart terminals"
 msgstr "터미널을 다시 시작하지 못했습니다"
 
@@ -5293,9 +5317,6 @@ msgstr "음성 모드를 시작할 수 없습니다"
 
 msgid "Couldn't start workspace"
 msgstr "워크스페이스를 시작하지 못했습니다"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "에이전트의 터미널을 중지할 수 없습니다"
 
 msgid "Couldn't stop the background task"
 msgstr "백그라운드 작업을 중지할 수 없습니다"
@@ -6174,6 +6195,9 @@ msgstr "스킬 비활성화"
 msgid "Disabled"
 msgstr "비활성화됨"
 
+msgid "Disabled in agent config"
+msgstr "에이전트 설정에서 비활성화됨"
+
 msgid "Disabled toggle"
 msgstr "비활성화된 토글"
 
@@ -6565,6 +6589,9 @@ msgstr "환경 편집"
 
 msgid "Edit files without asking; ask before commands"
 msgstr "파일은 묻지 않고 편집하고 명령 전에는 확인"
+
+msgid "Edit message"
+msgstr "메시지 편집"
 
 msgid "Edit name"
 msgstr "이름 수정"
@@ -7878,14 +7905,14 @@ msgstr "{domain} 잊기"
 msgid "Fork args"
 msgstr "포크 인자"
 
+msgid "Fork conversation"
+msgstr "대화 분기"
+
 msgid "Fork session"
 msgstr "세션 포크"
 
 msgid "Fork session…"
 msgstr "세션 포크…"
-
-msgid "Fork to new chat"
-msgstr "새 채팅으로 포크"
 
 msgid "Form controls and field composition"
 msgstr "폼 컨트롤과 필드 구성"
@@ -8757,6 +8784,9 @@ msgstr "Superset 데스크톱 앱에서 설정 → 원격 액세스을 열고 �
 msgid "In under a year, more than 145,000 developers across 180 countries have run Superset and created over 1.85 million agent workspaces."
 msgstr "1년이 채 되지 않아 180개국의 145,000명 이상의 개발자가 Superset을 실행했고, 185만 개 이상의 에이전트 워크스페이스를 만들었습니다."
 
+msgid "In your next chat"
+msgstr "다음 채팅부터"
+
 msgid "In your terminal"
 msgstr "터미널에서"
 
@@ -9375,6 +9405,9 @@ msgstr "지연 시간"
 msgid "Later"
 msgstr "나중에"
 
+msgid "Later messages are removed."
+msgstr "이후 메시지가 삭제됩니다."
+
 msgid "Latest"
 msgstr "최신"
 
@@ -9783,6 +9816,10 @@ msgstr "불러오는 중..."
 msgid "Loading…"
 msgstr "불러오는 중…"
 
+msgctxt "MCP server scope"
+msgid "local"
+msgstr "로컬"
+
 msgid "Local"
 msgstr "로컬"
 
@@ -9956,6 +9993,9 @@ msgstr "플랜 관리"
 msgid "Manage plan on the web"
 msgstr "웹에서 플랜 관리"
 
+msgid "Manage plugins…"
+msgstr "플러그인 관리…"
+
 msgid "Manage sessions"
 msgstr "세션 관리"
 
@@ -10055,6 +10095,9 @@ msgstr "MCP 서버"
 msgid "MCP Server Commands"
 msgstr "MCP 서버 명령"
 
+msgid "MCP servers"
+msgstr "MCP 서버"
+
 msgid "Measured over the trailing 30 days"
 msgstr "최근 30일 기준"
 
@@ -10139,9 +10182,6 @@ msgstr "머지 커밋"
 #. placeholder {0}: error.message
 msgid "Merge failed: {0}"
 msgstr "머지 실패: {0}"
-
-msgid "Merge into center"
-msgstr "가운데로 합치기"
 
 msgid "Merge pull request"
 msgstr "풀 리퀘스트 머지"
@@ -10387,9 +10427,6 @@ msgstr "소프트웨어 역사의 대부분"
 msgid "Move {count} to Group"
 msgstr "{count}개를 그룹으로 이동"
 
-msgid "Move to Center"
-msgstr "가운데로 이동"
-
 msgid "Move to group"
 msgstr "그룹으로 이동"
 
@@ -10561,6 +10598,9 @@ msgstr "새 브라우저"
 
 msgid "new challengers"
 msgstr "새 도전자"
+
+msgid "New Chat"
+msgstr "새 채팅"
 
 msgid "New cloud workspace"
 msgstr "새 클라우드 워크스페이스"
@@ -10811,6 +10851,9 @@ msgstr "아직 이 브랜치에 변경 사항이 없습니다."
 msgid "No changes to display."
 msgstr "표시할 변경 사항이 없습니다."
 
+msgid "No chats found"
+msgstr "채팅을 찾을 수 없습니다"
+
 msgid "No checks"
 msgstr "검사 없음"
 
@@ -10970,6 +11013,9 @@ msgstr "아이콘 없음"
 msgid "No icons match."
 msgstr "일치하는 아이콘이 없습니다."
 
+msgid "No installed agent can be opened as a chat"
+msgstr "채팅으로 열 수 있는 설치된 에이전트가 없습니다"
+
 msgid "No Internet Connection"
 msgstr "인터넷 연결 없음"
 
@@ -11018,6 +11064,9 @@ msgstr "일치 항목 없음"
 msgid "No matching files"
 msgstr "일치하는 파일 없음"
 
+msgid "No matching MCP servers"
+msgstr "일치하는 MCP 서버 없음"
+
 msgid "No matching models"
 msgstr "일치하는 모델이 없습니다"
 
@@ -11029,6 +11078,9 @@ msgstr "일치하는 페이지가 없습니다"
 
 msgid "No matching repositories."
 msgstr "일치하는 저장소가 없습니다."
+
+msgid "No MCP servers found"
+msgstr "MCP 서버를 찾을 수 없음"
 
 msgid "No members yet"
 msgstr "아직 멤버가 없습니다"
@@ -11765,6 +11817,9 @@ msgstr "파일 패널에서 {path} 열기"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "활성 터미널의 여러 줄 프롬프트 작성기를 엽니다"
+
+msgid "Open a new {label} chat?"
+msgstr "새 {label} 채팅을 열까요?"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "창을 열거나 가운데에서 여기로 끌어 오세요."
@@ -13070,6 +13125,10 @@ msgstr "진행 상황"
 msgid "Progress · Spinner"
 msgstr "진행 표시줄 · 스피너"
 
+msgctxt "MCP server scope"
+msgid "project"
+msgstr "프로젝트"
+
 msgid "Project"
 msgstr "프로젝트"
 
@@ -13102,6 +13161,9 @@ msgstr "프로젝트를 찾을 수 없습니다."
 
 msgid "Project not set up on this host"
 msgstr "이 호스트에 프로젝트가 설정되지 않았습니다"
+
+msgid "Project not trusted in Codex"
+msgstr "Codex에서 신뢰하지 않는 프로젝트"
 
 msgid "Project ready — open it from the sidebar."
 msgstr "프로젝트 준비 완료 — 사이드바에서 열어 보세요."
@@ -13435,6 +13497,9 @@ msgstr "배포 및 빌드 로그 확인"
 
 msgid "Read it on your phone"
 msgstr "휴대폰으로 읽기"
+
+msgid "Read MCP servers again"
+msgstr "MCP 서버 다시 읽기"
 
 msgid "Read the changelog"
 msgstr "변경 로그 읽기"
@@ -14797,6 +14862,9 @@ msgstr "키 이름으로 검색..."
 msgid "Search changed files"
 msgstr "변경된 파일 검색"
 
+msgid "Search chats..."
+msgstr "채팅 검색..."
+
 msgid "Search developers"
 msgstr "개발자 검색"
 
@@ -14847,6 +14915,9 @@ msgstr "Linear 검색"
 
 msgid "Search Linear…"
 msgstr "Linear 검색…"
+
+msgid "Search MCP servers…"
+msgstr "MCP 서버 검색…"
 
 msgid "Search models"
 msgstr "모델 검색"
@@ -15885,6 +15956,9 @@ msgstr "SOC 2 Type II 준수. 보고서를 요청하세요."
 msgid "SOC 2 Type II report"
 msgstr "SOC 2 Type II 보고서"
 
+msgid "Some chat history could not be loaded."
+msgstr "일부 채팅 기록을 불러오지 못했습니다."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "일부 파일이 허용되지 않는 형식이라 추가되지 않았습니다."
 
@@ -16200,6 +16274,9 @@ msgstr "무료 체험 시작"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "무료로 시작하세요. 팀이 커지면 업그레이드하세요. 고급 보안과 규정 준수가 필요한 조직을 위한 엔터프라이즈 플랜도 있습니다."
 
+msgid "Start fresh"
+msgstr "새로 시작"
+
 msgid "Start from a template"
 msgstr "템플릿으로 시작"
 
@@ -16338,6 +16415,9 @@ msgstr "다른 기기에서 삭제하려면 여기에서 Superset을 종료하�
 
 msgid "Stop the agent and send this now"
 msgstr "에이전트를 중지하고 지금 보내기"
+
+msgid "Stop the agent before you edit a message"
+msgstr "메시지를 편집하기 전에 에이전트를 중지하세요"
 
 msgid "Stop watching"
 msgstr "감시 중지"
@@ -17515,6 +17595,9 @@ msgstr "이 에이전트는 클라우드 워크스페이스에서 실행할 수 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "이 에이전트는 선택한 기기에 더 이상 존재하지 않습니다 (에이전트가 초기화되었을 수 있습니다). 새 에이전트를 선택할 때까지 실행이 실패합니다."
 
+msgid "This agent only shows chats saved in Superset."
+msgstr "이 에이전트는 Superset에 저장된 채팅만 표시합니다."
+
 msgid "This also:"
 msgstr "다음 작업도 함께 수행됩니다:"
 
@@ -18452,6 +18535,9 @@ msgstr "지원하지 않는 항목 \"{0}\""
 msgid "Untitled"
 msgstr "제목 없음"
 
+msgid "Untitled chat"
+msgstr "제목 없는 채팅"
+
 msgid "Untitled Page"
 msgstr "제목 없는 페이지"
 
@@ -18689,6 +18775,10 @@ msgstr "시스템이 다크 모드일 때 사용합니다."
 
 msgid "Used when your system is in light mode."
 msgstr "시스템이 라이트 모드일 때 사용합니다."
+
+msgctxt "MCP server scope"
+msgid "user"
+msgstr "사용자"
 
 msgid "User already has access to this host"
 msgstr "사용자에게 이미 이 호스트에 대한 접근 권한이 있습니다"

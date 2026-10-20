@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { spawn } from "node:child_process";
 import type { Item } from "@superset/chat/protocol";
-import { AGENT_DEFAULT_MODE } from "@superset/chat/protocol";
+import { AGENT_DEFAULT_MODE, wrapHiddenText } from "@superset/chat/protocol";
 import type { AdapterEvent } from "../types";
 import {
 	AcpAdapter,
@@ -297,6 +297,10 @@ class FakeAcpAgent {
 				this.notify(sessionId, {
 					sessionUpdate: "user_message_chunk",
 					content: { type: "text", text: "now ship it" },
+				});
+				this.notify(sessionId, {
+					sessionUpdate: "user_message_chunk",
+					content: { type: "text", text: wrapHiddenText("MCP context") },
 				});
 				this.notify(sessionId, {
 					sessionUpdate: "agent_message_chunk",
@@ -817,6 +821,91 @@ describe("AcpAdapter", () => {
 		expect(await second.fork()).toBeNull();
 		expect(plain.sent.map((f) => f.method)).not.toContain("session/fork");
 		await second.dispose();
+	});
+
+	it("forks at a message only for an agent known to honour the cut, and resumes it quietly", async () => {
+		const cutting = new FakeAcpAgent();
+		const adapter = new AcpAdapter({
+			command: "fake",
+			createTransport: (_opts, handlers) => cutting.transport(handlers),
+			now: () => 1,
+			mintId: () => "x",
+			forkAtMessage: true,
+		});
+		void collect(adapter.start({ cwd: "/work" }), []);
+		await flush(40);
+		expect(await adapter.fork({ upToMessageId: "msg_1" })).toBe("sess-forked");
+		const forkFrame = cutting.sent.find((f) => f.method === "session/fork");
+		expect(
+			(forkFrame?.params as { _meta?: unknown } | undefined)?._meta,
+		).toEqual({
+			jetbrains: { air: { fork: { version: 1, messageId: "msg_1" } } },
+		});
+		await adapter.dispose();
+
+		const ignoring = new FakeAcpAgent();
+		const unsure = new AcpAdapter({
+			command: "fake",
+			createTransport: (_opts, handlers) => ignoring.transport(handlers),
+			now: () => 1,
+			mintId: () => "x",
+		});
+		void collect(unsure.start({ cwd: "/work" }), []);
+		await flush(40);
+		expect(await unsure.fork({ upToMessageId: "msg_1" })).toBeNull();
+		expect(ignoring.sent.map((f) => f.method)).not.toContain("session/fork");
+		await unsure.dispose();
+
+		const replayed = new FakeAcpAgent();
+		replayed.replayUpdates = [
+			{
+				sessionUpdate: "agent_message_chunk",
+				messageId: "msg_1",
+				content: { type: "text", text: "earlier reply" },
+			},
+			{
+				sessionUpdate: "agent_message_chunk",
+				messageId: "msg_1",
+				content: { type: "text", text: ", continued" },
+			},
+		];
+		const quiet = new AcpAdapter({
+			command: "fake",
+			createTransport: (_opts, handlers) => replayed.transport(handlers),
+			now: () => 1,
+			mintId: () => "x",
+		});
+		const quietEvents: AdapterEvent[] = [];
+		void collect(
+			quiet.start({
+				cwd: "/work",
+				resume: { harnessSessionId: "sess-forked", quiet: true },
+			}),
+			quietEvents,
+		);
+		await flush(40);
+		expect(replayed.sent.map((f) => f.method)).toContain("session/load");
+		expect(itemsOf(quietEvents)).toEqual([]);
+		expect(quietEvents.filter((event) => event.kind === "delta")).toEqual([]);
+		await quiet.dispose();
+	});
+
+	it("keeps the agent's id on the messages it streams", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "hi" }]);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message_chunk",
+			messageId: "msg_7",
+			content: { type: "text", text: "hello" },
+		});
+		await flush();
+		expect(
+			itemsOf(events).find((item) => item.id.endsWith(":msg_7")),
+		).toMatchObject({ agentMessageId: "msg_7" });
+		await adapter.dispose();
 	});
 
 	it("surfaces the agent's own slash commands", async () => {

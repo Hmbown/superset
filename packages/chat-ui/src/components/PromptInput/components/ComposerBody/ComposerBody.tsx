@@ -255,8 +255,14 @@ export function ComposerBody({
 				});
 				editor.focus();
 			},
+			insertChip(chip: ComposerChip) {
+				editor.update(() => $insertChipAtSelection(chip));
+			},
 			openFileDialog() {
 				fileInputRef.current?.click();
+			},
+			openPanel(next: ComposerPanelContent) {
+				setPanel(next);
 			},
 			focus() {
 				focusAtEnd();
@@ -375,6 +381,11 @@ export function ComposerBody({
 	useEffect(() => {
 		return dropZone?.register((files) => addFilesRef.current(files));
 	}, [dropZone]);
+
+	const closePanel = useCallback(() => {
+		setPanel(null);
+		editor.focus();
+	}, [editor]);
 
 	const actionContext: ComposerActionContext = {
 		insertChip: (chip) => {
@@ -763,6 +774,7 @@ export function ComposerBody({
 			setBrowseOpen(false);
 			setTypeaheadDismissed(true);
 			setCommandDismissed(true);
+			setPanel((current) => (current?.bare ? null : current));
 		};
 		document.addEventListener("pointerdown", onPointerDown);
 		return () => document.removeEventListener("pointerdown", onPointerDown);
@@ -826,14 +838,27 @@ export function ComposerBody({
 					/>
 				)}
 			</div>
-			{panel && (
-				<ComposerPanel
-					title={panel.title}
-					placement={placement}
-					onClose={() => setPanel(null)}
+			{panel?.bare ? (
+				<div
+					role="dialog"
+					aria-label={panel.title}
+					className={cn(
+						"absolute inset-x-0 z-30",
+						placement === "bottom" ? "top-full pt-2" : "bottom-full pb-2",
+					)}
 				>
-					{panel.render()}
-				</ComposerPanel>
+					{panel.render({ close: closePanel })}
+				</div>
+			) : (
+				panel && (
+					<ComposerPanel
+						title={panel.title}
+						placement={placement}
+						onClose={() => setPanel(null)}
+					>
+						{panel.render({ close: closePanel })}
+					</ComposerPanel>
+				)
 			)}
 			<div
 				aria-hidden={!dragging}

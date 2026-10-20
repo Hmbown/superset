@@ -83,6 +83,7 @@ import {
 	setAutomationPromptSchema,
 	updateAutomationSchema,
 } from "./schema";
+import { recordCloudLaunch, reportCloudLaunchSchema } from "./sessionRecord";
 import {
 	type AutomationTarget,
 	NO_TARGET,
@@ -196,6 +197,7 @@ function selectRuns(args: {
 			triggerKind: automationTriggers.kind,
 			v2WorkspaceId: automationRuns.v2WorkspaceId,
 			cloudWorkspaceId: automationRuns.cloudWorkspaceId,
+			sessionKind: automationRuns.sessionKind,
 			chatSessionId: automationRuns.chatSessionId,
 			terminalSessionId: automationRuns.terminalSessionId,
 			eventId: automationRuns.eventId,
@@ -1164,6 +1166,26 @@ export const automationRouter = {
 			return row;
 		}),
 
+	/**
+	 * A cloud workspace reporting the session its first-boot launch started,
+	 * for the automation run that created it. Only the box itself may call it.
+	 */
+	reportCloudLaunch: protectedProcedure
+		.input(reportCloudLaunchSchema)
+		.mutation(async ({ ctx, input }) => {
+			if (!ctx.sandboxCaller) {
+				throw new TRPCError({
+					code: "FORBIDDEN",
+					message: "Only a cloud workspace can report its own launch",
+				});
+			}
+			const result = await recordCloudLaunch(ctx.sandboxCaller, input);
+			if (result.recorded) {
+				nudge(ctx.sandboxCaller.organizationId, "automation_runs");
+			}
+			return result;
+		}),
+
 	/** Most recent run per automation across the caller's active organization. */
 	latestRuns: protectedProcedure.query(async ({ ctx }) => {
 		const organizationId = await requireActiveOrgMembership(ctx);
@@ -1175,6 +1197,7 @@ export const automationRouter = {
 				createdAt: automationRuns.createdAt,
 				v2WorkspaceId: automationRuns.v2WorkspaceId,
 				cloudWorkspaceId: automationRuns.cloudWorkspaceId,
+				sessionKind: automationRuns.sessionKind,
 				chatSessionId: automationRuns.chatSessionId,
 				terminalSessionId: automationRuns.terminalSessionId,
 				ownerUserId: automations.ownerUserId,

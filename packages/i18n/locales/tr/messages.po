@@ -948,6 +948,9 @@ msgstr "{minimumContrast}:1 kontrast"
 msgid "{minutes}m"
 msgstr "{minutes}dk"
 
+msgid "{minutes}m {rest}s"
+msgstr "{minutes} dk {rest} sn"
+
 msgid "{minutes}m ago"
 msgstr "{minutes}dk önce"
 
@@ -980,6 +983,9 @@ msgstr "{name} yerleşiktir ve değiştirilemez"
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} eklenmedi"
+
+msgid "{name} plugin"
+msgstr "{name} eklentisi"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {En az bir kişi belirtin veya {choice} seçeneğini seçin.} sender {En az bir gönderen belirtin veya {choice} seçeneğini seçin.} other {En az bir öğe belirtin veya {choice} seçeneğini seçin.}}"
@@ -1071,6 +1077,9 @@ msgstr "{repositoryFullName}, bu organizasyonun GitHub App'inin kurulu olduğu {
 
 msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
 msgstr "{repositoryFullName} henüz Superset GitHub App ile paylaşılmadı."
+
+msgid "{seconds}s"
+msgstr "{seconds} sn"
 
 msgid "{seconds}s ago"
 msgstr "{seconds}sn önce"
@@ -1397,8 +1406,8 @@ msgstr "Her bölme için bir CDP uç noktası"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "Her hafta bir değişiklik günlüğü yayınlıyoruz. Yeni katılanların çoğu ilk birkaç gününde kullanıcılara bir şey yayınlıyor."
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "Bir sohbet, konuşmanın ortasında başka bir sağlayıcıya geçemez. Bunun yerine bu konuşmayı yeni bir {label} sohbetine çatallayın. Bu {currentLabel} sohbeti açık kalır."
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "Bir sohbet konuşmanın ortasında başka bir sağlayıcıya geçemez. Yeni bir {label} sohbeti başlatın veya bu konuşmayı yeni bir sohbete ayırın. Bu {currentLabel} sohbeti açık kalır."
 
 msgid "A chat takes its name from the agent."
 msgstr "Sohbet adını ajandan alır."
@@ -3538,6 +3547,9 @@ msgstr "Sohbet"
 msgid "Chat closed"
 msgstr "Sohbet kapatıldı"
 
+msgid "Chat history"
+msgstr "Sohbet geçmişi"
+
 msgid "Chat is being reworked"
 msgstr "Sohbet yeniden düzenleniyor"
 
@@ -3603,6 +3615,9 @@ msgstr "Ortamlar kontrol ediliyor…"
 
 msgid "Checking host…"
 msgstr "Host denetleniyor…"
+
+msgid "Checking MCP servers…"
+msgstr "MCP sunucuları denetleniyor…"
 
 msgid "Checking out a PR requires a project"
 msgstr "Bir PR'ı checkout etmek proje gerektirir"
@@ -3673,6 +3688,9 @@ msgstr "Ajan seçin"
 msgid "Choose an existing repo folder"
 msgstr "Mevcut bir depo klasörü seçin"
 
+msgid "Choose an MCP server"
+msgstr "Bir MCP sunucusu seçin"
+
 msgid "Choose app"
 msgstr "Uygulama seç"
 
@@ -3684,6 +3702,9 @@ msgstr "Değişiklikler görünümünün üst çubuktan nasıl açılacağını 
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Terminalde Cmd+tıkladığınızda dosya yollarının nasıl açılacağını seçin"
+
+msgid "Choose MCP servers for this message"
+msgstr "Bu ileti için MCP sunucularını seçin"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Uygulama içi tarayıcıdan neyin temizleneceğini seçin."
@@ -4324,6 +4345,9 @@ msgstr "Başlatıcılarda hangi ajanların görüneceğini ve başlatmalarının
 msgid "Configure workspace run command"
 msgstr "Çalışma alanı çalıştırma komutunu yapılandır"
 
+msgid "Configured for {agent}"
+msgstr "{agent} için yapılandırıldı"
+
 msgid "Confirm before quitting"
 msgstr "Çıkmadan önce onay iste"
 
@@ -4571,9 +4595,6 @@ msgstr "Bağlam menüsü"
 
 msgid "Continue"
 msgstr "Devam et"
-
-msgid "Continue in a new {label} chat?"
-msgstr "Yeni bir {label} sohbetinde devam edilsin mi?"
 
 msgid "Continue or fork session"
 msgstr "Oturumu sürdür veya forkla"
@@ -4979,6 +5000,9 @@ msgstr "Bu çalışma alanının makinesine erişilemedi"
 msgid "Could not reactivate"
 msgstr "Yeniden etkinleştirilemedi"
 
+msgid "Could not read MCP servers."
+msgstr "MCP sunucuları okunamadı."
+
 msgid "Could not read selected file"
 msgstr "Seçilen dosya okunamadı"
 
@@ -5133,6 +5157,9 @@ msgstr "Hazırlanmış değişiklikler atılamadı"
 msgid "Couldn't discard unstaged changes"
 msgstr "Hazırlanmamış değişiklikler atılamadı"
 
+msgid "Couldn't edit the message"
+msgstr "Mesaj düzenlenemedi"
+
 msgid "Couldn’t finish deleting workspaces"
 msgstr "Çalışma alanlarını silme işlemi tamamlanamadı"
 
@@ -5221,9 +5248,6 @@ msgstr "Bu host'tan kullanım geçmişi okunamadı."
 msgid "Couldn't remove the local sign-in"
 msgstr "Yerel oturum kaydı kaldırılamadı"
 
-msgid "Couldn't reopen the agent in a terminal"
-msgstr "Aracı bir terminalde yeniden açamadık"
-
 msgid "Couldn't restart terminals"
 msgstr "Terminaller yeniden başlatılamadı"
 
@@ -5293,9 +5317,6 @@ msgstr "Sesli mod başlatılamadı"
 
 msgid "Couldn't start workspace"
 msgstr "Çalışma alanı başlatılamadı"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "Aracının terminali durdurulamadı"
 
 msgid "Couldn't stop the background task"
 msgstr "Arka plan görevi durdurulamadı"
@@ -6174,6 +6195,9 @@ msgstr "Beceriyi devre dışı bırak"
 msgid "Disabled"
 msgstr "Devre dışı"
 
+msgid "Disabled in agent config"
+msgstr "Ajan yapılandırmasında devre dışı"
+
 msgid "Disabled toggle"
 msgstr "Devre dışı anahtar"
 
@@ -6565,6 +6589,9 @@ msgstr "Ortamı düzenle"
 
 msgid "Edit files without asking; ask before commands"
 msgstr "Dosyaları sormadan düzenle; komutlardan önce sor"
+
+msgid "Edit message"
+msgstr "Mesajı düzenle"
 
 msgid "Edit name"
 msgstr "Adı düzenle"
@@ -7878,14 +7905,14 @@ msgstr "{domain} sitesini unut"
 msgid "Fork args"
 msgstr "Fork argümanları"
 
+msgid "Fork conversation"
+msgstr "Konuşmayı ayır"
+
 msgid "Fork session"
 msgstr "Oturumu forkla"
 
 msgid "Fork session…"
 msgstr "Oturumu forkla…"
-
-msgid "Fork to new chat"
-msgstr "Yeni sohbete çatalla"
 
 msgid "Form controls and field composition"
 msgstr "Form denetimleri ve alan kompozisyonu"
@@ -8757,6 +8784,9 @@ msgstr "Superset masaüstü uygulamasında Ayarlar → Uzaktan erişim bölümü
 msgid "In under a year, more than 145,000 developers across 180 countries have run Superset and created over 1.85 million agent workspaces."
 msgstr "Bir yıldan kısa sürede 180 ülkeden 145.000'den fazla geliştirici Superset'i çalıştırdı ve 1,85 milyondan fazla ajan çalışma alanı oluşturdu."
 
+msgid "In your next chat"
+msgstr "Sonraki sohbetinizde"
+
 msgid "In your terminal"
 msgstr "Terminalinizde"
 
@@ -9375,6 +9405,9 @@ msgstr "Gecikme"
 msgid "Later"
 msgstr "Daha sonra"
 
+msgid "Later messages are removed."
+msgstr "Sonraki mesajlar kaldırılacak."
+
 msgid "Latest"
 msgstr "En son"
 
@@ -9783,6 +9816,10 @@ msgstr "Yükleniyor..."
 msgid "Loading…"
 msgstr "Yükleniyor…"
 
+msgctxt "MCP server scope"
+msgid "local"
+msgstr "yerel"
+
 msgid "Local"
 msgstr "Yerel"
 
@@ -9956,6 +9993,9 @@ msgstr "Planı yönet"
 msgid "Manage plan on the web"
 msgstr "Planı web'den yönet"
 
+msgid "Manage plugins…"
+msgstr "Eklentileri yönet…"
+
 msgid "Manage sessions"
 msgstr "Oturumları yönet"
 
@@ -10055,6 +10095,9 @@ msgstr "MCP sunucusu"
 msgid "MCP Server Commands"
 msgstr "MCP sunucusu komutları"
 
+msgid "MCP servers"
+msgstr "MCP sunucuları"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Son 30 gün üzerinden ölçülür"
 
@@ -10139,9 +10182,6 @@ msgstr "Birleştirme commit'i"
 #. placeholder {0}: error.message
 msgid "Merge failed: {0}"
 msgstr "Birleştirme başarısız: {0}"
-
-msgid "Merge into center"
-msgstr "Ortaya birleştir"
 
 msgid "Merge pull request"
 msgstr "Pull request'i birleştir"
@@ -10387,9 +10427,6 @@ msgstr "Yazılım tarihinin çoğu"
 msgid "Move {count} to Group"
 msgstr "{count} öğeyi gruba taşı"
 
-msgid "Move to Center"
-msgstr "Ortaya taşı"
-
 msgid "Move to group"
 msgstr "Gruba taşı"
 
@@ -10561,6 +10598,9 @@ msgstr "Yeni tarayıcı"
 
 msgid "new challengers"
 msgstr "yeni rakipler"
+
+msgid "New Chat"
+msgstr "Yeni sohbet"
 
 msgid "New cloud workspace"
 msgstr "Yeni bulut çalışma alanı"
@@ -10811,6 +10851,9 @@ msgstr "Bu dalda henüz değişiklik yok."
 msgid "No changes to display."
 msgstr "Gösterilecek değişiklik yok."
 
+msgid "No chats found"
+msgstr "Sohbet bulunamadı"
+
 msgid "No checks"
 msgstr "Kontrol yok"
 
@@ -10970,6 +11013,9 @@ msgstr "Simge yok"
 msgid "No icons match."
 msgstr "Eşleşen simge yok."
 
+msgid "No installed agent can be opened as a chat"
+msgstr "Yüklü hiçbir ajan sohbet olarak açılamıyor"
+
 msgid "No Internet Connection"
 msgstr "İnternet bağlantısı yok"
 
@@ -11018,6 +11064,9 @@ msgstr "Eşleşme yok"
 msgid "No matching files"
 msgstr "Eşleşen dosya yok"
 
+msgid "No matching MCP servers"
+msgstr "Eşleşen MCP sunucusu yok"
+
 msgid "No matching models"
 msgstr "Eşleşen model yok"
 
@@ -11029,6 +11078,9 @@ msgstr "Eşleşen sayfa yok"
 
 msgid "No matching repositories."
 msgstr "Eşleşen depo yok."
+
+msgid "No MCP servers found"
+msgstr "MCP sunucusu bulunamadı"
 
 msgid "No members yet"
 msgstr "Henüz üye yok"
@@ -11765,6 +11817,9 @@ msgstr "{path} dosyasını dosya bölmesinde aç"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "Etkin terminal için çok satırlı istem düzenleyicisini aç"
+
+msgid "Open a new {label} chat?"
+msgstr "Yeni bir {label} sohbeti açılsın mı?"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "Bir bölme açın veya ortadan buraya sürükleyin."
@@ -13070,6 +13125,10 @@ msgstr "İlerleme"
 msgid "Progress · Spinner"
 msgstr "İlerleme · Spinner"
 
+msgctxt "MCP server scope"
+msgid "project"
+msgstr "proje"
+
 msgid "Project"
 msgstr "Proje"
 
@@ -13102,6 +13161,9 @@ msgstr "Proje bulunamadı."
 
 msgid "Project not set up on this host"
 msgstr "Proje bu host'ta kurulu değil"
+
+msgid "Project not trusted in Codex"
+msgstr "Proje Codex'te güvenilir değil"
 
 msgid "Project ready — open it from the sidebar."
 msgstr "Proje hazır — kenar çubuğundan açın."
@@ -13435,6 +13497,9 @@ msgstr "Dağıtım ve derleme günlüklerini okuyun"
 
 msgid "Read it on your phone"
 msgstr "Telefonunuzda okuyun"
+
+msgid "Read MCP servers again"
+msgstr "MCP sunucularını yeniden oku"
 
 msgid "Read the changelog"
 msgstr "Değişiklik günlüğünü oku"
@@ -14797,6 +14862,9 @@ msgstr "Anahtar adına göre ara..."
 msgid "Search changed files"
 msgstr "Değişen dosyaları ara"
 
+msgid "Search chats..."
+msgstr "Sohbetlerde ara..."
+
 msgid "Search developers"
 msgstr "Geliştirici ara"
 
@@ -14847,6 +14915,9 @@ msgstr "Linear'da ara"
 
 msgid "Search Linear…"
 msgstr "Linear'da ara…"
+
+msgid "Search MCP servers…"
+msgstr "MCP sunucularında ara…"
 
 msgid "Search models"
 msgstr "Model ara"
@@ -15885,6 +15956,9 @@ msgstr "SOC 2 Type II uyumlu. Raporumuzu talep edin."
 msgid "SOC 2 Type II report"
 msgstr "SOC 2 Type II raporu"
 
+msgid "Some chat history could not be loaded."
+msgstr "Sohbet geçmişinin bir kısmı yüklenemedi."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "Bazı dosyalar kabul edilen türde değil ve eklenmedi."
 
@@ -16200,6 +16274,9 @@ msgstr "Ücretsiz denemeyi başlat"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Ücretsiz başlayın. Takımınız büyüdüğünde yükseltin. Gelişmiş güvenlik ve uyumluluk ihtiyaçları olan kuruluşlar için Enterprise planları."
 
+msgid "Start fresh"
+msgstr "Baştan başla"
+
 msgid "Start from a template"
 msgstr "Şablondan başla"
 
@@ -16338,6 +16415,9 @@ msgstr "Başka bir cihazdan silmek için Superset'i burada durdurun."
 
 msgid "Stop the agent and send this now"
 msgstr "Ajanı durdur ve şimdi gönder"
+
+msgid "Stop the agent before you edit a message"
+msgstr "Bir mesajı düzenlemeden önce ajanı durdurun"
 
 msgid "Stop watching"
 msgstr "İzlemeyi durdur"
@@ -17515,6 +17595,9 @@ msgstr "Bu ajan bir bulut çalışma alanında çalışamaz"
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Bu ajan seçili cihazda artık yok (ajanları sıfırlanmış olabilir). Yeni bir tane seçene kadar çalıştırmalar başarısız olacak."
 
+msgid "This agent only shows chats saved in Superset."
+msgstr "Bu ajan yalnızca Superset'te kaydedilen sohbetleri gösterir."
+
 msgid "This also:"
 msgstr "Ayrıca:"
 
@@ -18452,6 +18535,9 @@ msgstr "Desteklenmeyen öğe \"{0}\""
 msgid "Untitled"
 msgstr "Adsız"
 
+msgid "Untitled chat"
+msgstr "Başlıksız sohbet"
+
 msgid "Untitled Page"
 msgstr "Adsız sayfa"
 
@@ -18689,6 +18775,10 @@ msgstr "Sisteminiz koyu moddayken kullanılır."
 
 msgid "Used when your system is in light mode."
 msgstr "Sisteminiz açık moddayken kullanılır."
+
+msgctxt "MCP server scope"
+msgid "user"
+msgstr "kullanıcı"
 
 msgid "User already has access to this host"
 msgstr "Kullanıcının bu host'a zaten erişimi var"
