@@ -785,7 +785,7 @@ export function usePaneRegistry({
 					t({
 						message: "Mobile",
 					}),
-				renderPane: () => <MobilePane />,
+				renderPane: () => <MobilePane workspaceId={workspaceId} />,
 			},
 			"chat-v3": {
 				getIcon: (ctx) => {

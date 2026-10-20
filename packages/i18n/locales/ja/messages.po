@@ -437,6 +437,10 @@ msgstr "{0} はこの組織のタスクですでに使われています。"
 msgid "{0} is not a repository the GitHub App is installed on"
 msgstr "{0} は GitHub App がインストールされているリポジトリではありません"
 
+#. placeholder {0}: selected.name
+msgid "{0} is not running."
+msgstr "{0} は起動していません。"
+
 #. placeholder {0}: host.name
 msgid "{0} is offline"
 msgstr "{0}はオフラインです"
@@ -3052,6 +3056,9 @@ msgstr "太字"
 
 msgid "Bold Text"
 msgstr "文字を太くする"
+
+msgid "Boot"
+msgstr "起動"
 
 #. placeholder {0}: selected.name
 msgid "Booting {0}…"

@@ -437,6 +437,10 @@ msgstr "{0} jest już używany dla zadań w tej organizacji."
 msgid "{0} is not a repository the GitHub App is installed on"
 msgstr "{0} nie jest repozytorium, w którym zainstalowano aplikację GitHub App"
 
+#. placeholder {0}: selected.name
+msgid "{0} is not running."
+msgstr "{0} nie jest uruchomione."
+
 #. placeholder {0}: host.name
 msgid "{0} is offline"
 msgstr "{0} jest offline"
@@ -3052,6 +3056,9 @@ msgstr "Pogrubienie"
 
 msgid "Bold Text"
 msgstr "Pogrubiony tekst"
+
+msgid "Boot"
+msgstr "Uruchom"
 
 #. placeholder {0}: selected.name
 msgid "Booting {0}…"

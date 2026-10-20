@@ -437,6 +437,10 @@ msgstr "{0}은(는) 이 조직의 작업에 이미 사용 중입니다."
 msgid "{0} is not a repository the GitHub App is installed on"
 msgstr "{0}은(는) GitHub App이 설치된 리포지토리가 아닙니다"
 
+#. placeholder {0}: selected.name
+msgid "{0} is not running."
+msgstr "{0}이(가) 실행 중이 아닙니다."
+
 #. placeholder {0}: host.name
 msgid "{0} is offline"
 msgstr "{0}이(가) 오프라인입니다"
@@ -3052,6 +3056,9 @@ msgstr "굵게"
 
 msgid "Bold Text"
 msgstr "볼드체 텍스트"
+
+msgid "Boot"
+msgstr "부팅"
 
 #. placeholder {0}: selected.name
 msgid "Booting {0}…"
