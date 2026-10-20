@@ -1279,14 +1279,14 @@ msgstr "⌘⇧ 클릭"
 msgid "● Online"
 msgstr "● 온라인"
 
+msgid "✓ 12m ago"
+msgstr "✓ 12분 전"
+
 msgid "✓ 1d ago"
 msgstr "✓ 1일 전"
 
 msgid "✓ 2h ago"
 msgstr "✓ 2시간 전"
-
-msgid "✓ 3d ago"
-msgstr "✓ 3일 전"
 
 msgid "${balance} credits"
 msgstr "크레딧 ${balance}"
@@ -1317,6 +1317,9 @@ msgstr "10시간 전"
 
 msgid "12 packages have a newer version"
 msgstr "패키지 12개에 새 버전이 있습니다"
+
+msgid "12m ago"
+msgstr "12분 전"
 
 msgid "15 min"
 msgstr "15분"
@@ -1369,9 +1372,6 @@ msgstr "엔지니어당 동시 작업 흐름 3개 이상"
 msgid "30D"
 msgstr "30일"
 
-msgid "3d ago"
-msgstr "3일 전"
-
 msgid "4 min ago"
 msgstr "4분 전"
 
@@ -1392,9 +1392,6 @@ msgstr "5일"
 
 msgid "55 call sites pass {code}"
 msgstr "55개 호출 지점이 {code}를 전달합니다"
-
-msgid "5d ago"
-msgstr "5일 전"
 
 msgid "7:1 (AAA)"
 msgstr "7:1 (AAA)"
@@ -1830,6 +1827,9 @@ msgstr "사이드바에 추가"
 
 msgid "Add to workspace"
 msgstr "워크스페이스에 추가"
+
+msgid "Add Trigger"
+msgstr "트리거 추가"
 
 msgid "Add your own terminal agent to this device."
 msgstr "이 기기에 직접 만든 터미널 에이전트를 추가합니다."
@@ -2332,6 +2332,9 @@ msgstr "모든 채널"
 
 msgid "Any conclusion"
 msgstr "모든 결과"
+
+msgid "Any custom RRule"
+msgstr "모든 사용자 지정 RRule"
 
 msgid "Any data source"
 msgstr "모든 데이터 소스"
@@ -3680,9 +3683,6 @@ msgstr "폴더 선택"
 
 msgid "Choose a parent directory"
 msgstr "상위 디렉터리 선택"
-
-msgid "Choose a preset such as Weekdays or write a custom RRule. One automation can have more than one schedule."
-msgstr "'평일' 같은 프리셋을 고르거나 직접 RRule을 작성하세요. 자동화 하나에 일정을 여러 개 둘 수 있습니다."
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "이슈를 열기 전에 GitHub 이슈 화면에서 프로젝트를 선택하세요."
@@ -5512,6 +5512,9 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "생성됨"
 
+msgid "created · 2m ago"
+msgstr "생성됨 · 2분 전"
+
 #. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
@@ -6827,14 +6830,14 @@ msgstr "각 에이전트는 자체 Git worktree와 브랜치에서 실행되어 
 msgid "Every axis is carrying its weight for the next tier. Hold it and the tier follows."
 msgstr "모든 축이 다음 등급을 향해 제 몫을 하고 있습니다. 이대로 유지하면 등급은 따라옵니다."
 
+msgid "Every day at <0>9:00 AM</0>"
+msgstr "매일 <0>오전 9:00</0>"
+
 msgid "Every day at 3:00 AM"
 msgstr "매일 오전 3:00"
 
 msgid "Every Friday at 4pm, draft release notes from this week's merged PRs."
 msgstr "매주 금요일 오후 4시에 이번 주 머지된 PR로 릴리스 노트 초안을 작성합니다."
-
-msgid "Every Friday at 5:00 PM"
-msgstr "매주 금요일 오후 5:00"
 
 msgid "Every minute"
 msgstr "1분마다"
@@ -6848,8 +6851,8 @@ msgstr "모든 목표가 다음 단계를 향해 제 몫을 하고 있습니다.
 msgid "Every publish is a version"
 msgstr "게시할 때마다 버전이 됩니다"
 
-msgid "Every scheduled run so far found a host online."
-msgstr "지금까지 모든 예약 실행이 온라인 호스트를 찾았습니다."
+msgid "Every run so far found a host online."
+msgstr "지금까지 모든 실행이 온라인 호스트를 찾았습니다."
 
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "출시 이후 <0>{repoSlug}</0>의 모든 스타를 그래프로 나타냈습니다."
@@ -8481,6 +8484,9 @@ msgstr "HotkeyTooltip.tsx"
 msgid "Hourly"
 msgstr "매시간"
 
+msgid "Hourly, daily, or weekly"
+msgstr "매시간, 매일 또는 매주"
+
 msgid "Hover Card"
 msgstr "호버 카드"
 
@@ -8751,9 +8757,6 @@ msgstr "차이 뷰어 개선"
 
 msgid "in 14h"
 msgstr "14시간 후"
-
-msgid "in 2d"
-msgstr "2일 후"
 
 msgid "in 3d"
 msgstr "3일 후"
@@ -10351,9 +10354,6 @@ msgstr "고정폭"
 msgid "Month"
 msgstr "월"
 
-msgid "monthly"
-msgstr "매월"
-
 msgid "Monthly"
 msgstr "월간"
 
@@ -10730,6 +10730,9 @@ msgstr "다음 릴리스"
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "다음 실행 {0}"
+
+msgid "Next run in 14h"
+msgstr "다음 실행은 14시간 후"
 
 msgid "Next run in 3d"
 msgstr "다음 실행은 3일 후"
@@ -11370,8 +11373,8 @@ msgstr "아직 워크스페이스가 없습니다"
 msgid "No-Prompt Launch"
 msgstr "프롬프트 없는 실행"
 
-msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and scheduled runs without tying the workflow to one provider."
-msgstr "아닙니다. 에이전트는 그대로 독립적이고, Superset은 그 주위를 감싸는 오케스트레이션 계층입니다. 작업마다 격리된 Git worktree, 유지되는 세션, 차이 리뷰, 예약 실행이 제공되며 워크플로가 특정 제공사에 묶이지 않습니다."
+msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and automations that run on events or a schedule, without tying the workflow to one provider."
+msgstr "아닙니다. 에이전트는 그대로 독립적이고, Superset은 그 주위를 감싸는 오케스트레이션 계층입니다. 작업마다 격리된 Git worktree, 유지되는 세션, 차이 리뷰, 이벤트나 일정에 따라 실행되는 자동화가 제공되며 워크플로가 특정 제공사에 묶이지 않습니다."
 
 msgid "Nobody has joined the board yet."
 msgstr "아직 순위표에 참여한 사람이 없습니다."
@@ -11599,6 +11602,9 @@ msgstr "GitHub에서 스타 15k+, 포크 1,000+, 기여자 100명 이상을 보�
 
 msgid "On our radar. Order and scope may change."
 msgstr "지켜보고 있습니다. 순서와 범위는 바뀔 수 있습니다."
+
+msgid "on review request"
+msgstr "리뷰 요청 시"
 
 msgid "on the board"
 msgstr "순위표 등록"
@@ -12689,6 +12695,9 @@ msgstr "워크스페이스 선택"
 msgid "Pick a workspace whose agent is waiting for your input, has finished since you last looked, or is still running"
 msgstr "에이전트가 입력을 기다리고 있거나, 마지막으로 확인한 뒤 작업을 마쳤거나, 아직 실행 중인 워크스페이스를 선택합니다"
 
+msgid "Pick an event, like a review request or a new Sentry issue, or a schedule. One automation can have up to 25 triggers."
+msgstr "리뷰 요청이나 새 Sentry 이슈 같은 이벤트, 또는 일정을 고르세요. 자동화 하나에 트리거를 최대 25개까지 둘 수 있습니다."
+
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "아이콘과 색상을 고르거나 직접 만든 이미지를 업로드하세요. 기본값은 연결된 GitHub 소유자의 아바타입니다."
 
@@ -12892,6 +12901,9 @@ msgstr "PR 머지 후 닫힘"
 
 msgid "PR ready for review"
 msgstr "PR이 리뷰 준비 완료되었습니다"
+
+msgid "PR review"
+msgstr "PR 리뷰"
 
 msgid "PR review comment"
 msgstr "PR 리뷰 댓글"
@@ -13297,6 +13309,9 @@ msgstr "풀 리퀘스트 제목"
 msgid "Pull request…"
 msgstr "풀 리퀘스트…"
 
+msgid "Pull request… › Review requested"
+msgstr "풀 리퀘스트… › 리뷰 요청됨"
+
 msgid "Pull requests"
 msgstr "풀 리퀘스트"
 
@@ -13322,9 +13337,6 @@ msgstr "푸시하고 초안 PR을 열었습니다."
 
 msgid "Pushing..."
 msgstr "푸시 중…"
-
-msgid "Put recurring work on a schedule"
-msgstr "반복 업무를 일정에 올리세요"
 
 msgid "Put recurring work on a schedule or an event. Agents run on their own and land in a workspace for you to review."
 msgstr "반복되는 작업을 일정이나 이벤트에 맡기세요. 에이전트가 알아서 실행되고 결과는 검토할 수 있도록 워크스페이스에 도착합니다."
@@ -13694,9 +13706,6 @@ msgstr "릴레이 접근이 활성화되었습니다. 릴레이에 연결하는 
 
 msgid "Release control"
 msgstr "제어 해제"
-
-msgid "Release notes draft"
-msgstr "릴리스 노트 초안"
 
 msgid "Release published"
 msgstr "릴리스 게시됨"
@@ -14384,11 +14393,20 @@ msgstr "리뷰 대기 중"
 msgid "Review pending changes."
 msgstr "대기 중인 변경 사항을 검토합니다."
 
+msgid "Review PRs the moment you're asked"
+msgstr "요청받는 즉시 PR 리뷰하기"
+
 msgid "Review pull requests inside Superset: diff pane, agent-assisted review, act on comments directly."
 msgstr "Superset 안에서 풀 리퀘스트를 리뷰하세요. 차이 창, 에이전트 보조 리뷰, 댓글에 대한 직접 처리까지."
 
 msgid "Review requested"
 msgstr "리뷰 요청됨"
+
+msgid "Review requested from <0>Me</0> in <1>acme/web</1> by <2>Anyone</2>"
+msgstr "<1>acme/web</1>에서 <2>모든 사람</2>이 <0>나</0>에게 리뷰 요청"
+
+msgid "Review requested on acme/web #482"
+msgstr "acme/web #482에서 리뷰 요청됨"
 
 msgid "Review required"
 msgstr "리뷰 필요"
@@ -14560,6 +14578,9 @@ msgstr "워크스페이스에서 이슈를 실행할"
 msgid "Run now"
 msgstr "지금 실행"
 
+msgid "Run on a schedule or on events, run on demand, pause, resume, and read logs."
+msgstr "일정이나 이벤트로 실행, 필요할 때 실행, 일시 중지, 재개, 로그 확인."
+
 msgid "Run script"
 msgstr "스크립트 실행"
 
@@ -14640,6 +14661,9 @@ msgstr "실행 결과는 워크스페이스에 도착합니다. 차이를 검토
 
 msgid "Runs on a device you choose"
 msgstr "선택한 기기에서 실행"
+
+msgid "Runs that found no host online"
+msgstr "온라인 호스트를 찾지 못한 실행"
 
 msgid "Runs that started their workspace in the last 7 days"
 msgstr "지난 7일 동안 워크스페이스를 시작한 실행"
@@ -14744,17 +14768,11 @@ msgstr "매일 오전 9시에 새 Linear 이슈를 분류하는 자동화를 예
 msgid "Schedule meetings"
 msgstr "회의 일정 잡기"
 
-msgid "Schedule recurring runs, run on demand, pause, resume, and read logs."
-msgstr "반복 실행을 예약하고, 즉시 실행하고, 일시 중지하고, 재개하고, 로그를 읽습니다."
+msgid "Scheduled"
+msgstr "예약됨"
 
-msgid "Schedule."
-msgstr "일정."
-
-msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
-msgstr "cron, GitHub 이벤트, 웹훅으로 예약하거나 이벤트에 반응하는 에이전트를 기성 템플릿과 함께 제공합니다."
-
-msgid "Scheduled runs that found no host online"
-msgstr "온라인 호스트를 찾지 못한 예약 실행"
+msgid "Scheduled and event-triggered agents (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhooks) with ready-made templates."
+msgstr "cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, 웹훅으로 예약하거나 이벤트에 반응하는 에이전트를 기성 템플릿과 함께 제공합니다."
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "일정은 반복됩니다 — COUNT 또는 UNTIL을 제거하세요."
@@ -15295,6 +15313,9 @@ msgstr "에이전트에 보냄"
 
 msgid "Sent to the pull request's workspace"
 msgstr "풀 리퀘스트의 워크스페이스로 보냈습니다"
+
+msgid "Sentry issue created in <0>web</0> with level <1>Error</1>"
+msgstr "<0>web</0>에서 수준 <1>Error</1>의 Sentry 이슈 생성"
 
 msgid "Sentry rejected the token"
 msgstr "Sentry가 토큰을 거부했습니다"
@@ -16211,11 +16232,17 @@ msgstr "실행할 때마다 새 에이전트 세션 시작"
 msgid "Start a new chat"
 msgstr "새 채팅 시작"
 
+msgid "Start a run from any service"
+msgstr "어떤 서비스에서든 실행 시작하기"
+
 msgid "Start a run when something happens."
 msgstr "무슨 일이 생기면 실행을 시작하세요."
 
 msgid "Start a session"
 msgstr "세션 시작"
+
+msgid "Start agents on events or a schedule"
+msgstr "이벤트나 일정으로 에이전트 시작"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "iPhone이나 iPad에서 에이전트를 시작하고, 실시간으로 따라가고, diff를 리뷰하세요. 코드는 내 머신에 그대로 남습니다."
@@ -16240,6 +16267,9 @@ msgstr "무료 체험 시작"
 
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "무료로 시작하세요. 팀이 커지면 업그레이드하세요. 고급 보안과 규정 준수가 필요한 조직을 위한 엔터프라이즈 플랜도 있습니다."
+
+msgid "Start from a guide:"
+msgstr "가이드로 시작하기:"
 
 msgid "Start from a template"
 msgstr "템플릿으로 시작"
@@ -16336,8 +16366,8 @@ msgstr "방향 전환"
 msgid "Step {0} of 2"
 msgstr "2단계 중 {0}단계"
 
-msgid "Steps 3 and 4 repeat at every scheduled time."
-msgstr "3단계와 4단계는 예약된 시간마다 반복됩니다."
+msgid "Steps 3 and 4 repeat each time a trigger fires."
+msgstr "트리거가 실행될 때마다 3, 4단계가 반복됩니다."
 
 msgid "Steps 3 and 4 repeat until the page is right."
 msgstr "페이지가 완성될 때까지 3단계와 4단계를 반복합니다."
@@ -17921,9 +17951,6 @@ msgstr "등급"
 msgid "Time"
 msgstr "시간"
 
-msgid "Times use your time zone."
-msgstr "시간은 사용자의 시간대로 표시됩니다."
-
 msgid "Tinted"
 msgstr "색조"
 
@@ -18152,6 +18179,9 @@ msgstr "메일 분류 및 답장 초안 작성"
 msgid "Triage new issues"
 msgstr "새 이슈 분류"
 
+msgid "Triage new Sentry issues"
+msgstr "새 Sentry 이슈 분류하기"
+
 msgid "triaging 12 new issues…"
 msgstr "새 이슈 12건 분류 중…"
 
@@ -18172,6 +18202,9 @@ msgstr "Teams 채널 메시지에서 자동화를 트리거합니다."
 
 msgid "Trigger not found"
 msgstr "트리거를 찾을 수 없습니다"
+
+msgid "Trigger."
+msgstr "트리거."
 
 msgid "Triggers"
 msgstr "트리거"
@@ -18226,6 +18259,9 @@ msgstr "“릴레이를 통해 이 기기에 원격 액세스 허용” 켜기"
 
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "디자인을 켜고 변경하고 싶은 페이지 부분을 클릭하세요."
+
+msgid "Turn Slack bug reports into fixes"
+msgstr "Slack 버그 제보를 수정으로 바꾸기"
 
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Slack 대화를 작업으로 바꾸고, 워크스페이스에서 에이전트를 실행하고, 일이 시작되는 곳에서 팀원과 상황을 공유하세요."
@@ -19145,8 +19181,8 @@ msgstr "어떤 문제를 해결하려고 하시나요?"
 msgid "What shipped"
 msgstr "출시된 내용"
 
-msgid "What should run on a schedule?"
-msgstr "어떤 작업을 일정에 따라 실행할까요?"
+msgid "What should run on its own?"
+msgstr "무엇을 자동으로 실행할까요?"
 
 msgid "What should the page show?"
 msgstr "페이지에 무엇을 표시할까요?"

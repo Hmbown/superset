@@ -1279,14 +1279,14 @@ msgstr "⌘⇧-klik"
 msgid "● Online"
 msgstr "● Online"
 
+msgid "✓ 12m ago"
+msgstr "✓ 12m geleden"
+
 msgid "✓ 1d ago"
 msgstr "✓ 1d geleden"
 
 msgid "✓ 2h ago"
 msgstr "✓ 2u geleden"
-
-msgid "✓ 3d ago"
-msgstr "✓ 3d geleden"
 
 msgid "${balance} credits"
 msgstr "${balance} tegoed"
@@ -1317,6 +1317,9 @@ msgstr "10u geleden"
 
 msgid "12 packages have a newer version"
 msgstr "12 pakketten hebben een nieuwere versie"
+
+msgid "12m ago"
+msgstr "12m geleden"
 
 msgid "15 min"
 msgstr "15 min"
@@ -1369,9 +1372,6 @@ msgstr "3+ gelijktijdige werkstromen per engineer"
 msgid "30D"
 msgstr "30D"
 
-msgid "3d ago"
-msgstr "3d geleden"
-
 msgid "4 min ago"
 msgstr "4 min geleden"
 
@@ -1392,9 +1392,6 @@ msgstr "5 dagen"
 
 msgid "55 call sites pass {code}"
 msgstr "55 aanroepplekken geven {code} door"
-
-msgid "5d ago"
-msgstr "5d geleden"
 
 msgid "7:1 (AAA)"
 msgstr "7:1 (AAA)"
@@ -1830,6 +1827,9 @@ msgstr "Aan zijbalk toevoegen"
 
 msgid "Add to workspace"
 msgstr "Toevoegen aan werkruimte"
+
+msgid "Add Trigger"
+msgstr "Trigger toevoegen"
 
 msgid "Add your own terminal agent to this device."
 msgstr "Voeg je eigen terminalagent toe aan dit apparaat."
@@ -2332,6 +2332,9 @@ msgstr "Elk kanaal"
 
 msgid "Any conclusion"
 msgstr "Elke uitkomst"
+
+msgid "Any custom RRule"
+msgstr "Elke eigen RRule"
 
 msgid "Any data source"
 msgstr "Elke databron"
@@ -3680,9 +3683,6 @@ msgstr "Kies een map"
 
 msgid "Choose a parent directory"
 msgstr "Kies een bovenliggende map"
-
-msgid "Choose a preset such as Weekdays or write a custom RRule. One automation can have more than one schedule."
-msgstr "Kies een preset zoals Werkdagen of schrijf een eigen RRule. Een automatisering kan meer dan één schema hebben."
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Kies een project bij GitHub-issues voordat je een issue opent."
@@ -5512,6 +5512,9 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Aangemaakt"
 
+msgid "created · 2m ago"
+msgstr "aangemaakt · 2m geleden"
+
 #. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
@@ -6827,14 +6830,14 @@ msgstr "Elke agent draait in een eigen Git-worktree en branch, zodat werkbestand
 msgid "Every axis is carrying its weight for the next tier. Hold it and the tier follows."
 msgstr "Elke as draagt zijn deel bij voor het volgende niveau. Houd dit vast en het niveau volgt."
 
+msgid "Every day at <0>9:00 AM</0>"
+msgstr "Elke dag om <0>09:00</0>"
+
 msgid "Every day at 3:00 AM"
 msgstr "Elke dag om 03:00"
 
 msgid "Every Friday at 4pm, draft release notes from this week's merged PRs."
 msgstr "Elke vrijdag om 16.00 uur: stel release notes op uit de gemergede PR's van deze week."
-
-msgid "Every Friday at 5:00 PM"
-msgstr "Elke vrijdag om 17:00"
 
 msgid "Every minute"
 msgstr "Elke minuut"
@@ -6848,8 +6851,8 @@ msgstr "Alle doelen dragen bij aan de volgende trede. Gemeten over de laatste 30
 msgid "Every publish is a version"
 msgstr "Elke publicatie is een versie"
 
-msgid "Every scheduled run so far found a host online."
-msgstr "Tot nu toe vond elke geplande uitvoering een host online."
+msgid "Every run so far found a host online."
+msgstr "Tot nu toe vond elke run een host online."
 
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Elke ster op <0>{repoSlug}</0>, uitgezet sinds de lancering."
@@ -8481,6 +8484,9 @@ msgstr "HotkeyTooltip.tsx"
 msgid "Hourly"
 msgstr "Elk uur"
 
+msgid "Hourly, daily, or weekly"
+msgstr "Elk uur, dagelijks of wekelijks"
+
 msgid "Hover Card"
 msgstr "Hover Card"
 
@@ -8751,9 +8757,6 @@ msgstr "Verbeterde diff-viewer"
 
 msgid "in 14h"
 msgstr "over 14u"
-
-msgid "in 2d"
-msgstr "over 2d"
 
 msgid "in 3d"
 msgstr "over 3d"
@@ -10351,9 +10354,6 @@ msgstr "Monospace"
 msgid "Month"
 msgstr "Maand"
 
-msgid "monthly"
-msgstr "maandelijks"
-
 msgid "Monthly"
 msgstr "Maandelijks"
 
@@ -10730,6 +10730,9 @@ msgstr "Volgende release"
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "Volgende run {0}"
+
+msgid "Next run in 14h"
+msgstr "Volgende run over 14u"
 
 msgid "Next run in 3d"
 msgstr "Volgende run over 3d"
@@ -11370,8 +11373,8 @@ msgstr "Nog geen werkruimtes"
 msgid "No-Prompt Launch"
 msgstr "Start zonder prompt"
 
-msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and scheduled runs without tying the workflow to one provider."
-msgstr "Nee. Je agents blijven onafhankelijk; Superset is de orkestratielaag eromheen. Elke taak krijgt een geïsoleerde Git-worktree, blijvende sessies, diff-review en geplande runs, zonder je workflow aan één provider te binden."
+msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and automations that run on events or a schedule, without tying the workflow to one provider."
+msgstr "Nee. Je agents blijven onafhankelijk; Superset is de orkestratielaag eromheen. Elke taak krijgt een geïsoleerde Git-worktree, blijvende sessies, diff-review en automatiseringen die bij een gebeurtenis of volgens schema draaien, zonder je workflow aan één provider te binden."
 
 msgid "Nobody has joined the board yet."
 msgstr "Nog niemand doet mee aan de ranglijst."
@@ -11599,6 +11602,9 @@ msgstr "Op GitHub heeft het meer dan 15k sterren, meer dan 1.000 forks en meer d
 
 msgid "On our radar. Order and scope may change."
 msgstr "Op onze radar. Volgorde en omvang kunnen veranderen."
+
+msgid "on review request"
+msgstr "bij reviewverzoek"
 
 msgid "on the board"
 msgstr "op de ranglijst"
@@ -12689,6 +12695,9 @@ msgstr "Kies een werkruimte"
 msgid "Pick a workspace whose agent is waiting for your input, has finished since you last looked, or is still running"
 msgstr "Kies een werkruimte waarvan de agent op je invoer wacht, klaar is sinds je laatst keek of nog bezig is"
 
+msgid "Pick an event, like a review request or a new Sentry issue, or a schedule. One automation can have up to 25 triggers."
+msgstr "Kies een gebeurtenis, zoals een reviewverzoek of een nieuwe Sentry-issue, of een schema. Eén automatisering kan tot 25 triggers hebben."
+
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "Kies een icoon en een kleur, of upload een eigen afbeelding. Standaard is de avatar van de gekoppelde GitHub-eigenaar."
 
@@ -12892,6 +12901,9 @@ msgstr "PR gemerged en gesloten"
 
 msgid "PR ready for review"
 msgstr "PR is klaar voor review"
+
+msgid "PR review"
+msgstr "PR-review"
 
 msgid "PR review comment"
 msgstr "PR-reviewopmerking"
@@ -13297,6 +13309,9 @@ msgstr "Titel van pull request"
 msgid "Pull request…"
 msgstr "Pull request…"
 
+msgid "Pull request… › Review requested"
+msgstr "Pull request… › Review gevraagd"
+
 msgid "Pull requests"
 msgstr "Pull requests"
 
@@ -13322,9 +13337,6 @@ msgstr "Gepusht en een draft-PR geopend."
 
 msgid "Pushing..."
 msgstr "Bezig met pushen…"
-
-msgid "Put recurring work on a schedule"
-msgstr "Zet terugkerend werk op een schema"
 
 msgid "Put recurring work on a schedule or an event. Agents run on their own and land in a workspace for you to review."
 msgstr "Zet terugkerend werk op een schema of laat het starten door een gebeurtenis. Agents draaien vanzelf en zetten het resultaat klaar in een werkruimte om te beoordelen."
@@ -13694,9 +13706,6 @@ msgstr "Relaytoegang ingeschakeld, verbinden met de relay…"
 
 msgid "Release control"
 msgstr "Besturing loslaten"
-
-msgid "Release notes draft"
-msgstr "Concept van releasenotes"
 
 msgid "Release published"
 msgstr "Release gepubliceerd"
@@ -14384,11 +14393,20 @@ msgstr "Review in behandeling"
 msgid "Review pending changes."
 msgstr "Openstaande wijzigingen reviewen."
 
+msgid "Review PRs the moment you're asked"
+msgstr "Review PR's zodra het je gevraagd wordt"
+
 msgid "Review pull requests inside Superset: diff pane, agent-assisted review, act on comments directly."
 msgstr "Review pull requests in Superset: diff-paneel, review met hulp van een agent, direct reageren op opmerkingen."
 
 msgid "Review requested"
 msgstr "Review gevraagd"
+
+msgid "Review requested from <0>Me</0> in <1>acme/web</1> by <2>Anyone</2>"
+msgstr "Review gevraagd van <0>mij</0> in <1>acme/web</1> door <2>Iedereen</2>"
+
+msgid "Review requested on acme/web #482"
+msgstr "Review gevraagd op acme/web #482"
 
 msgid "Review required"
 msgstr "Review vereist"
@@ -14560,6 +14578,9 @@ msgstr "issues in werkruimtes uitvoeren"
 msgid "Run now"
 msgstr "Nu uitvoeren"
 
+msgid "Run on a schedule or on events, run on demand, pause, resume, and read logs."
+msgstr "Draai volgens schema of bij gebeurtenissen, op aanvraag, pauzeer, hervat en lees logs."
+
 msgid "Run script"
 msgstr "Script uitvoeren"
 
@@ -14640,6 +14661,9 @@ msgstr "Runs komen in een werkruimte terecht. Bekijk de diff, merge wat goed is.
 
 msgid "Runs on a device you choose"
 msgstr "Draait op een apparaat naar keuze"
+
+msgid "Runs that found no host online"
+msgstr "Runs die geen host online vonden"
 
 msgid "Runs that started their workspace in the last 7 days"
 msgstr "Uitvoeringen die hun workspace in de afgelopen 7 dagen hebben gestart"
@@ -14744,17 +14768,11 @@ msgstr "Plan een dagelijkse automatisering die om 9 uur nieuwe Linear-issues tri
 msgid "Schedule meetings"
 msgstr "Vergaderingen plannen"
 
-msgid "Schedule recurring runs, run on demand, pause, resume, and read logs."
-msgstr "Terugkerende runs inplannen, op verzoek uitvoeren, pauzeren, hervatten en logs lezen."
+msgid "Scheduled"
+msgstr "Gepland"
 
-msgid "Schedule."
-msgstr "Plan."
-
-msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
-msgstr "Geplande en door gebeurtenissen getriggerde agents (cron, GitHub-events, webhooks) met kant-en-klare sjablonen."
-
-msgid "Scheduled runs that found no host online"
-msgstr "Geplande uitvoeringen die geen host online vonden"
+msgid "Scheduled and event-triggered agents (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhooks) with ready-made templates."
+msgstr "Geplande en door gebeurtenissen getriggerde agents (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhooks) met kant-en-klare sjablonen."
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "Schema's herhalen — verwijder COUNT of UNTIL."
@@ -15295,6 +15313,9 @@ msgstr "Naar agent gestuurd"
 
 msgid "Sent to the pull request's workspace"
 msgstr "Verzonden naar de werkruimte van de pull request"
+
+msgid "Sentry issue created in <0>web</0> with level <1>Error</1>"
+msgstr "Sentry-issue aangemaakt in <0>web</0> met niveau <1>Error</1>"
 
 msgid "Sentry rejected the token"
 msgstr "Sentry heeft het token geweigerd"
@@ -16211,11 +16232,17 @@ msgstr "Start bij elke run een nieuwe agentsessie"
 msgid "Start a new chat"
 msgstr "Nieuwe chat starten"
 
+msgid "Start a run from any service"
+msgstr "Start een run vanuit elke dienst"
+
 msgid "Start a run when something happens."
 msgstr "Start een run wanneer er iets gebeurt."
 
 msgid "Start a session"
 msgstr "Sessie starten"
+
+msgid "Start agents on events or a schedule"
+msgstr "Start agents bij gebeurtenissen of volgens schema"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "Start agents, volg ze live en review de diff vanaf je iPhone of iPad. Je code blijft op je machines."
@@ -16240,6 +16267,9 @@ msgstr "Start gratis proefperiode"
 
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Begin gratis. Upgrade wanneer je team eruit groeit. Enterprise-plannen voor organisaties met geavanceerde eisen aan security en compliance."
+
+msgid "Start from a guide:"
+msgstr "Begin met een gids:"
 
 msgid "Start from a template"
 msgstr "Beginnen met een sjabloon"
@@ -16336,8 +16366,8 @@ msgstr "Bijsturen"
 msgid "Step {0} of 2"
 msgstr "Stap {0} van 2"
 
-msgid "Steps 3 and 4 repeat at every scheduled time."
-msgstr "Stap 3 en 4 herhalen zich op elk gepland tijdstip."
+msgid "Steps 3 and 4 repeat each time a trigger fires."
+msgstr "Stap 3 en 4 herhalen zich elke keer dat een trigger afgaat."
 
 msgid "Steps 3 and 4 repeat until the page is right."
 msgstr "Stap 3 en 4 herhalen zich tot de pagina klopt."
@@ -17921,9 +17951,6 @@ msgstr "Tier"
 msgid "Time"
 msgstr "Tijd"
 
-msgid "Times use your time zone."
-msgstr "Tijden gebruiken je tijdzone."
-
 msgid "Tinted"
 msgstr "Getint"
 
@@ -18152,6 +18179,9 @@ msgstr "Triageer mail en schrijf conceptantwoorden"
 msgid "Triage new issues"
 msgstr "Nieuwe issues triageren"
 
+msgid "Triage new Sentry issues"
+msgstr "Triage nieuwe Sentry-issues"
+
 msgid "triaging 12 new issues…"
 msgstr "12 nieuwe issues triageren…"
 
@@ -18172,6 +18202,9 @@ msgstr "Trigger automatiseringen vanuit berichten in Teams-kanalen."
 
 msgid "Trigger not found"
 msgstr "Trigger niet gevonden"
+
+msgid "Trigger."
+msgstr "Trigger."
 
 msgid "Triggers"
 msgstr "Triggers"
@@ -18226,6 +18259,9 @@ msgstr "Zet “Externe toegang tot dit apparaat via de relay toestaan” aan"
 
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "Zet Design aan en klik op het deel van de pagina dat je wilt wijzigen."
+
+msgid "Turn Slack bug reports into fixes"
+msgstr "Maak van bugmeldingen in Slack fixes"
 
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Zet Slack-gesprekken om in taken, laat agents draaien vanuit je werkruimte en houd teamgenoten op de hoogte waar het werk begint."
@@ -19145,8 +19181,8 @@ msgstr "Welk probleem wil je oplossen?"
 msgid "What shipped"
 msgstr "Wat er is uitgebracht"
 
-msgid "What should run on a schedule?"
-msgstr "Wat moet er volgens een schema draaien?"
+msgid "What should run on its own?"
+msgstr "Wat moet vanzelf draaien?"
 
 msgid "What should the page show?"
 msgstr "Wat moet de pagina laten zien?"

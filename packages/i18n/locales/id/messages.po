@@ -1279,14 +1279,14 @@ msgstr "⌘⇧ klik"
 msgid "● Online"
 msgstr "● Online"
 
+msgid "✓ 12m ago"
+msgstr "✓ 12m lalu"
+
 msgid "✓ 1d ago"
 msgstr "✓ 1h lalu"
 
 msgid "✓ 2h ago"
 msgstr "✓ 2j lalu"
-
-msgid "✓ 3d ago"
-msgstr "✓ 3h lalu"
 
 msgid "${balance} credits"
 msgstr "kredit ${balance}"
@@ -1317,6 +1317,9 @@ msgstr "10j lalu"
 
 msgid "12 packages have a newer version"
 msgstr "12 paket punya versi yang lebih baru"
+
+msgid "12m ago"
+msgstr "12m lalu"
 
 msgid "15 min"
 msgstr "15 mnt"
@@ -1369,9 +1372,6 @@ msgstr "3+ alur kerja bersamaan per engineer"
 msgid "30D"
 msgstr "30H"
 
-msgid "3d ago"
-msgstr "3h lalu"
-
 msgid "4 min ago"
 msgstr "4 mnt lalu"
 
@@ -1392,9 +1392,6 @@ msgstr "5 hari"
 
 msgid "55 call sites pass {code}"
 msgstr "55 titik pemanggilan meneruskan {code}"
-
-msgid "5d ago"
-msgstr "5h lalu"
 
 msgid "7:1 (AAA)"
 msgstr "7:1 (AAA)"
@@ -1830,6 +1827,9 @@ msgstr "Tambahkan ke sidebar"
 
 msgid "Add to workspace"
 msgstr "Tambahkan ke workspace"
+
+msgid "Add Trigger"
+msgstr "Tambah Pemicu"
 
 msgid "Add your own terminal agent to this device."
 msgstr "Tambahkan agen terminal Anda sendiri ke perangkat ini."
@@ -2332,6 +2332,9 @@ msgstr "Channel mana pun"
 
 msgid "Any conclusion"
 msgstr "Kesimpulan apa pun"
+
+msgid "Any custom RRule"
+msgstr "RRule kustom apa pun"
 
 msgid "Any data source"
 msgstr "Sumber data mana pun"
@@ -3680,9 +3683,6 @@ msgstr "Pilih folder"
 
 msgid "Choose a parent directory"
 msgstr "Pilih direktori induk"
-
-msgid "Choose a preset such as Weekdays or write a custom RRule. One automation can have more than one schedule."
-msgstr "Pilih preset seperti Hari kerja atau tulis RRule kustom. Satu otomatisasi bisa punya lebih dari satu jadwal."
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Pilih proyek dari issue GitHub sebelum membuka sebuah issue."
@@ -5512,6 +5512,9 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Dibuat"
 
+msgid "created · 2m ago"
+msgstr "dibuat · 2m lalu"
+
 #. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
@@ -6827,14 +6830,14 @@ msgstr "Setiap agen berjalan di worktree dan cabang Git masing-masing, sehingga 
 msgid "Every axis is carrying its weight for the next tier. Hold it and the tier follows."
 msgstr "Setiap sumbu sudah menopang untuk tingkat berikutnya. Pertahankan, tingkatnya akan menyusul."
 
+msgid "Every day at <0>9:00 AM</0>"
+msgstr "Setiap hari pukul <0>09.00</0>"
+
 msgid "Every day at 3:00 AM"
 msgstr "Setiap hari pukul 03.00"
 
 msgid "Every Friday at 4pm, draft release notes from this week's merged PRs."
 msgstr "Tiap Jumat jam 4 sore, susun draf catatan rilis dari PR yang di-merge minggu ini."
-
-msgid "Every Friday at 5:00 PM"
-msgstr "Setiap Jumat pukul 17.00"
 
 msgid "Every minute"
 msgstr "Tiap menit"
@@ -6848,8 +6851,8 @@ msgstr "Semua sasaran sudah berkontribusi sesuai bobotnya untuk tingkat berikutn
 msgid "Every publish is a version"
 msgstr "Setiap publikasi adalah satu versi"
 
-msgid "Every scheduled run so far found a host online."
-msgstr "Sejauh ini setiap eksekusi terjadwal menemukan host yang online."
+msgid "Every run so far found a host online."
+msgstr "Sejauh ini setiap run menemukan host yang online."
 
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Tiap star di <0>{repoSlug}</0>, diplot sejak peluncuran."
@@ -8481,6 +8484,9 @@ msgstr "HotkeyTooltip.tsx"
 msgid "Hourly"
 msgstr "Tiap jam"
 
+msgid "Hourly, daily, or weekly"
+msgstr "Per jam, harian, atau mingguan"
+
 msgid "Hover Card"
 msgstr "Hover Card"
 
@@ -8751,9 +8757,6 @@ msgstr "Penampil diff yang lebih baik"
 
 msgid "in 14h"
 msgstr "dalam 14j"
-
-msgid "in 2d"
-msgstr "dalam 2h"
 
 msgid "in 3d"
 msgstr "dalam 3h"
@@ -10351,9 +10354,6 @@ msgstr "Monospace"
 msgid "Month"
 msgstr "Bulan"
 
-msgid "monthly"
-msgstr "bulanan"
-
 msgid "Monthly"
 msgstr "Bulanan"
 
@@ -10730,6 +10730,9 @@ msgstr "Rilis berikutnya"
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "Run berikutnya {0}"
+
+msgid "Next run in 14h"
+msgstr "Run berikutnya dalam 14j"
 
 msgid "Next run in 3d"
 msgstr "Run berikutnya dalam 3h"
@@ -11370,8 +11373,8 @@ msgstr "Belum ada workspace"
 msgid "No-Prompt Launch"
 msgstr "Peluncuran Tanpa Prompt"
 
-msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and scheduled runs without tying the workflow to one provider."
-msgstr "Tidak. Agen Anda tetap independen; Superset adalah lapisan orkestrasi di sekitarnya. Tiap tugas mendapat worktree Git terisolasi, sesi yang persisten, review diff, dan run terjadwal tanpa mengikat alur kerja ke satu penyedia."
+msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and automations that run on events or a schedule, without tying the workflow to one provider."
+msgstr "Tidak. Agen Anda tetap independen; Superset adalah lapisan orkestrasi di sekitarnya. Tiap tugas mendapat worktree Git terisolasi, sesi yang persisten, review diff, dan otomatisasi yang berjalan saat ada event atau sesuai jadwal tanpa mengikat alur kerja ke satu penyedia."
 
 msgid "Nobody has joined the board yet."
 msgstr "Belum ada yang bergabung ke papan ini."
@@ -11599,6 +11602,9 @@ msgstr "Di GitHub, Superset memiliki lebih dari 15k bintang, lebih dari 1.000 fo
 
 msgid "On our radar. Order and scope may change."
 msgstr "Ada di radar kami. Urutan dan cakupannya bisa berubah."
+
+msgid "on review request"
+msgstr "saat review diminta"
 
 msgid "on the board"
 msgstr "di papan ini"
@@ -12689,6 +12695,9 @@ msgstr "Pilih workspace"
 msgid "Pick a workspace whose agent is waiting for your input, has finished since you last looked, or is still running"
 msgstr "Pilih workspace yang agennya menunggu input Anda, sudah selesai sejak terakhir Anda melihatnya, atau masih berjalan"
 
+msgid "Pick an event, like a review request or a new Sentry issue, or a schedule. One automation can have up to 25 triggers."
+msgstr "Pilih event, seperti permintaan review atau issue Sentry baru, atau jadwal. Satu otomatisasi bisa punya hingga 25 pemicu."
+
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "Pilih ikon dan warna, atau unggah gambar kustom. Bawaannya memakai avatar pemilik GitHub yang ditautkan."
 
@@ -12892,6 +12901,9 @@ msgstr "PR Di-merge dan Ditutup"
 
 msgid "PR ready for review"
 msgstr "PR siap ditinjau"
+
+msgid "PR review"
+msgstr "Review PR"
 
 msgid "PR review comment"
 msgstr "Komentar review PR"
@@ -13297,6 +13309,9 @@ msgstr "Judul pull request"
 msgid "Pull request…"
 msgstr "Pull request…"
 
+msgid "Pull request… › Review requested"
+msgstr "Pull request… › Review diminta"
+
 msgid "Pull requests"
 msgstr "Pull request"
 
@@ -13322,9 +13337,6 @@ msgstr "Sudah di-push dan membuka draf PR."
 
 msgid "Pushing..."
 msgstr "Melakukan push…"
-
-msgid "Put recurring work on a schedule"
-msgstr "Jadwalkan pekerjaan yang berulang"
 
 msgid "Put recurring work on a schedule or an event. Agents run on their own and land in a workspace for you to review."
 msgstr "Jadwalkan pekerjaan berulang berdasarkan waktu atau picu lewat event. Agen berjalan sendiri dan hasilnya mendarat di sebuah workspace untuk Anda tinjau."
@@ -13694,9 +13706,6 @@ msgstr "Akses relay aktif, menghubungkan ke relay…"
 
 msgid "Release control"
 msgstr "Lepaskan kendali"
-
-msgid "Release notes draft"
-msgstr "Draf catatan rilis"
 
 msgid "Release published"
 msgstr "Rilis dipublikasikan"
@@ -14384,11 +14393,20 @@ msgstr "Review tertunda"
 msgid "Review pending changes."
 msgstr "Review perubahan yang tertunda."
 
+msgid "Review PRs the moment you're asked"
+msgstr "Review PR begitu Anda diminta"
+
 msgid "Review pull requests inside Superset: diff pane, agent-assisted review, act on comments directly."
 msgstr "Review pull request di dalam Superset: panel diff, review dibantu agen, tindak lanjuti komentar langsung."
 
 msgid "Review requested"
 msgstr "Review diminta"
+
+msgid "Review requested from <0>Me</0> in <1>acme/web</1> by <2>Anyone</2>"
+msgstr "Review diminta dari <0>Saya</0> di <1>acme/web</1> oleh <2>Siapa pun</2>"
+
+msgid "Review requested on acme/web #482"
+msgstr "Review diminta di acme/web #482"
 
 msgid "Review required"
 msgstr "Review diperlukan"
@@ -14560,6 +14578,9 @@ msgstr "menjalankan issue di workspace"
 msgid "Run now"
 msgstr "Jalankan sekarang"
 
+msgid "Run on a schedule or on events, run on demand, pause, resume, and read logs."
+msgstr "Jalankan sesuai jadwal atau saat ada event, sesuai permintaan, jeda, lanjutkan, dan baca log."
+
 msgid "Run script"
 msgstr "Jalankan skrip"
 
@@ -14640,6 +14661,9 @@ msgstr "Run mendarat di sebuah workspace. Review diff-nya, merge yang bagus."
 
 msgid "Runs on a device you choose"
 msgstr "Berjalan di perangkat pilihan Anda"
+
+msgid "Runs that found no host online"
+msgstr "Run yang tidak menemukan host online"
 
 msgid "Runs that started their workspace in the last 7 days"
 msgstr "Eksekusi yang memulai workspace-nya dalam 7 hari terakhir"
@@ -14744,17 +14768,11 @@ msgstr "Jadwalkan otomatisasi harian yang mentriase issue Linear baru jam 9 pagi
 msgid "Schedule meetings"
 msgstr "Jadwalkan rapat"
 
-msgid "Schedule recurring runs, run on demand, pause, resume, and read logs."
-msgstr "Menjadwalkan run berulang, menjalankan sesuai permintaan, menjeda, melanjutkan, dan membaca log."
+msgid "Scheduled"
+msgstr "Terjadwal"
 
-msgid "Schedule."
-msgstr "Jadwalkan."
-
-msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
-msgstr "Agen terjadwal dan terpicu event (cron, event GitHub, webhook) dengan templat siap pakai."
-
-msgid "Scheduled runs that found no host online"
-msgstr "Eksekusi terjadwal yang tidak menemukan host online"
+msgid "Scheduled and event-triggered agents (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhooks) with ready-made templates."
+msgstr "Agen terjadwal dan terpicu event (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhook) dengan templat siap pakai."
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "Jadwal harus berulang — hapus COUNT atau UNTIL."
@@ -15295,6 +15313,9 @@ msgstr "Dikirim ke agen"
 
 msgid "Sent to the pull request's workspace"
 msgstr "Dikirim ke workspace pull request"
+
+msgid "Sentry issue created in <0>web</0> with level <1>Error</1>"
+msgstr "Issue Sentry dibuat di <0>web</0> dengan level <1>Error</1>"
 
 msgid "Sentry rejected the token"
 msgstr "Sentry menolak tokennya"
@@ -16211,11 +16232,17 @@ msgstr "Mulai sesi agen baru setiap kali dijalankan"
 msgid "Start a new chat"
 msgstr "Mulai chat baru"
 
+msgid "Start a run from any service"
+msgstr "Mulai run dari layanan apa pun"
+
 msgid "Start a run when something happens."
 msgstr "Mulai run saat sesuatu terjadi."
 
 msgid "Start a session"
 msgstr "Mulai sesi"
+
+msgid "Start agents on events or a schedule"
+msgstr "Jalankan agen saat ada event atau sesuai jadwal"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "Mulai agen, ikuti secara langsung, dan tinjau diff dari iPhone atau iPad Anda. Kode Anda tetap di mesin Anda."
@@ -16240,6 +16267,9 @@ msgstr "Mulai uji coba gratis"
 
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Mulai gratis. Upgrade saat tim Anda membutuhkan lebih. Paket enterprise untuk organisasi dengan kebutuhan keamanan dan kepatuhan tingkat lanjut."
+
+msgid "Start from a guide:"
+msgstr "Mulai dari panduan:"
 
 msgid "Start from a template"
 msgstr "Mulai dari templat"
@@ -16336,8 +16366,8 @@ msgstr "Arahkan"
 msgid "Step {0} of 2"
 msgstr "Langkah {0} dari 2"
 
-msgid "Steps 3 and 4 repeat at every scheduled time."
-msgstr "Langkah 3 dan 4 berulang pada setiap waktu terjadwal."
+msgid "Steps 3 and 4 repeat each time a trigger fires."
+msgstr "Langkah 3 dan 4 berulang setiap kali pemicu aktif."
 
 msgid "Steps 3 and 4 repeat until the page is right."
 msgstr "Langkah 3 dan 4 diulang sampai halamannya pas."
@@ -17921,9 +17951,6 @@ msgstr "Tingkat"
 msgid "Time"
 msgstr "Waktu"
 
-msgid "Times use your time zone."
-msgstr "Waktu memakai zona waktu Anda."
-
 msgid "Tinted"
 msgstr "Berwarna"
 
@@ -18152,6 +18179,9 @@ msgstr "Triase email dan buat draf balasan"
 msgid "Triage new issues"
 msgstr "Triase issue baru"
 
+msgid "Triage new Sentry issues"
+msgstr "Triase issue Sentry baru"
+
 msgid "triaging 12 new issues…"
 msgstr "mentriase 12 issue baru…"
 
@@ -18172,6 +18202,9 @@ msgstr "Picu otomatisasi dari pesan channel Teams."
 
 msgid "Trigger not found"
 msgstr "Pemicu tidak ditemukan"
+
+msgid "Trigger."
+msgstr "Pemicu."
 
 msgid "Triggers"
 msgstr "Pemicu"
@@ -18226,6 +18259,9 @@ msgstr "Aktifkan “Izinkan akses jarak jauh ke perangkat ini melalui relay”"
 
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "Aktifkan Desain dan klik bagian halaman yang ingin Anda ubah."
+
+msgid "Turn Slack bug reports into fixes"
+msgstr "Ubah laporan bug di Slack menjadi perbaikan"
 
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Ubah percakapan Slack menjadi tugas, jalankan agen dari workspace Anda, dan libatkan rekan tim di tempat pekerjaan dimulai."
@@ -19145,8 +19181,8 @@ msgstr "Masalah apa yang ingin Anda selesaikan?"
 msgid "What shipped"
 msgstr "Yang telah dirilis"
 
-msgid "What should run on a schedule?"
-msgstr "Apa yang harus dijalankan terjadwal?"
+msgid "What should run on its own?"
+msgstr "Apa yang harus berjalan sendiri?"
 
 msgid "What should the page show?"
 msgstr "Apa yang harus ditampilkan halaman ini?"

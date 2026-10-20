@@ -1279,14 +1279,14 @@ msgstr "⌘⇧點選"
 msgid "● Online"
 msgstr "● 線上"
 
+msgid "✓ 12m ago"
+msgstr "✓ 12分鐘前"
+
 msgid "✓ 1d ago"
 msgstr "✓ 1天前"
 
 msgid "✓ 2h ago"
 msgstr "✓ 2小時前"
-
-msgid "✓ 3d ago"
-msgstr "✓ 3天前"
 
 msgid "${balance} credits"
 msgstr "${balance}額度"
@@ -1317,6 +1317,9 @@ msgstr "10小時前"
 
 msgid "12 packages have a newer version"
 msgstr "12 個套件有新版本"
+
+msgid "12m ago"
+msgstr "12分鐘前"
 
 msgid "15 min"
 msgstr "15 分鐘"
@@ -1369,9 +1372,6 @@ msgstr "每位工程師3條以上並行工作流"
 msgid "30D"
 msgstr "30天"
 
-msgid "3d ago"
-msgstr "3天前"
-
 msgid "4 min ago"
 msgstr "4 分鐘前"
 
@@ -1392,9 +1392,6 @@ msgstr "5 天"
 
 msgid "55 call sites pass {code}"
 msgstr "55 個呼叫位置傳入 {code}"
-
-msgid "5d ago"
-msgstr "5天前"
 
 msgid "7:1 (AAA)"
 msgstr "7:1 (AAA)"
@@ -1830,6 +1827,9 @@ msgstr "新增到側邊欄"
 
 msgid "Add to workspace"
 msgstr "新增到工作區"
+
+msgid "Add Trigger"
+msgstr "新增觸發器"
 
 msgid "Add your own terminal agent to this device."
 msgstr "向此裝置新增你自己的終端代理程式。"
@@ -2332,6 +2332,9 @@ msgstr "任意頻道"
 
 msgid "Any conclusion"
 msgstr "任意結論"
+
+msgid "Any custom RRule"
+msgstr "任意自訂 RRule"
 
 msgid "Any data source"
 msgstr "任意資料來源"
@@ -3680,9 +3683,6 @@ msgstr "選擇資料夾"
 
 msgid "Choose a parent directory"
 msgstr "選擇父目錄"
-
-msgid "Choose a preset such as Weekdays or write a custom RRule. One automation can have more than one schedule."
-msgstr "選擇「平日」等預設，或自行撰寫 RRule。一個自動化可以有多個計劃。"
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "開啟議題前，請先在GitHub議題中選擇一個專案。"
@@ -5512,6 +5512,9 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "已建立"
 
+msgid "created · 2m ago"
+msgstr "已建立 · 2分鐘前"
+
 #. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
@@ -6827,14 +6830,14 @@ msgstr "每個代理都在各自的 Git worktree 和分支中執行，讓工作�
 msgid "Every axis is carrying its weight for the next tier. Hold it and the tier follows."
 msgstr "每個維度都在為下一等級出力。保持住，等級自然會來。"
 
+msgid "Every day at <0>9:00 AM</0>"
+msgstr "每天 <0>上午 9:00</0>"
+
 msgid "Every day at 3:00 AM"
 msgstr "每天凌晨 3:00"
 
 msgid "Every Friday at 4pm, draft release notes from this week's merged PRs."
 msgstr "每週五下午4點，根據本週合併的PR起草釋出說明。"
-
-msgid "Every Friday at 5:00 PM"
-msgstr "每週五下午 5:00"
 
 msgid "Every minute"
 msgstr "每分鐘"
@@ -6848,8 +6851,8 @@ msgstr "所有目標都在為下一階發力。以最近 30 天計算。"
 msgid "Every publish is a version"
 msgstr "每次發佈都是一個版本"
 
-msgid "Every scheduled run so far found a host online."
-msgstr "目前每次排程執行都找到了線上主機。"
+msgid "Every run so far found a host online."
+msgstr "到目前為止，每次執行都找到了線上主機。"
 
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "<0>{repoSlug}</0>的每一個星標，自發布起繪製。"
@@ -8481,6 +8484,9 @@ msgstr "HotkeyTooltip.tsx"
 msgid "Hourly"
 msgstr "每小時"
 
+msgid "Hourly, daily, or weekly"
+msgstr "每小時、每天或每週"
+
 msgid "Hover Card"
 msgstr "懸浮卡片"
 
@@ -8751,9 +8757,6 @@ msgstr "更好的差異檢視器"
 
 msgid "in 14h"
 msgstr "14小時後"
-
-msgid "in 2d"
-msgstr "2天後"
 
 msgid "in 3d"
 msgstr "3天後"
@@ -10351,9 +10354,6 @@ msgstr "等寬字型"
 msgid "Month"
 msgstr "月"
 
-msgid "monthly"
-msgstr "每月"
-
 msgid "Monthly"
 msgstr "按月"
 
@@ -10730,6 +10730,9 @@ msgstr "下一個版本"
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "下次執行{0}"
+
+msgid "Next run in 14h"
+msgstr "14小時後下次執行"
 
 msgid "Next run in 3d"
 msgstr "3天後下次執行"
@@ -11370,8 +11373,8 @@ msgstr "暫無工作區"
 msgid "No-Prompt Launch"
 msgstr "無提示詞啟動"
 
-msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and scheduled runs without tying the workflow to one provider."
-msgstr "不是。你的代理程式保持獨立，Superset是圍繞它們的編排層。每個任務都有隔離的Git worktree、持久會話、差異審查和定時執行，工作流不繫結任何一家提供商。"
+msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and automations that run on events or a schedule, without tying the workflow to one provider."
+msgstr "不是。你的代理程式保持獨立，Superset是圍繞它們的編排層。每個任務都有隔離的Git worktree、持久會話、差異審查，以及依事件或計劃執行的自動化，工作流不繫結任何一家提供商。"
 
 msgid "Nobody has joined the board yet."
 msgstr "還沒有人加入榜單。"
@@ -11599,6 +11602,9 @@ msgstr "Superset 在 GitHub 上擁有 15k+ 顆星、1,000+ 次 fork 與 100+ 位
 
 msgid "On our radar. Order and scope may change."
 msgstr "在我們的視野內。順序和範圍可能會變。"
+
+msgid "on review request"
+msgstr "收到審查請求時"
 
 msgid "on the board"
 msgstr "在榜上"
@@ -12689,6 +12695,9 @@ msgstr "選擇一個工作區"
 msgid "Pick a workspace whose agent is waiting for your input, has finished since you last looked, or is still running"
 msgstr "選擇一個工作區：其代理正在等待你的輸入、自你上次查看後已完成，或仍在執行"
 
+msgid "Pick an event, like a review request or a new Sentry issue, or a schedule. One automation can have up to 25 triggers."
+msgstr "選擇一個事件（例如審查請求或新的 Sentry 問題）或一個計劃。一個自動化最多可以有 25 個觸發器。"
+
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "選擇圖示和顏色，或上傳自訂圖片。預設使用關聯的GitHub擁有者頭像。"
 
@@ -12892,6 +12901,9 @@ msgstr "PR已合併並關閉"
 
 msgid "PR ready for review"
 msgstr "PR已可審查"
+
+msgid "PR review"
+msgstr "PR 審查"
 
 msgid "PR review comment"
 msgstr "PR審查評論"
@@ -13297,6 +13309,9 @@ msgstr "拉取請求標題"
 msgid "Pull request…"
 msgstr "拉取請求…"
 
+msgid "Pull request… › Review requested"
+msgstr "拉取請求… › 已請求審查"
+
 msgid "Pull requests"
 msgstr "拉取請求"
 
@@ -13322,9 +13337,6 @@ msgstr "已推送並開了一個草稿PR。"
 
 msgid "Pushing..."
 msgstr "正在推送…"
-
-msgid "Put recurring work on a schedule"
-msgstr "把重複的活兒排進日程"
 
 msgid "Put recurring work on a schedule or an event. Agents run on their own and land in a workspace for you to review."
 msgstr "將重複性工作排入排程，或設定為由事件觸發。代理程式會自行執行，並將結果放入工作區供你審查。"
@@ -13694,9 +13706,6 @@ msgstr "已啟用中繼存取，正在連線中繼…"
 
 msgid "Release control"
 msgstr "釋放控制"
-
-msgid "Release notes draft"
-msgstr "發布說明草稿"
 
 msgid "Release published"
 msgstr "版本已發布"
@@ -14384,11 +14393,20 @@ msgstr "待審查"
 msgid "Review pending changes."
 msgstr "審查待處理的更改。"
 
+msgid "Review PRs the moment you're asked"
+msgstr "一被請求就審查 PR"
+
 msgid "Review pull requests inside Superset: diff pane, agent-assisted review, act on comments directly."
 msgstr "在Superset裡審查拉取請求：差異面板、代理程式輔助審查、直接處理評論。"
 
 msgid "Review requested"
 msgstr "已請求審查"
+
+msgid "Review requested from <0>Me</0> in <1>acme/web</1> by <2>Anyone</2>"
+msgstr "<2>任何人</2>在<1>acme/web</1>中請求<0>我</0>審查"
+
+msgid "Review requested on acme/web #482"
+msgstr "acme/web #482 已請求審查"
 
 msgid "Review required"
 msgstr "需要審查"
@@ -14560,6 +14578,9 @@ msgstr "在工作區中執行議題"
 msgid "Run now"
 msgstr "立即執行"
 
+msgid "Run on a schedule or on events, run on demand, pause, resume, and read logs."
+msgstr "依計劃或事件執行、隨需執行、暫停、恢復並查看日誌。"
+
 msgid "Run script"
 msgstr "執行指令碼"
 
@@ -14640,6 +14661,9 @@ msgstr "執行結果會落在一個工作區裡。審查差異，把合適的合
 
 msgid "Runs on a device you choose"
 msgstr "在你選擇的裝置上執行"
+
+msgid "Runs that found no host online"
+msgstr "未找到線上主機的執行"
 
 msgid "Runs that started their workspace in the last 7 days"
 msgstr "過去 7 天內啟動了工作區的執行"
@@ -14744,17 +14768,11 @@ msgstr "安排一個每天上午9點分類新Linear議題的自動化"
 msgid "Schedule meetings"
 msgstr "安排會議"
 
-msgid "Schedule recurring runs, run on demand, pause, resume, and read logs."
-msgstr "安排定時執行、按需執行、暫停、恢復並讀取日誌。"
+msgid "Scheduled"
+msgstr "定時"
 
-msgid "Schedule."
-msgstr "計劃。"
-
-msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
-msgstr "定時和事件觸發的代理程式（cron、GitHub事件、webhook），並提供現成模板。"
-
-msgid "Scheduled runs that found no host online"
-msgstr "未找到線上主機的排程執行"
+msgid "Scheduled and event-triggered agents (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhooks) with ready-made templates."
+msgstr "定時和事件觸發的代理程式（cron、GitHub、Slack、Linear、Sentry、Notion、Microsoft Teams、webhook），並提供現成模板。"
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "計劃會重複 — 請移除COUNT或UNTIL。"
@@ -15295,6 +15313,9 @@ msgstr "已傳送給代理程式"
 
 msgid "Sent to the pull request's workspace"
 msgstr "已傳送至拉取請求的工作區"
+
+msgid "Sentry issue created in <0>web</0> with level <1>Error</1>"
+msgstr "在<0>web</0>中建立了等級為<1>Error</1>的 Sentry 問題"
 
 msgid "Sentry rejected the token"
 msgstr "Sentry拒絕了該權杖"
@@ -16211,11 +16232,17 @@ msgstr "每次執行都啟動新的代理程式工作階段"
 msgid "Start a new chat"
 msgstr "開始新的聊天"
 
+msgid "Start a run from any service"
+msgstr "從任何服務開始執行"
+
 msgid "Start a run when something happens."
 msgstr "有事發生時即開始執行。"
 
 msgid "Start a session"
 msgstr "開始一個會話"
+
+msgid "Start agents on events or a schedule"
+msgstr "依事件或計劃啟動代理程式"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "在 iPhone 或 iPad 上啟動 agent、即時追蹤並審查差異。你的程式碼始終留在你的機器上。"
@@ -16240,6 +16267,9 @@ msgstr "開始免費試用"
 
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "免費開始。團隊用不夠時再升級。企業方案面向有進階安全與合規需求的組織。"
+
+msgid "Start from a guide:"
+msgstr "從指南開始："
 
 msgid "Start from a template"
 msgstr "從模板開始"
@@ -16336,8 +16366,8 @@ msgstr "引導"
 msgid "Step {0} of 2"
 msgstr "第{0}步，共2步"
 
-msgid "Steps 3 and 4 repeat at every scheduled time."
-msgstr "第 3 步和第 4 步會在每個計劃時間重複。"
+msgid "Steps 3 and 4 repeat each time a trigger fires."
+msgstr "每次觸發器觸發時都會重複第 3 和第 4 步。"
 
 msgid "Steps 3 and 4 repeat until the page is right."
 msgstr "步驟 3 和 4 會重複，直到頁面滿意為止。"
@@ -17921,9 +17951,6 @@ msgstr "等級"
 msgid "Time"
 msgstr "時間"
 
-msgid "Times use your time zone."
-msgstr "時間依你的時區顯示。"
-
 msgid "Tinted"
 msgstr "色調"
 
@@ -18152,6 +18179,9 @@ msgstr "分類郵件並草擬回覆"
 msgid "Triage new issues"
 msgstr "分類新議題"
 
+msgid "Triage new Sentry issues"
+msgstr "分診新的 Sentry 問題"
+
 msgid "triaging 12 new issues…"
 msgstr "正在分類12個新議題…"
 
@@ -18172,6 +18202,9 @@ msgstr "用Teams頻道訊息觸發自動化。"
 
 msgid "Trigger not found"
 msgstr "未找到觸發器"
+
+msgid "Trigger."
+msgstr "觸發。"
 
 msgid "Triggers"
 msgstr "觸發器"
@@ -18226,6 +18259,9 @@ msgstr "開啟「允許透過中繼遠端存取此裝置」"
 
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "開啟「設計」，然後點擊頁面上想修改的部分。"
+
+msgid "Turn Slack bug reports into fixes"
+msgstr "把 Slack 裡的 bug 回報變成修復"
 
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "把Slack對話變成任務，從工作區執行代理程式，讓隊友在工作開始的地方保持同步。"
@@ -19145,8 +19181,8 @@ msgstr "你想解決什麼問題？"
 msgid "What shipped"
 msgstr "已發布內容"
 
-msgid "What should run on a schedule?"
-msgstr "想讓什麼定時執行？"
+msgid "What should run on its own?"
+msgstr "什麼應該自動執行？"
 
 msgid "What should the page show?"
 msgstr "頁面應顯示什麼?"

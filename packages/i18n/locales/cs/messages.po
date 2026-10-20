@@ -1279,14 +1279,14 @@ msgstr "⌘⇧ kliknutí"
 msgid "● Online"
 msgstr "● Online"
 
+msgid "✓ 12m ago"
+msgstr "✓ před 12 min"
+
 msgid "✓ 1d ago"
 msgstr "✓ před 1 d"
 
 msgid "✓ 2h ago"
 msgstr "✓ před 2 h"
-
-msgid "✓ 3d ago"
-msgstr "✓ před 3 d"
 
 msgid "${balance} credits"
 msgstr "{balance} $ kreditů"
@@ -1317,6 +1317,9 @@ msgstr "před 10 h"
 
 msgid "12 packages have a newer version"
 msgstr "12 balíčků má novější verzi"
+
+msgid "12m ago"
+msgstr "před 12 min"
 
 msgid "15 min"
 msgstr "15 min"
@@ -1369,9 +1372,6 @@ msgstr "3+ souběžné proudy práce na inženýra"
 msgid "30D"
 msgstr "30 d"
 
-msgid "3d ago"
-msgstr "před 3 d"
-
 msgid "4 min ago"
 msgstr "před 4 min"
 
@@ -1392,9 +1392,6 @@ msgstr "5 dní"
 
 msgid "55 call sites pass {code}"
 msgstr "55 míst volání předává {code}"
-
-msgid "5d ago"
-msgstr "před 5 d"
 
 msgid "7:1 (AAA)"
 msgstr "7:1 (AAA)"
@@ -1830,6 +1827,9 @@ msgstr "Přidat do postranního panelu"
 
 msgid "Add to workspace"
 msgstr "Přidat do pracovního prostoru"
+
+msgid "Add Trigger"
+msgstr "Přidat spouštěč"
 
 msgid "Add your own terminal agent to this device."
 msgstr "Přidejte na toto zařízení vlastního terminálového agenta."
@@ -2332,6 +2332,9 @@ msgstr "Jakýkoli kanál"
 
 msgid "Any conclusion"
 msgstr "Jakýkoli výsledek"
+
+msgid "Any custom RRule"
+msgstr "Libovolné vlastní RRule"
 
 msgid "Any data source"
 msgstr "Jakýkoli zdroj dat"
@@ -3680,9 +3683,6 @@ msgstr "Vyberte složku"
 
 msgid "Choose a parent directory"
 msgstr "Vyberte nadřazený adresář"
-
-msgid "Choose a preset such as Weekdays or write a custom RRule. One automation can have more than one schedule."
-msgstr "Vyberte předvolbu, například Pracovní dny, nebo napište vlastní RRule. Jedna automatizace může mít více plánů."
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Než otevřete issue, vyberte projekt v sekci GitHub issues."
@@ -5512,6 +5512,9 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Vytvořeno"
 
+msgid "created · 2m ago"
+msgstr "vytvořeno · před 2 min"
+
 #. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
@@ -6827,14 +6830,14 @@ msgstr "Každý agent běží ve vlastním Git worktree a větvi, takže pracovn
 msgid "Every axis is carrying its weight for the next tier. Hold it and the tier follows."
 msgstr "Každá osa táhne na další úroveň. Udržte to a úroveň přijde sama."
 
+msgid "Every day at <0>9:00 AM</0>"
+msgstr "Každý den v <0>9:00</0>"
+
 msgid "Every day at 3:00 AM"
 msgstr "Každý den ve 3:00"
 
 msgid "Every Friday at 4pm, draft release notes from this week's merged PRs."
 msgstr "Každý pátek v 16:00 sepiš poznámky k vydání ze sloučených PR za tento týden."
-
-msgid "Every Friday at 5:00 PM"
-msgstr "Každý pátek v 17:00"
 
 msgid "Every minute"
 msgstr "Každou minutu"
@@ -6848,8 +6851,8 @@ msgstr "Všechny cíle táhnou k dalšímu stupni. Měřeno za posledních 30 dn
 msgid "Every publish is a version"
 msgstr "Každé zveřejnění je verze"
 
-msgid "Every scheduled run so far found a host online."
-msgstr "Každé naplánované spuštění zatím našlo online hostitele."
+msgid "Every run so far found a host online."
+msgstr "Zatím každý běh našel hostitele online."
 
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Každá hvězda na <0>{repoSlug}</0>, vynesená od spuštění."
@@ -8481,6 +8484,9 @@ msgstr "HotkeyTooltip.tsx"
 msgid "Hourly"
 msgstr "Každou hodinu"
 
+msgid "Hourly, daily, or weekly"
+msgstr "Každou hodinu, denně nebo týdně"
+
 msgid "Hover Card"
 msgstr "Hover Card"
 
@@ -8751,9 +8757,6 @@ msgstr "Vylepšený prohlížeč rozdílů"
 
 msgid "in 14h"
 msgstr "za 14 h"
-
-msgid "in 2d"
-msgstr "za 2 d"
 
 msgid "in 3d"
 msgstr "za 3 d"
@@ -10351,9 +10354,6 @@ msgstr "Neproporcionální"
 msgid "Month"
 msgstr "Měsíc"
 
-msgid "monthly"
-msgstr "měsíčně"
-
 msgid "Monthly"
 msgstr "Měsíčně"
 
@@ -10730,6 +10730,9 @@ msgstr "Další vydání"
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "Další běh {0}"
+
+msgid "Next run in 14h"
+msgstr "Další běh za 14 h"
 
 msgid "Next run in 3d"
 msgstr "Další běh za 3 d"
@@ -11370,8 +11373,8 @@ msgstr "Zatím žádné pracovní prostory"
 msgid "No-Prompt Launch"
 msgstr "Spuštění bez promptu"
 
-msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and scheduled runs without tying the workflow to one provider."
-msgstr "Ne. Vaši agenti zůstávají nezávislí; Superset je orchestrační vrstva kolem nich. Každý úkol dostane izolovaný git worktree, trvalé relace, revizi rozdílů a plánované běhy, aniž byste workflow uvázali k jednomu poskytovateli."
+msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and automations that run on events or a schedule, without tying the workflow to one provider."
+msgstr "Ne. Vaši agenti zůstávají nezávislí; Superset je orchestrační vrstva kolem nich. Každý úkol dostane izolovaný git worktree, trvalé relace, revizi rozdílů a automatizace spouštěné událostmi nebo podle plánu, aniž byste workflow uvázali k jednomu poskytovateli."
 
 msgid "Nobody has joined the board yet."
 msgstr "Do žebříčku se zatím nikdo nezapojil."
@@ -11599,6 +11602,9 @@ msgstr "Na GitHubu má přes 15 tis. hvězdiček, přes 1 000 forků a přes 100
 
 msgid "On our radar. Order and scope may change."
 msgstr "Máme to na radaru. Pořadí i rozsah se můžou změnit."
+
+msgid "on review request"
+msgstr "při žádosti o revizi"
 
 msgid "on the board"
 msgstr "v žebříčku"
@@ -12689,6 +12695,9 @@ msgstr "Vyberte pracovní prostor"
 msgid "Pick a workspace whose agent is waiting for your input, has finished since you last looked, or is still running"
 msgstr "Vyberte pracovní prostor, jehož agent čeká na váš vstup, od vaší poslední návštěvy dokončil práci, nebo stále běží"
 
+msgid "Pick an event, like a review request or a new Sentry issue, or a schedule. One automation can have up to 25 triggers."
+msgstr "Vyberte událost, třeba žádost o revizi nebo novou issue v Sentry, nebo plán. Jedna automatizace může mít až 25 spouštěčů."
+
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "Vyberte ikonu a barvu nebo nahrajte vlastní obrázek. Ve výchozím stavu se použije avatar propojeného vlastníka na GitHubu."
 
@@ -12892,6 +12901,9 @@ msgstr "PR sloučen a uzavřen"
 
 msgid "PR ready for review"
 msgstr "PR je připraven k revizi"
+
+msgid "PR review"
+msgstr "Revize PR"
 
 msgid "PR review comment"
 msgstr "Komentář v revizi PR"
@@ -13297,6 +13309,9 @@ msgstr "Název pull requestu"
 msgid "Pull request…"
 msgstr "Pull request…"
 
+msgid "Pull request… › Review requested"
+msgstr "Pull request… › Vyžádána revize"
+
 msgid "Pull requests"
 msgstr "Pull requesty"
 
@@ -13322,9 +13337,6 @@ msgstr "Odeslal push a otevřel koncept PR."
 
 msgid "Pushing..."
 msgstr "Pushování…"
-
-msgid "Put recurring work on a schedule"
-msgstr "Naplánujte opakovanou práci"
 
 msgid "Put recurring work on a schedule or an event. Agents run on their own and land in a workspace for you to review."
 msgstr "Naplánujte opakující se práci podle rozvrhu nebo události. Agenti běží sami a výsledek skončí v pracovním prostoru, kde ho zkontrolujete."
@@ -13694,9 +13706,6 @@ msgstr "Přístup přes relay povolen, připojuji se k relay…"
 
 msgid "Release control"
 msgstr "Uvolnit ovládání"
-
-msgid "Release notes draft"
-msgstr "Návrh poznámek k vydání"
 
 msgid "Release published"
 msgstr "Vydání publikováno"
@@ -14384,11 +14393,20 @@ msgstr "Čeká na revizi"
 msgid "Review pending changes."
 msgstr "Zkontrolujte čekající změny."
 
+msgid "Review PRs the moment you're asked"
+msgstr "Revidujte PR, jakmile vás o to požádají"
+
 msgid "Review pull requests inside Superset: diff pane, agent-assisted review, act on comments directly."
 msgstr "Revidujte pull requesty přímo v Superset: panel rozdílů, revize s pomocí agenta, práce s komentáři na místě."
 
 msgid "Review requested"
 msgstr "Vyžádána revize"
+
+msgid "Review requested from <0>Me</0> in <1>acme/web</1> by <2>Anyone</2>"
+msgstr "Vyžádána revize od <0>mě</0> v <1>acme/web</1> od <2>Kdokoli</2>"
+
+msgid "Review requested on acme/web #482"
+msgstr "Vyžádána revize v acme/web #482"
 
 msgid "Review required"
 msgstr "Vyžadována revize"
@@ -14560,6 +14578,9 @@ msgstr "spustit issues v pracovních prostorech"
 msgid "Run now"
 msgstr "Spustit teď"
 
+msgid "Run on a schedule or on events, run on demand, pause, resume, and read logs."
+msgstr "Spouštění podle plánu nebo událostí, na vyžádání, pozastavení, obnovení a čtení logů."
+
 msgid "Run script"
 msgstr "Spustit skript"
 
@@ -14640,6 +14661,9 @@ msgstr "Běhy skončí v pracovním prostoru. Projděte rozdíly a slučte, co j
 
 msgid "Runs on a device you choose"
 msgstr "Běží na zařízení, které si vyberete"
+
+msgid "Runs that found no host online"
+msgstr "Běhy, které nenašly hostitele online"
 
 msgid "Runs that started their workspace in the last 7 days"
 msgstr "Spuštění, která v posledních 7 dnech spustila svůj workspace"
@@ -14744,17 +14768,11 @@ msgstr "Naplánuj denní automatizaci, která v 9:00 roztřídí nové issues v 
 msgid "Schedule meetings"
 msgstr "Plánování schůzek"
 
-msgid "Schedule recurring runs, run on demand, pause, resume, and read logs."
-msgstr "Naplánovat opakované běhy, spustit na vyžádání, pozastavit, obnovit a číst logy."
+msgid "Scheduled"
+msgstr "Plánované"
 
-msgid "Schedule."
-msgstr "Naplánujte."
-
-msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
-msgstr "Agenti spouštění podle plánu i událostmi (cron, GitHub události, webhooky) s hotovými šablonami."
-
-msgid "Scheduled runs that found no host online"
-msgstr "Naplánovaná spuštění, která nenašla žádného online hostitele"
+msgid "Scheduled and event-triggered agents (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhooks) with ready-made templates."
+msgstr "Agenti spouštění podle plánu i událostmi (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhooky) s hotovými šablonami."
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "Plány se opakují — odeberte COUNT nebo UNTIL."
@@ -15295,6 +15313,9 @@ msgstr "Odesláno agentovi"
 
 msgid "Sent to the pull request's workspace"
 msgstr "Odesláno do pracovního prostoru pull requestu"
+
+msgid "Sentry issue created in <0>web</0> with level <1>Error</1>"
+msgstr "Issue v Sentry vytvořena v <0>web</0> s úrovní <1>Error</1>"
 
 msgid "Sentry rejected the token"
 msgstr "Sentry token odmítl"
@@ -16211,11 +16232,17 @@ msgstr "Při každém spuštění začít novou relaci agenta"
 msgid "Start a new chat"
 msgstr "Zahájit nový chat"
 
+msgid "Start a run from any service"
+msgstr "Spusťte běh z jakékoli služby"
+
 msgid "Start a run when something happens."
 msgstr "Spusťte běh, když se něco stane."
 
 msgid "Start a session"
 msgstr "Spustit relaci"
+
+msgid "Start agents on events or a schedule"
+msgstr "Spouštějte agenty událostmi nebo podle plánu"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "Spouštějte agenty, sledujte je živě a kontrolujte diff z iPhonu nebo iPadu. Váš kód zůstává na vašich počítačích."
@@ -16240,6 +16267,9 @@ msgstr "Začít zkušební verzi zdarma"
 
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Začněte zdarma. Až vám to jako týmu přestane stačit, přejděte výš. Pro organizace s náročnými požadavky na bezpečnost a compliance máme tarify Enterprise."
+
+msgid "Start from a guide:"
+msgstr "Začněte návodem:"
 
 msgid "Start from a template"
 msgstr "Začít ze šablony"
@@ -16336,8 +16366,8 @@ msgstr "Usměrnit"
 msgid "Step {0} of 2"
 msgstr "Krok {0} ze 2"
 
-msgid "Steps 3 and 4 repeat at every scheduled time."
-msgstr "Kroky 3 a 4 se opakují v každý naplánovaný čas."
+msgid "Steps 3 and 4 repeat each time a trigger fires."
+msgstr "Kroky 3 a 4 se opakují při každém spuštění spouštěče."
 
 msgid "Steps 3 and 4 repeat until the page is right."
 msgstr "Kroky 3 a 4 se opakují, dokud stránka není správně."
@@ -17921,9 +17951,6 @@ msgstr "Tarif"
 msgid "Time"
 msgstr "Čas"
 
-msgid "Times use your time zone."
-msgstr "Časy používají vaše časové pásmo."
-
 msgid "Tinted"
 msgstr "Tónovaný"
 
@@ -18152,6 +18179,9 @@ msgstr "Třídění pošty a návrhy odpovědí"
 msgid "Triage new issues"
 msgstr "Třídit nové issues"
 
+msgid "Triage new Sentry issues"
+msgstr "Třiďte nové issues ze Sentry"
+
 msgid "triaging 12 new issues…"
 msgstr "třídí 12 nových issues…"
 
@@ -18172,6 +18202,9 @@ msgstr "Spouštějte automatizace ze zpráv v kanálech Teams."
 
 msgid "Trigger not found"
 msgstr "Spouštěč nenalezen"
+
+msgid "Trigger."
+msgstr "Spouštěč."
 
 msgid "Triggers"
 msgstr "Spouštěče"
@@ -18226,6 +18259,9 @@ msgstr "Zapněte „Povolit vzdálený přístup k tomuto zařízení přes rela
 
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "Zapněte Design a klikněte na část stránky, kterou chcete změnit."
+
+msgid "Turn Slack bug reports into fixes"
+msgstr "Proměňte hlášení chyb ze Slacku v opravy"
 
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Proměňte konverzace ve Slacku v úkoly, spouštějte agenty ze svého pracovního prostoru a držte kolegy v obraze tam, kde práce začíná."
@@ -19145,8 +19181,8 @@ msgstr "Jaký problém chcete vyřešit?"
 msgid "What shipped"
 msgstr "Co bylo vydáno"
 
-msgid "What should run on a schedule?"
-msgstr "Co má běžet podle plánu?"
+msgid "What should run on its own?"
+msgstr "Co se má spouštět samo?"
 
 msgid "What should the page show?"
 msgstr "Co má stránka zobrazovat?"

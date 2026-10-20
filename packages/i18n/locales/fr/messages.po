@@ -1279,14 +1279,14 @@ msgstr "⌘⇧ clic"
 msgid "● Online"
 msgstr "● En ligne"
 
+msgid "✓ 12m ago"
+msgstr "✓ il y a 12 min"
+
 msgid "✓ 1d ago"
 msgstr "✓ il y a 1 j"
 
 msgid "✓ 2h ago"
 msgstr "✓ il y a 2 h"
-
-msgid "✓ 3d ago"
-msgstr "✓ il y a 3 j"
 
 msgid "${balance} credits"
 msgstr "{balance} $ de crédits"
@@ -1317,6 +1317,9 @@ msgstr "il y a 10 h"
 
 msgid "12 packages have a newer version"
 msgstr "12 paquets ont une version plus récente"
+
+msgid "12m ago"
+msgstr "il y a 12 min"
 
 msgid "15 min"
 msgstr "15 min"
@@ -1369,9 +1372,6 @@ msgstr "3 chantiers simultanés ou plus par ingénieur"
 msgid "30D"
 msgstr "30 J"
 
-msgid "3d ago"
-msgstr "il y a 3 j"
-
 msgid "4 min ago"
 msgstr "il y a 4 min"
 
@@ -1392,9 +1392,6 @@ msgstr "5 jours"
 
 msgid "55 call sites pass {code}"
 msgstr "55 sites d'appel passent {code}"
-
-msgid "5d ago"
-msgstr "il y a 5 j"
 
 msgid "7:1 (AAA)"
 msgstr "7:1 (AAA)"
@@ -1830,6 +1827,9 @@ msgstr "Ajouter à la barre latérale"
 
 msgid "Add to workspace"
 msgstr "Ajouter à un espace de travail"
+
+msgid "Add Trigger"
+msgstr "Ajouter un déclencheur"
 
 msgid "Add your own terminal agent to this device."
 msgstr "Ajoutez votre propre agent de terminal sur cet appareil."
@@ -2332,6 +2332,9 @@ msgstr "Tout canal"
 
 msgid "Any conclusion"
 msgstr "Toute conclusion"
+
+msgid "Any custom RRule"
+msgstr "N'importe quelle RRule personnalisée"
 
 msgid "Any data source"
 msgstr "Toute source de données"
@@ -3680,9 +3683,6 @@ msgstr "Choisir un dossier"
 
 msgid "Choose a parent directory"
 msgstr "Choisir un répertoire parent"
-
-msgid "Choose a preset such as Weekdays or write a custom RRule. One automation can have more than one schedule."
-msgstr "Choisissez un préréglage comme Jours ouvrés ou écrivez une RRule personnalisée. Une automatisation peut avoir plusieurs planifications."
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Choisissez un projet dans Issues GitHub avant d'ouvrir une issue."
@@ -5512,6 +5512,9 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Créée"
 
+msgid "created · 2m ago"
+msgstr "créée · il y a 2 min"
+
 #. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
@@ -6827,14 +6830,14 @@ msgstr "Chaque agent fonctionne dans son propre worktree et sa propre branche Gi
 msgid "Every axis is carrying its weight for the next tier. Hold it and the tier follows."
 msgstr "Chaque axe tire son poids pour le palier suivant. Tenez-le et le palier suivra."
 
+msgid "Every day at <0>9:00 AM</0>"
+msgstr "Tous les jours à <0>9 h 00</0>"
+
 msgid "Every day at 3:00 AM"
 msgstr "Tous les jours à 3 h 00"
 
 msgid "Every Friday at 4pm, draft release notes from this week's merged PRs."
 msgstr "Chaque vendredi à 16 h, rédige les notes de version à partir des pull requests fusionnées cette semaine."
-
-msgid "Every Friday at 5:00 PM"
-msgstr "Tous les vendredis à 17 h 00"
 
 msgid "Every minute"
 msgstr "Chaque minute"
@@ -6848,8 +6851,8 @@ msgstr "Tous les objectifs contribuent au palier suivant. Mesuré sur les 30 der
 msgid "Every publish is a version"
 msgstr "Chaque publication est une version"
 
-msgid "Every scheduled run so far found a host online."
-msgstr "Jusqu'ici, chaque exécution planifiée a trouvé un hôte en ligne."
+msgid "Every run so far found a host online."
+msgstr "Jusqu'ici, chaque exécution a trouvé un hôte en ligne."
 
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Chaque étoile sur <0>{repoSlug}</0>, tracée depuis le lancement."
@@ -8481,6 +8484,9 @@ msgstr "HotkeyTooltip.tsx"
 msgid "Hourly"
 msgstr "Toutes les heures"
 
+msgid "Hourly, daily, or weekly"
+msgstr "Toutes les heures, tous les jours ou toutes les semaines"
+
 msgid "Hover Card"
 msgstr "Hover Card"
 
@@ -8751,9 +8757,6 @@ msgstr "Visualiseur de diff amélioré"
 
 msgid "in 14h"
 msgstr "dans 14 h"
-
-msgid "in 2d"
-msgstr "dans 2 j"
 
 msgid "in 3d"
 msgstr "dans 3 j"
@@ -10351,9 +10354,6 @@ msgstr "Monospace"
 msgid "Month"
 msgstr "Mois"
 
-msgid "monthly"
-msgstr "tous les mois"
-
 msgid "Monthly"
 msgstr "Mensuel"
 
@@ -10730,6 +10730,9 @@ msgstr "Version suivante"
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "Prochaine exécution {0}"
+
+msgid "Next run in 14h"
+msgstr "Prochaine exécution dans 14 h"
 
 msgid "Next run in 3d"
 msgstr "Prochaine exécution dans 3 j"
@@ -11370,8 +11373,8 @@ msgstr "Aucun espace de travail pour le moment"
 msgid "No-Prompt Launch"
 msgstr "Lancement sans prompt"
 
-msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and scheduled runs without tying the workflow to one provider."
-msgstr "Non. Vos agents restent indépendants ; Superset est la couche d'orchestration autour d'eux. Chaque tâche obtient un worktree Git isolé, des sessions persistantes, une revue de diff et des exécutions planifiées, sans lier votre flux de travail à un seul fournisseur."
+msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and automations that run on events or a schedule, without tying the workflow to one provider."
+msgstr "Non. Vos agents restent indépendants ; Superset est la couche d'orchestration autour d'eux. Chaque tâche obtient un worktree Git isolé, des sessions persistantes, une revue de diff et des automatisations qui s'exécutent sur un événement ou selon une planification, sans lier votre flux de travail à un seul fournisseur."
 
 msgid "Nobody has joined the board yet."
 msgstr "Personne n'a encore rejoint le classement."
@@ -11599,6 +11602,9 @@ msgstr "Sur GitHub, il compte plus de 15k étoiles, plus de 1 000 forks et plus 
 
 msgid "On our radar. Order and scope may change."
 msgstr "Dans notre viseur. L'ordre et le périmètre peuvent changer."
+
+msgid "on review request"
+msgstr "à la demande de revue"
 
 msgid "on the board"
 msgstr "au classement"
@@ -12689,6 +12695,9 @@ msgstr "Choisissez un espace de travail"
 msgid "Pick a workspace whose agent is waiting for your input, has finished since you last looked, or is still running"
 msgstr "Choisissez un espace de travail dont l'agent attend votre saisie, a terminé depuis votre dernier passage ou est toujours en cours"
 
+msgid "Pick an event, like a review request or a new Sentry issue, or a schedule. One automation can have up to 25 triggers."
+msgstr "Choisissez un événement, comme une demande de revue ou une nouvelle issue Sentry, ou une planification. Une automatisation peut avoir jusqu'à 25 déclencheurs."
+
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "Choisissez une icône et une couleur, ou envoyez une image personnalisée. Par défaut, l'avatar du propriétaire GitHub lié."
 
@@ -12892,6 +12901,9 @@ msgstr "PR fusionnée et fermée"
 
 msgid "PR ready for review"
 msgstr "La PR est prête pour la revue"
+
+msgid "PR review"
+msgstr "Revue de PR"
 
 msgid "PR review comment"
 msgstr "Commentaire de revue de PR"
@@ -13297,6 +13309,9 @@ msgstr "Titre de la pull request"
 msgid "Pull request…"
 msgstr "Pull request…"
 
+msgid "Pull request… › Review requested"
+msgstr "Pull request… › Revue demandée"
+
 msgid "Pull requests"
 msgstr "Pull requests"
 
@@ -13322,9 +13337,6 @@ msgstr "Poussé et ouvert une pull request en brouillon."
 
 msgid "Pushing..."
 msgstr "Push en cours…"
-
-msgid "Put recurring work on a schedule"
-msgstr "Mettez le travail récurrent sur un calendrier"
 
 msgid "Put recurring work on a schedule or an event. Agents run on their own and land in a workspace for you to review."
 msgstr "Planifiez le travail récurrent selon un horaire ou un événement. Les agents s'exécutent seuls et le résultat arrive dans un espace de travail à passer en revue."
@@ -13694,9 +13706,6 @@ msgstr "Accès au relais activé, connexion au relais…"
 
 msgid "Release control"
 msgstr "Rendre le contrôle"
-
-msgid "Release notes draft"
-msgstr "Brouillon de notes de version"
 
 msgid "Release published"
 msgstr "Release publiée"
@@ -14384,11 +14393,20 @@ msgstr "Revue en attente"
 msgid "Review pending changes."
 msgstr "Passer en revue les modifications en attente."
 
+msgid "Review PRs the moment you're asked"
+msgstr "Relisez les PR dès qu'on vous le demande"
+
 msgid "Review pull requests inside Superset: diff pane, agent-assisted review, act on comments directly."
 msgstr "Passez vos pull requests en revue dans Superset : volet de diff, revue assistée par agent, action directe sur les commentaires."
 
 msgid "Review requested"
 msgstr "Revue demandée"
+
+msgid "Review requested from <0>Me</0> in <1>acme/web</1> by <2>Anyone</2>"
+msgstr "Revue demandée à <0>moi</0> dans <1>acme/web</1> par <2>N'importe qui</2>"
+
+msgid "Review requested on acme/web #482"
+msgstr "Revue demandée sur acme/web #482"
 
 msgid "Review required"
 msgstr "Revue requise"
@@ -14560,6 +14578,9 @@ msgstr "exécuter les issues dans des espaces de travail"
 msgid "Run now"
 msgstr "Exécuter maintenant"
 
+msgid "Run on a schedule or on events, run on demand, pause, resume, and read logs."
+msgstr "Exécution planifiée ou sur événement, à la demande, pause, reprise et lecture des journaux."
+
 msgid "Run script"
 msgstr "Exécuter le script"
 
@@ -14640,6 +14661,9 @@ msgstr "Les exécutions arrivent dans un espace de travail. Passez le diff en re
 
 msgid "Runs on a device you choose"
 msgstr "S'exécute sur l'appareil de votre choix"
+
+msgid "Runs that found no host online"
+msgstr "Exécutions qui n'ont trouvé aucun hôte en ligne"
 
 msgid "Runs that started their workspace in the last 7 days"
 msgstr "Exécutions ayant démarré leur espace de travail au cours des 7 derniers jours"
@@ -14744,17 +14768,11 @@ msgstr "Planifie une automatisation quotidienne qui trie les nouvelles issues Li
 msgid "Schedule meetings"
 msgstr "Planifier des réunions"
 
-msgid "Schedule recurring runs, run on demand, pause, resume, and read logs."
-msgstr "Planifier des exécutions récurrentes, lancer à la demande, mettre en pause, reprendre et lire les journaux."
+msgid "Scheduled"
+msgstr "Planifié"
 
-msgid "Schedule."
-msgstr "Planifiez."
-
-msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
-msgstr "Des agents planifiés et déclenchés par événement (cron, événements GitHub, webhooks), avec des modèles prêts à l'emploi."
-
-msgid "Scheduled runs that found no host online"
-msgstr "Exécutions planifiées n'ayant trouvé aucun hôte en ligne"
+msgid "Scheduled and event-triggered agents (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhooks) with ready-made templates."
+msgstr "Des agents planifiés et déclenchés par événement (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhooks), avec des modèles prêts à l'emploi."
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "Les planifications se répètent — retirez COUNT ou UNTIL."
@@ -15295,6 +15313,9 @@ msgstr "Envoyé à l'agent"
 
 msgid "Sent to the pull request's workspace"
 msgstr "Envoyé à l'espace de travail de la pull request"
+
+msgid "Sentry issue created in <0>web</0> with level <1>Error</1>"
+msgstr "Issue Sentry créée dans <0>web</0> avec le niveau <1>Error</1>"
 
 msgid "Sentry rejected the token"
 msgstr "Sentry a rejeté le jeton"
@@ -16211,11 +16232,17 @@ msgstr "Démarrer une nouvelle session d'agent à chaque exécution"
 msgid "Start a new chat"
 msgstr "Démarrer une nouvelle discussion"
 
+msgid "Start a run from any service"
+msgstr "Lancez une exécution depuis n'importe quel service"
+
 msgid "Start a run when something happens."
 msgstr "Lancez une exécution quand quelque chose se produit."
 
 msgid "Start a session"
 msgstr "Démarrer une session"
+
+msgid "Start agents on events or a schedule"
+msgstr "Lancez des agents sur événement ou selon une planification"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "Lancez des agents, suivez-les en direct et relisez le diff depuis votre iPhone ou iPad. Votre code reste sur vos machines."
@@ -16240,6 +16267,9 @@ msgstr "Commencer l'essai gratuit"
 
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Commencez gratuitement. Passez à l'offre supérieure quand votre équipe s'agrandit. Des offres Enterprise pour les organisations aux besoins avancés de sécurité et de conformité."
+
+msgid "Start from a guide:"
+msgstr "Commencez par un guide :"
 
 msgid "Start from a template"
 msgstr "Partir d'un modèle"
@@ -16336,8 +16366,8 @@ msgstr "Réorienter"
 msgid "Step {0} of 2"
 msgstr "Étape {0} sur 2"
 
-msgid "Steps 3 and 4 repeat at every scheduled time."
-msgstr "Les étapes 3 et 4 se répètent à chaque heure planifiée."
+msgid "Steps 3 and 4 repeat each time a trigger fires."
+msgstr "Les étapes 3 et 4 se répètent à chaque déclenchement."
 
 msgid "Steps 3 and 4 repeat until the page is right."
 msgstr "Les étapes 3 et 4 se répètent jusqu'à ce que la page soit juste."
@@ -17921,9 +17951,6 @@ msgstr "Offre"
 msgid "Time"
 msgstr "Date"
 
-msgid "Times use your time zone."
-msgstr "Les heures utilisent votre fuseau horaire."
-
 msgid "Tinted"
 msgstr "Teinté"
 
@@ -18152,6 +18179,9 @@ msgstr "Trier les e-mails et rédiger des réponses"
 msgid "Triage new issues"
 msgstr "Trier les nouvelles issues"
 
+msgid "Triage new Sentry issues"
+msgstr "Triez les nouvelles issues Sentry"
+
 msgid "triaging 12 new issues…"
 msgstr "tri de 12 nouvelles issues…"
 
@@ -18172,6 +18202,9 @@ msgstr "Déclenchez des automatisations depuis les messages de canaux Teams."
 
 msgid "Trigger not found"
 msgstr "Déclencheur introuvable"
+
+msgid "Trigger."
+msgstr "Déclencheur."
 
 msgid "Triggers"
 msgstr "Déclencheurs"
@@ -18226,6 +18259,9 @@ msgstr "Activez « Autoriser l'accès distant à cet appareil via le relais »"
 
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "Activez Design et cliquez sur la partie de la page à modifier."
+
+msgid "Turn Slack bug reports into fixes"
+msgstr "Transformez les rapports de bugs Slack en correctifs"
 
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Transformez les conversations Slack en tâches, exécutez des agents depuis votre espace de travail et tenez vos coéquipiers informés là où le travail commence."
@@ -19145,8 +19181,8 @@ msgstr "Quel problème cherchez-vous à résoudre ?"
 msgid "What shipped"
 msgstr "Ce qui a été livré"
 
-msgid "What should run on a schedule?"
-msgstr "Qu'est-ce qui doit s'exécuter selon une planification ?"
+msgid "What should run on its own?"
+msgstr "Que faut-il exécuter tout seul ?"
 
 msgid "What should the page show?"
 msgstr "Que doit montrer la page ?"

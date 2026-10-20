@@ -1279,14 +1279,14 @@ msgstr "⌘⇧ tık"
 msgid "● Online"
 msgstr "● Çevrimiçi"
 
+msgid "✓ 12m ago"
+msgstr "✓ 12dk önce"
+
 msgid "✓ 1d ago"
 msgstr "✓ 1g önce"
 
 msgid "✓ 2h ago"
 msgstr "✓ 2sa önce"
-
-msgid "✓ 3d ago"
-msgstr "✓ 3g önce"
 
 msgid "${balance} credits"
 msgstr "${balance} kredi"
@@ -1317,6 +1317,9 @@ msgstr "10sa önce"
 
 msgid "12 packages have a newer version"
 msgstr "12 paketin daha yeni bir sürümü var"
+
+msgid "12m ago"
+msgstr "12dk önce"
 
 msgid "15 min"
 msgstr "15 dk"
@@ -1369,9 +1372,6 @@ msgstr "Mühendis başına 3+ eşzamanlı iş akışı"
 msgid "30D"
 msgstr "30G"
 
-msgid "3d ago"
-msgstr "3g önce"
-
 msgid "4 min ago"
 msgstr "4 dk önce"
 
@@ -1392,9 +1392,6 @@ msgstr "5 gün"
 
 msgid "55 call sites pass {code}"
 msgstr "55 çağrı noktası {code} geçiriyor"
-
-msgid "5d ago"
-msgstr "5g önce"
 
 msgid "7:1 (AAA)"
 msgstr "7:1 (AAA)"
@@ -1830,6 +1827,9 @@ msgstr "Kenar çubuğuna ekle"
 
 msgid "Add to workspace"
 msgstr "Çalışma alanına ekle"
+
+msgid "Add Trigger"
+msgstr "Tetikleyici ekle"
 
 msgid "Add your own terminal agent to this device."
 msgstr "Bu cihaza kendi terminal ajanınızı ekleyin."
@@ -2332,6 +2332,9 @@ msgstr "Tüm kanallar"
 
 msgid "Any conclusion"
 msgstr "Tüm sonuçlar"
+
+msgid "Any custom RRule"
+msgstr "Herhangi bir özel RRule"
 
 msgid "Any data source"
 msgstr "Tüm veri kaynakları"
@@ -3680,9 +3683,6 @@ msgstr "Bir klasör seçin"
 
 msgid "Choose a parent directory"
 msgstr "Bir üst dizin seçin"
-
-msgid "Choose a preset such as Weekdays or write a custom RRule. One automation can have more than one schedule."
-msgstr "Hafta içi gibi hazır bir ayar seçin veya özel bir RRule yazın. Bir otomasyonun birden fazla zamanlaması olabilir."
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Bir issue açmadan önce GitHub issue'ları bölümünden bir proje seçin."
@@ -5512,6 +5512,9 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Oluşturuldu"
 
+msgid "created · 2m ago"
+msgstr "oluşturuldu · 2dk önce"
+
 #. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
@@ -6827,14 +6830,14 @@ msgstr "Her ajan kendi Git worktree ve dalında çalışır, böylece çalışma
 msgid "Every axis is carrying its weight for the next tier. Hold it and the tier follows."
 msgstr "Her eksen bir sonraki katman için üzerine düşeni yapıyor. Bunu sürdür, katman kendiliğinden gelir."
 
+msgid "Every day at <0>9:00 AM</0>"
+msgstr "Her gün <0>09:00</0>"
+
 msgid "Every day at 3:00 AM"
 msgstr "Her gün 03:00'te"
 
 msgid "Every Friday at 4pm, draft release notes from this week's merged PRs."
 msgstr "Her cuma 16.00'da bu haftanın birleştirilen PR'larından sürüm notları taslağı hazırla."
-
-msgid "Every Friday at 5:00 PM"
-msgstr "Her cuma 17:00'de"
 
 msgid "Every minute"
 msgstr "Her dakika"
@@ -6848,8 +6851,8 @@ msgstr "Tüm hedefler bir sonraki basamak için üzerine düşeni yapıyor. Son 
 msgid "Every publish is a version"
 msgstr "Her yayın bir sürümdür"
 
-msgid "Every scheduled run so far found a host online."
-msgstr "Şimdiye kadar her zamanlanmış çalıştırma çevrimiçi bir ana makine buldu."
+msgid "Every run so far found a host online."
+msgstr "Şimdiye kadar her çalıştırma çevrimiçi bir ana makine buldu."
 
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "<0>{repoSlug}</0> üzerindeki her yıldız, lansmandan bu yana grafikte."
@@ -8481,6 +8484,9 @@ msgstr "HotkeyTooltip.tsx"
 msgid "Hourly"
 msgstr "Saatlik"
 
+msgid "Hourly, daily, or weekly"
+msgstr "Saatlik, günlük veya haftalık"
+
 msgid "Hover Card"
 msgstr "Üzerine gelme kartı"
 
@@ -8751,9 +8757,6 @@ msgstr "Geliştirilmiş fark görüntüleyici"
 
 msgid "in 14h"
 msgstr "14sa içinde"
-
-msgid "in 2d"
-msgstr "2g içinde"
 
 msgid "in 3d"
 msgstr "3g içinde"
@@ -10351,9 +10354,6 @@ msgstr "Eş aralıklı"
 msgid "Month"
 msgstr "Ay"
 
-msgid "monthly"
-msgstr "aylık"
-
 msgid "Monthly"
 msgstr "Aylık"
 
@@ -10730,6 +10730,9 @@ msgstr "Sonraki sürüm"
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "Sonraki çalıştırma {0}"
+
+msgid "Next run in 14h"
+msgstr "Sonraki çalıştırma 14sa içinde"
 
 msgid "Next run in 3d"
 msgstr "Sonraki çalıştırma 3g içinde"
@@ -11370,8 +11373,8 @@ msgstr "Henüz çalışma alanı yok"
 msgid "No-Prompt Launch"
 msgstr "İstemsiz başlatma"
 
-msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and scheduled runs without tying the workflow to one provider."
-msgstr "Hayır. Ajanlarınız bağımsız kalır; Superset onların etrafındaki orkestrasyon katmanıdır. Her görev yalıtılmış bir Git worktree'si, kalıcı oturumlar, fark incelemesi ve zamanlanmış çalıştırmalar alır; iş akışı tek bir sağlayıcıya bağlanmaz."
+msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and automations that run on events or a schedule, without tying the workflow to one provider."
+msgstr "Hayır. Ajanlarınız bağımsız kalır; Superset onların etrafındaki orkestrasyon katmanıdır. Her görev yalıtılmış bir Git worktree'si, kalıcı oturumlar, fark incelemesi ve olaylarla ya da zamanlamayla çalışan otomasyonlar alır; iş akışı tek bir sağlayıcıya bağlanmaz."
 
 msgid "Nobody has joined the board yet."
 msgstr "Tabloya henüz kimse katılmadı."
@@ -11599,6 +11602,9 @@ msgstr "GitHub'da 15k+ yıldızı, 1.000+ fork'u ve 100+ katkıda bulunanı var.
 
 msgid "On our radar. Order and scope may change."
 msgstr "Radarımızda. Sıra ve kapsam değişebilir."
+
+msgid "on review request"
+msgstr "inceleme isteğinde"
 
 msgid "on the board"
 msgstr "tabloda"
@@ -12689,6 +12695,9 @@ msgstr "Bir çalışma alanı seçin"
 msgid "Pick a workspace whose agent is waiting for your input, has finished since you last looked, or is still running"
 msgstr "Ajanı sizden yanıt bekleyen, son bakışınızdan beri işini bitiren veya hâlâ çalışan bir çalışma alanı seçin"
 
+msgid "Pick an event, like a review request or a new Sentry issue, or a schedule. One automation can have up to 25 triggers."
+msgstr "İnceleme isteği veya yeni bir Sentry issue gibi bir olay ya da bir zamanlama seçin. Bir otomasyonda en fazla 25 tetikleyici olabilir."
+
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "Bir simge ve renk seçin ya da özel bir görsel yükleyin. Varsayılan olarak bağlı GitHub sahibinin avatarı kullanılır."
 
@@ -12892,6 +12901,9 @@ msgstr "PR birleştirildi ve kapatıldı"
 
 msgid "PR ready for review"
 msgstr "PR incelemeye hazır"
+
+msgid "PR review"
+msgstr "PR incelemesi"
 
 msgid "PR review comment"
 msgstr "PR inceleme yorumu"
@@ -13297,6 +13309,9 @@ msgstr "Pull request başlığı"
 msgid "Pull request…"
 msgstr "Pull request…"
 
+msgid "Pull request… › Review requested"
+msgstr "Pull request… › İnceleme istendi"
+
 msgid "Pull requests"
 msgstr "Pull request'ler"
 
@@ -13322,9 +13337,6 @@ msgstr "Push etti ve taslak PR açtı."
 
 msgid "Pushing..."
 msgstr "Push ediliyor…"
-
-msgid "Put recurring work on a schedule"
-msgstr "Tekrarlayan işleri zamanlamaya alın"
 
 msgid "Put recurring work on a schedule or an event. Agents run on their own and land in a workspace for you to review."
 msgstr "Tekrarlayan işleri bir zamanlamaya veya olaya bağlayın. Ajanlar kendi başına çalışır ve sonuç, incelemeniz için bir çalışma alanına düşer."
@@ -13694,9 +13706,6 @@ msgstr "Röle erişimi etkinleştirildi, röleye bağlanılıyor…"
 
 msgid "Release control"
 msgstr "Kontrolü bırak"
-
-msgid "Release notes draft"
-msgstr "Sürüm notları taslağı"
 
 msgid "Release published"
 msgstr "Sürüm yayınlandı"
@@ -14384,11 +14393,20 @@ msgstr "İnceleme bekliyor"
 msgid "Review pending changes."
 msgstr "Bekleyen değişiklikleri inceleyin."
 
+msgid "Review PRs the moment you're asked"
+msgstr "İstendiği anda PR'ları inceleyin"
+
 msgid "Review pull requests inside Superset: diff pane, agent-assisted review, act on comments directly."
 msgstr "Pull request'leri Superset içinde inceleyin: fark bölmesi, ajan destekli inceleme, yorumlara doğrudan müdahale."
 
 msgid "Review requested"
 msgstr "İnceleme istendi"
+
+msgid "Review requested from <0>Me</0> in <1>acme/web</1> by <2>Anyone</2>"
+msgstr "<1>acme/web</1> içinde <2>Herkes</2> tarafından <0>benden</0> inceleme istendi"
+
+msgid "Review requested on acme/web #482"
+msgstr "acme/web #482 için inceleme istendi"
 
 msgid "Review required"
 msgstr "İnceleme gerekli"
@@ -14560,6 +14578,9 @@ msgstr "issue'ları çalışma alanlarında çalıştırma"
 msgid "Run now"
 msgstr "Şimdi çalıştır"
 
+msgid "Run on a schedule or on events, run on demand, pause, resume, and read logs."
+msgstr "Zamanlamayla veya olaylarla çalıştırın, isteğe bağlı çalıştırın, duraklatın, sürdürün ve günlükleri okuyun."
+
 msgid "Run script"
 msgstr "Betiği çalıştır"
 
@@ -14640,6 +14661,9 @@ msgstr "Çalıştırmalar bir çalışma alanına düşer. Farkı inceleyin, iyi
 
 msgid "Runs on a device you choose"
 msgstr "Seçtiğiniz bir cihazda çalışır"
+
+msgid "Runs that found no host online"
+msgstr "Çevrimiçi ana makine bulamayan çalıştırmalar"
 
 msgid "Runs that started their workspace in the last 7 days"
 msgstr "Son 7 günde workspace'ini başlatan çalıştırmalar"
@@ -14744,17 +14768,11 @@ msgstr "Her gün 09.00'da yeni Linear issue'larını sınıflandıran bir otomas
 msgid "Schedule meetings"
 msgstr "Toplantı planlayın"
 
-msgid "Schedule recurring runs, run on demand, pause, resume, and read logs."
-msgstr "Yinelenen çalıştırmaları zamanlayın, istek üzerine çalıştırın, duraklatın, sürdürün ve günlükleri okuyun."
+msgid "Scheduled"
+msgstr "Zamanlanmış"
 
-msgid "Schedule."
-msgstr "Zamanlayın."
-
-msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
-msgstr "Hazır şablonlarla zamanlanmış ve olay tetiklemeli ajanlar (cron, GitHub olayları, webhook'lar)."
-
-msgid "Scheduled runs that found no host online"
-msgstr "Çevrimiçi ana makine bulamayan zamanlanmış çalıştırmalar"
+msgid "Scheduled and event-triggered agents (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhooks) with ready-made templates."
+msgstr "Hazır şablonlarla zamanlanmış ve olay tetiklemeli ajanlar (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhook'lar)."
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "Zamanlamalar yinelenir — COUNT veya UNTIL değerini kaldırın."
@@ -15295,6 +15313,9 @@ msgstr "Ajana gönderildi"
 
 msgid "Sent to the pull request's workspace"
 msgstr "Pull request'in çalışma alanına gönderildi"
+
+msgid "Sentry issue created in <0>web</0> with level <1>Error</1>"
+msgstr "<0>web</0> içinde <1>Error</1> seviyesinde Sentry issue oluşturuldu"
 
 msgid "Sentry rejected the token"
 msgstr "Sentry token'ı reddetti"
@@ -16211,11 +16232,17 @@ msgstr "Her çalıştırmada yeni bir aracı oturumu başlat"
 msgid "Start a new chat"
 msgstr "Yeni sohbet başlat"
 
+msgid "Start a run from any service"
+msgstr "Herhangi bir servisten çalıştırma başlatın"
+
 msgid "Start a run when something happens."
 msgstr "Bir şey olduğunda çalıştırmayı başlatın."
 
 msgid "Start a session"
 msgstr "Bir oturum başlat"
+
+msgid "Start agents on events or a schedule"
+msgstr "Ajanları olaylarla veya zamanlamayla başlatın"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "iPhone veya iPad'inizden ajanları başlatın, canlı takip edin ve diff'i inceleyin. Kodunuz makinelerinizde kalır."
@@ -16240,6 +16267,9 @@ msgstr "Ücretsiz denemeyi başlat"
 
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Ücretsiz başlayın. Takımınız büyüdüğünde yükseltin. Gelişmiş güvenlik ve uyumluluk ihtiyaçları olan kuruluşlar için Enterprise planları."
+
+msgid "Start from a guide:"
+msgstr "Bir kılavuzla başlayın:"
 
 msgid "Start from a template"
 msgstr "Şablondan başla"
@@ -16336,8 +16366,8 @@ msgstr "Yönlendir"
 msgid "Step {0} of 2"
 msgstr "Adım {0} / 2"
 
-msgid "Steps 3 and 4 repeat at every scheduled time."
-msgstr "3. ve 4. adımlar her zamanlanan saatte tekrarlanır."
+msgid "Steps 3 and 4 repeat each time a trigger fires."
+msgstr "Adım 3 ve 4 her tetiklemede tekrarlanır."
 
 msgid "Steps 3 and 4 repeat until the page is right."
 msgstr "Sayfa doğru olana kadar 3. ve 4. adımlar tekrarlanır."
@@ -17921,9 +17951,6 @@ msgstr "Katman"
 msgid "Time"
 msgstr "Zaman"
 
-msgid "Times use your time zone."
-msgstr "Saatler saat diliminizi kullanır."
-
 msgid "Tinted"
 msgstr "Renkli"
 
@@ -18152,6 +18179,9 @@ msgstr "E-postaları ayıklayın, yanıt taslağı hazırlayın"
 msgid "Triage new issues"
 msgstr "Yeni issue'ları sınıflandır"
 
+msgid "Triage new Sentry issues"
+msgstr "Yeni Sentry issue'larını önceliklendirin"
+
 msgid "triaging 12 new issues…"
 msgstr "12 yeni issue sınıflandırılıyor…"
 
@@ -18172,6 +18202,9 @@ msgstr "Otomasyonları Teams kanal mesajlarından tetikleyin."
 
 msgid "Trigger not found"
 msgstr "Tetikleyici bulunamadı"
+
+msgid "Trigger."
+msgstr "Tetikleyici."
 
 msgid "Triggers"
 msgstr "Tetikleyiciler"
@@ -18226,6 +18259,9 @@ msgstr "“Bu cihaza röle üzerinden uzaktan erişime izin ver” seçeneğini 
 
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "Tasarım'ı açın ve sayfada değiştirmek istediğiniz bölüme tıklayın."
+
+msgid "Turn Slack bug reports into fixes"
+msgstr "Slack'teki hata raporlarını düzeltmelere dönüştürün"
 
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Slack konuşmalarını göreve dönüştürün, çalışma alanınızdan ajan çalıştırın ve takım arkadaşlarınızı işin başladığı yerde haberdar edin."
@@ -19145,8 +19181,8 @@ msgstr "Hangi sorunu çözmeye çalışıyorsunuz?"
 msgid "What shipped"
 msgstr "Yayınlananlar"
 
-msgid "What should run on a schedule?"
-msgstr "Zamanlanmış olarak ne çalışsın?"
+msgid "What should run on its own?"
+msgstr "Ne kendi kendine çalışmalı?"
 
 msgid "What should the page show?"
 msgstr "Sayfa ne göstermeli?"

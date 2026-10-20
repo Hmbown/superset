@@ -1279,14 +1279,14 @@ msgstr "⌘⇧ клик"
 msgid "● Online"
 msgstr "● В сети"
 
+msgid "✓ 12m ago"
+msgstr "✓ 12 мин назад"
+
 msgid "✓ 1d ago"
 msgstr "✓ 1 д. назад"
 
 msgid "✓ 2h ago"
 msgstr "✓ 2 ч. назад"
-
-msgid "✓ 3d ago"
-msgstr "✓ 3 д. назад"
 
 msgid "${balance} credits"
 msgstr "${balance} кредитов"
@@ -1317,6 +1317,9 @@ msgstr "10 ч назад"
 
 msgid "12 packages have a newer version"
 msgstr "У 12 пакетов есть более новая версия"
+
+msgid "12m ago"
+msgstr "12 мин назад"
 
 msgid "15 min"
 msgstr "15 мин"
@@ -1369,9 +1372,6 @@ msgstr "3+ параллельных потока работы на инжене�
 msgid "30D"
 msgstr "30 дн."
 
-msgid "3d ago"
-msgstr "3 д. назад"
-
 msgid "4 min ago"
 msgstr "4 мин назад"
 
@@ -1392,9 +1392,6 @@ msgstr "5 дней"
 
 msgid "55 call sites pass {code}"
 msgstr "55 мест вызова передают {code}"
-
-msgid "5d ago"
-msgstr "5 дн. назад"
 
 msgid "7:1 (AAA)"
 msgstr "7:1 (AAA)"
@@ -1830,6 +1827,9 @@ msgstr "Добавить на боковую панель"
 
 msgid "Add to workspace"
 msgstr "Добавить в рабочую область"
+
+msgid "Add Trigger"
+msgstr "Добавить триггер"
 
 msgid "Add your own terminal agent to this device."
 msgstr "Добавьте своего терминального агента на это устройство."
@@ -2332,6 +2332,9 @@ msgstr "Любой канал"
 
 msgid "Any conclusion"
 msgstr "Любой итог"
+
+msgid "Any custom RRule"
+msgstr "Любое своё RRule"
 
 msgid "Any data source"
 msgstr "Любой источник данных"
@@ -3680,9 +3683,6 @@ msgstr "Выберите папку"
 
 msgid "Choose a parent directory"
 msgstr "Выберите родительскую папку"
-
-msgid "Choose a preset such as Weekdays or write a custom RRule. One automation can have more than one schedule."
-msgstr "Выберите готовый вариант, например «По будням», или напишите собственный RRule. У одной автоматизации может быть несколько расписаний."
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Выберите проект в разделе задач GitHub, прежде чем открывать задачу."
@@ -5512,6 +5512,9 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Создан"
 
+msgid "created · 2m ago"
+msgstr "создан · 2 мин назад"
+
 #. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
@@ -6827,14 +6830,14 @@ msgstr "Каждый агент работает в собственном Git w
 msgid "Every axis is carrying its weight for the next tier. Hold it and the tier follows."
 msgstr "Каждая ось работает на следующий уровень. Удержите это — уровень придёт сам."
 
+msgid "Every day at <0>9:00 AM</0>"
+msgstr "Каждый день в <0>9:00</0>"
+
 msgid "Every day at 3:00 AM"
 msgstr "Каждый день в 3:00"
 
 msgid "Every Friday at 4pm, draft release notes from this week's merged PRs."
 msgstr "Каждую пятницу в 16:00 готовь черновик release notes по объединённым за неделю PR."
-
-msgid "Every Friday at 5:00 PM"
-msgstr "Каждую пятницу в 17:00"
 
 msgid "Every minute"
 msgstr "Каждую минуту"
@@ -6848,8 +6851,8 @@ msgstr "Все цели работают на следующую ступень.
 msgid "Every publish is a version"
 msgstr "Каждая публикация становится версией"
 
-msgid "Every scheduled run so far found a host online."
-msgstr "Пока каждый запуск по расписанию находил хост в сети."
+msgid "Every run so far found a host online."
+msgstr "Пока каждый запуск находил хост в сети."
 
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Каждая звезда на <0>{repoSlug}</0> с момента запуска."
@@ -8481,6 +8484,9 @@ msgstr "HotkeyTooltip.tsx"
 msgid "Hourly"
 msgstr "Ежечасно"
 
+msgid "Hourly, daily, or weekly"
+msgstr "Ежечасно, ежедневно или еженедельно"
+
 msgid "Hover Card"
 msgstr "Карточка при наведении"
 
@@ -8751,9 +8757,6 @@ msgstr "Улучшенный просмотр diff"
 
 msgid "in 14h"
 msgstr "через 14 ч"
-
-msgid "in 2d"
-msgstr "через 2 дн."
 
 msgid "in 3d"
 msgstr "через 3 дн."
@@ -10351,9 +10354,6 @@ msgstr "Моноширинные"
 msgid "Month"
 msgstr "Месяц"
 
-msgid "monthly"
-msgstr "ежемесячно"
-
 msgid "Monthly"
 msgstr "Ежемесячно"
 
@@ -10730,6 +10730,9 @@ msgstr "Следующий релиз"
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "Следующий запуск {0}"
+
+msgid "Next run in 14h"
+msgstr "Следующий запуск через 14 ч"
 
 msgid "Next run in 3d"
 msgstr "Следующий запуск через 3 дн."
@@ -11370,8 +11373,8 @@ msgstr "Рабочих областей пока нет"
 msgid "No-Prompt Launch"
 msgstr "Запуск без промпта"
 
-msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and scheduled runs without tying the workflow to one provider."
-msgstr "Нет. Ваши агенты остаются независимыми; Superset — слой оркестрации вокруг них. У каждой задачи изолированный Git worktree, постоянные сессии, ревью diff и запуски по расписанию — без привязки процесса к одному провайдеру."
+msgid "No. Your agents stay independent; Superset is the orchestration layer around them. Each task gets an isolated Git worktree, persistent sessions, diff review, and automations that run on events or a schedule, without tying the workflow to one provider."
+msgstr "Нет. Ваши агенты остаются независимыми; Superset — слой оркестрации вокруг них. У каждой задачи изолированный Git worktree, постоянные сессии, ревью diff и автоматизации, которые запускаются по событиям или по расписанию, — без привязки процесса к одному провайдеру."
 
 msgid "Nobody has joined the board yet."
 msgstr "В рейтинг пока никто не вступил."
@@ -11599,6 +11602,9 @@ msgstr "На GitHub у проекта более 15 тыс. звёзд, боле
 
 msgid "On our radar. Order and scope may change."
 msgstr "У нас на радаре. Порядок и объём могут измениться."
+
+msgid "on review request"
+msgstr "по запросу ревью"
 
 msgid "on the board"
 msgstr "в рейтинге"
@@ -12689,6 +12695,9 @@ msgstr "Выберите рабочую область"
 msgid "Pick a workspace whose agent is waiting for your input, has finished since you last looked, or is still running"
 msgstr "Выберите рабочую область, где агент ждёт вашего ввода, завершил работу с момента вашего последнего просмотра или всё ещё выполняется"
 
+msgid "Pick an event, like a review request or a new Sentry issue, or a schedule. One automation can have up to 25 triggers."
+msgstr "Выберите событие, например запрос ревью или новую задачу в Sentry, или расписание. У одной автоматизации может быть до 25 триггеров."
+
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "Выберите иконку и цвет или загрузите своё изображение. По умолчанию используется аватар связанного владельца на GitHub."
 
@@ -12892,6 +12901,9 @@ msgstr "PR объединён и закрыт"
 
 msgid "PR ready for review"
 msgstr "PR готов к ревью"
+
+msgid "PR review"
+msgstr "Ревью PR"
 
 msgid "PR review comment"
 msgstr "Комментарий в ревью PR"
@@ -13297,6 +13309,9 @@ msgstr "Заголовок пул-реквеста"
 msgid "Pull request…"
 msgstr "Пул-реквест…"
 
+msgid "Pull request… › Review requested"
+msgstr "Pull request… › Запрошено ревью"
+
 msgid "Pull requests"
 msgstr "Пул-реквесты"
 
@@ -13322,9 +13337,6 @@ msgstr "Отправил изменения и открыл черновик PR.
 
 msgid "Pushing..."
 msgstr "Отправка…"
-
-msgid "Put recurring work on a schedule"
-msgstr "Поставьте повторяющуюся работу на расписание"
 
 msgid "Put recurring work on a schedule or an event. Agents run on their own and land in a workspace for you to review."
 msgstr "Поставьте повторяющуюся работу на расписание или событие. Агенты работают сами, а результат приземляется в рабочую область для проверки."
@@ -13694,9 +13706,6 @@ msgstr "Доступ через реле включён, подключаемс�
 
 msgid "Release control"
 msgstr "Отпустить управление"
-
-msgid "Release notes draft"
-msgstr "Черновик заметок о релизе"
 
 msgid "Release published"
 msgstr "Релиз опубликован"
@@ -14384,11 +14393,20 @@ msgstr "Ревью ожидается"
 msgid "Review pending changes."
 msgstr "Проверьте ожидающие изменения."
 
+msgid "Review PRs the moment you're asked"
+msgstr "Ревью PR сразу, как только вас попросят"
+
 msgid "Review pull requests inside Superset: diff pane, agent-assisted review, act on comments directly."
 msgstr "Проверяйте пул-реквесты внутри Superset: панель diff, ревью с помощью агента, действия по комментариям прямо на месте."
 
 msgid "Review requested"
 msgstr "Запрошено ревью"
+
+msgid "Review requested from <0>Me</0> in <1>acme/web</1> by <2>Anyone</2>"
+msgstr "Запрошено ревью у <0>меня</0> в <1>acme/web</1> от <2>Кто угодно</2>"
+
+msgid "Review requested on acme/web #482"
+msgstr "Запрошено ревью в acme/web #482"
 
 msgid "Review required"
 msgstr "Требуется ревью"
@@ -14560,6 +14578,9 @@ msgstr "запустить задачи GitHub в рабочих областя�
 msgid "Run now"
 msgstr "Запустить сейчас"
 
+msgid "Run on a schedule or on events, run on demand, pause, resume, and read logs."
+msgstr "Запуск по расписанию или по событиям, запуск по требованию, пауза, возобновление и чтение логов."
+
 msgid "Run script"
 msgstr "Запустить скрипт"
 
@@ -14640,6 +14661,9 @@ msgstr "Запуски приземляются в рабочую область
 
 msgid "Runs on a device you choose"
 msgstr "Работает на выбранном вами устройстве"
+
+msgid "Runs that found no host online"
+msgstr "Запуски, не нашедшие хост в сети"
 
 msgid "Runs that started their workspace in the last 7 days"
 msgstr "Запуски, которые за последние 7 дней запустили своё рабочее пространство"
@@ -14744,17 +14768,11 @@ msgstr "Поставь ежедневную автоматизацию, кото
 msgid "Schedule meetings"
 msgstr "Планирование встреч"
 
-msgid "Schedule recurring runs, run on demand, pause, resume, and read logs."
-msgstr "Ставить повторяющиеся запуски по расписанию, запускать по требованию, приостанавливать, возобновлять и читать логи."
+msgid "Scheduled"
+msgstr "По расписанию"
 
-msgid "Schedule."
-msgstr "Запланируйте."
-
-msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
-msgstr "Агенты по расписанию и по событиям (cron, события GitHub, вебхуки) с готовыми шаблонами."
-
-msgid "Scheduled runs that found no host online"
-msgstr "Запуски по расписанию, не нашедшие хост в сети"
+msgid "Scheduled and event-triggered agents (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, webhooks) with ready-made templates."
+msgstr "Агенты по расписанию и по событиям (cron, GitHub, Slack, Linear, Sentry, Notion, Microsoft Teams, вебхуки) с готовыми шаблонами."
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "Расписания повторяются — уберите COUNT или UNTIL."
@@ -15295,6 +15313,9 @@ msgstr "Отправлено агенту"
 
 msgid "Sent to the pull request's workspace"
 msgstr "Отправлено в рабочую область пул-реквеста"
+
+msgid "Sentry issue created in <0>web</0> with level <1>Error</1>"
+msgstr "Создана задача Sentry в <0>web</0> с уровнем <1>Error</1>"
 
 msgid "Sentry rejected the token"
 msgstr "Sentry отклонил токен"
@@ -16211,11 +16232,17 @@ msgstr "Запускать новую сессию агента при кажд�
 msgid "Start a new chat"
 msgstr "Начать новый чат"
 
+msgid "Start a run from any service"
+msgstr "Запускайте агента из любого сервиса"
+
 msgid "Start a run when something happens."
 msgstr "Запускайте агента, когда что-то происходит."
 
 msgid "Start a session"
 msgstr "Запустить сессию"
+
+msgid "Start agents on events or a schedule"
+msgstr "Запускайте агентов по событиям или по расписанию"
 
 msgid "Start agents, follow them live, and review the diff from your iPhone or iPad. Your code stays on your machines."
 msgstr "Запускайте агентов, следите за ними в реальном времени и проверяйте diff с iPhone или iPad. Ваш код остаётся на ваших машинах."
@@ -16240,6 +16267,9 @@ msgstr "Начать бесплатный пробный период"
 
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "Начните бесплатно. Переходите на платный, когда команда вырастет. Enterprise — для организаций с повышенными требованиями к безопасности и соответствию."
+
+msgid "Start from a guide:"
+msgstr "Начните с руководства:"
 
 msgid "Start from a template"
 msgstr "Начать с шаблона"
@@ -16336,8 +16366,8 @@ msgstr "Направить"
 msgid "Step {0} of 2"
 msgstr "Шаг {0} из 2"
 
-msgid "Steps 3 and 4 repeat at every scheduled time."
-msgstr "Шаги 3 и 4 повторяются в каждое запланированное время."
+msgid "Steps 3 and 4 repeat each time a trigger fires."
+msgstr "Шаги 3 и 4 повторяются при каждом срабатывании триггера."
 
 msgid "Steps 3 and 4 repeat until the page is right."
 msgstr "Шаги 3 и 4 повторяются, пока страница не станет как надо."
@@ -17921,9 +17951,6 @@ msgstr "Уровень"
 msgid "Time"
 msgstr "Время"
 
-msgid "Times use your time zone."
-msgstr "Время указано в вашем часовом поясе."
-
 msgid "Tinted"
 msgstr "Тонированный"
 
@@ -18152,6 +18179,9 @@ msgstr "Разбор почты и черновики ответов"
 msgid "Triage new issues"
 msgstr "Разбирать новые задачи"
 
+msgid "Triage new Sentry issues"
+msgstr "Разбирайте новые задачи Sentry"
+
 msgid "triaging 12 new issues…"
 msgstr "разбирает 12 новых задач…"
 
@@ -18172,6 +18202,9 @@ msgstr "Запускайте автоматизации по сообщения�
 
 msgid "Trigger not found"
 msgstr "Триггер не найден"
+
+msgid "Trigger."
+msgstr "Триггер."
 
 msgid "Triggers"
 msgstr "Триггеры"
@@ -18226,6 +18259,9 @@ msgstr "Включите «Разрешить удалённый доступ к
 
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "Включите «Дизайн» и нажмите на ту часть страницы, которую хотите изменить."
+
+msgid "Turn Slack bug reports into fixes"
+msgstr "Превращайте баг-репорты из Slack в исправления"
 
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Превращайте обсуждения в Slack в задачи, запускайте агентов из рабочей области и держите команду в курсе там, где начинается работа."
@@ -19145,8 +19181,8 @@ msgstr "Какую задачу вы решаете?"
 msgid "What shipped"
 msgstr "Что выпущено"
 
-msgid "What should run on a schedule?"
-msgstr "Что запускать по расписанию?"
+msgid "What should run on its own?"
+msgstr "Что должно запускаться само?"
 
 msgid "What should the page show?"
 msgstr "Что должна показывать страница?"
