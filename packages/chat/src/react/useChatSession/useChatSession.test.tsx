@@ -790,6 +790,9 @@ describe("useChatSession", () => {
 		await domWaitFor(() =>
 			expect(session().snapshot.session?.status).toBe("idle"),
 		);
+		await domWaitFor(() =>
+			expect(session().snapshot.items.size).toBeGreaterThan(0),
+		);
 		const cachedItems = session().snapshot.items.size;
 		firstView.unmount();
 		first.close();

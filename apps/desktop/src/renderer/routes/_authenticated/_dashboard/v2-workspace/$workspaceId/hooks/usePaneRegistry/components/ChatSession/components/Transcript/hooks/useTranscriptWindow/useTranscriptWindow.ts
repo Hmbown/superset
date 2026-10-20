@@ -45,12 +45,14 @@ export function useTranscriptWindow({
 	sessionId,
 	pinnedRowKeys,
 	observeRow,
+	find,
 }: {
 	rows: readonly TranscriptRow[];
 	viewport: HTMLElement | null;
 	sessionId: string;
 	pinnedRowKeys: readonly (string | null)[];
 	observeRow: (rowKey: string) => RowRef;
+	find?: { isOpen: boolean; mountsAll: boolean; awayFromEnd: boolean };
 }): TranscriptWindow {
 	const heights = useMemo(() => rowHeightsFor(sessionId), [sessionId]);
 	const [windowState, setWindowState] = useState<{
@@ -119,12 +121,32 @@ export function useTranscriptWindow({
 		});
 	}, []);
 
+	const findIsOpen = find?.isOpen ?? false;
+	const findMountsAll = find?.mountsAll ?? false;
+	const awayFromEnd = find?.awayFromEnd ?? false;
+	const findWasOpen = useRef(false);
+	useEffect(() => {
+		if (findWasOpen.current && !findIsOpen && !findMountsAll && !awayFromEnd) {
+			resetToTail();
+		}
+		findWasOpen.current = findIsOpen || findMountsAll;
+	}, [findIsOpen, findMountsAll, awayFromEnd, resetToTail]);
+
+	const cancelRevealHoldRef = useRef<(() => void) | null>(null);
+	useEffect(() => {
+		if (!viewport) return;
+		return () => {
+			cancelRevealHoldRef.current?.();
+			revealHeldRef.current = false;
+		};
+	}, [viewport]);
+
 	const holdRevealUntilScrollEnds = useCallback(() => {
+		cancelRevealHoldRef.current?.();
 		if (!viewport) return;
 		revealHeldRef.current = true;
 		const release = () => {
-			window.clearTimeout(timer);
-			viewport.removeEventListener("scrollend", release);
+			cancelRevealHoldRef.current?.();
 			revealHeldRef.current = false;
 			const watched = revealObserverRef.current;
 			watched?.observer.unobserve(watched.spacer);
@@ -132,6 +154,11 @@ export function useTranscriptWindow({
 		};
 		const timer = window.setTimeout(release, MAX_REVEAL_HOLD_MS);
 		viewport.addEventListener("scrollend", release);
+		cancelRevealHoldRef.current = () => {
+			window.clearTimeout(timer);
+			viewport.removeEventListener("scrollend", release);
+			cancelRevealHoldRef.current = null;
+		};
 	}, [viewport]);
 
 	const [spacer, setSpacer] = useState<HTMLDivElement | null>(null);

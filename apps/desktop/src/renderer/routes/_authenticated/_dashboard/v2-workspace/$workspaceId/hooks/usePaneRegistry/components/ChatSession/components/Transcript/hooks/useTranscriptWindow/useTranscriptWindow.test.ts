@@ -1,4 +1,4 @@
-import { afterEach, expect, test } from "bun:test";
+import { afterEach, expect, spyOn, test } from "bun:test";
 import type { TranscriptRow } from "../../utils/transcriptRows";
 import { rowHeightsFor } from "./utils/rowHeights";
 
@@ -27,19 +27,26 @@ function rows(count: number, prefix = "row"): TranscriptRow[] {
 
 const observeRow = () => () => {};
 
+type WindowProps = {
+	rows: TranscriptRow[];
+	pinned?: (string | null)[];
+	find?: Parameters<typeof useTranscriptWindow>[0]["find"];
+};
+
 function renderWindow(
-	initial: { rows: TranscriptRow[]; pinned?: (string | null)[] },
+	initial: WindowProps,
 	sessionId = crypto.randomUUID(),
 	viewport: HTMLElement | null = null,
 ) {
 	return renderHook(
-		({ rows, pinned }: { rows: TranscriptRow[]; pinned?: (string | null)[] }) =>
+		({ rows, pinned, find }: WindowProps) =>
 			useTranscriptWindow({
 				rows,
 				viewport,
 				sessionId,
 				pinnedRowKeys: pinned ?? [],
 				observeRow,
+				find,
 			}),
 		{ initialProps: initial },
 	);
@@ -158,6 +165,96 @@ test("goes back to the newest 40 rows when asked to reset", () => {
 
 	act(() => result.current.resetToTail());
 	expect(result.current.startIndex).toBe(60);
+});
+
+test("resets to the tail only after the deferred find pin clears", () => {
+	const { result, rerender } = renderWindow({
+		rows: rows(100),
+		pinned: ["row-0"],
+		find: { isOpen: true, mountsAll: true, awayFromEnd: false },
+	});
+	rerender({
+		rows: rows(100),
+		pinned: ["row-0"],
+		find: { isOpen: false, mountsAll: true, awayFromEnd: false },
+	});
+	expect(result.current.startIndex).toBe(0);
+
+	rerender({
+		rows: rows(100),
+		find: { isOpen: false, mountsAll: false, awayFromEnd: false },
+	});
+	expect(result.current.startIndex).toBe(60);
+});
+
+test("keeps revealed history when find closes away from the end", () => {
+	const { result, rerender } = renderWindow({
+		rows: rows(100),
+		pinned: ["row-0"],
+		find: { isOpen: true, mountsAll: true, awayFromEnd: true },
+	});
+	rerender({
+		rows: rows(100),
+		find: { isOpen: false, mountsAll: false, awayFromEnd: true },
+	});
+	expect(result.current.startIndex).toBe(0);
+});
+
+test("replaces the previous jump's reveal hold and cleans up on unmount", () => {
+	const observers = installObservers();
+	const timers = new Map<number, () => void>();
+	let nextTimer = 0;
+	const setClockTimeout = ((callback: () => void) => {
+		const id = ++nextTimer;
+		timers.set(id, callback);
+		return id as unknown as ReturnType<typeof setTimeout>;
+	}) as typeof window.setTimeout;
+	const schedule = spyOn(window, "setTimeout").mockImplementation(
+		setClockTimeout,
+	);
+	const cancel = spyOn(window, "clearTimeout").mockImplementation((id) => {
+		timers.delete(Number(id));
+	});
+	try {
+		const viewport = document.createElement("div");
+		const listen = spyOn(viewport, "addEventListener");
+		const unlisten = spyOn(viewport, "removeEventListener");
+		const { result, unmount } = renderWindow(
+			{ rows: rows(100) },
+			crypto.randomUUID(),
+			viewport,
+		);
+		act(() => result.current.spacerRef(document.createElement("div")));
+		act(() => result.current.holdRevealUntilScrollEnds());
+		const firstTimer = nextTimer;
+		const firstListener = listen.mock.calls.find(
+			([event]) => event === "scrollend",
+		)?.[1];
+		act(() => result.current.holdRevealUntilScrollEnds());
+		expect(unlisten).toHaveBeenCalledWith("scrollend", firstListener);
+		act(() => {
+			timers.get(firstTimer)?.();
+			observers.intersections.at(-1)?.callback([{ isIntersecting: true }]);
+		});
+		expect(result.current.startIndex).toBe(60);
+		expect(timers.size).toBe(1);
+
+		act(() => viewport.dispatchEvent(new Event("scrollend")));
+		expect(timers.size).toBe(0);
+		act(() => {
+			observers.intersections.at(-1)?.callback([{ isIntersecting: true }]);
+		});
+		expect(result.current.startIndex).toBe(20);
+
+		act(() => result.current.holdRevealUntilScrollEnds());
+		unmount();
+		expect(timers.size).toBe(0);
+	} finally {
+		cleanup();
+		schedule.mockRestore();
+		cancel.mockRestore();
+		observers.restore();
+	}
 });
 
 test("holds reveals while a jump scrolls, then resumes when the scroll ends", () => {

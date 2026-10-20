@@ -288,15 +288,13 @@ export function Transcript({
 			revealRowKey,
 		],
 		observeRow,
+		find: {
+			isOpen: find.isOpen,
+			mountsAll: findMountsAll,
+			awayFromEnd: scrollable.end,
+		},
 	});
-	const { resetToTail, holdRevealUntilScrollEnds } = transcriptWindow;
-	const findWasOpen = useRef(false);
-	useEffect(() => {
-		if (findWasOpen.current && !find.isOpen && !awayFromEndRef.current) {
-			resetToTail();
-		}
-		findWasOpen.current = find.isOpen;
-	}, [find.isOpen, resetToTail]);
+	const { holdRevealUntilScrollEnds } = transcriptWindow;
 
 	useEffect(() => {
 		if (revealMessageId === null) return;
