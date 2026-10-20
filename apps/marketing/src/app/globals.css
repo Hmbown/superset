@@ -44,6 +44,17 @@
 	}
 }
 
+[data-headline-variant]:not([data-headline-variant="control"]),
+html:is([data-hero-headline="ide"], [data-hero-headline="army"])
+	[data-headline-variant="control"] {
+	display: none;
+}
+
+html[data-hero-headline="ide"] [data-headline-variant="ide"],
+html[data-hero-headline="army"] [data-headline-variant="army"] {
+	display: inline;
+}
+
 .headline-marks {
 	padding: 0 0.3em;
 	white-space: nowrap;
