@@ -7,6 +7,7 @@
 import { createHmac } from "node:crypto";
 import { db } from "@superset/db/client";
 import { type cloudWorkspaces, users } from "@superset/db/schema";
+import { machineSizeVcpus } from "@superset/shared/billing";
 import {
 	type CloudAgentLaunch,
 	cloudAgentLaunchToEnv,
@@ -146,6 +147,7 @@ export async function buildSandboxClaim(args: {
 			managedEnv,
 			networkPolicy,
 			ports: repoHooks?.ports,
+			vcpus: machineSizeVcpus(args.row.machineSize),
 		},
 		environment: {
 			sourceKind: environment.sourceKind,

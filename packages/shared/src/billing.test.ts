@@ -2,6 +2,8 @@ import { describe, expect, test } from "bun:test";
 import {
 	autumnProPlanId,
 	isCloudUsageRefusal,
+	machineSizeVcpus,
+	offeredMachineSize,
 	planAllowsAutomations,
 	planAllowsTriggerKind,
 	planTierFromSubscription,
@@ -166,5 +168,18 @@ describe("proSeatPricePerMonth", () => {
 	test("yearly is the annual price spread over twelve months", () => {
 		expect(proSeatPricePerMonth({ annual: false })).toBe(20);
 		expect(proSeatPricePerMonth({ annual: true })).toBe(15);
+	});
+});
+
+describe("machine sizes", () => {
+	test("a workspace with no size runs large, the size boxes had before sizes existed", () => {
+		expect(machineSizeVcpus(null)).toBe(8);
+		expect(machineSizeVcpus("small")).toBe(2);
+	});
+
+	test("only offered sizes reach a new box", () => {
+		expect(offeredMachineSize("medium")).toBe("medium");
+		expect(offeredMachineSize("xlarge")).toBeUndefined();
+		expect(offeredMachineSize(null)).toBeUndefined();
 	});
 });

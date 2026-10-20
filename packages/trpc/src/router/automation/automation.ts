@@ -585,6 +585,7 @@ export const automationRouter = {
 						prompt: input.prompt,
 						agent: input.agent,
 						...target,
+						machineSize: input.machineSize ?? null,
 						// Every automation groups its runs out of the box; explicit
 						// tags (including []) override the default.
 						tags: input.tags ?? ["automation"],
@@ -699,6 +700,9 @@ export const automationRouter = {
 						name: input.name ?? existing.name,
 						agent: input.agent ?? existing.agent,
 						...target,
+						...(input.machineSize !== undefined
+							? { machineSize: input.machineSize }
+							: {}),
 						tags: input.tags ?? existing.tags,
 						prompt: input.prompt ?? existing.prompt,
 					})

@@ -9,6 +9,7 @@ import {
 	members,
 	users,
 } from "@superset/db/schema";
+import { OFFERED_MACHINE_SIZES } from "@superset/shared/billing";
 import {
 	CLOUD_AGENT_PROMPT_MAX_LENGTH,
 	isCloudAgentId,
@@ -355,6 +356,8 @@ export const cloudWorkspaceRouter = {
 				typedPrompt: z.string().max(20000).optional(),
 				/** Tasks the composer linked; each must be in this organization. */
 				taskIds: z.array(z.string().uuid()).max(10).optional(),
+				/** Omitted = medium. */
+				machineSize: z.enum(OFFERED_MACHINE_SIZES).optional(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
@@ -398,6 +401,7 @@ export const cloudWorkspaceRouter = {
 				typedPrompt: input.typedPrompt,
 				taskIds: input.taskIds,
 				attachmentFileIds: input.attachmentFileIds,
+				machineSize: input.machineSize,
 				...(input.agent
 					? {
 							launch: {

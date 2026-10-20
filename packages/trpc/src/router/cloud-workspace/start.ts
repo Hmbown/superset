@@ -1,5 +1,10 @@
 import { db } from "@superset/db/client";
 import { cloudWorkspaces, environments, tasks } from "@superset/db/schema";
+import {
+	DEFAULT_MACHINE_SIZE,
+	type MachineSize,
+	machineSizeVcpus,
+} from "@superset/shared/billing";
 import type { CloudAgentLaunch } from "@superset/shared/cloud-agent-launch";
 import { and, eq, inArray, isNull } from "drizzle-orm";
 import { acpChatEnabled } from "../../lib/acp-chat";
@@ -81,6 +86,7 @@ export async function startCloudWorkspace(args: {
 	launch?: CloudAgentLaunch;
 	taskIds?: string[];
 	attachmentFileIds?: string[];
+	machineSize?: MachineSize;
 }) {
 	// The sandbox's Codex is older than the codex-acp floor, so only Claude chats.
 	const openAsChat =
@@ -88,7 +94,8 @@ export async function startCloudWorkspace(args: {
 			? acpChatEnabled(args.userId)
 			: Promise.resolve(false);
 	const environment = await loadUsableEnvironment(args);
-	await assertMayBoot(args.organizationId);
+	const machineSize = args.machineSize ?? DEFAULT_MACHINE_SIZE;
+	await assertMayBoot(args.organizationId, machineSizeVcpus(machineSize));
 
 	// A workspace is started from an environment, and the environment's
 	// repositories are its checkouts.
@@ -136,6 +143,7 @@ export async function startCloudWorkspace(args: {
 			id,
 			organizationId: args.organizationId,
 			name,
+			machineSize,
 			branch: workspaceBranchName({ id, name }),
 			baseBranch: branch,
 			provider: "vercel",

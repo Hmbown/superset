@@ -170,3 +170,28 @@ export function proSeatPricePerMonth({ annual }: { annual: boolean }): number {
 		: PRO_SEAT_PRICE.monthlyCents;
 	return cents / 100;
 }
+
+export const MACHINE_SIZE_VCPUS = {
+	small: 2,
+	medium: 4,
+	large: 8,
+	xlarge: 16,
+} as const;
+export type MachineSize = keyof typeof MACHINE_SIZE_VCPUS;
+/** X-large waits on a Vercel plan that allows 16 vCPU per sandbox. */
+export const OFFERED_MACHINE_SIZES = ["small", "medium", "large"] as const;
+export const DEFAULT_MACHINE_SIZE: MachineSize = "medium";
+export const BOX_HOUR_GB_MINUTES = 480;
+
+export function offeredMachineSize(
+	value: string | null | undefined,
+): (typeof OFFERED_MACHINE_SIZES)[number] | undefined {
+	return OFFERED_MACHINE_SIZES.find((size) => size === value);
+}
+
+export function machineSizeVcpus(size: string | null | undefined): number {
+	if (size && size in MACHINE_SIZE_VCPUS) {
+		return MACHINE_SIZE_VCPUS[size as MachineSize];
+	}
+	return MACHINE_SIZE_VCPUS.large;
+}

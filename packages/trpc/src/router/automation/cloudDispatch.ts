@@ -1,5 +1,6 @@
 import { db } from "@superset/db/client";
 import { cloudWorkspaces, environments, members } from "@superset/db/schema";
+import { offeredMachineSize } from "@superset/shared/billing";
 import { CLOUD_AGENT_PROMPT_MAX_LENGTH } from "@superset/shared/cloud-agent-launch";
 import { SUPERSET_USER_ID_HEADER } from "@superset/shared/host-routing";
 import { and, eq } from "drizzle-orm";
@@ -97,6 +98,7 @@ export async function runInCloud(
 		name: automation.name.slice(0, 200),
 		branch: launch.branch,
 		launch: { agent: automation.agent, prompt },
+		machineSize: offeredMachineSize(automation.machineSize),
 	});
 	placed({ cloudWorkspaceId: created.id });
 	if (automation.cloudWorkspaceId) {
