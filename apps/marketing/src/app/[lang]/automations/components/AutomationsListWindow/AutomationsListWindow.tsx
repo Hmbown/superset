@@ -129,7 +129,7 @@ export function AutomationsListWindow() {
 							>
 								<span className="flex min-w-0 items-center gap-2">
 									<span
-										className={`truncate font-medium ${row.nextRun ? "text-foreground" : "text-muted-foreground"}`}
+										className={`truncate font-medium ${row.enabled ? "text-foreground" : "text-muted-foreground"}`}
 									>
 										{t(row.name)}
 									</span>
@@ -150,13 +150,15 @@ export function AutomationsListWindow() {
 									{t(row.schedule)}
 								</span>
 								<span className="hidden truncate text-muted-foreground text-xs sm:block">
-									{row.nextRun ? (
+									{row.enabled ? (
 										<>
 											<Trans>Active</Trans>
-											<span className="text-muted-foreground/60">
-												{" · "}
-												{t(row.nextRun)}
-											</span>
+											{row.nextRun && (
+												<span className="text-muted-foreground/60">
+													{" · "}
+													{t(row.nextRun)}
+												</span>
+											)}
 										</>
 									) : (
 										<Trans>Paused</Trans>

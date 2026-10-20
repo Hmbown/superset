@@ -7,16 +7,27 @@ export interface AutomationListRow {
 	name: MessageDescriptor;
 	project: string | null;
 	schedule: MessageDescriptor;
+	enabled: boolean;
 	nextRun: MessageDescriptor | null;
 	lastRun: { status: RunStatus; ago: MessageDescriptor };
 }
 
 export const ROWS: AutomationListRow[] = [
 	{
+		id: "review",
+		name: msg({ message: "PR review" }),
+		project: "web",
+		schedule: msg({ message: "Event triggered" }),
+		enabled: true,
+		nextRun: null,
+		lastRun: { status: "created", ago: msg({ message: "12m ago" }) },
+	},
+	{
 		id: "standup",
 		name: msg({ message: "Morning standup summary" }),
 		project: "superset",
 		schedule: msg({ message: "Weekdays at 9:00 AM" }),
+		enabled: true,
 		nextRun: msg({ message: "in 14h" }),
 		lastRun: { status: "created", ago: msg({ message: "10h ago" }) },
 	},
@@ -25,6 +36,7 @@ export const ROWS: AutomationListRow[] = [
 		name: msg({ message: "Security audit" }),
 		project: "api",
 		schedule: msg({ message: "Every day at 3:00 AM" }),
+		enabled: true,
 		nextRun: msg({ message: "in 8h" }),
 		lastRun: { status: "failed", ago: msg({ message: "16h ago" }) },
 	},
@@ -33,22 +45,16 @@ export const ROWS: AutomationListRow[] = [
 		name: msg({ message: "Dependency sweep" }),
 		project: "superset",
 		schedule: msg({ message: "Every Monday at 8:00 AM" }),
+		enabled: true,
 		nextRun: msg({ message: "in 3d" }),
 		lastRun: { status: "created", ago: msg({ message: "4d ago" }) },
-	},
-	{
-		id: "release",
-		name: msg({ message: "Release notes draft" }),
-		project: "web",
-		schedule: msg({ message: "Every Friday at 5:00 PM" }),
-		nextRun: msg({ message: "in 2d" }),
-		lastRun: { status: "created", ago: msg({ message: "5d ago" }) },
 	},
 	{
 		id: "inbox",
 		name: msg({ message: "Inbox triage" }),
 		project: null,
 		schedule: msg({ message: "Hourly" }),
+		enabled: false,
 		nextRun: null,
 		lastRun: { status: "created", ago: msg({ message: "2d ago" }) },
 	},

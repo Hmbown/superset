@@ -10,7 +10,9 @@ import { localizedAlternates } from "@/app/[lang]/metadata";
 import { initServerI18n } from "@/app/i18n-server";
 import { AutomationsListWindow } from "./components/AutomationsListWindow";
 import { HowItWorks } from "./components/HowItWorks";
+import { TriggerGuides } from "./components/TriggerGuides";
 import { TriggerSources } from "./components/TriggerSources";
+import { TriggersCard } from "./components/TriggersCard";
 import { DETAILS } from "./constants";
 
 const VIDEO_URL = "https://www.youtube.com/watch?v=ixe-PiRJTag";
@@ -106,7 +108,9 @@ export default async function AutomationsPage() {
 							it knows which PR or issue to look at.
 						</Trans>
 					</p>
+					<TriggersCard />
 					<TriggerSources />
+					<TriggerGuides />
 				</section>
 
 				<section className="mt-24 sm:mt-32">

@@ -26,18 +26,20 @@ export function TriggerSources() {
 				<li key={source.id} className="bg-background p-5">
 					<div className="flex items-center gap-3">
 						<SourceIcon icon={source.icon} />
-						<span className="font-medium text-foreground">{source.name}</span>
-						{source.note ? (
-							<span className="ml-auto font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
-								{t(source.note)}
-							</span>
-						) : null}
+						<span className="font-medium text-foreground">
+							{typeof source.name === "string" ? source.name : t(source.name)}
+						</span>
 					</div>
 					<ul className="mt-4 space-y-1.5 text-muted-foreground text-sm">
 						{source.events.map((event) => (
 							<li key={event.id}>{t(event)}</li>
 						))}
 					</ul>
+					{source.note ? (
+						<p className="mt-4 font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
+							{t(source.note)}
+						</p>
+					) : null}
 				</li>
 			))}
 		</ul>

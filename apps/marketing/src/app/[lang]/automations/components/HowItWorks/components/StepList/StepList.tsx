@@ -113,7 +113,7 @@ export function StepList({
 			</div>
 			<p className="flex items-center gap-2 border-border border-t px-6 py-3 text-muted-foreground text-xs">
 				<RotateCcw aria-hidden="true" className="size-3.5" />
-				<Trans>Steps 3 and 4 repeat at every scheduled time.</Trans>
+				<Trans>Steps 3 and 4 repeat each time a trigger fires.</Trans>
 			</p>
 		</div>
 	);

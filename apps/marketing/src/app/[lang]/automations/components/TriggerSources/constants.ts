@@ -1,5 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
+import { Clock } from "lucide-react";
 import type { IconType } from "react-icons";
 import { BsMicrosoftTeams } from "react-icons/bs";
 import { FaGithub } from "react-icons/fa";
@@ -8,8 +9,8 @@ import { SiLinear, SiNotion, SiSentry } from "react-icons/si";
 
 export interface TriggerSource {
 	id: string;
-	name: string;
-	icon: { image: string } | { glyph: IconType; color?: string };
+	name: string | MessageDescriptor;
+	icon: { image: string } | { glyph: IconType | typeof Clock; color?: string };
 	// Event names as they read in the app's Add Trigger menu.
 	events: MessageDescriptor[];
 	note?: MessageDescriptor;
@@ -82,5 +83,14 @@ export const TRIGGER_SOURCES: TriggerSource[] = [
 		name: "Webhook",
 		icon: { glyph: LuWebhook },
 		events: [msg({ message: "A POST to the automation's URL" })],
+	},
+	{
+		id: "schedule",
+		name: msg({ message: "Schedule" }),
+		icon: { glyph: Clock },
+		events: [
+			msg({ message: "Hourly, daily, or weekly" }),
+			msg({ message: "Any custom RRule" }),
+		],
 	},
 ];

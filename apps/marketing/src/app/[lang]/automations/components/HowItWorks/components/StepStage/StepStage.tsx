@@ -4,11 +4,11 @@ import { AgentMenu } from "./components/AgentMenu";
 import { AgentTerminal } from "./components/AgentTerminal";
 import { AutomationWindow } from "./components/AutomationWindow";
 import { ReviewCard } from "./components/ReviewCard";
-import { SchedulePicker } from "./components/SchedulePicker";
+import { TriggerMenu } from "./components/TriggerMenu";
 
 const OVERLAYS: Record<RunStepId, () => React.JSX.Element> = {
 	write: AgentMenu,
-	schedule: SchedulePicker,
+	trigger: TriggerMenu,
 	run: AgentTerminal,
 	review: ReviewCard,
 };

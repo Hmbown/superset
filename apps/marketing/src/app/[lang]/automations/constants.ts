@@ -1,7 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 
-export type RunStepId = "write" | "schedule" | "run" | "review";
+export type RunStepId = "write" | "trigger" | "run" | "review";
 
 interface AutomationsItem {
 	title: MessageDescriptor;
@@ -18,11 +18,11 @@ export const RUN_STEPS: (AutomationsItem & { id: RunStepId })[] = [
 		}),
 	},
 	{
-		id: "schedule",
-		title: msg({ message: "Schedule." }),
+		id: "trigger",
+		title: msg({ message: "Trigger." }),
 		description: msg({
 			message:
-				"Choose a preset such as Weekdays or write a custom RRule. One automation can have more than one schedule.",
+				"Pick an event, like a review request or a new Sentry issue, or a schedule. One automation can have up to 25 triggers.",
 		}),
 	},
 	{

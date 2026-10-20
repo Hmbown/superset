@@ -41,7 +41,7 @@ export function SettingsTab({ step }: { step: RunStepId }) {
 					<Trans>Triggers</Trans>
 				</p>
 				<div
-					className={`mt-2 flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs ${step === "schedule" ? HIGHLIGHT : ""}`}
+					className={`mt-2 flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs ${step === "trigger" ? HIGHLIGHT : ""}`}
 				>
 					<Clock className="size-3.5 text-muted-foreground" />
 					<span className="text-foreground">
