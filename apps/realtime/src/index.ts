@@ -337,39 +337,36 @@ app.get("/v2/page/:pageId/presence", async (c) => {
 	return stub.fetch("https://realtime/presence", { headers });
 });
 
-app.get(
-	"/v2/org/:organizationId/workspace/:workspaceId/presence",
-	async (c) => {
-		if (c.req.header("Upgrade")?.toLowerCase() !== "websocket") {
-			return c.json({ error: "WebSocket upgrade required" }, 426);
-		}
-		const organizationId = c.req.param("organizationId");
-		const workspaceId = c.req.param("workspaceId");
-		if (!UUID.test(workspaceId)) return acceptAndClose(4403, "Not found");
-		const token = extractToken(c);
-		if (!token) return acceptAndClose(4401, "Unauthorized");
-		const auth = await verifyJWT(token, c.env.NEXT_PUBLIC_API_URL);
-		if (!auth) return acceptAndClose(4401, "Unauthorized");
-		if (!auth.organizationIds.includes(organizationId)) {
-			return acceptAndClose(4403, "Not a member of this organization");
-		}
-		const stub = await getServerByName(
-			c.env.WorkspaceHub,
-			`${organizationId}:${workspaceId}`,
-		);
-		const headers = new Headers({ Upgrade: "websocket" });
-		headers.set(
-			WORKSPACE_CLAIMS_HEADER,
-			JSON.stringify({
-				userId: auth.sub,
-				name: auth.name ?? "Someone",
-				image: auth.image ?? null,
-				observer: c.req.query("observe") === "1",
-			}),
-		);
-		return stub.fetch("https://realtime/presence", { headers });
-	},
-);
+app.get("/organization/:organizationId/workspace/:workspaceId", async (c) => {
+	if (c.req.header("Upgrade")?.toLowerCase() !== "websocket") {
+		return c.json({ error: "WebSocket upgrade required" }, 426);
+	}
+	const organizationId = c.req.param("organizationId");
+	const workspaceId = c.req.param("workspaceId");
+	if (!UUID.test(workspaceId)) return acceptAndClose(4403, "Not found");
+	const token = extractToken(c);
+	if (!token) return acceptAndClose(4401, "Unauthorized");
+	const auth = await verifyJWT(token, c.env.NEXT_PUBLIC_API_URL);
+	if (!auth) return acceptAndClose(4401, "Unauthorized");
+	if (!auth.organizationIds.includes(organizationId)) {
+		return acceptAndClose(4403, "Not a member of this organization");
+	}
+	const stub = await getServerByName(
+		c.env.WorkspaceHub,
+		`${organizationId}:${workspaceId}`,
+	);
+	const headers = new Headers({ Upgrade: "websocket" });
+	headers.set(
+		WORKSPACE_CLAIMS_HEADER,
+		JSON.stringify({
+			userId: auth.sub,
+			name: auth.name ?? "Someone",
+			image: auth.image ?? null,
+			observer: c.req.query("observe") === "1",
+		}),
+	);
+	return stub.fetch("https://realtime/presence", { headers });
+});
 
 // ── Emit: the API, after a write ────────────────────────────────────
 
