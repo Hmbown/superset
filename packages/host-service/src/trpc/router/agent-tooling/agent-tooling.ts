@@ -13,7 +13,7 @@ import type { HostServiceContext } from "../../../types";
 import { queryProcedure, router } from "../../index";
 import { resolveDefaultAccountEnv } from "../usage/default-account";
 import { listAgentSlashCommands } from "./discovery";
-import { listMcpServers } from "./mcp-servers";
+import { isMcpServerAgent, listMcpServers } from "./mcp-servers";
 
 // Declaration emit (docs/interim-router-types.md): the procedure's return
 // type must be nameable from dist-types, and shared is runtime-neutral so
@@ -70,34 +70,41 @@ export const agentToolingRouter = router({
 				refresh: z.boolean().optional(),
 			}),
 		)
-		.query(async ({ ctx, input }): Promise<{ servers: McpServerEntry[] }> => {
-			const workspace = findWorkspace(ctx, input.workspaceId);
-			const config = resolveHostAgentConfig(ctx.db, input.agent);
-			const presetId = config?.presetId ?? input.agent;
-			const home = homedir();
-			const env = await buildChatAgentEnv({
-				db: ctx.db,
-				cwd: workspace.worktreePath,
-				workspaceId: input.workspaceId,
-			});
-			const claudeDir = env.CLAUDE_CONFIG_DIR?.trim();
-			const codexHome = env.CODEX_HOME?.trim();
-			const servers = await listMcpServers({
-				worktreePath: workspace.worktreePath,
-				agent: presetId,
-				refresh: input.refresh,
-				paths: {
-					homeDir: home,
-					claudeStatePath: claudeDir
-						? join(claudeDir, ".claude.json")
-						: join(home, ".claude.json"),
-					codexConfigPath: join(
-						codexHome || join(home, ".codex"),
-						"config.toml",
-					),
-					installedPluginsPath: installedPluginsFilePath(),
-				},
-			});
-			return { servers };
-		}),
+		.query(
+			async ({
+				ctx,
+				input,
+			}): Promise<{ servers: McpServerEntry[]; supported: boolean }> => {
+				const workspace = findWorkspace(ctx, input.workspaceId);
+				const config = resolveHostAgentConfig(ctx.db, input.agent);
+				const presetId = config?.presetId ?? input.agent;
+				if (!isMcpServerAgent(presetId))
+					return { servers: [], supported: false };
+				const home = homedir();
+				const env = await buildChatAgentEnv({
+					db: ctx.db,
+					cwd: workspace.worktreePath,
+					workspaceId: input.workspaceId,
+				});
+				const claudeDir = env.CLAUDE_CONFIG_DIR?.trim();
+				const codexHome = env.CODEX_HOME?.trim();
+				const servers = await listMcpServers({
+					worktreePath: workspace.worktreePath,
+					agent: presetId,
+					refresh: input.refresh,
+					paths: {
+						homeDir: home,
+						claudeStatePath: claudeDir
+							? join(claudeDir, ".claude.json")
+							: join(home, ".claude.json"),
+						codexConfigPath: join(
+							codexHome || join(home, ".codex"),
+							"config.toml",
+						),
+						installedPluginsPath: installedPluginsFilePath(),
+					},
+				});
+				return { servers, supported: true };
+			},
+		),
 });

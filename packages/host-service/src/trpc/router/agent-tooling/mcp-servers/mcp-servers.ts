@@ -46,6 +46,10 @@ interface FoundServer {
 const MAX_CONFIG_BYTES = 50 * 1024 * 1024;
 const PROXY_PREFIX = `${SUPERSET_API_URL}/mcp/plugins/`;
 
+export function isMcpServerAgent(agent: string): agent is McpServerAgent {
+	return agent === "claude" || agent === "codex";
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
 	return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -405,7 +409,7 @@ export async function discoverMcpServers({
 		};
 	});
 
-	if (agent === "claude" || agent === "codex") {
+	if (isMcpServerAgent(agent)) {
 		for (const candidate of pluginServers) {
 			if (covered.has(candidate.server)) continue;
 			covered.add(candidate.server);

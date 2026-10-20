@@ -4,6 +4,7 @@ import {
 	deriveQueuedPrompts,
 	runningTurnId as findRunningTurnId,
 	launchConfigSelections,
+	userMessageText,
 } from "@superset/chat/core";
 import type {
 	AvailableCommand,
@@ -55,13 +56,11 @@ const NO_CONFIG_OPTIONS: SessionConfigOption[] = [];
 const MODEL_OPTIONS_GRACE_MS = 1000;
 
 function contentText(content: UserContent[]): string {
-	return content
-		.flatMap((part) => (part.type === "text" ? [part.text] : []))
-		.join("\n");
+	return userMessageText({ content });
 }
 
 export function SessionView({
-	agentId,
+	presetId,
 	agentLabel,
 	agentSwitch,
 	canForkToWorktree,
@@ -84,7 +83,7 @@ export function SessionView({
 	workspaceId,
 }: {
 	client: SessionClient;
-	agentId?: string;
+	presetId?: string;
 	draftKey: string;
 	workspaceId: string;
 	headerLeft?: ReactNode;
@@ -476,7 +475,7 @@ export function SessionView({
 					)
 				)}
 				<Composer
-					agentId={agentId}
+					presetId={presetId}
 					agentSwitcher={agentSwitcher}
 					availableCommands={sessionState?.availableCommands ?? NO_COMMANDS}
 					configOptions={sessionState?.configOptions ?? NO_CONFIG_OPTIONS}

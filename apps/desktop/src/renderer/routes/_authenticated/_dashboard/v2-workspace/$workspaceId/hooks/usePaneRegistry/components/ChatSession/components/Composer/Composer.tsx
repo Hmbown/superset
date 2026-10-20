@@ -48,11 +48,11 @@ import { useFooterTier } from "./hooks/useFooterTier";
 import { useMcpServerPicker } from "./hooks/useMcpServerPicker";
 import { useQueueActions } from "./hooks/useQueueActions";
 import { useUploadAttachments } from "./hooks/useUploadAttachments";
-import { withMcpContext } from "./utils/mcpServerChips";
+import { mcpContextLine } from "./utils/mcpServerChips";
 
 export type ComposerProps = {
 	workspaceId: string;
-	agentId?: string;
+	presetId?: string;
 	draftKey: string;
 	inputRef?: Ref<Pick<PromptInputHandle, "appendText" | "focus">>;
 	availableCommands: AvailableCommand[];
@@ -105,7 +105,7 @@ const FOCUS_HANDOFF_MS = 1000;
 let focusHandoff: { draftKey: string; at: number } | null = null;
 
 export const Composer = memo(function Composer({
-	agentId,
+	presetId,
 	agentSwitcher,
 	availableCommands,
 	configOptions,
@@ -132,7 +132,7 @@ export const Composer = memo(function Composer({
 	const { storedDraft, onChange, clearDraft } = useComposerDraft(draftKey);
 	const promptInputRef = useRef<PromptInputHandle>(null);
 	const queueActions = useQueueActions(promptQueue, promptInputRef);
-	const mcpPicker = useMcpServerPicker({ workspaceId, agentId });
+	const mcpPicker = useMcpServerPicker({ workspaceId, presetId });
 	useImperativeHandle(
 		inputRef,
 		() => ({
@@ -295,11 +295,11 @@ export const Composer = memo(function Composer({
 				promptInputRef.current?.appendText(appendPastedText(text, pastedTexts));
 				return;
 			}
-			const message = withMcpContext(
-				text.trim(),
+			const message = text.trim();
+			const elements = elementsForChips(message, mentions);
+			const mcpContext = mcpContextLine(
 				mentions.flatMap((chip) => mcpPicker.serverNameOf(chip) ?? []),
 			);
-			const elements = elementsForChips(message, mentions);
 			onSend(
 				[
 					{
@@ -310,6 +310,9 @@ export const Composer = memo(function Composer({
 						),
 						...(elements.length > 0 ? { elements } : {}),
 					},
+					...(mcpContext
+						? [{ type: "text" as const, text: mcpContext, hidden: true }]
+						: []),
 				],
 				{ steer },
 			);

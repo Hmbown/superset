@@ -120,6 +120,28 @@ describe("LiveSession", () => {
 		await runtime.dispose();
 	});
 
+	test("sends a hidden part to the agent but keeps it off the user message", async () => {
+		const { runtime, sessionId, adapters } =
+			startSessionWithAdapters(SINGLE_TURN);
+		const visible = { type: "text", text: "@mcp/linear list issues" } as const;
+		const hint = { type: "text", text: "MCP context", hidden: true } as const;
+		const result = runtime.commands.prompt({
+			commandId: randomUUID(),
+			sessionId,
+			clientId: "client-hint",
+			content: [visible, hint],
+		});
+
+		await waitFor(() => runtime.sessions.get(sessionId)?.status === "idle");
+
+		expect(adapters[0]?.prompted).toEqual([[visible, hint]]);
+		const prompts = userMessages(journalEnvelopes(runtime, sessionId));
+		expect(prompts.map((prompt) => prompt.item.id)).toContain(result.itemId);
+		for (const prompt of prompts)
+			expect(prompt.item.content).toEqual([visible]);
+		await runtime.dispose();
+	});
+
 	test("says so when a prompted turn ends without showing anything", async () => {
 		const { runtime, sessionId } = startSession({
 			start: [

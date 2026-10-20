@@ -5,7 +5,6 @@ import type {
 	ComposerChipMatch,
 	PromptInputCommand,
 } from "@superset/chat-ui/PromptInput";
-import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useNavigate } from "@tanstack/react-router";
 import { ServerIcon } from "lucide-react";
@@ -13,6 +12,7 @@ import { type ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { useIsDarkTheme } from "renderer/assets/app-icons/preset-icons";
 import { ConnectConnectorDialog } from "renderer/components/ConnectorSection";
 import { PluginIcon } from "renderer/components/PluginIcon";
+import { useInstallAfterConnect } from "renderer/routes/_authenticated/_dashboard/hooks/useInstallAfterConnect";
 import { usePluginMutations } from "renderer/routes/_authenticated/_dashboard/hooks/usePluginMutations";
 import { McpServerPicker } from "../../components/McpServerPicker";
 import type { McpPickerActionRow } from "../../components/McpServerPicker/utils/mcpPickerRows";
@@ -33,28 +33,30 @@ type McpServerPickerControls = {
 
 export function useMcpServerPicker({
 	workspaceId,
-	agentId,
+	presetId,
 }: {
 	workspaceId: string;
-	agentId: string | undefined;
+	presetId: string | undefined;
 }): McpServerPickerControls {
 	const { t } = useLingui();
-	const pickerAgent =
-		agentId === "claude" || agentId === "codex" ? agentId : undefined;
 	const navigate = useNavigate();
 	const isDark = useIsDarkTheme();
 	const utils = workspaceTrpc.useUtils();
-	const { install } = usePluginMutations({ announceInstall: false });
-	const input = { workspaceId, agent: agentId ?? "" };
-	const cached = workspaceTrpc.agentTooling.listMcpServers.useQuery(input, {
-		enabled: pickerAgent !== undefined,
-	}).data?.servers;
+	const { install } = usePluginMutations();
+	const installAfterConnect = useInstallAfterConnect();
+	const input = { workspaceId, agent: presetId ?? "" };
+	const listed = workspaceTrpc.agentTooling.listMcpServers.useQuery(input, {
+		enabled: presetId !== undefined,
+	}).data;
+	const pickerAgent = listed?.supported === true ? presetId : undefined;
+	const cached = listed?.servers;
 	const [connecting, setConnecting] = useState<{
 		plugin: string;
 		connector: string;
 	} | null>(null);
 	const contextRef = useRef<ComposerActionContext | null>(null);
 	const installedHereRef = useRef<ReadonlySet<string>>(new Set());
+	const pendingInstallRef = useRef<Promise<void>>(Promise.resolve());
 	const openRef = useRef<(ctx: ComposerActionContext) => void>(() => {});
 
 	const refresh = () =>
@@ -68,29 +70,22 @@ export function useMcpServerPicker({
 		if (ctx) openRef.current(ctx);
 	};
 
+	const markInstalled = (plugin: string) => {
+		installedHereRef.current = new Set([...installedHereRef.current, plugin]);
+	};
+
 	const runAction = async (row: McpPickerActionRow) => {
-		if (!row.server.plugin?.installed) {
-			try {
-				await install(row.plugin);
-			} catch {
-				return;
-			}
-			installedHereRef.current = new Set([
-				...installedHereRef.current,
-				row.plugin,
-			]);
-		}
-		await refresh();
-		if (row.needsAccount && row.connector) {
+		if (row.action === "connect") {
 			setConnecting({ plugin: row.plugin, connector: row.connector });
 			return;
 		}
-		const name = row.displayName;
-		toast.success(t({ message: `${name} is installed` }), {
-			description: t({
-				message: "Its tools reach the agent in your next chat.",
-			}),
-		});
+		try {
+			await install(row.plugin);
+		} catch {
+			return;
+		}
+		markInstalled(row.plugin);
+		await refresh();
 		reopen();
 	};
 	const runActionRef = useRef(runAction);
@@ -104,7 +99,7 @@ export function useMcpServerPicker({
 			bare: true,
 			render: ({ close }) => (
 				<McpServerPicker
-					agentId={pickerAgent}
+					presetId={pickerAgent}
 					installedHere={installedHereRef.current}
 					workspaceId={workspaceId}
 					onPick={(chip) => {
@@ -145,7 +140,7 @@ export function useMcpServerPicker({
 			findMcpServerTokens(text).map(({ start, end, token, name }) => {
 				const server = cached?.find(
 					(candidate) =>
-						candidate.agent === agentId &&
+						candidate.agent === presetId &&
 						mcpServerToken(candidate, cached) === token,
 				);
 				return {
@@ -158,28 +153,37 @@ export function useMcpServerPicker({
 					),
 				};
 			}),
-		[agentId, cached, isDark],
+		[presetId, cached, isDark],
 	);
 
 	const dialog = (
 		<ConnectConnectorDialog
 			slug={connecting?.connector ?? null}
+			connectOnly
 			icon={
 				connecting ? (
 					<PluginIcon className="size-12" pluginName={connecting.plugin} />
 				) : undefined
 			}
+			onConnected={() => {
+				const plugin = connecting?.plugin;
+				if (!plugin) return;
+				pendingInstallRef.current = installAfterConnect(plugin).then(
+					() => markInstalled(plugin),
+					() => {},
+				);
+			}}
 			onOpenChange={(open) => {
 				if (open) return;
 				setConnecting(null);
-				void refresh().then(reopen);
+				void pendingInstallRef.current.then(refresh).then(reopen);
 			}}
 		/>
 	);
 
 	const serverNameOf = useCallback(
-		(chip: ComposerChip) => resolveMcpServerName(chip, cached ?? [], agentId),
-		[cached, agentId],
+		(chip: ComposerChip) => resolveMcpServerName(chip, cached ?? [], presetId),
+		[cached, presetId],
 	);
 
 	return { command, findChips, serverNameOf, dialog };

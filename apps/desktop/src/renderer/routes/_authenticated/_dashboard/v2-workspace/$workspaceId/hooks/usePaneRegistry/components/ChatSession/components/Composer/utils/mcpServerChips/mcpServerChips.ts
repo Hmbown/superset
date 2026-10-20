@@ -84,29 +84,9 @@ export function findMcpServerTokens(text: string): McpTokenMatch[] {
 	});
 }
 
-const CONTEXT_PREFIX = "MCP context: ";
 export function mcpContextLine(serverNames: readonly string[]): string | null {
 	const names = [...new Set(serverNames)];
 	if (names.length === 0) return null;
 	const list = names.map((name) => JSON.stringify(name)).join(", ");
-	return `${CONTEXT_PREFIX}Use the configured MCP server${names.length === 1 ? "" : "s"} ${list} when relevant to this request.`;
-}
-
-function withoutMcpContext(text: string): string {
-	if (!text.startsWith(CONTEXT_PREFIX)) return text;
-	const end = text.indexOf("\n\n");
-	return end === -1 ? "" : text.slice(end + 2);
-}
-
-/**
- * A recalled or edited message can still carry the line from its first
- * send, so it is replaced rather than stacked.
- */
-export function withMcpContext(
-	text: string,
-	serverNames: readonly string[],
-): string {
-	const body = withoutMcpContext(text);
-	const context = mcpContextLine(serverNames);
-	return context ? `${context}\n\n${body}` : body;
+	return `MCP context: Use the configured MCP server${names.length === 1 ? "" : "s"} ${list} when relevant to this request.`;
 }

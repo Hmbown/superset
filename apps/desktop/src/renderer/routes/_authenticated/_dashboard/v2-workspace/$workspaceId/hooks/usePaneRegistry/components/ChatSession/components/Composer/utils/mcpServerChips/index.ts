@@ -4,5 +4,4 @@ export {
 	mcpServerChip,
 	mcpServerToken,
 	resolveMcpServerName,
-	withMcpContext,
 } from "./mcpServerChips";

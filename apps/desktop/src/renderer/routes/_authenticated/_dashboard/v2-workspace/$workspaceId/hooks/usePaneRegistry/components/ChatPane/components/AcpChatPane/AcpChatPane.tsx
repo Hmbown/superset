@@ -583,7 +583,7 @@ export function AcpChatPane({
 
 	return (
 		<SessionView
-			agentId={agent?.id}
+			presetId={agent?.id}
 			client={client}
 			draftKey={draftKey}
 			{...(recovering

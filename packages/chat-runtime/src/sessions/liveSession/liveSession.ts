@@ -138,6 +138,9 @@ export class LiveSession {
 	): PromptResult {
 		const itemId = this.mintId();
 		const seq = ++this.sent;
+		const shown = content.filter(
+			(part) => !(part.type === "text" && part.hidden),
+		);
 		const wantsSteer =
 			steerTurnId !== undefined ||
 			this.sessionState.awaitingBackground === true;
@@ -151,7 +154,7 @@ export class LiveSession {
 				kind: "user_message",
 				clientId,
 				startedAtMs: this.now(),
-				content,
+				content: shown,
 			};
 			this.injectInto(running, {
 				item,
@@ -167,7 +170,7 @@ export class LiveSession {
 			kind: "user_message",
 			clientId,
 			startedAtMs: this.now(),
-			content,
+			content: shown,
 			...(queued ? { queued: true } : {}),
 			...(hidden ? { hidden: true } : {}),
 		};

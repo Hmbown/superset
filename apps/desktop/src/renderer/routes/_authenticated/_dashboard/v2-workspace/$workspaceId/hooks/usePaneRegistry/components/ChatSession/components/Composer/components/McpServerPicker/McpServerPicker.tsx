@@ -39,7 +39,7 @@ const AGENT_LABELS: Record<McpServerAgent, string> = {
 
 type McpServerPickerProps = {
 	workspaceId: string;
-	agentId: string;
+	presetId: string;
 	/** Plugins installed from this picker before this machine's config caught up. */
 	installedHere: ReadonlySet<string>;
 	onPick: (chip: ComposerChip) => void;
@@ -50,7 +50,7 @@ type McpServerPickerProps = {
 
 export function McpServerPicker({
 	workspaceId,
-	agentId,
+	presetId,
 	installedHere,
 	onPick,
 	onAction,
@@ -67,7 +67,7 @@ export function McpServerPicker({
 		const frame = requestAnimationFrame(() => searchRef.current?.focus());
 		return () => cancelAnimationFrame(frame);
 	}, []);
-	const input = { workspaceId, agent: agentId };
+	const input = { workspaceId, agent: presetId };
 	const utils = workspaceTrpc.useUtils();
 	const list = workspaceTrpc.agentTooling.listMcpServers.useQuery(input, {
 		staleTime: 30_000,

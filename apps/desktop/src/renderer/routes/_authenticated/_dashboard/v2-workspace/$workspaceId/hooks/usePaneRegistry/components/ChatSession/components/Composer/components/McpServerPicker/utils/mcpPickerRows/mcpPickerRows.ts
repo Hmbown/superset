@@ -12,11 +12,16 @@ export type McpPickerRow =
 			key: string;
 			server: McpServerEntry;
 			kind: "action";
-			action: "install" | "connect";
+			action: "install";
 			plugin: string;
-			displayName: string;
-			connector: string | null;
-			needsAccount: boolean;
+	  }
+	| {
+			key: string;
+			server: McpServerEntry;
+			kind: "action";
+			action: "connect";
+			plugin: string;
+			connector: string;
 	  }
 	| {
 			key: string;
@@ -46,23 +51,31 @@ function rowFor(
 	if (server.state === "not-configured" && !account) return null;
 	if (!plugin || !account) return { key, server, kind: "available" };
 
-	const needsAccount = Boolean(account.connector && !account.connected);
-	const action = (kind: "install" | "connect"): McpPickerRow => ({
-		key,
-		server,
-		kind: "action",
-		action: kind,
-		plugin: plugin.name,
-		displayName: account.displayName,
-		connector: account.connector,
-		needsAccount,
-	});
+	const connect: McpPickerRow | null =
+		account.connector && !account.connected
+			? {
+					key,
+					server,
+					kind: "action",
+					action: "connect",
+					plugin: plugin.name,
+					connector: account.connector,
+				}
+			: null;
 	if (server.state === "not-configured") {
-		if (needsAccount) return action("connect");
-		if (!plugin.installed) return action("install");
+		if (connect) return connect;
+		if (!plugin.installed) {
+			return {
+				key,
+				server,
+				kind: "action",
+				action: "install",
+				plugin: plugin.name,
+			};
+		}
 		return { key, server, kind: "unavailable", reason: "next-session" };
 	}
-	if (plugin.proxied && needsAccount) return action("connect");
+	if (plugin.proxied && connect) return connect;
 	return { key, server, kind: "available" };
 }
 

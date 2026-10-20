@@ -22,6 +22,8 @@ export const userContentSchema = z.discriminatedUnion("type", [
 		type: z.literal("text"),
 		text: z.string(),
 		elements: z.array(textElementSchema).optional(),
+		/** Reaches the agent, but is not kept on the transcript's user message. */
+		hidden: z.boolean().optional(),
 	}),
 	z.looseObject({
 		type: z.literal("attachment"),
