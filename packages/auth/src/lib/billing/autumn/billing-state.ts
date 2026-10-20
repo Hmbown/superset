@@ -1,4 +1,5 @@
 import type { PlanTier } from "@superset/shared/billing";
+import { boxRateFrom } from "./box-rate";
 import { type CloudUsage, cloudUsageFromBalances } from "./cloud-usage";
 import type { getAutumnCustomer } from "./customer";
 import { paidPlanIdFromFlags, tierFromFlags } from "./entitlements";
@@ -24,6 +25,7 @@ export interface OrganizationBilling {
 	lapsed: boolean;
 	paymentState: PaymentState;
 	cloudUsage: CloudUsage | null;
+	boxRate: number;
 }
 
 type AutumnCustomer = Awaited<ReturnType<typeof getAutumnCustomer>>;
@@ -37,7 +39,7 @@ function iso(ms: number | null | undefined): string | null {
 export function billingFromCustomer(
 	customer: Pick<
 		AutumnCustomer,
-		"flags" | "subscriptions" | "invoices" | "balances"
+		"flags" | "subscriptions" | "invoices" | "balances" | "metadata"
 	>,
 	now: number,
 ): OrganizationBilling {
@@ -90,5 +92,9 @@ export function billingFromCustomer(
 		lapsed,
 		paymentState,
 		cloudUsage: cloudUsageFromBalances(customer.balances),
+		boxRate: boxRateFrom({
+			customer: customer.metadata,
+			plan: paid?.plan?.metadata,
+		}),
 	};
 }

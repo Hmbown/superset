@@ -20,6 +20,7 @@ const FREE: OrganizationBilling = {
 	lapsed: false,
 	paymentState: { kind: "ok" },
 	cloudUsage: null,
+	boxRate: 1,
 };
 
 const FAIL_OPEN: OrganizationBilling = {
@@ -32,6 +33,7 @@ const FAIL_OPEN: OrganizationBilling = {
 	lapsed: false,
 	paymentState: { kind: "ok" },
 	cloudUsage: null,
+	boxRate: 1,
 };
 
 const redis = new Redis({
@@ -123,6 +125,12 @@ export async function organizationPlanFromAutumn(
 	organizationId: string,
 ): Promise<PlanTier> {
 	return (await organizationBilling(organizationId)).tier;
+}
+
+export async function organizationBoxRateFromAutumn(
+	organizationId: string,
+): Promise<number> {
+	return (await organizationBilling(organizationId)).boxRate ?? 1;
 }
 
 export async function invalidateOrganizationBilling(

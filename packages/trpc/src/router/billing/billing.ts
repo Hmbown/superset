@@ -197,11 +197,13 @@ export const billingRouter = {
 	}),
 
 	cloudUsage: protectedProcedure.query(
-		async ({ ctx }): Promise<CloudUsage | null> => {
+		async ({ ctx }): Promise<(CloudUsage & { boxRate: number }) | null> => {
 			const activeOrgId = ctx.activeOrganizationId;
 			if (!billingUsesAutumn || !activeOrgId) return null;
 			const billing = await organizationBilling(activeOrgId);
-			return billing.cloudUsage ?? null;
+			return billing.cloudUsage
+				? { ...billing.cloudUsage, boxRate: billing.boxRate ?? 1 }
+				: null;
 		},
 	),
 

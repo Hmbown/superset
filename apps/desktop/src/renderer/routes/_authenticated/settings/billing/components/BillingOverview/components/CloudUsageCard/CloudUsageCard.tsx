@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/react/macro";
 import { useFormat } from "@superset/i18n/react";
-import { BOX_HOUR_GB_MINUTES } from "@superset/shared/billing";
+import { BOX_HOUR_GB_MINUTES, machineSizeSpec } from "@superset/shared/billing";
 import { Progress } from "@superset/ui/progress";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 
@@ -23,6 +23,13 @@ export function CloudUsageCard() {
 	const resetDate = usage.resetsAt
 		? formatDate(new Date(usage.resetsAt))
 		: null;
+	const perHour = (size: "small" | "medium" | "large") =>
+		formatNumber(machineSizeSpec(size).boxHoursPerHour * usage.boxRate, {
+			maximumFractionDigits: 2,
+		});
+	const small = perHour("small");
+	const medium = perHour("medium");
+	const large = perHour("large");
 	const percentUsed =
 		usage.includedGbMinutes && usage.includedGbMinutes > 0
 			? Math.min(100, (usage.usedGbMinutes / usage.includedGbMinutes) * 100)
@@ -59,7 +66,9 @@ export function CloudUsageCard() {
 					</div>
 				)}
 				<div className="text-xs text-muted-foreground">
-					<Trans>Small uses ½, medium 1, large 2 box hours an hour</Trans>
+					<Trans>
+						Box hours an hour: small {small}, medium {medium}, large {large}
+					</Trans>
 				</div>
 			</div>
 		</div>

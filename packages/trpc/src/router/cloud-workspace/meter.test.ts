@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, test } from "bun:test";
 import { autumnClient } from "@superset/auth/autumn";
+import * as billing from "@superset/auth/billing";
 import { db } from "@superset/db/client";
 import { AutumnError } from "autumn-js";
 import { stub } from "../../../test/stub";
@@ -84,6 +85,11 @@ stub(autumnClient, {
 		return { balance: {} };
 	},
 });
+const boxRates: Record<string, number> = { org_half: 0.5 };
+stub(billing, {
+	organizationBoxRateFromAutumn: async (organizationId: string) =>
+		boxRates[organizationId] ?? 1,
+});
 stub(autumnClient.balances, {
 	finalize: async (params: unknown, options?: { headers?: unknown }) => {
 		autumnCalls.push({ method: "finalize", params, headers: options?.headers });
@@ -147,6 +153,18 @@ describe("settleBoot", () => {
 			lock: { lockId: "boot_1:1" },
 		});
 		expect(writes.at(-1)).toMatchObject({ lockSeq: 1, lockOpen: true });
+	});
+
+	test("an org's box_rate scales what is billed", async () => {
+		boot = { ...boot, organizationId: "org_half" };
+		expect(await settleBoot("boot_1")).toBe("renewed");
+		expect(
+			(
+				autumnCalls.find((call) => call.method === "finalize")?.params as {
+					overrideValue: number;
+				}
+			).overrideValue,
+		).toBeCloseTo(80, 0);
 	});
 
 	test("a stopped box is billed to its stop, records its CPU unbilled, and closes", async () => {
