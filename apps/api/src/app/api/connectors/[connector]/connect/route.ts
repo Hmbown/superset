@@ -1,4 +1,5 @@
 import type { ConnectorMethod } from "@superset/shared/connectors";
+import { pluginConnectorSlug } from "@superset/shared/plugins";
 import {
 	authorizeUrl,
 	connectorMethod,
@@ -12,7 +13,10 @@ import {
 import { encryptSecret } from "@superset/trpc/integrations/plugins";
 
 import { env } from "@/env";
-import { beginOAuthFlow, STATE_COOKIES } from "@/lib/integrations/oauthFlow";
+import {
+	beginOAuthFlow,
+	connectorStateCookie,
+} from "@/lib/integrations/oauthFlow";
 import { requireOrgMember } from "@/lib/integrations/requireOrgMember";
 
 export async function GET(
@@ -26,7 +30,11 @@ export async function GET(
 	// Same reason as the callback: the generic connect page covers every
 	// connector, `/integrations/<slug>` only the seven older ones.
 	const connectUrl = `${env.NEXT_PUBLIC_WEB_URL}/connect/${slug}`;
-	const requested = new URL(request.url).searchParams.get("method");
+	const search = new URL(request.url).searchParams;
+	const requested = search.get("method");
+	const plugin = search.get("plugin");
+	const returnsToPlugin =
+		plugin !== null && pluginConnectorSlug(plugin) === slug;
 
 	let method: ConnectorMethod;
 	try {
@@ -55,13 +63,14 @@ export async function GET(
 		const codeVerifier = wantsPkce ? createCodeVerifier() : null;
 
 		return await beginOAuthFlow({
-			cookie: STATE_COOKIES.connectors,
+			cookie: connectorStateCookie(slug),
 			payload: {
 				organizationId: member.organizationId,
 				userId: member.userId,
 				...(codeVerifier
 					? { codeVerifier: await encryptSecret(codeVerifier) }
 					: {}),
+				...(returnsToPlugin ? { plugin } : {}),
 			},
 			authorizeUrl: async (state) =>
 				(

@@ -1,24 +1,22 @@
+import { useLingui } from "@lingui/react/macro";
 import type { Reasoning as ReasoningItem } from "@superset/chat/protocol";
+import { Shimmer } from "@superset/ui/ai-elements/shimmer";
 import {
-	Reasoning,
-	ReasoningContent,
-	ReasoningTrigger,
-} from "@superset/ui/ai-elements/reasoning";
-import { useState } from "react";
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "@superset/ui/collapsible";
+import { cn } from "@superset/ui/utils";
+import { useMemo, useState } from "react";
+import { MarkdownView } from "../../../MarkdownView";
+import { thoughtSummary } from "./utils/thoughtSummary";
 
-const MS_IN_S = 1000;
-
-/** Replayed thoughts settle in the same instant they start; a zero reads as live. */
-function thoughtSeconds(item: ReasoningItem): number | undefined {
-	if (item.completedAtMs === undefined) return undefined;
-	const seconds = Math.round((item.completedAtMs - item.startedAtMs) / MS_IN_S);
-	return seconds >= 1 ? seconds : undefined;
-}
+const THINKING_SWEEP_SECONDS = 1.6;
 
 /**
- * Closed until the reader opens it, and it stays how they left it when the
- * thought finishes: the label changes from "Thinking..." to the duration, the
- * disclosure does not move.
+ * One quiet line: "Thinking..." until the thought has words, then its first
+ * paragraph, breathing while it streams. The whole thought opens beneath it
+ * on request and stays how the reader left it.
  */
 export function ReasoningRow({
 	item,
@@ -27,20 +25,41 @@ export function ReasoningRow({
 	item: ReasoningItem;
 	text: string;
 }) {
+	const { t } = useLingui();
 	const [open, setOpen] = useState(false);
+	const streaming = item.completedAtMs === undefined;
+	const summary = useMemo(() => thoughtSummary(text), [text]);
+
+	if (!summary && streaming) {
+		return (
+			<div className="py-1 font-sans text-sm">
+				<Shimmer duration={THINKING_SWEEP_SECONDS} variant="text">
+					{t({ message: "Thinking..." })}
+				</Shimmer>
+			</div>
+		);
+	}
+	if (!text.trim()) return null;
+
 	return (
-		<Reasoning
-			className="mb-0"
-			defaultOpen={false}
-			duration={thoughtSeconds(item)}
-			isStreaming={item.completedAtMs === undefined}
-			onOpenChange={setOpen}
-			open={open}
-		>
-			<ReasoningTrigger />
-			<ReasoningContent className="ml-1.5 border-border/60 border-l pl-3 text-muted-foreground">
-				{text}
-			</ReasoningContent>
-		</Reasoning>
+		<Collapsible onOpenChange={setOpen} open={open}>
+			<CollapsibleTrigger className="group flex w-full min-w-0 items-center py-1 text-left font-sans text-sm">
+				<span
+					className={cn(
+						"min-w-0 flex-1 truncate text-foreground/50 transition-colors duration-200 group-hover:text-foreground/75",
+						streaming && "animate-thinking-pulse motion-reduce:animate-none",
+					)}
+					data-find-item={summary ? item.id : undefined}
+				>
+					{summary || t({ message: "Thought for a few seconds" })}
+				</span>
+			</CollapsibleTrigger>
+			<CollapsibleContent className="pb-2">
+				<MarkdownView
+					className="text-foreground/50 [&_em]:text-foreground/60 [&_strong]:text-foreground/60"
+					text={text}
+				/>
+			</CollapsibleContent>
+		</Collapsible>
 	);
 }

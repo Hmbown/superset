@@ -1,6 +1,7 @@
 import {
 	pageReportReasonValues,
 	pageReportStatusValues,
+	pageShareRoleEnum,
 } from "@superset/db/schema";
 import { z } from "zod";
 
@@ -102,7 +103,7 @@ export const PAGE_LIST_MAX_LIMIT = 200;
  */
 export const PAGE_LIST_MAX_IDS = 200;
 
-export const PAGE_LIST_SCOPES = ["all", "team", "mine"] as const;
+export const PAGE_LIST_SCOPES = ["all", "team", "mine", "shared"] as const;
 
 export type PageListScope = (typeof PAGE_LIST_SCOPES)[number];
 
@@ -190,6 +191,11 @@ export const setPageVisibilitySchema = z.object({
 	visibility: pageFields.visibility,
 });
 
+export const setPageOrganizationRoleSchema = z.object({
+	id: pageFields.id,
+	role: pageShareRoleEnum,
+});
+
 export const setSharedVersionSchema = z.object({
 	id: pageFields.id,
 	version: pageFields.version.nullable(),
@@ -236,6 +242,8 @@ export const setPageWatchSchema = z.object({
 export const clearPageWatchSchema = z.object({ id: pageFields.id });
 
 export const publicPageSchema = z.object({ slug: pageFields.slug });
+
+export const pagePreviewSchema = z.object({ slug: pageFields.slug });
 
 export const updatePageSchema = z
 	.object({

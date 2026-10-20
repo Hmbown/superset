@@ -14,13 +14,20 @@ import {
 	useState,
 } from "react";
 import { useDrop } from "react-dnd";
+import type { StoreApi } from "zustand/vanilla";
+import type { WorkspaceStore } from "../../../../../core/store";
+import {
+	transferPaneToNewTab,
+	transferTabToIndex,
+} from "../../../../../core/transfer";
 import type { Tab } from "../../../../../types";
-import type { PaneRegistry } from "../../../../types";
+import type { AddTabMenuActions, PaneRegistry } from "../../../../types";
 import { PANE_DRAG_TYPE } from "../Tab/components/Pane/components/PaneHeader";
 import { TAB_DRAG_TYPE, TabItem } from "./components/TabItem";
 import { computeInsertIndex, TAB_WIDTH } from "./utils";
 
 interface TabBarProps<TData> {
+	store: StoreApi<WorkspaceStore<TData>>;
 	tabs: Tab<TData>[];
 	registry: PaneRegistry<TData>;
 	activeTabId: string | null;
@@ -32,20 +39,21 @@ interface TabBarProps<TData> {
 	onReorderTab: (tabId: string, toIndex: number) => void;
 	onMovePaneToNewTab: (paneId: string, toIndex: number) => void;
 	renderTabIcon?: (tab: Tab<TData>) => ReactNode;
-	renderAddTabMenu?: () => ReactNode;
+	renderAddTabMenu?: (actions: AddTabMenuActions) => ReactNode;
 	renderTabBarLeading?: () => ReactNode;
 	renderTabBarTrailing?: () => ReactNode;
 	renderTabAccessory?: (tab: Tab<TData>) => ReactNode;
 }
 
-type TabDragItem = { tabId: string };
-type PaneDragItem = { paneId: string };
+type TabDragItem = { tabId: string; store?: unknown };
+type PaneDragItem = { paneId: string; store?: unknown };
 
 function AddTabButton<_TData>({
 	renderAddTabMenu,
 }: {
-	renderAddTabMenu?: () => ReactNode;
+	renderAddTabMenu?: (actions: AddTabMenuActions) => ReactNode;
 }) {
+	const pendingActionRef = useRef<(() => void) | null>(null);
 	const button = (
 		<Button
 			className="ml-1.5 size-7 rounded-md border border-border/60 bg-muted/30 px-1 text-muted-foreground shadow-none hover:bg-accent/60 hover:text-foreground"
@@ -61,8 +69,22 @@ function AddTabButton<_TData>({
 		return (
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>{button}</DropdownMenuTrigger>
-				<DropdownMenuContent align="end" className="w-56">
-					{renderAddTabMenu()}
+				<DropdownMenuContent
+					align="end"
+					className="w-56"
+					onCloseAutoFocus={(event) => {
+						const action = pendingActionRef.current;
+						if (!action) return;
+						pendingActionRef.current = null;
+						event.preventDefault();
+						action();
+					}}
+				>
+					{renderAddTabMenu({
+						runAfterClose: (action) => {
+							pendingActionRef.current = action;
+						},
+					})}
 				</DropdownMenuContent>
 			</DropdownMenu>
 		);
@@ -72,6 +94,7 @@ function AddTabButton<_TData>({
 }
 
 export function TabBar<TData>({
+	store,
 	tabs,
 	registry,
 	activeTabId,
@@ -119,6 +142,26 @@ export function TabBar<TData>({
 				insertIndexRef.current = null;
 				setInsertIndex(null);
 
+				const source = item.store as typeof store | undefined;
+				if (source && source !== store) {
+					if (monitor.getItemType() === PANE_DRAG_TYPE && "paneId" in item) {
+						transferPaneToNewTab({
+							source,
+							target: store,
+							paneId: item.paneId,
+							toIndex: idx,
+						});
+					} else if ("tabId" in item) {
+						transferTabToIndex({
+							source,
+							target: store,
+							tabId: item.tabId,
+							toIndex: idx,
+						});
+					}
+					return;
+				}
+
 				if (monitor.getItemType() === PANE_DRAG_TYPE && "paneId" in item) {
 					onMovePaneToNewTab(item.paneId, idx);
 					return;
@@ -141,7 +184,7 @@ export function TabBar<TData>({
 				isOver: monitor.isOver(),
 			}),
 		}),
-		[tabs, onReorderTab, onMovePaneToNewTab],
+		[store, tabs, onReorderTab, onMovePaneToNewTab],
 	);
 
 	// Clear indicator when cursor leaves the tab bar
@@ -200,6 +243,7 @@ export function TabBar<TData>({
 							<TabItem
 								tab={tab}
 								tabs={tabs}
+								store={store}
 								registry={registry}
 								index={i}
 								isActive={tab.id === activeTabId}

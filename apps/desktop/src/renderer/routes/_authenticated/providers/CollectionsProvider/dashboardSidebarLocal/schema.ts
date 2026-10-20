@@ -208,6 +208,15 @@ export const workspaceLocalStateSchema = z.object({
 		suppressedPullRequestUrl: z.string().nullable().default(null),
 	}),
 	paneLayout: paneWorkspaceStateSchema,
+	rightPaneLayout: paneWorkspaceStateSchema.optional(),
+	rightSidebarOpen: z.boolean().optional(),
+	rightPaneAreaExpansion: z
+		.object({
+			movedTabIds: z.array(z.string()),
+			centerActiveTabId: z.string().nullable(),
+			rightActiveTabId: z.string().nullable(),
+		})
+		.optional(),
 	viewedFiles: z.array(z.string()).default([]),
 	recentlyViewedFiles: z
 		.array(
@@ -360,6 +369,7 @@ export type V2TerminalPresetRow = z.infer<typeof v2TerminalPresetSchema>;
  *   - "pane"      → open in current tab/pane (file viewer, in-app browser)
  *   - "newTab"    → open in a new tab/pane
  *   - "external"  → open in the external app (editor / system browser)
+ *   - "rightPane" → open URLs in the right pane area (falls back to "pane")
  *
  * Surfaces:
  *   - fileLinks / urlLinks: links embedded in terminal output and markdown.
@@ -373,7 +383,7 @@ export type V2TerminalPresetRow = z.infer<typeof v2TerminalPresetSchema>;
  *
  * Resolution and labels live in src/renderer/lib/clickPolicy.
  */
-const linkActionSchema = z.enum(["pane", "newTab", "external"]);
+const linkActionSchema = z.enum(["pane", "newTab", "external", "rightPane"]);
 
 export type LinkAction = z.infer<typeof linkActionSchema>;
 
@@ -483,6 +493,15 @@ export type SidebarProjectSortMode = z.infer<
 const persistedSidebarProjectSortModeSchema =
 	sidebarProjectSortModeSchema.catch("manual");
 
+const sidebarProjectHostFilterSchema = z.enum(["all", "local", "cloud"]);
+
+export type SidebarProjectHostFilter = z.infer<
+	typeof sidebarProjectHostFilterSchema
+>;
+
+const persistedSidebarProjectHostFilterSchema =
+	sidebarProjectHostFilterSchema.catch("all");
+
 export const v2UserPreferencesSchema = z.object({
 	id: z.literal("preferences"),
 	fileLinks: linkTierMapSchema.default(DEFAULT_LINK_TIER_MAP),
@@ -495,11 +514,15 @@ export const v2UserPreferencesSchema = z.object({
 	rightSidebarOpen: z.boolean().default(true),
 	rightSidebarTab: z.enum(["changes", "files"]).default("changes"),
 	rightSidebarWidth: z.number().default(340),
+	rightPaneAreaWidth: z.number().optional(),
 	deleteLocalBranch: z.boolean().default(false),
 	showPresetsBar: z.boolean().default(true),
 	changesViewMode: changesViewModeSchema.default("folders"),
 	// Ordering of the dashboard sidebar's Projects list; manual = drag order.
 	sidebarProjectSortMode: persistedSidebarProjectSortModeSchema,
+	// Which workspaces the Projects list shows: every row, only the ones on
+	// a device, or only cloud sandboxes.
+	sidebarProjectHostFilter: persistedSidebarProjectHostFilterSchema,
 	// Built-in (synthetic, app-shipped) presets the user hid from the preset
 	// bar. Synthetic presets have no v2TerminalPresets row, so visibility can't
 	// live on the row's pinnedToBar like user presets. Pruned against
@@ -539,6 +562,7 @@ export const DEFAULT_V2_USER_PREFERENCES: V2UserPreferencesRow = {
 	showPresetsBar: true,
 	changesViewMode: "folders",
 	sidebarProjectSortMode: "manual",
+	sidebarProjectHostFilter: "all",
 	hiddenBuiltinPresetIds: [],
 	favoritePageIds: [],
 	hiddenTagFolders: {},
@@ -563,6 +587,10 @@ export function healWorkspaceLocalState(raw: unknown): WorkspaceLocalStateRow {
 		// undefined node. Passed through untouched before, which white-screened
 		// the workspace view on a corrupt layout.
 		paneLayout: sanitizePaneLayout(r.paneLayout),
+		rightPaneLayout:
+			r.rightPaneLayout === undefined
+				? undefined
+				: sanitizePaneLayout(r.rightPaneLayout),
 		viewedFiles:
 			r.viewedFiles ?? WORKSPACE_LOCAL_STATE_OPTIONAL_DEFAULTS.viewedFiles,
 		recentlyViewedFiles:
@@ -634,6 +662,9 @@ export function healV2UserPreferences(raw: unknown): V2UserPreferencesRow {
 		},
 		sidebarProjectSortMode: persistedSidebarProjectSortModeSchema.parse(
 			r.sidebarProjectSortMode,
+		),
+		sidebarProjectHostFilter: persistedSidebarProjectHostFilterSchema.parse(
+			r.sidebarProjectHostFilter,
 		),
 		// Prune retired/stray built-in ids so the array stays bounded.
 		hiddenBuiltinPresetIds: (Array.isArray(r.hiddenBuiltinPresetIds)

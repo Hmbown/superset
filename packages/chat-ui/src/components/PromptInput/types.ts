@@ -6,7 +6,14 @@ export type ComposerChip = {
 	brandColor?: string;
 	// Icon as a URL string so chips stay serializable data.
 	iconUrl?: string;
+	description?: string;
 	data?: unknown;
+};
+
+export type ComposerChipMatch = {
+	start: number;
+	end: number;
+	chip: ComposerChip;
 };
 
 export type ComposerActionContext = {
@@ -60,6 +67,7 @@ export type ComposerMentionProvider = {
 export type PromptInputCommand = {
 	id: string;
 	title: string;
+	hint?: string;
 	description?: string;
 	icon?: ReactNode;
 	rightIcon?: ReactNode;
@@ -79,6 +87,9 @@ export type PromptInputSubmitPayload = {
 	text: string;
 	files: File[];
 	mentions: ComposerChip[];
+	// Large pastes held as cards, in paste order.
+	pastedTexts: string[];
+	steer: boolean;
 };
 
 export type PromptInputDictationError = {
@@ -87,10 +98,19 @@ export type PromptInputDictationError = {
 };
 
 export type PromptInputDictation = {
-	transcribe(audio: Blob): Promise<string> | string;
+	// Reject with a DictationError to choose the message and whether retry
+	// is offered; any other rejection is retryable. The signal aborts when
+	// the user cancels or the composer unmounts.
+	transcribe(
+		audio: Blob,
+		options: { signal: AbortSignal },
+	): Promise<string> | string;
 	// Surfaced for app-owned toasts; retryable failures also keep the
 	// recording and show retry controls in the composer row.
 	onError?(error: PromptInputDictationError): void;
+	// Recording stops and transcribes on its own at this length.
+	maxSeconds?: number;
+	audioBitsPerSecond?: number;
 };
 
 export type PromptInputHandle = {
@@ -114,9 +134,19 @@ export type PromptInputProps = {
 	// Text to open with, read once on mount. A host that persists drafts hands
 	// back what it stored; the composer owns the editor state from then on.
 	defaultValue?: string;
-	// Plain text of the composer as it is typed, for persisting a draft.
+	// Plain text of the composer as it is typed, for persisting a draft. With
+	// collapseLargePastes, pasted cards follow as trailing pasted_text blocks,
+	// and defaultValue and appendText turn such blocks back into cards.
 	onChange?: (text: string) => void;
-	onSubmit?: (payload: PromptInputSubmitPayload) => void;
+	// A paste of 25+ lines or 4,000+ chars becomes a card instead of text.
+	collapseLargePastes?: boolean;
+	// Spans of a stored draft that were chips before it was serialized, so
+	// they come back as chips. Runs on the draft as read, never on typing.
+	findChips?: (text: string) => ComposerChipMatch[];
+	/** Returning `false` keeps the draft in the editor. */
+	onSubmit?: (
+		payload: PromptInputSubmitPayload,
+	) => false | void | Promise<void>;
 	onStop?: () => void;
 	header?: ReactNode;
 	onAddFiles?: (files: File[]) => void;
@@ -125,7 +155,12 @@ export type PromptInputProps = {
 	hideSubmit?: boolean;
 	autoFocus?: boolean;
 	onMentionHighlight?: (entry: ComposerMentionEntry | null) => void;
-	onAttachmentClick?: (attachment: PromptInputAttachment) => void;
+	/** The clicked pill, and every pending attachment in order. */
+	onAttachmentClick?: (
+		attachment: PromptInputAttachment,
+		attachments: readonly PromptInputAttachment[],
+	) => void;
 	onChipClick?: (chip: ComposerChip) => void;
+	history?: string[];
 	className?: string;
 };

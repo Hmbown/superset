@@ -30,19 +30,24 @@ import {
 	SandboxNotReadyError,
 	SandboxUnavailableError,
 	sandboxExists,
+	stopAndSnapshot,
 } from "../../lib/sandbox";
 import { jwtProcedure, userError } from "../../trpc";
 import { hostServiceMutation } from "../automation/relay-client";
+import { ensureDefaultEnvironment } from "../environment/default-environment";
+import { regionForRequest } from "../environment/region-for-request";
 import {
-	isVisibleTo,
+	canOpenWorkspace,
 	loadVisibleWorkspace,
 	notFound,
 	visibleTo,
 } from "./access";
 import { recordCloudWorkspaceActivity } from "./activity";
+import { queueSettleWorkspace, settleWorkspaceNow } from "./meter";
 import { nextSandboxNameFor } from "./provision";
 import { queueReap } from "./reap";
 import { cloudWorkspaceRecordRouter } from "./record";
+import { cloudWorkspaceSharingRouter } from "./sharing";
 import { queueProvision, startCloudWorkspace } from "./start";
 import { transitionCloudWorkspace } from "./transition";
 import {
@@ -76,7 +81,7 @@ async function loadReadyWorkspace(
 	}
 	await assertCloudAccess(ctx);
 	assertMember(ctx.organizationIds, row.organizationId);
-	if (!isVisibleTo(row, ctx.userId)) throw notFound();
+	if (!(await canOpenWorkspace(row, ctx.userId))) throw notFound();
 	if (row.status !== "ready") {
 		throw new TRPCError({
 			code: "PRECONDITION_FAILED",
@@ -179,6 +184,7 @@ async function loadPresence(organizationId: string, workspaceIds: string[]) {
 
 export const cloudWorkspaceRouter = {
 	...cloudWorkspaceRecordRouter,
+	sharing: cloudWorkspaceSharingRouter,
 
 	/**
 	 * Whether this account may use cloud workspaces. Clients decide their
@@ -326,7 +332,11 @@ export const cloudWorkspaceRouter = {
 				/** Omitted = the repo's default branch, resolved here — a client
 				 * whose branch query hadn't answered must not guess "main". */
 				branch: z.string().min(1).max(300).optional(),
-				environmentId: z.string().uuid(),
+				/** One of the two: an environment, or a repository whose default
+				 * environment is used — made on first use when the organization
+				 * has none that checks the repository out. */
+				environmentId: z.string().uuid().optional(),
+				repositoryId: z.string().uuid().optional(),
 				/**
 				 * A built-in agent to launch on first boot with `prompt`. Absent
 				 * means the workspace comes up idle.
@@ -359,10 +369,29 @@ export const cloudWorkspaceRouter = {
 				});
 			}
 
+			const environmentId =
+				input.environmentId ??
+				(input.repositoryId
+					? (
+							await ensureDefaultEnvironment({
+								organizationId: input.organizationId,
+								repositoryId: input.repositoryId,
+								userId: ctx.userId,
+								region: regionForRequest(ctx.headers),
+							})
+						).id
+					: null);
+			if (!environmentId) {
+				throw new TRPCError({
+					code: "BAD_REQUEST",
+					message: "environmentId or repositoryId is required",
+				});
+			}
+
 			const row = await startCloudWorkspace({
 				organizationId: input.organizationId,
 				userId: ctx.userId,
-				environmentId: input.environmentId,
+				environmentId,
 				name: input.name,
 				prompt: input.prompt,
 				branch: input.branch,
@@ -516,6 +545,19 @@ export const cloudWorkspaceRouter = {
 			return { restarted: true };
 		}),
 
+	/** Stops the sandbox so it costs storage only; the next `access` with `wake` boots it again. */
+	sleep: jwtProcedure
+		.input(z.object({ id: z.string().uuid() }))
+		.mutation(async ({ ctx, input }) => {
+			const row = await loadReadyWorkspace(ctx, input.id);
+			const { running } = await addressSandbox(row, "address");
+			if (running) {
+				await stopAndSnapshot(row.providerSandboxId);
+				await queueSettleWorkspace(row.id);
+			}
+			return { stopped: running };
+		}),
+
 	/**
 	 * A ticket for host-service in this workspace's sandbox at its last known
 	 * address, without asking the provider. For callers that reach the box
@@ -611,7 +653,9 @@ export const cloudWorkspaceRouter = {
 			if (!row) return { deleted: false };
 			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, row.organizationId);
-			if (!isVisibleTo(row, ctx.userId)) return { deleted: false };
+			if (!(await canOpenWorkspace(row, ctx.userId))) {
+				return { deleted: false };
+			}
 
 			const archivedAt = new Date();
 			// From any state, provisioning included: the job checks the row
@@ -633,6 +677,12 @@ export const cloudWorkspaceRouter = {
 						console.error(
 							`[cloud-workspace] could not queue the reap for ${row.id}`,
 							error,
+						);
+						await settleWorkspaceNow(row.id).catch((meterError) =>
+							console.error(
+								`[cloud-workspace] ${row.id} final meter failed`,
+								meterError,
+							),
 						);
 						await deleteSandbox(row.providerSandboxId);
 					});

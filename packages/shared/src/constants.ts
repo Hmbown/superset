@@ -1,4 +1,7 @@
+import { ROOT_DOMAIN } from "./app-identity";
 import type { TriggerConfigInput } from "./automation-triggers";
+
+export { CANONICAL_URLS, IOS_APP } from "./app-identity";
 
 // Auth
 export const AUTH_PROVIDERS = ["github", "google"] as const;
@@ -12,21 +15,12 @@ export const PROTOCOL_SCHEMES = {
 	PROD: "superset",
 } as const;
 
-const IOS_TEAM_ID = "NV9657CS5A";
-const IOS_BUNDLE_ID = "sh.superset.mobile";
-
-export const IOS_APP = {
-	TEAM_ID: IOS_TEAM_ID,
-	BUNDLE_ID: IOS_BUNDLE_ID,
-	APP_ID: `${IOS_TEAM_ID}.${IOS_BUNDLE_ID}`,
-} as const;
-
 // Company
 // Root domain flips the whole brand at cutover. Default keeps superset.sh so
-// nothing changes until NEXT_PUBLIC_ROOT_DOMAIN is set (e.g. boid.so). All
+// nothing changes until NEXT_PUBLIC_ROOT_DOMAIN is set. All
 // domain-derived URLs below build off this; social handles / GitHub / Discord
 // are external identities and are updated by hand on rebrand.
-const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN || "superset.sh";
+const SUPPORT_EMAIL = `support@${ROOT_DOMAIN}`;
 const MARKETING_URL =
 	process.env.NEXT_PUBLIC_MARKETING_URL || `https://${ROOT_DOMAIN}`;
 const APP_STORE_ID = "6788926383";
@@ -44,7 +38,8 @@ export const COMPANY = {
 	X_URL: "https://x.com/superset_sh",
 	LINKEDIN_URL: "https://www.linkedin.com/company/superset-sh",
 	YOUTUBE_URL: "https://www.youtube.com/@superset-sh",
-	MAIL_TO: `mailto:support@${ROOT_DOMAIN}`,
+	SUPPORT_EMAIL,
+	MAIL_TO: `mailto:${SUPPORT_EMAIL}`,
 	TEAM_EMAIL: `team@${ROOT_DOMAIN}`,
 	TEAM_MAIL_TO: `mailto:team@${ROOT_DOMAIN}`,
 	REPORT_ISSUE_URL: "https://github.com/superset-sh/superset/issues/new",
@@ -53,10 +48,19 @@ export const COMPANY = {
 	APP_STORE_URL: `https://apps.apple.com/app/id${APP_STORE_ID}`,
 	STATUS_URL: `https://status.${ROOT_DOMAIN}`,
 	TRUST_URL: `https://trust.${ROOT_DOMAIN}`,
-	JOIN_US_URL: `${MARKETING_URL}/join-us`,
+	JOIN_US_URL: `${MARKETING_URL}/careers`,
 	/** The formal YC listing; product surfaces link here. `JOIN_US_URL` is our own marketing page. */
 	CAREERS_URL: "https://www.ycombinator.com/companies/superset/jobs",
 } as const;
+
+// Staff keep their @superset.sh accounts after the root domain changes.
+export const STAFF_EMAIL_DOMAINS = [
+	...new Set([COMPANY.EMAIL_DOMAIN, "@superset.sh"]),
+];
+
+export function isStaffEmail(email: string): boolean {
+	return STAFF_EMAIL_DOMAINS.some((domain) => email.endsWith(domain));
+}
 
 export const OPEN_ROLES = [
 	{
@@ -124,6 +128,8 @@ export const FEATURE_FLAGS = {
 	MOBILE_LAUNCH: "mobile-launch",
 	/** Gates access to Cloud features (environment variables, sandboxes). */
 	CLOUD_ACCESS: "cloud-access",
+	/** Allowlist for mobile voice mode: shows the entry and authorizes `voice.createSession`. */
+	MOBILE_VOICE_MODE: "mobile-voice-mode",
 	/** When enabled, blocks remote agent execution on the desktop (e.g., for enterprise orgs). */
 	DISABLE_REMOTE_AGENT: "disable-remote-agent",
 	/**
@@ -191,11 +197,23 @@ export const FEATURE_FLAGS = {
 	 */
 	CHAT_V3: "chat-v3",
 	/**
+	 * Replaces the v2 workspace's right sidebar with a second pane area that
+	 * holds Files, Changes, Review, Browser and Chat panes.
+	 */
+	RIGHT_PANE_AREA: "right-pane-area",
+	/**
 	 * Who may use cloud sandboxes: shows the option in the create picker, and
 	 * gates the cloud procedures server-side (`assertCloudAccess`). The release
 	 * conditions are the allowlist, so access changes without a deploy.
 	 */
 	CLOUD_WORKSPACES: "cloud-workspaces",
+	/**
+	 * Renders cloud workspaces as rows of their GitHub repo's project in the
+	 * desktop sidebar instead of in a separate Cloud section. UI-only and
+	 * renderer-local: off, unloaded, or offline all keep the Cloud section, so
+	 * flips take effect live and nothing on a host changes.
+	 */
+	SIDEBAR_INLINE_CLOUD_WORKSPACES: "sidebar-inline-cloud-workspaces",
 	/**
 	 * Lets the Slack agent answer replies in a thread it has already replied
 	 * in without an @-mention. Evaluated per Slack team; off, unloaded or
@@ -224,6 +242,13 @@ export const FEATURE_FLAGS = {
 	 * release condition on the flag, so widening never needs a release.
 	 */
 	ACP_CHAT: "acp-chat",
+	/**
+	 * Shows the `pdev` agent: in the agent catalog, agent pickers
+	 * and, with ACP_CHAT, as a chat harness (`pdev acp`). Off, unloaded or
+	 * offline all hide it. Hosts never seed it, so a user only gets it by
+	 * adding it while the flag is on.
+	 */
+	PDEV_AGENT: "pdev-agent",
 } as const;
 
 /**
@@ -289,18 +314,12 @@ export const SHARED_ENVIRONMENT_ORGANIZATION_ID =
 
 export const SHARED_ENVIRONMENT_NAME = "Default";
 
-// Terminal identity presented to shell programs via TERM_PROGRAM. kitty:
-// agent TUIs (claude-code especially) tune wheel-scroll compensation per
-// TERM_PROGRAM, and our terminals install the full-fidelity wheel handler
-// (@superset/shared/terminal-wheel-handler) that produces a native
-// kitty/iTerm-grade report stream. Under kitty-class identities TUIs trust
-// that stream as-is; a vscode identity would make claude-code amplify each
-// report (its compensation for xterm.js's damped stock stream) and
-// over-scroll ~3x. The identity and the wheel handler must ship together —
-// reverting one without the other reintroduces slow or runaway scrolling.
-// Kitty *keyboard protocol* support is advertised separately via the CSI-u
-// capability probe.
-export const TERMINAL_TERM_PROGRAM = "kitty";
-// A plausible kitty version: TUIs may version-gate quirk handling against
-// real kitty releases, so keep this roughly current when touching terminal code.
-export const TERMINAL_TERM_PROGRAM_VERSION = "0.42.0";
+// Terminals set no TERM_PROGRAM, like xterm. Agents take kitty-only paths
+// under "kitty" that xterm.js cannot serve, and under "vscode" Claude Code
+// amplifies the full-fidelity wheel stream ~2x. Without it, agents identify
+// the terminal from its XTVERSION reply ("Superset (xterm.js)", see the
+// desktop terminal-version-reply) and the CSI-u probe.
+export const TERMINAL_IDENTITY_ENV_KEYS = [
+	"TERM_PROGRAM",
+	"TERM_PROGRAM_VERSION",
+] as const;

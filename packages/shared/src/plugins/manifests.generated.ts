@@ -388,6 +388,43 @@ export const FIRST_PARTY_MANIFESTS = {
 		},
 		"skills": []
 	} as const,
+	"autumn": {
+		"$schema": "https://superset.sh/schemas/plugin/1.0.0.json",
+		"name": "autumn",
+		"version": "1.0.0",
+		"description": "Work with billing in Autumn: customers, plans, balances, and subscriptions.",
+		"author": {
+			"name": "Superset",
+			"url": "https://superset.sh"
+		},
+		"homepage": "https://docs.superset.sh",
+		"repository": "https://github.com/superset-sh/superset",
+		"license": "MIT",
+		"keywords": [
+			"autumn",
+			"billing",
+			"pricing",
+			"subscriptions",
+			"usage"
+		],
+		"extensions": {
+			"superset": {
+				"interface": {
+					"displayName": "Autumn",
+					"category": "Data & APIs",
+					"icon": "autumn"
+				},
+				"connector": {
+					"slug": "autumn_mcp"
+				},
+				"mcp": {
+					"type": "streamable-http",
+					"url": "https://mcp.useautumn.com/mcp"
+				}
+			}
+		},
+		"skills": []
+	} as const,
 	"stripe": {
 		"$schema": "https://superset.sh/schemas/plugin/1.0.0.json",
 		"name": "stripe",
@@ -491,6 +528,235 @@ export const FIRST_PARTY_MANIFESTS = {
 				"description": "Work through a Superhuman inbox — sort what is there into needs a reply, waiting on someone else, worth knowing, and noise, then archive, star, label, remind, or unsubscribe only as the user directs. Use when the user asks what needs their attention, what they are waiting on, to triage or clean up their inbox, or to deal with newsletters and notifications."
 			}
 		]
+	} as const,
+	"neon": {
+		"$schema": "https://superset.sh/schemas/plugin/1.0.0.json",
+		"name": "neon",
+		"version": "1.0.0",
+		"description": "Work with your Neon Postgres: inspect projects and branches, read schemas, and run SQL.",
+		"author": {
+			"name": "Superset",
+			"url": "https://superset.sh"
+		},
+		"homepage": "https://docs.superset.sh",
+		"repository": "https://github.com/superset-sh/superset",
+		"license": "MIT",
+		"keywords": [
+			"neon",
+			"postgres",
+			"database",
+			"sql",
+			"branches"
+		],
+		"extensions": {
+			"superset": {
+				"interface": {
+					"displayName": "Neon",
+					"category": "Data & APIs",
+					"icon": "neon"
+				},
+				"connector": {
+					"slug": "neon_mcp"
+				},
+				"bind": {
+					"headers": {
+						"Authorization": "Bearer ${config.access_token}"
+					}
+				},
+				"mcp": {
+					"type": "streamable-http",
+					"url": "https://mcp.neon.tech/mcp"
+				}
+			}
+		},
+		"skills": []
+	} as const,
+	"neon-readonly": {
+		"$schema": "https://superset.sh/schemas/plugin/1.0.0.json",
+		"name": "neon-readonly",
+		"version": "1.0.1",
+		"description": "Read your Neon Postgres without writing to it: inspect projects and branches, read schemas, and run read-only SQL.",
+		"author": {
+			"name": "Superset",
+			"url": "https://superset.sh"
+		},
+		"homepage": "https://docs.superset.sh",
+		"repository": "https://github.com/superset-sh/superset",
+		"license": "MIT",
+		"keywords": [
+			"neon",
+			"postgres",
+			"database",
+			"sql",
+			"read-only"
+		],
+		"extensions": {
+			"superset": {
+				"interface": {
+					"displayName": "Neon (read-only)",
+					"category": "Data & APIs",
+					"icon": "neon"
+				},
+				"connector": {
+					"slug": "neon_mcp"
+				},
+				"bind": {
+					"headers": {
+						"Authorization": "Bearer ${config.access_token}"
+					}
+				},
+				"mcp": {
+					"type": "streamable-http",
+					"url": "https://mcp.neon.tech/mcp?readonly=true"
+				}
+			}
+		},
+		"skills": []
+	} as const,
+	"exa": {
+		"$schema": "https://superset.sh/schemas/plugin/1.0.0.json",
+		"name": "exa",
+		"version": "1.0.1",
+		"description": "Search the web, companies, and people with Exa.",
+		"author": {
+			"name": "Superset",
+			"url": "https://superset.sh"
+		},
+		"homepage": "https://docs.superset.sh",
+		"repository": "https://github.com/superset-sh/superset",
+		"license": "MIT",
+		"keywords": [
+			"exa",
+			"search",
+			"research",
+			"companies",
+			"people"
+		],
+		"extensions": {
+			"superset": {
+				"interface": {
+					"displayName": "Exa",
+					"category": "Data & APIs"
+				},
+				"mcp": {
+					"type": "streamable-http",
+					"url": "https://mcp.exa.ai/mcp"
+				}
+			}
+		},
+		"skills": []
+	} as const,
+	"posthog": {
+		"$schema": "https://superset.sh/schemas/plugin/1.0.0.json",
+		"name": "posthog",
+		"version": "1.0.0",
+		"description": "Ask PostHog about your product: query events and insights, look up people, and check feature flags.",
+		"author": {
+			"name": "Superset",
+			"url": "https://superset.sh"
+		},
+		"homepage": "https://docs.superset.sh",
+		"repository": "https://github.com/superset-sh/superset",
+		"license": "MIT",
+		"keywords": [
+			"posthog",
+			"analytics",
+			"events",
+			"feature-flags",
+			"product"
+		],
+		"extensions": {
+			"superset": {
+				"interface": {
+					"displayName": "PostHog",
+					"category": "Data & APIs",
+					"icon": "posthog"
+				},
+				"connector": {
+					"slug": "posthog_mcp"
+				},
+				"bind": {
+					"headers": {
+						"Authorization": "Bearer ${config.access_token}"
+					}
+				},
+				"mcp": {
+					"type": "streamable-http",
+					"url": "https://mcp.posthog.com/mcp"
+				}
+			}
+		},
+		"skills": []
+	} as const,
+	"google-calendar": {
+		"$schema": "https://superset.sh/schemas/plugin/1.0.0.json",
+		"name": "google-calendar",
+		"version": "1.0.0",
+		"description": "Read and manage your Google Calendar: find events, check free time, and schedule meetings.",
+		"author": {
+			"name": "Superset",
+			"url": "https://superset.sh"
+		},
+		"homepage": "https://docs.superset.sh",
+		"repository": "https://github.com/superset-sh/superset",
+		"license": "MIT",
+		"keywords": [
+			"google",
+			"calendar",
+			"events",
+			"meetings",
+			"scheduling"
+		],
+		"extensions": {
+			"superset": {
+				"interface": {
+					"displayName": "Google Calendar",
+					"category": "Productivity",
+					"icon": "google-calendar"
+				},
+				"connector": {
+					"slug": "google"
+				}
+			}
+		},
+		"skills": []
+	} as const,
+	"vercel": {
+		"$schema": "https://superset.sh/schemas/plugin/1.0.0.json",
+		"name": "vercel",
+		"version": "1.0.0",
+		"description": "Work with Vercel: inspect projects and deployments, read build and runtime logs, and search Vercel's docs.",
+		"author": {
+			"name": "Superset",
+			"url": "https://superset.sh"
+		},
+		"homepage": "https://docs.superset.sh",
+		"repository": "https://github.com/superset-sh/superset",
+		"license": "MIT",
+		"keywords": [
+			"vercel",
+			"deployments",
+			"hosting",
+			"logs",
+			"nextjs"
+		],
+		"extensions": {
+			"superset": {
+				"interface": {
+					"displayName": "Vercel",
+					"category": "Developer tools",
+					"icon": "vercel"
+				},
+				"connector": {
+					"slug": "vercel_mcp"
+				},
+				"mcp": {
+					"type": "streamable-http",
+					"url": "https://mcp.vercel.com"
+				}
+			}
+		},
+		"skills": []
 	} as const,
 } as const;
 

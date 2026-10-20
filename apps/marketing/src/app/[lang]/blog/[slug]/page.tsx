@@ -15,6 +15,7 @@ import {
 	getBlogPost,
 	getRelatedPosts,
 } from "@/lib/blog";
+import { extractComparisonFaqItems } from "@/lib/compare-utils";
 import { mdxComponents } from "../components/mdx-components";
 import { BlogPostLayout } from "./components/BlogPostLayout";
 
@@ -37,6 +38,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 		slug,
 		relatedSlugs: post.relatedSlugs,
 	});
+	const faqItems = post.faq ?? extractComparisonFaqItems(post.content);
 	const { author } = post;
 
 	const url = localeUrl(lang, `/blog/${slug}`);
@@ -74,7 +76,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 					{ name: post.title, url },
 				]}
 			/>
-			{post.faq && post.faq.length > 0 && <FAQPageJsonLd items={post.faq} />}
+			{faqItems.length > 0 && <FAQPageJsonLd items={faqItems} />}
 			<BlogPostLayout post={post} toc={toc} relatedPosts={relatedPosts}>
 				<MDXRemote source={post.content} components={mdxComponents} />
 			</BlogPostLayout>

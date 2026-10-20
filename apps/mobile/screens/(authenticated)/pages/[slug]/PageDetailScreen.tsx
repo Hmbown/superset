@@ -7,6 +7,7 @@ import {
 	type FrameRect,
 	PENDING_ANCHOR_ID,
 } from "@superset/shared/page-comments-runtime";
+import { pagePresenceUrl } from "@superset/shared/page-presence";
 import * as Haptics from "expo-haptics";
 import {
 	Stack,
@@ -21,12 +22,16 @@ import { View } from "react-native";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
+import { env } from "@/lib/env";
 import { errorCopy } from "@/lib/errors";
+import { getHostAuthToken } from "@/lib/host/client";
 import { pageUrlForSlug } from "@/lib/web-links";
 import { PressableScale } from "@/screens/(authenticated)/components/PressableScale";
 import { usePageQuery } from "../hooks/usePages";
 import { CommentPin } from "./components/CommentPin";
 import { PageFrame, type PageFrameHandle } from "./components/PageFrame";
+import { PagePresence } from "./components/PagePresence";
+import { usePageAccessQuery } from "./hooks/usePageSharing";
 import { usePageCommentStore } from "./stores/pageCommentStore";
 import { pinPointOf, stackPins } from "./utils/pinLayout";
 
@@ -68,6 +73,9 @@ export function PageDetailScreen({
 		scrollY?: string;
 	}>();
 	const headerHeight = useHeaderHeight();
+	const access = usePageAccessQuery(slug);
+	// Optimistic while loading: the server refuses a view-only reader's comment either way.
+	const canComment = access.data?.canComment ?? true;
 	const frameRef = useRef<PageFrameHandle>(null);
 	const scrollYRef = useRef(0);
 	const restoredScroll = useRef(false);
@@ -106,6 +114,17 @@ export function PageDetailScreen({
 		() => threads.filter((thread) => !thread.resolved),
 		[threads],
 	);
+
+	const presenceUrl = useCallback(async () => {
+		const token = await getHostAuthToken().catch(() => null);
+		return token && pageId
+			? pagePresenceUrl({
+					realtimeUrl: env.EXPO_PUBLIC_REALTIME_URL,
+					pageId,
+					token,
+				})
+			: null;
+	}, [pageId]);
 
 	const send = useCallback(
 		(message: Parameters<PageFrameHandle["send"]>[0]) =>
@@ -253,19 +272,21 @@ export function PageDetailScreen({
 						}}
 					/>
 				) : null}
-				<Stack.Toolbar.Button
-					icon={commentMode ? "viewfinder.circle.fill" : "viewfinder"}
-					accessibilityLabel={
-						commentMode
-							? t({ message: "Leave comment mode" })
-							: t({ message: "Comment on this page" })
-					}
-					onPress={() => {
-						void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-						setSelection(null);
-						setCommentMode((enabled) => !enabled);
-					}}
-				/>
+				{canComment ? (
+					<Stack.Toolbar.Button
+						icon={commentMode ? "viewfinder.circle.fill" : "viewfinder"}
+						accessibilityLabel={
+							commentMode
+								? t({ message: "Leave comment mode" })
+								: t({ message: "Comment on this page" })
+						}
+						onPress={() => {
+							void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+							setSelection(null);
+							setCommentMode((enabled) => !enabled);
+						}}
+					/>
+				) : null}
 				<Stack.Toolbar.Button
 					icon="bubble.left.and.bubble.right"
 					accessibilityLabel={t({ message: "Show all comments" })}
@@ -370,6 +391,8 @@ export function PageDetailScreen({
 							/>
 						) : null}
 					</View>
+
+					{pageId ? <PagePresence key={pageId} url={presenceUrl} /> : null}
 
 					{commentMode && !selection ? (
 						<View

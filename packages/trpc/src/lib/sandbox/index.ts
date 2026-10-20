@@ -7,6 +7,7 @@ export {
 	resolveSandboxCaller,
 	SANDBOX_ALLOWED_PROCEDURES,
 	type SandboxCaller,
+	sandboxCredentialWorkspaceId,
 } from "./api-credential";
 export { buildSandboxClaim } from "./claim";
 export { deriveSandboxCredentials } from "./credentials";
@@ -36,9 +37,14 @@ export {
 	workspaceRepositories,
 } from "./repositories";
 export {
+	type BoxSession,
 	deleteSandbox,
 	describeSandbox,
+	findSandboxSession,
 	HOST_SERVICE_PORT,
+	IMAGE_SANDBOX_VCPUS,
+	listActiveWorkspaceSandboxes,
+	MEMORY_MB_PER_VCPU,
 	promoteSandboxToEnvironment,
 	provisionSandbox,
 	pushManagedEnv,
@@ -47,6 +53,7 @@ export {
 	SandboxNotReadyError,
 	SandboxUnavailableError,
 	sandboxExists,
+	sessionEndedAt,
 	settleSandbox,
 	stopAndSnapshot,
 	stopSandbox,

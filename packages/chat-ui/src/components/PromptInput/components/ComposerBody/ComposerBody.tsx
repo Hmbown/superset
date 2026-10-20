@@ -7,6 +7,7 @@ import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
 import { LexicalTypeaheadMenuPlugin } from "@lexical/react/LexicalTypeaheadMenuPlugin";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { appendPastedText, parsePastedText } from "@superset/chat/core";
 import { getClipboardFiles } from "@superset/ui/lib/clipboard-files";
 import { cn } from "@superset/ui/utils";
 import {
@@ -47,12 +48,14 @@ import {
 	useState,
 } from "react";
 import { createPortal } from "react-dom";
+import { isDropHandled, markDropHandled } from "../../../../utils/handledDrops";
 import { useComposerDropZone } from "../../../ComposerDropZone";
 import { useDictation } from "../../hooks/useDictation";
 import {
 	type MentionSection,
 	useMentionSources,
 } from "../../hooks/useMentionSources";
+import { usePastedTexts } from "../../hooks/usePastedTexts";
 import { MentionChipNode } from "../../nodes/mentionChipNode";
 import type {
 	ComposerActionContext,
@@ -62,8 +65,12 @@ import type {
 	PromptInputAttachment,
 	PromptInputProps,
 } from "../../types";
+import { registerDraftEdit } from "../../utils/draftEdit";
+import { registerHistoryNavigation } from "../../utils/historyNavigation";
+import { $insertTranscript } from "../../utils/insertTranscript";
 import { matchToken } from "../../utils/matchToken";
 import { rankCommands } from "../../utils/rankCommands";
+import { $restoreChips } from "../../utils/restoreChips";
 import {
 	CommandTypeaheadOption,
 	MentionTypeaheadOption,
@@ -74,6 +81,21 @@ import { ComposerPanel } from "../ComposerPanel";
 import { ContextButton } from "../ContextButton";
 import { DictationBar } from "../DictationBar";
 import { MentionMenu } from "../MentionMenu";
+
+const FOOTER_BUTTON_CLASS =
+	"flex size-[26px] shrink-0 items-center justify-center rounded-md transition-colors";
+const GHOST_FOOTER_BUTTON_CLASS = cn(
+	FOOTER_BUTTON_CLASS,
+	"cursor-pointer text-muted-foreground hover:bg-accent hover:text-foreground",
+);
+const FILLED_FOOTER_BUTTON_CLASS = cn(
+	FOOTER_BUTTON_CLASS,
+	"cursor-pointer bg-secondary text-secondary-foreground hover:bg-secondary/80",
+);
+const INACTIVE_SEND_BUTTON_CLASS = cn(
+	FOOTER_BUTTON_CLASS,
+	"cursor-not-allowed bg-secondary text-muted-foreground",
+);
 
 // Slash commands only trigger while the "/token" is the entire message.
 function matchCommandToken(text: string) {
@@ -100,7 +122,9 @@ export type ComposerBodyProps = Required<
 		| "toolbar"
 		| "toolbarEnd"
 		| "defaultValue"
+		| "findChips"
 		| "onChange"
+		| "collapseLargePastes"
 		| "onSubmit"
 		| "onStop"
 		| "onMentionHighlight"
@@ -113,6 +137,7 @@ export type ComposerBodyProps = Required<
 		| "clearOnSubmit"
 		| "hideSubmit"
 		| "autoFocus"
+		| "history"
 	>;
 
 function $insertChipAtSelection(chip: ComposerChip) {
@@ -155,7 +180,9 @@ export function ComposerBody({
 	toolbar,
 	toolbarEnd,
 	defaultValue,
+	findChips,
 	onChange,
+	collapseLargePastes,
 	onSubmit,
 	onStop,
 	onMentionHighlight,
@@ -168,9 +195,36 @@ export function ComposerBody({
 	clearOnSubmit,
 	hideSubmit,
 	autoFocus,
+	history,
 }: ComposerBodyProps) {
 	const { t } = useLingui();
 	const [editor] = useLexicalComposerContext();
+	const onChangeRef = useRef(onChange);
+	onChangeRef.current = onChange;
+	const pasted = usePastedTexts(editor, {
+		enabled: Boolean(collapseLargePastes),
+		onCardsChange: (cards, editorText) =>
+			onChangeRef.current?.(
+				appendPastedText(
+					editorText,
+					cards.map((card) => card.text),
+				),
+			),
+	});
+	const { cardsRef } = pasted;
+	const draftText = useCallback(
+		(editorText: string) =>
+			appendPastedText(
+				editorText,
+				cardsRef.current.map((card) => card.text),
+			),
+		[cardsRef],
+	);
+	const splitPastes = useCallback(
+		(text: string) =>
+			collapseLargePastes ? parsePastedText(text) : { text, pastes: [] },
+		[collapseLargePastes],
+	);
 	const focusAtEnd = useCallback(() => {
 		editor.update(() => $getRoot().selectEnd());
 		editor.focus();
@@ -178,7 +232,18 @@ export function ComposerBody({
 	useImperativeHandle(
 		ref,
 		() => ({
-			appendText(text: string) {
+			appendText(message: string) {
+				const { text, pastes } = splitPastes(message);
+				pasted.restore(pastes);
+				if (!text) {
+					onChangeRef.current?.(
+						draftText(
+							editor.getEditorState().read(() => $getRoot().getTextContent()),
+						),
+					);
+					editor.focus();
+					return;
+				}
 				editor.update(() => {
 					const root = $getRoot();
 					const separator = root.getTextContent().trim() === "" ? "" : "\n";
@@ -197,7 +262,7 @@ export function ComposerBody({
 				focusAtEnd();
 			},
 		}),
-		[editor, focusAtEnd],
+		[draftText, editor, focusAtEnd, pasted.restore, splitPastes],
 	);
 	const [attachments, setAttachments] = useState<PromptInputAttachment[]>([]);
 	const [isEmpty, setIsEmpty] = useState(true);
@@ -222,6 +287,7 @@ export function ComposerBody({
 		submitWhileStreaming,
 		allowEmptySubmit,
 		clearOnSubmit,
+		history,
 	});
 	stateRef.current = {
 		attachments,
@@ -232,33 +298,55 @@ export function ComposerBody({
 		submitWhileStreaming,
 		allowEmptySubmit,
 		clearOnSubmit,
+		history,
 	};
+	const historyNavigationRef = useRef<{ reset: () => void } | null>(null);
 
 	// A draft the host had stored. Read once: after mount the editor is the
 	// only writer, and re-applying would fight what is being typed.
-	const seeded = useRef(false);
+	const seededValue = useRef<string | null>(null);
 	useEffect(() => {
-		if (seeded.current) return;
-		seeded.current = true;
-		if (!defaultValue) return;
+		if (seededValue.current !== null) return;
+		const { text, pastes } = splitPastes(defaultValue ?? "");
+		seededValue.current = text;
+		pasted.restore(pastes);
+		if (!text) return;
 		editor.update(() => {
 			const root = $getRoot();
 			if (root.getTextContent() !== "") return;
 			root.selectEnd();
 			const selection = $getSelection();
-			if ($isRangeSelection(selection)) selection.insertText(defaultValue);
+			if ($isRangeSelection(selection)) selection.insertText(text);
 		});
-	}, [defaultValue, editor]);
+	}, [defaultValue, editor, pasted.restore, splitPastes]);
 
-	const onChangeRef = useRef(onChange);
-	onChangeRef.current = onChange;
+	// Chips come back once the finder can name them, which may be after the
+	// draft was read (a catalog still loading). Only the untouched draft is
+	// rewritten: once edited, even back to the same text, it is the user's.
+	const draftEdited = useRef(false);
+	useEffect(() => {
+		const seededText = seededValue.current;
+		if (!seededText) return;
+		return registerDraftEdit(editor, seededText, () => {
+			draftEdited.current = true;
+		});
+	}, [editor]);
+	useEffect(() => {
+		const seededText = seededValue.current;
+		if (!findChips || !seededText || draftEdited.current) return;
+		editor.update(() => {
+			if ($getRoot().getTextContent() !== seededText) return;
+			$restoreChips(findChips);
+		});
+	}, [editor, findChips]);
+
 	useEffect(
 		() =>
 			editor.registerUpdateListener(({ editorState }) => {
 				const text = editorState.read(() => $getRoot().getTextContent());
-				onChangeRef.current?.(text);
+				onChangeRef.current?.(draftText(text));
 			}),
-		[editor],
+		[draftText, editor],
 	);
 
 	const addFiles = (files: FileList | File[]) => {
@@ -389,7 +477,7 @@ export function ComposerBody({
 		if (attachment.previewUrl) URL.revokeObjectURL(attachment.previewUrl);
 	};
 
-	const submit = () => {
+	const submit = ({ steer = false }: { steer?: boolean } = {}) => {
 		if (
 			stateRef.current.status === "streaming" &&
 			!stateRef.current.submitWhileStreaming
@@ -402,11 +490,28 @@ export function ComposerBody({
 		const files = stateRef.current.attachments.map(
 			(attachment) => attachment.file,
 		);
-		if (!text && files.length === 0 && !stateRef.current.allowEmptySubmit) {
+		const pastedTexts = cardsRef.current.map((card) => card.text);
+		if (
+			!text &&
+			files.length === 0 &&
+			pastedTexts.length === 0 &&
+			!stateRef.current.allowEmptySubmit
+		) {
 			return;
 		}
-		stateRef.current.onSubmit?.({ text, files, mentions });
+		if (
+			stateRef.current.onSubmit?.({
+				text,
+				files,
+				mentions,
+				pastedTexts,
+				steer,
+			}) === false
+		)
+			return;
+		historyNavigationRef.current?.reset();
 		if (!stateRef.current.clearOnSubmit) return;
+		pasted.clear();
 		editor.update(() => $getRoot().clear());
 		setAttachments((previous) => {
 			for (const attachment of previous) releaseAttachment(attachment);
@@ -417,22 +522,23 @@ export function ComposerBody({
 	const submitRef = useRef(submit);
 	submitRef.current = submit;
 
+	const isFocusUnclaimed = () => {
+		const active = document.activeElement;
+		return (
+			active == null ||
+			active === document.body ||
+			Boolean(rootRef.current?.contains(active))
+		);
+	};
+
 	const dictationSession = useDictation({
-		transcribe: (audio) => dictation?.transcribe(audio) ?? "",
+		transcribe: (audio, options) => dictation?.transcribe(audio, options) ?? "",
 		onError: (dictationError) => dictation?.onError?.(dictationError),
+		maxSeconds: dictation?.maxSeconds,
+		audioBitsPerSecond: dictation?.audioBitsPerSecond,
 		onTranscript: (text) => {
-			editor.update(() => {
-				$getRoot().selectEnd();
-				const selection = $getSelection();
-				if (!$isRangeSelection(selection)) return;
-				const anchorNode = selection.anchor.getNode();
-				const offset = selection.anchor.offset;
-				const previousChar = $isTextNode(anchorNode)
-					? anchorNode.getTextContent()[offset - 1]
-					: undefined;
-				const needsSpace = previousChar != null && !/\s/.test(previousChar);
-				selection.insertText(needsSpace ? ` ${text}` : text);
-			});
+			editor.update(() => $insertTranscript(text));
+			if (isFocusUnclaimed()) editor.focus();
 		},
 	});
 
@@ -443,13 +549,21 @@ export function ComposerBody({
 		const unregisterEnter = editor.registerCommand<KeyboardEvent | null>(
 			KEY_ENTER_COMMAND,
 			(event) => {
-				if (event?.shiftKey) return false;
+				if (event?.shiftKey || event?.isComposing || event?.keyCode === 229)
+					return false;
 				event?.preventDefault();
-				submitRef.current();
+				submitRef.current({
+					steer: Boolean(event?.metaKey || event?.ctrlKey),
+				});
 				return true;
 			},
 			COMMAND_PRIORITY_LOW,
 		);
+		const historyNavigation = registerHistoryNavigation(
+			editor,
+			() => stateRef.current.history ?? [],
+		);
+		historyNavigationRef.current = historyNavigation;
 		const unregisterEscape = editor.registerCommand<KeyboardEvent | null>(
 			KEY_ESCAPE_COMMAND,
 			(event) => {
@@ -467,6 +581,7 @@ export function ComposerBody({
 				const files = event.dataTransfer?.files;
 				if (files && files.length > 0) {
 					event.preventDefault();
+					markDropHandled(event);
 					addFilesRef.current(files);
 					setDragging(false);
 					return true;
@@ -534,6 +649,7 @@ export function ComposerBody({
 		return () => {
 			unregisterText();
 			unregisterEnter();
+			historyNavigation.unregister();
 			unregisterEscape();
 			unregisterDrop();
 			unregisterPaste();
@@ -576,19 +692,25 @@ export function ComposerBody({
 		void entry.select(actionContextRef.current);
 	};
 
-	// Escape aborts dictation without transcribing; it outranks every other
-	// Escape behavior while a recording or failed transcription is active.
+	// While dictating, Escape cancels and Enter stops or retries, never sends;
+	// both win over the composer's own Escape/Enter (stopping the agent, send).
 	useEffect(() => {
-		if (
-			dictationSession.status !== "recording" &&
-			dictationSession.status !== "error"
-		)
-			return;
+		if (dictationSession.status === "idle") return;
 		const onKeyDown = (event: KeyboardEvent) => {
-			if (event.key !== "Escape") return;
+			if (event.isComposing || !isFocusUnclaimed()) return;
+			if (event.key === "Escape") {
+				event.preventDefault();
+				event.stopPropagation();
+				dictationSession.cancel();
+				return;
+			}
+			if (event.key !== "Enter" || event.shiftKey) return;
 			event.preventDefault();
 			event.stopPropagation();
-			dictationSession.cancel();
+			if (dictationSession.status === "recording")
+				void dictationSession.finish();
+			else if (dictationSession.status === "error")
+				void dictationSession.retry();
 		};
 		window.addEventListener("keydown", onKeyDown, { capture: true });
 		return () =>
@@ -646,7 +768,11 @@ export function ComposerBody({
 		return () => document.removeEventListener("pointerdown", onPointerDown);
 	}, []);
 
-	const canSend = allowEmptySubmit || !isEmpty || attachments.length > 0;
+	const canSend =
+		allowEmptySubmit ||
+		!isEmpty ||
+		attachments.length > 0 ||
+		pasted.cards.length > 0;
 
 	useEffect(() => {
 		if (autoFocus) focusAtEnd();
@@ -670,15 +796,13 @@ export function ComposerBody({
 					setDragging(false);
 			}}
 			onDrop={(event) => {
-				// The editor's DROP_COMMAND handler may have consumed this already;
-				// preventDefault marks it and the event still bubbles here. Inside a
-				// layout ComposerDropZone the zone owns non-editor drops instead.
 				if (
 					dropZone == null &&
-					!event.defaultPrevented &&
+					!isDropHandled(event.nativeEvent) &&
 					event.dataTransfer.files.length > 0
 				) {
 					event.preventDefault();
+					markDropHandled(event.nativeEvent);
 					addFiles(event.dataTransfer.files);
 				}
 				setDragging(false);
@@ -730,6 +854,9 @@ export function ComposerBody({
 			{header}
 			<AttachmentPills
 				attachments={attachments}
+				pastedTexts={pasted.cards}
+				onShowPastedText={pasted.showInTextField}
+				onRemovePastedText={pasted.remove}
 				onAttachmentClick={onAttachmentClick}
 				onPreviewError={(id) =>
 					setAttachments((previous) =>
@@ -836,7 +963,10 @@ export function ComposerBody({
 					}
 				/>
 			</div>
-			<div className="flex min-h-12 items-center gap-2 px-3 pb-2.5">
+			<div
+				className="flex min-h-12 items-center gap-2 px-3 pb-2.5"
+				data-composer-footer
+			>
 				<ContextButton
 					onClick={toggleBrowseMenu}
 					disabled={dictationSession.status !== "idle"}
@@ -862,9 +992,9 @@ export function ComposerBody({
 								message: "Retry dictation",
 							})}
 							onClick={() => void dictationSession.retry()}
-							className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-secondary/80"
+							className={FILLED_FOOTER_BUTTON_CLASS}
 						>
-							<RefreshCcwIcon className="size-4" />
+							<RefreshCcwIcon className="size-3.5" />
 						</button>
 						<button
 							type="button"
@@ -872,9 +1002,9 @@ export function ComposerBody({
 								message: "Discard recording",
 							})}
 							onClick={dictationSession.cancel}
-							className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+							className={GHOST_FOOTER_BUTTON_CLASS}
 						>
-							<XIcon className="size-4" />
+							<XIcon className="size-3.5" />
 						</button>
 						<button
 							type="button"
@@ -882,9 +1012,9 @@ export function ComposerBody({
 								message: "Send message",
 							})}
 							disabled
-							className="flex size-8 shrink-0 cursor-not-allowed items-center justify-center rounded-lg bg-secondary text-muted-foreground"
+							className={INACTIVE_SEND_BUTTON_CLASS}
 						>
-							<ArrowUpIcon className="size-4.5" />
+							<ArrowUpIcon className="size-4" />
 						</button>
 					</>
 				) : dictationSession.status !== "idle" ? (
@@ -892,6 +1022,11 @@ export function ComposerBody({
 						<DictationBar
 							canvasRef={dictationSession.canvasRef}
 							seconds={dictationSession.seconds}
+							status={
+								dictationSession.status === "transcribing"
+									? "transcribing"
+									: "recording"
+							}
 						/>
 						<button
 							type="button"
@@ -900,9 +1035,12 @@ export function ComposerBody({
 							})}
 							disabled={dictationSession.status === "transcribing"}
 							onClick={() => void dictationSession.finish()}
-							className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-secondary/80 disabled:cursor-default disabled:opacity-50"
+							className={cn(
+								FILLED_FOOTER_BUTTON_CLASS,
+								"disabled:cursor-default disabled:opacity-50",
+							)}
 						>
-							<SquareIcon className="size-3.5 fill-current" />
+							<SquareIcon className="size-3 fill-current" />
 						</button>
 						<button
 							type="button"
@@ -910,9 +1048,9 @@ export function ComposerBody({
 								message: "Send message",
 							})}
 							disabled
-							className="flex size-8 shrink-0 cursor-not-allowed items-center justify-center rounded-lg bg-secondary text-muted-foreground"
+							className={INACTIVE_SEND_BUTTON_CLASS}
 						>
-							<ArrowUpIcon className="size-4.5" />
+							<ArrowUpIcon className="size-4" />
 						</button>
 					</>
 				) : (
@@ -920,19 +1058,20 @@ export function ComposerBody({
 						{toolbar}
 						<div className="flex-1" />
 						{toolbarEnd}
-						{dictation && status !== "streaming" && (
+						{dictation && (
 							<button
 								type="button"
 								aria-label={t({
 									message: "Dictate",
 								})}
-								onClick={() => {
+								onClick={async () => {
 									setBrowseOpen(false);
-									void dictationSession.start();
+									await dictationSession.start();
+									editor.focus();
 								}}
-								className="flex size-8 cursor-pointer items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+								className={GHOST_FOOTER_BUTTON_CLASS}
 							>
-								<MicIcon className="size-4.5" />
+								<MicIcon className="size-4" />
 							</button>
 						)}
 						{hideSubmit ? null : status === "streaming" &&
@@ -943,9 +1082,9 @@ export function ComposerBody({
 									message: "Stop response",
 								})}
 								onClick={onStop}
-								className="flex size-8 cursor-pointer items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-secondary/80"
+								className={FILLED_FOOTER_BUTTON_CLASS}
 							>
-								<SquareIcon className="size-3.5 fill-current" />
+								<SquareIcon className="size-3 fill-current" />
 							</button>
 						) : (
 							<button
@@ -954,15 +1093,17 @@ export function ComposerBody({
 									message: "Send message",
 								})}
 								disabled={!canSend}
-								onClick={submit}
-								className={cn(
-									"flex size-8 items-center justify-center rounded-lg transition-colors",
+								onClick={() => submit()}
+								className={
 									canSend
-										? "cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90"
-										: "cursor-not-allowed bg-secondary text-muted-foreground",
-								)}
+										? cn(
+												FOOTER_BUTTON_CLASS,
+												"cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90",
+											)
+										: INACTIVE_SEND_BUTTON_CLASS
+								}
 							>
-								<ArrowUpIcon className="size-4.5" />
+								<ArrowUpIcon className="size-4" />
 							</button>
 						)}
 					</>

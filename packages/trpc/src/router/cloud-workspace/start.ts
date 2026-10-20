@@ -2,6 +2,7 @@ import { db } from "@superset/db/client";
 import { cloudWorkspaces, environments, tasks } from "@superset/db/schema";
 import type { CloudAgentLaunch } from "@superset/shared/cloud-agent-launch";
 import { and, eq, inArray, isNull } from "drizzle-orm";
+import { acpChatEnabled } from "../../lib/acp-chat";
 import { anchorAttachments } from "../../lib/attachments";
 import {
 	githubRepositoriesOutOfReach,
@@ -17,6 +18,7 @@ import {
 import { userError } from "../../trpc";
 import { recordCloudWorkspaceActivity } from "./activity";
 import { publishCloudWorkspaceJob } from "./jobs";
+import { assertMayBoot } from "./meter";
 import {
 	FALLBACK_NAME,
 	type ProvisionCloudWorkspaceInput,
@@ -80,7 +82,13 @@ export async function startCloudWorkspace(args: {
 	taskIds?: string[];
 	attachmentFileIds?: string[];
 }) {
+	// The sandbox's Codex is older than the codex-acp floor, so only Claude chats.
+	const openAsChat =
+		args.launch?.agent === "claude"
+			? acpChatEnabled(args.userId)
+			: Promise.resolve(false);
 	const environment = await loadUsableEnvironment(args);
+	await assertMayBoot(args.organizationId);
 
 	// A workspace is started from an environment, and the environment's
 	// repositories are its checkouts.
@@ -182,7 +190,13 @@ export async function startCloudWorkspace(args: {
 	const job = {
 		cloudWorkspaceId: row.id,
 		...(args.name ? {} : { namingPrompt: args.prompt ?? "" }),
-		...(args.launch ? { launch: args.launch } : {}),
+		...(args.launch
+			? {
+					launch: (await openAsChat)
+						? { ...args.launch, surface: "chat" as const }
+						: args.launch,
+				}
+			: {}),
 	};
 
 	nudge(row.organizationId, "cloud_workspaces");

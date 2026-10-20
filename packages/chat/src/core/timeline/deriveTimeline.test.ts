@@ -43,7 +43,7 @@ function env(item: Item, turnId: string): DurableEnvelope {
 }
 
 describe("collapseWorkLog", () => {
-	test("collapses runs of settled tool calls and leaves singles inline", () => {
+	test("collapses runs of tool calls and leaves singles inline", () => {
 		const items: Item[] = [
 			message("m1", 1),
 			toolCall("tc1", "completed", 2),
@@ -64,13 +64,15 @@ describe("collapseWorkLog", () => {
 		expect(run.items.map((i) => i.id)).toEqual(["tc1", "tc2", "tc3"]);
 	});
 
-	test("running tool calls stay inline and break runs", () => {
+	test("a running tool call joins the run it continues", () => {
 		const entries = collapseWorkLog([
 			toolCall("tc1", "completed", 1),
 			toolCall("tc2", "running", 2),
-			toolCall("tc3", "completed", 3),
 		]);
-		expect(entries.map((e) => e.kind)).toEqual(["item", "item", "item"]);
+		expect(entries.map((e) => e.kind)).toEqual(["tool_run"]);
+		const run = entries[0];
+		if (run?.kind !== "tool_run") throw new Error("expected tool_run");
+		expect(run.items.map((i) => i.id)).toEqual(["tc1", "tc2"]);
 	});
 });
 

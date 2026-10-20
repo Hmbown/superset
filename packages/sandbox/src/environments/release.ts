@@ -4,16 +4,22 @@
  * result the way a person would:
  *
  *   1. the host-service runtime asset (this checkout's host-service and
- *      pty-daemon, natives installed for the box) and the bundle, published
- *   2. the image in Vercel Container Registry, unless --skip-image
+ *      pty-daemon, natives installed for the box), this checkout's CLI, the
+ *      latest claude, codex and Chrome (a fetch that fails keeps the
+ *      committed pin) and the bundle, published
+ *   2. the image in Vercel Container Registry under a candidate tag, unless
+ *      --skip-image; `latest`, which every image environment resolves to,
+ *      stays on the previous release
  *   3. the internal golden: a box provisioned from the image exactly the way
  *      a workspace is, with the internal environment's setup hook run in it,
  *      verified, stripped of its identity and stopped so its snapshot is what
  *      forks start from
  *   4. a probe fork of that golden, checked as a workspace: host-service,
- *      the desktop stream, the checkout, the firewall, the gate
- *   5. the rows: the shared `Default` environment -> image + bundle, the
- *      internal organization's environment -> the new golden + bundle + the
+ *      the desktop stream, the checkout, the firewall, the gate; then
+ *      `latest` moved to the candidate
+ *   5. the rows, in one transaction: the shared `Default` environment and
+ *      every environment that has a bundle -> the new bundle, `Default` ->
+ *      image, the internal organization's environment -> the new golden + the
  *      setup and start overrides; the previous golden deleted
  *
  *   SUPERSET_INTERNAL_ORGANIZATION_ID=… SUPERSET_INTERNAL_ENVIRONMENT_ID=… bun run release [--production] [--skip-image] [--keep-old]
@@ -24,7 +30,7 @@
  * NEON_PROJECT_ID). SUPERSET_INTERNAL_ENV_FILE feeds the probe's managed
  * environment so the dev-stack checks can run; the golden never carries it.
  * Fails loudly and leaves the golden and probe up for inspection when any
- * check fails; the previous rows stay live.
+ * check fails; the previous rows and `latest` stay live.
  */
 
 import { randomUUID } from "node:crypto";
@@ -52,6 +58,7 @@ process.env.SKIP_ENV_VALIDATION ??= "1";
 const SKIP_IMAGE = process.argv.includes("--skip-image");
 const KEEP_OLD = process.argv.includes("--keep-old");
 const PRODUCTION = process.argv.includes("--production");
+const FOLLOWED_UPSTREAM = ["claude", "codex", "chrome"];
 /** The environment the release rebuilds; without it, the release creates one named INTERNAL_NAME. */
 const ENVIRONMENT_ID = process.env.SUPERSET_INTERNAL_ENVIRONMENT_ID;
 const INTERNAL_NAME =
@@ -123,17 +130,37 @@ const { producers } = await import("../assets/produce");
 const { buildBundle, publishBundle } = await import("../build");
 log("runtime: building host-service and pty-daemon into the runtime asset");
 await producers["host-service"]?.();
+log("cli: building this checkout's superset for the box");
+await producers.cli?.();
+for (const name of FOLLOWED_UPSTREAM) {
+	try {
+		await producers[name]?.();
+	} catch (error) {
+		console.log(
+			`::warning::${name}: kept the committed pin; the latest did not resolve: ${error}`,
+		);
+	}
+}
 const bundle = buildBundle();
+log(
+	`pins: ${["host-service", "cli", ...FOLLOWED_UPSTREAM]
+		.map((name) => `${name} ${bundle.assets[name]?.version}`)
+		.join(", ")}`,
+);
 await publishBundle(bundle, { dry: false });
 log(`bundle: ${bundle.sha256} published`);
 
 // 2. image
+const candidateTag = `release-${bundle.sha256.slice(0, 12)}`;
+const goldenImage = SKIP_IMAGE
+	? SANDBOX_IMAGE_NAME
+	: `${SANDBOX_IMAGE_NAME}:${candidateTag}`;
 if (SKIP_IMAGE) {
 	log("image: skipped (--skip-image)");
 } else {
 	const { buildImage } = await import("../image");
-	log(`image: building and pushing ${SANDBOX_IMAGE_NAME}`);
-	await buildImage(bundle, { local: false });
+	log(`image: building and pushing ${goldenImage}`);
+	await buildImage(bundle, { local: false, tag: candidateTag });
 }
 
 // 3. golden
@@ -172,7 +199,7 @@ function identityFor(workspaceId: string, sourceRef: string): SandboxIdentity {
 const golden = `env-internal-${Date.now().toString(36)}`;
 const goldenWorkspaceId = randomUUID();
 const goldenSecret = await sandboxHostSecretFor(goldenWorkspaceId);
-log(`golden: provisioning ${golden} from ${SANDBOX_IMAGE_NAME}`);
+log(`golden: provisioning ${golden} from ${goldenImage}`);
 // A freshly pushed image sits in `Preparing` while the registry optimises it
 // for sandboxes, and create answers 409 until then.
 const deadline = Date.now() + 20 * 60_000;
@@ -183,11 +210,11 @@ for (;;) {
 			kind: "environment",
 			environment: {
 				sourceKind: "image",
-				sourceRef: SANDBOX_IMAGE_NAME,
+				sourceRef: goldenImage,
 				region: REGION,
 			},
 			claim: {
-				identity: identityFor(goldenWorkspaceId, SANDBOX_IMAGE_NAME),
+				identity: identityFor(goldenWorkspaceId, goldenImage),
 				hostSecret: goldenSecret,
 				managedEnv: {},
 				networkPolicy: "allow-all",
@@ -209,7 +236,7 @@ for (;;) {
 await wakeSandbox({
 	providerSandboxId: golden,
 	claim: {
-		identity: identityFor(goldenWorkspaceId, SANDBOX_IMAGE_NAME),
+		identity: identityFor(goldenWorkspaceId, goldenImage),
 		hostSecret: goldenSecret,
 		managedEnv: {},
 		networkPolicy: "allow-all",
@@ -294,7 +321,7 @@ const checks: Array<[label: string, command: string, expect: RegExp]> = [
 	["eas-cli", "eas --version", /\d+\.\d+\.\d+/],
 	["psql", "psql --version", /\d+\.\d+/],
 	["ntn", "ntn --version", /\d+\.\d+\.\d+/],
-	["lim", "lim --version", /\d+\.\d+\.\d+/],
+	["agent-device", "agent-device --version", /\d+\.\d+\.\d+/],
 	["stripe", "stripe --version", /\d+\.\d+\.\d+/],
 ];
 let failed = 0;
@@ -435,11 +462,17 @@ if (probeFailed)
 await deleteSandbox(probe);
 log(`probe: ${probe} deleted`);
 
+if (!SKIP_IMAGE) {
+	const { retagImage } = await import("../image");
+	await retagImage(candidateTag, "latest");
+	log(`image: ${SANDBOX_IMAGE_NAME}:latest -> ${goldenImage}`);
+}
+
 // 5. rows
 const { db, dbWs } = await import("@superset/db/client");
 const { environments, environmentRepositories, githubRepositories } =
 	await import("@superset/db/schema");
-const { and, eq } = await import("drizzle-orm");
+const { and, eq, isNotNull, isNull, or } = await import("drizzle-orm");
 const { seedSharedEnvironments } = await import("./seed");
 
 // The golden baked the monorepo at its path; a fork asks for the same, and
@@ -455,15 +488,6 @@ if (!monorepo)
 		`rows: ${REPO_FULL_NAME} is not connected to organization ${ORGANIZATION_ID}; install the GitHub App there first; ${golden} left for inspection`,
 	);
 
-await seedSharedEnvironments(SANDBOX_IMAGE_NAME);
-await db
-	.update(environments)
-	.set({ bundleSha: bundle.sha256 })
-	.where(eq(environments.organizationId, SHARED_ENVIRONMENT_ORGANIZATION_ID));
-log(
-	`rows: ${SHARED_ENVIRONMENT_NAME} -> image ${SANDBOX_IMAGE_NAME}, bundle ${bundle.sha256.slice(0, 12)}`,
-);
-
 const previous = ENVIRONMENT_ID
 	? await db.query.environments.findFirst({
 			where: (row, { and: both, eq: equals }) =>
@@ -477,6 +501,8 @@ if (ENVIRONMENT_ID && !previous)
 	fail(
 		`rows: environment ${ENVIRONMENT_ID} is not in organization ${ORGANIZATION_ID}; ${golden} left for inspection`,
 	);
+
+await seedSharedEnvironments(SANDBOX_IMAGE_NAME);
 const fromGolden = {
 	provider: "vercel" as const,
 	sourceKind: "fork" as const,
@@ -486,7 +512,20 @@ const fromGolden = {
 	hooksRepositoryId: monorepo.id,
 	archivedAt: null,
 };
-const internal = await dbWs.transaction(async (tx) => {
+const { internal, bundled } = await dbWs.transaction(async (tx) => {
+	const bundled = await tx
+		.update(environments)
+		.set({ bundleSha: bundle.sha256 })
+		.where(
+			and(
+				isNull(environments.archivedAt),
+				or(
+					isNotNull(environments.bundleSha),
+					eq(environments.organizationId, SHARED_ENVIRONMENT_ORGANIZATION_ID),
+				),
+			),
+		)
+		.returning({ id: environments.id });
 	const [internal] = previous
 		? await tx
 				.update(environments)
@@ -510,8 +549,11 @@ const internal = await dbWs.transaction(async (tx) => {
 		environmentId: internal.id,
 		repositoryId: monorepo.id,
 	});
-	return internal;
+	return { internal, bundled };
 });
+log(
+	`rows: ${SHARED_ENVIRONMENT_NAME} -> image ${SANDBOX_IMAGE_NAME}; ${bundled.length} environments -> bundle ${bundle.sha256.slice(0, 12)}`,
+);
 log(
 	`rows: ${internal.name} (${internal.id}) -> fork of ${golden}, bundle ${bundle.sha256.slice(0, 12)}`,
 );

@@ -8,6 +8,9 @@ export type AcpHarness = {
 	args: string[];
 	minVersion: string;
 	upgrade?: string;
+	/** The agent's own id for its unrestricted mode; chats start in it. */
+	fullAccessModeId?: string;
+	clientApprovalModes?: boolean;
 	note: string;
 } & AcpTranslator;
 
@@ -22,6 +25,7 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		adapter: "@agentclientprotocol/claude-agent-acp",
 		executableEnv: "CLAUDE_CODE_EXECUTABLE",
 		upgrade: "npm i -g @anthropic-ai/claude-code@latest",
+		fullAccessModeId: "bypassPermissions",
 		note: "2.1.226 verified against adapter 0.85.0: session/new returns the same modes and configOptions as 2.1.286.",
 	},
 	"codex-acp": {
@@ -32,6 +36,7 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		adapter: "@agentclientprotocol/codex-acp",
 		executableEnv: "CODEX_PATH",
 		upgrade: "npm i -g @openai/codex@latest",
+		fullAccessModeId: "agent-full-access",
 		note: "Conservative: the adapter drives `codex app-server`, and the release that introduced it is not pinned. The native codex adapter's MIN_CODEX_VERSION is 0.143.0, so this floor is probably lowerable once app-server is verified against an older build.",
 	},
 	"gemini-acp": {
@@ -59,6 +64,15 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		executableEnv: "PI_ACP_PI_COMMAND",
 		note: "Ungated: no pi install was available to verify a floor against, and gating on a guess would reject working versions. It reached the same state before this catalogue, since the harness resolved pi off PATH either way.",
 	},
+	"pdev-acp": {
+		registryId: "pdev-acp",
+		binary: "pdev",
+		args: ["acp"],
+		minVersion: UNGATED_VERSION,
+		fullAccessModeId: "bypassPermissions",
+		clientApprovalModes: true,
+		note: "Ungated: every release, from 0.1.0 on, ships `pdev acp`, so there is no older build to reject and no upgrade command. `pdev acp` is its own ACP server, so no adapter. The desktop bundles it and needs no env: pdev signs in to the router through the superset CLI on PATH.",
+	},
 };
 
 /**
@@ -74,4 +88,16 @@ export function cliFloor(harness: string): {
 		minVersion: entry?.minVersion ?? UNGATED_VERSION,
 		upgrade: entry?.upgrade,
 	};
+}
+
+const ACP_HARNESS_BY_PRESET: Record<string, string> = {
+	claude: "claude-acp",
+	codex: "codex-acp",
+	opencode: "opencode-acp",
+	pi: "pi-acp",
+	pdev: "pdev-acp",
+};
+
+export function acpHarnessForPreset(presetId: string): string | undefined {
+	return ACP_HARNESS_BY_PRESET[presetId];
 }

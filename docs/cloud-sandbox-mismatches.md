@@ -166,8 +166,8 @@ A box acts in its own organization only. In `packages/trpc/src/trpc.ts`,
 organization header that names one, and `protectedProcedure` keeps the box's
 organization as the active one; `user.myOrganizations` lists only the box's.
 Archiving the box from inside it
-(`workspaces delete`) cuts off the box's API access at once and stops the box
-about a minute later: put the box's own id last when deleting several, and
+(`workspaces archive`) cuts off the box's API access at once and stops the box
+about a minute later: put the box's own id last when archiving several, and
 unarchive from a signed-in client.
 
 **Docker is installed but not started.** An environment whose repository needs
@@ -179,6 +179,20 @@ waits for the daemon:
             "until docker info >/dev/null 2>&1; do sleep 0.2; done",
             "docker compose up"] }
 ```
+
+**`gh` runs in a clean login shell, so the sandbox's `GH_TOKEN` never reaches
+it.** Host-service shells out to `gh` for pull-request reads and writes
+(`pullRequests.getContent`, `addComment`, `setDraft`, the content read behind
+the PR page) through `getToolEnvironment()`, which rebuilds the environment
+from a login shell the way a person's machine would have it. On a machine a
+person owns that is where `gh auth login` left its credentials. A sandbox has
+no `gh auth login`; its GitHub access is the `GH_TOKEN` the provider injects
+into the *process* environment, which the clean shell drops. The PR page then
+fails its first content read with a gh auth error. **What we did:** the review
+run wrote a temporary `~/.config/gh/hosts.yml` from the token and deleted it
+afterwards. The durable fix is for `getToolEnvironment()` to carry `GH_TOKEN`
+(and `GITHUB_TOKEN`) through from the host-service process when the shell did
+not provide one.
 
 ## Runtime environment
 
@@ -305,6 +319,14 @@ rows read the same collection as every other row.
 
 **Drag ordering isn't wired** — the cloud section sits outside the DnD
 containers. **Open.**
+
+**Sleep stops nothing a sandbox started on a third party.** On a machine
+someone owns, quitting the app disposes host-service, which stops what it
+started. A sandbox that goes to sleep is stopped from outside, so a remote
+resource started from it keeps running. Measured with an EAS simulator
+session: it stayed `IN_PROGRESS` (and billed) after `workspaces sleep`.
+**Open**; `apps/mobile/scripts/eas-dev.sh` starts its session with an idle
+timeout, which bounds it.
 
 **A sandbox's host-service is frozen at the version it was provisioned with,
 and nothing updates it. Open, and the most consequential item on this list.**

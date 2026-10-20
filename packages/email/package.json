@@ -13,7 +13,8 @@
 	},
 	"exports": {
 		"./emails/marketing/DownloadLinkEmail": "./src/emails/marketing/DownloadLinkEmail/index.ts",
-		"./emails/*": "./src/emails/*.tsx"
+		"./emails/*": "./src/emails/*.tsx",
+		"./sender": "./src/lib/sender.ts"
 	},
 	"private": true,
 	"scripts": {
@@ -21,7 +22,7 @@
 		"dev": "NEXT_PUBLIC_MARKETING_URL=$(grep NEXT_PUBLIC_MARKETING_URL ../../.env | cut -d '=' -f2) email dev --dir src/emails",
 		"export": "email export --dir src/emails",
 		"sync:automations": "bun scripts/sync-automations.ts",
-		"test": "bun test --isolate",
+		"test": "bun test",
 		"typecheck": "tsc --noEmit"
 	},
 	"type": "module",

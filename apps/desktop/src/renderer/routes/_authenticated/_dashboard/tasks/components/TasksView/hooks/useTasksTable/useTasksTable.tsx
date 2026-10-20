@@ -57,14 +57,14 @@ interface UseTasksTableParams {
 	filterTab: TabValue;
 	searchQuery: string;
 	assigneeFilter: string | null;
-	linearProjectFilter: string | null;
+	labelFilter: string | null;
 }
 
 export function useTasksTable({
 	filterTab,
 	searchQuery,
 	assigneeFilter,
-	linearProjectFilter,
+	labelFilter,
 }: UseTasksTableParams): TasksPagination & {
 	table: Table<TaskWithStatus>;
 	rowSelection: RowSelectionState;
@@ -87,24 +87,17 @@ export function useTasksTable({
 		hasNextTasksPage,
 		isFetchingNextTasksPage,
 		isLoadingTasks,
-	} = useTasksJoinedWithStatuses();
+	} = useTasksJoinedWithStatuses(labelFilter);
 
-	const projectScopedData = useMemo(() => {
-		if (!linearProjectFilter) return sortedData;
-		return sortedData.filter(
-			(task) => task.externalProjectId === linearProjectFilter,
-		);
-	}, [sortedData, linearProjectFilter]);
-
-	const { search } = useHybridSearch(projectScopedData);
+	const { search } = useHybridSearch(sortedData);
 
 	const data = useMemo(() => {
 		if (!searchQuery.trim()) {
-			return projectScopedData;
+			return sortedData;
 		}
 		const results = search(searchQuery);
 		return results.map((r) => r.item);
-	}, [projectScopedData, searchQuery, search]);
+	}, [sortedData, searchQuery, search]);
 
 	const isFirstMount = useRef(true);
 	useEffect(() => {
@@ -280,13 +273,7 @@ export function useTasksTable({
 				}),
 				filterFn: (row, _columnId, filterValue: string) => {
 					if (filterValue === "unassigned") {
-						return (
-							row.original.assigneeId === null &&
-							row.original.assigneeExternalId === null
-						);
-					}
-					if (filterValue.startsWith("ext:")) {
-						return row.original.assigneeExternalId === filterValue.slice(4);
+						return row.original.assigneeId === null;
 					}
 					return row.original.assigneeId === filterValue;
 				},

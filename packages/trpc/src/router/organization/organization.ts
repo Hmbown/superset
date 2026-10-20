@@ -1,10 +1,11 @@
 import { auth } from "@superset/auth/server";
-import { stripeClient } from "@superset/auth/stripe";
+import { syncCustomerName } from "@superset/auth/stripe";
 import { db } from "@superset/db/client";
 import { taskTrackerEnum } from "@superset/db/enums";
 import {
 	members,
 	organizations,
+	taskSequences,
 	teamMembers,
 	teams,
 	users,
@@ -94,6 +95,7 @@ export const organizationRouter = {
 				name: organizations.name,
 				slug: organizations.slug,
 				logo: organizations.logo,
+				taskTracker: organizations.taskTracker,
 			})
 			.from(organizations)
 			.innerJoin(members, eq(members.organizationId, organizations.id))
@@ -167,9 +169,11 @@ export const organizationRouter = {
 					id: teams.id,
 					name: teams.name,
 					slug: teams.slug,
+					taskKey: taskSequences.key,
 					createdAt: teams.createdAt,
 				})
 				.from(teams)
+				.leftJoin(taskSequences, eq(taskSequences.teamId, teams.id))
 				.where(eq(teams.organizationId, organizationId))
 				.orderBy(teams.name),
 			db
@@ -461,16 +465,14 @@ export const organizationRouter = {
 				.returning();
 
 			if (organization?.stripeCustomerId && data.name) {
-				stripeClient.customers
-					.update(organization.stripeCustomerId, {
-						name: data.name,
-					})
-					.catch((error) => {
+				syncCustomerName(organization.stripeCustomerId, data.name).catch(
+					(error) => {
 						console.error(
 							"[org/update] Failed to sync Stripe customer info:",
 							error,
 						);
-					});
+					},
+				);
 			}
 
 			return organization;

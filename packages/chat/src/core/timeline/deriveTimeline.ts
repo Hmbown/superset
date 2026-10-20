@@ -22,8 +22,8 @@ function byStartThenId(a: Item, b: Item): number {
 	return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
 }
 
-function isSettledToolCall(item: Item): item is ToolCall {
-	return item.kind === "tool_call" && (item as ToolCall).status !== "running";
+function isToolCall(item: Item): item is ToolCall {
+	return item.kind === "tool_call";
 }
 
 export function collapseWorkLog(items: readonly Item[]): TimelineEntry[] {
@@ -39,7 +39,7 @@ export function collapseWorkLog(items: readonly Item[]): TimelineEntry[] {
 	};
 
 	for (const item of items) {
-		if (isSettledToolCall(item)) {
+		if (isToolCall(item)) {
 			run.push(item);
 			continue;
 		}

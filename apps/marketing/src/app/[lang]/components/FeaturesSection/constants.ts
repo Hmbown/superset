@@ -45,7 +45,7 @@ export const FEATURES: Feature[] = [
 		}),
 		description: msg({
 			message:
-				"Turn chores into scheduled agents: issue triage, changelog drafts, dependency bumps. They run on their own and open PRs for you to review.",
+				"Turn chores into agents that run on a schedule or when an event comes in: issue triage, changelog drafts, dependency bumps. They run on their own and open PRs for you to review.",
 		}),
 	},
 	{
@@ -58,7 +58,7 @@ export const FEATURES: Feature[] = [
 		}),
 		description: msg({
 			message:
-				"Each agent runs in its own isolated Git worktree. No merge conflicts, no stepping on each other's changes. Review and merge work when you're ready.",
+				"Each agent runs in its own isolated Git worktree. No overwriting each other's files. Review and merge work when you're ready.",
 		}),
 	},
 	{

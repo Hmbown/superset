@@ -39,7 +39,7 @@ export function register(server: McpServer): void {
 				.string()
 				.min(1)
 				.nullish()
-				.describe("Linear only: team key, e.g. ENG."),
+				.describe("Filter by team key or name, e.g. ENG."),
 			priority: z
 				.enum(["urgent", "high", "medium", "low", "none"])
 				.nullish()
@@ -64,6 +64,13 @@ export function register(server: McpServer): void {
 				.min(1)
 				.nullish()
 				.describe("Free-text search on title."),
+			labels: z
+				.array(z.string().trim().min(1))
+				.max(20)
+				.nullish()
+				.describe(
+					"Superset only: label names. A task must have all of them (case-insensitive). A label also matches its sub-labels: acme matches acme/web.",
+				),
 			limit: z
 				.number()
 				.int()
@@ -82,10 +89,10 @@ export function register(server: McpServer): void {
 			const caller = createMcpCaller(ctx);
 			const { tracker, linearStatus, team, ...filters } = input;
 			if ((await resolveTracker(caller, tracker)) === "superset") {
-				if (team || linearStatus) {
-					throw new Error("team and linearStatus only apply to Linear issues");
+				if (linearStatus) {
+					throw new Error("linearStatus only applies to Linear issues");
 				}
-				return caller.task.list(filters);
+				return caller.task.list({ ...filters, team });
 			}
 			if (filters.offset + filters.limit > MAX_LINEAR_ISSUES) {
 				throw new Error(
@@ -97,6 +104,7 @@ export function register(server: McpServer): void {
 				statusId: filters.statusId,
 				priority: filters.priority,
 				creatorMe: filters.creatorMe,
+				labels: filters.labels,
 			});
 			const organizationId = ctx.organizationId;
 			const workspace =

@@ -2,15 +2,18 @@
 
 import { Trans, useLingui } from "@lingui/react/macro";
 import { COMPANY } from "@superset/shared/constants";
+import { useInView } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { FaApple, FaGithub, FaMobileAlt } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { FaApple, FaGithub } from "react-icons/fa";
+import { track } from "@/lib/analytics";
 import { DownloadButton } from "../DownloadButton";
 import { WaitlistModal } from "../WaitlistModal";
 import { BoidsBackground } from "./components/BoidsBackground";
-import { HeroReassurance } from "./components/HeroReassurance";
 import { ProductDemo } from "./components/ProductDemo";
-import { TypewriterText } from "./components/TypewriterText";
+import { RiseHeadline } from "./components/RiseHeadline";
+import { useHeadlineVariant } from "./hooks/useHeadlineVariant";
+import type { HeadlineVariant } from "./utils/subscribeToHeadlineVariant";
 
 export function HeroSection() {
 	const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -25,31 +28,50 @@ export function HeroSection() {
 	}, []);
 	const { t, i18n } = useLingui();
 
-	const headlineSegments = [
-		{
-			id: "lead",
-			// Typed newline, not a space: the headline is always two lines, and
-			// the break arrives as part of the animation (the caret drops to the
-			// second line) instead of the second segment starting on line one and
-			// reflowing down once it outgrows the width. Needs the h1's
-			// whitespace-pre-line to render.
-			text: `${t({
-				message: "Bring Any Agent.",
-			})}\n`,
-		},
-		{
-			id: "emphasis",
-			text: t({
-				message: "Orchestrate Them All.",
+	const assignment = useHeadlineVariant();
+	const headlineRef = useRef<HTMLHeadingElement>(null);
+	const isHeadlineInView = useInView(headlineRef, { amount: 0.5 });
+
+	useEffect(() => {
+		if (!assignment || !isHeadlineInView) return;
+		const recordWhenVisible = () => {
+			if (document.visibilityState === "visible") assignment.recordExposure();
+		};
+		recordWhenVisible();
+		document.addEventListener("visibilitychange", recordWhenVisible);
+		return () =>
+			document.removeEventListener("visibilitychange", recordWhenVisible);
+	}, [assignment, isHeadlineInView]);
+
+	const headlines: Record<HeadlineVariant, [lead: string, emphasis: string]> = {
+		control: [
+			t({ message: "Bring Any Agent" }),
+			t({ message: "Orchestrate Them All" }),
+		],
+		ide: [
+			t({
+				message: "The IDE for",
+				comment:
+					"Homepage headline, line 1 of 2. Line 2 is “Parallel Agents”; reorder the two lines if the language needs it.",
 			}),
-			// Beat on the empty second line before the payoff line types
-			delayBefore: 450,
-			// Plain inline (not inline-block): vertical padding on inline boxes
-			// paints the brackets without affecting line height, so the line
-			// can't jump when this segment mounts mid-animation
-			className: "corner-brackets px-[0.2em] py-[0.06em] whitespace-nowrap",
-		},
-	];
+			t({
+				message: "Parallel Agents",
+				comment: "Homepage headline, line 2 of 2, after “The IDE for”.",
+			}),
+		],
+		army: [
+			t({
+				message: "Run an Army of",
+				comment:
+					"Homepage headline, line 1 of 2. Line 2 is “Coding Agents”; reorder the two lines if the language needs it.",
+			}),
+			t({
+				message: "Coding Agents",
+				comment: "Homepage headline, line 2 of 2, after “Run an Army of”.",
+			}),
+		],
+	};
+	const [lead, emphasis] = headlines[assignment?.variant ?? "control"];
 
 	return (
 		<div>
@@ -58,15 +80,19 @@ export function HeroSection() {
 				<div className="relative w-full max-w-7xl mx-auto px-6 sm:px-8">
 					<div className="flex flex-col items-center text-center">
 						<Link
-							href={i18n.locale === "en" ? "/mobile" : `/${i18n.locale}/mobile`}
+							href={
+								i18n.locale === "en"
+									? "/blog/a-new-name"
+									: `/${i18n.locale}/blog/a-new-name`
+							}
 							className="group mb-6 sm:mb-8 inline-flex max-w-full items-center gap-2 rounded-[2px] border border-border bg-background/80 px-3 py-1.5 text-xs font-mono text-muted-foreground transition-colors hover:text-foreground hover:border-foreground/[0.2]"
 						>
-							<FaMobileAlt
+							<span
 								aria-hidden="true"
-								className="size-3.5 text-foreground shrink-0"
+								className="size-1.5 shrink-0 rounded-full bg-brand"
 							/>
 							<span>
-								<Trans>Superset Mobile is here</Trans>
+								<Trans>Superset is getting a new name soon</Trans>
 							</span>
 							<span
 								aria-hidden="true"
@@ -76,31 +102,21 @@ export function HeroSection() {
 							</span>
 						</Link>
 						<div className="space-y-4 sm:space-y-6">
-							<h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] [word-spacing:0.15em] whitespace-pre-line text-foreground relative max-w-6xl mx-auto">
-								{/* Real headline for screen readers and no-JS crawlers; the
-								    typewriter below is purely visual */}
-								<span className="sr-only">
-									{headlineSegments.map((segment) => segment.text).join("")}
-								</span>
-								{/* Sizer must mirror the visible segments' styling so wrapping matches */}
-								<span className="invisible" aria-hidden="true">
-									{headlineSegments.map((segment) => (
-										<span key={segment.id} className={segment.className}>
-											{segment.text}
-										</span>
-									))}
-								</span>
-								<span className="absolute inset-0" aria-hidden="true">
-									<TypewriterText
-										segments={headlineSegments}
-										speed={40}
-										delay={600}
-										// Caret matches the corner-bracket box height (1.30em) for the
-										// whole animation; drawn via scale-y so its layout height stays
-										// 0.72em and can't inflate the line box
-										cursorClassName="inline-block ml-0.5 w-3 -mr-3.5 h-[0.72em] origin-bottom scale-y-[1.806] translate-y-[0.268em] bg-brand"
+							<h1
+								ref={headlineRef}
+								className="text-[min(2.25rem,8.6vw)] sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] [word-spacing:0.15em] whitespace-pre-line text-foreground relative max-w-6xl mx-auto"
+							>
+								{assignment ? (
+									<RiseHeadline
+										key={assignment.variant}
+										lead={lead}
+										emphasis={emphasis}
 									/>
-								</span>
+								) : (
+									<span className="invisible" aria-hidden="true">
+										<RiseHeadline lead={lead} emphasis={emphasis} />
+									</span>
+								)}
 							</h1>
 							<p
 								id="hero-subheadline"
@@ -125,7 +141,15 @@ export function HeroSection() {
 											? "/mobile"
 											: `/${i18n.locale}/mobile`
 								}
-								aria-label={t({ message: "Superset for iPhone" })}
+								onClick={() =>
+									isIOS
+										? track("mobile_store_clicked", {
+												store: "app_store",
+												source: "hero",
+											})
+										: track("mobile_page_clicked", { source: "hero" })
+								}
+								aria-label={t({ message: "Superset for iPhone and iPad" })}
 								className="flex size-11 shrink-0 items-center justify-center border border-border bg-background text-foreground transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:size-12"
 							>
 								<FaApple aria-hidden="true" className="size-5" />
@@ -133,7 +157,14 @@ export function HeroSection() {
 							<button
 								type="button"
 								className="flex size-11 shrink-0 items-center justify-center border border-border bg-background text-foreground transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:size-12"
-								onClick={() => window.open(COMPANY.GITHUB_URL, "_blank")}
+								onClick={() => {
+									track("github_clicked", { source: "hero" });
+									window.open(
+										COMPANY.GITHUB_URL,
+										"_blank",
+										"noopener,noreferrer",
+									);
+								}}
 								aria-label={t({
 									message: "View on GitHub",
 								})}
@@ -141,7 +172,6 @@ export function HeroSection() {
 								<FaGithub aria-hidden="true" className="size-5" />
 							</button>
 						</div>
-						<HeroReassurance />
 					</div>
 
 					<div className="relative w-full mt-20 sm:mt-32 lg:mt-40">

@@ -149,6 +149,9 @@ step_setup_neon_branch() {
 
   # Export for use in other steps
   export BRANCH_ID DIRECT_URL POOLED_URL WORKSPACE_NAME
+  # An inherited env var beats bun's --env-file, so later steps would otherwise
+  # query the root .env's database instead of this branch.
+  export DATABASE_URL="$POOLED_URL" DATABASE_URL_UNPOOLED="$DIRECT_URL"
 
   success "Neon branch ready: $WORKSPACE_NAME"
   return 0
@@ -375,6 +378,7 @@ step_write_env() {
     write_env_var "REALTIME_NUDGE_SECRET" "fake-realtime-nudge-secret"
     write_env_var "SUPERSET_WEB_URL" "http://localhost:$WEB_PORT"
     write_env_var "USERCONTENT_URL" "http://frame.usercontent.localhost:$USERCONTENT_DEV_PORT"
+    write_env_var "MEDIA_URL" "http://media.usercontent.localhost:$USERCONTENT_DEV_PORT"
     write_env_var "SANDBOX_GATE_ORIGIN" "http://127.0.0.1:$SANDBOX_GATE_DEV_PORT"
     echo ""
     echo "# Streams URLs (overrides from root .env)"

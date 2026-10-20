@@ -42,7 +42,12 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 			"v1-migration-continuity-pending-*",
 			"v1-migration-welcome-pending-*",
 			"v1-migration-followup-pending-*",
+			"v1-migration-attention-dismissed-*",
 		],
+	],
+	[
+		"src/renderer/routes/_authenticated/components/V1FlipNotice/V1TerminalsNotice/V1TerminalsNotice.tsx",
+		["v1-terminals-notice-*"],
 	],
 	["src/renderer/lib/posthog.ts", ["ph_*_posthog", "__ph_opt_in_out_*"]],
 	[
@@ -52,6 +57,10 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 	[
 		"src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/state/paneScrollStateCache/paneScrollStateCache.ts",
 		["v2-pane-scroll-state-v1"],
+	],
+	[
+		"src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/utils/pendingChatStops/pendingChatStops.ts",
+		["pending-chat-stops-v1"],
 	],
 	[
 		"src/renderer/routes/_authenticated/_dashboard/v2-workspaces/stores/v2WorkspacesFilterStore/v2WorkspacesFilterStore.ts",
@@ -95,7 +104,6 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 		"src/renderer/stores/sidebar-sections-collapse.ts",
 		["sidebar-workspaces-collapse"],
 	],
-	["src/renderer/stores/v2-local-override.ts", ["v2-local-override-v2"]],
 	[
 		"src/renderer/stores/v2-workspace-create-defaults.ts",
 		["v2-workspace-create-defaults"],
@@ -108,6 +116,10 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 	["src/renderer/stores/v2-notifications/store.ts", ["v2-notifications-v1"]],
 	["src/renderer/stores/hiring-banner/store.ts", ["hiring-banner-v1"]],
 	["src/renderer/stores/star-nag/store.ts", ["star-nag-v1"]],
+	[
+		"src/renderer/stores/release-notes-card/store.ts",
+		["release-notes-card-v1"],
+	],
 	[
 		"src/renderer/stores/terminal-close-confirm/store.ts",
 		["terminal-close-confirm-v1"],
@@ -129,6 +141,7 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 		],
 	],
 	["src/renderer/stores/workspace-agents-row.ts", ["workspace-agents-row"]],
+	["src/renderer/stores/new-dashboard-sidebar.ts", ["new-dashboard-sidebar"]],
 	[
 		"src/renderer/routes/_authenticated/settings/usage/utils/usageLastSection/usageLastSection.ts",
 		["usage-last-section-v1"],
@@ -162,6 +175,14 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 	[
 		"src/renderer/routes/_authenticated/components/LeaderboardAutoPublish/hooks/useLeaderboardAutoPublish/autoPublishState.ts",
 		["leaderboard-auto-publish-v2"],
+	],
+	[
+		"src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/components/Composer/components/ModelPicker/hooks/useFavoriteModels/useFavoriteModels.ts",
+		["chatFavoriteModels"],
+	],
+	[
+		"src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatPane/utils/savedChatMode/savedChatMode.ts",
+		["chatModeByAgent"],
 	],
 	[
 		"src/renderer/hooks/useAgentModelPreference/useAgentModelPreference.ts",

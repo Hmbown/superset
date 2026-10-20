@@ -7,6 +7,7 @@ import {
 	ContextMenuSeparator,
 	ContextMenuTrigger,
 } from "@superset/ui/context-menu";
+import { useRunAfterMenuClose } from "@superset/ui/hooks/use-run-after-menu-close";
 import { OverflowFadeText } from "@superset/ui/overflow-fade-text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
@@ -24,6 +25,7 @@ export const TAB_DRAG_TYPE = "tab";
 interface TabItemProps<TData> {
 	tab: Tab<TData>;
 	tabs: Tab<TData>[];
+	store?: unknown;
 	registry: PaneRegistry<TData>;
 	index: number;
 	isActive: boolean;
@@ -39,6 +41,7 @@ interface TabItemProps<TData> {
 export function TabItem<TData>({
 	tab,
 	tabs,
+	store,
 	registry,
 	index,
 	isActive,
@@ -54,6 +57,7 @@ export function TabItem<TData>({
 	const [isEditing, setIsEditing] = useState(false);
 	const [editValue, setEditValue] = useState("");
 	const title = useTabTitle(tab, tabs, registry);
+	const { runAfterClose, onCloseAutoFocus } = useRunAfterMenuClose();
 
 	const startEditing = () => {
 		setEditValue(title);
@@ -79,12 +83,12 @@ export function TabItem<TData>({
 	const [{ isDragging }, connectDrag] = useDrag(
 		() => ({
 			type: TAB_DRAG_TYPE,
-			item: { tabId: tab.id, index },
+			item: { tabId: tab.id, index, store },
 			collect: (monitor) => ({
 				isDragging: monitor.isDragging(),
 			}),
 		}),
-		[tab.id, index],
+		[tab.id, index, store],
 	);
 
 	// Existing pane-to-tab drop (hovering a pane over a tab switches to it)
@@ -198,8 +202,8 @@ export function TabItem<TData>({
 					)}
 				</div>
 			</ContextMenuTrigger>
-			<ContextMenuContent>
-				<ContextMenuItem onSelect={startEditing}>
+			<ContextMenuContent onCloseAutoFocus={onCloseAutoFocus}>
+				<ContextMenuItem onSelect={() => runAfterClose(startEditing)}>
 					<PencilIcon className="mr-2 size-4" />
 					<Trans>Rename</Trans>
 				</ContextMenuItem>

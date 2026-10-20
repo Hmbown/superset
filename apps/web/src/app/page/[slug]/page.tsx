@@ -135,6 +135,7 @@ export default async function PublishedPage({
 		const shared = await pullPublicPage(slug);
 		return shared ? (
 			<PublicPageView
+				pageId={shared.id}
 				title={shared.title}
 				viewUrl={shared.viewUrl}
 				slug={slug}
@@ -173,7 +174,7 @@ export default async function PublishedPage({
 			pageId={page.id}
 			version={page.version}
 			pageOwnerId={page.createdByUserId}
-			readOnly={previewing}
+			readOnly={previewing || !access.canComment}
 			user={pageCommentUser(session, i18n._(msg({ message: "You" })))}
 		>
 			<div className="flex h-dvh flex-col bg-background">
@@ -192,6 +193,7 @@ export default async function PublishedPage({
 					}}
 					versions={versions}
 					currentUserId={session.user.id}
+					canComment={access.canComment}
 					slug={slug}
 					watching={page.watch.watching}
 					watchAgentId={page.watch.agentId}

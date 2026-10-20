@@ -6,6 +6,7 @@ import type { RouterOutputs } from "@superset/trpc";
 import { useMemo } from "react";
 import { authClient } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
+import { onePerName } from "./utils/onePerName";
 
 type CatalogRow = RouterOutputs["plugins"]["list"][number];
 
@@ -17,7 +18,6 @@ export interface CatalogPlugin extends Omit<PluginCatalogEntry, "auth"> {
 	installed: boolean;
 	latestVersion: string | null;
 	updateAvailable: boolean;
-	enabled: boolean;
 	accounts: string[];
 	connections: CatalogRow["connections"];
 	pluginSkills: PluginSkill[];
@@ -41,13 +41,13 @@ function toCatalogPlugin(plugin: CatalogRow): CatalogPlugin {
 		connector: plugin.connector,
 		skills: plugin.skills.map((skill) => skill.name),
 		marketplace: plugin.marketplace,
-		installed: plugin.installed,
+		installed: plugin.installed && plugin.enabled,
 		latestVersion: plugin.latestVersion,
 		updateAvailable:
 			plugin.installed &&
+			plugin.enabled &&
 			plugin.latestVersion !== null &&
 			plugin.latestVersion !== plugin.version,
-		enabled: plugin.enabled,
 		accounts: plugin.accounts,
 		connections: plugin.connections,
 		pluginSkills: plugin.skills,
@@ -67,7 +67,7 @@ export function usePluginCatalog() {
 	});
 
 	const plugins = useMemo(
-		() => (query.data ?? []).map(toCatalogPlugin),
+		() => onePerName((query.data ?? []).map(toCatalogPlugin)),
 		[query.data],
 	);
 

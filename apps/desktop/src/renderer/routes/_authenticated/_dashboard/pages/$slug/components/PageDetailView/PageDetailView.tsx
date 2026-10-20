@@ -3,6 +3,7 @@ import { Button } from "@superset/ui/button";
 import {
 	CommentModeButton,
 	PageHeader as PageTitleBar,
+	PageViewers,
 } from "@superset/ui/page-comments";
 import { Spinner } from "@superset/ui/spinner";
 import { useNavigate } from "@tanstack/react-router";
@@ -14,9 +15,15 @@ import { usePageHeaderData } from "renderer/routes/_authenticated/_dashboard/hoo
 
 interface PageDetailViewProps {
 	slug: string;
+	initialThreadId?: string | null;
+	initialPanelOpen?: boolean;
 }
 
-export function PageDetailView({ slug }: PageDetailViewProps) {
+export function PageDetailView({
+	slug,
+	initialThreadId = null,
+	initialPanelOpen = false,
+}: PageDetailViewProps) {
 	const { t } = useLingui();
 	const navigate = useNavigate();
 	const [commentsEnabled, setCommentsEnabled] = useState(false);
@@ -31,6 +38,8 @@ export function PageDetailView({ slug }: PageDetailViewProps) {
 		onRename,
 		onRefresh,
 		onDelete,
+		sharing,
+		canComment,
 	} = usePageHeaderData({ slug, version: previewVersion });
 
 	const goBack = () => navigate({ to: "/pages" });
@@ -65,14 +74,22 @@ export function PageDetailView({ slug }: PageDetailViewProps) {
 						currentUserId={currentUserId}
 						leading={backButton}
 						trailing={
-							<CommentModeButton
-								enabled={commentsEnabled}
-								openCount={threads.filter((thread) => !thread.resolved).length}
-								onToggle={() => setCommentsEnabled(!commentsEnabled)}
-							/>
+							<>
+								<PageViewers pageId={page.id} className="mr-1" />
+								{canComment ? (
+									<CommentModeButton
+										enabled={commentsEnabled}
+										openCount={
+											threads.filter((thread) => !thread.resolved).length
+										}
+										onToggle={() => setCommentsEnabled(!commentsEnabled)}
+									/>
+								) : null}
+							</>
 						}
 						onSetVisibility={onSetVisibility}
 						onSetSharedVersion={onSetSharedVersion}
+						sharing={sharing}
 						onRename={onRename}
 						onRefresh={onRefresh}
 						onPreviewVersion={setPreviewVersion}
@@ -102,8 +119,10 @@ export function PageDetailView({ slug }: PageDetailViewProps) {
 					key={slug}
 					slug={slug}
 					version={previewVersion}
-					commentsEnabled={commentsEnabled}
+					commentsEnabled={commentsEnabled && canComment}
 					onCommentsEnabledChange={setCommentsEnabled}
+					initialThreadId={initialThreadId}
+					initialPanelOpen={initialPanelOpen}
 				/>
 			</div>
 		</div>

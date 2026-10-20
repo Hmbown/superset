@@ -1,4 +1,5 @@
-import { db } from "@superset/db/client";
+import { db, dbWs } from "@superset/db/client";
+import type { IntegrationProvider } from "@superset/db/enums";
 import {
 	cloudWorkspaceActivity,
 	cloudWorkspaceLabels,
@@ -8,14 +9,15 @@ import {
 	environments,
 	githubRepositories,
 	pages,
-	type SelectTask,
 	suggestions,
 	taskLabels,
 	taskProjects,
 	taskStatuses,
 	tasks,
+	teams,
 	users,
 } from "@superset/db/schema";
+import { retiredTaskColumns } from "@superset/db/task-list-query";
 import { LABELS_MAX_PER_WORKSPACE } from "@superset/shared/labels";
 import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
@@ -36,8 +38,8 @@ const DESCRIPTION_MAX_LENGTH = 20_000;
 export const taskColumns = {
 	id: tasks.id,
 	slug: tasks.slug,
-	externalProvider: tasks.externalProvider,
-	externalKey: tasks.externalKey,
+	externalProvider: retiredTaskColumns.externalProvider,
+	externalKey: retiredTaskColumns.externalKey,
 	title: tasks.title,
 	statusType: taskStatuses.type,
 	statusColor: taskStatuses.color,
@@ -47,7 +49,7 @@ export const taskColumns = {
 type TaskColumns = {
 	id: string;
 	slug: string;
-	externalProvider: SelectTask["externalProvider"];
+	externalProvider: IntegrationProvider | null;
 	externalKey: string | null;
 	title: string;
 	statusType: string | null;
@@ -213,6 +215,35 @@ export async function addLabel(args: {
 	);
 }
 
+/** Who a share or unshare was for, if the person, team, or invitation still exists. */
+function shareTargetOf(row: {
+	entry: { targetEmail: string | null };
+	targetUser: {
+		userId: string | null;
+		name: string | null;
+		image: string | null;
+	} | null;
+	targetTeam: { id: string | null; name: string | null } | null;
+}) {
+	if (row.targetUser?.userId && row.targetUser.name !== null) {
+		return {
+			kind: "user" as const,
+			person: {
+				userId: row.targetUser.userId,
+				name: row.targetUser.name,
+				image: row.targetUser.image,
+			},
+		};
+	}
+	if (row.targetTeam?.id && row.targetTeam.name !== null) {
+		return { kind: "team" as const, name: row.targetTeam.name };
+	}
+	if (row.entry.targetEmail) {
+		return { kind: "email" as const, email: row.entry.targetEmail };
+	}
+	return null;
+}
+
 export const cloudWorkspaceRecordRouter = {
 	/** One box in any state, archived included, with what its record page shows. */
 	get: jwtProcedure
@@ -306,6 +337,7 @@ export const cloudWorkspaceRecordRouter = {
 			const fromProject = alias(taskProjects, "from_project");
 			const toProject = alias(taskProjects, "to_project");
 			const proposer = alias(users, "proposer");
+			const targetUser = alias(users, "target_user");
 			const rows = await db
 				.select({
 					entry: cloudWorkspaceActivity,
@@ -313,8 +345,8 @@ export const cloudWorkspaceRecordRouter = {
 					linkedTask: {
 						id: linkedTask.id,
 						slug: linkedTask.slug,
-						externalProvider: linkedTask.externalProvider,
-						externalKey: linkedTask.externalKey,
+						externalProvider: retiredTaskColumns.externalProvider,
+						externalKey: retiredTaskColumns.externalKey,
 						title: linkedTask.title,
 						statusType: linkedStatus.type,
 						statusColor: linkedStatus.color,
@@ -323,8 +355,8 @@ export const cloudWorkspaceRecordRouter = {
 					unlinkedTask: {
 						id: unlinkedTask.id,
 						slug: unlinkedTask.slug,
-						externalProvider: unlinkedTask.externalProvider,
-						externalKey: unlinkedTask.externalKey,
+						externalProvider: retiredTaskColumns.externalProvider,
+						externalKey: retiredTaskColumns.externalKey,
 						title: unlinkedTask.title,
 						statusType: unlinkedStatus.type,
 						statusColor: unlinkedStatus.color,
@@ -349,6 +381,12 @@ export const cloudWorkspaceRecordRouter = {
 						name: proposer.name,
 						image: proposer.image,
 					},
+					targetUser: {
+						userId: targetUser.id,
+						name: targetUser.name,
+						image: targetUser.image,
+					},
+					targetTeam: { id: teams.id, name: teams.name },
 				})
 				.from(cloudWorkspaceActivity)
 				.leftJoin(users, eq(users.id, cloudWorkspaceActivity.actorUserId))
@@ -376,6 +414,11 @@ export const cloudWorkspaceRecordRouter = {
 					eq(suggestions.id, cloudWorkspaceActivity.suggestionId),
 				)
 				.leftJoin(proposer, eq(proposer.id, suggestions.proposedByUserId))
+				.leftJoin(
+					targetUser,
+					eq(targetUser.id, cloudWorkspaceActivity.targetUserId),
+				)
+				.leftJoin(teams, eq(teams.id, cloudWorkspaceActivity.targetTeamId))
 				.where(eq(cloudWorkspaceActivity.cloudWorkspaceId, row.id))
 				.orderBy(asc(cloudWorkspaceActivity.createdAt));
 
@@ -430,6 +473,7 @@ export const cloudWorkspaceRecordRouter = {
 				page: row.page?.id ? row.page : null,
 				suggestedBy: row.suggestedBy?.userId ? row.suggestedBy : null,
 				suggestionSource: row.suggestion?.source ?? null,
+				shareTarget: shareTargetOf(row),
 			}));
 			if (entries.some((entry) => entry.event === "created")) return entries;
 			// Boxes made before the log existed still show where they started.
@@ -468,6 +512,7 @@ export const cloudWorkspaceRecordRouter = {
 					page: null,
 					suggestedBy: null,
 					suggestionSource: null,
+					shareTarget: null,
 				},
 				...entries,
 			];
@@ -625,7 +670,9 @@ export const cloudWorkspaceRecordRouter = {
 		.input(z.object({ id: z.string().uuid(), name: z.string() }))
 		.mutation(async ({ ctx, input }) => {
 			const row = await loadVisibleWorkspace(ctx, input.id);
-			const [label] = await ensureLabels(db, row.organizationId, [input.name]);
+			const [label] = await dbWs.transaction((tx) =>
+				ensureLabels(tx, row.organizationId, [input.name]),
+			);
 			if (!label) {
 				throw new TRPCError({ code: "BAD_REQUEST", message: "Invalid label" });
 			}

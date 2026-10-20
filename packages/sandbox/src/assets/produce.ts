@@ -317,11 +317,23 @@ function hostService(): void {
 	rmSync(out, { recursive: true, force: true });
 	const stage = join(out, "stage");
 	mkdirSync(stage, { recursive: true });
-	const copy = (from: string, to: string) =>
-		Bun.spawnSync(["cp", "-R", join(REPO_ROOT, from), join(stage, to)]);
+	const copy = (from: string, to: string) => {
+		const result = Bun.spawnSync([
+			"cp",
+			"-R",
+			join(REPO_ROOT, from),
+			join(stage, to),
+		]);
+		if (result.exitCode !== 0) {
+			throw new Error(
+				`cp -R ${from} ${to} failed: ${result.stderr?.toString().trim()}`,
+			);
+		}
+	};
 	copy("packages/host-service/dist", "dist");
 	copy("packages/host-service/drizzle", "drizzle");
 	copy("packages/agent-setup/templates", "agent-templates");
+	copy("plugins", "agent-templates/plugins");
 	copy("packages/pty-daemon/dist", "pty-daemon");
 	writeFileSync(join(stage, "RUNTIME"), `version=${version}\nnode=24\n`);
 	inContainer(
@@ -392,12 +404,19 @@ function cli(): void {
 	const pkg = JSON.parse(
 		readFileSync(join(REPO_ROOT, "packages", "cli", "package.json"), "utf8"),
 	) as { version: string };
-	const build = Bun.spawnSync(
+	// The compiled catalogs are gitignored, so a clean checkout has none to bundle.
+	const steps = [
+		["bun", "run", "--filter=@superset/i18n", "build"],
 		["bun", "run", "--cwd", "packages/cli", "build:linux-x64"],
-		{ cwd: REPO_ROOT, stdout: "ignore", stderr: "inherit" },
-	);
-	if (build.exitCode !== 0)
-		throw new Error("packages/cli build:linux-x64 failed");
+	];
+	for (const step of steps) {
+		const run = Bun.spawnSync(step, {
+			cwd: REPO_ROOT,
+			stdout: "ignore",
+			stderr: "inherit",
+		});
+		if (run.exitCode !== 0) throw new Error(`${step.join(" ")} failed`);
+	}
 	const binary = readFileSync(
 		join(REPO_ROOT, "packages", "cli", "dist", "superset-linux-x64"),
 	);
