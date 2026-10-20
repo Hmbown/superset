@@ -48,11 +48,14 @@ import {
 	useComposerDraft,
 } from "./hooks/useComposerDraft";
 import { useFooterTier } from "./hooks/useFooterTier";
+import { useMcpServerPicker } from "./hooks/useMcpServerPicker";
 import { useQueueActions } from "./hooks/useQueueActions";
 import { useUploadAttachments } from "./hooks/useUploadAttachments";
+import { mcpServerOfChip, withMcpContext } from "./utils/mcpServerChips";
 
 export type ComposerProps = {
 	workspaceId: string;
+	agentId?: string;
 	draftKey: string;
 	inputRef?: Ref<Pick<PromptInputHandle, "appendText" | "focus">>;
 	availableCommands: AvailableCommand[];
@@ -109,6 +112,7 @@ const FOCUS_HANDOFF_MS = 1000;
 let focusHandoff: { draftKey: string; at: number } | null = null;
 
 export const Composer = memo(function Composer({
+	agentId,
 	agentSwitcher,
 	availableCommands,
 	configOptions,
@@ -136,6 +140,7 @@ export const Composer = memo(function Composer({
 	const { storedDraft, onChange, clearDraft } = useComposerDraft(draftKey);
 	const promptInputRef = useRef<PromptInputHandle>(null);
 	const queueActions = useQueueActions(promptQueue, promptInputRef);
+	const mcpPicker = useMcpServerPicker({ workspaceId, agentId });
 	useImperativeHandle(
 		inputRef,
 		() => ({
@@ -274,7 +279,7 @@ export const Composer = memo(function Composer({
 		(open: (panel: ComposerPanelContent) => void) =>
 			open({
 				title: t({ message: "Rewind" }),
-				render: (close) => (
+				render: ({ close }) => (
 					<RewindPanel
 						points={rewindRef.current?.points ?? []}
 						onPick={(point) => {
@@ -288,28 +293,37 @@ export const Composer = memo(function Composer({
 	);
 	const hasRewind = rewind !== undefined;
 
+	const mcpCommand = mcpPicker.command;
 	const commands = useMemo(() => {
-		const groups = {
-			commands: t({ message: "Commands" }),
-			mcp: t({ message: "MCP Server Commands" }),
-		};
-		if (!hasRewind) return toMenuCommands(availableCommands, groups);
-		return [
-			{
-				id: REWIND_COMMAND,
-				title: `/${REWIND_COMMAND}`,
-				description: t({
-					message: "Go back to an earlier message and restore the files",
-				}),
-				group: groups.commands,
-				onSelect: (ctx) => openRewind(ctx.openPanel),
-			} satisfies PromptInputCommand,
-			...toMenuCommands(
-				availableCommands.filter((command) => command.name !== REWIND_COMMAND),
-				groups,
-			),
+		const local: PromptInputCommand[] = [
+			...(mcpCommand ? [mcpCommand] : []),
+			...(hasRewind
+				? [
+						{
+							id: REWIND_COMMAND,
+							title: `/${REWIND_COMMAND}`,
+							description: t({
+								message: "Go back to an earlier message and restore the files",
+							}),
+							group: t({ message: "Commands" }),
+							onSelect: (ctx) => openRewind(ctx.openPanel),
+						} satisfies PromptInputCommand,
+					]
+				: []),
 		];
-	}, [availableCommands, hasRewind, openRewind, t]);
+		const agentCommands = toMenuCommands(
+			availableCommands.filter(
+				(command) =>
+					!(mcpCommand && command.name === "mcp") &&
+					!(hasRewind && command.name === REWIND_COMMAND),
+			),
+			{
+				commands: t({ message: "Commands" }),
+				mcp: t({ message: "MCP Server Commands" }),
+			},
+		);
+		return [...local, ...agentCommands];
+	}, [availableCommands, mcpCommand, hasRewind, openRewind, t]);
 
 	const send = useCallback(
 		async (
@@ -324,13 +338,17 @@ export const Composer = memo(function Composer({
 				promptInputRef.current?.appendText(appendPastedText(text, pastedTexts));
 				return;
 			}
-			const elements = elementsForChips(text.trim(), mentions);
+			const message = withMcpContext(
+				text.trim(),
+				mentions.flatMap((chip) => mcpServerOfChip(chip) ?? []),
+			);
+			const elements = elementsForChips(message, mentions);
 			onSend(
 				[
 					{
 						type: "text",
 						text: appendPastedText(
-							[text.trim(), ...tags].filter(Boolean).join("\n"),
+							[message, ...tags].filter(Boolean).join("\n"),
 							pastedTexts,
 						),
 						...(elements.length > 0 ? { elements } : {}),
@@ -419,6 +437,7 @@ export const Composer = memo(function Composer({
 				collapseLargePastes
 				commands={commands}
 				defaultValue={storedDraft}
+				findChips={mcpPicker.findChips}
 				history={history}
 				key={draftKey}
 				mentionProviders={mentionProviders}
@@ -456,6 +475,7 @@ export const Composer = memo(function Composer({
 				}
 			/>
 			{attachmentPreview.overlay}
+			{mcpPicker.dialog}
 		</div>
 	);
 });

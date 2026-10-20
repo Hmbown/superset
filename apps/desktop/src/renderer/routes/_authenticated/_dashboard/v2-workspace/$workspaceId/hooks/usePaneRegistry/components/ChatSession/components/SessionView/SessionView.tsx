@@ -61,6 +61,7 @@ function contentText(content: UserContent[]): string {
 }
 
 export function SessionView({
+	agentId,
 	agentLabel,
 	agentSwitch,
 	canForkToWorktree,
@@ -82,6 +83,7 @@ export function SessionView({
 	workspaceId,
 }: {
 	client: SessionClient;
+	agentId?: string;
 	draftKey: string;
 	workspaceId: string;
 	headerLeft?: ReactNode;
@@ -466,6 +468,7 @@ export function SessionView({
 					)
 				)}
 				<Composer
+					agentId={agentId}
 					agentSwitcher={agentSwitcher}
 					availableCommands={sessionState?.availableCommands ?? NO_COMMANDS}
 					configOptions={sessionState?.configOptions ?? NO_CONFIG_OPTIONS}

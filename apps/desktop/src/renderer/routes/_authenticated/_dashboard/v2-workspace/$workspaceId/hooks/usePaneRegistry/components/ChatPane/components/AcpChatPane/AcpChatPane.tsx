@@ -505,7 +505,7 @@ export function AcpChatPane({
 				}
 			}
 			if (!mounted.current) return;
-			prependToDraft(draftKey, request.messageText);
+			prependToDraft(draftKey, [request.messageText]);
 			attaching.current = false;
 			onRewound(
 				request.transcript.trim()
@@ -607,6 +607,7 @@ export function AcpChatPane({
 
 	return (
 		<SessionView
+			agentId={agent?.id}
 			client={client}
 			draftKey={draftKey}
 			{...(recovering
