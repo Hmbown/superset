@@ -82,6 +82,7 @@ export async function startCloudWorkspace(args: {
 	launch?: CloudAgentLaunch;
 	taskIds?: string[];
 	attachmentFileIds?: string[];
+	beforeProvision?: (workspaceId: string) => Promise<void>;
 }) {
 	// The sandbox's Codex is older than the codex-acp floor, so only Claude chats.
 	const openAsChat =
@@ -193,14 +194,25 @@ export async function startCloudWorkspace(args: {
 		...(args.name ? {} : { namingPrompt: args.prompt ?? "" }),
 		...(args.launch
 			? {
-					launch: (await openAsChat)
-						? { ...args.launch, surface: "chat" as const }
-						: args.launch,
+					launch: {
+						...args.launch,
+						surface: (await openAsChat) ? ("chat" as const) : undefined,
+					},
 				}
 			: {}),
 	};
 
 	pushWorkspaceAccess(row.organizationId, row.id);
+	try {
+		await args.beforeProvision?.(row.id);
+	} catch (error) {
+		await transitionCloudWorkspace({
+			id: row.id,
+			from: ["provisioning"],
+			to: "failed",
+		});
+		throw error;
+	}
 	nudge(row.organizationId, "cloud_workspaces");
 	await queueProvision(job);
 	return row;
