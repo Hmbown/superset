@@ -1,5 +1,9 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import {
+	OFFERED_MACHINE_SIZES,
+	type OfferedMachineSize,
+} from "@superset/shared/billing";
+import {
 	describeEnvironments,
 	selectCloudEnvironment,
 	startableCloudEnvironments,
@@ -46,7 +50,7 @@ export function register(server: McpServer): void {
 		name: "workspaces_create",
 		annotations: { destructiveHint: false },
 		description:
-			"Create a workspace. Without hostId it is a cloud workspace: it starts from `environment` (by id — a create without one, when several exist, fails listing the ids; its repositories are the checkouts; required when several environments have repositories), runs on Superset's infrastructure so it keeps going when the user's laptop sleeps, and returns as soon as its row exists in status 'provisioning' — poll workspaces_list until it is 'ready'. It bills until deleted, so call workspaces_delete when the work is done. A cloud workspace takes `name`, `branch` and at most one entry in `agents` (claude or codex); host-only fields are rejected. With hostId it is created on that host (see projects_list and hosts_list): use `checkout: local` to share the project checkout without switching branches, or omit checkout for an isolated worktree with a branch or PR; omit `projectId` (and `branch`/`pr`/`baseBranch`/`taskId`) for a project-less session. `agents` spawns agents once the workspace is ready (the equivalent of agents_create) and `command` runs a one-off shell command.",
+			"Create a workspace. Without hostId it is a cloud workspace: it starts from `environment` (by id — a create without one, when several exist, fails listing the ids; its repositories are the checkouts; required when several environments have repositories), runs on Superset's infrastructure so it keeps going when the user's laptop sleeps, and returns as soon as its row exists in status 'provisioning' — poll workspaces_list until it is 'ready'. It bills until deleted, so call workspaces_delete when the work is done. A cloud workspace takes `name`, `branch`, `machineSize` and at most one entry in `agents` (claude or codex); host-only fields are rejected. With hostId it is created on that host (see projects_list and hosts_list): use `checkout: local` to share the project checkout without switching branches, or omit checkout for an isolated worktree with a branch or PR; omit `projectId` (and `branch`/`pr`/`baseBranch`/`taskId`) for a project-less session. `agents` spawns agents once the workspace is ready (the equivalent of agents_create) and `command` runs a one-off shell command.",
 		inputSchema: {
 			checkout: z
 				.enum(["worktree", "local"])
@@ -74,6 +78,12 @@ export function register(server: McpServer): void {
 				.optional()
 				.describe(
 					"Cloud only: id of the environment the workspace starts from. Required when several environments have repositories.",
+				),
+			machineSize: z
+				.enum(OFFERED_MACHINE_SIZES)
+				.optional()
+				.describe(
+					"Cloud only: size of the machine. `small` (2 vCPU, 4 GB, 0.5 box hours per hour) for light work such as triage, review or answering questions; `medium` (4 vCPU, 8 GB, 1 box hour per hour) is the default for most coding work; `large` (8 vCPU, 16 GB, 2 box hours per hour) only for big builds, large test suites or heavy compiles.",
 				),
 			branch: z
 				.string()
@@ -126,10 +136,12 @@ export function register(server: McpServer): void {
 				return createInCloud(input, ctx);
 			}
 			const hostId = input.hostId;
-			if (input.environment !== undefined) {
-				throw new Error(
-					"`environment` applies to cloud workspaces; omit hostId to create one",
-				);
+			for (const field of ["environment", "machineSize"] as const) {
+				if (input[field] !== undefined) {
+					throw new Error(
+						`\`${field}\` applies to cloud workspaces; omit hostId to create one`,
+					);
+				}
 			}
 			if (input.name === undefined) {
 				throw new Error("`name` is required for a workspace on a host");
@@ -228,6 +240,7 @@ async function createInCloud(
 		name?: string;
 		branch?: string;
 		environment?: string;
+		machineSize?: OfferedMachineSize;
 		projectId?: string;
 		checkout?: string;
 		pr?: number;
@@ -278,6 +291,7 @@ async function createInCloud(
 		environmentId: environment.id,
 		...(input.name ? { name: input.name } : {}),
 		...(input.branch ? { branch: input.branch } : {}),
+		...(input.machineSize ? { machineSize: input.machineSize } : {}),
 		...(launch
 			? {
 					agent: launch.agent,
