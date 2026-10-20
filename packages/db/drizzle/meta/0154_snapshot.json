@@ -1,5 +1,5 @@
 {
-  "id": "300c0b2b-0bbf-41c1-9d70-c83b8de3cd2f",
+  "id": "38686c37-5ee0-46f5-9175-c3b633e5c662",
   "prevId": "cc8fd4fb-c5fd-4692-a670-10fb12ca5125",
   "version": "7",
   "dialect": "postgresql",
@@ -6022,12 +6022,6 @@
           "notNull": true,
           "default": false
         },
-        "machine_size": {
-          "name": "machine_size",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "enabled": {
           "name": "enabled",
           "type": "boolean",
@@ -7606,12 +7600,6 @@
         "usage_stop_at": {
           "name": "usage_stop_at",
           "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "machine_size": {
-          "name": "machine_size",
-          "type": "text",
           "primaryKey": false,
           "notNull": false
         },
@@ -10659,6 +10647,38 @@
           ]
         }
       },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sandbox_bundles": {
+      "name": "sandbox_bundles",
+      "schema": "",
+      "columns": {
+        "sha": {
+          "name": "sha",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "image_ref": {
+          "name": "image_ref",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "released_at": {
+          "name": "released_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
