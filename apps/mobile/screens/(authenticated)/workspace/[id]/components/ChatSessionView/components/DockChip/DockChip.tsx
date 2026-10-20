@@ -1,31 +1,84 @@
-import type { LucideIcon } from "lucide-react-native";
-import { Pressable } from "react-native";
-import { Icon } from "@/components/ui/icon";
-import { Text } from "@/components/ui/text";
+import {
+	Host,
+	HStack,
+	Button as SwiftUIButton,
+	Image as SwiftUIImage,
+	Text as SwiftUIText,
+} from "@expo/ui/swift-ui";
+import {
+	accessibilityLabel,
+	buttonBorderShape,
+	buttonStyle,
+	font,
+	foregroundStyle,
+	frame,
+	lineLimit,
+	padding,
+} from "@expo/ui/swift-ui/modifiers";
+import type { ComponentProps } from "react";
+import { useTheme } from "@/hooks/useTheme";
 import { DOCK_CHIP_HEIGHT } from "./constants";
+
+/** The padding .glass draws around its label, measured on iOS 26. */
+const GLASS_PADDING = 7;
 
 interface DockChipProps {
 	label: string;
 	count?: number;
-	icon?: LucideIcon;
+	systemName?: NonNullable<ComponentProps<typeof SwiftUIImage>["systemName"]>;
 	onPress: () => void;
 }
 
-export function DockChip({ label, count, icon, onPress }: DockChipProps) {
+/** Same native .glass button as the scroll-to-bottom button beside it. */
+export function DockChip({ label, count, systemName, onPress }: DockChipProps) {
+	const theme = useTheme();
 	return (
-		<Pressable
-			accessibilityRole="button"
-			className="flex-row items-center gap-2 rounded-full border border-white/10 bg-[#1C1C1C] px-4 active:opacity-70"
-			onPress={onPress}
-			style={{ height: DOCK_CHIP_HEIGHT }}
-		>
-			{icon ? (
-				<Icon as={icon} className="text-muted-foreground size-[18px]" />
-			) : null}
-			<Text className="text-foreground text-base">{label}</Text>
-			{count !== undefined ? (
-				<Text className="text-muted-foreground text-base">{count}</Text>
-			) : null}
-		</Pressable>
+		<Host matchContents colorScheme="dark">
+			<SwiftUIButton
+				onPress={onPress}
+				modifiers={[
+					buttonStyle("glass"),
+					buttonBorderShape("capsule"),
+					accessibilityLabel(
+						count === undefined ? label : `${label}, ${count}`,
+					),
+				]}
+			>
+				<HStack
+					spacing={8}
+					modifiers={[
+						frame({ height: DOCK_CHIP_HEIGHT - GLASS_PADDING * 2 }),
+						padding({ horizontal: 4 }),
+					]}
+				>
+					{systemName ? (
+						<SwiftUIImage
+							systemName={systemName}
+							size={16}
+							color={theme.mutedForeground}
+						/>
+					) : null}
+					<SwiftUIText
+						modifiers={[
+							font({ size: 16 }),
+							foregroundStyle(theme.foreground),
+							lineLimit(1),
+						]}
+					>
+						{label}
+					</SwiftUIText>
+					{count !== undefined ? (
+						<SwiftUIText
+							modifiers={[
+								font({ size: 16 }),
+								foregroundStyle(theme.mutedForeground),
+							]}
+						>
+							{String(count)}
+						</SwiftUIText>
+					) : null}
+				</HStack>
+			</SwiftUIButton>
+		</Host>
 	);
 }

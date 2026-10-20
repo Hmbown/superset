@@ -14,7 +14,6 @@ import {
 import { randomUUID } from "expo-crypto";
 import { useRouter } from "expo-router";
 import { useHeaderHeight } from "expo-router/react-navigation";
-import { GitPullRequest, ListEnd } from "lucide-react-native";
 import {
 	forwardRef,
 	useCallback,
@@ -452,7 +451,7 @@ export const ChatSessionView = forwardRef<
 					<View className="flex-row gap-2" pointerEvents="box-none">
 						{pullRequestLabel && onOpenPullRequests ? (
 							<DockChip
-								icon={GitPullRequest}
+								systemName="arrow.triangle.pull"
 								label={pullRequestLabel}
 								onPress={onOpenPullRequests}
 							/>
@@ -460,7 +459,7 @@ export const ChatSessionView = forwardRef<
 						{queued.length > 0 ? (
 							<DockChip
 								count={queued.length}
-								icon={ListEnd}
+								systemName="text.append"
 								label={
 									queuePaused
 										? t({ message: "Queue paused" })
