@@ -4,7 +4,7 @@ import {
 	organizationPlanFromAutumn,
 } from "@superset/auth/billing";
 import { db } from "@superset/db/client";
-import { subscriptions } from "@superset/db/schema";
+import { organizations, subscriptions } from "@superset/db/schema";
 import {
 	ACTIVE_SUBSCRIPTION_STATUSES,
 	DEFAULT_MACHINE_SIZE_CONFIG,
@@ -38,12 +38,41 @@ export async function organizationPlan(
 	return planTierFromSubscription(subscription);
 }
 
+export function organizationMetadataObject(
+	metadata: string | null | undefined,
+): Record<string, unknown> {
+	if (!metadata) return {};
+	try {
+		const parsed: unknown = JSON.parse(metadata);
+		return parsed && typeof parsed === "object" && !Array.isArray(parsed)
+			? (parsed as Record<string, unknown>)
+			: {};
+	} catch (error) {
+		console.warn("[billing/plan] organization metadata is not JSON", error);
+		return {};
+	}
+}
+
+/** The sizes Autumn offers the org, with the org's own default when it is one of them. */
 export async function organizationMachineSizes(
 	organizationId: string,
 ): Promise<MachineSizeConfig> {
-	return billingUsesAutumn
-		? organizationMachineSizesFromAutumn(organizationId)
-		: DEFAULT_MACHINE_SIZE_CONFIG;
+	const [offered, [organization]] = await Promise.all([
+		billingUsesAutumn
+			? organizationMachineSizesFromAutumn(organizationId)
+			: DEFAULT_MACHINE_SIZE_CONFIG,
+		db
+			.select({ metadata: organizations.metadata })
+			.from(organizations)
+			.where(eq(organizations.id, organizationId)),
+	]);
+	const chosen = organizationMetadataObject(
+		organization?.metadata,
+	).defaultMachineSize;
+	return typeof chosen === "string" &&
+		machineSizeVcpus(offered, chosen) !== null
+		? { ...offered, defaultSize: chosen }
+		: offered;
 }
 
 export async function resolveMachineSize(

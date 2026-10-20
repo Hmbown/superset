@@ -16,6 +16,7 @@ export const SETTING_ITEM_ID = {
 	ORGANIZATION_SLUG: "organization-slug",
 	ORGANIZATION_ID: "organization-id",
 	ORGANIZATION_TASK_TRACKER: "organization-task-tracker",
+	ORGANIZATION_DEFAULT_MACHINE_SIZE: "organization-default-machine-size",
 	ORGANIZATION_MEMBERS_LIST: "organization-members-list",
 	ORGANIZATION_MEMBERS_INVITE: "organization-members-invite",
 	ORGANIZATION_MEMBERS_PENDING_INVITATIONS:
@@ -169,6 +170,7 @@ export const SETTING_ITEM_VARIANT: Record<SettingItemId, SettingVariant> = {
 	[SETTING_ITEM_ID.ORGANIZATION_SLUG]: "shared",
 	[SETTING_ITEM_ID.ORGANIZATION_ID]: "shared",
 	[SETTING_ITEM_ID.ORGANIZATION_TASK_TRACKER]: "shared",
+	[SETTING_ITEM_ID.ORGANIZATION_DEFAULT_MACHINE_SIZE]: "shared",
 	[SETTING_ITEM_ID.ORGANIZATION_MEMBERS_LIST]: "shared",
 	[SETTING_ITEM_ID.ORGANIZATION_MEMBERS_INVITE]: "shared",
 	[SETTING_ITEM_ID.ORGANIZATION_MEMBERS_PENDING_INVITATIONS]: "shared",
@@ -473,6 +475,21 @@ export const SETTINGS_ITEMS: SettingsItem[] = [
 			"tracker",
 			"issues",
 			"integration",
+		],
+	},
+	{
+		id: SETTING_ITEM_ID.ORGANIZATION_DEFAULT_MACHINE_SIZE,
+		section: "organization",
+		title: "Default machine size",
+		description: "The machine size new cloud workspaces start with",
+		keywords: [
+			"organization",
+			"cloud",
+			"machine",
+			"size",
+			"vcpu",
+			"memory",
+			"workspace",
 		],
 	},
 	{

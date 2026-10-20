@@ -24,6 +24,7 @@ import { canRemoveMember, type OrganizationRole } from "@superset/shared/auth";
 import { TRPCError, type TRPCRouterRecord } from "@trpc/server";
 import { and, desc, eq, isNull, ne, sql } from "drizzle-orm";
 import { z } from "zod";
+import { organizationMetadataObject } from "../../lib/billing/plan";
 import { userConnection } from "../../lib/connectors";
 import { generateImagePathname, uploadImage } from "../../lib/upload";
 import {
@@ -32,6 +33,7 @@ import {
 	publicProcedure,
 	userError,
 } from "../../trpc";
+import { assertMachineSizeOffered } from "../cloud-workspace/start";
 import { verifyOrgAdmin, verifyOrgMembership } from "../integration/utils";
 import { requireActiveOrgMembership } from "../utils/active-org";
 import { organizationMembersRouter } from "./members";
@@ -476,6 +478,51 @@ export const organizationRouter = {
 			}
 
 			return organization;
+		}),
+
+	setDefaultMachineSize: protectedProcedure
+		.input(
+			z.object({
+				id: z.string().uuid(),
+				/** Null clears the choice, so the default from the plan applies. */
+				machineSize: z.string().min(1).max(40).nullable(),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			const membership = await findOrgMembership({
+				userId: ctx.session.user.id,
+				organizationId: input.id,
+			});
+			if (!membership) {
+				throw userError({
+					code: "FORBIDDEN",
+					message: "You are not a member of this organization",
+					i18nKey: "serverError.organization.youAreNotAMember",
+				});
+			}
+			if (membership.role !== "owner") {
+				throw userError({
+					code: "FORBIDDEN",
+					message: "Only owners can update organization settings",
+					i18nKey:
+						"serverError.organization.onlyOwnersCanUpdateOrganizationSettings",
+				});
+			}
+			await assertMachineSizeOffered(input.id, input.machineSize);
+
+			const [current] = await db
+				.select({ metadata: organizations.metadata })
+				.from(organizations)
+				.where(eq(organizations.id, input.id));
+			const metadata = organizationMetadataObject(current?.metadata);
+			if (input.machineSize) metadata.defaultMachineSize = input.machineSize;
+			else delete metadata.defaultMachineSize;
+
+			await db
+				.update(organizations)
+				.set({ metadata: JSON.stringify(metadata) })
+				.where(eq(organizations.id, input.id));
+			return { machineSize: input.machineSize };
 		}),
 
 	uploadLogo: protectedProcedure
