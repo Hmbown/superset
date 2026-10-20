@@ -3,7 +3,6 @@ import { realtimeWorkspacePresencePath } from "@superset/shared/realtime";
 import { useJoinPresence, usePresenceVisitors } from "@superset/ui/presence";
 import { useCallback } from "react";
 import { env } from "renderer/env.renderer";
-import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { ensureFreshJwt } from "renderer/lib/auth-client";
 
 /**
@@ -12,9 +11,11 @@ import { ensureFreshJwt } from "renderer/lib/auth-client";
  */
 export function useCloudWorkspacePresence(
 	workspaceId: string,
-	{ observe }: { observe: boolean },
+	{
+		organizationId,
+		observe,
+	}: { organizationId: string | undefined; observe: boolean },
 ): PresenceVisitor[] {
-	const organizationId = useActiveOrganizationId();
 	const roomId = `workspace:${workspaceId}:${observe ? "observe" : "visit"}`;
 
 	const url = useCallback(async () => {

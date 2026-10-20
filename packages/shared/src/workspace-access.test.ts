@@ -1,6 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import {
 	canOpenWorkspace,
+	parseVersionedWorkspaceAccess,
 	parseWorkspaceAccess,
 	type WorkspaceAccess,
 } from "./workspace-access";
@@ -51,6 +52,22 @@ describe("parseWorkspaceAccess", () => {
 		).toBeNull();
 		expect(
 			parseWorkspaceAccess({ ...privateAccess, sharedTeamIds: [1] }),
+		).toBeNull();
+	});
+});
+
+describe("parseVersionedWorkspaceAccess", () => {
+	it("needs a read time, and allows a workspace that is gone", () => {
+		expect(
+			parseVersionedWorkspaceAccess({ access: privateAccess, readAt: 5 }),
+		).toEqual({ access: privateAccess, readAt: 5 });
+		expect(parseVersionedWorkspaceAccess({ access: null, readAt: 5 })).toEqual({
+			access: null,
+			readAt: 5,
+		});
+		expect(parseVersionedWorkspaceAccess({ access: privateAccess })).toBeNull();
+		expect(
+			parseVersionedWorkspaceAccess({ access: { bogus: 1 }, readAt: 5 }),
 		).toBeNull();
 	});
 });

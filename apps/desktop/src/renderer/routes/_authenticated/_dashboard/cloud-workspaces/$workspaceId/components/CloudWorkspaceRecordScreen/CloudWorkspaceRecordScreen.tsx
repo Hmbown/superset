@@ -68,7 +68,10 @@ export function CloudWorkspaceRecordScreen({
 	const hasOrg = organizationId !== null;
 
 	const record = cloudTrpc.cloudWorkspace.get.useQuery({ id: workspaceId });
-	const presence = useCloudWorkspacePresence(workspaceId, { observe: true });
+	const presence = useCloudWorkspacePresence(workspaceId, {
+		organizationId: record.data?.organizationId,
+		observe: true,
+	});
 	const activity = cloudTrpc.cloudWorkspace.activity.useQuery({
 		id: workspaceId,
 	});

@@ -1,6 +1,11 @@
 import { describe, expect, it } from "bun:test";
 import type { WorkspaceAccess } from "@superset/shared/workspace-access";
-import { ACCESS_RETRY_MS, ACCESS_TTL_MS, admission } from "./admission";
+import {
+	ACCESS_RETRY_MS,
+	ACCESS_TTL_MS,
+	admission,
+	supersedes,
+} from "./admission";
 
 const access: WorkspaceAccess = {
 	organizationId: "org",
@@ -42,5 +47,14 @@ describe("admission", () => {
 		expect(admission({ access: null, readAt: now - 1 }, owner, now)).toEqual({
 			kind: "refuse",
 		});
+	});
+});
+
+describe("supersedes", () => {
+	it("keeps the newer read, so a slow lookup cannot undo a revoke", () => {
+		const revoked = { access: null, readAt: 20 };
+		expect(supersedes({ access, readAt: 10 }, revoked)).toBe(false);
+		expect(supersedes({ access, readAt: 30 }, revoked)).toBe(true);
+		expect(supersedes({ access, readAt: 10 }, undefined)).toBe(true);
 	});
 });

@@ -1,5 +1,6 @@
 import {
 	canOpenWorkspace,
+	type VersionedWorkspaceAccess,
 	type WorkspaceAccess,
 	type WorkspaceActor,
 } from "@superset/shared/workspace-access";
@@ -9,9 +10,14 @@ export const ACCESS_TTL_MS = 60 * 60_000;
 /** After a refusal, access is read again at most this often, so a new share works at once. */
 export const ACCESS_RETRY_MS = 60_000;
 
-export interface StoredAccess {
-	access: WorkspaceAccess | null;
-	readAt: number;
+export type StoredAccess = VersionedWorkspaceAccess;
+
+/** A slow lookup or a late push never undoes a change the hub already holds. */
+export function supersedes(
+	incoming: StoredAccess,
+	current: StoredAccess | undefined,
+): boolean {
+	return !current || incoming.readAt >= current.readAt;
 }
 
 export type Admission =

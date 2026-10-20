@@ -2,13 +2,13 @@ import { MAX_PRESENCE_VISITORS } from "@superset/shared/page-presence";
 import { PresenceVisits } from "@superset/shared/presence-visits";
 import {
 	canOpenWorkspace,
-	parseWorkspaceAccess,
-	type WorkspaceAccess,
+	parseVersionedWorkspaceAccess,
+	type VersionedWorkspaceAccess,
 	type WorkspaceActor,
 } from "@superset/shared/workspace-access";
 import { type Connection, type ConnectionContext, Server } from "partyserver";
 import type { RealtimeEnv } from "./types";
-import { admission, type StoredAccess } from "./utils/admission";
+import { admission, type StoredAccess, supersedes } from "./utils/admission";
 import {
 	broadcastPresence,
 	SWEEP_MS,
@@ -85,7 +85,9 @@ export class WorkspaceHub extends Server<RealtimeEnv> {
 			userId: claims.userId,
 			name: claims.name,
 			image: typeof claims.image === "string" ? claims.image : null,
-			organizationIds: claims.organizationIds,
+			organizationIds: claims.organizationIds.filter(
+				(id) => id === this.organizationId,
+			),
 			teamIds: claims.teamIds,
 			observer: claims.observer === true,
 			connectedAt: Date.now(),
@@ -114,8 +116,9 @@ export class WorkspaceHub extends Server<RealtimeEnv> {
 	}
 
 	/** Called by the API when the workspace is created or its visibility or sharing changes. */
-	async accessChanged(access: WorkspaceAccess | null): Promise<void> {
-		await this.storeAccess(access);
+	async accessChanged(versioned: VersionedWorkspaceAccess): Promise<void> {
+		if (!(await this.storeAccess(versioned))) return;
+		const { access } = versioned;
 		let removed = false;
 		for (const connection of this.getConnections<Viewer>()) {
 			const viewer = connection.state;
@@ -140,14 +143,13 @@ export class WorkspaceHub extends Server<RealtimeEnv> {
 			return true;
 		}
 		if (decision.kind === "refuse") return false;
-		let access: WorkspaceAccess | null;
 		try {
-			access = await this.fetchAccess();
+			await this.storeAccess(await this.fetchAccess());
 		} catch (error) {
 			if (stored) return false;
 			throw error;
 		}
-		await this.storeAccess(access);
+		const access = this.access?.access ?? null;
 		return access !== null && canOpenWorkspace(access, viewer);
 	}
 
@@ -162,12 +164,18 @@ export class WorkspaceHub extends Server<RealtimeEnv> {
 		return this.access;
 	}
 
-	private async storeAccess(access: WorkspaceAccess | null): Promise<void> {
-		this.access = { access, readAt: Date.now() };
-		await this.ctx.storage.put("access", this.access);
+	private async storeAccess(versioned: StoredAccess): Promise<boolean> {
+		if (!supersedes(versioned, await this.readStoredAccess())) return false;
+		this.access = versioned;
+		await this.ctx.storage.put("access", versioned);
+		return true;
 	}
 
-	private async fetchAccess(): Promise<WorkspaceAccess | null> {
+	private get organizationId(): string {
+		return this.name.split(":")[0] ?? "";
+	}
+
+	private async fetchAccess(): Promise<StoredAccess> {
 		const [organizationId, workspaceId] = this.name.split(":");
 		const response = await fetch(
 			`${this.env.NEXT_PUBLIC_API_URL}/api/cloud-workspaces/${workspaceId}/realtime-access`,
@@ -176,10 +184,12 @@ export class WorkspaceHub extends Server<RealtimeEnv> {
 				signal: AbortSignal.timeout(5_000),
 			},
 		);
-		if (response.status === 404) return null;
 		if (!response.ok) throw new Error(`access lookup: ${response.status}`);
-		const access = parseWorkspaceAccess(await response.json());
-		return access?.organizationId === organizationId ? access : null;
+		const versioned = parseVersionedWorkspaceAccess(await response.json());
+		if (!versioned) throw new Error("access lookup: malformed");
+		return versioned.access?.organizationId === organizationId
+			? versioned
+			: { access: null, readAt: versioned.readAt };
 	}
 
 	async onClose(connection: Connection<Viewer>): Promise<void> {

@@ -46,6 +46,23 @@ export function parseWorkspaceAccess(raw: unknown): WorkspaceAccess | null {
 	};
 }
 
+/** Access as the API read it at `readAt`, so a hub can drop anything older than what it holds. */
+export interface VersionedWorkspaceAccess {
+	access: WorkspaceAccess | null;
+	readAt: number;
+}
+
+export function parseVersionedWorkspaceAccess(
+	raw: unknown,
+): VersionedWorkspaceAccess | null {
+	if (typeof raw !== "object" || raw === null) return null;
+	const { access, readAt } = raw as { access?: unknown; readAt?: unknown };
+	if (typeof readAt !== "number" || !Number.isFinite(readAt)) return null;
+	if (access === null) return { access: null, readAt };
+	const parsed = parseWorkspaceAccess(access);
+	return parsed ? { access: parsed, readAt } : null;
+}
+
 export function canOpenWorkspace(
 	access: WorkspaceAccess,
 	actor: WorkspaceActor,

@@ -35,6 +35,11 @@
 			"name": "GUEST_PRESENCE_BY_PAGE",
 			"namespace_id": "4102",
 			"simple": { "limit": 120, "period": 60 }
+		},
+		{
+			"name": "WORKSPACE_PRESENCE_BY_USER",
+			"namespace_id": "4103",
+			"simple": { "limit": 120, "period": 60 }
 		}
 	],
 	"migrations": [

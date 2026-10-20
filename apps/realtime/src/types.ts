@@ -14,4 +14,5 @@ export interface RealtimeEnv {
 	PRIVATE: R2Bucket;
 	GUEST_PRESENCE_BY_IP: RateLimit;
 	GUEST_PRESENCE_BY_PAGE: RateLimit;
+	WORKSPACE_PRESENCE_BY_USER: RateLimit;
 }

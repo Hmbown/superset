@@ -1,1 +1,6 @@
-export { type Admission, admission, type StoredAccess } from "./admission";
+export {
+	type Admission,
+	admission,
+	type StoredAccess,
+	supersedes,
+} from "./admission";

@@ -47,6 +47,7 @@ export function pushWorkspaceAccess(
 	organizationId: string,
 	workspaceId: string,
 ): void {
+	const readAt = Date.now();
 	waitUntil(
 		loadWorkspaceAccess(workspaceId)
 			.then((access) =>
@@ -58,7 +59,7 @@ export function pushWorkspaceAccess(
 							authorization: `Bearer ${env.REALTIME_NUDGE_SECRET}`,
 							"content-type": "application/json",
 						},
-						body: JSON.stringify({ access }),
+						body: JSON.stringify({ access, readAt }),
 						signal: AbortSignal.timeout(5_000),
 					},
 				),

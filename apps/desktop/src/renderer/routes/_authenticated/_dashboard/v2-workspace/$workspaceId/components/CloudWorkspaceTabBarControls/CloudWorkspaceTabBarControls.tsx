@@ -21,9 +21,12 @@ export function CloudWorkspaceTabBarControls({
 	const { data: session } = authClient.useSession();
 	const { workspaces } = useCloudWorkspaces();
 	const setVisibility = useSetCloudWorkspaceVisibility();
-	const presence = useCloudWorkspacePresence(workspaceId, { observe: false });
-
 	const workspace = workspaces?.find((row) => row.id === workspaceId);
+	const presence = useCloudWorkspacePresence(workspaceId, {
+		organizationId: workspace?.organizationId,
+		observe: false,
+	});
+
 	if (!workspace) return null;
 	return (
 		<div className="flex items-center gap-1">
