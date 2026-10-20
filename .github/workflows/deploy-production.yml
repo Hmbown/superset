@@ -423,8 +423,9 @@ jobs:
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: apps/marketing/.next/cache
-          key: next-marketing-${{ github.sha }}
-          restore-keys: next-marketing-
+          # No restore-keys: a Turbopack cache from another commit served a stale
+          # globals.css to production
+          key: next-marketing-v2-${{ github.sha }}
 
       - name: Build and Deploy Marketing
         env:
