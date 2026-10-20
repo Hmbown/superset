@@ -305,7 +305,15 @@ export function SessionView({
 					? composerAnswer(question, content)
 					: null;
 			if (question && answer) {
-				return respondToApproval(question.id, answer);
+				return respondToApproval(question.id, answer).catch(() => {
+					composerRef.current?.appendText(contentText(content));
+					composerRef.current?.focus();
+					toast.error(
+						t({
+							message: "Couldn't send your message. It's back in the composer.",
+						}),
+					);
+				});
 			}
 			for (const approval of pending) {
 				void respondToApproval(approval.id, { type: "cancel" });
@@ -325,6 +333,7 @@ export function SessionView({
 			respondToApproval,
 			sendPrompt,
 			runningTurnId,
+			t,
 		],
 	);
 	const awaitingBackground = sessionState?.awaitingBackground === true;
