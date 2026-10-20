@@ -41,7 +41,7 @@ Click **Automations → New automation** and fill in:
 
 ## Triggers
 
-Triggers decide when an automation runs. They live in the **Triggers** card on the automation's detail page: **Add Trigger** opens a searchable menu of providers and events, and each trigger reads as a sentence you fill in, like "Review requested from **Me** in **acme/web**". One automation can have up to 25 triggers and can mix events and schedules. Edits are drafts until you press **Save**.
+Triggers decide when an automation runs. They live in the **Triggers** card on the automation's detail page: **Add Trigger** opens a searchable menu of providers and events, and each trigger reads as a sentence you fill in, like "Review requested from **Me** in **acme/web** by **Anyone**". One automation can have up to 25 triggers and can mix events and schedules. Edits are drafts until you press **Save**.
 
 ### Event triggers
 
@@ -50,15 +50,17 @@ An event trigger starts a run when the event comes in, without waiting for a sch
 | Provider | Events | Scope and filters |
 | --- | --- | --- |
 | GitHub | Pull request opened, pushed, merged, closed, review requested, or assigned; draft opened; comment added; PR review comment; PR review submitted; review thread resolved or unresolved; issue comment; label change; checks completed; workflow run completed; new push to branch; release published, created, edited, unpublished, or deleted | One repository (required), branches, labels, comment text, and people (Anyone, Me, or specific people) |
-| Slack | Message in channel, reaction added, channel created | Channels (required), message text, emoji |
+| Slack | Message in channel, reaction added, channel created | Channels (required, except for channel created), message text or new channel name, emoji (required for reaction added), people |
 | Linear | Issue created, status changed, or assigned; cycle ended | Teams (required), projects, labels, status, assignee |
 | Sentry | Issue created, resolved, assigned, archived, or unresolved; any issue event | Projects (required), level (Fatal, Error, Warning, Info, Debug) |
 | Notion | Rows changed, comment added, comment mentions user | Data sources (required), pages, people |
-| Microsoft Teams | Message in channel, channel created | Team and channels (required), message or channel name text |
+| Microsoft Teams | Message in channel, channel created | Team (required), channels (required for message in channel), message or channel name text, people |
 
-Text filters are plain "contains" matches, not regular expressions. Pull requests from forks never trigger a run.
+Text filters are plain, case-insensitive "contains" matches against the first 4,096 characters, not regular expressions. Thread replies in Slack don't count as a message in channel.
 
-If the provider isn't connected, the trigger shows **Requires connection** with a **Connect** button; an expired connection shows **Reconnect**. A few providers need one extra step:
+GitHub triggers skip pull request events from forks (opened, pushed, reviews, review comments, threads), and a run never checks out a fork's branch. A top-level comment on a fork's pull request can still fire **Comment added**, and checks and workflow runs from fork pull requests still fire.
+
+If the provider isn't connected, the trigger shows **Requires connection** with a **Connect** button; an expired connection shows **Connection expired** with a **Reconnect** button. A few providers need one extra step:
 
 - **Slack**: the Superset bot joins the public channels you pick when you save. For a private channel, invite **@Superset** to it first.
 - **Notion**: share the pages and data sources the automation should watch with the Superset integration.
@@ -70,7 +72,7 @@ If the provider isn't connected, the trigger shows **Requires connection** with 
 A webhook trigger runs the automation whenever something sends a POST to its URL, so any service that can call a URL can start a run.
 
 1. Add a **Webhook triggered** trigger and save.
-2. Click the key chip, then **Generate token**, and copy the URL. The token starts with `sset_wh_` and is shown once. **Regenerate token** replaces it, and the old token stops working immediately.
+2. Click **Generate token**, then **Copy URL with token** (or **Copy auth header**). The token starts with `sset_wh_` and is shown once. **Regenerate token** asks you to confirm, then replaces it, and the old token stops working immediately.
 3. Send a JSON body to the URL, with the token as a bearer header or as a `?token=` query parameter:
 
 ```bash
@@ -80,15 +82,22 @@ curl -X POST "https://api.superset.sh/api/automations/webhook/<automationId>" \
   -d '{"service": "checkout", "status": "failed"}'
 ```
 
-The body must be a JSON object or array of at most 1 MiB; an empty body counts as `{}`. Each token can make 300 requests per minute. Responses: `200` when the run was dispatched, `400` if the automation is paused or the body isn't JSON, `401` for a missing or invalid token, `413` for a body that's too large, `429` past the rate limit. Every request is a new event: webhook triggers have no filters and no de-duplication.
+The body must be a JSON object or array of at most 1 MiB; an empty body counts as `{}`. Each token can make 300 requests per minute. Responses: `200` when the delivery is accepted (the reply's `runs` field says how many runs it started; `0` means none did, for example on a plan without automations), `400` if the automation is paused or the body isn't JSON, `401` for a missing or invalid token, `413` for a body that's too large, `429` past the rate limit. Every request is a new event: webhook triggers have no filters and no de-duplication.
 
 ### What the agent receives
 
-The agent gets your prompt with the event that started the run in front of it: the provider, the event type, its title, URL, and who did it, plus the event payload (capped at 24,000 characters). For a webhook it's the JSON body you sent. So a prompt like "Review this pull request and leave comments" knows which pull request to look at. When a pull request event runs in a project linked to that repository, the run's workspace checks out the pull request's branch.
+The agent gets your prompt with the event that started the run in front of it: the provider, the event type, its title, URL, and who did it, plus the event payload (capped at 24,000 characters). For a webhook it's the JSON body you sent. So a prompt like "Review this pull request and leave comments" knows which pull request to look at. When a pull request event runs in a project linked to that repository, the run's workspace checks out the pull request's branch, and reuses that pull request's workspace if one exists. If the device can't fetch the pull request, the run starts on a fresh branch.
+
+### Guides
+
+- [Review PRs the moment you're asked](/recipes/review-requested-prs): GitHub **Review requested**
+- [Triage new Sentry issues](/recipes/sentry-triage): Sentry **Issue created**
+- [Turn Slack bug reports into fixes](/recipes/slack-bug-reports): Slack **Message in channel**
+- [Start a run from any service](/recipes/webhook-runs): **Webhook triggered**
 
 ### Schedules
 
-Schedules are stored as [RFC 5545 RRules](https://datatracker.ietf.org/doc/html/rfc5545#section-3.8.5). The picker has presets for common cadences (Hourly, Daily, Weekdays, Weekly); use **Custom** for anything else. Times use your timezone at creation, and each schedule shows its next run inline. Custom rules are validated inline: invalid rules, rules with no upcoming runs, and one-shot rules (`COUNT`/`UNTIL`) are rejected before saving.
+Schedules are stored as [RFC 5545 RRules](https://datatracker.ietf.org/doc/html/rfc5545#section-3.8.5). The picker has presets for Hourly, Daily, and Weekly. **Custom** opens with a weekdays rule you can edit, for anything else. Times use your timezone at creation, and each schedule shows its next run inline. Custom rules are validated inline: invalid rules, rules with no upcoming runs, and one-shot rules (`COUNT`/`UNTIL`) are rejected before saving.
 
 Examples:
 
