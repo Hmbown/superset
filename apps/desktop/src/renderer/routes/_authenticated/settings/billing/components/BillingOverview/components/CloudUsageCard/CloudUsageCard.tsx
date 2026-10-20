@@ -49,7 +49,9 @@ export function CloudUsageCard() {
 						</span>
 					)}
 				</div>
-				{included !== null && <Progress value={percentUsed} />}
+				{usage.includedGbMinutes !== null && usage.includedGbMinutes > 0 && (
+					<Progress value={percentUsed} />
+				)}
 				{overage && (
 					<div className="text-xs text-warning tabular-nums">
 						<Trans>Overage: {overage} box hours</Trans>

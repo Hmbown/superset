@@ -8,6 +8,7 @@ import { getAutumnCustomer } from "./customer";
 const MEMORY_TTL_MS = 10_000;
 const SHARED_TTL_SECONDS = 60;
 const LAST_KNOWN_TTL_SECONDS = 24 * 60 * 60;
+const AUTUMN_READ_TIMEOUT_MS = 2_000;
 
 const FREE: OrganizationBilling = {
 	tier: "free",
@@ -64,7 +65,9 @@ async function fetchBilling(
 ): Promise<OrganizationBilling> {
 	try {
 		return billingFromCustomer(
-			await getAutumnCustomer(organizationId),
+			await getAutumnCustomer(organizationId, {
+				timeoutMs: AUTUMN_READ_TIMEOUT_MS,
+			}),
 			Date.now(),
 		);
 	} catch (error) {
@@ -107,7 +110,12 @@ export async function organizationBilling(
 			`[billing/plan-state] Autumn unavailable for ${organizationId}; serving ${lastKnown ? "last known" : "fail-open"} state`,
 			error,
 		);
-		return lastKnown ?? FAIL_OPEN;
+		const fallback = lastKnown ?? FAIL_OPEN;
+		memory.set(organizationId, {
+			value: fallback,
+			expiresAt: Date.now() + MEMORY_TTL_MS,
+		});
+		return fallback;
 	}
 }
 
