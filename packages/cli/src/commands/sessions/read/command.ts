@@ -92,9 +92,13 @@ function formatReadMessage(sessionId: string, page: SessionPageResult): string {
 	const lines = page.envelopes
 		.map(formatEnvelope)
 		.filter((line): line is string => Boolean(line));
-	return lines.length > 0
-		? lines.join("\n")
-		: `${page.envelopes.length} event(s) in session ${sessionId}`;
+	const body =
+		lines.length > 0
+			? lines.join("\n")
+			: `${page.envelopes.length} event(s) in session ${sessionId}`;
+	return page.nextBefore
+		? `${body}\n\nOlder events: --before '${JSON.stringify(page.nextBefore)}'`
+		: body;
 }
 
 export default command({

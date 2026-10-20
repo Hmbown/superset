@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { acpHarnessForPreset } from "@superset/chat/core";
+import type { DiscoverSessionsResult } from "@superset/chat/protocol";
 import { formatCompactRelativeTime } from "@superset/i18n/format";
 import type { RendererContext, WorkspaceStore } from "@superset/panes";
 import { Button } from "@superset/ui/button";
@@ -9,6 +10,7 @@ import { useWorkspaceClient } from "@superset/workspace-client";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { Check, History, LoaderCircle } from "lucide-react";
 import { useState } from "react";
+import { isMissingProcedureError } from "renderer/lib/isMissingProcedureError";
 import type {
 	ChatPaneData,
 	PaneViewerData,
@@ -45,11 +47,16 @@ export function ChatHistoryPicker({
 	const native = useInfiniteQuery({
 		queryKey: ["chat-v3", hostUrl, "discoverSessions", workspaceId, harness],
 		queryFn: ({ pageParam }) =>
-			transport.discoverSessions({
-				workspaceId,
-				harness: harness ?? "",
-				...(pageParam ? { cursor: pageParam } : {}),
-			}),
+			transport
+				.discoverSessions({
+					workspaceId,
+					harness: harness ?? "",
+					...(pageParam ? { cursor: pageParam } : {}),
+				})
+				.catch((error: unknown): DiscoverSessionsResult => {
+					if (!isMissingProcedureError(error)) throw error;
+					return { supported: false, sessions: [] };
+				}),
 		initialPageParam: undefined as string | undefined,
 		getNextPageParam: (page) => page.nextCursor,
 		enabled: open && !!harness,

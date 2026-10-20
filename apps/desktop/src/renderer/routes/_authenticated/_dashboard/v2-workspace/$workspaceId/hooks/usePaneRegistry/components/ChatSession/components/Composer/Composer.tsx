@@ -335,6 +335,16 @@ export const Composer = memo(function Composer({
 			)
 				return;
 			const name = LEADING_COMMAND.exec(text.trim())?.[1];
+			const input = promptInputRef.current;
+			if (text.trim() === "/mcp" && mcpPicker.command && input) {
+				mcpPicker.open.current({
+					insertChip: input.insertChip,
+					attachFiles: input.openFileDialog,
+					openPanel: input.openPanel,
+					query: "",
+				});
+				return;
+			}
 			if (
 				name &&
 				availableCommands.length > 0 &&
@@ -345,7 +355,7 @@ export const Composer = memo(function Composer({
 			}
 			return send(text, files, mentions, pastedTexts, steer);
 		},
-		[availableCommands, disabled, send, t],
+		[availableCommands, disabled, send, t, mcpPicker],
 	);
 
 	const queueListRef = useRef<HTMLUListElement>(null);

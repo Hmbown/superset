@@ -255,6 +255,9 @@ export function ComposerBody({
 				});
 				editor.focus();
 			},
+			insertChip(chip: ComposerChip) {
+				editor.update(() => $insertChipAtSelection(chip));
+			},
 			openFileDialog() {
 				fileInputRef.current?.click();
 			},

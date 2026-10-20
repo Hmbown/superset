@@ -122,6 +122,7 @@ export type PromptInputDictation = {
 
 export type PromptInputHandle = {
 	appendText(text: string): void;
+	insertChip(chip: ComposerChip): void;
 	openFileDialog(): void;
 	openPanel(panel: ComposerPanelContent): void;
 	focus(): void;

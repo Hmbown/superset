@@ -8,7 +8,14 @@ import type {
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useNavigate } from "@tanstack/react-router";
 import { ServerIcon } from "lucide-react";
-import { type ReactNode, useCallback, useMemo, useRef, useState } from "react";
+import {
+	type ReactNode,
+	type RefObject,
+	useCallback,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { useIsDarkTheme } from "renderer/assets/app-icons/preset-icons";
 import { ConnectConnectorDialog } from "renderer/components/ConnectorSection";
 import { PluginIcon } from "renderer/components/PluginIcon";
@@ -31,6 +38,7 @@ type McpServerPickerControls = {
 	findChips: (text: string) => ComposerChipMatch[];
 	serverNameOf: (chip: ComposerChip) => string | null;
 	dialog: ReactNode;
+	open: RefObject<(ctx: ComposerActionContext) => void>;
 };
 
 export function useMcpServerPicker({
@@ -200,5 +208,5 @@ export function useMcpServerPicker({
 		[cached, presetId],
 	);
 
-	return { command, findChips, serverNameOf, dialog };
+	return { command, findChips, serverNameOf, dialog, open: openRef };
 }
