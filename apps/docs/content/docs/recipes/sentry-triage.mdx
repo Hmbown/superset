@@ -4,12 +4,12 @@ description: An agent reproduces each new Sentry error and opens a draft pull re
 ---
 
 <Callout type="info" title="Use when">
-	new errors land in Sentry faster than anyone looks at them, and most of them are small bugs with a clear stack trace.
+	Sentry gets more new errors than your team has time to look at, and most of them are small bugs with a clear stack trace.
 </Callout>
 
 ## The Idea
 
-A Sentry **Issue created** trigger starts a run for each new issue. The agent gets the issue's title, link, and event payload in its prompt, finds the code in the stack trace, reproduces the bug in a test, and opens a draft pull request. You review a fix instead of a stack trace.
+A Sentry **Issue created** trigger starts a run for each new issue. The agent gets the issue's title, link, and event payload in its prompt, finds the code in the stack trace, reproduces the bug in a test, and opens a draft pull request.
 
 ## Steps
 
@@ -32,9 +32,9 @@ If a pull request for this Sentry issue already exists, stop.
 
 ## Tips
 
-- **Reproduce first**: a failing test is what makes an unattended fix reviewable. Without one, a "fix" is a guess.
+- **Reproduce first**: a failing test shows that the fix works. Without one, you cannot tell.
 - **Draft only**: `--draft` keeps CI and reviewers out until you have looked at it.
-- **Idempotent**: delivery is at-least-once, so the "already exists" check keeps a rare second dispatch harmless.
+- **Duplicates**: the same event can be delivered twice. The "already exists" check stops the second run.
 
 ## Variations
 

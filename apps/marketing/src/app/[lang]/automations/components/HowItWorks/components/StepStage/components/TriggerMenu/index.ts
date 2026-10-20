@@ -1,1 +1,0 @@
-export { TriggerMenu } from "./TriggerMenu";

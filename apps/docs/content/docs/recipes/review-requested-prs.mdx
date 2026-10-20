@@ -1,15 +1,15 @@
 ---
-title: Review PRs the Moment You're Asked
-description: An agent starts a review as soon as someone requests your review on a pull request
+title: Review Pull Requests When Your Review Is Requested
+description: An agent reviews a pull request when someone requests your review
 ---
 
 <Callout type="info" title="Use when">
-	review requests pile up and you want a first pass (bugs, missing tests, risky changes) waiting before you open the pull request.
+	you get many review requests and want the agent to check each pull request for bugs, missing tests, and risky changes before you read it.
 </Callout>
 
 ## The Idea
 
-A GitHub **Review requested** trigger starts a run when someone asks you to review a pull request. The agent gets the pull request in its prompt, and the run's workspace checks out its branch, so it reads the real code instead of a diff in a browser tab.
+A GitHub **Review requested** trigger starts a run when someone asks you to review a pull request. The agent gets the pull request in its prompt, and the run's workspace checks out its branch, so it can read and run the code.
 
 ## Steps
 

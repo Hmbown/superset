@@ -11,9 +11,6 @@ export interface TriggerSource {
 	id: string;
 	name: string | MessageDescriptor;
 	icon: { image: string } | { glyph: IconType | typeof Clock; color?: string };
-	// Event names as they read in the app's Add Trigger menu.
-	events: MessageDescriptor[];
-	note?: MessageDescriptor;
 }
 
 export const TRIGGER_SOURCES: TriggerSource[] = [
@@ -21,76 +18,40 @@ export const TRIGGER_SOURCES: TriggerSource[] = [
 		id: "github",
 		name: "GitHub",
 		icon: { glyph: FaGithub },
-		events: [
-			msg({ message: "Review requested" }),
-			msg({ message: "Checks completed" }),
-			msg({ message: "New push to branch" }),
-			msg({ message: "Release published" }),
-		],
 	},
 	{
 		id: "slack",
 		name: "Slack",
 		icon: { image: "/plugins/slack-icon.svg" },
-		events: [
-			msg({ message: "Message in channel" }),
-			msg({ message: "Reaction added" }),
-			msg({ message: "Channel created" }),
-		],
 	},
 	{
 		id: "linear",
 		name: "Linear",
 		icon: { glyph: SiLinear, color: "#5E6AD2" },
-		events: [
-			msg({ message: "Issue created" }),
-			msg({ message: "Issue moved" }),
-			msg({ message: "Issue assigned" }),
-		],
 	},
 	{
 		id: "sentry",
 		name: "Sentry",
 		icon: { glyph: SiSentry, color: "#7553FF" },
-		events: [
-			msg({ message: "Issue created" }),
-			msg({ message: "Issue resolved" }),
-			msg({ message: "Issue assigned" }),
-		],
 	},
 	{
 		id: "notion",
 		name: "Notion",
 		icon: { glyph: SiNotion },
-		events: [
-			msg({ message: "Rows changed" }),
-			msg({ message: "Comment added" }),
-			msg({ message: "Comment mentions you" }),
-		],
 	},
 	{
 		id: "teams",
 		name: "Microsoft Teams",
 		icon: { glyph: BsMicrosoftTeams, color: "#5059C9" },
-		events: [
-			msg({ message: "Message in channel" }),
-			msg({ message: "Channel created" }),
-		],
-		note: msg({ message: "Enterprise plan" }),
 	},
 	{
 		id: "webhook",
 		name: "Webhook",
 		icon: { glyph: LuWebhook },
-		events: [msg({ message: "A POST to the automation's URL" })],
 	},
 	{
 		id: "schedule",
 		name: msg({ message: "Schedule" }),
 		icon: { glyph: Clock },
-		events: [
-			msg({ message: "Hourly, daily, or weekly" }),
-			msg({ message: "Any custom RRule" }),
-		],
 	},
 ];
