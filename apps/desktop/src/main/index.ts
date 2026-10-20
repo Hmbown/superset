@@ -60,7 +60,6 @@ import { localDb } from "./lib/local-db";
 import { requestLocalNetworkAccess } from "./lib/local-network-permission";
 import { menuEmitter } from "./lib/menu-events";
 import { allowRendererToReachDeviceHub } from "./lib/mobile-hub-origin";
-import { navigationDeepLinkPath } from "./lib/navigation-deep-link/navigation-deep-link";
 
 import { syncInstalledPluginMcpServers } from "./lib/plugin-installs";
 import { portForwardManager } from "./lib/port-forward";
@@ -174,8 +173,7 @@ async function processDeepLink(url: string): Promise<void> {
 
 	// Non-auth deep links: extract path and navigate in renderer
 	// e.g. superset://tasks/my-slug -> /tasks/my-slug
-	const path = navigationDeepLinkPath(url);
-	if (!path) return;
+	const path = `/${url.slice(url.indexOf("://") + 3)}`;
 	focusMainWindow();
 
 	const target = getFocusedOrLastWindow();
