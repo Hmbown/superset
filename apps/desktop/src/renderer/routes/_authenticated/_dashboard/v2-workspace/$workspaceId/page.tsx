@@ -675,7 +675,6 @@ function V2WorkspaceContent() {
 			linkedStores={linkedPaneStores}
 			isLayoutReady={isLayoutReady && isRightLayoutReady}
 			onOpenPage={openPagePane}
-			onOpenSubagent={openSubagentPane}
 			onCreateNewAgentSession={createNewAgentSession}
 			onFocusAgentTerminal={focusAgentTerminal}
 			changes={
