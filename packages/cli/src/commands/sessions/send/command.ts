@@ -6,7 +6,8 @@ import {
 } from "../../../lib/sessions";
 
 export default command({
-	description: "Send a follow-up prompt to a chat session",
+	description:
+		"Send a follow-up prompt to a chat session, resuming it first if it is stopped",
 	options: {
 		...sessionWorkspaceOptions,
 		session: string().required().desc("Chat session ID"),
@@ -22,17 +23,25 @@ export default command({
 
 		const { sessions } = await resolveSessionWorkspace(ctx, options);
 
-		const result = await sessions.send.mutate({
+		const resumed = await sessions.resume.mutate({
 			workspaceId: options.workspace,
 			sessionId: options.session,
+		});
+		const result = await sessions.send.mutate({
+			workspaceId: options.workspace,
+			sessionId: resumed.sessionId,
 			prompt: options.prompt,
 		});
+		const resumedNote =
+			resumed.sessionId === options.session
+				? ""
+				: ` (resumed ${options.session} as ${resumed.sessionId})`;
 
 		return {
-			data: result,
+			data: { ...result, sessionId: resumed.sessionId },
 			message: result.queued
-				? `Queued prompt ${result.itemId} for session ${options.session}`
-				: `Sent prompt ${result.itemId} to session ${options.session}`,
+				? `Queued prompt ${result.itemId} for session ${resumed.sessionId}${resumedNote}`
+				: `Sent prompt ${result.itemId} to session ${resumed.sessionId}${resumedNote}`,
 		};
 	},
 });

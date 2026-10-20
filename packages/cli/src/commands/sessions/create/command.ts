@@ -1,4 +1,4 @@
-import { CLIError, string } from "@superset/cli-framework";
+import { string } from "@superset/cli-framework";
 import { command } from "../../../lib/command";
 import {
 	resolveSessionWorkspace,
@@ -22,12 +22,6 @@ export default command({
 		mode: string().desc(
 			"Launch mode for this chat session (agent-specific; omit to use the agent default)",
 		),
-		resumeSession: string().desc(
-			"Native harness session ID of a previous run to restore into a new chat session",
-		),
-		continueSession: string().desc(
-			"Try to continue this live chat; otherwise start a new chat",
-		),
 		attachmentId: string()
 			.variadic()
 			.desc("Pre-uploaded attachment UUID; pass --attachment-id repeatedly"),
@@ -38,13 +32,6 @@ export default command({
 			),
 	},
 	run: async ({ ctx, options }) => {
-		if (options.resumeSession && options.continueSession) {
-			throw new CLIError(
-				"Choose one session operation",
-				"Pass either --resume-session or --continue-session, not both",
-			);
-		}
-
 		const { target, sessions } = await resolveSessionWorkspace(ctx, options);
 
 		const uploadedIds = options.attachment
@@ -58,17 +45,12 @@ export default command({
 			prompt: options.prompt,
 			model: options.model,
 			mode: options.mode,
-			resumeSessionId: options.resumeSession,
-			continueSessionId: options.continueSession,
 			attachmentIds: attachmentIds.length > 0 ? attachmentIds : undefined,
 		});
 
 		return {
 			data: result,
-			message:
-				options.continueSession && result.sessionId !== options.continueSession
-					? `Previous chat could not be continued. Started a new ${result.label} chat session ${result.sessionId} in workspace ${options.workspace}`
-					: `Started ${result.label} chat session ${result.sessionId} in workspace ${options.workspace}`,
+			message: `Started ${result.label} chat session ${result.sessionId} in workspace ${options.workspace}`,
 		};
 	},
 });

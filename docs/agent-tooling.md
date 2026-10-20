@@ -131,6 +131,7 @@ superset sessions send --local --workspace WORKSPACE_ID --session CHAT_SESSION_I
 superset sessions open --local --workspace WORKSPACE_ID --session CHAT_SESSION_ID
 superset sessions close --local --workspace WORKSPACE_ID --session CHAT_SESSION_ID
 superset sessions resume --local --workspace WORKSPACE_ID --session CHAT_SESSION_ID
+superset sessions import --local --workspace WORKSPACE_ID --agent claude --native-session PROVIDER_SESSION_ID
 ```
 
 The host resolves the selected agent to an installed ACP harness. It does not check the `acp-chat`
@@ -144,9 +145,11 @@ oldest page.
 
 A chat session ID identifies the host's journal. A provider session ID identifies the conversation
 inside Claude, Codex, or another ACP agent. `sessions resume --session` accepts the former and
-returns the new live chat session ID. `sessions create --resume-session` accepts the latter and
-also requires `--agent`. `sessions list` lists Superset-saved sessions for the workspace; native
-provider discovery remains available in the chat header's history menu.
+returns the live chat session ID, which is a new one when the chat had stopped. `sessions import
+--native-session` accepts the latter, with `--agent`, and adopts that conversation into a new chat.
+`sessions create` always starts a new chat. `sessions send` resumes a stopped chat first and returns
+the session ID the prompt went to. `sessions list` lists Superset-saved sessions for the workspace;
+native provider discovery remains available in the chat header's history menu.
 
 Automations check the owner's `acp-chat` flag in the API, then the host's `sessions.capabilities`. Eligible runs use
 `sessions.create`; unsupported agents retain terminal launches. Hosts without the sessions router

@@ -200,9 +200,9 @@ The desktop app has its own bundling script,
 ## Current Notes And Gaps
 
 - `superset sessions` (`create`, `list`, `read`, `send`, `close`, `resume`,
-  `open`) manages chat-only ACP sessions through the host `sessions.*` router.
-  The host enforces the ACP chat feature flag and supported chat providers with
-  no terminal fallback (`superset agents` and `superset terminals` remain the
+  `import`, `open`) manages chat-only ACP sessions through the host
+  `sessions.*` router. The host accepts only supported chat providers, with no
+  terminal fallback (`superset agents` and `superset terminals` remain the
   terminal-backed namespaces).
 - Required named options are enforced by the parser, but help output does
   not visually mark named options as required. Positional required args are

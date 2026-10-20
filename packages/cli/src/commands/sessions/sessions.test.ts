@@ -40,6 +40,12 @@ withLocalHostService("org-1", {
 		readInput = input;
 		return { ok: true, envelopes: [], nextBefore: null };
 	},
+	"sessions.resume": (input) => ({
+		kind: "chat",
+		sessionId: input.sessionId === SESSION_ID ? SESSION_ID : "chat-resumed",
+		terminalId: "term-1",
+		label: "claude",
+	}),
 	"sessions.send": (input) => {
 		sendInput = input;
 		return { itemId: "item-2", queued: false };
@@ -91,6 +97,15 @@ describe("sessions commands", () => {
 			runCommand(sendSessionCommand, { session: SESSION_ID, prompt: "   " }),
 		).rejects.toThrow(/Missing --prompt/);
 		expect(sendInput).toBeUndefined();
+	});
+
+	test("send resumes a stopped chat and sends to the session it resumed into", async () => {
+		const result = (await runCommand(sendSessionCommand, {
+			session: "chat-stopped",
+			prompt: "Continue",
+		})) as { data: { sessionId: string } };
+		expect(sendInput?.sessionId).toBe("chat-resumed");
+		expect(result.data.sessionId).toBe("chat-resumed");
 	});
 
 	test("open prints the session deep link and rejects an unknown session", async () => {
