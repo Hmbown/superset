@@ -92,25 +92,14 @@ export function transcriptRows(
 			(entry) => entry.kind === "item" && entry.item.kind === "user_message",
 		);
 		let run: Extract<TranscriptRow, { kind: "tool_run" }> | null = null;
-		let thoughts: Item[] = [];
-		const flushThoughts = () => {
-			for (const item of thoughts) {
-				push({ kind: "item", key: transcriptItemKey(item), groupStart, item });
-			}
-			thoughts = [];
-		};
-		for (let index = 0; index < group.entries.length; index++) {
-			const entry = group.entries[index];
-			if (!entry) continue;
+		for (const [index, entry] of group.entries.entries()) {
 			if (index > lastPrompt) placeClock();
 			if (entry.kind === "item") {
 				if (hiddenToolIds.has(entry.item.id)) continue;
-				if (entry.item.kind === "reasoning") {
-					if (run) run.steps.push(entry.item);
-					else thoughts.push(entry.item);
+				if (run && entry.item.kind === "reasoning") {
+					run.steps.push(entry.item);
 					continue;
 				}
-				flushThoughts();
 				run = null;
 				const clientId =
 					entry.item.kind === "user_message"
@@ -156,15 +145,13 @@ export function transcriptRows(
 				key: toolRunKey(group.turnId, entry.items, index),
 				groupStart,
 				items: [...items],
-				steps: [...thoughts, ...items],
+				steps: [...items],
 				defaultCollapsed: !waiting,
 				live: false,
 				...(pages.length > 0 ? { pages } : {}),
 			};
-			thoughts = [];
 			push(run);
 		}
-		flushThoughts();
 		if (run && turn?.status === "running" && rows.at(-1) === run) {
 			run.live = true;
 		}

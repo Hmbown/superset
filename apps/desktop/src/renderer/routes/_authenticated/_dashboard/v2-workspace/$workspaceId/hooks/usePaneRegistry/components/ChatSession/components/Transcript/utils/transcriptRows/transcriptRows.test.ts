@@ -187,7 +187,7 @@ describe("transcriptRows", () => {
 		expect(liveFlags("completed", [run("b1")])).toEqual([false]);
 	});
 
-	test("thinking around tool runs folds into one run, in order", () => {
+	test("thinking after a tool run folds into it, in order", () => {
 		const thought = (id: string) => ({
 			kind: "item" as const,
 			item: {
@@ -224,7 +224,7 @@ describe("transcriptRows", () => {
 						? [row.item.id]
 						: [],
 			),
-		).toEqual(["r1 b1 r2 b2 r3"]);
+		).toEqual(["r1", "b1 r2 b2 r3"]);
 	});
 
 	test("a tool run starts collapsed unless it waits on an approval", () => {
