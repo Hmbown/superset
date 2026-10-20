@@ -77,7 +77,7 @@ METRO_LOG="$STATE_DIR/metro.log"
 METRO_PID_FILE="$STATE_DIR/metro.pid"
 LOAD_ATTEMPTS=3
 BUNDLE_WAIT_SECONDS=90
-SIGN_IN_SCREEN_TRIES=10
+SIGN_IN_SCREEN_SECONDS=30
 
 cd apps/mobile
 
@@ -236,7 +236,8 @@ sign_in_as() {
 	# Settings when signed in, the sign-in screen when not. A freshly loaded app
 	# shows neither for a few seconds.
 	agent_device open "superset://settings" >/dev/null 2>&1 || true
-	for _ in $(seq 1 "$SIGN_IN_SCREEN_TRIES"); do
+	local deadline=$((SECONDS + SIGN_IN_SCREEN_SECONDS))
+	while [ "$SECONDS" -lt "$deadline" ]; do
 		agent_device is visible 'label="Sign in with email (dev)"' >/dev/null 2>&1 && break
 		if agent_device find "Sign out" click >/dev/null 2>&1 ||
 			{ agent_device scroll down >/dev/null 2>&1 && agent_device find "Sign out" click >/dev/null 2>&1; }; then
@@ -245,6 +246,7 @@ sign_in_as() {
 				sign_in_step_failed "$email" "the sign-in screen after logging out"
 			break
 		fi
+		sleep 1
 	done
 	agent_device is visible 'label="Sign in with email (dev)"' >/dev/null 2>&1 ||
 		sign_in_step_failed "$email" "Settings or the sign-in screen, which did not appear"
