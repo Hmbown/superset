@@ -1,9 +1,6 @@
 import type { PresenceVisitor } from "@superset/shared/page-presence";
 import { realtimeWorkspacePresencePath } from "@superset/shared/realtime";
-import {
-	useJoinPagePresence,
-	usePresenceVisitors,
-} from "@superset/ui/page-comments";
+import { useJoinPresence, usePresenceVisitors } from "@superset/ui/presence";
 import { useCallback } from "react";
 import { env } from "renderer/env.renderer";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
@@ -32,8 +29,8 @@ export function useCloudWorkspacePresence(
 		return address.toString();
 	}, [organizationId, workspaceId, observe]);
 
-	useJoinPagePresence({
-		pageId: roomId,
+	useJoinPresence({
+		roomId,
 		url: organizationId ? url : undefined,
 	});
 	return usePresenceVisitors(roomId);
