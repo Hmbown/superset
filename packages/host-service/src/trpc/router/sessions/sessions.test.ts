@@ -133,29 +133,6 @@ describe("sessions router", () => {
 		expect(launches).toHaveLength(1);
 	});
 
-	test("scopes retry command ids to a workspace and conversation", async () => {
-		const commandId = crypto.randomUUID();
-		const first = await caller.create({
-			workspaceId: WORKSPACE,
-			agent: "claude",
-			commandId,
-		});
-		const second = await caller.create({
-			workspaceId: OTHER_WORKSPACE,
-			agent: "claude",
-			commandId,
-		});
-		expect(first.sessionId).not.toBe(second.sessionId);
-		expect(
-			(
-				await caller.get({
-					workspaceId: OTHER_WORKSPACE,
-					sessionId: second.sessionId,
-				})
-			).session.scopeId,
-		).toBe(OTHER_WORKSPACE);
-	});
-
 	test("does not continue or return a dead adapter as a live chat", async () => {
 		startDead = true;
 		const created = await caller.create({

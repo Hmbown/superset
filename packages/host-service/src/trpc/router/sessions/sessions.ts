@@ -5,7 +5,6 @@ import { z } from "zod";
 import { protectedProcedure, router } from "../../index";
 import { chatLaunchTarget } from "../agents/agents";
 import { seedDefaultsIfEmpty } from "../settings/agent-configs";
-import { scopedCommandId } from "./scoped-command-id";
 import {
 	createChatSessionInWorkspace,
 	createChatSessionSchema,
@@ -101,10 +100,7 @@ export const sessionsRouter = router({
 						"This chat session is stopped. Resume it before sending a prompt.",
 				});
 			return chat.commands.prompt({
-				commandId: scopedCommandId(
-					`prompt:${input.sessionId}`,
-					input.commandId,
-				),
+				commandId: input.commandId ?? crypto.randomUUID(),
 				sessionId: input.sessionId,
 				clientId: "superset-sessions",
 				content: [{ type: "text", text: input.prompt }],

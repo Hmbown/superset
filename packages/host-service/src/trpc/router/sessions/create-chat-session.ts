@@ -1,5 +1,4 @@
 import type { ChatRuntime } from "@superset/chat-runtime";
-import { scopedCommandId } from "./scoped-command-id";
 import type {
 	ChatSessionResult,
 	CreateChatSessionInput,
@@ -19,10 +18,7 @@ export function createChatSession(
 ): ChatSessionResult {
 	const commandId = input.commandId ?? crypto.randomUUID();
 	const created = chat.commands.createSession({
-		commandId: scopedCommandId(
-			`create:${input.workspaceId}:${input.agent}:${target.harness}`,
-			commandId,
-		),
+		commandId,
 		scopeId: input.workspaceId,
 		cwd,
 		harness: target.harness,
@@ -44,7 +40,7 @@ export function createChatSession(
 	];
 	if (content.length)
 		chat.commands.prompt({
-			commandId: scopedCommandId(`prompt:${created.sessionId}`, commandId),
+			commandId,
 			sessionId: created.sessionId,
 			clientId: "superset-sessions",
 			content,

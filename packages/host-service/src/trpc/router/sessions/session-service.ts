@@ -10,7 +10,6 @@ import { chatContinuationTarget, chatLaunchTarget } from "../agents/agents";
 import { seedDefaultsIfEmpty } from "../settings/agent-configs";
 import { seedAgentFolderTrust } from "../workspace-creation/shared/seed-agent-trust";
 import { createChatSession } from "./create-chat-session";
-import { scopedCommandId } from "./scoped-command-id";
 
 export const createChatSessionSchema = z
 	.object({
@@ -145,10 +144,7 @@ export async function createChatSessionInWorkspace(
 		) {
 			if (input.prompt.trim())
 				chat.commands.prompt({
-					commandId: scopedCommandId(
-						`prompt:${input.continueSessionId}`,
-						commandId,
-					),
+					commandId,
 					sessionId: input.continueSessionId,
 					clientId: "superset-sessions",
 					content: [{ type: "text", text: input.prompt }],
