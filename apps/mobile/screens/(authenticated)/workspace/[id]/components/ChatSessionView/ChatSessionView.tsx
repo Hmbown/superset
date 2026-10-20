@@ -50,7 +50,7 @@ import {
 } from "../../utils/pullRequest";
 import { ChatRowView } from "../ChatRowView";
 import { Diffstat } from "../Diffstat";
-import { DockChip } from "./components/DockChip";
+import { DOCK_CHIP_HEIGHT, DockChip } from "./components/DockChip";
 import { ScrollToBottom } from "./components/ScrollToBottom";
 import { StickToBottom } from "./components/StickToBottom";
 import { useTapHandlers } from "./hooks/useTapHandlers";
@@ -460,7 +460,11 @@ export const ChatSessionView = forwardRef<
 				pointerEvents="box-none"
 			>
 				{pullRequestChip || queued.length > 0 ? (
-					<View className="flex-row gap-2" pointerEvents="box-none">
+					<View
+						className="flex-row flex-wrap gap-2"
+						pointerEvents="box-none"
+						style={{ paddingRight: DOCK_CHIP_HEIGHT + 8 }}
+					>
 						{pullRequestChip && onOpenPullRequests ? (
 							<DockChip
 								icon={PULL_REQUEST_STATUS[pullRequestChip.status].icon}
