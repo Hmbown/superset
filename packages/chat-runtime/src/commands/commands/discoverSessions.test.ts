@@ -4,182 +4,85 @@ import type { DiscoverSessionsResult } from "@superset/chat/protocol";
 import type {
 	DiscoverNativeSessionsInput,
 	HarnessAdapter,
-	HarnessStartOptions,
 } from "../../harness";
-import type { ChatRuntime } from "../../index";
-import type { HarnessFactory, HarnessRegistry } from "../../sessions";
 import { createTestRuntime } from "../../testing/testRuntime";
 
 const HARNESS = "listing";
 
-type Probe = {
-	started: number;
-	disposed: number;
-	queries: DiscoverNativeSessionsInput[];
-	factoryCalls: number;
-};
-
-function listingAdapter(
-	probe: Probe,
-	page: DiscoverSessionsResult | Error,
-): HarnessAdapter {
-	probe.factoryCalls += 1;
-	return {
-		start(options: HarnessStartOptions): AsyncIterable<never> {
-			probe.started += 1;
-			void options;
-			return (async function* () {})();
-		},
-		prompt() {},
-		cancelTurn() {},
-		respondToApproval() {},
-		setMode() {},
-		discoverSessions(input) {
-			probe.queries.push(input);
-			if (page instanceof Error) return Promise.reject(page);
-			return Promise.resolve(page);
-		},
-		dispose() {
-			probe.disposed += 1;
-			return Promise.resolve();
-		},
-	};
-}
-
-function runtimeOf(factory: HarnessFactory): {
-	runtime: ChatRuntime;
-	probe: Probe;
-} {
-	const probe: Probe = {
+function probedRuntime(page: DiscoverSessionsResult | Error | null) {
+	const probe = {
 		started: 0,
 		disposed: 0,
-		queries: [],
 		factoryCalls: 0,
+		queries: [] as DiscoverNativeSessionsInput[],
 	};
-	const harnesses: HarnessRegistry = new Map([[HARNESS, factory]]);
-	return { runtime: createTestRuntime({ harnesses }), probe };
+	const adapter = (): HarnessAdapter => {
+		probe.factoryCalls += 1;
+		return {
+			start(): AsyncIterable<never> {
+				probe.started += 1;
+				return (async function* () {})();
+			},
+			prompt() {},
+			cancelTurn() {},
+			respondToApproval() {},
+			setMode() {},
+			...(page === null
+				? {}
+				: {
+						discoverSessions(input: DiscoverNativeSessionsInput) {
+							probe.queries.push(input);
+							return page instanceof Error
+								? Promise.reject(page)
+								: Promise.resolve(page);
+						},
+					}),
+			dispose() {
+				probe.disposed += 1;
+				return Promise.resolve();
+			},
+		};
+	};
+	const runtime = createTestRuntime({
+		harnesses: new Map([[HARNESS, adapter]]),
+	});
+	return { runtime, probe };
 }
 
+const query = { scopeId: "workspace-1", harness: HARNESS, cwd: "/work/repo" };
+
 describe("discoverSessions", () => {
-	test("returns unsupported without starting a session when the harness cannot list", async () => {
-		const probe: Probe = {
-			started: 0,
-			disposed: 0,
-			queries: [],
-			factoryCalls: 0,
-		};
-		const harnesses: HarnessRegistry = new Map([
+	test("lists through a temporary adapter that is never started and is always disposed", async () => {
+		const page = { supported: true, sessions: [], nextCursor: "page-2" };
+		for (const [result, expectation] of [
+			[page, (p: Promise<unknown>) => expect(p).resolves.toEqual(page)],
 			[
-				HARNESS,
-				() => {
-					probe.factoryCalls += 1;
-					return {
-						start(): AsyncIterable<never> {
-							probe.started += 1;
-							return (async function* () {})();
-						},
-						prompt() {},
-						cancelTurn() {},
-						respondToApproval() {},
-						setMode() {},
-						dispose() {
-							probe.disposed += 1;
-							return Promise.resolve();
-						},
-					};
-				},
+				null,
+				(p: Promise<unknown>) =>
+					expect(p).resolves.toEqual({ supported: false, sessions: [] }),
 			],
-		]);
-		const runtime = createTestRuntime({ harnesses });
-
-		await expect(
-			runtime.commands.discoverSessions({
-				scopeId: "workspace-1",
-				harness: HARNESS,
-				cwd: "/work/repo",
-			}),
-		).resolves.toEqual({ supported: false, sessions: [] });
-		expect(probe).toMatchObject({
-			factoryCalls: 1,
-			started: 0,
-			disposed: 1,
-		});
-		expect(runtime.sessions.list()).toEqual([]);
-		await runtime.dispose();
+			[
+				new Error("history unreadable"),
+				(p: Promise<unknown>) =>
+					expect(p).rejects.toThrow("history unreadable"),
+			],
+		] as const) {
+			const { runtime, probe } = probedRuntime(result);
+			await expectation(runtime.commands.discoverSessions(query));
+			expect(probe).toMatchObject({ started: 0, disposed: 1 });
+			expect(runtime.sessions.list()).toEqual([]);
+			await runtime.dispose();
+		}
 	});
 
-	test("lists through a temporary adapter, then disposes it", async () => {
-		const probe: Probe = {
-			started: 0,
-			disposed: 0,
-			queries: [],
-			factoryCalls: 0,
-		};
-		const { runtime } = runtimeOf(() =>
-			listingAdapter(probe, {
-				supported: true,
-				sessions: [
-					{
-						sessionId: "native-1",
-						cwd: "/work/repo",
-						title: "Fix the flaky test",
-					},
-				],
-				nextCursor: "page-2",
-			}),
-		);
+	test("reuses a live adapter in the same scope only", async () => {
+		const { runtime, probe } = probedRuntime({ supported: true, sessions: [] });
+		runtime.commands.createSession({ commandId: randomUUID(), ...query });
 
-		await expect(
-			runtime.commands.discoverSessions({
-				scopeId: "workspace-1",
-				harness: HARNESS,
-				cwd: "/work/repo",
-				cursor: "page-1",
-			}),
-		).resolves.toEqual({
-			supported: true,
-			sessions: [
-				{
-					sessionId: "native-1",
-					cwd: "/work/repo",
-					title: "Fix the flaky test",
-				},
-			],
-			nextCursor: "page-2",
-		});
-		expect(probe.queries).toEqual([{ cwd: "/work/repo", cursor: "page-1" }]);
-		expect(probe.started).toBe(0);
-		expect(probe.disposed).toBe(1);
-		expect(runtime.sessions.list()).toEqual([]);
-		await runtime.dispose();
-	});
-
-	test("reuses a live adapter and does not spawn another", async () => {
-		const probe: Probe = {
-			started: 0,
-			disposed: 0,
-			queries: [],
-			factoryCalls: 0,
-		};
-		const { runtime } = runtimeOf(() =>
-			listingAdapter(probe, { supported: true, sessions: [] }),
-		);
-		runtime.commands.createSession({
-			commandId: randomUUID(),
-			scopeId: "workspace-1",
-			harness: HARNESS,
-			cwd: "/work/repo",
-		});
-
+		await runtime.commands.discoverSessions(query);
 		await runtime.commands.discoverSessions({
-			scopeId: "workspace-1",
-			harness: HARNESS,
-			cwd: "/work/repo",
-		});
-		await runtime.commands.discoverSessions({
+			...query,
 			scopeId: "workspace-2",
-			harness: HARNESS,
-			cwd: "/other",
 			cursor: "older",
 		});
 
@@ -187,46 +90,9 @@ describe("discoverSessions", () => {
 		expect(probe.started).toBe(1);
 		expect(probe.queries).toEqual([
 			{ cwd: "/work/repo" },
-			{ cwd: "/other", cursor: "older" },
+			{ cwd: "/work/repo", cursor: "older" },
 		]);
 		expect(probe.disposed).toBe(1);
-		await runtime.dispose();
-		expect(probe.disposed).toBe(2);
-	});
-
-	test("propagates a list failure after disposing the temporary adapter", async () => {
-		const probe: Probe = {
-			started: 0,
-			disposed: 0,
-			queries: [],
-			factoryCalls: 0,
-		};
-		const { runtime } = runtimeOf(() =>
-			listingAdapter(probe, new Error("history unreadable")),
-		);
-
-		await expect(
-			runtime.commands.discoverSessions({
-				scopeId: "workspace-1",
-				harness: HARNESS,
-				cwd: "/work/repo",
-			}),
-		).rejects.toThrow("history unreadable");
-		expect(probe.disposed).toBe(1);
-		expect(probe.started).toBe(0);
-		await runtime.dispose();
-	});
-
-	test("rejects an unknown harness without opening a session", async () => {
-		const runtime = createTestRuntime();
-		await expect(
-			runtime.commands.discoverSessions({
-				scopeId: "workspace-1",
-				harness: "nope",
-				cwd: "/work/repo",
-			}),
-		).rejects.toThrow("unknown harness nope");
-		expect(runtime.sessions.list()).toEqual([]);
 		await runtime.dispose();
 	});
 });

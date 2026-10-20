@@ -39,10 +39,6 @@ function renderSlide(mode: SidebarSlideMode, keepMounted = false) {
 }
 
 describe("SidebarSlide", () => {
-	test("renders nothing until it is first opened", () => {
-		expect(renderSlide("closed").panel()).toBeNull();
-	});
-
 	test("expanding and restoring keep the same panel node, filling while expanded", async () => {
 		const slide = renderSlide("open");
 		const node = slide.panel();
@@ -56,7 +52,8 @@ describe("SidebarSlide", () => {
 		expect(slide.fills.at(-1)).toBe(false);
 	});
 
-	test("closing unmounts the panel unless asked to keep it", async () => {
+	test("mounts the panel only once opened and unmounts it on close unless kept", async () => {
+		expect(renderSlide("closed").panel()).toBeNull();
 		const slide = renderSlide("open");
 		slide.setMode("closed");
 		await settle();

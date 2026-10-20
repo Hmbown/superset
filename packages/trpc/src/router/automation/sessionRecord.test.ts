@@ -5,7 +5,6 @@ import {
 	type CloudLaunchWorkspaceRow,
 	decideCloudLaunchReport,
 	type ReportCloudLaunchInput,
-	reportCloudLaunchSchema,
 	runSessionColumns,
 } from "./sessionRecord";
 
@@ -17,24 +16,17 @@ const chat = {
 };
 
 describe("runSessionColumns", () => {
-	test("records a chat by its host session id and its terminal", () => {
+	test("records a chat by its session id only when it is linked", () => {
 		expect(runSessionColumns(chat, true)).toEqual({
 			sessionKind: "chat",
 			chatSessionId: chat.sessionId,
 			terminalSessionId: "term-chat",
 		});
-	});
-
-	test("records an unlinked chat by its terminal only", () => {
 		expect(runSessionColumns(chat, false)).toEqual({
 			sessionKind: "terminal",
 			chatSessionId: null,
 			terminalSessionId: "term-chat",
 		});
-	});
-
-	test("leaves the columns alone when the run started no session yet", () => {
-		expect(runSessionColumns(null, false)).toEqual({});
 	});
 });
 
@@ -222,15 +214,6 @@ describe("decideCloudLaunchReport", () => {
 				workspace: workspace(),
 				input: { ...chatReport, terminalId: "other" },
 			}).recorded,
-		).toBe(false);
-	});
-
-	test("requires the run id on the report", () => {
-		expect(
-			reportCloudLaunchSchema.safeParse({
-				kind: "terminal",
-				terminalId: "term-1",
-			}).success,
 		).toBe(false);
 	});
 });

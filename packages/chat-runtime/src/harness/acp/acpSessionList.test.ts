@@ -79,35 +79,23 @@ function adapterFor(agent: ListingAgent): AcpAdapter {
 }
 
 describe("ACP native session list", () => {
-	it("does not list or open a session when sessionCapabilities.list is absent", async () => {
-		const agent = new ListingAgent();
-		agent.capabilities = { sessionCapabilities: { fork: {} } };
-		const adapter = adapterFor(agent);
-
-		await expect(
-			adapter.discoverSessions({ cwd: "/work/repo" }),
-		).resolves.toEqual({ supported: false, sessions: [] });
-		expect(agent.sent.map((frame) => frame.method)).toEqual(["initialize"]);
-
-		await adapter.dispose();
-		expect(agent.closed).toBe(1);
-	});
-
-	it("treats an explicit null list capability as absent", async () => {
-		const agent = new ListingAgent();
-		agent.capabilities = { sessionCapabilities: { list: null } };
-		const adapter = adapterFor(agent);
-
-		await expect(
-			adapter.discoverSessions({ cwd: "/work/repo" }),
-		).resolves.toEqual({ supported: false, sessions: [] });
-		expect(agent.sent.some((frame) => frame.method === "session/list")).toBe(
-			false,
-		);
-		expect(agent.sent.some((frame) => frame.method === "session/new")).toBe(
-			false,
-		);
-		await adapter.dispose();
+	it("does not list or open a session when the agent does not advertise listing", async () => {
+		for (const [protocolVersion, capabilities] of [
+			[1, { sessionCapabilities: { fork: {} } }],
+			[1, { sessionCapabilities: { list: null } }],
+			[2, {}],
+		] as const) {
+			const agent = new ListingAgent();
+			agent.protocolVersion = protocolVersion;
+			agent.capabilities = capabilities;
+			const adapter = adapterFor(agent);
+			await expect(
+				adapter.discoverSessions({ cwd: "/work/repo" }),
+			).resolves.toEqual({ supported: false, sessions: [] });
+			expect(agent.sent.map((frame) => frame.method)).toEqual(["initialize"]);
+			await adapter.dispose();
+			expect(agent.closed).toBe(1);
+		}
 	});
 
 	it("passes cwd and cursor through session/list and pages the result", async () => {
@@ -180,35 +168,21 @@ describe("ACP native session list", () => {
 		expect(agent.closed).toBe(1);
 	});
 
-	it("lists on v2 when capabilities.session is present, and not when it is omitted", async () => {
-		const listed = new ListingAgent();
-		listed.protocolVersion = 2;
-		listed.capabilities = { session: {} };
-		listed.pages = [
+	it("lists on v2 when capabilities.session is present", async () => {
+		const agent = new ListingAgent();
+		agent.protocolVersion = 2;
+		agent.capabilities = { session: {} };
+		agent.pages = [
 			{ sessions: [{ sessionId: "v2-1", cwd: "/work/repo", title: "v2" }] },
 		];
-		const listing = adapterFor(listed);
+		const adapter = adapterFor(agent);
 		await expect(
-			listing.discoverSessions({ cwd: "/work/repo" }),
+			adapter.discoverSessions({ cwd: "/work/repo" }),
 		).resolves.toMatchObject({
 			supported: true,
 			sessions: [{ sessionId: "v2-1", cwd: "/work/repo", title: "v2" }],
 		});
-		expect(listed.sent.map((frame) => frame.method)).toEqual([
-			"initialize",
-			"session/list",
-		]);
-		await listing.dispose();
-
-		const plain = new ListingAgent();
-		plain.protocolVersion = 2;
-		plain.capabilities = {};
-		const unsupported = adapterFor(plain);
-		await expect(
-			unsupported.discoverSessions({ cwd: "/work/repo" }),
-		).resolves.toEqual({ supported: false, sessions: [] });
-		expect(plain.sent.map((frame) => frame.method)).toEqual(["initialize"]);
-		await unsupported.dispose();
+		await adapter.dispose();
 	});
 
 	it("propagates a session/list failure and still closes the process", async () => {

@@ -149,14 +149,6 @@ describe("sessions router", () => {
 		expect(launches).toHaveLength(1);
 	});
 
-	test("reports unavailable flag verification without launching or downgrading", async () => {
-		flagFailure = true;
-		await expect(
-			caller.create({ workspaceId: WORKSPACE, agent: "claude" }),
-		).rejects.toMatchObject({ code: "SERVICE_UNAVAILABLE" });
-		expect(launches).toHaveLength(0);
-	});
-
 	test("scopes retry command ids to a workspace and conversation", async () => {
 		const commandId = crypto.randomUUID();
 		const first = await caller.create({
@@ -210,7 +202,7 @@ describe("sessions router", () => {
 		});
 		expect(continued.sessionId).not.toBe(created.sessionId);
 	});
-	test("requires the chat flag and never starts a session when disabled", async () => {
+	test("never starts a session when the chat flag is off or cannot be verified", async () => {
 		enabled = false;
 		expect(await caller.capabilities({ agent: "claude" })).toEqual({
 			enabled: false,
@@ -219,6 +211,10 @@ describe("sessions router", () => {
 		await expect(
 			caller.create({ workspaceId: WORKSPACE, agent: "claude" }),
 		).rejects.toMatchObject({ code: "PRECONDITION_FAILED" });
+		flagFailure = true;
+		await expect(
+			caller.create({ workspaceId: WORKSPACE, agent: "claude" }),
+		).rejects.toMatchObject({ code: "SERVICE_UNAVAILABLE" });
 		expect(launches).toHaveLength(0);
 	});
 

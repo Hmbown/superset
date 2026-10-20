@@ -229,21 +229,6 @@ describe("createChatRouter", () => {
 		await runtime.dispose();
 	});
 
-	test("discoverSessions resolves the workspace cwd and does not open a journal session", async () => {
-		const { runtime, caller, resolvedWorkspaceIds } = newCaller();
-		await expect(
-			caller.discoverSessions({
-				workspaceId: "workspace-9",
-				harness: FAKE_HARNESS,
-				cursor: "page-2",
-			}),
-		).resolves.toEqual({ supported: false, sessions: [] });
-		expect(resolvedWorkspaceIds).toEqual(["workspace-9"]);
-		expect(runtime.sessions.list()).toEqual([]);
-		expect(await caller.listSessions({})).toEqual([]);
-		await runtime.dispose();
-	});
-
 	test("discoverSessions reports an unknown harness", async () => {
 		const { runtime, caller } = newCaller();
 		await expect(

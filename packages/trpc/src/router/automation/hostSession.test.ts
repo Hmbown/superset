@@ -44,21 +44,6 @@ const terminalRun = { kind: "terminal", sessionId: "term-1", label: "Claude" };
 const base = { workspaceId: "ws-1", agent: "claude", prompt: "do it" };
 
 describe("launchAgentSession", () => {
-	test("does not continue a known chat through the terminal path when the flag is off", async () => {
-		const { host, calls } = fakeHost({ "agents.run": terminalRun });
-		await launchAgentSession(host, {
-			...base,
-			chat: false,
-			previous: {
-				chatSessionId: chatCreated.sessionId,
-				terminalSessionId: chatCreated.terminalId,
-			},
-		});
-		expect(calls).toEqual([
-			{ kind: "mutation", procedure: "agents.run", input: base },
-		]);
-	});
-
 	test("opens a chat through sessions.create when the host can chat", async () => {
 		const { host, calls } = fakeHost({
 			"sessions.capabilities": { supported: true, enabled: true },
@@ -168,14 +153,23 @@ describe("launchAgentSession", () => {
 		expect(calls).toHaveLength(2);
 	});
 
-	test("never asks about chat when the caller does not allow it", async () => {
+	test("with chat off, never asks about chat and continues only a terminal run", async () => {
 		const { host, calls } = fakeHost({ "agents.run": terminalRun });
+		await launchAgentSession(host, {
+			...base,
+			chat: false,
+			previous: {
+				chatSessionId: chatCreated.sessionId,
+				terminalSessionId: chatCreated.terminalId,
+			},
+		});
 		await launchAgentSession(host, {
 			...base,
 			chat: false,
 			previous: { chatSessionId: null, terminalSessionId: "prev-term" },
 		});
 		expect(calls).toEqual([
+			{ kind: "mutation", procedure: "agents.run", input: base },
 			{
 				kind: "mutation",
 				procedure: "agents.run",
