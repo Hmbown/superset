@@ -209,7 +209,7 @@ export async function startCloudWorkspace(args: {
 		await transitionCloudWorkspace({
 			id: row.id,
 			from: ["provisioning"],
-			to: "failed",
+			to: "deleted",
 		});
 		throw error;
 	}
