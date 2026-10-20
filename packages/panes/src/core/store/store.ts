@@ -109,8 +109,17 @@ export type CreateTabInput<TData> = {
 	activePaneId?: string;
 };
 
+export type OpenPaneArgs<TData> = {
+	pane: CreatePaneInput<TData>;
+	beside?: string;
+};
+
+export type PlacePane<TData> = (
+	store: WorkspaceStore<TData>,
+	args: OpenPaneArgs<TData>,
+) => void;
+
 export interface WorkspaceStore<TData> extends WorkspaceState<TData> {
-	readonly openInTabs: boolean;
 	addTab: (args: CreateTabInput<TData>) => void;
 	removeTab: (tabId: string, options?: { intent?: "close" | "remove" }) => void;
 	insertTab: (args: { tab: Tab<TData>; index?: number }) => void;
@@ -148,7 +157,7 @@ export interface WorkspaceStore<TData> extends WorkspaceState<TData> {
 		newPane: CreatePaneInput<TData>;
 	}) => void;
 
-	openPane: (args: { pane: CreatePaneInput<TData> }) => void;
+	openPane: (args: OpenPaneArgs<TData>) => void;
 
 	splitPane: (args: {
 		tabId: string;
@@ -196,7 +205,7 @@ export interface WorkspaceStore<TData> extends WorkspaceState<TData> {
 
 export interface CreateWorkspaceStoreOptions<TData> {
 	initialState?: WorkspaceState<TData>;
-	openInTabs?: boolean;
+	placePane?: PlacePane<TData>;
 }
 
 export function createWorkspaceStore<TData>(
@@ -213,10 +222,9 @@ export function createWorkspaceStore<TData>(
 			}
 		}
 	};
-	const openInTabs = options?.openInTabs === true;
+	const placePane = options?.placePane;
 	return createStore<WorkspaceStore<TData>>((set, get) => ({
 		version: 1,
-		openInTabs,
 		tabs: options?.initialState?.tabs ?? [],
 		activeTabId: options?.initialState?.activeTabId ?? null,
 
@@ -476,25 +484,28 @@ export function createWorkspaceStore<TData>(
 
 		openPane: (args) => {
 			const s = get();
-			if (openInTabs) {
-				const candidates = [
-					...s.tabs.filter((t) => t.id === s.activeTabId),
-					...s.tabs.filter((t) => t.id !== s.activeTabId),
-				];
-				for (const t of candidates) {
-					const reusable = Object.values(t.panes).find(
-						(p) => p.kind === args.pane.kind && !p.pinned,
-					);
-					if (!reusable) continue;
-					get().replacePane({
-						tabId: t.id,
-						paneId: reusable.id,
-						newPane: args.pane,
-					});
-					get().setActiveTab(t.id);
+			if (placePane) {
+				placePane(s, args);
+				return;
+			}
+			const anchor = args.beside ? s.getPane(args.beside) : null;
+			const besideTab = anchor ? s.getTab(anchor.tabId) : null;
+			if (anchor && besideTab) {
+				const reusable = Object.values(besideTab.panes).find(
+					(p) =>
+						p.kind === args.pane.kind && !p.pinned && p.id !== anchor.pane.id,
+				);
+				if (reusable) {
+					s.setPaneData({ paneId: reusable.id, data: args.pane.data });
+					s.setActivePane({ tabId: besideTab.id, paneId: reusable.id });
 					return;
 				}
-				get().addTab({ panes: [args.pane] });
+				s.splitPane({
+					tabId: besideTab.id,
+					paneId: anchor.pane.id,
+					position: "left",
+					newPane: args.pane,
+				});
 				return;
 			}
 			const activeTabId = s.activeTabId;
