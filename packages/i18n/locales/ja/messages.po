@@ -1481,6 +1481,9 @@ msgstr "このブランチから新しいワークスペースを作り、会話
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "ページは読み手ごとの回答を保存できるので、バックエンドなしでアンケートが作れます。"
 
+msgid "A POST to the automation's URL"
+msgstr "オートメーションのURLへのPOST"
+
 msgid "A practical TypeScript problem, like the ones we solve every day. No algorithm puzzles."
 msgstr "普段私たちが取り組んでいるような、実践的なTypeScriptの課題です。アルゴリズムパズルは出しません。"
 
@@ -1498,6 +1501,9 @@ msgstr "エージェントを操作するためのチャット画面を作り直
 
 msgid "A repository is not connected to this organization, or the repositories come from different GitHub installations"
 msgstr "リポジトリがこの組織に接続されていないか、リポジトリが異なる GitHub インストールに属しています"
+
+msgid "A review gets requested, an issue gets filed, someone posts in #bugs. Pick the event and the run starts when it comes in, with no schedule to wait for. The agent gets the event in its prompt, so it knows which PR or issue to look at."
+msgstr "レビューがリクエストされる、Issueが登録される、誰かが#bugsに投稿する。イベントを選べば、それが届いた時点で実行が始まり、スケジュールを待つ必要はありません。エージェントはプロンプトでイベントを受け取るので、どのPRやIssueを見ればよいかがわかります。"
 
 msgid "A run for this automation is already in progress."
 msgstr "このオートメーションの実行はすでに進行中です。"
@@ -2636,9 +2642,6 @@ msgstr "補助"
 msgid "at"
 msgstr "at"
 
-msgid "At each scheduled time, the device you picked creates a new workspace. The agent starts on your prompt there."
-msgstr "予定の時刻になるたびに、選択したデバイスが新しいワークスペースを作成します。エージェントはそこでプロンプトに沿って作業を始めます。"
-
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "名前を挙げられるチームが少なくとも1つ、当社を含めて、四半期を通してF4のゲートをすべて通過し、その数値を公開する。"
 
@@ -2822,8 +2825,8 @@ msgstr "オートメーション({myFailedCount}件失敗中)"
 msgid "Automations & event triggers"
 msgstr "オートメーションとイベントトリガー"
 
-msgid "Automations need a Pro or Enterprise plan. If you downgrade, your automations stay but stop running."
-msgstr "オートメーションにはProまたはEnterpriseプランが必要です。ダウングレードしても、オートメーションは残りますが実行は止まります。"
+msgid "Automations need a Pro or Enterprise plan; Microsoft Teams triggers need Enterprise. If you downgrade, your automations stay but stop running."
+msgstr "オートメーションにはProまたはEnterpriseプランが必要です。Microsoft TeamsのトリガーにはEnterpriseが必要です。ダウングレードしても、オートメーションは残りますが実行は止まります。"
 
 msgid "Automations require the Pro plan."
 msgstr "オートメーションにはProプランが必要です。"
@@ -4212,6 +4215,9 @@ msgstr "コメント追加"
 
 msgid "Comment mentions user"
 msgstr "コメントでユーザーをメンション"
+
+msgid "Comment mentions you"
+msgstr "コメントで自分をメンション"
 
 msgid "Comment not found"
 msgstr "コメントが見つかりません"
@@ -6540,8 +6546,8 @@ msgstr "各エージェントは独立したGitワークツリーで動きます
 msgid "Each attachment is at most {0} MB."
 msgstr "添付ファイルは1件あたり最大{0} MBです。"
 
-msgid "Each automation runs on the machine you pick. If it is offline, the run fails and Retry all sends it again."
-msgstr "各オートメーションは、選択したマシンで実行されます。マシンがオフラインだと実行は失敗し、「すべて再試行」で再送されます。"
+msgid "Each automation runs on the machine you pick. If it is offline when the automation fires, that run is missed."
+msgstr "各オートメーションは、選択したマシンで実行されます。オートメーションの起動時にマシンがオフラインだと、その実行は見送られます。"
 
 msgid "Each in its own new tab"
 msgstr "それぞれ新しいタブで"
@@ -6766,6 +6772,9 @@ msgstr "URLを入力..."
 
 msgid "Enterprise"
 msgstr "エンタープライズ"
+
+msgid "Enterprise plan"
+msgstr "Enterpriseプラン"
 
 msgid "Environment"
 msgstr "環境"
@@ -9106,6 +9115,9 @@ msgstr "Issueコメント"
 
 msgid "Issue created"
 msgstr "Issueを作成"
+
+msgid "Issue moved"
+msgstr "Issueを移動"
 
 msgid "Issue not found."
 msgstr "Issueが見つかりません。"
@@ -13686,6 +13698,9 @@ msgstr "操作を終了"
 msgid "Release notes draft"
 msgstr "リリースノートの下書き"
 
+msgid "Release published"
+msgstr "リリース公開"
+
 msgid "Release…"
 msgstr "リリース…"
 
@@ -16195,6 +16210,9 @@ msgstr "実行ごとに新しいエージェントセッションを開始"
 
 msgid "Start a new chat"
 msgstr "新しいチャットを開始"
+
+msgid "Start a run when something happens."
+msgstr "何かが起きたら実行を開始。"
 
 msgid "Start a session"
 msgstr "セッションを開始"
@@ -19175,6 +19193,9 @@ msgstr "今後の予定"
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "オフにすると、このデバイスのファイルやツールに外部からアクセスできなくなります。ここからリモートサンドボックスへの接続は引き続き可能です。<0>詳細<1/></0>"
 
+msgid "When the event comes in or the schedule fires, the device you picked creates a new workspace. The agent starts on your prompt there."
+msgstr "イベントが届くか予定の時刻になると、選択したデバイスが新しいワークスペースを作成します。エージェントはそこでプロンプトに沿って作業を始めます。"
+
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "サイドバーの検出ポートバッジをクリックしたときの開き方。"
 
@@ -19447,8 +19468,8 @@ msgstr "コメントを入力…"
 msgid "Write a note and pick an agent. Your note arrives with the element's code and a cropped screenshot."
 msgstr "メモを書いて、エージェントを選びます。メモは、要素のコードと切り抜いたスクリーンショットと一緒に届きます。"
 
-msgid "Write a prompt and pick a schedule or an event, like a pull request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
-msgstr "プロンプトを書き、スケジュールまたはイベントを選びます。イベントには、プルリクエスト、Slackのメッセージ、LinearのIssue、SentryのIssue、Webhookなどがあります。実行ごとにワークスペースが開き、レビューして作業を続けられます。"
+msgid "Write a prompt and pick an event or a schedule, like a review request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
+msgstr "プロンプトを書き、イベントまたはスケジュールを選びます。イベントには、レビューリクエスト、Slackのメッセージ、LinearのIssue、SentryのIssue、Webhookなどがあります。実行ごとにワークスペースが開き、レビューして作業を続けられます。"
 
 msgid "Write a reply"
 msgstr "返信を書く"
@@ -19661,8 +19682,8 @@ msgstr "エージェントがデザインやレポートを公開し、チーム
 msgid "Your agent publishes designs and reports. Your team comments, and it gets to work."
 msgstr "エージェントがデザインやレポートを公開します。チームがコメントすると、エージェントが作業を始めます。"
 
-msgid "Your agents do the work on a schedule or when an event comes in."
-msgstr "エージェントがスケジュールやイベントの発生に応じて作業します。"
+msgid "Your agents start when something happens, or on a schedule."
+msgstr "何かが起きたとき、またはスケジュールに沿って、エージェントが動き出します。"
 
 msgid "Your Agents, Your Accounts"
 msgstr "エージェントもアカウントも、あなたのもの"

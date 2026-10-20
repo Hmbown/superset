@@ -1,6 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { getI18nInstance } from "@superset/i18n/server";
+import { COMPANY } from "@superset/shared/constants";
 import { ArrowUpRight } from "lucide-react";
 import type { Metadata } from "next";
 import { CTASection } from "@/app/[lang]/components/CTASection";
@@ -9,6 +10,7 @@ import { localizedAlternates } from "@/app/[lang]/metadata";
 import { initServerI18n } from "@/app/i18n-server";
 import { AutomationsListWindow } from "./components/AutomationsListWindow";
 import { HowItWorks } from "./components/HowItWorks";
+import { TriggerSources } from "./components/TriggerSources";
 import { DETAILS } from "./constants";
 
 const VIDEO_URL = "https://www.youtube.com/watch?v=ixe-PiRJTag";
@@ -16,15 +18,38 @@ const VIDEO_URL = "https://www.youtube.com/watch?v=ixe-PiRJTag";
 export async function generateMetadata(): Promise<Metadata> {
 	const lang = await initServerI18n();
 	const i18n = getI18nInstance(lang);
+	const title = i18n._(msg({ message: "Superset Automations" }));
+	const description = i18n._(
+		msg({
+			message:
+				"Write a prompt and pick an event or a schedule, like a review request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue.",
+		}),
+	);
+	const image = {
+		url: "/automations/og.jpg",
+		width: 2400,
+		height: 1257,
+		alt: title,
+	};
 	return {
-		title: i18n._(msg({ message: "Superset Automations" })),
-		description: i18n._(
-			msg({
-				message:
-					"Write a prompt and pick a schedule or an event, like a pull request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue.",
-			}),
-		),
+		title,
+		description,
 		alternates: localizedAlternates(lang, "/automations"),
+		openGraph: {
+			title,
+			description,
+			type: "website",
+			url: `${COMPANY.MARKETING_URL}/automations`,
+			siteName: COMPANY.NAME,
+			images: [image],
+		},
+		twitter: {
+			card: "summary_large_image",
+			title,
+			description,
+			images: [image.url],
+			creator: "@superset_sh",
+		},
 	};
 }
 
@@ -42,12 +67,12 @@ export default async function AutomationsPage() {
 						</p>
 						<h1 className="mt-4 font-medium text-balance text-4xl text-foreground tracking-tight sm:text-5xl">
 							<Trans>
-								Your agents do the work on a schedule or when an event comes in.
+								Your agents start when something happens, or on a schedule.
 							</Trans>
 						</h1>
 						<p className="mt-5 max-w-xl text-lg text-muted-foreground leading-relaxed">
 							<Trans>
-								Write a prompt and pick a schedule or an event, like a pull
+								Write a prompt and pick an event or a schedule, like a review
 								request, a Slack message, a Linear issue, a Sentry issue, or a
 								webhook. Each run opens a workspace you can review and continue.
 							</Trans>
@@ -64,6 +89,24 @@ export default async function AutomationsPage() {
 						<Trans>Watch the Superset Automations video on YouTube</Trans>
 						<ArrowUpRight className="size-3.5" />
 					</a>
+				</section>
+
+				<section className="mt-24 sm:mt-32">
+					<p className="font-mono text-brand text-xs uppercase tracking-wider">
+						<Trans>Triggers</Trans>
+					</p>
+					<h2 className="mt-4 font-medium text-3xl text-foreground tracking-tight sm:text-4xl">
+						<Trans>Start a run when something happens.</Trans>
+					</h2>
+					<p className="mt-5 max-w-2xl text-lg text-muted-foreground leading-relaxed">
+						<Trans>
+							A review gets requested, an issue gets filed, someone posts in
+							#bugs. Pick the event and the run starts when it comes in, with no
+							schedule to wait for. The agent gets the event in its prompt, so
+							it knows which PR or issue to look at.
+						</Trans>
+					</p>
+					<TriggerSources />
 				</section>
 
 				<section className="mt-24 sm:mt-32">

@@ -1481,6 +1481,9 @@ msgstr "基于该分支创建新工作区，并将对话交给新的智能体"
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "页面可以保存每位读者的答案，所以无需后端就能做投票。"
 
+msgid "A POST to the automation's URL"
+msgstr "向自动化的 URL 发送 POST 请求"
+
 msgid "A practical TypeScript problem, like the ones we solve every day. No algorithm puzzles."
 msgstr "一道实用的 TypeScript 题目，和我们每天解决的问题类似。不考算法谜题。"
 
@@ -1498,6 +1501,9 @@ msgstr "重建的智能体驱动聊天界面：更丰富的工具输出、更顺
 
 msgid "A repository is not connected to this organization, or the repositories come from different GitHub installations"
 msgstr "某个仓库未连接到此组织，或这些仓库来自不同的 GitHub 安装"
+
+msgid "A review gets requested, an issue gets filed, someone posts in #bugs. Pick the event and the run starts when it comes in, with no schedule to wait for. The agent gets the event in its prompt, so it knows which PR or issue to look at."
+msgstr "有人请求审查、有人提交议题、有人在 #bugs 发消息。选好事件，事件一到就开始运行，无需等待计划。智能体会在提示词中收到该事件，因此知道该查看哪个 PR 或议题。"
 
 msgid "A run for this automation is already in progress."
 msgstr "此自动化已有一次运行正在进行中。"
@@ -2636,9 +2642,6 @@ msgstr "辅助"
 msgid "at"
 msgstr "位于"
 
-msgid "At each scheduled time, the device you picked creates a new workspace. The agent starts on your prompt there."
-msgstr "每到计划时间，你选择的设备都会创建一个新的工作区，智能体会在其中按你的提示词开始工作。"
-
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "至少有一支叫得出名字的团队（包括我们自己）连续一个季度通过全部F4关卡，并公布数据。"
 
@@ -2822,8 +2825,8 @@ msgstr "自动化（{myFailedCount}个失败）"
 msgid "Automations & event triggers"
 msgstr "自动化与事件触发"
 
-msgid "Automations need a Pro or Enterprise plan. If you downgrade, your automations stay but stop running."
-msgstr "自动化需要专业版或企业版套餐。降级后，自动化会保留，但不再运行。"
+msgid "Automations need a Pro or Enterprise plan; Microsoft Teams triggers need Enterprise. If you downgrade, your automations stay but stop running."
+msgstr "自动化需要专业版或企业版套餐；Microsoft Teams 触发器需要企业版。降级后，自动化会保留，但不再运行。"
 
 msgid "Automations require the Pro plan."
 msgstr "自动化需要Pro套餐。"
@@ -4212,6 +4215,9 @@ msgstr "添加了评论"
 
 msgid "Comment mentions user"
 msgstr "评论提及用户"
+
+msgid "Comment mentions you"
+msgstr "评论提及你"
 
 msgid "Comment not found"
 msgstr "未找到评论"
@@ -6540,8 +6546,8 @@ msgstr "每个智能体都跑在自己隔离的Git worktree里。互不覆盖彼
 msgid "Each attachment is at most {0} MB."
 msgstr "每个附件最大为{0} MB。"
 
-msgid "Each automation runs on the machine you pick. If it is offline, the run fails and Retry all sends it again."
-msgstr "每个自动化都在你选择的设备上运行。若设备离线，运行会失败，点击“全部重试”即可重新发送。"
+msgid "Each automation runs on the machine you pick. If it is offline when the automation fires, that run is missed."
+msgstr "每个自动化都在你选择的设备上运行。如果自动化触发时设备离线，该次运行将被错过。"
 
 msgid "Each in its own new tab"
 msgstr "每条各占一个新标签页"
@@ -6766,6 +6772,9 @@ msgstr "输入URL..."
 
 msgid "Enterprise"
 msgstr "企业版"
+
+msgid "Enterprise plan"
+msgstr "企业版套餐"
 
 msgid "Environment"
 msgstr "环境"
@@ -9106,6 +9115,9 @@ msgstr "议题评论"
 
 msgid "Issue created"
 msgstr "问题已创建"
+
+msgid "Issue moved"
+msgstr "议题已移动"
 
 msgid "Issue not found."
 msgstr "未找到议题。"
@@ -13686,6 +13698,9 @@ msgstr "释放控制"
 msgid "Release notes draft"
 msgstr "发布说明草稿"
 
+msgid "Release published"
+msgstr "版本已发布"
+
 msgid "Release…"
 msgstr "版本…"
 
@@ -16195,6 +16210,9 @@ msgstr "每次运行都启动新的智能体会话"
 
 msgid "Start a new chat"
 msgstr "开始新的聊天"
+
+msgid "Start a run when something happens."
+msgstr "有事发生时即开始运行。"
 
 msgid "Start a session"
 msgstr "开始一个会话"
@@ -19175,6 +19193,9 @@ msgstr "接下来"
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "关闭后，其他设备无法访问本设备上的文件和工具。你仍可以从这里连接到远程沙箱。<0>了解更多<1/></0>"
 
+msgid "When the event comes in or the schedule fires, the device you picked creates a new workspace. The agent starts on your prompt there."
+msgstr "事件到来或计划时间到达时，你选择的设备会创建一个新的工作区，智能体会在其中按你的提示词开始工作。"
+
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "点击侧边栏中检测到的端口标记时打开的位置。"
 
@@ -19447,8 +19468,8 @@ msgstr "写下评论…"
 msgid "Write a note and pick an agent. Your note arrives with the element's code and a cropped screenshot."
 msgstr "写一条备注并选择智能体。备注会连同该元素的代码和裁剪后的截图一起送达。"
 
-msgid "Write a prompt and pick a schedule or an event, like a pull request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
-msgstr "编写提示词，然后选择一个计划或事件，例如拉取请求、Slack 消息、Linear 议题、Sentry 议题或 Webhook。每次运行都会打开一个工作区，你可以审查并继续工作。"
+msgid "Write a prompt and pick an event or a schedule, like a review request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
+msgstr "编写提示词，然后选择一个事件或计划，例如审查请求、Slack 消息、Linear 议题、Sentry 议题或 Webhook。每次运行都会打开一个工作区，你可以审查并继续工作。"
 
 msgid "Write a reply"
 msgstr "写回复"
@@ -19661,8 +19682,8 @@ msgstr "你的智能体发布设计和报告，供团队审阅。有人评论后
 msgid "Your agent publishes designs and reports. Your team comments, and it gets to work."
 msgstr "你的智能体发布设计和报告。团队发表评论，智能体随即开始工作。"
 
-msgid "Your agents do the work on a schedule or when an event comes in."
-msgstr "你的智能体会按计划或在事件到来时完成工作。"
+msgid "Your agents start when something happens, or on a schedule."
+msgstr "你的智能体会在有事发生时或按计划开始工作。"
 
 msgid "Your Agents, Your Accounts"
 msgstr "你的智能体，你的账号"

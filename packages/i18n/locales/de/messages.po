@@ -1481,6 +1481,9 @@ msgstr "Ein neuer Workspace von diesem Branch, die Unterhaltung wird an einen ne
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "Eine Seite kann die Antwort jedes Lesers speichern, also funktioniert eine Umfrage ohne Backend."
 
+msgid "A POST to the automation's URL"
+msgstr "Ein POST an die URL der Automatisierung"
+
 msgid "A practical TypeScript problem, like the ones we solve every day. No algorithm puzzles."
 msgstr "Eine praxisnahe TypeScript-Aufgabe, wie wir sie jeden Tag lösen. Keine Algorithmus-Rätsel."
 
@@ -1498,6 +1501,9 @@ msgstr "Eine neu gebaute Chat-Oberfläche zum Steuern von Agenten: reichere Tool
 
 msgid "A repository is not connected to this organization, or the repositories come from different GitHub installations"
 msgstr "Ein Repository ist nicht mit dieser Organisation verbunden, oder die Repositories stammen aus verschiedenen GitHub-Installationen"
+
+msgid "A review gets requested, an issue gets filed, someone posts in #bugs. Pick the event and the run starts when it comes in, with no schedule to wait for. The agent gets the event in its prompt, so it knows which PR or issue to look at."
+msgstr "Ein Review wird angefordert, ein Issue wird angelegt, jemand postet in #bugs. Wähle das Ereignis, und der Lauf startet, sobald es eintrifft, ohne auf einen Zeitplan zu warten. Der Agent erhält das Ereignis in seinem Prompt und weiß so, welchen PR oder welches Issue er sich ansehen soll."
 
 msgid "A run for this automation is already in progress."
 msgstr "Für diese Automatisierung läuft bereits ein Durchlauf."
@@ -2636,9 +2642,6 @@ msgstr "Assistiert"
 msgid "at"
 msgstr "at"
 
-msgid "At each scheduled time, the device you picked creates a new workspace. The agent starts on your prompt there."
-msgstr "Zu jedem geplanten Zeitpunkt erstellt das gewählte Gerät einen neuen Arbeitsbereich. Der Agent startet dort mit deinem Prompt."
-
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "Mindestens ein Team, das wir benennen können, unseres eingeschlossen, besteht ein ganzes Quartal lang jedes F4-Kriterium und veröffentlicht die Zahlen."
 
@@ -2822,8 +2825,8 @@ msgstr "Automatisierungen ({myFailedCount} fehlgeschlagen)"
 msgid "Automations & event triggers"
 msgstr "Automatisierungen & Ereignis-Trigger"
 
-msgid "Automations need a Pro or Enterprise plan. If you downgrade, your automations stay but stop running."
-msgstr "Automatisierungen erfordern einen Pro- oder Enterprise-Tarif. Wenn du herabstufst, bleiben deine Automatisierungen erhalten, laufen aber nicht mehr."
+msgid "Automations need a Pro or Enterprise plan; Microsoft Teams triggers need Enterprise. If you downgrade, your automations stay but stop running."
+msgstr "Automatisierungen erfordern einen Pro- oder Enterprise-Tarif; Microsoft-Teams-Auslöser erfordern Enterprise. Wenn du herabstufst, bleiben deine Automatisierungen erhalten, laufen aber nicht mehr."
 
 msgid "Automations require the Pro plan."
 msgstr "Automatisierungen erfordern den Pro-Plan."
@@ -4212,6 +4215,9 @@ msgstr "Kommentar hinzugefügt"
 
 msgid "Comment mentions user"
 msgstr "Kommentar erwähnt Nutzer"
+
+msgid "Comment mentions you"
+msgstr "Kommentar erwähnt dich"
 
 msgid "Comment not found"
 msgstr "Kommentar nicht gefunden"
@@ -6540,8 +6546,8 @@ msgstr "Jeder Agent läuft in seinem eigenen isolierten Git-Worktree. Keiner üb
 msgid "Each attachment is at most {0} MB."
 msgstr "Jeder Anhang darf höchstens {0} MB groß sein."
 
-msgid "Each automation runs on the machine you pick. If it is offline, the run fails and Retry all sends it again."
-msgstr "Jede Automatisierung läuft auf der Maschine, die du auswählst. Ist sie offline, schlägt die Ausführung fehl und „Alle erneut versuchen“ sendet sie erneut."
+msgid "Each automation runs on the machine you pick. If it is offline when the automation fires, that run is missed."
+msgstr "Jede Automatisierung läuft auf der Maschine, die du auswählst. Ist sie offline, wenn die Automatisierung auslöst, entfällt dieser Lauf."
 
 msgid "Each in its own new tab"
 msgstr "Jeder in einem eigenen neuen Tab"
@@ -6766,6 +6772,9 @@ msgstr "URL eingeben..."
 
 msgid "Enterprise"
 msgstr "Enterprise"
+
+msgid "Enterprise plan"
+msgstr "Enterprise-Tarif"
 
 msgid "Environment"
 msgstr "Umgebung"
@@ -9106,6 +9115,9 @@ msgstr "Issue-Kommentar"
 
 msgid "Issue created"
 msgstr "Issue erstellt"
+
+msgid "Issue moved"
+msgstr "Issue verschoben"
 
 msgid "Issue not found."
 msgstr "Issue nicht gefunden."
@@ -13686,6 +13698,9 @@ msgstr "Steuerung freigeben"
 msgid "Release notes draft"
 msgstr "Entwurf der Release Notes"
 
+msgid "Release published"
+msgstr "Release veröffentlicht"
+
 msgid "Release…"
 msgstr "Release…"
 
@@ -16195,6 +16210,9 @@ msgstr "Bei jedem Lauf eine neue Agent-Sitzung starten"
 
 msgid "Start a new chat"
 msgstr "Neuen Chat starten"
+
+msgid "Start a run when something happens."
+msgstr "Starte einen Lauf, wenn etwas passiert."
 
 msgid "Start a session"
 msgstr "Sitzung starten"
@@ -19175,6 +19193,9 @@ msgstr "Was als Nächstes kommt"
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Wenn deaktiviert, kann nichts anderes auf die Dateien und Tools dieses Geräts zugreifen. Du kannst dich von hier aus weiterhin mit Remote-Sandboxes verbinden. <0>Mehr erfahren<1/></0>"
 
+msgid "When the event comes in or the schedule fires, the device you picked creates a new workspace. The agent starts on your prompt there."
+msgstr "Wenn das Ereignis eintrifft oder der Zeitplan auslöst, erstellt das gewählte Gerät einen neuen Arbeitsbereich. Der Agent startet dort mit deinem Prompt."
+
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Wo Port-Badges in der Seitenleiste beim Klick geöffnet werden."
 
@@ -19447,8 +19468,8 @@ msgstr "Kommentar schreiben…"
 msgid "Write a note and pick an agent. Your note arrives with the element's code and a cropped screenshot."
 msgstr "Schreibe eine Notiz und wähle einen Agenten. Deine Notiz kommt mit dem Code des Elements und einem zugeschnittenen Screenshot an."
 
-msgid "Write a prompt and pick a schedule or an event, like a pull request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
-msgstr "Schreibe einen Prompt und wähle einen Zeitplan oder ein Ereignis, etwa einen Pull Request, eine Slack-Nachricht, ein Linear-Issue, ein Sentry-Issue oder einen Webhook. Jeder Lauf öffnet einen Arbeitsbereich, den du prüfen und fortsetzen kannst."
+msgid "Write a prompt and pick an event or a schedule, like a review request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
+msgstr "Schreibe einen Prompt und wähle ein Ereignis oder einen Zeitplan, etwa eine Review-Anfrage, eine Slack-Nachricht, ein Linear-Issue, ein Sentry-Issue oder einen Webhook. Jeder Lauf öffnet einen Arbeitsbereich, den du prüfen und fortsetzen kannst."
 
 msgid "Write a reply"
 msgstr "Antwort schreiben"
@@ -19661,8 +19682,8 @@ msgstr "Dein Agent veröffentlicht Designs und Berichte, die dein Team prüft. S
 msgid "Your agent publishes designs and reports. Your team comments, and it gets to work."
 msgstr "Dein Agent veröffentlicht Designs und Berichte. Dein Team kommentiert, und der Agent legt los."
 
-msgid "Your agents do the work on a schedule or when an event comes in."
-msgstr "Deine Agenten erledigen die Arbeit nach Zeitplan oder bei einem Ereignis."
+msgid "Your agents start when something happens, or on a schedule."
+msgstr "Deine Agenten starten, wenn etwas passiert, oder nach Zeitplan."
 
 msgid "Your Agents, Your Accounts"
 msgstr "Deine Agenten, deine Konten"

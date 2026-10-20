@@ -1481,6 +1481,9 @@ msgstr "이 브랜치에서 새 워크스페이스를 만들고 대화를 새 �
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "페이지가 독자별 답변을 저장하므로 백엔드 없이 투표를 만들 수 있습니다."
 
+msgid "A POST to the automation's URL"
+msgstr "자동화 URL로 보내는 POST"
+
 msgid "A practical TypeScript problem, like the ones we solve every day. No algorithm puzzles."
 msgstr "우리가 매일 해결하는 것과 비슷한 실전 TypeScript 문제입니다. 알고리즘 퍼즐은 없습니다."
 
@@ -1498,6 +1501,9 @@ msgstr "에이전트를 다루기 위해 새로 만든 채팅 화면입니다. �
 
 msgid "A repository is not connected to this organization, or the repositories come from different GitHub installations"
 msgstr "리포지토리가 이 조직에 연결되어 있지 않거나, 리포지토리들이 서로 다른 GitHub 설치에서 왔습니다"
+
+msgid "A review gets requested, an issue gets filed, someone posts in #bugs. Pick the event and the run starts when it comes in, with no schedule to wait for. The agent gets the event in its prompt, so it knows which PR or issue to look at."
+msgstr "리뷰가 요청되고, 이슈가 등록되고, 누군가 #bugs에 글을 올립니다. 이벤트를 고르면 이벤트가 들어오는 즉시 실행이 시작되므로 일정을 기다릴 필요가 없습니다. 에이전트는 프롬프트로 이벤트를 받기 때문에 어떤 PR이나 이슈를 봐야 하는지 압니다."
 
 msgid "A run for this automation is already in progress."
 msgstr "이 자동화의 실행이 이미 진행 중입니다."
@@ -2636,9 +2642,6 @@ msgstr "보조"
 msgid "at"
 msgstr "at"
 
-msgid "At each scheduled time, the device you picked creates a new workspace. The agent starts on your prompt there."
-msgstr "예약된 시간마다 선택한 기기가 새 워크스페이스를 만듭니다. 에이전트는 그곳에서 프롬프트에 따라 작업을 시작합니다."
-
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "우리를 포함해 이름을 댈 수 있는 팀 중 최소 한 곳이 한 분기 내내 모든 F4 관문을 통과하고 그 수치를 공개합니다."
 
@@ -2822,8 +2825,8 @@ msgstr "자동화 ({myFailedCount}개 실패)"
 msgid "Automations & event triggers"
 msgstr "자동화 및 이벤트 트리거"
 
-msgid "Automations need a Pro or Enterprise plan. If you downgrade, your automations stay but stop running."
-msgstr "자동화에는 Pro 또는 Enterprise 요금제가 필요합니다. 다운그레이드해도 자동화는 남지만 실행은 멈춥니다."
+msgid "Automations need a Pro or Enterprise plan; Microsoft Teams triggers need Enterprise. If you downgrade, your automations stay but stop running."
+msgstr "자동화에는 Pro 또는 Enterprise 요금제가 필요하며, Microsoft Teams 트리거에는 Enterprise가 필요합니다. 다운그레이드해도 자동화는 남지만 실행은 멈춥니다."
 
 msgid "Automations require the Pro plan."
 msgstr "자동화에는 Pro 플랜이 필요합니다."
@@ -4212,6 +4215,9 @@ msgstr "댓글 추가됨"
 
 msgid "Comment mentions user"
 msgstr "댓글이 사용자를 멘션함"
+
+msgid "Comment mentions you"
+msgstr "댓글이 나를 멘션함"
 
 msgid "Comment not found"
 msgstr "코멘트를 찾을 수 없습니다"
@@ -6540,8 +6546,8 @@ msgstr "각 에이전트가 격리된 자체 Git worktree에서 실행됩니다.
 msgid "Each attachment is at most {0} MB."
 msgstr "첨부 파일은 각각 최대 {0} MB입니다."
 
-msgid "Each automation runs on the machine you pick. If it is offline, the run fails and Retry all sends it again."
-msgstr "각 자동화는 선택한 머신에서 실행됩니다. 머신이 오프라인이면 실행이 실패하고, '모두 다시 시도'로 다시 보낼 수 있습니다."
+msgid "Each automation runs on the machine you pick. If it is offline when the automation fires, that run is missed."
+msgstr "각 자동화는 선택한 머신에서 실행됩니다. 자동화가 실행될 때 머신이 오프라인이면 그 실행은 건너뜁니다."
 
 msgid "Each in its own new tab"
 msgstr "각각 새 탭에서"
@@ -6766,6 +6772,9 @@ msgstr "URL 입력..."
 
 msgid "Enterprise"
 msgstr "엔터프라이즈"
+
+msgid "Enterprise plan"
+msgstr "Enterprise 요금제"
 
 msgid "Environment"
 msgstr "환경"
@@ -9106,6 +9115,9 @@ msgstr "이슈 댓글"
 
 msgid "Issue created"
 msgstr "이슈 생성됨"
+
+msgid "Issue moved"
+msgstr "이슈 이동됨"
 
 msgid "Issue not found."
 msgstr "이슈를 찾을 수 없습니다."
@@ -13686,6 +13698,9 @@ msgstr "제어 해제"
 msgid "Release notes draft"
 msgstr "릴리스 노트 초안"
 
+msgid "Release published"
+msgstr "릴리스 게시됨"
+
 msgid "Release…"
 msgstr "릴리스…"
 
@@ -16195,6 +16210,9 @@ msgstr "실행할 때마다 새 에이전트 세션 시작"
 
 msgid "Start a new chat"
 msgstr "새 채팅 시작"
+
+msgid "Start a run when something happens."
+msgstr "무슨 일이 생기면 실행을 시작하세요."
 
 msgid "Start a session"
 msgstr "세션 시작"
@@ -19175,6 +19193,9 @@ msgstr "다음 계획"
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "끄면 이 기기의 파일과 도구에 아무것도 접근할 수 없습니다. 여기에서 원격 샌드박스로 나가는 연결은 계속 사용할 수 있습니다. <0>자세히 알아보기<1/></0>"
 
+msgid "When the event comes in or the schedule fires, the device you picked creates a new workspace. The agent starts on your prompt there."
+msgstr "이벤트가 들어오거나 예약된 시간이 되면 선택한 기기가 새 워크스페이스를 만듭니다. 에이전트는 그곳에서 프롬프트에 따라 작업을 시작합니다."
+
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "사이드바의 감지된 포트 배지를 클릭했을 때 열리는 위치입니다."
 
@@ -19447,8 +19468,8 @@ msgstr "댓글을 작성하세요…"
 msgid "Write a note and pick an agent. Your note arrives with the element's code and a cropped screenshot."
 msgstr "메모를 쓰고 에이전트를 고르세요. 메모는 요소의 코드와 잘라낸 스크린샷과 함께 전달됩니다."
 
-msgid "Write a prompt and pick a schedule or an event, like a pull request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
-msgstr "프롬프트를 작성하고 일정이나 이벤트를 고르세요. 이벤트로는 풀 리퀘스트, Slack 메시지, Linear 이슈, Sentry 이슈, 웹훅 등이 있습니다. 실행할 때마다 검토하고 이어서 작업할 수 있는 워크스페이스가 열립니다."
+msgid "Write a prompt and pick an event or a schedule, like a review request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
+msgstr "프롬프트를 작성하고 이벤트나 일정을 고르세요. 이벤트로는 리뷰 요청, Slack 메시지, Linear 이슈, Sentry 이슈, 웹훅 등이 있습니다. 실행할 때마다 검토하고 이어서 작업할 수 있는 워크스페이스가 열립니다."
 
 msgid "Write a reply"
 msgstr "답글 작성"
@@ -19661,8 +19682,8 @@ msgstr "에이전트가 디자인과 보고서를 게시하면 팀이 검토합�
 msgid "Your agent publishes designs and reports. Your team comments, and it gets to work."
 msgstr "에이전트가 디자인과 보고서를 게시합니다. 팀이 댓글을 달면 에이전트가 작업을 시작합니다."
 
-msgid "Your agents do the work on a schedule or when an event comes in."
-msgstr "에이전트가 일정에 따라 또는 이벤트가 발생할 때 작업합니다."
+msgid "Your agents start when something happens, or on a schedule."
+msgstr "무슨 일이 생기거나 일정이 되면 에이전트가 작업을 시작합니다."
 
 msgid "Your Agents, Your Accounts"
 msgstr "당신의 에이전트, 당신의 계정"

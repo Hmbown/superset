@@ -1481,6 +1481,9 @@ msgstr "以該分支建立新工作區，並將對話交給新的代理"
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "頁面可以保存每位讀者的答案，所以不需要後端就能做投票。"
 
+msgid "A POST to the automation's URL"
+msgstr "向自動化的 URL 傳送 POST 請求"
+
 msgid "A practical TypeScript problem, like the ones we solve every day. No algorithm puzzles."
 msgstr "一道實用的 TypeScript 題目，和我們每天解決的問題類似。不考演算法謎題。"
 
@@ -1498,6 +1501,9 @@ msgstr "重建的代理程式驅動聊天介面：更豐富的工具輸出、更
 
 msgid "A repository is not connected to this organization, or the repositories come from different GitHub installations"
 msgstr "某個儲存庫未連結至此組織，或這些儲存庫來自不同的 GitHub 安裝"
+
+msgid "A review gets requested, an issue gets filed, someone posts in #bugs. Pick the event and the run starts when it comes in, with no schedule to wait for. The agent gets the event in its prompt, so it knows which PR or issue to look at."
+msgstr "有人請求審查、有人提交議題、有人在 #bugs 發訊息。選好事件，事件一到就開始執行，不必等待排程。代理程式會在提示詞中收到該事件，因此知道該查看哪個 PR 或議題。"
 
 msgid "A run for this automation is already in progress."
 msgstr "此自動化已有一次執行正在進行中。"
@@ -2636,9 +2642,6 @@ msgstr "輔助"
 msgid "at"
 msgstr "位於"
 
-msgid "At each scheduled time, the device you picked creates a new workspace. The agent starts on your prompt there."
-msgstr "每到計劃時間，你選擇的裝置都會建立一個新的工作區，代理程式會在其中依你的提示詞開始工作。"
-
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "至少有一支叫得出名字的團隊（包括我們自己）連續一個季度通過全部F4關卡，並公佈資料。"
 
@@ -2822,8 +2825,8 @@ msgstr "自動化（{myFailedCount}個失敗）"
 msgid "Automations & event triggers"
 msgstr "自動化與事件觸發"
 
-msgid "Automations need a Pro or Enterprise plan. If you downgrade, your automations stay but stop running."
-msgstr "自動化需要專業版或企業版方案。降級後，自動化會保留，但不再執行。"
+msgid "Automations need a Pro or Enterprise plan; Microsoft Teams triggers need Enterprise. If you downgrade, your automations stay but stop running."
+msgstr "自動化需要專業版或企業版方案；Microsoft Teams 觸發器需要企業版。降級後，自動化會保留，但不再執行。"
 
 msgid "Automations require the Pro plan."
 msgstr "自動化需要Pro方案。"
@@ -4212,6 +4215,9 @@ msgstr "添加了評論"
 
 msgid "Comment mentions user"
 msgstr "評論提及使用者"
+
+msgid "Comment mentions you"
+msgstr "評論提及你"
 
 msgid "Comment not found"
 msgstr "未找到評論"
@@ -6540,8 +6546,8 @@ msgstr "每個代理程式都跑在自己隔離的Git worktree裡。互不覆蓋
 msgid "Each attachment is at most {0} MB."
 msgstr "每個附件最大為{0} MB。"
 
-msgid "Each automation runs on the machine you pick. If it is offline, the run fails and Retry all sends it again."
-msgstr "每個自動化都在你選擇的裝置上執行。若裝置離線，執行會失敗，按「全部重試」即可重新傳送。"
+msgid "Each automation runs on the machine you pick. If it is offline when the automation fires, that run is missed."
+msgstr "每個自動化都在你選擇的裝置上執行。如果自動化觸發時裝置離線，該次執行將會錯過。"
 
 msgid "Each in its own new tab"
 msgstr "每條各佔一個新分頁"
@@ -6766,6 +6772,9 @@ msgstr "輸入URL..."
 
 msgid "Enterprise"
 msgstr "企業版"
+
+msgid "Enterprise plan"
+msgstr "企業版方案"
 
 msgid "Environment"
 msgstr "環境"
@@ -9106,6 +9115,9 @@ msgstr "議題評論"
 
 msgid "Issue created"
 msgstr "問題已建立"
+
+msgid "Issue moved"
+msgstr "議題已移動"
 
 msgid "Issue not found."
 msgstr "未找到議題。"
@@ -13686,6 +13698,9 @@ msgstr "釋放控制"
 msgid "Release notes draft"
 msgstr "發布說明草稿"
 
+msgid "Release published"
+msgstr "版本已發布"
+
 msgid "Release…"
 msgstr "版本…"
 
@@ -16195,6 +16210,9 @@ msgstr "每次執行都啟動新的代理程式工作階段"
 
 msgid "Start a new chat"
 msgstr "開始新的聊天"
+
+msgid "Start a run when something happens."
+msgstr "有事發生時即開始執行。"
 
 msgid "Start a session"
 msgstr "開始一個會話"
@@ -19175,6 +19193,9 @@ msgstr "接下來"
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "關閉後，任何其他來源都無法存取此裝置上的檔案和工具。你仍可從這裡連線到遠端沙箱。<0>瞭解更多<1/></0>"
 
+msgid "When the event comes in or the schedule fires, the device you picked creates a new workspace. The agent starts on your prompt there."
+msgstr "事件到來或排程時間到達時，你選擇的裝置會建立一個新的工作區，代理程式會在其中依你的提示詞開始工作。"
+
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "點選側邊欄中檢測到的埠標記時開啟的位置。"
 
@@ -19447,8 +19468,8 @@ msgstr "寫下評論…"
 msgid "Write a note and pick an agent. Your note arrives with the element's code and a cropped screenshot."
 msgstr "寫一則備註並選擇代理程式。備註會連同該元素的程式碼和裁剪後的截圖一起送達。"
 
-msgid "Write a prompt and pick a schedule or an event, like a pull request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
-msgstr "撰寫提示詞，然後選擇排程或事件，例如拉取請求、Slack 訊息、Linear 議題、Sentry 議題或 Webhook。每次執行都會開啟一個工作區，你可以審查並繼續工作。"
+msgid "Write a prompt and pick an event or a schedule, like a review request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
+msgstr "撰寫提示詞，然後選擇事件或排程，例如審查請求、Slack 訊息、Linear 議題、Sentry 議題或 Webhook。每次執行都會開啟一個工作區，你可以審查並繼續工作。"
 
 msgid "Write a reply"
 msgstr "撰寫回覆"
@@ -19661,8 +19682,8 @@ msgstr "你的代理程式發布設計和報告，供團隊審閱。有人留言
 msgid "Your agent publishes designs and reports. Your team comments, and it gets to work."
 msgstr "你的代理程式發布設計和報告。團隊留言，代理程式隨即開始工作。"
 
-msgid "Your agents do the work on a schedule or when an event comes in."
-msgstr "你的代理程式會依排程或在事件發生時完成工作。"
+msgid "Your agents start when something happens, or on a schedule."
+msgstr "你的代理程式會在有事發生時或依排程開始工作。"
 
 msgid "Your Agents, Your Accounts"
 msgstr "你的代理程式，你的帳號"

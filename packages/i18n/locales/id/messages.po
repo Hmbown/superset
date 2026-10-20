@@ -1481,6 +1481,9 @@ msgstr "Ruang kerja baru dari cabang ini, dengan percakapan diserahkan ke agen b
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "Halaman bisa menyimpan jawaban setiap pembaca, jadi polling berjalan tanpa backend."
 
+msgid "A POST to the automation's URL"
+msgstr "POST ke URL otomatisasi"
+
 msgid "A practical TypeScript problem, like the ones we solve every day. No algorithm puzzles."
 msgstr "Soal TypeScript yang praktis, seperti yang kami selesaikan setiap hari. Tanpa teka-teki algoritma."
 
@@ -1498,6 +1501,9 @@ msgstr "Permukaan chat yang dibangun ulang untuk mengendalikan agen: output alat
 
 msgid "A repository is not connected to this organization, or the repositories come from different GitHub installations"
 msgstr "Sebuah repositori tidak terhubung ke organisasi ini, atau repositori berasal dari instalasi GitHub yang berbeda"
+
+msgid "A review gets requested, an issue gets filed, someone posts in #bugs. Pick the event and the run starts when it comes in, with no schedule to wait for. The agent gets the event in its prompt, so it knows which PR or issue to look at."
+msgstr "Review diminta, issue dibuat, seseorang memposting di #bugs. Pilih event-nya dan run dimulai begitu event masuk, tanpa perlu menunggu jadwal. Agen menerima event tersebut di prompt-nya, sehingga tahu PR atau issue mana yang perlu dilihat."
 
 msgid "A run for this automation is already in progress."
 msgstr "Sebuah run untuk otomatisasi ini sedang berjalan."
@@ -2636,9 +2642,6 @@ msgstr "Terbantu"
 msgid "at"
 msgstr "at"
 
-msgid "At each scheduled time, the device you picked creates a new workspace. The agent starts on your prompt there."
-msgstr "Pada setiap waktu terjadwal, perangkat yang Anda pilih membuat workspace baru. Agen mulai bekerja di sana dengan prompt Anda."
-
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "Setidaknya satu tim yang bisa kami sebut namanya, termasuk tim kami, melewati semua gerbang F4 selama satu kuartal penuh dan mempublikasikan angkanya."
 
@@ -2822,8 +2825,8 @@ msgstr "Otomatisasi ({myFailedCount} gagal)"
 msgid "Automations & event triggers"
 msgstr "Otomatisasi & pemicu event"
 
-msgid "Automations need a Pro or Enterprise plan. If you downgrade, your automations stay but stop running."
-msgstr "Otomatisasi memerlukan paket Pro atau Enterprise. Jika Anda menurunkan paket, otomatisasi tetap ada tetapi berhenti berjalan."
+msgid "Automations need a Pro or Enterprise plan; Microsoft Teams triggers need Enterprise. If you downgrade, your automations stay but stop running."
+msgstr "Otomatisasi memerlukan paket Pro atau Enterprise; pemicu Microsoft Teams memerlukan Enterprise. Jika Anda menurunkan paket, otomatisasi tetap ada tetapi berhenti berjalan."
 
 msgid "Automations require the Pro plan."
 msgstr "Otomatisasi memerlukan paket Pro."
@@ -4212,6 +4215,9 @@ msgstr "Komentar ditambahkan"
 
 msgid "Comment mentions user"
 msgstr "Komentar menyebut pengguna"
+
+msgid "Comment mentions you"
+msgstr "Komentar menyebut Anda"
 
 msgid "Comment not found"
 msgstr "Komentar tidak ditemukan"
@@ -6540,8 +6546,8 @@ msgstr "Tiap agen berjalan di worktree Git terisolasi sendiri. Tidak ada yang me
 msgid "Each attachment is at most {0} MB."
 msgstr "Setiap lampiran maksimal {0} MB."
 
-msgid "Each automation runs on the machine you pick. If it is offline, the run fails and Retry all sends it again."
-msgstr "Setiap otomatisasi berjalan di mesin yang Anda pilih. Jika mesin offline, run gagal dan Coba lagi semua mengirimnya ulang."
+msgid "Each automation runs on the machine you pick. If it is offline when the automation fires, that run is missed."
+msgstr "Setiap otomatisasi berjalan di mesin yang Anda pilih. Jika mesin offline saat otomatisasi terpicu, run tersebut terlewat."
 
 msgid "Each in its own new tab"
 msgstr "Masing-masing di tab barunya sendiri"
@@ -6766,6 +6772,9 @@ msgstr "Masukkan URL..."
 
 msgid "Enterprise"
 msgstr "Enterprise"
+
+msgid "Enterprise plan"
+msgstr "Paket Enterprise"
 
 msgid "Environment"
 msgstr "Lingkungan"
@@ -9106,6 +9115,9 @@ msgstr "Komentar issue"
 
 msgid "Issue created"
 msgstr "Issue dibuat"
+
+msgid "Issue moved"
+msgstr "Issue dipindahkan"
 
 msgid "Issue not found."
 msgstr "Issue tidak ditemukan."
@@ -13686,6 +13698,9 @@ msgstr "Lepaskan kendali"
 msgid "Release notes draft"
 msgstr "Draf catatan rilis"
 
+msgid "Release published"
+msgstr "Rilis dipublikasikan"
+
 msgid "Release…"
 msgstr "Rilis…"
 
@@ -16195,6 +16210,9 @@ msgstr "Mulai sesi agen baru setiap kali dijalankan"
 
 msgid "Start a new chat"
 msgstr "Mulai chat baru"
+
+msgid "Start a run when something happens."
+msgstr "Mulai run saat sesuatu terjadi."
 
 msgid "Start a session"
 msgstr "Mulai sesi"
@@ -19175,6 +19193,9 @@ msgstr "Selanjutnya"
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Saat nonaktif, tidak ada yang bisa mengakses file dan alat di perangkat ini. Anda tetap bisa terhubung ke sandbox jarak jauh dari sini. <0>Pelajari lebih lanjut<1/></0>"
 
+msgid "When the event comes in or the schedule fires, the device you picked creates a new workspace. The agent starts on your prompt there."
+msgstr "Saat event masuk atau jadwal tiba, perangkat yang Anda pilih membuat workspace baru. Agen mulai bekerja di sana dengan prompt Anda."
+
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Ke mana badge port yang terdeteksi di sidebar terbuka saat diklik."
 
@@ -19447,8 +19468,8 @@ msgstr "Tulis komentar…"
 msgid "Write a note and pick an agent. Your note arrives with the element's code and a cropped screenshot."
 msgstr "Tulis catatan dan pilih agen. Catatan Anda dikirim bersama kode elemen dan screenshot yang dipotong."
 
-msgid "Write a prompt and pick a schedule or an event, like a pull request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
-msgstr "Tulis prompt dan pilih jadwal atau event, seperti pull request, pesan Slack, issue Linear, issue Sentry, atau webhook. Setiap run membuka workspace yang bisa Anda tinjau dan lanjutkan."
+msgid "Write a prompt and pick an event or a schedule, like a review request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
+msgstr "Tulis prompt dan pilih event atau jadwal, seperti permintaan review, pesan Slack, issue Linear, issue Sentry, atau webhook. Setiap run membuka workspace yang bisa Anda tinjau dan lanjutkan."
 
 msgid "Write a reply"
 msgstr "Tulis balasan"
@@ -19661,8 +19682,8 @@ msgstr "Agen Anda menerbitkan desain dan laporan untuk ditinjau tim Anda. Saat s
 msgid "Your agent publishes designs and reports. Your team comments, and it gets to work."
 msgstr "Agen Anda menerbitkan desain dan laporan. Tim Anda berkomentar, lalu agen mulai bekerja."
 
-msgid "Your agents do the work on a schedule or when an event comes in."
-msgstr "Agen Anda bekerja sesuai jadwal atau saat ada event."
+msgid "Your agents start when something happens, or on a schedule."
+msgstr "Agen Anda mulai bekerja saat sesuatu terjadi, atau sesuai jadwal."
 
 msgid "Your Agents, Your Accounts"
 msgstr "Agen Anda, Akun Anda"

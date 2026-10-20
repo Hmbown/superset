@@ -30,7 +30,7 @@ export const RUN_STEPS: (AutomationsItem & { id: RunStepId })[] = [
 		title: msg({ message: "Run." }),
 		description: msg({
 			message:
-				"At each scheduled time, the device you picked creates a new workspace. The agent starts on your prompt there.",
+				"When the event comes in or the schedule fires, the device you picked creates a new workspace. The agent starts on your prompt there.",
 		}),
 	},
 	{
@@ -48,7 +48,7 @@ export const DETAILS: AutomationsItem[] = [
 		title: msg({ message: "Runs on a device you choose" }),
 		description: msg({
 			message:
-				"Each automation runs on the machine you pick. If it is offline, the run fails and Retry all sends it again.",
+				"Each automation runs on the machine you pick. If it is offline when the automation fires, that run is missed.",
 		}),
 	},
 	{
@@ -68,7 +68,7 @@ export const DETAILS: AutomationsItem[] = [
 		title: msg({ message: "Part of Superset Pro" }),
 		description: msg({
 			message:
-				"Automations need a Pro or Enterprise plan. If you downgrade, your automations stay but stop running.",
+				"Automations need a Pro or Enterprise plan; Microsoft Teams triggers need Enterprise. If you downgrade, your automations stay but stop running.",
 		}),
 	},
 ];

@@ -1481,6 +1481,9 @@ msgstr "Een nieuwe workspace vanaf deze branch, met het gesprek overgedragen aan
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "Een pagina kan het antwoord van elke lezer opslaan, dus een poll werkt zonder backend."
 
+msgid "A POST to the automation's URL"
+msgstr "Een POST naar de URL van de automatisering"
+
 msgid "A practical TypeScript problem, like the ones we solve every day. No algorithm puzzles."
 msgstr "Een praktisch TypeScript-probleem, zoals we ze elke dag oplossen. Geen algoritmepuzzels."
 
@@ -1498,6 +1501,9 @@ msgstr "Een herbouwd chatoppervlak om agents aan te sturen: rijkere tooluitvoer,
 
 msgid "A repository is not connected to this organization, or the repositories come from different GitHub installations"
 msgstr "Een repository is niet gekoppeld aan deze organisatie, of de repositories komen uit verschillende GitHub-installaties"
+
+msgid "A review gets requested, an issue gets filed, someone posts in #bugs. Pick the event and the run starts when it comes in, with no schedule to wait for. The agent gets the event in its prompt, so it knows which PR or issue to look at."
+msgstr "Er wordt een review aangevraagd, er wordt een issue aangemaakt, iemand post in #bugs. Kies het event en de run start zodra het binnenkomt, zonder op een schema te wachten. De agent krijgt het event in zijn prompt en weet dus welke PR of issue hij moet bekijken."
 
 msgid "A run for this automation is already in progress."
 msgstr "Er loopt al een run voor deze automatisering."
@@ -2636,9 +2642,6 @@ msgstr "Ondersteund"
 msgid "at"
 msgstr "at"
 
-msgid "At each scheduled time, the device you picked creates a new workspace. The agent starts on your prompt there."
-msgstr "Op elk gepland tijdstip maakt het gekozen apparaat een nieuwe werkruimte. De agent begint daar met je prompt."
-
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "Minstens één team dat we kunnen noemen, het onze inbegrepen, haalt een heel kwartaal lang elke F4-drempel en publiceert de cijfers."
 
@@ -2822,8 +2825,8 @@ msgstr "Automatiseringen ({myFailedCount} mislukt)"
 msgid "Automations & event triggers"
 msgstr "Automatiseringen en event-triggers"
 
-msgid "Automations need a Pro or Enterprise plan. If you downgrade, your automations stay but stop running."
-msgstr "Automatiseringen vereisen een Pro- of Enterprise-abonnement. Als je downgradet, blijven je automatiseringen bestaan maar worden ze niet meer uitgevoerd."
+msgid "Automations need a Pro or Enterprise plan; Microsoft Teams triggers need Enterprise. If you downgrade, your automations stay but stop running."
+msgstr "Automatiseringen vereisen een Pro- of Enterprise-abonnement; Microsoft Teams-triggers vereisen Enterprise. Als je downgradet, blijven je automatiseringen bestaan maar worden ze niet meer uitgevoerd."
 
 msgid "Automations require the Pro plan."
 msgstr "Automatiseringen vereisen het Pro-abonnement."
@@ -4212,6 +4215,9 @@ msgstr "Opmerking toegevoegd"
 
 msgid "Comment mentions user"
 msgstr "Opmerking vermeldt gebruiker"
+
+msgid "Comment mentions you"
+msgstr "Opmerking vermeldt jou"
 
 msgid "Comment not found"
 msgstr "Opmerking niet gevonden"
@@ -6540,8 +6546,8 @@ msgstr "Elke agent draait in zijn eigen geïsoleerde Git-worktree. Niemand overs
 msgid "Each attachment is at most {0} MB."
 msgstr "Elke bijlage is maximaal {0} MB."
 
-msgid "Each automation runs on the machine you pick. If it is offline, the run fails and Retry all sends it again."
-msgstr "Elke automatisering draait op de machine die je kiest. Is die offline, dan mislukt de run en stuurt Alles opnieuw proberen hem opnieuw."
+msgid "Each automation runs on the machine you pick. If it is offline when the automation fires, that run is missed."
+msgstr "Elke automatisering draait op de machine die je kiest. Is die offline wanneer de automatisering afgaat, dan wordt die run overgeslagen."
 
 msgid "Each in its own new tab"
 msgstr "Elk in een eigen nieuw tabblad"
@@ -6766,6 +6772,9 @@ msgstr "Voer URL in..."
 
 msgid "Enterprise"
 msgstr "Enterprise"
+
+msgid "Enterprise plan"
+msgstr "Enterprise-abonnement"
 
 msgid "Environment"
 msgstr "Omgeving"
@@ -9106,6 +9115,9 @@ msgstr "Issue-opmerking"
 
 msgid "Issue created"
 msgstr "Issue aangemaakt"
+
+msgid "Issue moved"
+msgstr "Issue verplaatst"
 
 msgid "Issue not found."
 msgstr "Issue niet gevonden."
@@ -13686,6 +13698,9 @@ msgstr "Besturing loslaten"
 msgid "Release notes draft"
 msgstr "Concept van releasenotes"
 
+msgid "Release published"
+msgstr "Release gepubliceerd"
+
 msgid "Release…"
 msgstr "Release…"
 
@@ -16195,6 +16210,9 @@ msgstr "Start bij elke run een nieuwe agentsessie"
 
 msgid "Start a new chat"
 msgstr "Nieuwe chat starten"
+
+msgid "Start a run when something happens."
+msgstr "Start een run wanneer er iets gebeurt."
 
 msgid "Start a session"
 msgstr "Sessie starten"
@@ -19175,6 +19193,9 @@ msgstr "Wat volgt"
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Als dit uitstaat, kan niets anders bij de bestanden en tools op dit apparaat. Je kunt vanaf hier nog steeds verbinden met externe sandboxes. <0>Meer informatie<1/></0>"
 
+msgid "When the event comes in or the schedule fires, the device you picked creates a new workspace. The agent starts on your prompt there."
+msgstr "Wanneer het event binnenkomt of het schema afgaat, maakt het gekozen apparaat een nieuwe werkruimte. De agent begint daar met je prompt."
+
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Waar de badges van gedetecteerde poorten in de zijbalk openen bij een klik."
 
@@ -19447,8 +19468,8 @@ msgstr "Schrijf een opmerking…"
 msgid "Write a note and pick an agent. Your note arrives with the element's code and a cropped screenshot."
 msgstr "Schrijf een notitie en kies een agent. Je notitie komt aan met de code van het element en een bijgesneden screenshot."
 
-msgid "Write a prompt and pick a schedule or an event, like a pull request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
-msgstr "Schrijf een prompt en kies een schema of een event, zoals een pull request, een Slack-bericht, een Linear-issue, een Sentry-issue of een webhook. Elke run opent een werkruimte die je kunt reviewen en voortzetten."
+msgid "Write a prompt and pick an event or a schedule, like a review request, a Slack message, a Linear issue, a Sentry issue, or a webhook. Each run opens a workspace you can review and continue."
+msgstr "Schrijf een prompt en kies een event of een schema, zoals een reviewverzoek, een Slack-bericht, een Linear-issue, een Sentry-issue of een webhook. Elke run opent een werkruimte die je kunt reviewen en voortzetten."
 
 msgid "Write a reply"
 msgstr "Schrijf een antwoord"
@@ -19661,8 +19682,8 @@ msgstr "Je agent publiceert ontwerpen en rapporten die je team beoordeelt. Zodra
 msgid "Your agent publishes designs and reports. Your team comments, and it gets to work."
 msgstr "Je agent publiceert ontwerpen en rapporten. Je team geeft commentaar en de agent gaat aan de slag."
 
-msgid "Your agents do the work on a schedule or when an event comes in."
-msgstr "Je agents doen het werk op een schema of wanneer er een event binnenkomt."
+msgid "Your agents start when something happens, or on a schedule."
+msgstr "Je agents starten wanneer er iets gebeurt, of op een schema."
 
 msgid "Your Agents, Your Accounts"
 msgstr "Jouw agents, jouw accounts"
