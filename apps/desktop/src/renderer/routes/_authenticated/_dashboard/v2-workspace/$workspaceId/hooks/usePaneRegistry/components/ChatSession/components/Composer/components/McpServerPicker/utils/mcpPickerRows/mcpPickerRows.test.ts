@@ -1,5 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import type { McpServerEntry } from "@superset/shared/mcp-servers";
+import { SUPERSET_API_URL } from "@superset/shared/plugins";
 import type { McpPickerPlugin } from "../../../../utils/mcpPickerPlugins";
 import { mcpPickerRows } from "./mcpPickerRows";
 
@@ -20,6 +21,7 @@ function linear(overrides: Partial<McpPickerPlugin>): McpPickerPlugin {
 		name: "linear",
 		displayName: "Linear",
 		servers: ["linear"],
+		urls: [],
 		connector: "linear",
 		connected: false,
 		installed: false,
@@ -62,6 +64,23 @@ describe("mcpPickerRows", () => {
 		expect(mcpPickerRows(configured, [linear({})], "")[0]?.kind).toBe(
 			"available",
 		);
+	});
+
+	it("knows a server under any name by the plugin proxy URL it points at", () => {
+		const rows = mcpPickerRows(
+			[
+				server({
+					name: "my-linear",
+					url: `${SUPERSET_API_URL}/mcp/plugins/superset/linear`,
+				}),
+			],
+			[linear({ installed: true })],
+			"",
+		);
+
+		expect(rows.map((row) => [row.name, row.kind])).toEqual([
+			["my-linear", "action"],
+		]);
 	});
 
 	it("offers Install, then says the server arrives with the next session", () => {

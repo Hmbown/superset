@@ -337,12 +337,14 @@ export const Composer = memo(function Composer({
 			const name = LEADING_COMMAND.exec(text.trim())?.[1];
 			const input = promptInputRef.current;
 			if (text.trim() === "/mcp" && mcpPicker.command && input) {
-				mcpPicker.open.current({
-					insertChip: input.insertChip,
-					attachFiles: input.openFileDialog,
-					openPanel: input.openPanel,
-					query: "",
-				});
+				queueMicrotask(() =>
+					mcpPicker.open.current({
+						insertChip: input.insertChip,
+						attachFiles: input.openFileDialog,
+						openPanel: input.openPanel,
+						query: "",
+					}),
+				);
 				return;
 			}
 			if (

@@ -18,6 +18,7 @@ export interface McpServerEntry {
 	agent: string;
 	scope: McpServerScope;
 	transport: string;
+	url?: string;
 	configPath: string;
 	state: McpServerState;
 }

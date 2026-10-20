@@ -1,4 +1,5 @@
 import type { McpServerEntry } from "@superset/shared/mcp-servers";
+import { SUPERSET_API_URL } from "@superset/shared/plugins";
 import type { McpPickerPlugin } from "../../../../utils/mcpPickerPlugins";
 
 interface RowBase {
@@ -27,16 +28,31 @@ export type McpPickerRow = RowBase &
 export type McpPickerActionRow = Extract<McpPickerRow, { kind: "action" }>;
 
 const ORDER = { available: 0, action: 1, unavailable: 2 } as const;
+const PROXY_PREFIX = `${SUPERSET_API_URL}/mcp/plugins/`;
+
+function pluginOfServer(
+	server: McpServerEntry,
+	plugins: readonly McpPickerPlugin[],
+): McpPickerPlugin | null {
+	if (server.url?.startsWith(PROXY_PREFIX)) {
+		const name = server.url.slice(PROXY_PREFIX.length).split("/")[1];
+		return plugins.find((candidate) => candidate.name === name) ?? null;
+	}
+	return (
+		plugins.find(
+			(candidate) =>
+				candidate.installed &&
+				(candidate.servers.includes(server.name) ||
+					(server.url !== undefined && candidate.urls.includes(server.url))),
+		) ?? null
+	);
+}
 
 function configuredRow(
 	server: McpServerEntry,
 	plugins: readonly McpPickerPlugin[],
 ): McpPickerRow {
-	const plugin =
-		plugins.find(
-			(candidate) =>
-				candidate.installed && candidate.servers.includes(server.name),
-		) ?? null;
+	const plugin = pluginOfServer(server, plugins);
 	const base = {
 		key: `${server.agent}:${server.scope}:${server.configPath}:${server.name}`,
 		name: server.name,
@@ -60,13 +76,13 @@ function setupRows(
 	servers: readonly McpServerEntry[],
 	plugins: readonly McpPickerPlugin[],
 ): McpPickerRow[] {
-	const configured = new Set(
-		servers
-			.filter((server) => server.state !== "other-agent")
-			.map((server) => server.name),
+	const ours = servers.filter((server) => server.state !== "other-agent");
+	const configured = new Set(ours.map((server) => server.name));
+	const covered = new Set(
+		ours.flatMap((server) => pluginOfServer(server, plugins)?.name ?? []),
 	);
 	return plugins.flatMap((plugin) =>
-		plugin.servers
+		(covered.has(plugin.name) ? [] : plugin.servers)
 			.filter((name) => !configured.has(name))
 			.map((name): McpPickerRow => {
 				const base = {

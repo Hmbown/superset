@@ -25,6 +25,7 @@ interface FoundServer {
 	agent: McpServerAgent;
 	scope: McpServerScope;
 	transport: string;
+	url?: string;
 	enabled: boolean;
 	configPath: string;
 	untrusted?: boolean;
@@ -110,16 +111,17 @@ function jsonServers(
 	if (!isRecord(servers)) return [];
 	return Object.entries(servers).flatMap(([name, config]): FoundServer[] => {
 		if (!isRecord(config)) return [];
-		const hasUrl = typeof config.url === "string";
+		const url = typeof config.url === "string" ? config.url : undefined;
 		return [
 			{
 				name,
 				agent: "claude",
 				scope,
+				...(url ? { url } : {}),
 				transport:
 					typeof config.type === "string"
 						? config.type
-						: hasUrl
+						: url
 							? "http"
 							: "stdio",
 				enabled:
@@ -210,7 +212,11 @@ function parseCodexMcpServers(
 			continue;
 		}
 		if (!current) continue;
-		if (tomlString(line, "url") !== undefined) current.transport = "http";
+		const url = tomlString(line, "url");
+		if (url !== undefined) {
+			current.transport = "http";
+			current.url = url;
+		}
 		if (/^\s*enabled\s*=\s*false\b/.test(line)) current.enabled = false;
 	}
 	return [...servers.values()];
@@ -298,6 +304,7 @@ export async function discoverMcpServers({
 				agent: found.agent,
 				scope: found.scope,
 				transport: found.transport,
+				...(found.url ? { url: found.url } : {}),
 				configPath: found.configPath,
 				state:
 					found.agent !== agent
