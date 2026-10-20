@@ -92,10 +92,6 @@ msgstr "(no output)"
 msgid "(you)"
 msgstr "(you)"
 
-#. placeholder {0}: connections.length
-msgid "{0, plural, one {# account connected} other {# accounts connected}}"
-msgstr "{0, plural, one {# account connected} other {# accounts connected}}"
-
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
@@ -391,16 +387,14 @@ msgstr "{0} cannot be signed in this way yet."
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: variables.name
 msgid "{0} disabled"
 msgstr "{0} disabled"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "{0} Documentation"
 msgstr "{0} Documentation"
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: skill.name
 #. placeholder {0}: variables.name
 msgid "{0} enabled"
@@ -1196,7 +1190,7 @@ msgstr "#{0} {1}\n"
 msgid "#engineering"
 msgstr "#engineering"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.NAME
 msgid "%s | {0} Docs"
 msgstr "%s | {0} Docs"
 
@@ -1532,6 +1526,9 @@ msgstr "Aa"
 
 msgid "About"
 msgstr "About"
+
+msgid "About {displayName}"
+msgstr "About {displayName}"
 
 msgid "About Superset"
 msgstr "About Superset"
@@ -2111,8 +2108,8 @@ msgstr "All of your data will be permanently deleted after {ACCOUNT_DELETION_GRA
 msgid "All of your data will be permanently deleted after {ACCOUNT_DELETION_GRACE_DAYS} days. Sign back in before then to restore your account."
 msgstr "All of your data will be permanently deleted after {ACCOUNT_DELETION_GRACE_DAYS} days. Sign back in before then to restore your account."
 
-msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close Superset” instead if you want services to keep running for the next launch."
-msgstr "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close Superset” instead if you want services to keep running for the next launch."
+msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close {displayName}” instead if you want services to keep running for the next launch."
+msgstr "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close {displayName}” instead if you want services to keep running for the next launch."
 
 msgid "All pages"
 msgstr "All pages"
@@ -2578,6 +2575,9 @@ msgstr "Ask an agent for a design doc or a report. It builds the page and publis
 
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Ask an agent to publish one from the desktop app."
+
+msgid "Ask before you close a terminal, tab, or port that still has a process running in it"
+msgstr "Ask before you close a terminal, tab, or port that still has a process running in it"
 
 msgid "Ask for approval"
 msgstr "Ask for approval"
@@ -3859,9 +3859,6 @@ msgstr "Click the chip to open the pull request"
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Click to copy the session ID (resume with `claude --resume <id>`)."
 
-msgid "Click to open on GitHub"
-msgstr "Click to open on GitHub"
-
 msgid "Click to open the pull request"
 msgstr "Click to open the pull request"
 
@@ -3905,6 +3902,9 @@ msgstr "Close (Esc)"
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "Close {0}"
+
+msgid "Close {displayName}"
+msgstr "Close {displayName}"
 
 #. placeholder {0}: data.number
 msgid "Close #{0}?"
@@ -4004,9 +4004,6 @@ msgstr "Close review filter"
 
 msgid "Close session"
 msgstr "Close session"
-
-msgid "Close Superset"
-msgstr "Close Superset"
 
 msgid "Close tab"
 msgstr "Close tab"
@@ -6191,9 +6188,6 @@ msgstr "Direct mode"
 msgid "Directory"
 msgstr "Directory"
 
-msgid "Disable"
-msgstr "Disable"
-
 msgid "Disable skill"
 msgstr "Disable skill"
 
@@ -6699,9 +6693,6 @@ msgstr "Empty command"
 
 msgid "Emulator"
 msgstr "Emulator"
-
-msgid "Enable"
-msgstr "Enable"
 
 #. placeholder {0}: preset.label
 msgid "Enable {0}"
@@ -8310,6 +8301,9 @@ msgstr "Hidden until you join"
 msgid "Hide"
 msgstr "Hide"
 
+msgid "Hide {displayName}"
+msgstr "Hide {displayName}"
+
 msgid "Hide checks"
 msgstr "Hide checks"
 
@@ -8916,9 +8910,6 @@ msgstr "Install Superset MCP in your client"
 msgid "Install the desktop app"
 msgstr "Install the desktop app"
 
-msgid "Install the plugin to connect"
-msgstr "Install the plugin to connect"
-
 msgid "Install the Superset GitHub App to connect your repositories."
 msgstr "Install the Superset GitHub App to connect your repositories."
 
@@ -9160,6 +9151,9 @@ msgstr "Iterate."
 
 msgid "Its comments and history go with it."
 msgstr "Its comments and history go with it."
+
+msgid "Its connected accounts were disconnected."
+msgstr "Its connected accounts were disconnected."
 
 msgid "Its own branch and copy of the files"
 msgstr "Its own branch and copy of the files"
@@ -9955,9 +9949,6 @@ msgstr "Manage"
 
 msgid "Manage {title}"
 msgstr "Manage {title}"
-
-msgid "Manage accounts"
-msgstr "Manage accounts"
 
 msgid "Manage accounts…"
 msgstr "Manage accounts…"
@@ -11559,11 +11550,11 @@ msgstr "of all tokens"
 msgid "Off"
 msgstr "Off"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
 msgstr "Official documentation for {0}, the app for running 100+ coding agents in parallel."
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}. Learn how to run 100+ coding agents in parallel on your machine."
 msgstr "Official documentation for {0}. Learn how to run 100+ coding agents in parallel on your machine."
 
@@ -11777,6 +11768,9 @@ msgstr "Open {0}"
 #. placeholder {0}: plugin.interface.displayName
 msgid "Open {0} website"
 msgstr "Open {0} website"
+
+msgid "Open {displayName}"
+msgstr "Open {displayName}"
 
 msgid "Open {filePath}"
 msgstr "Open {filePath}"
@@ -12098,9 +12092,6 @@ msgstr "Open sheet"
 
 msgid "Open ship options"
 msgstr "Open ship options"
-
-msgid "Open Superset"
-msgstr "Open Superset"
 
 msgid "Open Superset on that computer"
 msgstr "Open Superset on that computer"
@@ -13381,17 +13372,21 @@ msgstr "Quiet"
 msgid "Quit"
 msgstr "Quit"
 
+msgid "Quit {displayName}"
+msgstr "Quit {displayName}"
+
+msgctxt "quit confirmation dialog title"
+msgid "Quit {displayName}"
+msgstr "Quit {displayName}"
+
+msgid "Quit {displayName} and stop all background services?"
+msgstr "Quit {displayName} and stop all background services?"
+
+msgid "Quit {displayName} Completely"
+msgstr "Quit {displayName} Completely"
+
 msgid "Quit Completely"
 msgstr "Quit Completely"
-
-msgid "Quit Superset"
-msgstr "Quit Superset"
-
-msgid "Quit Superset and stop all background services?"
-msgstr "Quit Superset and stop all background services?"
-
-msgid "Quit Superset Completely"
-msgstr "Quit Superset Completely"
 
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
@@ -15292,8 +15287,8 @@ msgstr "Sentry triggers stop firing until you connect again. The integration sta
 msgid "Separator"
 msgstr "Separator"
 
-msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
-msgstr "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
+msgid "Service availability is published at <0>{statusHost}</0>, and security and compliance documentation at <1>{trustHost}</1>."
+msgstr "Service availability is published at <0>{statusHost}</0>, and security and compliance documentation at <1>{trustHost}</1>."
 
 msgid "Session"
 msgstr "Session"
@@ -18939,6 +18934,9 @@ msgstr "Waking up workspace"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
+
+msgid "Warn before closing a running terminal"
+msgstr "Warn before closing a running terminal"
 
 msgid "Warning"
 msgstr "Warning"

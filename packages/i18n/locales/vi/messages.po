@@ -92,10 +92,6 @@ msgstr "(không có đầu ra)"
 msgid "(you)"
 msgstr "(bạn)"
 
-#. placeholder {0}: connections.length
-msgid "{0, plural, one {# account connected} other {# accounts connected}}"
-msgstr "{0, plural, other {# tài khoản đã kết nối}}"
-
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# cổng đang hoạt động — ẩn chi tiết} other {# cổng đang hoạt động — ẩn chi tiết}}"
@@ -391,16 +387,14 @@ msgstr "{0} chưa thể đăng nhập theo cách này."
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} nhà phát triển được xếp hạng theo mức dùng agent. 30 ngày qua của bạn đã được tính, chỉ là đang ẩn. Chỉ số lượng token và tên mô hình, không có tên repo, đường dẫn tệp hay prompt."
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: variables.name
 msgid "{0} disabled"
 msgstr "Đã tắt {0}"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "{0} Documentation"
 msgstr "Tài liệu {0}"
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: skill.name
 #. placeholder {0}: variables.name
 msgid "{0} enabled"
@@ -1196,7 +1190,7 @@ msgstr "#{0} {1}\n"
 msgid "#engineering"
 msgstr "#engineering"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.NAME
 msgid "%s | {0} Docs"
 msgstr "%s | Tài liệu {0}"
 
@@ -1532,6 +1526,9 @@ msgstr "Aa"
 
 msgid "About"
 msgstr "Giới thiệu"
+
+msgid "About {displayName}"
+msgstr "Giới thiệu về {displayName}"
 
 msgid "About Superset"
 msgstr "Về Superset"
@@ -2111,8 +2108,8 @@ msgstr "Toàn bộ dữ liệu của bạn sẽ bị xóa vĩnh viễn sau {ACCO
 msgid "All of your data will be permanently deleted after {ACCOUNT_DELETION_GRACE_DAYS} days. Sign back in before then to restore your account."
 msgstr "Toàn bộ dữ liệu của bạn sẽ bị xóa vĩnh viễn sau {ACCOUNT_DELETION_GRACE_DAYS} ngày. Hãy đăng nhập lại trước thời điểm đó để khôi phục tài khoản."
 
-msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close Superset” instead if you want services to keep running for the next launch."
-msgstr "Mọi phiên terminal đang mở sẽ bị kết thúc và các host-service đang chạy sẽ bị dừng. Hãy dùng “Đóng Superset” nếu bạn muốn các dịch vụ tiếp tục chạy cho lần khởi động sau."
+msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close {displayName}” instead if you want services to keep running for the next launch."
+msgstr "Mọi phiên terminal đang mở sẽ bị kết thúc và các host-service đang chạy sẽ bị dừng. Hãy dùng “Đóng {displayName}” nếu bạn muốn các dịch vụ tiếp tục chạy cho lần khởi động sau."
 
 msgid "All pages"
 msgstr "Tất cả các trang"
@@ -2578,6 +2575,9 @@ msgstr "Nhờ agent viết tài liệu thiết kế hoặc báo cáo. Agent tạ
 
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Hãy nhờ một agent xuất bản một trang từ ứng dụng máy tính."
+
+msgid "Ask before you close a terminal, tab, or port that still has a process running in it"
+msgstr "Hỏi trước khi đóng terminal, tab hoặc cổng vẫn còn tiến trình đang chạy"
 
 msgid "Ask for approval"
 msgstr "Yêu cầu phê duyệt"
@@ -3859,9 +3859,6 @@ msgstr "Nhấp vào thẻ để mở pull request"
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Nhấp để sao chép ID phiên (resume bằng `claude --resume <id>`)."
 
-msgid "Click to open on GitHub"
-msgstr "Nhấp để mở trên GitHub"
-
 msgid "Click to open the pull request"
 msgstr "Nhấp để mở pull request"
 
@@ -3905,6 +3902,9 @@ msgstr "Đóng (Esc)"
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "Đóng {0}"
+
+msgid "Close {displayName}"
+msgstr "Đóng {displayName}"
 
 #. placeholder {0}: data.number
 msgid "Close #{0}?"
@@ -4004,9 +4004,6 @@ msgstr "Đóng bộ lọc review"
 
 msgid "Close session"
 msgstr "Đóng phiên"
-
-msgid "Close Superset"
-msgstr "Đóng Superset"
 
 msgid "Close tab"
 msgstr "Đóng tab"
@@ -6191,9 +6188,6 @@ msgstr "Chế độ trực tiếp"
 msgid "Directory"
 msgstr "Thư mục"
 
-msgid "Disable"
-msgstr "Tắt"
-
 msgid "Disable skill"
 msgstr "Tắt skill"
 
@@ -6699,9 +6693,6 @@ msgstr "Lệnh trống"
 
 msgid "Emulator"
 msgstr "Trình giả lập"
-
-msgid "Enable"
-msgstr "Bật"
 
 #. placeholder {0}: preset.label
 msgid "Enable {0}"
@@ -8310,6 +8301,9 @@ msgstr "Ẩn cho đến khi bạn tham gia"
 msgid "Hide"
 msgstr "Ẩn"
 
+msgid "Hide {displayName}"
+msgstr "Ẩn {displayName}"
+
 msgid "Hide checks"
 msgstr "Ẩn check"
 
@@ -8916,9 +8910,6 @@ msgstr "Cài Superset MCP vào client của bạn"
 msgid "Install the desktop app"
 msgstr "Cài ứng dụng máy tính"
 
-msgid "Install the plugin to connect"
-msgstr "Cài đặt plugin để kết nối"
-
 msgid "Install the Superset GitHub App to connect your repositories."
 msgstr "Hãy cài Superset GitHub App để kết nối các repository của bạn."
 
@@ -9160,6 +9151,9 @@ msgstr "Cải tiến."
 
 msgid "Its comments and history go with it."
 msgstr "Bình luận và lịch sử cũng bị xóa theo."
+
+msgid "Its connected accounts were disconnected."
+msgstr "Các tài khoản đã kết nối đã bị ngắt kết nối."
 
 msgid "Its own branch and copy of the files"
 msgstr "Nhánh riêng và bản sao tệp riêng"
@@ -9955,9 +9949,6 @@ msgstr "Quản lý"
 
 msgid "Manage {title}"
 msgstr "Quản lý {title}"
-
-msgid "Manage accounts"
-msgstr "Quản lý tài khoản"
 
 msgid "Manage accounts…"
 msgstr "Quản lý tài khoản…"
@@ -11559,11 +11550,11 @@ msgstr "trên tổng số token"
 msgid "Off"
 msgstr "Tắt"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
 msgstr "Tài liệu chính thức của {0}, ứng dụng chạy song song hơn 100 tác tử lập trình."
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}. Learn how to run 100+ coding agents in parallel on your machine."
 msgstr "Tài liệu chính thức của {0}. Tìm hiểu cách chạy song song hơn 100 tác tử lập trình trên máy của bạn."
 
@@ -11777,6 +11768,9 @@ msgstr "Mở {0}"
 #. placeholder {0}: plugin.interface.displayName
 msgid "Open {0} website"
 msgstr "Mở website {0}"
+
+msgid "Open {displayName}"
+msgstr "Mở {displayName}"
 
 msgid "Open {filePath}"
 msgstr "Mở {filePath}"
@@ -12098,9 +12092,6 @@ msgstr "Mở sheet"
 
 msgid "Open ship options"
 msgstr "Mở tùy chọn gửi"
-
-msgid "Open Superset"
-msgstr "Mở Superset"
 
 msgid "Open Superset on that computer"
 msgstr "Mở Superset trên máy tính đó"
@@ -13381,17 +13372,21 @@ msgstr "Nhỏ"
 msgid "Quit"
 msgstr "Thoát"
 
+msgid "Quit {displayName}"
+msgstr "Thoát {displayName}"
+
+msgctxt "quit confirmation dialog title"
+msgid "Quit {displayName}"
+msgstr "Thoát {displayName}"
+
+msgid "Quit {displayName} and stop all background services?"
+msgstr "Thoát {displayName} và dừng mọi dịch vụ nền?"
+
+msgid "Quit {displayName} Completely"
+msgstr "Thoát hẳn {displayName}"
+
 msgid "Quit Completely"
 msgstr "Thoát hẳn"
-
-msgid "Quit Superset"
-msgstr "Thoát Superset"
-
-msgid "Quit Superset and stop all background services?"
-msgstr "Thoát Superset và dừng mọi dịch vụ nền?"
-
-msgid "Quit Superset Completely"
-msgstr "Thoát hẳn Superset"
 
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "Thoát trình duyệt nguồn trước để thông tin đăng nhập được lưu xuống đĩa. Bạn sẽ được hỏi cho phép truy cập Keychain."
@@ -15292,8 +15287,8 @@ msgstr "Các trigger Sentry sẽ ngừng chạy cho đến khi bạn kết nối
 msgid "Separator"
 msgstr "Separator"
 
-msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
-msgstr "Tình trạng dịch vụ được công bố tại <0>status.superset.sh</0>, còn tài liệu bảo mật và tuân thủ tại <1>trust.superset.sh</1>."
+msgid "Service availability is published at <0>{statusHost}</0>, and security and compliance documentation at <1>{trustHost}</1>."
+msgstr "Tình trạng dịch vụ được công bố tại <0>{statusHost}</0>, còn tài liệu bảo mật và tuân thủ tại <1>{trustHost}</1>."
 
 msgid "Session"
 msgstr "Phiên"
@@ -18939,6 +18934,9 @@ msgstr "Đang đánh thức workspace"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Muốn có sớm hơn? <0>Hãy nói với chúng tôi trên Discord</0>. Phần lớn những gì ở đây bắt đầu từ yêu cầu của người dùng."
+
+msgid "Warn before closing a running terminal"
+msgstr "Cảnh báo trước khi đóng terminal đang chạy"
 
 msgid "Warning"
 msgstr "Cảnh báo"

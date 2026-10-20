@@ -92,10 +92,6 @@ msgstr "(çıktı yok)"
 msgid "(you)"
 msgstr "(siz)"
 
-#. placeholder {0}: connections.length
-msgid "{0, plural, one {# account connected} other {# accounts connected}}"
-msgstr "{0, plural, one {# hesap bağlı} other {# hesap bağlı}}"
-
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# etkin port — ayrıntıları gizle} other {# etkin port — ayrıntıları gizle}}"
@@ -391,16 +387,14 @@ msgstr "{0} henüz bu şekilde oturum açamıyor."
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} geliştirici ajan kullanımına göre sıralanıyor. Son 30 gününüz zaten sayılıyor, yalnızca gizli. Yalnızca token sayıları ve model adları; repo adları, dosya yolları veya prompt'lar yok."
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: variables.name
 msgid "{0} disabled"
 msgstr "{0} devre dışı bırakıldı"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "{0} Documentation"
 msgstr "{0} Belgeleri"
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: skill.name
 #. placeholder {0}: variables.name
 msgid "{0} enabled"
@@ -1196,7 +1190,7 @@ msgstr "#{0} {1}\n"
 msgid "#engineering"
 msgstr "#engineering"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.NAME
 msgid "%s | {0} Docs"
 msgstr "%s | {0} Belgeleri"
 
@@ -1532,6 +1526,9 @@ msgstr "Aa"
 
 msgid "About"
 msgstr "Hakkımızda"
+
+msgid "About {displayName}"
+msgstr "{displayName} Hakkında"
 
 msgid "About Superset"
 msgstr "Superset hakkında"
@@ -2111,8 +2108,8 @@ msgstr "Tüm verileriniz {ACCOUNT_DELETION_GRACE_DAYS} gün sonra kalıcı olara
 msgid "All of your data will be permanently deleted after {ACCOUNT_DELETION_GRACE_DAYS} days. Sign back in before then to restore your account."
 msgstr "Tüm verileriniz {ACCOUNT_DELETION_GRACE_DAYS} gün sonra kalıcı olarak silinecek. Hesabınızı geri yüklemek için o tarihten önce yeniden oturum açın."
 
-msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close Superset” instead if you want services to keep running for the next launch."
-msgstr "Açık tüm terminal oturumları sonlandırılacak ve çalışan host hizmetleri durdurulacak. Hizmetlerin sonraki açılış için çalışmaya devam etmesini istiyorsanız “Superset'i kapat” seçeneğini kullanın."
+msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close {displayName}” instead if you want services to keep running for the next launch."
+msgstr "Açık tüm terminal oturumları sonlandırılacak ve çalışan host hizmetleri durdurulacak. Hizmetlerin sonraki açılış için çalışmaya devam etmesini istiyorsanız “{displayName}'i kapat” seçeneğini kullanın."
 
 msgid "All pages"
 msgstr "Tüm sayfalar"
@@ -2578,6 +2575,9 @@ msgstr "Bir ajandan tasarım belgesi veya rapor isteyin. Sayfayı oluşturup yay
 
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Bir ajandan masaüstü uygulamasından bir tane yayımlamasını isteyin."
+
+msgid "Ask before you close a terminal, tab, or port that still has a process running in it"
+msgstr "İçinde hâlâ çalışan bir işlem olan bir terminali, sekmeyi veya portu kapatmadan önce sor"
 
 msgid "Ask for approval"
 msgstr "Onay iste"
@@ -3859,9 +3859,6 @@ msgstr "Pull request'i açmak için etikete tıklayın"
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Oturum kimliğini kopyalamak için tıklayın (`claude --resume <id>` ile sürdürün)."
 
-msgid "Click to open on GitHub"
-msgstr "GitHub'da açmak için tıklayın"
-
 msgid "Click to open the pull request"
 msgstr "Pull request'i açmak için tıklayın"
 
@@ -3905,6 +3902,9 @@ msgstr "Kapat (Esc)"
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "{0} oturumunu kapat"
+
+msgid "Close {displayName}"
+msgstr "{displayName}'i kapat"
 
 #. placeholder {0}: data.number
 msgid "Close #{0}?"
@@ -4004,9 +4004,6 @@ msgstr "İnceleme filtresini kapat"
 
 msgid "Close session"
 msgstr "Oturumu kapat"
-
-msgid "Close Superset"
-msgstr "Superset'i kapat"
 
 msgid "Close tab"
 msgstr "Sekmeyi kapat"
@@ -6191,9 +6188,6 @@ msgstr "Doğrudan mod"
 msgid "Directory"
 msgstr "Dizin"
 
-msgid "Disable"
-msgstr "Devre dışı bırak"
-
 msgid "Disable skill"
 msgstr "Beceriyi devre dışı bırak"
 
@@ -6699,9 +6693,6 @@ msgstr "Boş komut"
 
 msgid "Emulator"
 msgstr "Emülatör"
-
-msgid "Enable"
-msgstr "Etkinleştir"
 
 #. placeholder {0}: preset.label
 msgid "Enable {0}"
@@ -8310,6 +8301,9 @@ msgstr "Katılana kadar gizli"
 msgid "Hide"
 msgstr "Gizle"
 
+msgid "Hide {displayName}"
+msgstr "{displayName} Uygulamasını Gizle"
+
 msgid "Hide checks"
 msgstr "Kontrolleri gizle"
 
@@ -8916,9 +8910,6 @@ msgstr "Superset MCP'yi istemcinize kurun"
 msgid "Install the desktop app"
 msgstr "Masaüstü uygulamasını kurun"
 
-msgid "Install the plugin to connect"
-msgstr "Bağlanmak için eklentiyi kurun"
-
 msgid "Install the Superset GitHub App to connect your repositories."
 msgstr "Depolarınızı bağlamak için Superset GitHub App'i kurun."
 
@@ -9160,6 +9151,9 @@ msgstr "Yineleyin."
 
 msgid "Its comments and history go with it."
 msgstr "Yorumları ve geçmişi de silinir."
+
+msgid "Its connected accounts were disconnected."
+msgstr "Bağlı hesapların bağlantısı kesildi."
 
 msgid "Its own branch and copy of the files"
 msgstr "Kendi dalı ve dosyaların kendi kopyası"
@@ -9955,9 +9949,6 @@ msgstr "Yönet"
 
 msgid "Manage {title}"
 msgstr "{title} yönet"
-
-msgid "Manage accounts"
-msgstr "Hesapları yönet"
 
 msgid "Manage accounts…"
 msgstr "Hesapları yönet…"
@@ -11559,11 +11550,11 @@ msgstr "tüm token'ların"
 msgid "Off"
 msgstr "Kapalı"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
 msgstr "100'den fazla kodlama ajanını paralel çalıştıran {0} uygulamasının resmi belgeleri."
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}. Learn how to run 100+ coding agents in parallel on your machine."
 msgstr "{0} resmi belgeleri. Bilgisayarınızda 100'den fazla kodlama ajanını paralel çalıştırmayı öğrenin."
 
@@ -11777,6 +11768,9 @@ msgstr "Aç: {0}"
 #. placeholder {0}: plugin.interface.displayName
 msgid "Open {0} website"
 msgstr "{0} web sitesini aç"
+
+msgid "Open {displayName}"
+msgstr "{displayName}'i aç"
 
 msgid "Open {filePath}"
 msgstr "Aç: {filePath}"
@@ -12098,9 +12092,6 @@ msgstr "Sayfayı aç"
 
 msgid "Open ship options"
 msgstr "Gönderim seçeneklerini aç"
-
-msgid "Open Superset"
-msgstr "Superset'i aç"
 
 msgid "Open Superset on that computer"
 msgstr "O bilgisayarda Superset'i açın"
@@ -13381,17 +13372,21 @@ msgstr "Sessiz"
 msgid "Quit"
 msgstr "Çık"
 
+msgid "Quit {displayName}"
+msgstr "{displayName} Uygulamasından Çık"
+
+msgctxt "quit confirmation dialog title"
+msgid "Quit {displayName}"
+msgstr "{displayName}'ten çık"
+
+msgid "Quit {displayName} and stop all background services?"
+msgstr "{displayName}'ten çıkılsın ve tüm arka plan hizmetleri durdurulsun mu?"
+
+msgid "Quit {displayName} Completely"
+msgstr "{displayName}'ten tamamen çık"
+
 msgid "Quit Completely"
 msgstr "Tamamen çık"
-
-msgid "Quit Superset"
-msgstr "Superset'ten çık"
-
-msgid "Quit Superset and stop all background services?"
-msgstr "Superset'ten çıkılsın ve tüm arka plan hizmetleri durdurulsun mu?"
-
-msgid "Quit Superset Completely"
-msgstr "Superset'ten tamamen çık"
 
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "Oturum bilgilerinin diske kaydedilmesi için önce kaynak tarayıcıdan çıkın. Anahtar Zinciri erişimine izin vermeniz istenecek."
@@ -15292,8 +15287,8 @@ msgstr "Siz yeniden bağlanana kadar Sentry tetikleyicileri çalışmaz. Entegra
 msgid "Separator"
 msgstr "Ayırıcı"
 
-msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
-msgstr "Hizmet durumu <0>status.superset.sh</0> adresinde, güvenlik ve uyumluluk belgeleri ise <1>trust.superset.sh</1> adresinde yayımlanır."
+msgid "Service availability is published at <0>{statusHost}</0>, and security and compliance documentation at <1>{trustHost}</1>."
+msgstr "Hizmet durumu <0>{statusHost}</0> adresinde, güvenlik ve uyumluluk belgeleri ise <1>{trustHost}</1> adresinde yayımlanır."
 
 msgid "Session"
 msgstr "Oturum"
@@ -18939,6 +18934,9 @@ msgstr "Çalışma alanı uyandırılıyor"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Bir şeyi daha erken mi istiyorsunuz? <0>Discord'da bize söyleyin</0>. Buradakilerin çoğu bir kullanıcı isteği olarak başladı."
+
+msgid "Warn before closing a running terminal"
+msgstr "Çalışan bir terminali kapatmadan önce uyar"
 
 msgid "Warning"
 msgstr "Uyarı"
