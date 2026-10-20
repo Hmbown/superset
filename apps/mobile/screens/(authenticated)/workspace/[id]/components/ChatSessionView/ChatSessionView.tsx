@@ -14,6 +14,7 @@ import {
 import { randomUUID } from "expo-crypto";
 import { useRouter } from "expo-router";
 import { useHeaderHeight } from "expo-router/react-navigation";
+import { ListEnd } from "lucide-react-native";
 import {
 	forwardRef,
 	useCallback,
@@ -33,6 +34,7 @@ import {
 } from "@/lib/chat";
 import { errorCopy } from "@/lib/errors";
 import { usePendingChatLaunchStore } from "@/screens/(authenticated)/stores/pendingChatLaunchStore";
+import type { PullRequestDiffstat } from "../../hooks/usePullRequestDiffstat";
 import { useActiveChatStore } from "../../stores/activeChatStore";
 import { useChatActivityStore } from "../../stores/chatActivityStore";
 import {
@@ -42,7 +44,12 @@ import {
 	groupPositions,
 	lastReplyKeys,
 } from "../../utils/chatRows";
+import {
+	PULL_REQUEST_STATUS,
+	type PullRequestStatus,
+} from "../../utils/pullRequest";
 import { ChatRowView } from "../ChatRowView";
+import { Diffstat } from "../Diffstat";
 import { DockChip } from "./components/DockChip";
 import { ScrollToBottom } from "./components/ScrollToBottom";
 import { StickToBottom } from "./components/StickToBottom";
@@ -82,7 +89,12 @@ interface ChatSessionViewProps {
 	hostUrl: string;
 	onOpenSession: (sessionId: string) => void;
 	onTap?: () => void;
-	pullRequestLabel?: string;
+	/** The newest pull request sets the mark and the diffstat. */
+	pullRequestChip?: {
+		label: string;
+		status: PullRequestStatus;
+		diffstat: PullRequestDiffstat | null;
+	};
 	onOpenPullRequests?: () => void;
 }
 
@@ -102,7 +114,7 @@ export const ChatSessionView = forwardRef<
 		hostUrl,
 		onOpenSession,
 		onTap,
-		pullRequestLabel,
+		pullRequestChip,
 		onOpenPullRequests,
 	},
 	ref,
@@ -447,19 +459,27 @@ export const ChatSessionView = forwardRef<
 				onLayout={(event) => setDockHeight(event.nativeEvent.layout.height)}
 				pointerEvents="box-none"
 			>
-				{pullRequestLabel || queued.length > 0 ? (
+				{pullRequestChip || queued.length > 0 ? (
 					<View className="flex-row gap-2" pointerEvents="box-none">
-						{pullRequestLabel && onOpenPullRequests ? (
+						{pullRequestChip && onOpenPullRequests ? (
 							<DockChip
-								systemName="arrow.triangle.pull"
-								label={pullRequestLabel}
+								icon={PULL_REQUEST_STATUS[pullRequestChip.status].icon}
+								iconClassName={PULL_REQUEST_STATUS[pullRequestChip.status].ink}
+								label={pullRequestChip.label}
 								onPress={onOpenPullRequests}
-							/>
+							>
+								{pullRequestChip.diffstat ? (
+									<Diffstat
+										{...pullRequestChip.diffstat}
+										className="text-[15px]"
+									/>
+								) : null}
+							</DockChip>
 						) : null}
 						{queued.length > 0 ? (
 							<DockChip
 								count={queued.length}
-								systemName="text.append"
+								icon={ListEnd}
 								label={
 									queuePaused
 										? t({ message: "Queue paused" })
