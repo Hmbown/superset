@@ -1,5 +1,4 @@
 import { useLingui } from "@lingui/react/macro";
-import type { OfferedMachineSize } from "@superset/shared/billing";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -15,8 +14,8 @@ import {
 } from "../FormPickerTrigger";
 
 interface MachineSizePickerPillProps {
-	machineSize: OfferedMachineSize;
-	onSelectMachineSize: (machineSize: OfferedMachineSize) => void;
+	machineSize: string | null;
+	onSelectMachineSize: (machineSize: string) => void;
 }
 
 export function MachineSizePickerPill({
@@ -24,9 +23,11 @@ export function MachineSizePickerPill({
 	onSelectMachineSize,
 }: MachineSizePickerPillProps) {
 	const { t } = useLingui();
-	const options = useMachineSizeOptions();
-	const selected = options.find((option) => option.size === machineSize);
-	const label = selected?.name ?? machineSize;
+	const { options, defaultSize } = useMachineSizeOptions();
+	const selected =
+		options.find((option) => option.size === machineSize) ??
+		options.find((option) => option.size === defaultSize);
+	const label = selected?.name ?? machineSize ?? defaultSize;
 
 	return (
 		<DropdownMenu>
@@ -62,7 +63,7 @@ export function MachineSizePickerPill({
 								{option.usage}
 							</span>
 						</span>
-						{option.size === machineSize && (
+						{option.size === selected?.size && (
 							<HiCheck className="mt-0.5 size-4 shrink-0" />
 						)}
 					</DropdownMenuItem>

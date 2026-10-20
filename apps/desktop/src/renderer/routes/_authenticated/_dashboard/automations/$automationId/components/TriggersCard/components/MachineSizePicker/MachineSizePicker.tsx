@@ -1,4 +1,3 @@
-import type { OfferedMachineSize } from "@superset/shared/billing";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -11,8 +10,8 @@ import { PickerTrigger } from "renderer/components/PickerTrigger";
 import { useMachineSizeOptions } from "renderer/routes/_authenticated/hooks/useMachineSizeOptions";
 
 interface MachineSizePickerProps {
-	value: OfferedMachineSize;
-	onChange: (machineSize: OfferedMachineSize) => void;
+	value: string | null;
+	onChange: (machineSize: string) => void;
 	className?: string;
 	disabled?: boolean;
 }
@@ -23,8 +22,10 @@ export function MachineSizePicker({
 	className,
 	disabled,
 }: MachineSizePickerProps) {
-	const options = useMachineSizeOptions();
-	const selected = options.find((option) => option.size === value);
+	const { options, defaultSize } = useMachineSizeOptions();
+	const selected =
+		options.find((option) => option.size === value) ??
+		options.find((option) => option.size === defaultSize);
 
 	return (
 		<DropdownMenu>
@@ -33,7 +34,7 @@ export function MachineSizePicker({
 					disabled={disabled}
 					className={className}
 					icon={<LuCpu className="size-4 shrink-0" />}
-					label={selected?.name ?? value}
+					label={selected?.name ?? value ?? defaultSize}
 					title={selected?.spec}
 				/>
 			</DropdownMenuTrigger>
@@ -56,7 +57,7 @@ export function MachineSizePicker({
 								{option.usage}
 							</span>
 						</span>
-						{option.size === value && (
+						{option.size === selected?.size && (
 							<HiCheck className="mt-0.5 size-4 shrink-0" />
 						)}
 					</DropdownMenuItem>

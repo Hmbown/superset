@@ -3,7 +3,11 @@ import { type CloudUsage, organizationBilling } from "@superset/auth/billing";
 import { stripeClient } from "@superset/auth/stripe";
 import { db } from "@superset/db/client";
 import { members, organizations, subscriptions } from "@superset/db/schema";
-import { ACTIVE_SUBSCRIPTION_STATUSES } from "@superset/shared/billing";
+import {
+	ACTIVE_SUBSCRIPTION_STATUSES,
+	DEFAULT_MACHINE_SIZE_CONFIG,
+	machineSpec,
+} from "@superset/shared/billing";
 import type { TRPCRouterRecord } from "@trpc/server";
 import { and, desc, eq, inArray } from "drizzle-orm";
 import type Stripe from "stripe";
@@ -197,13 +201,31 @@ export const billingRouter = {
 	}),
 
 	cloudUsage: protectedProcedure.query(
-		async ({ ctx }): Promise<(CloudUsage & { boxRate: number }) | null> => {
+		async ({
+			ctx,
+		}): Promise<
+			| (CloudUsage & {
+					boxRate: number;
+					machineSizes: Array<{ name: string; boxHoursPerHour: number }>;
+			  })
+			| null
+		> => {
 			const activeOrgId = ctx.activeOrganizationId;
 			if (!billingUsesAutumn || !activeOrgId) return null;
 			const billing = await organizationBilling(activeOrgId);
-			return billing.cloudUsage
-				? { ...billing.cloudUsage, boxRate: billing.boxRate ?? 1 }
-				: null;
+			if (!billing.cloudUsage) return null;
+			const boxRate = billing.boxRate ?? 1;
+			const config = billing.machineSizes ?? DEFAULT_MACHINE_SIZE_CONFIG;
+			return {
+				...billing.cloudUsage,
+				boxRate,
+				machineSizes: Object.entries(config.sizes)
+					.sort((x, y) => x[1] - y[1])
+					.map(([name, vcpus]) => ({
+						name,
+						boxHoursPerHour: machineSpec(vcpus).boxHoursPerHour * boxRate,
+					})),
+			};
 		},
 	),
 

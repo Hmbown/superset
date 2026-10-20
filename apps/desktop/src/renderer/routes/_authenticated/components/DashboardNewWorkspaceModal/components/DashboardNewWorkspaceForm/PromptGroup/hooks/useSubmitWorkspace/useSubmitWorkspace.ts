@@ -194,7 +194,7 @@ export function useSubmitWorkspace(
 						)
 						.slice(0, 10),
 					branch: draft.baseBranch ?? branchName ?? undefined,
-					machineSize: draft.machineSize,
+					machineSize: draft.machineSize ?? undefined,
 					...(attachmentIds.length > 0
 						? { attachmentFileIds: attachmentIds }
 						: {}),

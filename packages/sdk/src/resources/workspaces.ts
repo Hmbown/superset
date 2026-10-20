@@ -244,8 +244,8 @@ export interface WorkspaceCreateParams {
 	model?: string;
 	/** Reasoning effort for the agent. Supported values depend on the agent; omit to use its default. */
 	effort?: string;
-	/** `small` (2 vCPU, 4 GB), `medium` (4 vCPU, 8 GB) or `large` (8 vCPU, 16 GB). Defaults to `medium`. */
-	machineSize?: "small" | "medium" | "large";
+	/** A machine size the organization offers, usually `small` (2 vCPU, 4 GB) or `medium` (4 vCPU, 8 GB). Defaults to the organization's default. */
+	machineSize?: string;
 }
 
 export interface WorkspaceUpdateParams {

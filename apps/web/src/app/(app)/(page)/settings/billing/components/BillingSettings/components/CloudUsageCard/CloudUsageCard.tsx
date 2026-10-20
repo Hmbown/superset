@@ -1,15 +1,16 @@
 "use client";
 
-import { Trans } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useFormat } from "@superset/i18n/react";
-import { BOX_HOUR_GB_MINUTES, machineSizeSpec } from "@superset/shared/billing";
+import { BOX_HOUR_GB_MINUTES } from "@superset/shared/billing";
 import { Progress } from "@superset/ui/progress";
 import { useQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/react";
 
 export function CloudUsageCard() {
 	const trpc = useTRPC();
-	const { formatNumber, formatDate } = useFormat();
+	const { t } = useLingui();
+	const { formatNumber, formatDate, formatList } = useFormat();
 	const { data: usage } = useQuery(trpc.billing.cloudUsage.queryOptions());
 
 	if (!usage) return null;
@@ -27,13 +28,17 @@ export function CloudUsageCard() {
 	const resetDate = usage.resetsAt
 		? formatDate(new Date(usage.resetsAt))
 		: null;
-	const perHour = (size: "small" | "medium" | "large") =>
-		formatNumber(machineSizeSpec(size).boxHoursPerHour * usage.boxRate, {
-			maximumFractionDigits: 2,
-		});
-	const small = perHour("small");
-	const medium = perHour("medium");
-	const large = perHour("large");
+	const sizeNames: Record<string, string> = {
+		small: t({ message: "Small", context: "machine size" }),
+		medium: t({ message: "Medium", context: "machine size" }),
+		large: t({ message: "Large", context: "machine size" }),
+	};
+	const rates = formatList(
+		usage.machineSizes.map(
+			({ name, boxHoursPerHour }) =>
+				`${sizeNames[name] ?? name} ${formatNumber(boxHoursPerHour, { maximumFractionDigits: 2 })}`,
+		),
+	);
 	const percentUsed =
 		usage.includedGbMinutes && usage.includedGbMinutes > 0
 			? Math.min(100, (usage.usedGbMinutes / usage.includedGbMinutes) * 100)
@@ -69,9 +74,7 @@ export function CloudUsageCard() {
 				</div>
 			)}
 			<div className="text-sm text-muted-foreground">
-				<Trans>
-					Box hours an hour: small {small}, medium {medium}, large {large}
-				</Trans>
+				<Trans>Box hours an hour: {rates}</Trans>
 			</div>
 		</div>
 	);

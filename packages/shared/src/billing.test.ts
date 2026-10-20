@@ -2,9 +2,8 @@ import { describe, expect, test } from "bun:test";
 import {
 	autumnProPlanId,
 	isCloudUsageRefusal,
-	machineSizeSpec,
-	machineSizeVcpus,
-	offeredMachineSize,
+	machineSizeConfigFrom,
+	machineSpec,
 	planAllowsAutomations,
 	planAllowsTriggerKind,
 	planTierFromSubscription,
@@ -173,24 +172,57 @@ describe("proSeatPricePerMonth", () => {
 });
 
 describe("machine sizes", () => {
-	test("a workspace with no size runs large, the size boxes had before sizes existed", () => {
-		expect(machineSizeVcpus(null)).toBe(8);
-		expect(machineSizeVcpus("small")).toBe(2);
+	test("with nothing set an org gets small and medium, and medium by default", () => {
+		expect(machineSizeConfigFrom({ customer: {}, plan: undefined })).toEqual({
+			sizes: { small: 2, medium: 4 },
+			defaultSize: "medium",
+		});
 	});
 
-	test("only offered sizes reach a new box", () => {
-		expect(offeredMachineSize("medium")).toBe("medium");
-		expect(offeredMachineSize("xlarge")).toBeUndefined();
-		expect(offeredMachineSize(null)).toBeUndefined();
+	test("a customer's sizes replace its plan's, and its default must be one of them", () => {
+		expect(
+			machineSizeConfigFrom({
+				customer: { machine_sizes: { small: 2, medium: 4, large: 8 } },
+				plan: { machine_sizes: { small: 2 } },
+			}),
+		).toEqual({
+			sizes: { small: 2, medium: 4, large: 8 },
+			defaultSize: "medium",
+		});
+		expect(
+			machineSizeConfigFrom({
+				customer: {
+					machine_sizes: { large: 8 },
+					default_machine_size: "small",
+				},
+				plan: {},
+			}),
+		).toEqual({ sizes: { large: 8 }, defaultSize: "large" });
 	});
 
-	test("one box hour is one hour of the medium box", () => {
-		expect(machineSizeSpec("small")).toEqual({
+	test("sizes Vercel cannot run, and bad names, are dropped", () => {
+		expect(
+			machineSizeConfigFrom({
+				customer: {
+					machine_sizes: { odd: 3, huge: 64, zero: 0, "Bad Name": 4, ok: "6" },
+				},
+				plan: {},
+			}).sizes,
+		).toEqual({ ok: 6 });
+		expect(
+			machineSizeConfigFrom({
+				customer: { machine_sizes: { odd: 3 } },
+				plan: {},
+			}).sizes,
+		).toEqual({ small: 2, medium: 4 });
+	});
+
+	test("a box hour is one hour of the 4 vCPU / 8 GB box", () => {
+		expect(machineSpec(2)).toEqual({
 			vcpus: 2,
 			memoryGb: 4,
 			boxHoursPerHour: 0.5,
 		});
-		expect(machineSizeSpec("medium").boxHoursPerHour).toBe(1);
-		expect(machineSizeSpec("large").boxHoursPerHour).toBe(2);
+		expect(machineSpec(8).boxHoursPerHour).toBe(2);
 	});
 });

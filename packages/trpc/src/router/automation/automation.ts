@@ -51,7 +51,10 @@ import { env } from "../../env";
 import { assertCloudAccess } from "../../lib/cloud-guards";
 import { nudge } from "../../lib/realtime";
 import { planRequiredError, protectedProcedure, userError } from "../../trpc";
-import { loadUsableEnvironment } from "../cloud-workspace/start";
+import {
+	assertMachineSizeOffered,
+	loadUsableEnvironment,
+} from "../cloud-workspace/start";
 import { joinSlackTriggerChannels } from "../integration/slack/joinChannels";
 import {
 	requireActiveOrgMembership,
@@ -537,6 +540,7 @@ export const automationRouter = {
 		.input(createAutomationSchema)
 		.mutation(async ({ ctx, input }) => {
 			const organizationId = await requireAutomationsPlan(ctx);
+			await assertMachineSizeOffered(organizationId, input.machineSize);
 
 			const target = await resolveTarget(
 				ctx,
@@ -654,6 +658,7 @@ export const automationRouter = {
 				organizationId,
 				input.id,
 			);
+			await assertMachineSizeOffered(organizationId, input.machineSize);
 
 			const target = await resolveTarget(
 				ctx,

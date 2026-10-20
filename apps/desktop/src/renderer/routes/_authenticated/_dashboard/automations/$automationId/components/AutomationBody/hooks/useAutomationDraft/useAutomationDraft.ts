@@ -3,7 +3,6 @@ import {
 	describeTriggerProblems,
 	summarizeTriggerProblems,
 } from "@superset/shared/automation-triggers";
-import type { OfferedMachineSize } from "@superset/shared/billing";
 import { useMemo, useState } from "react";
 
 export interface AutomationDraft {
@@ -15,7 +14,7 @@ export interface AutomationDraft {
 	v2WorkspaceId: string | null;
 	cloudWorkspaceId: string | null;
 	environmentId: string | null;
-	machineSize: OfferedMachineSize | null;
+	machineSize: string | null;
 	tags: string[];
 	continueAgentSession: boolean;
 	triggers: DraftTrigger[];

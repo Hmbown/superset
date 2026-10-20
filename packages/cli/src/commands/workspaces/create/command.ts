@@ -1,5 +1,4 @@
 import { boolean, CLIError, number, string } from "@superset/cli-framework";
-import { OFFERED_MACHINE_SIZES } from "@superset/shared/billing";
 import { resolveWorkspaceHost } from "../../../lib/cloud-workspaces";
 import { command } from "../../../lib/command";
 import { resolveHostTarget } from "../../../lib/host-target";
@@ -15,11 +14,9 @@ export default command({
 		environment: string().desc(
 			"Environment ID a cloud workspace starts from (see: superset environments list); required when several have repositories",
 		),
-		machine: string()
-			.enum(...OFFERED_MACHINE_SIZES)
-			.desc(
-				"Machine size of a cloud workspace: `small` (2 vCPU, 4 GB, 0.5 box hours per hour), `medium` (4 vCPU, 8 GB, 1 box hour per hour; default), or `large` (8 vCPU, 16 GB, 2 box hours per hour)",
-			),
+		machine: string().desc(
+			"Machine size of a cloud workspace, as your organization offers them: usually `small` (2 vCPU, 4 GB, 0.5 box hours per hour) or `medium` (4 vCPU, 8 GB, 1 box hour per hour). Omit for your organization's default",
+		),
 		project: string().desc(
 			"Project ID, for a workspace on a host. Required with --local or --host unless --session",
 		),

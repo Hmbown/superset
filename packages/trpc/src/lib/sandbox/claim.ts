@@ -7,7 +7,7 @@
 import { createHmac } from "node:crypto";
 import { db } from "@superset/db/client";
 import { type cloudWorkspaces, users } from "@superset/db/schema";
-import { machineSizeVcpus } from "@superset/shared/billing";
+import { machineSizeVcpus, UNSIZED_BOX_VCPUS } from "@superset/shared/billing";
 import {
 	type CloudAgentLaunch,
 	cloudAgentLaunchToEnv,
@@ -21,6 +21,7 @@ import { eq } from "drizzle-orm";
 import { env } from "../../env";
 import { resolveAgentCredentialEnv } from "../../router/agent-credential";
 import { resolveEnvironment } from "../../router/environment/resolve-environment";
+import { organizationMachineSizes } from "../billing/plan";
 import { githubUserConnectionFor, githubUserTokenFor } from "../github-user";
 import { sandboxHostSecretFor } from "./access";
 import { deriveSandboxCredentials, gitAuthorFor } from "./credentials";
@@ -46,6 +47,17 @@ function agentCredentialDigest(userAgentEnv: Record<string, string>): string {
 
 /** Commits by a workspace nobody created, such as an automation's. */
 const SUPERSET_GIT_AUTHOR = { name: "Superset", email: "noreply@superset.sh" };
+
+/** A size the org no longer offers falls back to its default at the next start. */
+async function boxVcpus(row: CloudWorkspaceRow): Promise<number> {
+	if (row.machineSize === null) return UNSIZED_BOX_VCPUS;
+	const config = await organizationMachineSizes(row.organizationId);
+	return (
+		machineSizeVcpus(config, row.machineSize) ??
+		machineSizeVcpus(config, config.defaultSize) ??
+		UNSIZED_BOX_VCPUS
+	);
+}
 
 export async function buildSandboxClaim(args: {
 	row: CloudWorkspaceRow;
@@ -145,7 +157,7 @@ export async function buildSandboxClaim(args: {
 			managedEnv,
 			networkPolicy,
 			ports: repoHooks?.ports,
-			vcpus: machineSizeVcpus(args.row.machineSize),
+			vcpus: await boxVcpus(args.row),
 		},
 		environment: {
 			sourceKind: environment.sourceKind,

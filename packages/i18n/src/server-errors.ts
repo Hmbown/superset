@@ -279,6 +279,13 @@ export const serverErrorMessages: Record<
 					"Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace.",
 			}),
 		),
+	"serverError.cloudWorkspace.machineSizeNotAvailable": () =>
+		i18n._(
+			msg({
+				message:
+					"This machine size is not available for your organization. Pick another size",
+			}),
+		),
 	"serverError.cloudWorkspace.environmentHasNoRepositories": () =>
 		i18n._(
 			msg({

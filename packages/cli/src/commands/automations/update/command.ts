@@ -1,5 +1,4 @@
 import { boolean, CLIError, positional, string } from "@superset/cli-framework";
-import { OFFERED_MACHINE_SIZES } from "@superset/shared/billing";
 import { CLOUD_HOST_ID } from "@superset/shared/host-routing";
 import { command } from "../../../lib/command";
 import { resolveHostFilter } from "../../../lib/host-target";
@@ -39,11 +38,9 @@ export default command({
 		environment: string().desc(
 			"Id of the environment each run's cloud workspace starts from. Implies --cloud",
 		),
-		machine: string()
-			.enum(...OFFERED_MACHINE_SIZES)
-			.desc(
-				"Machine size of each run's new cloud workspace: `small` (2 vCPU, 4 GB), `medium` (4 vCPU, 8 GB; default), or `large` (8 vCPU, 16 GB). Only for a cloud automation",
-			),
+		machine: string().desc(
+			"Machine size of each run's new cloud workspace, as your organization offers them (usually `small` or `medium`). Only for a cloud automation",
+		),
 		continueSession: boolean().desc(
 			"Continue the agent session the previous run left (--continue-session) or start a new one each run (--no-continue-session). Requires a pinned workspace",
 		),

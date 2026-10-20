@@ -15,6 +15,7 @@ export {
 	invalidateOrganizationBilling,
 	organizationBilling,
 	organizationBoxRateFromAutumn,
+	organizationMachineSizesFromAutumn,
 	organizationPlanFromAutumn,
 } from "./autumn/plan-state";
 export {

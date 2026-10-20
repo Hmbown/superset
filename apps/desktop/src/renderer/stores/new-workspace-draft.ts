@@ -1,7 +1,3 @@
-import {
-	DEFAULT_MACHINE_SIZE,
-	type OfferedMachineSize,
-} from "@superset/shared/billing";
 import { create } from "zustand";
 
 export type LinkedIssue = {
@@ -44,7 +40,7 @@ export interface NewWorkspaceDraft {
 	checkout: WorkspaceCheckout;
 	/** Cloud only. Null until picked; submit falls back to the first. */
 	environmentId: string | null;
-	machineSize: OfferedMachineSize;
+	machineSize: string | null;
 	/** Cloud only, for an environment without repositories of its own: primary first. */
 	prompt: string;
 	baseBranch: string | null;
@@ -83,7 +79,7 @@ function buildInitialDraft(): NewWorkspaceDraft {
 		hostId: null,
 		checkout: "worktree",
 		environmentId: null,
-		machineSize: DEFAULT_MACHINE_SIZE,
+		machineSize: null,
 		prompt: "",
 		baseBranch: null,
 		baseBranchSource: null,

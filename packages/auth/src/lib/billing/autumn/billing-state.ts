@@ -1,4 +1,8 @@
-import type { PlanTier } from "@superset/shared/billing";
+import {
+	type MachineSizeConfig,
+	machineSizeConfigFrom,
+	type PlanTier,
+} from "@superset/shared/billing";
 import { boxRateFrom } from "./box-rate";
 import { type CloudUsage, cloudUsageFromBalances } from "./cloud-usage";
 import type { getAutumnCustomer } from "./customer";
@@ -26,6 +30,7 @@ export interface OrganizationBilling {
 	paymentState: PaymentState;
 	cloudUsage: CloudUsage | null;
 	boxRate: number;
+	machineSizes: MachineSizeConfig;
 }
 
 type AutumnCustomer = Awaited<ReturnType<typeof getAutumnCustomer>>;
@@ -93,6 +98,10 @@ export function billingFromCustomer(
 		paymentState,
 		cloudUsage: cloudUsageFromBalances(customer.balances),
 		boxRate: boxRateFrom({
+			customer: customer.metadata,
+			plan: paid?.plan?.metadata,
+		}),
+		machineSizes: machineSizeConfigFrom({
 			customer: customer.metadata,
 			plan: paid?.plan?.metadata,
 		}),

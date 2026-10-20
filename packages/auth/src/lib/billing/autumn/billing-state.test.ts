@@ -81,6 +81,7 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 			paymentState: { kind: "ok" },
 			cloudUsage: null,
 			boxRate: 1,
+			machineSizes: { sizes: { small: 2, medium: 4 }, defaultSize: "medium" },
 		});
 	});
 

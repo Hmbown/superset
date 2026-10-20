@@ -11,7 +11,7 @@
  */
 
 import { randomUUID } from "node:crypto";
-import { MACHINE_SIZE_VCPUS } from "@superset/shared/billing";
+import { UNSIZED_BOX_VCPUS } from "@superset/shared/billing";
 import { SANDBOX_IMAGE_NAME } from "@superset/shared/constants";
 import {
 	SANDBOX_CONTRACT_VERSION,
@@ -80,7 +80,7 @@ const claim = {
 	hostSecret,
 	managedEnv: { SUPERSET_REAL_CHECK: "1" },
 	networkPolicy: "allow-all" as const,
-	vcpus: MACHINE_SIZE_VCPUS.large,
+	vcpus: UNSIZED_BOX_VCPUS,
 };
 
 log(

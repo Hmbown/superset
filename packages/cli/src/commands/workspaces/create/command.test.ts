@@ -1,5 +1,4 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { parseArgv } from "@superset/cli-framework";
 import { withLocalHostService } from "../../../lib/host/test-helpers";
 import createWorkspaceCommand from "./command";
 
@@ -220,18 +219,6 @@ describe("workspaces create", () => {
 		await expect(invoke({ checkout: "clone" })).rejects.toThrow(
 			/Unknown checkout/,
 		);
-	});
-
-	test("--machine accepts only the offered sizes", () => {
-		const machine = createWorkspaceCommand.options?.machine;
-		if (!machine) throw new Error("ws create has no --machine option");
-		const configs = { machine: { ...machine._.config, name: "machine" } };
-		expect(
-			parseArgv(["bun", "superset", "--machine", "large"], configs).options,
-		).toEqual({ machine: "large" });
-		expect(() =>
-			parseArgv(["bun", "superset", "--machine", "xlarge"], configs),
-		).toThrow();
 	});
 
 	test("rejects --machine for a workspace on a host", async () => {

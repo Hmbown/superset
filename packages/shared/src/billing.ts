@@ -171,43 +171,93 @@ export function proSeatPricePerMonth({ annual }: { annual: boolean }): number {
 	return cents / 100;
 }
 
-export const MACHINE_SIZE_VCPUS = {
-	small: 2,
-	medium: 4,
-	large: 8,
-	xlarge: 16,
-} as const;
-export type MachineSize = keyof typeof MACHINE_SIZE_VCPUS;
-/** X-large waits on a Vercel plan that allows 16 vCPU per sandbox. */
-export const OFFERED_MACHINE_SIZES = ["small", "medium", "large"] as const;
-export type OfferedMachineSize = (typeof OFFERED_MACHINE_SIZES)[number];
-export const DEFAULT_MACHINE_SIZE: OfferedMachineSize = "medium";
 export const BOX_HOUR_GB_MINUTES = 480;
 export const MEMORY_GB_PER_VCPU = 2;
+/** Every box ran at 8 vCPU before sizes; workspaces from then have no size. */
+export const UNSIZED_BOX_VCPUS = 8;
+/** Vercel Sandbox allows 1 or an even number of vCPUs, up to 32. */
+const MAX_SANDBOX_VCPUS = 32;
+const MACHINE_SIZE_NAME = /^[a-z0-9][a-z0-9_-]{0,39}$/;
 
-export function machineSizeSpec(size: MachineSize): {
+export type MachineSizes = Record<string, number>;
+
+export interface MachineSizeConfig {
+	sizes: MachineSizes;
+	defaultSize: string;
+}
+
+export const DEFAULT_MACHINE_SIZE_CONFIG: MachineSizeConfig = {
+	sizes: { small: 2, medium: 4 },
+	defaultSize: "medium",
+};
+
+export function isSandboxVcpuCount(value: number): boolean {
+	return (
+		Number.isInteger(value) &&
+		(value === 1 ||
+			(value % 2 === 0 && value >= 2 && value <= MAX_SANDBOX_VCPUS))
+	);
+}
+
+function machineSizesIn(value: unknown): MachineSizes | null {
+	if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+	const sizes: MachineSizes = {};
+	for (const [name, vcpus] of Object.entries(value)) {
+		const count = Number(vcpus);
+		if (MACHINE_SIZE_NAME.test(name) && isSandboxVcpuCount(count)) {
+			sizes[name] = count;
+		}
+	}
+	return Object.keys(sizes).length > 0 ? sizes : null;
+}
+
+type Metadata = Record<string, unknown> | null | undefined;
+
+/** A customer's `machine_sizes` replaces its plan's; neither means the default. */
+export function machineSizeConfigFrom({
+	customer,
+	plan,
+}: {
+	customer: Metadata;
+	plan: Metadata;
+}): MachineSizeConfig {
+	const sizes =
+		machineSizesIn(customer?.machine_sizes) ??
+		machineSizesIn(plan?.machine_sizes) ??
+		DEFAULT_MACHINE_SIZE_CONFIG.sizes;
+	const named = [
+		customer?.default_machine_size,
+		plan?.default_machine_size,
+		DEFAULT_MACHINE_SIZE_CONFIG.defaultSize,
+	].find(
+		(name): name is string =>
+			typeof name === "string" && Object.hasOwn(sizes, name),
+	);
+	const smallest = Object.entries(sizes).sort((a, b) => a[1] - b[1])[0]?.[0];
+	return {
+		sizes,
+		defaultSize: named ?? smallest ?? DEFAULT_MACHINE_SIZE_CONFIG.defaultSize,
+	};
+}
+
+export function machineSizeVcpus(
+	config: MachineSizeConfig,
+	name: string,
+): number | null {
+	return Object.hasOwn(config.sizes, name)
+		? (config.sizes[name] ?? null)
+		: null;
+}
+
+export function machineSpec(vcpus: number): {
 	vcpus: number;
 	memoryGb: number;
 	boxHoursPerHour: number;
 } {
-	const vcpus = MACHINE_SIZE_VCPUS[size];
 	const memoryGb = vcpus * MEMORY_GB_PER_VCPU;
 	return {
 		vcpus,
 		memoryGb,
 		boxHoursPerHour: (memoryGb * 60) / BOX_HOUR_GB_MINUTES,
 	};
-}
-
-export function offeredMachineSize(
-	value: string | null | undefined,
-): OfferedMachineSize | undefined {
-	return OFFERED_MACHINE_SIZES.find((size) => size === value);
-}
-
-export function machineSizeVcpus(size: string | null | undefined): number {
-	if (size && size in MACHINE_SIZE_VCPUS) {
-		return MACHINE_SIZE_VCPUS[size as MachineSize];
-	}
-	return MACHINE_SIZE_VCPUS.large;
 }

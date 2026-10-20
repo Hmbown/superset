@@ -1,9 +1,15 @@
 import { billingUsesAutumn } from "@superset/auth/autumn";
-import { organizationPlanFromAutumn } from "@superset/auth/billing";
+import {
+	organizationMachineSizesFromAutumn,
+	organizationPlanFromAutumn,
+} from "@superset/auth/billing";
 import { db } from "@superset/db/client";
 import { subscriptions } from "@superset/db/schema";
 import {
 	ACTIVE_SUBSCRIPTION_STATUSES,
+	DEFAULT_MACHINE_SIZE_CONFIG,
+	type MachineSizeConfig,
+	machineSizeVcpus,
 	type PlanTier,
 	planTierFromSubscription,
 } from "@superset/shared/billing";
@@ -30,4 +36,22 @@ export async function organizationPlan(
 		.orderBy(desc(subscriptions.createdAt))
 		.limit(1);
 	return planTierFromSubscription(subscription);
+}
+
+export async function organizationMachineSizes(
+	organizationId: string,
+): Promise<MachineSizeConfig> {
+	return billingUsesAutumn
+		? organizationMachineSizesFromAutumn(organizationId)
+		: DEFAULT_MACHINE_SIZE_CONFIG;
+}
+
+export async function resolveMachineSize(
+	organizationId: string,
+	requested: string | null | undefined,
+): Promise<{ name: string; vcpus: number } | null> {
+	const config = await organizationMachineSizes(organizationId);
+	const name = requested ?? config.defaultSize;
+	const vcpus = machineSizeVcpus(config, name);
+	return vcpus === null ? null : { name, vcpus };
 }

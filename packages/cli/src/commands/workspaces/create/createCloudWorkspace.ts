@@ -1,5 +1,4 @@
 import { CLIError } from "@superset/cli-framework";
-import type { OfferedMachineSize } from "@superset/shared/billing";
 import { TRPCClientError } from "@trpc/client";
 import type { ApiClient } from "../../../lib/api-client";
 import { resolveCloudEnvironment } from "../../../lib/cloud-workspaces";
@@ -14,7 +13,7 @@ export interface CloudCreateOptions {
 	model?: string;
 	effort?: string;
 	environment?: string;
-	machine?: OfferedMachineSize;
+	machine?: string;
 	project?: string;
 	session?: boolean;
 	pr?: number;

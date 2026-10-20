@@ -3,10 +3,6 @@ import type {
 	DraftTrigger,
 	TriggerProblem,
 } from "@superset/shared/automation-triggers";
-import {
-	DEFAULT_MACHINE_SIZE,
-	type OfferedMachineSize,
-} from "@superset/shared/billing";
 import { startableCloudEnvironments } from "@superset/shared/cloud-environments";
 import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { CLOUD_HOST_ID } from "@superset/shared/host-routing";
@@ -45,7 +41,7 @@ export interface ScopeDraft {
 	v2WorkspaceId: string | null;
 	cloudWorkspaceId: string | null;
 	environmentId: string | null;
-	machineSize: OfferedMachineSize | null;
+	machineSize: string | null;
 	continueAgentSession: boolean;
 	tags: string[];
 }
@@ -239,7 +235,7 @@ export function TriggersCard({
 					{cloud && !scope.cloudWorkspaceId && (
 						<MachineSizePicker
 							className={SCOPE_CHIP}
-							value={scope.machineSize ?? DEFAULT_MACHINE_SIZE}
+							value={scope.machineSize}
 							disabled={readOnly}
 							onChange={(machineSize) => onScopeChange({ machineSize })}
 						/>

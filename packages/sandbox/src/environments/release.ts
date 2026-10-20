@@ -36,7 +36,7 @@
 import { randomUUID } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { MACHINE_SIZE_VCPUS } from "@superset/shared/billing";
+import { UNSIZED_BOX_VCPUS } from "@superset/shared/billing";
 import { SANDBOX_IMAGE_NAME } from "@superset/shared/constants";
 import {
 	SANDBOX_CONTRACT_VERSION,
@@ -215,7 +215,7 @@ for (;;) {
 				hostSecret: goldenSecret,
 				managedEnv: {},
 				networkPolicy: "allow-all",
-				vcpus: MACHINE_SIZE_VCPUS.large,
+				vcpus: UNSIZED_BOX_VCPUS,
 			},
 		});
 		break;
@@ -238,7 +238,7 @@ await wakeSandbox({
 		hostSecret: goldenSecret,
 		managedEnv: {},
 		networkPolicy: "allow-all",
-		vcpus: MACHINE_SIZE_VCPUS.large,
+		vcpus: UNSIZED_BOX_VCPUS,
 	},
 });
 log("golden: host-service up; waiting for the checkout");
@@ -399,7 +399,7 @@ const probeClaim = {
 	hostSecret: probeSecret,
 	managedEnv,
 	networkPolicy,
-	vcpus: MACHINE_SIZE_VCPUS.large,
+	vcpus: UNSIZED_BOX_VCPUS,
 };
 log(`probe: provisioning ${probe} as a fork of ${golden}`);
 await provisionSandbox({
