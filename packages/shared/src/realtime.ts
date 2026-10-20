@@ -87,5 +87,5 @@ export function realtimeWorkspacePresencePath(
 	organizationId: string,
 	workspaceId: string,
 ): string {
-	return `/v2/org/${encodeURIComponent(organizationId)}/workspace/${encodeURIComponent(workspaceId)}/presence`;
+	return `/organization/${encodeURIComponent(organizationId)}/workspace/${encodeURIComponent(workspaceId)}`;
 }
