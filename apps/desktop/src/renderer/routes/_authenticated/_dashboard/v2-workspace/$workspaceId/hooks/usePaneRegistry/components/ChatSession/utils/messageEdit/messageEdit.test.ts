@@ -2,10 +2,10 @@ import { describe, expect, it } from "bun:test";
 import type { SessionSnapshot, TurnGroup } from "@superset/chat/core";
 import { buildChatRewindPrompt } from "@superset/shared/terminal-session-handoff";
 import {
-	rewindPoints,
+	editableMessageIds,
 	rewindTranscript,
 	timelineBefore,
-} from "./rewindTimeline";
+} from "./messageEdit";
 
 function userItem(id: string, text: string, startedAtMs: number) {
 	return {
@@ -43,11 +43,23 @@ const groups = [
 	},
 ] as unknown as TurnGroup[];
 
-describe("rewindTimeline", () => {
-	it("lists the user's messages newest first", () => {
-		expect(
-			rewindPoints(groups, undefined).map((point) => point.itemId),
-		).toEqual(["u3", "u2", "u1"]);
+describe("messageEdit", () => {
+	it("lets the user edit their own messages, not hidden ones", () => {
+		const hidden = {
+			turnId: "t3",
+			turn: null,
+			entries: [
+				{
+					...userItem("u4", "handoff", 4),
+					item: { ...userItem("u4", "handoff", 4).item, hidden: true },
+				},
+			],
+		} as unknown as TurnGroup;
+		expect([...editableMessageIds([...groups, hidden], undefined)]).toEqual([
+			"u1",
+			"u2",
+			"u3",
+		]);
 	});
 
 	it("keeps only what came before the chosen message", () => {
@@ -107,9 +119,6 @@ describe("rewindTimeline", () => {
 			session: null,
 		} as unknown as SessionSnapshot;
 
-		expect(
-			rewindPoints(rewound, undefined).map((point) => point.itemId),
-		).toEqual(["u5", "u4"]);
 		expect(rewindTranscript(rewound, "u5", snapshot, "Claude")).toBe(
 			`${earlier}\n\nUser: again\n\nClaude: did it`,
 		);

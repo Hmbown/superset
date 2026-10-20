@@ -33,9 +33,9 @@ import {
 import type { ChatEditRequest, ChatForkTarget } from "../../types";
 import { buildChatHandoffTranscript } from "../../utils/chatHandoffTranscript";
 import { heldPromptQueue } from "../../utils/heldPromptQueue";
+import { editableMessageIds, rewindTranscript } from "../../utils/messageEdit";
 import { promptHistory } from "../../utils/promptHistory";
 import { railMessages } from "../../utils/railMessages";
-import { rewindPoints, rewindTranscript } from "../../utils/rewindTimeline";
 import {
 	type AgentChoice,
 	type AgentSwitcher,
@@ -302,14 +302,9 @@ export function SessionView({
 		},
 		[onModeChange, setMode],
 	);
-	const points = useStableList(
-		useMemo(() => rewindPoints(timeline, harness), [timeline, harness]),
-		(previous, next) =>
-			previous.itemId === next.itemId && previous.text === next.text,
-	);
-	const editableMessageIds = useMemo(
-		() => new Set(points.map((point) => point.itemId)),
-		[points],
+	const editableIds = useMemo(
+		() => editableMessageIds(timeline, harness),
+		[timeline, harness],
 	);
 	const editable = onEditMessage !== undefined && held === undefined;
 	const editMessage = useMemo(
@@ -419,7 +414,7 @@ export function SessionView({
 	return (
 		<ChatPaneActionsProvider
 			editMessage={editMessage}
-			editableMessageIds={editableMessageIds}
+			editableMessageIds={editableIds}
 			openFile={openFile}
 			openPage={openPage}
 			openLink={openLink}

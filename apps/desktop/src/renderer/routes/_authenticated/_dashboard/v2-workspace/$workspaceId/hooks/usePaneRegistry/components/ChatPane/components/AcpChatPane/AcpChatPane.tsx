@@ -95,7 +95,6 @@ export function AcpChatPane({
 	onOpenLink?: OpenLink;
 	onSwitchAgent?: (target: AgentSwitchTarget) => void;
 	onOpenAgentChat?: (target: AgentSwitchTarget) => void;
-	/** The chat restarts in a fresh agent session, told the conversation before the edited message. */
 	onRewound?: (handoffPrompt: string | null, editedPrompt: string) => void;
 	modelId?: string;
 	modelLabel?: string;

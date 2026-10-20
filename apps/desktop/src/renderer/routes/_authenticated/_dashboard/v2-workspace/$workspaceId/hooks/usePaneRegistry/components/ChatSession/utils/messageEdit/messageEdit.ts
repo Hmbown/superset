@@ -10,32 +10,23 @@ import { parseChatRewindPrompt } from "@superset/shared/terminal-session-handoff
 import { parseAttachmentTags } from "../attachmentTags";
 import { buildChatHandoffTranscript } from "../chatHandoffTranscript";
 
-type RewindPoint = {
-	itemId: string;
-	text: string;
-};
-
-/** The user's own messages, newest first: each one is a point the chat can go back to. */
-export function rewindPoints(
+export function editableMessageIds(
 	groups: TurnGroup[],
 	harness: string | undefined,
-): RewindPoint[] {
-	const points: RewindPoint[] = [];
+): Set<string> {
+	const ids = new Set<string>();
 	for (const group of groups) {
 		for (const entry of group.entries) {
 			if (entry.kind !== "item" || entry.item.kind !== "user_message") continue;
-			const raw = userMessageText(entry.item as UserMessage);
+			const message = entry.item as UserMessage;
+			if (message.hidden) continue;
+			const raw = userMessageText(message);
 			if (readBookkeeping(harness, raw)) continue;
-			if (parseChatRewindPrompt(raw) !== null) continue;
-			const { text } = parseAttachmentTags(raw);
-			if (!text) continue;
-			points.push({
-				itemId: entry.item.id,
-				text,
-			});
+			if (!parseAttachmentTags(raw).text) continue;
+			ids.add(message.id);
 		}
 	}
-	return points.reverse();
+	return ids;
 }
 
 /** The timeline as it stood just before `itemId` was sent. */
