@@ -76,21 +76,6 @@ export async function previousRunSession(
 	return previous;
 }
 
-/**
- * The terminal of the last run. Chat runs record their pane binding here too,
- * and a run recorded before chats had their own kind holds only this, so
- * `agents.run` can continue either.
- */
-export async function previousRunTerminal(
-	automationId: string,
-	workspace: RunWorkspace,
-): Promise<string | undefined> {
-	return (
-		(await previousRunSession(automationId, workspace))?.terminalSessionId ??
-		undefined
-	);
-}
-
 /** Moves a gone pin to `next`, or clears it, only if nobody re-pinned meanwhile. */
 export async function replacePin(
 	automationId: string,
