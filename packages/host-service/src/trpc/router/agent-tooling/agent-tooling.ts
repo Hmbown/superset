@@ -1,6 +1,5 @@
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { installedPluginsFilePath } from "@superset/agent-setup";
 import type { McpServerEntry } from "@superset/shared/mcp-servers";
 import type { SlashCommand } from "@superset/shared/slash-commands";
 import { TRPCError } from "@trpc/server";
@@ -101,7 +100,6 @@ export const agentToolingRouter = router({
 							codexHome || join(home, ".codex"),
 							"config.toml",
 						),
-						installedPluginsPath: installedPluginsFilePath(),
 					},
 				});
 				return { servers, supported: true };

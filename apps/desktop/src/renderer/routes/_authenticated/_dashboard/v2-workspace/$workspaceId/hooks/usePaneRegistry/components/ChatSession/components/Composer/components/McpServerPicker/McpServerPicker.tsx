@@ -1,7 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ComposerChip } from "@superset/chat-ui/PromptInput";
 import type {
-	McpServerAgent,
 	McpServerEntry,
 	McpServerScope,
 } from "@superset/shared/mcp-servers";
@@ -25,17 +24,17 @@ import {
 	mcpServerChip,
 	mcpServerToken,
 } from "../../../../utils/mcpServerChips";
+import { mcpPickerPlugins } from "../../utils/mcpPickerPlugins";
 import { mcpServerIconUrl } from "../../utils/mcpServerIconUrl";
 import {
 	type McpPickerActionRow,
 	type McpPickerRow,
-	type McpPluginAccount,
 	mcpPickerRows,
 } from "./utils/mcpPickerRows";
 
 const NO_SERVERS: McpServerEntry[] = [];
 
-const AGENT_LABELS: Record<McpServerAgent, string> = {
+const AGENT_LABELS: Record<string, string> = {
 	claude: "Claude Code",
 	codex: "Codex",
 };
@@ -91,29 +90,11 @@ export function McpServerPicker({
 			setIsRefreshing(false);
 		}
 	};
-	const servers = useMemo(
-		() =>
-			(list.data?.servers ?? NO_SERVERS).map((server) =>
-				server.plugin && installedHere.has(server.plugin.name)
-					? { ...server, plugin: { ...server.plugin, installed: true } }
-					: server,
-			),
-		[list.data, installedHere],
-	);
+	const servers = list.data?.servers ?? NO_SERVERS;
 	const { plugins: catalog } = usePluginCatalog();
 	const plugins = useMemo(
-		() =>
-			new Map<string, McpPluginAccount>(
-				catalog.map((plugin) => [
-					plugin.name,
-					{
-						displayName: plugin.interface.displayName,
-						connector: plugin.connector,
-						connected: plugin.connections.length > 0,
-					},
-				]),
-			),
-		[catalog],
+		() => mcpPickerPlugins(catalog, installedHere),
+		[catalog, installedHere],
 	);
 	const rows = useMemo(
 		() => mcpPickerRows(servers, plugins, query),
@@ -125,14 +106,14 @@ export function McpServerPicker({
 		local: t({ message: "local", context: "MCP server scope" }),
 	};
 
+	const agentLabel = (agent: string) => AGENT_LABELS[agent] ?? agent;
+
 	const subtitle = (row: McpPickerRow) => {
-		const { server } = row;
-		if (server.state === "not-configured" && server.plugin) {
-			const name =
-				plugins.get(server.plugin.name)?.displayName ?? server.plugin.name;
+		if (!row.server) {
+			const name = row.plugin?.displayName ?? row.name;
 			return t({ message: `${name} plugin` });
 		}
-		return `${AGENT_LABELS[server.agent]} · ${scopeLabels[server.scope]}`;
+		return `${agentLabel(row.server.agent)} · ${scopeLabels[row.server.scope]}`;
 	};
 
 	const status = (row: McpPickerRow) => {
@@ -154,7 +135,7 @@ export function McpServerPicker({
 		if (row.reason === "untrusted") {
 			return <Trans>Project not trusted in Codex</Trans>;
 		}
-		const agent = AGENT_LABELS[row.server.agent];
+		const agent = agentLabel(row.server?.agent ?? "");
 		return t({ message: `Configured for ${agent}` });
 	};
 
@@ -215,9 +196,9 @@ export function McpServerPicker({
 					</p>
 				) : (
 					rows.map((row) => {
-						const icon = row.server.plugin
+						const icon = row.plugin
 							? null
-							: getPresetIcon(row.server.agent, isDark);
+							: row.server && getPresetIcon(row.server.agent, isDark);
 						return (
 							<CommandItem
 								key={row.key}
@@ -229,17 +210,21 @@ export function McpServerPicker({
 											mcpServerChip(
 												row.server.name,
 												mcpServerToken(row.server, servers),
-												mcpServerIconUrl(row.server, isDark),
+												mcpServerIconUrl(
+													row.server.agent,
+													row.plugin?.name,
+													isDark,
+												),
 											),
 										);
 									} else if (row.kind === "action") onAction(row);
 								}}
 								className="h-11 cursor-pointer gap-2.5 rounded-[10px] px-2"
 							>
-								{row.server.plugin ? (
+								{row.plugin ? (
 									<PluginIcon
 										className="size-4 rounded"
-										pluginName={row.server.plugin.name}
+										pluginName={row.plugin.name}
 									/>
 								) : icon ? (
 									<img alt="" className="size-4 shrink-0" src={icon} />
@@ -248,7 +233,7 @@ export function McpServerPicker({
 								)}
 								<span className="min-w-0 flex-1">
 									<span className="block truncate text-[13px] text-foreground">
-										{row.server.name}
+										{row.name}
 									</span>
 									<span className="block truncate text-[11px] text-muted-foreground">
 										{subtitle(row)}

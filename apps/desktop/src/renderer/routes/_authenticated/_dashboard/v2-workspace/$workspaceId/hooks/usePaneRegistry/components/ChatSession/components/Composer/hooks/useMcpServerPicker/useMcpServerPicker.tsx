@@ -12,6 +12,7 @@ import { type ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { useIsDarkTheme } from "renderer/assets/app-icons/preset-icons";
 import { ConnectConnectorDialog } from "renderer/components/ConnectorSection";
 import { PluginIcon } from "renderer/components/PluginIcon";
+import { usePluginCatalog } from "renderer/hooks/usePluginCatalog";
 import { useInstallAfterConnect } from "renderer/routes/_authenticated/_dashboard/hooks/useInstallAfterConnect";
 import { usePluginMutations } from "renderer/routes/_authenticated/_dashboard/hooks/usePluginMutations";
 import {
@@ -22,6 +23,7 @@ import {
 } from "../../../../utils/mcpServerChips";
 import { McpServerPicker } from "../../components/McpServerPicker";
 import type { McpPickerActionRow } from "../../components/McpServerPicker/utils/mcpPickerRows";
+import { mcpPickerPlugins } from "../../utils/mcpPickerPlugins";
 import { mcpServerIconUrl } from "../../utils/mcpServerIconUrl";
 
 type McpServerPickerControls = {
@@ -50,6 +52,8 @@ export function useMcpServerPicker({
 	}).data;
 	const pickerAgent = listed?.supported === true ? presetId : undefined;
 	const cached = listed?.servers;
+	const { plugins: catalog } = usePluginCatalog();
+	const plugins = useMemo(() => mcpPickerPlugins(catalog), [catalog]);
 	const [connecting, setConnecting] = useState<{
 		plugin: string;
 		connector: string;
@@ -75,16 +79,17 @@ export function useMcpServerPicker({
 	};
 
 	const runAction = async (row: McpPickerActionRow) => {
+		const plugin = row.plugin.name;
 		if (row.action === "connect") {
-			setConnecting({ plugin: row.plugin, connector: row.connector });
+			setConnecting({ plugin, connector: row.connector });
 			return;
 		}
 		try {
-			await install(row.plugin);
+			await install(plugin);
 		} catch {
 			return;
 		}
-		markInstalled(row.plugin);
+		markInstalled(plugin);
 		await refresh();
 		reopen();
 	};
@@ -149,11 +154,20 @@ export function useMcpServerPicker({
 					chip: mcpServerChip(
 						server?.name ?? name,
 						token,
-						server ? mcpServerIconUrl(server, isDark) : undefined,
+						server
+							? mcpServerIconUrl(
+									server.agent,
+									plugins.find(
+										(plugin) =>
+											plugin.installed && plugin.servers.includes(server.name),
+									)?.name,
+									isDark,
+								)
+							: undefined,
 					),
 				};
 			}),
-		[presetId, cached, isDark],
+		[presetId, cached, plugins, isDark],
 	);
 
 	const dialog = (

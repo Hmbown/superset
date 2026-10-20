@@ -1,27 +1,15 @@
 import { readFile, stat } from "node:fs/promises";
 import { dirname, join, sep } from "node:path";
-import { readEnabledPlugins } from "@superset/agent-setup";
 import type {
-	McpServerAgent,
 	McpServerEntry,
-	McpServerPlugin,
 	McpServerScope,
 } from "@superset/shared/mcp-servers";
-import {
-	DEFAULT_MARKETPLACE,
-	desiredPluginMcpServers,
-	isServerSatisfiedExternally,
-	PLUGIN_CATALOG,
-	type PluginMcpServerConfig,
-	SUPERSET_API_URL,
-} from "@superset/shared/plugins";
 
 export interface McpConfigPaths {
 	homeDir: string;
 	/** `~/.claude.json`, or `.claude.json` inside a custom CLAUDE_CONFIG_DIR. */
 	claudeStatePath: string;
 	codexConfigPath: string;
-	installedPluginsPath: string;
 }
 
 interface DiscoverMcpServersOptions {
@@ -30,6 +18,8 @@ interface DiscoverMcpServersOptions {
 	paths: McpConfigPaths;
 }
 
+type McpServerAgent = "claude" | "codex";
+
 interface FoundServer {
 	name: string;
 	agent: McpServerAgent;
@@ -37,16 +27,12 @@ interface FoundServer {
 	transport: string;
 	enabled: boolean;
 	configPath: string;
-	url?: string;
-	command?: string;
-	args?: string[];
 	untrusted?: boolean;
 }
 
 const MAX_CONFIG_BYTES = 50 * 1024 * 1024;
-const PROXY_PREFIX = `${SUPERSET_API_URL}/mcp/plugins/`;
 
-export function isMcpServerAgent(agent: string): agent is McpServerAgent {
+export function isMcpServerAgent(agent: string): boolean {
 	return agent === "claude" || agent === "codex";
 }
 
@@ -124,7 +110,7 @@ function jsonServers(
 	if (!isRecord(servers)) return [];
 	return Object.entries(servers).flatMap(([name, config]): FoundServer[] => {
 		if (!isRecord(config)) return [];
-		const url = typeof config.url === "string" ? config.url : undefined;
+		const hasUrl = typeof config.url === "string";
 		return [
 			{
 				name,
@@ -133,7 +119,7 @@ function jsonServers(
 				transport:
 					typeof config.type === "string"
 						? config.type
-						: url
+						: hasUrl
 							? "http"
 							: "stdio",
 				enabled:
@@ -141,11 +127,6 @@ function jsonServers(
 					config.disabled !== true &&
 					!disabledNames.includes(name),
 				configPath,
-				...(url ? { url } : {}),
-				...(typeof config.command === "string"
-					? { command: config.command }
-					: {}),
-				args: stringList(config.args),
 			},
 		];
 	});
@@ -224,26 +205,13 @@ function parseCodexMcpServers(
 				transport: "stdio",
 				enabled: true,
 				configPath,
-				args: [],
 			};
 			servers.set(name, current);
 			continue;
 		}
 		if (!current) continue;
-		const url = tomlString(line, "url");
-		if (url !== undefined) {
-			current.url = url;
-			current.transport = "http";
-		}
-		const command = tomlString(line, "command");
-		if (command !== undefined) current.command = command;
+		if (tomlString(line, "url") !== undefined) current.transport = "http";
 		if (/^\s*enabled\s*=\s*false\b/.test(line)) current.enabled = false;
-		const args = line.match(/^\s*args\s*=\s*\[([^\]]*)\]/)?.[1];
-		if (args !== undefined) {
-			current.args = [...args.matchAll(/"([^"]*)"|'([^']*)'/g)].map(
-				(part) => part[1] ?? part[2] ?? "",
-			);
-		}
 	}
 	return [...servers.values()];
 }
@@ -301,58 +269,6 @@ async function readCodexServers(
 	return found;
 }
 
-interface PluginServer {
-	plugin: string;
-	server: string;
-	config: PluginMcpServerConfig;
-}
-
-function catalogPluginServers(): PluginServer[] {
-	return PLUGIN_CATALOG.flatMap((plugin) =>
-		Object.entries(desiredPluginMcpServers([{ name: plugin.name }])).map(
-			([server, config]) => ({ plugin: plugin.name, server, config }),
-		),
-	);
-}
-
-/**
- * A proxy URL names its plugin in the path. Otherwise exact name first, then
- * endpoint, since two catalog plugins can share a host.
- */
-function matchPlugin(
-	found: FoundServer,
-	pluginServers: readonly PluginServer[],
-): PluginServer | undefined {
-	if (found.url?.startsWith(PROXY_PREFIX)) {
-		const plugin = found.url.slice(PROXY_PREFIX.length).split("/")[1];
-		return pluginServers.find((candidate) => candidate.plugin === plugin);
-	}
-	return (
-		pluginServers.find((candidate) => candidate.server === found.name) ??
-		pluginServers.find((candidate) =>
-			isServerSatisfiedExternally(candidate.server, candidate.config, [
-				{
-					name: found.name,
-					...(found.url ? { url: found.url } : {}),
-					...(found.command ? { command: found.command } : {}),
-					...(found.args ? { args: found.args } : {}),
-				},
-			]),
-		)
-	);
-}
-
-function installedPluginNames(path: string): Set<string> {
-	return new Set(
-		(readEnabledPlugins(path) ?? [])
-			.filter(
-				(plugin) =>
-					!plugin.marketplace || plugin.marketplace === DEFAULT_MARKETPLACE,
-			)
-			.map((plugin) => plugin.name),
-	);
-}
-
 function compareEntries(a: McpServerEntry, b: McpServerEntry): number {
 	return (
 		a.name.localeCompare(b.name) ||
@@ -364,8 +280,7 @@ function compareEntries(a: McpServerEntry, b: McpServerEntry): number {
 
 /**
  * Every MCP server configured for Claude Code or Codex that applies in this
- * worktree, plus each Superset plugin server the asking agent does not have
- * yet. Reads files only: nothing is started or contacted.
+ * worktree. Reads files only: nothing is started or contacted.
  */
 export async function discoverMcpServers({
 	worktreePath,
@@ -376,63 +291,25 @@ export async function discoverMcpServers({
 		readClaudeServers(worktreePath, paths),
 		readCodexServers(worktreePath, paths),
 	]);
-	const installed = installedPluginNames(paths.installedPluginsPath);
-	const pluginServers = catalogPluginServers();
-	const covered = new Set<string>();
-
-	const entries = [...claude, ...codex].map((found): McpServerEntry => {
-		const match = matchPlugin(found, pluginServers);
-		if (match && found.agent === agent) covered.add(match.server);
-		const plugin: McpServerPlugin | null = match
-			? {
-					name: match.plugin,
-					installed: installed.has(match.plugin),
-					proxied: Boolean(found.url?.startsWith(PROXY_PREFIX)),
-				}
-			: null;
-		return {
-			name: found.name,
-			agent: found.agent,
-			scope: found.scope,
-			transport: found.transport,
-			enabled: found.enabled,
-			configPath: found.configPath,
-			plugin,
-			state:
-				found.agent !== agent
-					? "other-agent"
-					: found.untrusted
-						? "untrusted"
-						: found.enabled
-							? "available"
-							: "disabled",
-		};
-	});
-
-	if (isMcpServerAgent(agent)) {
-		for (const candidate of pluginServers) {
-			if (covered.has(candidate.server)) continue;
-			covered.add(candidate.server);
-			entries.push({
-				name: candidate.server,
-				agent,
-				scope: "user",
-				transport: "url" in candidate.config ? candidate.config.type : "stdio",
-				enabled: true,
-				configPath: "",
-				plugin: {
-					name: candidate.plugin,
-					installed: installed.has(candidate.plugin),
-					proxied:
-						"url" in candidate.config &&
-						candidate.config.url.startsWith(PROXY_PREFIX),
-				},
-				state: "not-configured",
-			});
-		}
-	}
-
-	return entries.sort(compareEntries);
+	return [...claude, ...codex]
+		.map(
+			(found): McpServerEntry => ({
+				name: found.name,
+				agent: found.agent,
+				scope: found.scope,
+				transport: found.transport,
+				configPath: found.configPath,
+				state:
+					found.agent !== agent
+						? "other-agent"
+						: found.untrusted
+							? "untrusted"
+							: found.enabled
+								? "available"
+								: "disabled",
+			}),
+		)
+		.sort(compareEntries);
 }
 
 const CACHE_TTL_MS = 30_000;
@@ -456,7 +333,6 @@ export function listMcpServers(
 		options.agent,
 		paths.claudeStatePath,
 		paths.codexConfigPath,
-		paths.installedPluginsPath,
 	].join("::");
 	const cached = cache.get(key);
 	if (!options.refresh && cached && now() - cached.fetchedAt < CACHE_TTL_MS) {

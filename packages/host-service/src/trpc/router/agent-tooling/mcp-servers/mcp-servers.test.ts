@@ -37,7 +37,6 @@ beforeEach(() => {
 		homeDir: home,
 		claudeStatePath: join(home, ".claude.json"),
 		codexConfigPath: join(home, ".codex", "config.toml"),
-		installedPluginsPath: join(home, ".superset", "installed_plugins.json"),
 	};
 	clearMcpServerCache();
 });
@@ -70,7 +69,6 @@ describe("discoverMcpServers", () => {
 		expect(byName(servers, "docs")[0]).toMatchObject({
 			scope: "user",
 			transport: "http",
-			enabled: false,
 			state: "disabled",
 		});
 		expect(byName(servers, "local")[0]).toMatchObject({
@@ -108,12 +106,10 @@ describe("discoverMcpServers", () => {
 
 		expect(byName(servers, "repl", "codex")[0]).toMatchObject({
 			transport: "stdio",
-			enabled: true,
 			state: "other-agent",
 		});
 		expect(byName(servers, "off", "codex")[0]).toMatchObject({
 			transport: "http",
-			enabled: false,
 			state: "other-agent",
 		});
 	});
@@ -168,51 +164,6 @@ describe("discoverMcpServers", () => {
 		expect(byName(servers, "docs").map((server) => server.configPath)).toEqual([
 			join(nested, ".mcp.json"),
 		]);
-	});
-
-	it("marks Superset plugin servers and lists the ones the agent does not have yet", async () => {
-		write(paths.claudeStatePath, {
-			mcpServers: {
-				"my-linear": {
-					type: "http",
-					url: "https://api.superset.sh/mcp/plugins/superset/linear",
-				},
-			},
-		});
-		write(paths.installedPluginsPath, {
-			version: 1,
-			plugins: [{ name: "linear", marketplace: "superset", enabled: true }],
-		});
-
-		const servers = await discoverMcpServers({
-			worktreePath: worktree,
-			agent: "claude",
-			paths,
-		});
-
-		expect(byName(servers, "my-linear")[0]).toMatchObject({
-			state: "available",
-			plugin: { name: "linear", installed: true, proxied: true },
-		});
-		expect(byName(servers, "linear")).toEqual([]);
-		expect(byName(servers, "github")[0]).toMatchObject({
-			agent: "claude",
-			configPath: "",
-			state: "not-configured",
-			plugin: { name: "github", installed: false },
-		});
-	});
-
-	it("lists no plugin servers to add for an agent Superset does not configure", async () => {
-		const servers = await discoverMcpServers({
-			worktreePath: worktree,
-			agent: "pi",
-			paths,
-		});
-
-		expect(
-			servers.filter((server) => server.state === "not-configured"),
-		).toEqual([]);
 	});
 });
 
