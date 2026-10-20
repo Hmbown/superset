@@ -1,15 +1,17 @@
 import { billingUsesAutumn } from "@superset/auth/autumn";
 import {
-	organizationMachineSizesFromAutumn,
+	organizationGatedMachineSizesFromAutumn,
 	organizationPlanFromAutumn,
 } from "@superset/auth/billing";
 import { db } from "@superset/db/client";
-import { organizations, subscriptions } from "@superset/db/schema";
+import { subscriptions } from "@superset/db/schema";
 import {
 	ACTIVE_SUBSCRIPTION_STATUSES,
-	DEFAULT_MACHINE_SIZE_CONFIG,
-	type MachineSizeConfig,
-	machineSizeVcpus,
+	defaultMachineSize,
+	isMachineSize,
+	MACHINE_SIZE_VCPUS,
+	type MachineSize,
+	offeredMachineSizes,
 	type PlanTier,
 	planTierFromSubscription,
 } from "@superset/shared/billing";
@@ -38,49 +40,28 @@ export async function organizationPlan(
 	return planTierFromSubscription(subscription);
 }
 
-export function organizationMetadataObject(
-	metadata: string | null | undefined,
-): Record<string, unknown> {
-	if (!metadata) return {};
-	try {
-		const parsed: unknown = JSON.parse(metadata);
-		return parsed && typeof parsed === "object" && !Array.isArray(parsed)
-			? (parsed as Record<string, unknown>)
-			: {};
-	} catch (error) {
-		console.warn("[billing/plan] organization metadata is not JSON", error);
-		return {};
-	}
+export interface OrganizationMachineSizes {
+	sizes: MachineSize[];
+	defaultSize: MachineSize;
 }
 
-/** The sizes Autumn offers the org, with the org's own default when it is one of them. */
+/** Small, medium and large for everyone; bigger sizes only while Autumn turns them on. */
 export async function organizationMachineSizes(
 	organizationId: string,
-): Promise<MachineSizeConfig> {
-	const [offered, [organization]] = await Promise.all([
-		billingUsesAutumn
-			? organizationMachineSizesFromAutumn(organizationId)
-			: DEFAULT_MACHINE_SIZE_CONFIG,
-		db
-			.select({ metadata: organizations.metadata })
-			.from(organizations)
-			.where(eq(organizations.id, organizationId)),
-	]);
-	const chosen = organizationMetadataObject(
-		organization?.metadata,
-	).defaultMachineSize;
-	return typeof chosen === "string" &&
-		machineSizeVcpus(offered, chosen) !== null
-		? { ...offered, defaultSize: chosen }
-		: offered;
+): Promise<OrganizationMachineSizes> {
+	const gated = billingUsesAutumn
+		? await organizationGatedMachineSizesFromAutumn(organizationId)
+		: [];
+	const sizes = offeredMachineSizes(gated);
+	return { sizes, defaultSize: defaultMachineSize(sizes) };
 }
 
 export async function resolveMachineSize(
 	organizationId: string,
 	requested: string | null | undefined,
-): Promise<{ name: string; vcpus: number } | null> {
-	const config = await organizationMachineSizes(organizationId);
-	const name = requested ?? config.defaultSize;
-	const vcpus = machineSizeVcpus(config, name);
-	return vcpus === null ? null : { name, vcpus };
+): Promise<{ name: MachineSize; vcpus: number } | null> {
+	const { sizes, defaultSize } = await organizationMachineSizes(organizationId);
+	const name = requested ?? defaultSize;
+	if (!isMachineSize(name) || !sizes.includes(name)) return null;
+	return { name, vcpus: MACHINE_SIZE_VCPUS[name] };
 }

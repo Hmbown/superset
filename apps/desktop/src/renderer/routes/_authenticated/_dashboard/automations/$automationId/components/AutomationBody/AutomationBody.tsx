@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
 import type { DraftTrigger } from "@superset/shared/automation-triggers";
+import { isMachineSize } from "@superset/shared/billing";
 import { isCloudAgentId } from "@superset/shared/cloud-agent-launch";
 import { CLOUD_HOST_ID } from "@superset/shared/host-routing";
 import type { RouterOutputs } from "@superset/trpc";
@@ -86,7 +87,9 @@ export function AutomationBody({
 			v2WorkspaceId: automation.v2WorkspaceId,
 			cloudWorkspaceId: automation.cloudWorkspaceId,
 			environmentId: automation.environmentId,
-			machineSize: automation.machineSize ?? null,
+			machineSize: isMachineSize(automation.machineSize)
+				? automation.machineSize
+				: null,
 			tags: automation.tags,
 			continueAgentSession: automation.continueAgentSession,
 			triggers: automation.triggers.map((trigger) => ({

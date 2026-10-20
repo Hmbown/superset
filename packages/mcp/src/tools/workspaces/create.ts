@@ -1,4 +1,5 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { MACHINE_SIZES, type MachineSize } from "@superset/shared/billing";
 import {
 	describeEnvironments,
 	selectCloudEnvironment,
@@ -76,12 +77,10 @@ export function register(server: McpServer): void {
 					"Cloud only: id of the environment the workspace starts from. Required when several environments have repositories.",
 				),
 			machineSize: z
-				.string()
-				.min(1)
-				.max(40)
+				.enum(MACHINE_SIZES)
 				.optional()
 				.describe(
-					"Cloud only: size of the machine, one the organization offers. Usually `small` (2 vCPU, 4 GB, 0.5 box hours per hour) for light work such as triage, review or answering questions, and `medium` (4 vCPU, 8 GB, 1 box hour per hour) for most coding work; some organizations also offer `large` (8 vCPU, 16 GB) for big builds, large test suites or heavy compiles. Omit for the organization's default. An error names a size it does not offer.",
+					"Cloud only: size of the machine. `small` (2 vCPU, 4 GB) for light work such as triage, review or answering questions; `medium` (4 vCPU, 8 GB) for most coding work and the default; `large` (8 vCPU, 16 GB) for big builds, large test suites or heavy compiles. `xlarge` and `2xlarge` only where the organization's plan includes them. Each size costs twice the size below it.",
 				),
 			branch: z
 				.string()
@@ -238,7 +237,7 @@ async function createInCloud(
 		name?: string;
 		branch?: string;
 		environment?: string;
-		machineSize?: string;
+		machineSize?: MachineSize;
 		projectId?: string;
 		checkout?: string;
 		pr?: number;

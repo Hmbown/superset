@@ -700,9 +700,6 @@ msgstr "開啟對應工作區時，{agents} 工作階段會恢復。"
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {落後main #個提交，需要變基} other {落後main #個提交，需要變基}}"
 
-msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
-msgstr "{boxHoursPerHour, plural, other {每小時消耗 # 個 box 小時}}"
-
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition}/{totalBranches}"
 
@@ -962,6 +959,9 @@ msgstr "按月計費每使用者每月 {monthlyPrice}，按年計費為 {yearlyP
 
 msgid "{months}mo ago"
 msgstr "{months}個月前"
+
+msgid "{multiple}× the cost of Medium"
+msgstr "中型的 {multiple} 倍費用"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "你有{myFailedCount}個自動化上次執行失敗"
@@ -1341,6 +1341,10 @@ msgstr "2027"
 
 msgid "2h ago"
 msgstr "2小時前"
+
+msgctxt "machine size"
+msgid "2X-Large"
+msgstr "2X-大型"
 
 msgid "3 archived workspaces"
 msgstr "3個已歸檔的工作區"
@@ -3047,18 +3051,6 @@ msgstr "底部抽屜，在觸控螢幕裝置上便於滑動操作。"
 
 msgid "Box"
 msgstr "Box"
-
-msgid "Box hours an hour: {rates}"
-msgstr "每小時盒時：{rates}"
-
-msgid "Box hours over the plan: {overage}"
-msgstr "超出方案的盒時：{overage}"
-
-msgid "Box hours used: {used}"
-msgstr "已用盒時：{used}"
-
-msgid "Box hours used: {used} of {included}"
-msgstr "已用盒時：{used} / {included}"
 
 msgid "Branch"
 msgstr "分支"
@@ -5787,12 +5779,6 @@ msgstr "新代理程式的預設帳戶"
 msgid "Default location for new worktree workspaces on this host."
 msgstr "此主機上新建worktree工作區的預設位置。"
 
-msgid "Default machine size"
-msgstr "預設機器規格"
-
-msgid "Default machine size updated"
-msgstr "已更新預設機器規格"
-
 msgid "Default model"
 msgstr "預設模型"
 
@@ -7433,9 +7419,6 @@ msgstr "更新頭像失敗"
 msgid "Failed to update branch prefix"
 msgstr "更新分支字首失敗"
 
-msgid "Failed to update default machine size"
-msgstr "無法更新預設機器規格"
-
 msgid "Failed to update hooks"
 msgstr "更新鉤子失敗"
 
@@ -7978,6 +7961,15 @@ msgstr "關卡"
 
 msgid "Gates open"
 msgstr "已開啟關卡"
+
+msgid "GB-hours over the plan: {overage}"
+msgstr "超出方案的 GB 小時：{overage}"
+
+msgid "GB-hours used: {used}"
+msgstr "已用 GB 小時：{used}"
+
+msgid "GB-hours used: {used} of {included}"
+msgstr "已用 GB 小時：{used} / {included}"
 
 msgid "General"
 msgstr "通用"
@@ -10572,9 +10564,6 @@ msgstr "換對手"
 
 msgid "New cloud workspace"
 msgstr "新建雲端工作區"
-
-msgid "New cloud workspaces and automations start on this size unless someone picks another."
-msgstr "新的雲端工作區和自動化會以此規格啟動，除非有人選擇其他規格。"
 
 msgid "New environment"
 msgstr "新增環境"
@@ -19476,6 +19465,10 @@ msgstr "已寫入"
 
 msgid "X handle"
 msgstr "X 帳號名稱"
+
+msgctxt "machine size"
+msgid "X-Large"
+msgstr "X-大型"
 
 msgid "xs · sm · default · lg · icon-xs → icon-lg"
 msgstr "xs · sm · default · lg · icon-xs → icon-lg"

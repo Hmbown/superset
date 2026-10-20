@@ -1,8 +1,4 @@
-import {
-	DEFAULT_MACHINE_SIZE_CONFIG,
-	type MachineSizeConfig,
-	type PlanTier,
-} from "@superset/shared/billing";
+import type { MachineSize, PlanTier } from "@superset/shared/billing";
 import { Redis } from "@upstash/redis";
 import { AutumnError } from "autumn-js";
 import { env } from "../../../env";
@@ -24,8 +20,7 @@ const FREE: OrganizationBilling = {
 	lapsed: false,
 	paymentState: { kind: "ok" },
 	cloudUsage: null,
-	boxRate: 1,
-	machineSizes: DEFAULT_MACHINE_SIZE_CONFIG,
+	gatedMachineSizes: [],
 };
 
 const FAIL_OPEN: OrganizationBilling = {
@@ -38,8 +33,7 @@ const FAIL_OPEN: OrganizationBilling = {
 	lapsed: false,
 	paymentState: { kind: "ok" },
 	cloudUsage: null,
-	boxRate: 1,
-	machineSizes: DEFAULT_MACHINE_SIZE_CONFIG,
+	gatedMachineSizes: [],
 };
 
 const redis = new Redis({
@@ -133,19 +127,10 @@ export async function organizationPlanFromAutumn(
 	return (await organizationBilling(organizationId)).tier;
 }
 
-export async function organizationBoxRateFromAutumn(
+export async function organizationGatedMachineSizesFromAutumn(
 	organizationId: string,
-): Promise<number> {
-	return (await organizationBilling(organizationId)).boxRate ?? 1;
-}
-
-export async function organizationMachineSizesFromAutumn(
-	organizationId: string,
-): Promise<MachineSizeConfig> {
-	return (
-		(await organizationBilling(organizationId)).machineSizes ??
-		DEFAULT_MACHINE_SIZE_CONFIG
-	);
+): Promise<MachineSize[]> {
+	return (await organizationBilling(organizationId)).gatedMachineSizes ?? [];
 }
 
 export async function invalidateOrganizationBilling(

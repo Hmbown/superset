@@ -5,7 +5,6 @@ import {
 	ACTIVE_CPU_MINUTES_FEATURE_ID,
 	BOX_GB_MINUTES_FEATURE_ID,
 	ensureAutumnCustomer,
-	organizationBoxRateFromAutumn,
 } from "@superset/auth/billing";
 import { db } from "@superset/db/client";
 import { cloudWorkspaceBoots, cloudWorkspaces } from "@superset/db/schema";
@@ -74,8 +73,8 @@ function refusalError(refusal: Refusal) {
 	});
 }
 
-function reservation(memoryMb: number, boxRate: number): number {
-	return gbMinutes({ ms: LOCK_WINDOW_MS, memoryMb }) * boxRate;
+function reservation(memoryMb: number): number {
+	return gbMinutes({ ms: LOCK_WINDOW_MS, memoryMb });
 }
 
 const OPEN_BOOT = or(
@@ -108,12 +107,11 @@ export async function assertMayBoot(
 ): Promise<void> {
 	if (!billingUsesAutumn) return;
 	const box = boxFor(vcpus);
-	const boxRate = await organizationBoxRateFromAutumn(organizationId);
 	const result = await checkOrFailOpen(organizationId, () =>
 		autumnClient.check({
 			customerId: organizationId,
 			featureId: BOX_GB_MINUTES_FEATURE_ID,
-			requiredBalance: reservation(box.memoryMb, boxRate),
+			requiredBalance: reservation(box.memoryMb),
 		}),
 	);
 	if (!result) return;
@@ -129,12 +127,11 @@ export async function authorizeBoot(args: {
 }): Promise<{ bootId: string | null }> {
 	if (!billingUsesAutumn) return { bootId: null };
 	const bootId = `boot_${randomUUID()}`;
-	const boxRate = await organizationBoxRateFromAutumn(args.organizationId);
 	const result = await checkOrFailOpen(args.organizationId, () =>
 		autumnClient.check({
 			customerId: args.organizationId,
 			featureId: BOX_GB_MINUTES_FEATURE_ID,
-			requiredBalance: reservation(args.memoryMb, boxRate),
+			requiredBalance: reservation(args.memoryMb),
 			lock: {
 				enabled: true,
 				lockId: lockIdFor(bootId, 0),
@@ -362,15 +359,13 @@ export async function settleBoot(
 			return "closed";
 		}
 		const { session } = found;
-		const boxRate = await organizationBoxRateFromAutumn(boot.organizationId);
 		const end = session.endedAt ?? Date.now();
 		const from = (
 			boot.finalizedThrough ?? new Date(session.startedAt)
 		).getTime();
 		await recordUsage(boot, {
 			from,
-			amount:
-				gbMinutes({ ms: end - from, memoryMb: session.memoryMb }) * boxRate,
+			amount: gbMinutes({ ms: end - from, memoryMb: session.memoryMb }),
 			userId: workspace?.createdByUserId ?? null,
 		});
 		await db
@@ -394,7 +389,7 @@ export async function settleBoot(
 		const renewal = await autumnClient.check({
 			customerId: boot.organizationId,
 			featureId: BOX_GB_MINUTES_FEATURE_ID,
-			requiredBalance: reservation(session.memoryMb, boxRate),
+			requiredBalance: reservation(session.memoryMb),
 			lock: {
 				enabled: true,
 				lockId: lockIdFor(bootId, nextSeq),

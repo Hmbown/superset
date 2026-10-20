@@ -1,4 +1,5 @@
 import { boolean, CLIError, number, string } from "@superset/cli-framework";
+import { MACHINE_SIZES } from "@superset/shared/billing";
 import { resolveWorkspaceHost } from "../../../lib/cloud-workspaces";
 import { command } from "../../../lib/command";
 import { resolveHostTarget } from "../../../lib/host-target";
@@ -14,9 +15,11 @@ export default command({
 		environment: string().desc(
 			"Environment ID a cloud workspace starts from (see: superset environments list); required when several have repositories",
 		),
-		machine: string().desc(
-			"Machine size of a cloud workspace, as your organization offers them: usually `small` (2 vCPU, 4 GB, 0.5 box hours per hour) or `medium` (4 vCPU, 8 GB, 1 box hour per hour). Omit for your organization's default",
-		),
+		machineSize: string()
+			.enum(...MACHINE_SIZES)
+			.desc(
+				"Machine size of a cloud workspace: `small` (2 vCPU, 4 GB), `medium` (4 vCPU, 8 GB; the default) or `large` (8 vCPU, 16 GB); `xlarge` and `2xlarge` where your plan includes them. Each size costs twice the size below it",
+			),
 		project: string().desc(
 			"Project ID, for a workspace on a host. Required with --local or --host unless --session",
 		),
@@ -90,10 +93,10 @@ export default command({
 				"Drop --local/--host to create in the cloud, or drop --environment for a workspace on a host",
 			);
 		}
-		if (options.machine) {
+		if (options.machineSize) {
 			throw new CLIError(
-				"--machine applies to cloud workspaces",
-				"Drop --local/--host to create in the cloud, or drop --machine for a workspace on a host",
+				"--machine-size applies to cloud workspaces",
+				"Drop --local/--host to create in the cloud, or drop --machine-size for a workspace on a host",
 			);
 		}
 

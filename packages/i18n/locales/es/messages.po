@@ -700,9 +700,6 @@ msgstr "Las sesiones de {agents} se reanudan cuando abres su espacio de trabajo.
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {# commit por detrás de main, necesita rebase} other {# commits por detrás de main, necesita rebase}}"
 
-msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
-msgstr "{boxHoursPerHour, plural, one {Usa # hora de box por hora} other {Usa # horas de box por hora}}"
-
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} de {totalBranches}"
 
@@ -962,6 +959,9 @@ msgstr "{monthlyPrice} por usuario/mes con facturación mensual, o {yearlyPrice}
 
 msgid "{months}mo ago"
 msgstr "hace {months} m"
+
+msgid "{multiple}× the cost of Medium"
+msgstr "{multiple}× el costo de Mediana"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "Tus automatizaciones con error en su última ejecución: {myFailedCount}"
@@ -1341,6 +1341,10 @@ msgstr "2027"
 
 msgid "2h ago"
 msgstr "hace 2 h"
+
+msgctxt "machine size"
+msgid "2X-Large"
+msgstr "2X-Grande"
 
 msgid "3 archived workspaces"
 msgstr "3 espacios de trabajo archivados"
@@ -3047,18 +3051,6 @@ msgstr "Panel inferior, cómodo de deslizar en dispositivos táctiles."
 
 msgid "Box"
 msgstr "Caja"
-
-msgid "Box hours an hour: {rates}"
-msgstr "Horas de box por hora: {rates}"
-
-msgid "Box hours over the plan: {overage}"
-msgstr "Horas de box por encima del plan: {overage}"
-
-msgid "Box hours used: {used}"
-msgstr "Horas de box usadas: {used}"
-
-msgid "Box hours used: {used} of {included}"
-msgstr "Horas de box usadas: {used} de {included}"
 
 msgid "Branch"
 msgstr "Rama"
@@ -5787,12 +5779,6 @@ msgstr "Predeterminada para los agentes nuevos"
 msgid "Default location for new worktree workspaces on this host."
 msgstr "Ubicación predeterminada de los espacios de trabajo con worktree nuevos en este host."
 
-msgid "Default machine size"
-msgstr "Tamaño de máquina predeterminado"
-
-msgid "Default machine size updated"
-msgstr "Tamaño de máquina predeterminado actualizado"
-
 msgid "Default model"
 msgstr "Modelo predeterminado"
 
@@ -7433,9 +7419,6 @@ msgstr "No se pudo actualizar el avatar"
 msgid "Failed to update branch prefix"
 msgstr "No se pudo actualizar el prefijo de rama"
 
-msgid "Failed to update default machine size"
-msgstr "No se pudo actualizar el tamaño de máquina predeterminado"
-
 msgid "Failed to update hooks"
 msgstr "No se pudieron actualizar los hooks"
 
@@ -7978,6 +7961,15 @@ msgstr "Metas"
 
 msgid "Gates open"
 msgstr "Metas abiertas"
+
+msgid "GB-hours over the plan: {overage}"
+msgstr "GB-horas por encima del plan: {overage}"
+
+msgid "GB-hours used: {used}"
+msgstr "GB-horas usadas: {used}"
+
+msgid "GB-hours used: {used} of {included}"
+msgstr "GB-horas usadas: {used} de {included}"
 
 msgid "General"
 msgstr "General"
@@ -10572,9 +10564,6 @@ msgstr "nuevos rivales"
 
 msgid "New cloud workspace"
 msgstr "Nuevo espacio de trabajo en la nube"
-
-msgid "New cloud workspaces and automations start on this size unless someone picks another."
-msgstr "Los nuevos espacios de trabajo en la nube y las automatizaciones empiezan con este tamaño, salvo que alguien elija otro."
 
 msgid "New environment"
 msgstr "Nuevo entorno"
@@ -19476,6 +19465,10 @@ msgstr "Escrito"
 
 msgid "X handle"
 msgstr "Identificador de X"
+
+msgctxt "machine size"
+msgid "X-Large"
+msgstr "X-Grande"
 
 msgid "xs · sm · default · lg · icon-xs → icon-lg"
 msgstr "xs · sm · default · lg · icon-xs → icon-lg"

@@ -700,9 +700,6 @@ msgstr "{agents}-sessies worden hervat wanneer je hun workspace opent."
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {# commit achter op main, rebase nodig} other {# commits achter op main, rebase nodig}}"
 
-msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
-msgstr "{boxHoursPerHour, plural, one {Gebruikt # box-uur per uur} other {Gebruikt # box-uren per uur}}"
-
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} van {totalBranches}"
 
@@ -962,6 +959,9 @@ msgstr "{monthlyPrice} per gebruiker/mnd bij maandelijkse facturering, of {yearl
 
 msgid "{months}mo ago"
 msgstr "{months}mnd geleden"
+
+msgid "{multiple}× the cost of Medium"
+msgstr "{multiple}× de kosten van Middel"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "Bij {myFailedCount} van je automatiseringen is de laatste run mislukt"
@@ -1341,6 +1341,10 @@ msgstr "2027"
 
 msgid "2h ago"
 msgstr "2u geleden"
+
+msgctxt "machine size"
+msgid "2X-Large"
+msgstr "2X-Groot"
 
 msgid "3 archived workspaces"
 msgstr "3 gearchiveerde werkruimtes"
@@ -3047,18 +3051,6 @@ msgstr "Lade onderaan, swipevriendelijk op touchapparaten."
 
 msgid "Box"
 msgstr "Box"
-
-msgid "Box hours an hour: {rates}"
-msgstr "Box-uren per uur: {rates}"
-
-msgid "Box hours over the plan: {overage}"
-msgstr "Box-uren boven het abonnement: {overage}"
-
-msgid "Box hours used: {used}"
-msgstr "Gebruikte box-uren: {used}"
-
-msgid "Box hours used: {used} of {included}"
-msgstr "Gebruikte box-uren: {used} van {included}"
 
 msgid "Branch"
 msgstr "Branch"
@@ -5787,12 +5779,6 @@ msgstr "Standaard voor nieuwe agents"
 msgid "Default location for new worktree workspaces on this host."
 msgstr "Standaardlocatie voor nieuwe worktree-werkruimtes op deze host."
 
-msgid "Default machine size"
-msgstr "Standaard machinegrootte"
-
-msgid "Default machine size updated"
-msgstr "Standaard machinegrootte bijgewerkt"
-
 msgid "Default model"
 msgstr "Standaardmodel"
 
@@ -7433,9 +7419,6 @@ msgstr "Bijwerken van avatar mislukt"
 msgid "Failed to update branch prefix"
 msgstr "Bijwerken van branchprefix mislukt"
 
-msgid "Failed to update default machine size"
-msgstr "Standaard machinegrootte kon niet worden bijgewerkt"
-
 msgid "Failed to update hooks"
 msgstr "Bijwerken van hooks mislukt"
 
@@ -7978,6 +7961,15 @@ msgstr "Drempels"
 
 msgid "Gates open"
 msgstr "Open drempels"
+
+msgid "GB-hours over the plan: {overage}"
+msgstr "GB-uren boven het abonnement: {overage}"
+
+msgid "GB-hours used: {used}"
+msgstr "Gebruikte GB-uren: {used}"
+
+msgid "GB-hours used: {used} of {included}"
+msgstr "Gebruikte GB-uren: {used} van {included}"
 
 msgid "General"
 msgstr "Algemeen"
@@ -10572,9 +10564,6 @@ msgstr "nieuwe uitdagers"
 
 msgid "New cloud workspace"
 msgstr "Nieuwe cloudwerkruimte"
-
-msgid "New cloud workspaces and automations start on this size unless someone picks another."
-msgstr "Nieuwe cloudworkspaces en automatiseringen starten op deze grootte, tenzij iemand een andere kiest."
 
 msgid "New environment"
 msgstr "Nieuwe omgeving"
@@ -19476,6 +19465,10 @@ msgstr "Geschreven"
 
 msgid "X handle"
 msgstr "X-handle"
+
+msgctxt "machine size"
+msgid "X-Large"
+msgstr "X-Groot"
 
 msgid "xs · sm · default · lg · icon-xs → icon-lg"
 msgstr "xs · sm · default · lg · icon-xs → icon-lg"

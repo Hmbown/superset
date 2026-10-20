@@ -7,7 +7,7 @@ import {
 	githubRepositories,
 	users,
 } from "@superset/db/schema";
-import { machineSpec } from "@superset/shared/billing";
+import { MACHINE_SIZES, machineSpec } from "@superset/shared/billing";
 import {
 	CLOUD_AGENT_PROMPT_MAX_LENGTH,
 	isCloudAgentId,
@@ -266,12 +266,12 @@ export const cloudWorkspaceRouter = {
 		.input(z.object({ organizationId: z.string().uuid() }))
 		.query(async ({ ctx, input }) => {
 			assertMember(ctx.organizationIds, input.organizationId);
-			const config = await organizationMachineSizes(input.organizationId);
+			const { sizes, defaultSize } = await organizationMachineSizes(
+				input.organizationId,
+			);
 			return {
-				defaultSize: config.defaultSize,
-				sizes: Object.entries(config.sizes)
-					.sort((a, b) => a[1] - b[1])
-					.map(([name, vcpus]) => ({ name, ...machineSpec(vcpus) })),
+				defaultSize,
+				sizes: sizes.map((name) => ({ name, ...machineSpec(name) })),
 			};
 		}),
 
@@ -329,7 +329,7 @@ export const cloudWorkspaceRouter = {
 				/** Tasks the composer linked; each must be in this organization. */
 				taskIds: z.array(z.string().uuid()).max(10).optional(),
 				/** A size the organization offers (see `machineSizes`); omitted = its default. */
-				machineSize: z.string().min(1).max(40).optional(),
+				machineSize: z.enum(MACHINE_SIZES).optional(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {

@@ -700,9 +700,6 @@ msgstr "Relace {agents} se obnoví, když otevřete jejich pracovní prostor."
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Zaostává za main o # commit, je potřeba rebase} few {Zaostává za main o # commity, je potřeba rebase} many {Zaostává za main o # commitu, je potřeba rebase} other {Zaostává za main o # commitů, je potřeba rebase}}"
 
-msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
-msgstr "{boxHoursPerHour, plural, one {Spotřebuje # box hodinu za hodinu} few {Spotřebuje # box hodiny za hodinu} many {Spotřebuje # box hodiny za hodinu} other {Spotřebuje # box hodin za hodinu}}"
-
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} z {totalBranches}"
 
@@ -962,6 +959,9 @@ msgstr "{monthlyPrice} na uživatele a měsíc při měsíční fakturaci, nebo 
 
 msgid "{months}mo ago"
 msgstr "před {months} měs."
+
+msgid "{multiple}× the cost of Medium"
+msgstr "{multiple}× cena střední"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "Vaše automatizace s neúspěšným posledním během: {myFailedCount}"
@@ -1341,6 +1341,10 @@ msgstr "2027"
 
 msgid "2h ago"
 msgstr "před 2 h"
+
+msgctxt "machine size"
+msgid "2X-Large"
+msgstr "2X-Velký"
 
 msgid "3 archived workspaces"
 msgstr "3 archivované pracovní prostory"
@@ -3047,18 +3051,6 @@ msgstr "Spodní drawer, na dotykových zařízeních ovladatelný přejetím prs
 
 msgid "Box"
 msgstr "Box"
-
-msgid "Box hours an hour: {rates}"
-msgstr "Hodiny boxu za hodinu: {rates}"
-
-msgid "Box hours over the plan: {overage}"
-msgstr "Hodiny boxu nad rámec plánu: {overage}"
-
-msgid "Box hours used: {used}"
-msgstr "Využité hodiny boxu: {used}"
-
-msgid "Box hours used: {used} of {included}"
-msgstr "Využité hodiny boxu: {used} z {included}"
 
 msgid "Branch"
 msgstr "Větev"
@@ -5787,12 +5779,6 @@ msgstr "Výchozí pro nové agenty"
 msgid "Default location for new worktree workspaces on this host."
 msgstr "Výchozí umístění nových pracovních prostorů s worktree na tomto hostu."
 
-msgid "Default machine size"
-msgstr "Výchozí velikost stroje"
-
-msgid "Default machine size updated"
-msgstr "Výchozí velikost stroje byla aktualizována"
-
 msgid "Default model"
 msgstr "Výchozí model"
 
@@ -7433,9 +7419,6 @@ msgstr "Nepodařilo se aktualizovat avatar"
 msgid "Failed to update branch prefix"
 msgstr "Nepodařilo se změnit prefix větve"
 
-msgid "Failed to update default machine size"
-msgstr "Výchozí velikost stroje se nepodařilo aktualizovat"
-
 msgid "Failed to update hooks"
 msgstr "Nepodařilo se aktualizovat hooky"
 
@@ -7978,6 +7961,15 @@ msgstr "Brány"
 
 msgid "Gates open"
 msgstr "Otevřené brány"
+
+msgid "GB-hours over the plan: {overage}"
+msgstr "GB-hodiny nad rámec plánu: {overage}"
+
+msgid "GB-hours used: {used}"
+msgstr "Využité GB-hodiny: {used}"
+
+msgid "GB-hours used: {used} of {included}"
+msgstr "Využité GB-hodiny: {used} z {included}"
 
 msgid "General"
 msgstr "Obecné"
@@ -10572,9 +10564,6 @@ msgstr "noví vyzyvatelé"
 
 msgid "New cloud workspace"
 msgstr "Nový cloudový pracovní prostor"
-
-msgid "New cloud workspaces and automations start on this size unless someone picks another."
-msgstr "Nové cloudové pracovní prostory a automatizace začínají na této velikosti, pokud někdo nevybere jinou."
 
 msgid "New environment"
 msgstr "Nové prostředí"
@@ -19476,6 +19465,10 @@ msgstr "Zapsáno"
 
 msgid "X handle"
 msgstr "Identifikátor na X"
+
+msgctxt "machine size"
+msgid "X-Large"
+msgstr "X-Velký"
 
 msgid "xs · sm · default · lg · icon-xs → icon-lg"
 msgstr "xs · sm · default · lg · icon-xs → icon-lg"

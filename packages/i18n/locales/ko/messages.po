@@ -700,9 +700,6 @@ msgstr "{agents} 세션은 해당 워크스페이스를 열면 재개됩니다."
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {main보다 커밋 #개 뒤처짐, 리베이스 필요} other {main보다 커밋 #개 뒤처짐, 리베이스 필요}}"
 
-msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
-msgstr "{boxHoursPerHour, plural, other {시간당 # 박스 시간 사용}}"
-
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{totalBranches}개 중 {branchPosition}번째"
 
@@ -962,6 +959,9 @@ msgstr "월간 결제 시 사용자당 월 {monthlyPrice}, 연간 결제 시 {ye
 
 msgid "{months}mo ago"
 msgstr "{months}개월 전"
+
+msgid "{multiple}× the cost of Medium"
+msgstr "중형 대비 {multiple}배 비용"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "내 자동화 {myFailedCount}개가 마지막 실행에 실패했습니다"
@@ -1341,6 +1341,10 @@ msgstr "2027년"
 
 msgid "2h ago"
 msgstr "2시간 전"
+
+msgctxt "machine size"
+msgid "2X-Large"
+msgstr "2X-대형"
 
 msgid "3 archived workspaces"
 msgstr "보관된 워크스페이스 3개"
@@ -3047,18 +3051,6 @@ msgstr "하단 드로어로, 터치 기기에서 스와이프하기 좋습니다
 
 msgid "Box"
 msgstr "박스"
-
-msgid "Box hours an hour: {rates}"
-msgstr "시간당 박스 시간: {rates}"
-
-msgid "Box hours over the plan: {overage}"
-msgstr "플랜 초과 박스 시간: {overage}"
-
-msgid "Box hours used: {used}"
-msgstr "사용한 박스 시간: {used}"
-
-msgid "Box hours used: {used} of {included}"
-msgstr "사용한 박스 시간: {included} 중 {used}"
 
 msgid "Branch"
 msgstr "브랜치"
@@ -5787,12 +5779,6 @@ msgstr "새 에이전트 기본값"
 msgid "Default location for new worktree workspaces on this host."
 msgstr "이 호스트에서 새 worktree 워크스페이스의 기본 위치입니다."
 
-msgid "Default machine size"
-msgstr "기본 머신 크기"
-
-msgid "Default machine size updated"
-msgstr "기본 머신 크기를 업데이트했습니다"
-
 msgid "Default model"
 msgstr "기본 모델"
 
@@ -7433,9 +7419,6 @@ msgstr "아바타를 업데이트하지 못했습니다"
 msgid "Failed to update branch prefix"
 msgstr "브랜치 접두사를 업데이트하지 못했습니다"
 
-msgid "Failed to update default machine size"
-msgstr "기본 머신 크기를 업데이트하지 못했습니다"
-
 msgid "Failed to update hooks"
 msgstr "훅을 업데이트하지 못했습니다"
 
@@ -7978,6 +7961,15 @@ msgstr "관문"
 
 msgid "Gates open"
 msgstr "열린 관문"
+
+msgid "GB-hours over the plan: {overage}"
+msgstr "플랜 초과 GB 시간: {overage}"
+
+msgid "GB-hours used: {used}"
+msgstr "사용한 GB 시간: {used}"
+
+msgid "GB-hours used: {used} of {included}"
+msgstr "사용한 GB 시간: {included} 중 {used}"
 
 msgid "General"
 msgstr "일반"
@@ -10572,9 +10564,6 @@ msgstr "새 도전자"
 
 msgid "New cloud workspace"
 msgstr "새 클라우드 워크스페이스"
-
-msgid "New cloud workspaces and automations start on this size unless someone picks another."
-msgstr "새 클라우드 워크스페이스와 자동화는 다른 크기를 선택하지 않으면 이 크기로 시작합니다."
 
 msgid "New environment"
 msgstr "새 환경"
@@ -19476,6 +19465,10 @@ msgstr "씀"
 
 msgid "X handle"
 msgstr "X 핸들"
+
+msgctxt "machine size"
+msgid "X-Large"
+msgstr "X-대형"
 
 msgid "xs · sm · default · lg · icon-xs → icon-lg"
 msgstr "xs · sm · default · lg · icon-xs → icon-lg"

@@ -1,12 +1,11 @@
-import {
-	type MachineSizeConfig,
-	machineSizeConfigFrom,
-	type PlanTier,
-} from "@superset/shared/billing";
-import { boxRateFrom } from "./box-rate";
+import type { MachineSize, PlanTier } from "@superset/shared/billing";
 import { type CloudUsage, cloudUsageFromBalances } from "./cloud-usage";
 import type { getAutumnCustomer } from "./customer";
-import { paidPlanIdFromFlags, tierFromFlags } from "./entitlements";
+import {
+	gatedMachineSizesFromFlags,
+	paidPlanIdFromFlags,
+	tierFromFlags,
+} from "./entitlements";
 import { SEATS_FEATURE_ID } from "./features";
 
 export type PaymentState =
@@ -29,8 +28,7 @@ export interface OrganizationBilling {
 	lapsed: boolean;
 	paymentState: PaymentState;
 	cloudUsage: CloudUsage | null;
-	boxRate: number;
-	machineSizes: MachineSizeConfig;
+	gatedMachineSizes: MachineSize[];
 }
 
 type AutumnCustomer = Awaited<ReturnType<typeof getAutumnCustomer>>;
@@ -44,7 +42,7 @@ function iso(ms: number | null | undefined): string | null {
 export function billingFromCustomer(
 	customer: Pick<
 		AutumnCustomer,
-		"flags" | "subscriptions" | "invoices" | "balances" | "metadata"
+		"flags" | "subscriptions" | "invoices" | "balances"
 	>,
 	now: number,
 ): OrganizationBilling {
@@ -97,13 +95,6 @@ export function billingFromCustomer(
 		lapsed,
 		paymentState,
 		cloudUsage: cloudUsageFromBalances(customer.balances),
-		boxRate: boxRateFrom({
-			customer: customer.metadata,
-			plan: paid?.plan?.metadata,
-		}),
-		machineSizes: machineSizeConfigFrom({
-			customer: customer.metadata,
-			plan: paid?.plan?.metadata,
-		}),
+		gatedMachineSizes: gatedMachineSizesFromFlags(customer.flags),
 	};
 }

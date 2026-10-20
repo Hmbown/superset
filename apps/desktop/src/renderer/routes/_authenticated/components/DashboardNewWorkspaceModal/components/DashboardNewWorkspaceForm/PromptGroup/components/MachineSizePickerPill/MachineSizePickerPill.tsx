@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import type { MachineSize } from "@superset/shared/billing";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -14,8 +15,8 @@ import {
 } from "../FormPickerTrigger";
 
 interface MachineSizePickerPillProps {
-	machineSize: string | null;
-	onSelectMachineSize: (machineSize: string) => void;
+	machineSize: MachineSize | null;
+	onSelectMachineSize: (machineSize: MachineSize) => void;
 }
 
 export function MachineSizePickerPill({
@@ -60,7 +61,7 @@ export function MachineSizePickerPill({
 								</span>
 							</span>
 							<span className="text-xs text-muted-foreground">
-								{option.usage}
+								{option.cost}
 							</span>
 						</span>
 						{option.size === selected?.size && (

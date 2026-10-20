@@ -45,7 +45,7 @@ test("sends the chosen machine size to the cloud", async () => {
 	await createCloudWorkspace({
 		api,
 		organizationId: "org",
-		options: { machine: "small" },
+		options: { machineSize: "small" },
 	});
 	expect(createInput).toMatchObject({ machineSize: "small" });
 });

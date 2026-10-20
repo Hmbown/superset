@@ -700,9 +700,6 @@ msgstr "{agents} のセッションは、そのワークスペースを開くと
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {mainより#コミット遅れています。リベースが必要です} other {mainより#コミット遅れています。リベースが必要です}}"
 
-msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
-msgstr "{boxHoursPerHour, plural, other {1 時間あたり # ボックス時間を使用}}"
-
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{totalBranches}件中{branchPosition}件目"
 
@@ -962,6 +959,9 @@ msgstr "1ユーザーあたり月額{monthlyPrice}（月払い）、または{ye
 
 msgid "{months}mo ago"
 msgstr "{months}か月前"
+
+msgid "{multiple}× the cost of Medium"
+msgstr "中の {multiple} 倍のコスト"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "自分のオートメーションのうち{myFailedCount}件が前回の実行に失敗しました"
@@ -1341,6 +1341,10 @@ msgstr "2027年"
 
 msgid "2h ago"
 msgstr "2時間前"
+
+msgctxt "machine size"
+msgid "2X-Large"
+msgstr "2X-大"
 
 msgid "3 archived workspaces"
 msgstr "アーカイブ済みワークスペース3件"
@@ -3047,18 +3051,6 @@ msgstr "下部ドロワー。タッチデバイスではスワイプで操作で
 
 msgid "Box"
 msgstr "Box"
-
-msgid "Box hours an hour: {rates}"
-msgstr "1 時間あたりのボックス時間: {rates}"
-
-msgid "Box hours over the plan: {overage}"
-msgstr "プランを超えたボックス時間: {overage}"
-
-msgid "Box hours used: {used}"
-msgstr "使用したボックス時間: {used}"
-
-msgid "Box hours used: {used} of {included}"
-msgstr "使用したボックス時間: {included} のうち {used}"
 
 msgid "Branch"
 msgstr "ブランチ"
@@ -5787,12 +5779,6 @@ msgstr "新規エージェントのデフォルト"
 msgid "Default location for new worktree workspaces on this host."
 msgstr "このホストの新規ワークツリーワークスペースの既定の場所。"
 
-msgid "Default machine size"
-msgstr "既定のマシンサイズ"
-
-msgid "Default machine size updated"
-msgstr "既定のマシンサイズを更新しました"
-
 msgid "Default model"
 msgstr "デフォルトのモデル"
 
@@ -7433,9 +7419,6 @@ msgstr "アバターの更新に失敗しました"
 msgid "Failed to update branch prefix"
 msgstr "ブランチプレフィックスの更新に失敗しました"
 
-msgid "Failed to update default machine size"
-msgstr "既定のマシンサイズを更新できませんでした"
-
 msgid "Failed to update hooks"
 msgstr "フックの更新に失敗しました"
 
@@ -7978,6 +7961,15 @@ msgstr "ゲート"
 
 msgid "Gates open"
 msgstr "通過したゲート"
+
+msgid "GB-hours over the plan: {overage}"
+msgstr "プランを超えた GB 時間: {overage}"
+
+msgid "GB-hours used: {used}"
+msgstr "使用した GB 時間: {used}"
+
+msgid "GB-hours used: {used} of {included}"
+msgstr "使用した GB 時間: {included} のうち {used}"
 
 msgid "General"
 msgstr "全般"
@@ -10572,9 +10564,6 @@ msgstr "別の対戦相手"
 
 msgid "New cloud workspace"
 msgstr "新規クラウドワークスペース"
-
-msgid "New cloud workspaces and automations start on this size unless someone picks another."
-msgstr "新しいクラウドワークスペースとオートメーションは、別のサイズが選ばれない限りこのサイズで開始します。"
 
 msgid "New environment"
 msgstr "新しい環境"
@@ -19476,6 +19465,10 @@ msgstr "書き込み"
 
 msgid "X handle"
 msgstr "X ハンドル"
+
+msgctxt "machine size"
+msgid "X-Large"
+msgstr "X-大"
 
 msgid "xs · sm · default · lg · icon-xs → icon-lg"
 msgstr "xs · sm · default · lg · icon-xs → icon-lg"

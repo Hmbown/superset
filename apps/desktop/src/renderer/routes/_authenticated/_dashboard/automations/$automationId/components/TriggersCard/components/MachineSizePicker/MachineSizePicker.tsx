@@ -1,3 +1,4 @@
+import type { MachineSize } from "@superset/shared/billing";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -10,8 +11,8 @@ import { PickerTrigger } from "renderer/components/PickerTrigger";
 import { useMachineSizeOptions } from "renderer/routes/_authenticated/hooks/useMachineSizeOptions";
 
 interface MachineSizePickerProps {
-	value: string | null;
-	onChange: (machineSize: string) => void;
+	value: MachineSize | null;
+	onChange: (machineSize: MachineSize) => void;
 	className?: string;
 	disabled?: boolean;
 }
@@ -54,7 +55,7 @@ export function MachineSizePicker({
 								</span>
 							</span>
 							<span className="text-xs text-muted-foreground">
-								{option.usage}
+								{option.cost}
 							</span>
 						</span>
 						{option.size === selected?.size && (

@@ -700,9 +700,6 @@ msgstr "{agents}-Sitzungen werden fortgesetzt, wenn du ihren Workspace öffnest.
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {# Commit hinter main, Rebase nötig} other {# Commits hinter main, Rebase nötig}}"
 
-msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
-msgstr "{boxHoursPerHour, plural, one {Verbraucht # Box-Stunde pro Stunde} other {Verbraucht # Box-Stunden pro Stunde}}"
-
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} von {totalBranches}"
 
@@ -962,6 +959,9 @@ msgstr "{monthlyPrice} pro Nutzer/Mon. bei monatlicher Abrechnung oder {yearlyPr
 
 msgid "{months}mo ago"
 msgstr "vor {months} Mon."
+
+msgid "{multiple}× the cost of Medium"
+msgstr "{multiple}× die Kosten von Mittel"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "Bei {myFailedCount} deiner Automatisierungen ist der letzte Lauf fehlgeschlagen"
@@ -1341,6 +1341,10 @@ msgstr "2027"
 
 msgid "2h ago"
 msgstr "vor 2 Std."
+
+msgctxt "machine size"
+msgid "2X-Large"
+msgstr "2X-Groß"
 
 msgid "3 archived workspaces"
 msgstr "3 archivierte Arbeitsbereiche"
@@ -3047,18 +3051,6 @@ msgstr "Drawer von unten, wischfreundlich auf Touch-Geräten."
 
 msgid "Box"
 msgstr "Box"
-
-msgid "Box hours an hour: {rates}"
-msgstr "Box-Stunden pro Stunde: {rates}"
-
-msgid "Box hours over the plan: {overage}"
-msgstr "Box-Stunden über dem Plan: {overage}"
-
-msgid "Box hours used: {used}"
-msgstr "Genutzte Box-Stunden: {used}"
-
-msgid "Box hours used: {used} of {included}"
-msgstr "Genutzte Box-Stunden: {used} von {included}"
 
 msgid "Branch"
 msgstr "Branch"
@@ -5787,12 +5779,6 @@ msgstr "Standard für neue Agenten"
 msgid "Default location for new worktree workspaces on this host."
 msgstr "Standard-Speicherort für neue Worktree-Arbeitsbereiche auf diesem Host."
 
-msgid "Default machine size"
-msgstr "Standard-Maschinengröße"
-
-msgid "Default machine size updated"
-msgstr "Standard-Maschinengröße aktualisiert"
-
 msgid "Default model"
 msgstr "Standardmodell"
 
@@ -7433,9 +7419,6 @@ msgstr "Avatar konnte nicht aktualisiert werden"
 msgid "Failed to update branch prefix"
 msgstr "Branch-Präfix konnte nicht aktualisiert werden"
 
-msgid "Failed to update default machine size"
-msgstr "Standard-Maschinengröße konnte nicht aktualisiert werden"
-
 msgid "Failed to update hooks"
 msgstr "Hooks konnten nicht aktualisiert werden"
 
@@ -7978,6 +7961,15 @@ msgstr "Schwellen"
 
 msgid "Gates open"
 msgstr "Offene Schwellen"
+
+msgid "GB-hours over the plan: {overage}"
+msgstr "GB-Stunden über dem Plan: {overage}"
+
+msgid "GB-hours used: {used}"
+msgstr "Genutzte GB-Stunden: {used}"
+
+msgid "GB-hours used: {used} of {included}"
+msgstr "Genutzte GB-Stunden: {used} von {included}"
 
 msgid "General"
 msgstr "Allgemein"
@@ -10572,9 +10564,6 @@ msgstr "neue Herausforderer"
 
 msgid "New cloud workspace"
 msgstr "Neuer Cloud-Arbeitsbereich"
-
-msgid "New cloud workspaces and automations start on this size unless someone picks another."
-msgstr "Neue Cloud-Workspaces und Automatisierungen starten mit dieser Größe, sofern niemand eine andere wählt."
 
 msgid "New environment"
 msgstr "Neue Umgebung"
@@ -19476,6 +19465,10 @@ msgstr "Geschrieben"
 
 msgid "X handle"
 msgstr "X-Handle"
+
+msgctxt "machine size"
+msgid "X-Large"
+msgstr "X-Groß"
 
 msgid "xs · sm · default · lg · icon-xs → icon-lg"
 msgstr "xs · sm · default · lg · icon-xs → icon-lg"

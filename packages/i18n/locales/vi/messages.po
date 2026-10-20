@@ -700,9 +700,6 @@ msgstr "Các phiên {agents} sẽ tiếp tục khi bạn mở workspace của ch
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Chậm hơn main # commit, cần rebase} other {Chậm hơn main # commit, cần rebase}}"
 
-msgid "{boxHoursPerHour, plural, one {Uses # box hour per hour} other {Uses # box hours per hour}}"
-msgstr "{boxHoursPerHour, plural, other {Dùng # giờ box mỗi giờ}}"
-
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} trong {totalBranches}"
 
@@ -962,6 +959,9 @@ msgstr "{monthlyPrice} mỗi người/tháng khi thanh toán theo tháng, hoặc
 
 msgid "{months}mo ago"
 msgstr "{months} tháng trước"
+
+msgid "{multiple}× the cost of Medium"
+msgstr "{multiple}× chi phí của Vừa"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "{myFailedCount} tự động hóa của bạn thất bại ở lần chạy gần nhất"
@@ -1341,6 +1341,10 @@ msgstr "2027"
 
 msgid "2h ago"
 msgstr "2 giờ trước"
+
+msgctxt "machine size"
+msgid "2X-Large"
+msgstr "2X-Lớn"
 
 msgid "3 archived workspaces"
 msgstr "3 workspace đã lưu trữ"
@@ -3047,18 +3051,6 @@ msgstr "Ngăn kéo dưới đáy, vuốt tiện trên thiết bị cảm ứng."
 
 msgid "Box"
 msgstr "Box"
-
-msgid "Box hours an hour: {rates}"
-msgstr "Giờ box mỗi giờ: {rates}"
-
-msgid "Box hours over the plan: {overage}"
-msgstr "Giờ box vượt gói: {overage}"
-
-msgid "Box hours used: {used}"
-msgstr "Giờ box đã dùng: {used}"
-
-msgid "Box hours used: {used} of {included}"
-msgstr "Giờ box đã dùng: {used} trên {included}"
 
 msgid "Branch"
 msgstr "Nhánh"
@@ -5787,12 +5779,6 @@ msgstr "Mặc định cho agent mới"
 msgid "Default location for new worktree workspaces on this host."
 msgstr "Vị trí mặc định cho workspace worktree mới trên host này."
 
-msgid "Default machine size"
-msgstr "Kích thước máy mặc định"
-
-msgid "Default machine size updated"
-msgstr "Đã cập nhật kích thước máy mặc định"
-
 msgid "Default model"
 msgstr "Mô hình mặc định"
 
@@ -7433,9 +7419,6 @@ msgstr "Không thể cập nhật ảnh đại diện"
 msgid "Failed to update branch prefix"
 msgstr "Không thể cập nhật tiền tố nhánh"
 
-msgid "Failed to update default machine size"
-msgstr "Không cập nhật được kích thước máy mặc định"
-
 msgid "Failed to update hooks"
 msgstr "Không thể cập nhật hook"
 
@@ -7978,6 +7961,15 @@ msgstr "Cổng"
 
 msgid "Gates open"
 msgstr "Cổng còn mở"
+
+msgid "GB-hours over the plan: {overage}"
+msgstr "GB-giờ vượt gói: {overage}"
+
+msgid "GB-hours used: {used}"
+msgstr "GB-giờ đã dùng: {used}"
+
+msgid "GB-hours used: {used} of {included}"
+msgstr "GB-giờ đã dùng: {used} trên {included}"
 
 msgid "General"
 msgstr "Chung"
@@ -10572,9 +10564,6 @@ msgstr "đối thủ mới"
 
 msgid "New cloud workspace"
 msgstr "Workspace cloud mới"
-
-msgid "New cloud workspaces and automations start on this size unless someone picks another."
-msgstr "Không gian làm việc đám mây và tự động hóa mới sẽ bắt đầu với kích thước này trừ khi có người chọn kích thước khác."
 
 msgid "New environment"
 msgstr "Environment mới"
@@ -19476,6 +19465,10 @@ msgstr "Đã ghi"
 
 msgid "X handle"
 msgstr "Handle X"
+
+msgctxt "machine size"
+msgid "X-Large"
+msgstr "X-Lớn"
 
 msgid "xs · sm · default · lg · icon-xs → icon-lg"
 msgstr "xs · sm · default · lg · icon-xs → icon-lg"

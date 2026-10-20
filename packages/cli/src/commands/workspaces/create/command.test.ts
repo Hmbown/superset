@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, test } from "bun:test";
+import type { MachineSize } from "@superset/shared/billing";
 import { withLocalHostService } from "../../../lib/host/test-helpers";
 import createWorkspaceCommand from "./command";
 
@@ -40,7 +41,7 @@ function invoke(
 		model?: string;
 		checkout?: string;
 		pr?: number;
-		machine?: string;
+		machineSize?: MachineSize;
 	} = {},
 ) {
 	return createWorkspaceCommand.run({
@@ -221,9 +222,9 @@ describe("workspaces create", () => {
 		);
 	});
 
-	test("rejects --machine for a workspace on a host", async () => {
-		await expect(invoke({ machine: "small" })).rejects.toThrow(
-			/--machine applies to cloud workspaces/,
+	test("rejects --machine-size for a workspace on a host", async () => {
+		await expect(invoke({ machineSize: "small" })).rejects.toThrow(
+			/--machine-size applies to cloud workspaces/,
 		);
 		expect(createInput).toBeUndefined();
 	});

@@ -1,3 +1,4 @@
+import type { MachineSize } from "@superset/shared/billing";
 import { create } from "zustand";
 
 export type LinkedIssue = {
@@ -40,7 +41,7 @@ export interface NewWorkspaceDraft {
 	checkout: WorkspaceCheckout;
 	/** Cloud only. Null until picked; submit falls back to the first. */
 	environmentId: string | null;
-	machineSize: string | null;
+	machineSize: MachineSize | null;
 	/** Cloud only, for an environment without repositories of its own: primary first. */
 	prompt: string;
 	baseBranch: string | null;

@@ -7,7 +7,6 @@ import {
 	getRoleSortPriority,
 	type OrganizationRole,
 } from "@superset/shared/auth";
-import { FEATURE_FLAGS } from "@superset/shared/constants";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -43,7 +42,6 @@ import {
 } from "@superset/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { useNavigate } from "@tanstack/react-router";
-import { useFeatureFlagEnabled } from "posthog-js/react";
 import { useEffect, useMemo, useState } from "react";
 import {
 	HiOutlineClipboardDocument,
@@ -70,7 +68,6 @@ import {
 	SETTING_ITEM_ID,
 	type SettingItemId,
 } from "../../../utils/settings-search";
-import { DefaultMachineSizeSelect } from "./components/DefaultMachineSizeSelect";
 import { OrganizationLogo } from "./components/OrganizationLogo";
 import { SlugDialog } from "./components/SlugDialog";
 
@@ -167,13 +164,6 @@ export function OrganizationSettings({
 		SETTING_ITEM_ID.ORGANIZATION_TASK_TRACKER,
 		visibleItems,
 	);
-	const cloudEnabled = useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES);
-	const showDefaultMachineSize =
-		Boolean(cloudEnabled) &&
-		isItemVisible(
-			SETTING_ITEM_ID.ORGANIZATION_DEFAULT_MACHINE_SIZE,
-			visibleItems,
-		);
 	const { copyToClipboard, copied } = useCopyToClipboard();
 	const showDelete = isItemVisible(
 		SETTING_ITEM_ID.ORGANIZATION_DELETE,
@@ -565,23 +555,6 @@ export function OrganizationSettings({
 												</SelectItem>
 											</SelectContent>
 										</Select>
-									</SettingsRow>
-								)}
-
-								{showDefaultMachineSize && (
-									<SettingsRow
-										label={t({ message: "Default machine size" })}
-										htmlFor="org-default-machine-size"
-										hint={t({
-											message:
-												"New cloud workspaces and automations start on this size unless someone picks another.",
-										})}
-									>
-										<DefaultMachineSizeSelect
-											id="org-default-machine-size"
-											organizationId={organization.id}
-											disabled={!isOwner}
-										/>
 									</SettingsRow>
 								)}
 
