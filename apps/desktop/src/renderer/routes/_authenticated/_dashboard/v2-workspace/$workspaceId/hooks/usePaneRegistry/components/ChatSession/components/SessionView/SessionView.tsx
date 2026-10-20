@@ -45,6 +45,7 @@ import { ConnectionNotice } from "../ConnectionNotice";
 import { SessionHeader } from "../SessionHeader";
 import { Transcript } from "../Transcript";
 import { useStableList } from "./hooks/useStableList";
+import { composerAnswer } from "./utils/composerAnswer";
 
 const RESUME_FOLLOW_PX = 24;
 const NO_COMMANDS: AvailableCommand[] = [];
@@ -297,14 +298,24 @@ export function SessionView({
 	const onSend = useCallback(
 		(content: UserContent[], { steer }: { steer: boolean }) => {
 			if (holdPrompt) return holdPrompt(content);
-			if (loaded) {
-				for (const approval of approvals) {
-					void respondToApproval(approval.id, { type: "cancel" });
-				}
+			const pending = loaded ? approvals : [];
+			const [question] = pending;
+			const answer =
+				pending.length === 1 && question
+					? composerAnswer(question, content)
+					: null;
+			if (question && answer) {
+				return respondToApproval(question.id, answer);
 			}
+			for (const approval of pending) {
+				void respondToApproval(approval.id, { type: "cancel" });
+			}
+			const steerTurn = steer || pending.length > 0;
 			return sendPrompt(
 				content,
-				steer && runningTurnId ? { expectedTurnId: runningTurnId } : undefined,
+				steerTurn && runningTurnId
+					? { expectedTurnId: runningTurnId }
+					: undefined,
 			);
 		},
 		[
