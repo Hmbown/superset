@@ -386,19 +386,27 @@ export const auth = betterAuth({
 					user: { id: string; name?: string | null; image?: string | null };
 					session: Record<string, unknown>;
 				}) => {
-					const userMemberships = await db.query.members.findMany({
-						where: eq(members.userId, user.id),
-						columns: { organizationId: true },
-					});
+					const [userMemberships, userTeams] = await Promise.all([
+						db.query.members.findMany({
+							where: eq(members.userId, user.id),
+							columns: { organizationId: true },
+						}),
+						db
+							.select({ teamId: authSchema.teamMembers.teamId })
+							.from(authSchema.teamMembers)
+							.where(eq(authSchema.teamMembers.userId, user.id)),
+					]);
 					const organizationIds = [
 						...new Set(userMemberships.map((m) => m.organizationId)),
 					];
+					const teamIds = [...new Set(userTeams.map((t) => t.teamId))];
 					// A Worker that attributes content to a person has to read
 					// who they are from the signed token; a caller-supplied name
 					// is a name they chose for someone else.
 					return {
 						sub: user.id,
 						organizationIds,
+						teamIds,
 						name: user.name ?? null,
 						image: user.image ?? null,
 					};

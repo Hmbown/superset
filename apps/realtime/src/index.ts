@@ -18,6 +18,7 @@ import {
 	verifyPageConnectTicket,
 } from "@superset/shared/usercontent";
 import { verifyJWT } from "@superset/shared/verify-jwt";
+import { parseWorkspaceAccess } from "@superset/shared/workspace-access";
 import type { Context } from "hono";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
@@ -362,11 +363,38 @@ app.get("/organization/:organizationId/workspace/:workspaceId", async (c) => {
 			userId: auth.sub,
 			name: auth.name ?? "Someone",
 			image: auth.image ?? null,
+			organizationIds: auth.organizationIds,
+			teamIds: auth.teamIds,
 			observer: c.req.query("observe") === "1",
 		}),
 	);
 	return stub.fetch("https://realtime/presence", { headers });
 });
+
+app.post(
+	"/organization/:organizationId/workspace/:workspaceId/access",
+	async (c) => {
+		const token = extractToken(c);
+		if (!token || token !== c.env.NUDGE_SECRET) {
+			return c.json({ error: "Unauthorized" }, 401);
+		}
+		const body = (await c.req.json().catch(() => null)) as {
+			access?: unknown;
+		} | null;
+		const access =
+			body?.access === null ? null : parseWorkspaceAccess(body?.access);
+		if (body?.access !== null && !access) {
+			return c.json({ error: "access required" }, 400);
+		}
+		const organizationId = c.req.param("organizationId");
+		const stub = await getServerByName(
+			c.env.WorkspaceHub,
+			`${organizationId}:${c.req.param("workspaceId")}`,
+		);
+		await stub.accessChanged(access);
+		return c.json({ ok: true });
+	},
+);
 
 // ── Emit: the API, after a write ────────────────────────────────────
 

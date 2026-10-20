@@ -30,6 +30,7 @@ import {
 	sandboxExists,
 	stopAndSnapshot,
 } from "../../lib/sandbox";
+import { pushWorkspaceAccess } from "../../lib/workspace-access";
 import { jwtProcedure, userError } from "../../trpc";
 import { hostServiceMutation } from "../automation/relay-client";
 import { ensureDefaultEnvironment } from "../environment/default-environment";
@@ -555,6 +556,9 @@ export const cloudWorkspaceRouter = {
 					{ kind: "user", userId: ctx.userId },
 					{ fromVisibility: row.visibility, toVisibility: input.visibility },
 				);
+			}
+			if (input.visibility !== row.visibility) {
+				pushWorkspaceAccess(row.organizationId, row.id);
 			}
 			nudge(row.organizationId, "cloud_workspaces");
 			return { visibility: input.visibility };
