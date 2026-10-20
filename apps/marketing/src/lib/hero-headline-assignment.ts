@@ -11,7 +11,9 @@ import {
 
 const ONE_YEAR_SECONDS = 60 * 60 * 24 * 365;
 
-type EvaluateVariant = (distinctId: string) => Promise<HeadlineVariant | null>;
+type EvaluateVariant = (
+	distinctId: string,
+) => Promise<HeadlineVariant | null | undefined>;
 
 function isMacDesktop(userAgent: string): boolean {
 	return (
@@ -24,7 +26,7 @@ function posthogDistinctId(request: NextRequest): string | null {
 	const raw = request.cookies.get(POSTHOG_PERSISTENCE_COOKIE)?.value;
 	if (!raw) return null;
 	try {
-		const { distinct_id } = JSON.parse(decodeURIComponent(raw));
+		const { distinct_id } = JSON.parse(raw);
 		return typeof distinct_id === "string" && distinct_id ? distinct_id : null;
 	} catch {
 		return null;
@@ -36,7 +38,7 @@ async function chooseVariant(
 	response: NextResponse,
 	isProductionHost: boolean,
 	evaluate: EvaluateVariant,
-): Promise<HeadlineVariant | null> {
+): Promise<HeadlineVariant | null | undefined> {
 	if (!isProductionHost) {
 		const preview = request.nextUrl.searchParams.get(
 			HEADLINE_VARIANT_PREVIEW_PARAM,
@@ -81,6 +83,7 @@ export async function assignHeadlineVariant(
 		isProductionHost,
 		evaluate,
 	);
+	if (variant === undefined) return;
 	if (!variant) {
 		if (request.cookies.has(HEADLINE_VARIANT_COOKIE)) {
 			response.cookies.delete(HEADLINE_VARIANT_COOKIE);

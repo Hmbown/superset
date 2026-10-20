@@ -35,11 +35,12 @@ async function assign({
 		isProductionHost,
 		evaluate: async (distinctId) => {
 			evaluated.push(distinctId);
-			return ready ? (flags[distinctId] ?? "ide") : null;
+			return ready ? (flags[distinctId] ?? "ide") : undefined;
 		},
 	});
 	return {
 		evaluated,
+		cleared: response.headers.get("set-cookie")?.includes("Max-Age=0") ?? false,
 		variant: response.cookies.get(HEADLINE_VARIANT_COOKIE)?.value,
 		bootstrapId: response.cookies.get(BOOTSTRAP_DISTINCT_ID_COOKIE)?.value,
 	};
@@ -56,11 +57,24 @@ describe("hero headline assignment", () => {
 					[POSTHOG_PERSISTENCE_COOKIE]: posthogCookie("known-visitor"),
 				},
 			}),
-		).toEqual({
+		).toMatchObject({
 			evaluated: ["known-visitor"],
 			variant: "army",
 			bootstrapId: undefined,
 		});
+	});
+
+	test("reads a PostHog cookie whose values hold encoded characters", async () => {
+		const cookie = encodeURIComponent(
+			JSON.stringify({
+				distinct_id: "known-visitor",
+				$initial_current_url: "https://superset.sh/?q=%22agents%22",
+			}),
+		);
+		expect(
+			(await assign({ cookies: { [POSTHOG_PERSISTENCE_COOKIE]: cookie } }))
+				.evaluated,
+		).toEqual(["known-visitor"]);
 	});
 
 	test("a new visitor keeps one id across visits for PostHog to adopt", async () => {
@@ -73,11 +87,20 @@ describe("hero headline assignment", () => {
 		expect(again.evaluated).toEqual(first.evaluated);
 	});
 
-	test("without flag definitions yet, nobody is enrolled", async () => {
+	test("without flag definitions yet, new visitors are not enrolled and enrolled ones keep their arm", async () => {
 		expect(await assign({ ready: false })).toMatchObject({
 			variant: undefined,
 			bootstrapId: undefined,
 		});
+		expect(
+			await assign({
+				ready: false,
+				cookies: {
+					[POSTHOG_PERSISTENCE_COOKIE]: posthogCookie("known-visitor"),
+					[HEADLINE_VARIANT_COOKIE]: "army",
+				},
+			}),
+		).toMatchObject({ cleared: false, variant: undefined });
 	});
 
 	test("visitors off Mac or off the production host are not enrolled", async () => {

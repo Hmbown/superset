@@ -30,8 +30,8 @@ export const env = createEnv({
 		// visitor. Absent means those reads are anonymous, as they always were.
 		LEADERBOARD_INTERNAL_TOKEN: z.string().min(1).optional(),
 		// PostHog project secret key (feature_flag:read). The proxy evaluates the
-		// homepage headline experiment locally; absent means nobody is enrolled.
-		POSTHOG_PROJECT_SECRET_KEY: z.string().min(1).optional(),
+		// homepage headline experiment locally; empty or absent means nobody is enrolled.
+		POSTHOG_PROJECT_SECRET_KEY: z.string().optional(),
 	},
 	client: {
 		NEXT_PUBLIC_API_URL: z.string().url(),

@@ -21,11 +21,14 @@ const posthog =
 			})
 		: null;
 
-/** Null until the flag definitions have loaded, so a request never waits on PostHog. */
+/**
+ * Undefined until the flag definitions have loaded, so a request never waits on
+ * PostHog. Null when the visitor is not in the experiment.
+ */
 export async function evaluateHeadlineVariant(
 	distinctId: string,
-): Promise<HeadlineVariant | null> {
-	if (!posthog?.isLocalEvaluationReady()) return null;
+): Promise<HeadlineVariant | null | undefined> {
+	if (!posthog?.isLocalEvaluationReady()) return undefined;
 	const variant = await posthog.getFeatureFlag(HERO_HEADLINE_FLAG, distinctId, {
 		onlyEvaluateLocally: true,
 		sendFeatureFlagEvents: false,
