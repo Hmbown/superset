@@ -23,7 +23,6 @@ export interface SandboxCaller {
 
 /** Everything `superset` in a box legitimately does, and nothing else. */
 export const SANDBOX_ALLOWED_PROCEDURES: ReadonlySet<string> = new Set([
-	"analytics.acpChatEnabled",
 	"attachment.resolve",
 	"automation.reportCloudLaunch",
 	"cloudWorkspace.available",

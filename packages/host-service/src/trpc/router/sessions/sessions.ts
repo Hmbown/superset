@@ -2,7 +2,6 @@ import { presetForAcpHarness } from "@superset/chat/core";
 import { cursorSchema } from "@superset/chat/protocol";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import type { HostServiceContext } from "../../../types";
 import { protectedProcedure, router } from "../../index";
 import { chatLaunchTarget } from "../agents/agents";
 import { seedDefaultsIfEmpty } from "../settings/agent-configs";
@@ -15,33 +14,6 @@ import {
 	requireSessionWorkspace,
 } from "./session-service";
 
-async function chatEnabled(
-	ctx: Pick<HostServiceContext, "api" | "userId">,
-): Promise<boolean> {
-	try {
-		const result = await ctx.api.analytics.acpChatEnabled.query({
-			...(ctx.userId ? { userId: ctx.userId } : {}),
-		});
-		return result.enabled;
-	} catch (error) {
-		throw new TRPCError({
-			code: "SERVICE_UNAVAILABLE",
-			message:
-				"Could not verify ACP chat access. Check the API connection and API version.",
-			cause: error,
-		});
-	}
-}
-
-const sessionProcedure = protectedProcedure.use(async ({ ctx, next }) => {
-	if (!(await chatEnabled(ctx)))
-		throw new TRPCError({
-			code: "PRECONDITION_FAILED",
-			message:
-				"ACP chat sessions require the acp-chat feature flag. Check flag access and update the API if needed. No terminal was launched.",
-		});
-	return next({ ctx });
-});
 const sessionInput = z.object({
 	workspaceId: z.string().uuid(),
 	sessionId: z.string().min(1),
@@ -50,7 +22,7 @@ const sessionInput = z.object({
 export const sessionsRouter = router({
 	capabilities: protectedProcedure
 		.input(z.object({ agent: z.string().min(1) }))
-		.query(async ({ ctx, input }) => {
+		.query(({ ctx, input }) => {
 			seedDefaultsIfEmpty(ctx.db);
 			const target = chatLaunchTarget(ctx.db, {
 				workspaceId: "",
@@ -59,15 +31,14 @@ export const sessionsRouter = router({
 				surface: "chat",
 			});
 			return {
-				enabled: await chatEnabled(ctx),
 				supported:
 					!!target && !!ctx.runtime.chat?.()?.live.supports(target.harness),
 			};
 		}),
-	create: sessionProcedure
+	create: protectedProcedure
 		.input(createChatSessionSchema)
 		.mutation(({ ctx, input }) => createChatSessionInWorkspace(ctx, input)),
-	list: sessionProcedure
+	list: protectedProcedure
 		.input(
 			z.object({
 				workspaceId: z.string().uuid(),
@@ -83,7 +54,7 @@ export const sessionsRouter = router({
 				})
 				.filter((session) => presetForAcpHarness(session.harness));
 		}),
-	get: sessionProcedure.input(sessionInput).query(({ ctx, input }) => {
+	get: protectedProcedure.input(sessionInput).query(({ ctx, input }) => {
 		const { chat: _chat, ...result } = requireChatSession(
 			ctx,
 			input.workspaceId,
@@ -91,7 +62,7 @@ export const sessionsRouter = router({
 		);
 		return result;
 	}),
-	read: sessionProcedure
+	read: protectedProcedure
 		.input(
 			sessionInput.extend({
 				limit: z.number().int().positive().max(500).default(200),
@@ -110,7 +81,7 @@ export const sessionsRouter = router({
 				before: input.before,
 			});
 		}),
-	send: sessionProcedure
+	send: protectedProcedure
 		.input(
 			sessionInput.extend({
 				prompt: z.string().min(1),
@@ -139,7 +110,7 @@ export const sessionsRouter = router({
 				content: [{ type: "text", text: input.prompt }],
 			});
 		}),
-	close: sessionProcedure.input(sessionInput).mutation(({ ctx, input }) => {
+	close: protectedProcedure.input(sessionInput).mutation(({ ctx, input }) => {
 		const { chat } = requireChatSession(
 			ctx,
 			input.workspaceId,
@@ -147,7 +118,7 @@ export const sessionsRouter = router({
 		);
 		return chat.commands.closeSession({ sessionId: input.sessionId });
 	}),
-	resume: sessionProcedure
+	resume: protectedProcedure
 		.input(sessionInput.extend({ commandId: z.string().uuid().optional() }))
 		.mutation(async ({ ctx, input }) => {
 			const { chat, session, live } = requireChatSession(

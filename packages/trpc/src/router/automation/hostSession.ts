@@ -22,7 +22,7 @@ type SessionsCreateOutput = {
 	label: string;
 };
 
-type SessionsCapabilitiesOutput = { supported: boolean; enabled: boolean };
+type SessionsCapabilitiesOutput = { supported: boolean };
 
 export type LaunchAgentSessionArgs = {
 	workspaceId: string;
@@ -72,9 +72,7 @@ export async function launchAgentSession(
 		if (!isMissingProcedure(err, "sessions.capabilities")) throw err;
 		return agentsRun("chat");
 	}
-	if (!capabilities.supported || !capabilities.enabled) {
-		return agentsRun(undefined);
-	}
+	if (!capabilities.supported) return agentsRun(undefined);
 
 	const continueSessionId = args.previous?.chatSessionId ?? undefined;
 	// A run recorded before chats had their own kind names only a terminal;

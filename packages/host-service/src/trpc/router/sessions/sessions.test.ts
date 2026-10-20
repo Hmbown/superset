@@ -19,15 +19,11 @@ const WORKSPACE = "11111111-1111-4111-8111-111111111111";
 const OTHER_WORKSPACE = "22222222-2222-4222-8222-222222222222";
 let runtime: ChatRuntime;
 let db: HostDb;
-let enabled: boolean;
-let flagFailure: boolean;
 let startDead: boolean;
 let launches: HarnessFactoryOptions[];
 let caller: ReturnType<typeof sessionsRouter.createCaller>;
 
 beforeEach(() => {
-	enabled = true;
-	flagFailure = false;
 	startDead = false;
 	launches = [];
 	const sqlite = new Database(":memory:");
@@ -101,18 +97,6 @@ beforeEach(() => {
 		runtime: { chat: () => runtime },
 		terminalAgentStore,
 		isAuthenticated: true,
-		userId: "request-user",
-		api: {
-			analytics: {
-				acpChatEnabled: {
-					query: async (input: { userId?: string }) => {
-						expect(input.userId).toBe("request-user");
-						if (flagFailure) throw new Error("API unavailable");
-						return { enabled };
-					},
-				},
-			},
-		},
 	} as unknown as HostServiceContext;
 	caller = sessionsRouter.createCaller(ctx);
 });
@@ -202,25 +186,8 @@ describe("sessions router", () => {
 		});
 		expect(continued.sessionId).not.toBe(created.sessionId);
 	});
-	test("never starts a session when the chat flag is off or cannot be verified", async () => {
-		enabled = false;
-		expect(await caller.capabilities({ agent: "claude" })).toEqual({
-			enabled: false,
-			supported: true,
-		});
-		await expect(
-			caller.create({ workspaceId: WORKSPACE, agent: "claude" }),
-		).rejects.toMatchObject({ code: "PRECONDITION_FAILED" });
-		flagFailure = true;
-		await expect(
-			caller.create({ workspaceId: WORKSPACE, agent: "claude" }),
-		).rejects.toMatchObject({ code: "SERVICE_UNAVAILABLE" });
-		expect(launches).toHaveLength(0);
-	});
-
 	test("rejects unsupported agents without terminal fallback", async () => {
 		expect(await caller.capabilities({ agent: "unsupported" })).toEqual({
-			enabled: true,
 			supported: false,
 		});
 		await expect(

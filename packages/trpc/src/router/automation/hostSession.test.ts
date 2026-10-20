@@ -46,7 +46,7 @@ const base = { workspaceId: "ws-1", agent: "claude", prompt: "do it" };
 describe("launchAgentSession", () => {
 	test("opens a chat through sessions.create when the host can chat", async () => {
 		const { host, calls } = fakeHost({
-			"sessions.capabilities": { supported: true, enabled: true },
+			"sessions.capabilities": { supported: true },
 			"sessions.create": chatCreated,
 		});
 		const result = await launchAgentSession(host, { ...base, chat: true });
@@ -60,7 +60,7 @@ describe("launchAgentSession", () => {
 
 	test("continues the previous chat by its session id", async () => {
 		const { host, calls } = fakeHost({
-			"sessions.capabilities": { supported: true, enabled: true },
+			"sessions.capabilities": { supported: true },
 			"sessions.create": chatCreated,
 		});
 		await launchAgentSession(host, {
@@ -76,7 +76,7 @@ describe("launchAgentSession", () => {
 
 	test("continues a run recorded before chats had a kind through agents.run", async () => {
 		const { host, calls } = fakeHost({
-			"sessions.capabilities": { supported: true, enabled: true },
+			"sessions.capabilities": { supported: true },
 			"agents.run": { ...terminalRun, sessionId: "prev-term" },
 		});
 		const result = await launchAgentSession(host, {
@@ -98,7 +98,7 @@ describe("launchAgentSession", () => {
 
 	test("launches a terminal for an agent the host cannot chat with", async () => {
 		const { host, calls } = fakeHost({
-			"sessions.capabilities": { supported: false, enabled: true },
+			"sessions.capabilities": { supported: false },
 			"agents.run": terminalRun,
 		});
 		const result = await launchAgentSession(host, {
@@ -126,7 +126,7 @@ describe("launchAgentSession", () => {
 
 	test("falls back when only sessions.create is missing", async () => {
 		const { host, calls } = fakeHost({
-			"sessions.capabilities": { supported: true, enabled: true },
+			"sessions.capabilities": { supported: true },
 			"agents.run": terminalRun,
 		});
 		await launchAgentSession(host, { ...base, chat: true });
@@ -144,7 +144,7 @@ describe("launchAgentSession", () => {
 			"",
 		);
 		const { host, calls } = fakeHost({
-			"sessions.capabilities": { supported: true, enabled: true },
+			"sessions.capabilities": { supported: true },
 			"sessions.create": gone,
 		});
 		await expect(

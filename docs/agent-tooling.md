@@ -97,8 +97,8 @@ exists only in this worktree, read the from-source CLI with
 CLI does not have yet.
 
 `superset sessions` (`create`, `list`, `read`, `send`, `close`, `resume`, `open`) is the chat-only
-namespace targeting `sessions.*` on the host. The host enforces the ACP chat flag and supported
-chat providers with no fallback to `agents.run` or `terminal.*`; `superset agents` and
+namespace targeting `sessions.*` on the host. The host accepts only supported chat providers, with
+no fallback to `agents.run` or `terminal.*`; `superset agents` and
 `superset terminals` remain unchanged for terminal-backed agent runs.
 
 `superset schema` exists from CLI 1.34.0, and the probes need `jq`. Skills ship with the plugin, not
@@ -133,11 +133,10 @@ superset sessions close --local --workspace WORKSPACE_ID --session CHAT_SESSION_
 superset sessions resume --local --workspace WORKSPACE_ID --session CHAT_SESSION_ID
 ```
 
-The host checks the requesting user's `acp-chat` flag through the API and resolves the selected
-agent to an installed ACP harness. If the flag cannot be checked, sessions fail closed. Unsupported
+The host resolves the selected agent to an installed ACP harness. It does not check the `acp-chat`
+rollout flag: the desktop gates the chat UI and the API gates automation dispatch. Unsupported
 agents and hosts without the new router return an error; these commands never start a terminal.
-Deploy the API flag endpoint before rolling out the new host-service. Old hosts produce an update
-instruction instead of falling back to `agents.run`.
+Old hosts produce an update instruction instead of falling back to `agents.run`.
 
 `sessions read --json` returns the newest page of events, in journal order, with a `nextBefore`
 cursor. To read older events, pass that cursor as JSON to `--before`. `nextBefore` is `null` on the
@@ -149,7 +148,7 @@ returns the new live chat session ID. `sessions create --resume-session` accepts
 also requires `--agent`. `sessions list` lists Superset-saved sessions for the workspace; native
 provider discovery remains available in the chat header's history menu.
 
-Automations check the owner's flag, then the host's `sessions.capabilities`. Eligible runs use
+Automations check the owner's `acp-chat` flag in the API, then the host's `sessions.capabilities`. Eligible runs use
 `sessions.create`; unsupported agents retain terminal launches. Hosts without the sessions router
 keep the previous `agents.run` chat request, but only an exact missing-procedure response triggers
 that compatibility path. A launch timeout or other failure must not start a second agent.
