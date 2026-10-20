@@ -166,8 +166,14 @@ export class WorkspaceHub extends Server<RealtimeEnv> {
 			}
 			if (age < ACCESS_RETRY_MS) return null;
 		}
-		const access = await this.fetchAccess();
-		await this.storeAccess(access);
+		let access: WorkspaceAccess | null;
+		try {
+			access = await this.fetchAccess();
+		} catch (error) {
+			if (!stored) throw error;
+			access = stored.access;
+		}
+		if (access !== stored?.access) await this.storeAccess(access);
 		return access && canOpenWorkspace(access, viewer) ? access : null;
 	}
 
