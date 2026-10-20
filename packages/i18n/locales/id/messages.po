@@ -391,7 +391,7 @@ msgstr "{0} developer diperingkat berdasarkan penggunaan agen. 30 hari terakhir 
 msgid "{0} disabled"
 msgstr "{0} dinonaktifkan"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "{0} Documentation"
 msgstr "Dokumentasi {0}"
 
@@ -1202,7 +1202,7 @@ msgstr "#{0} {1}\n"
 msgid "#engineering"
 msgstr "#engineering"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.NAME
 msgid "%s | {0} Docs"
 msgstr "%s | Dokumentasi {0}"
 
@@ -3870,9 +3870,6 @@ msgstr "Klik chip untuk membuka pull request"
 
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Klik untuk menyalin ID sesi (lanjutkan dengan `claude --resume <id>`)."
-
-msgid "Click to open on GitHub"
-msgstr "Klik untuk membuka di GitHub"
 
 msgid "Click to open the pull request"
 msgstr "Klik untuk membuka pull request"
@@ -11579,11 +11576,11 @@ msgstr "dari semua token"
 msgid "Off"
 msgstr "Mati"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
 msgstr "Dokumentasi resmi {0}, aplikasi untuk menjalankan lebih dari 100 agen pemrograman secara paralel."
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}. Learn how to run 100+ coding agents in parallel on your machine."
 msgstr "Dokumentasi resmi {0}. Pelajari cara menjalankan lebih dari 100 agen pemrograman secara paralel di perangkat Anda."
 

@@ -1,5 +1,6 @@
 import { ROOT_DOMAIN } from "./app-identity";
 import type { TriggerConfigInput } from "./automation-triggers";
+import { BRAND } from "./brand";
 
 export { CANONICAL_URLS, IOS_APP } from "./app-identity";
 
@@ -26,7 +27,8 @@ const MARKETING_URL =
 const APP_STORE_ID = "6788926383";
 
 export const COMPANY = {
-	NAME: "Superset",
+	NAME: BRAND.NAME,
+	LEGAL_NAME: "Superset Inc.",
 	DOMAIN: ROOT_DOMAIN,
 	EMAIL_DOMAIN: `@${ROOT_DOMAIN}`,
 	GITHUB_URL: "https://github.com/superset-sh/superset",
@@ -308,11 +310,6 @@ export const SANDBOX_IMAGE_NAME = "superset-hostsvc";
 /** The one transaction the API traces: the cloud workspace provision job. */
 export const CLOUD_WORKSPACE_PROVISION_TRANSACTION =
 	"cloud-workspace.provision";
-
-export const SHARED_ENVIRONMENT_ORGANIZATION_ID =
-	"00000000-0000-0000-0000-000000000000";
-
-export const SHARED_ENVIRONMENT_NAME = "Default";
 
 // Terminals set no TERM_PROGRAM, like xterm. Agents take kitty-only paths
 // under "kitty" that xterm.js cannot serve, and under "vscode" Claude Code

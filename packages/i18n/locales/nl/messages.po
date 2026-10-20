@@ -391,7 +391,7 @@ msgstr "{0} developers zijn gerangschikt op agentgebruik. Je laatste 30 dagen zi
 msgid "{0} disabled"
 msgstr "{0} uitgeschakeld"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "{0} Documentation"
 msgstr "Documentatie van {0}"
 
@@ -1202,7 +1202,7 @@ msgstr "#{0} {1}\n"
 msgid "#engineering"
 msgstr "#engineering"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.NAME
 msgid "%s | {0} Docs"
 msgstr "%s | Documentatie van {0}"
 
@@ -3870,9 +3870,6 @@ msgstr "Klik op de chip om de pull request te openen"
 
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Klik om de sessie-ID te kopiëren (hervatten met `claude --resume <id>`)."
-
-msgid "Click to open on GitHub"
-msgstr "Klik om te openen op GitHub"
 
 msgid "Click to open the pull request"
 msgstr "Klik om de pull request te openen"
@@ -11579,11 +11576,11 @@ msgstr "van alle tokens"
 msgid "Off"
 msgstr "Uit"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
 msgstr "Officiële documentatie van {0}, de app voor meer dan 100 parallelle programmeeragenten."
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}. Learn how to run 100+ coding agents in parallel on your machine."
 msgstr "Officiële documentatie van {0}. Leer hoe je meer dan 100 programmeeragenten parallel op je computer uitvoert."
 

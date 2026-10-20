@@ -802,8 +802,8 @@ export const environments = pgTable(
 		sourceRef: text("source_ref").notNull(),
 		/** Where its golden lives and every box forked from it runs; a snapshot only exists in its region. */
 		region: text().notNull().default("sfo1"),
-		/** The sandbox bundle every workspace of this environment boots on; null keeps the image's own. */
-		bundleSha: text("bundle_sha"),
+		/** The sandbox bundle every workspace of this environment boots on: the newest `sandbox_bundles` row at create, moved by every release. */
+		bundleSha: text("bundle_sha").notNull(),
 		/**
 		 * Which of the environment's repositories carries the `.superset/config.json`
 		 * the box acts on; null means none does and only `hooks` applies.
@@ -845,8 +845,7 @@ export const sandboxBundles = pgTable("sandbox_bundles", {
 
 /**
  * The repositories an environment checks out, in order; the first is the
- * primary. An environment with none (the shared image environment) takes
- * its repositories at workspace create.
+ * primary.
  */
 export const environmentRepositories = pgTable(
 	"environment_repositories",
