@@ -92,10 +92,6 @@ msgstr "(aucune sortie)"
 msgid "(you)"
 msgstr "(vous)"
 
-#. placeholder {0}: connections.length
-msgid "{0, plural, one {# account connected} other {# accounts connected}}"
-msgstr "{0, plural, one {# compte connecté} other {# comptes connectés}}"
-
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# port actif — masquer les détails} other {# ports actifs — masquer les détails}}"
@@ -391,16 +387,14 @@ msgstr "{0} ne peut pas encore se connecter de cette façon."
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} développeurs sont classés selon leur usage des agents. Vos 30 derniers jours sont déjà comptabilisés, simplement masqués. Uniquement le nombre de tokens et les noms de modèles, aucun nom de dépôt, chemin de fichier ni prompt."
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: variables.name
 msgid "{0} disabled"
 msgstr "{0} désactivé"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "{0} Documentation"
 msgstr "Documentation de {0}"
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: skill.name
 #. placeholder {0}: variables.name
 msgid "{0} enabled"
@@ -1196,7 +1190,7 @@ msgstr "#{0} {1}\n"
 msgid "#engineering"
 msgstr "#engineering"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.NAME
 msgid "%s | {0} Docs"
 msgstr "%s | Documentation de {0}"
 
@@ -1532,6 +1526,9 @@ msgstr "Aa"
 
 msgid "About"
 msgstr "À propos"
+
+msgid "About {displayName}"
+msgstr "À propos de {displayName}"
 
 msgid "About Superset"
 msgstr "À propos de Superset"
@@ -2111,8 +2108,8 @@ msgstr "Toutes vos données seront définitivement supprimées après {ACCOUNT_D
 msgid "All of your data will be permanently deleted after {ACCOUNT_DELETION_GRACE_DAYS} days. Sign back in before then to restore your account."
 msgstr "Toutes vos données seront définitivement supprimées après {ACCOUNT_DELETION_GRACE_DAYS} jours. Reconnectez-vous avant cette échéance pour restaurer votre compte."
 
-msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close Superset” instead if you want services to keep running for the next launch."
-msgstr "Toutes les sessions de terminal ouvertes seront interrompues et les services hôtes en cours seront arrêtés. Utilisez plutôt « Fermer Superset » si vous voulez que les services continuent de tourner pour le prochain lancement."
+msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close {displayName}” instead if you want services to keep running for the next launch."
+msgstr "Toutes les sessions de terminal ouvertes seront interrompues et les services hôtes en cours seront arrêtés. Utilisez plutôt « Fermer {displayName} » si vous voulez que les services continuent de tourner pour le prochain lancement."
 
 msgid "All pages"
 msgstr "Toutes les pages"
@@ -2578,6 +2575,9 @@ msgstr "Demandez à un agent un document de design ou un rapport. Il crée la pa
 
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Demandez à un agent d'en publier une depuis l'application de bureau."
+
+msgid "Ask before you close a terminal, tab, or port that still has a process running in it"
+msgstr "Demander avant de fermer un terminal, un onglet ou un port dans lequel un processus est encore en cours"
 
 msgid "Ask for approval"
 msgstr "Demander une approbation"
@@ -3859,9 +3859,6 @@ msgstr "Cliquez sur la pastille pour ouvrir la pull request"
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "Cliquez pour copier l'ID de session (reprenez avec `claude --resume <id>`)."
 
-msgid "Click to open on GitHub"
-msgstr "Cliquer pour ouvrir sur GitHub"
-
 msgid "Click to open the pull request"
 msgstr "Cliquez pour ouvrir la pull request"
 
@@ -3905,6 +3902,9 @@ msgstr "Fermer (Esc)"
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "Fermer {0}"
+
+msgid "Close {displayName}"
+msgstr "Fermer {displayName}"
 
 #. placeholder {0}: data.number
 msgid "Close #{0}?"
@@ -4004,9 +4004,6 @@ msgstr "Fermer le filtre de revues"
 
 msgid "Close session"
 msgstr "Fermer la session"
-
-msgid "Close Superset"
-msgstr "Fermer Superset"
 
 msgid "Close tab"
 msgstr "Fermer l'onglet"
@@ -6191,9 +6188,6 @@ msgstr "Mode direct"
 msgid "Directory"
 msgstr "Répertoire"
 
-msgid "Disable"
-msgstr "Désactiver"
-
 msgid "Disable skill"
 msgstr "Désactiver la compétence"
 
@@ -6699,9 +6693,6 @@ msgstr "Commande vide"
 
 msgid "Emulator"
 msgstr "Émulateur"
-
-msgid "Enable"
-msgstr "Activer"
 
 #. placeholder {0}: preset.label
 msgid "Enable {0}"
@@ -8310,6 +8301,9 @@ msgstr "Masqué tant que vous n'avez pas rejoint"
 msgid "Hide"
 msgstr "Masquer"
 
+msgid "Hide {displayName}"
+msgstr "Masquer {displayName}"
+
 msgid "Hide checks"
 msgstr "Masquer les vérifications"
 
@@ -8916,9 +8910,6 @@ msgstr "Installer Superset MCP dans votre client"
 msgid "Install the desktop app"
 msgstr "Installer l'application de bureau"
 
-msgid "Install the plugin to connect"
-msgstr "Installez le plugin pour vous connecter"
-
 msgid "Install the Superset GitHub App to connect your repositories."
 msgstr "Installez la GitHub App Superset pour connecter vos dépôts."
 
@@ -9160,6 +9151,9 @@ msgstr "Itérez."
 
 msgid "Its comments and history go with it."
 msgstr "Ses commentaires et son historique seront aussi supprimés."
+
+msgid "Its connected accounts were disconnected."
+msgstr "Ses comptes connectés ont été déconnectés."
 
 msgid "Its own branch and copy of the files"
 msgstr "Sa propre branche et sa propre copie des fichiers"
@@ -9955,9 +9949,6 @@ msgstr "Gérer"
 
 msgid "Manage {title}"
 msgstr "Gérer {title}"
-
-msgid "Manage accounts"
-msgstr "Gérer les comptes"
 
 msgid "Manage accounts…"
 msgstr "Gérer les comptes…"
@@ -11559,11 +11550,11 @@ msgstr "de tous les tokens"
 msgid "Off"
 msgstr "Désactivée"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
 msgstr "Documentation officielle de {0}, l’application pour exécuter plus de 100 agents de programmation en parallèle."
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}. Learn how to run 100+ coding agents in parallel on your machine."
 msgstr "Documentation officielle de {0}. Apprenez à exécuter plus de 100 agents de programmation en parallèle sur votre machine."
 
@@ -11777,6 +11768,9 @@ msgstr "Ouvrir {0}"
 #. placeholder {0}: plugin.interface.displayName
 msgid "Open {0} website"
 msgstr "Ouvrir le site de {0}"
+
+msgid "Open {displayName}"
+msgstr "Ouvrir {displayName}"
 
 msgid "Open {filePath}"
 msgstr "Ouvrir {filePath}"
@@ -12098,9 +12092,6 @@ msgstr "Ouvrir le panneau"
 
 msgid "Open ship options"
 msgstr "Ouvrir les options d'envoi"
-
-msgid "Open Superset"
-msgstr "Ouvrir Superset"
 
 msgid "Open Superset on that computer"
 msgstr "Ouvrez Superset sur cet ordinateur"
@@ -13381,17 +13372,21 @@ msgstr "Faible"
 msgid "Quit"
 msgstr "Quitter"
 
+msgid "Quit {displayName}"
+msgstr "Quitter {displayName}"
+
+msgctxt "quit confirmation dialog title"
+msgid "Quit {displayName}"
+msgstr "Quitter {displayName}"
+
+msgid "Quit {displayName} and stop all background services?"
+msgstr "Quitter {displayName} et arrêter tous les services en arrière-plan ?"
+
+msgid "Quit {displayName} Completely"
+msgstr "Quitter complètement {displayName}"
+
 msgid "Quit Completely"
 msgstr "Quitter complètement"
-
-msgid "Quit Superset"
-msgstr "Quitter Superset"
-
-msgid "Quit Superset and stop all background services?"
-msgstr "Quitter Superset et arrêter tous les services en arrière-plan ?"
-
-msgid "Quit Superset Completely"
-msgstr "Quitter complètement Superset"
 
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "Quittez d'abord le navigateur source pour que ses identifiants soient enregistrés sur le disque. Vous devrez autoriser l'accès au trousseau."
@@ -15292,8 +15287,8 @@ msgstr "Les déclencheurs Sentry cesseront de se déclencher jusqu'à ce que vou
 msgid "Separator"
 msgstr "Séparateur"
 
-msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
-msgstr "La disponibilité du service est publiée sur <0>status.superset.sh</0>, et la documentation sécurité et conformité sur <1>trust.superset.sh</1>."
+msgid "Service availability is published at <0>{statusHost}</0>, and security and compliance documentation at <1>{trustHost}</1>."
+msgstr "La disponibilité du service est publiée sur <0>{statusHost}</0>, et la documentation sécurité et conformité sur <1>{trustHost}</1>."
 
 msgid "Session"
 msgstr "Session"
@@ -18942,6 +18937,9 @@ msgstr "Réveil de l’espace de travail"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Vous voulez quelque chose plus tôt ? <0>Dites-le-nous sur Discord</0>. Une bonne partie de ce qui figure ici est née d'une demande d'utilisateur."
+
+msgid "Warn before closing a running terminal"
+msgstr "Avertir avant de fermer un terminal en cours d'exécution"
 
 msgid "Warning"
 msgstr "Avertissement"

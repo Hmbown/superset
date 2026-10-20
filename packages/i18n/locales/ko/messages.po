@@ -92,10 +92,6 @@ msgstr "(출력 없음)"
 msgid "(you)"
 msgstr "(나)"
 
-#. placeholder {0}: connections.length
-msgid "{0, plural, one {# account connected} other {# accounts connected}}"
-msgstr "{0, plural, other {계정 #개 연결됨}}"
-
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {활성 포트 #개 — 세부 정보 숨기기} other {활성 포트 #개 — 세부 정보 숨기기}}"
@@ -391,16 +387,14 @@ msgstr "{0}은(는) 아직 이 방식으로 로그인할 수 없습니다."
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0}명의 개발자가 에이전트 사용량으로 순위에 올라 있습니다. 최근 30일 사용량은 이미 집계되어 있고 숨겨져 있을 뿐입니다. 토큰 수와 모델 이름만 공개되며 저장소 이름, 파일 경로, 프롬프트는 포함되지 않습니다."
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: variables.name
 msgid "{0} disabled"
 msgstr "{0} 비활성화됨"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "{0} Documentation"
 msgstr "{0} 문서"
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: skill.name
 #. placeholder {0}: variables.name
 msgid "{0} enabled"
@@ -1196,7 +1190,7 @@ msgstr "#{0} {1}\n"
 msgid "#engineering"
 msgstr "#engineering"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.NAME
 msgid "%s | {0} Docs"
 msgstr "%s | {0} 문서"
 
@@ -1532,6 +1526,9 @@ msgstr "Aa"
 
 msgid "About"
 msgstr "회사 소개"
+
+msgid "About {displayName}"
+msgstr "{displayName}에 관하여"
 
 msgid "About Superset"
 msgstr "Superset 소개"
@@ -2111,8 +2108,8 @@ msgstr "모든 데이터가 {ACCOUNT_DELETION_GRACE_DAYS}일 후에 영구적으
 msgid "All of your data will be permanently deleted after {ACCOUNT_DELETION_GRACE_DAYS} days. Sign back in before then to restore your account."
 msgstr "모든 데이터가 {ACCOUNT_DELETION_GRACE_DAYS}일 후에 영구적으로 삭제됩니다. 그 전에 다시 로그인하면 계정이 복원됩니다."
 
-msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close Superset” instead if you want services to keep running for the next launch."
-msgstr "열려 있는 모든 터미널 세션이 종료되고 실행 중인 호스트 서비스가 모두 중지됩니다. 다음 실행까지 서비스를 계속 실행하려면 “Superset 닫기”를 사용하세요."
+msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close {displayName}” instead if you want services to keep running for the next launch."
+msgstr "열려 있는 모든 터미널 세션이 종료되고 실행 중인 호스트 서비스가 모두 중지됩니다. 다음 실행까지 서비스를 계속 실행하려면 “{displayName} 닫기”를 사용하세요."
 
 msgid "All pages"
 msgstr "모든 페이지"
@@ -2578,6 +2575,9 @@ msgstr "에이전트에게 디자인 문서나 보고서를 요청하세요. 페
 
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "데스크톱 앱에서 에이전트에게 게시를 요청하세요."
+
+msgid "Ask before you close a terminal, tab, or port that still has a process running in it"
+msgstr "프로세스가 아직 실행 중인 터미널, 탭 또는 포트를 닫기 전에 확인합니다"
 
 msgid "Ask for approval"
 msgstr "승인 요청"
@@ -3859,9 +3859,6 @@ msgstr "칩을 클릭하면 풀 리퀘스트가 열립니다"
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "클릭하면 세션 ID를 복사합니다(`claude --resume <id>`로 이어서 진행)."
 
-msgid "Click to open on GitHub"
-msgstr "클릭하여 GitHub에서 열기"
-
 msgid "Click to open the pull request"
 msgstr "클릭하여 풀 리퀘스트 열기"
 
@@ -3905,6 +3902,9 @@ msgstr "닫기 (Esc)"
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "{0} 닫기"
+
+msgid "Close {displayName}"
+msgstr "{displayName} 닫기"
 
 #. placeholder {0}: data.number
 msgid "Close #{0}?"
@@ -4004,9 +4004,6 @@ msgstr "리뷰 필터 닫기"
 
 msgid "Close session"
 msgstr "세션 닫기"
-
-msgid "Close Superset"
-msgstr "Superset 닫기"
 
 msgid "Close tab"
 msgstr "탭 닫기"
@@ -6191,9 +6188,6 @@ msgstr "다이렉트 모드"
 msgid "Directory"
 msgstr "디렉터리"
 
-msgid "Disable"
-msgstr "비활성화"
-
 msgid "Disable skill"
 msgstr "스킬 비활성화"
 
@@ -6699,9 +6693,6 @@ msgstr "빈 명령"
 
 msgid "Emulator"
 msgstr "에뮬레이터"
-
-msgid "Enable"
-msgstr "활성화"
 
 #. placeholder {0}: preset.label
 msgid "Enable {0}"
@@ -8310,6 +8301,9 @@ msgstr "참여 전까지 숨김"
 msgid "Hide"
 msgstr "숨기기"
 
+msgid "Hide {displayName}"
+msgstr "{displayName} 가리기"
+
 msgid "Hide checks"
 msgstr "검사 숨기기"
 
@@ -8916,9 +8910,6 @@ msgstr "클라이언트에 Superset MCP 설치하기"
 msgid "Install the desktop app"
 msgstr "데스크톱 앱 설치"
 
-msgid "Install the plugin to connect"
-msgstr "연결하려면 플러그인을 설치하세요"
-
 msgid "Install the Superset GitHub App to connect your repositories."
 msgstr "리포지토리를 연결하려면 Superset GitHub App을 설치하세요."
 
@@ -9160,6 +9151,9 @@ msgstr "반복."
 
 msgid "Its comments and history go with it."
 msgstr "댓글과 기록도 함께 삭제됩니다."
+
+msgid "Its connected accounts were disconnected."
+msgstr "연결된 계정의 연결이 해제되었습니다."
 
 msgid "Its own branch and copy of the files"
 msgstr "독립된 브랜치와 파일 사본"
@@ -9955,9 +9949,6 @@ msgstr "관리"
 
 msgid "Manage {title}"
 msgstr "{title} 관리"
-
-msgid "Manage accounts"
-msgstr "계정 관리"
 
 msgid "Manage accounts…"
 msgstr "계정 관리…"
@@ -11559,11 +11550,11 @@ msgstr "전체 토큰 대비"
 msgid "Off"
 msgstr "끔"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
 msgstr "100개 이상의 코딩 에이전트를 병렬로 실행하는 앱, {0}의 공식 문서입니다."
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}. Learn how to run 100+ coding agents in parallel on your machine."
 msgstr "{0} 공식 문서입니다. 기기에서 100개 이상의 코딩 에이전트를 병렬로 실행하는 방법을 알아보세요."
 
@@ -11777,6 +11768,9 @@ msgstr "{0} 열기"
 #. placeholder {0}: plugin.interface.displayName
 msgid "Open {0} website"
 msgstr "{0} 웹사이트 열기"
+
+msgid "Open {displayName}"
+msgstr "{displayName} 열기"
 
 msgid "Open {filePath}"
 msgstr "{filePath} 열기"
@@ -12098,9 +12092,6 @@ msgstr "시트 열기"
 
 msgid "Open ship options"
 msgstr "배포 옵션 열기"
-
-msgid "Open Superset"
-msgstr "Superset 열기"
 
 msgid "Open Superset on that computer"
 msgstr "해당 컴퓨터에서 Superset 열기"
@@ -13381,17 +13372,21 @@ msgstr "조용함"
 msgid "Quit"
 msgstr "종료"
 
+msgid "Quit {displayName}"
+msgstr "{displayName} 종료"
+
+msgctxt "quit confirmation dialog title"
+msgid "Quit {displayName}"
+msgstr "{displayName} 종료"
+
+msgid "Quit {displayName} and stop all background services?"
+msgstr "{displayName}을 종료하고 모든 백그라운드 서비스를 중지할까요?"
+
+msgid "Quit {displayName} Completely"
+msgstr "{displayName} 완전히 종료"
+
 msgid "Quit Completely"
 msgstr "완전히 종료"
-
-msgid "Quit Superset"
-msgstr "Superset 종료"
-
-msgid "Quit Superset and stop all background services?"
-msgstr "Superset을 종료하고 모든 백그라운드 서비스를 중지할까요?"
-
-msgid "Quit Superset Completely"
-msgstr "Superset 완전히 종료"
 
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "로그인 정보가 디스크에 저장되도록 원본 브라우저를 먼저 종료하세요. 키체인 접근 허용을 요청받게 됩니다."
@@ -15292,8 +15287,8 @@ msgstr "다시 연결할 때까지 Sentry 트리거가 실행되지 않습니다
 msgid "Separator"
 msgstr "구분선"
 
-msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
-msgstr "서비스 가용성은 <0>status.superset.sh</0>에, 보안 및 규정 준수 문서는 <1>trust.superset.sh</1>에 공개되어 있습니다."
+msgid "Service availability is published at <0>{statusHost}</0>, and security and compliance documentation at <1>{trustHost}</1>."
+msgstr "서비스 가용성은 <0>{statusHost}</0>에, 보안 및 규정 준수 문서는 <1>{trustHost}</1>에 공개되어 있습니다."
 
 msgid "Session"
 msgstr "세션"
@@ -18942,6 +18937,9 @@ msgstr "워크스페이스 깨우는 중"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "더 빨리 필요한 기능이 있나요? <0>Discord에서 알려 주세요</0>. 여기 있는 항목 상당수가 사용자 요청에서 시작했습니다."
+
+msgid "Warn before closing a running terminal"
+msgstr "실행 중인 터미널을 닫기 전에 경고"
 
 msgid "Warning"
 msgstr "경고"

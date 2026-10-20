@@ -92,10 +92,6 @@ msgstr "（出力なし）"
 msgid "(you)"
 msgstr "（自分）"
 
-#. placeholder {0}: connections.length
-msgid "{0, plural, one {# account connected} other {# accounts connected}}"
-msgstr "{0, plural, other {# 個のアカウントが接続されています}}"
-
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {#個のアクティブなポート — 詳細を隠す} other {#個のアクティブなポート — 詳細を隠す}}"
@@ -391,16 +387,14 @@ msgstr "{0}はまだこの方法ではサインインできません。"
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0}人の開発者がエージェント利用量でランク付けされています。あなたの直近30日はすでに集計済みで、非表示になっているだけです。公開されるのはトークン数とモデル名のみで、リポジトリ名・ファイルパス・プロンプトは含まれません。"
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: variables.name
 msgid "{0} disabled"
 msgstr "{0}を無効にしました"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "{0} Documentation"
 msgstr "{0}ドキュメント"
 
-#. placeholder {0}: displayName(variables.name)
 #. placeholder {0}: skill.name
 #. placeholder {0}: variables.name
 msgid "{0} enabled"
@@ -1196,7 +1190,7 @@ msgstr "#{0} {1}\n"
 msgid "#engineering"
 msgstr "#engineering"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.NAME
 msgid "%s | {0} Docs"
 msgstr "%s | {0}ドキュメント"
 
@@ -1532,6 +1526,9 @@ msgstr "Aa"
 
 msgid "About"
 msgstr "会社概要"
+
+msgid "About {displayName}"
+msgstr "{displayName}について"
 
 msgid "About Superset"
 msgstr "Supersetについて"
@@ -2111,8 +2108,8 @@ msgstr "{ACCOUNT_DELETION_GRACE_DAYS}日後にすべてのデータが完全に�
 msgid "All of your data will be permanently deleted after {ACCOUNT_DELETION_GRACE_DAYS} days. Sign back in before then to restore your account."
 msgstr "すべてのデータは{ACCOUNT_DELETION_GRACE_DAYS}日後に完全に削除されます。それまでに再度サインインすればアカウントを復元できます。"
 
-msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close Superset” instead if you want services to keep running for the next launch."
-msgstr "開いているターミナルセッションはすべて終了し、実行中のhost-serviceも停止します。次回の起動までサービスを実行し続けたい場合は、「Supersetを閉じる」を使用してください。"
+msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close {displayName}” instead if you want services to keep running for the next launch."
+msgstr "開いているターミナルセッションはすべて終了し、実行中のhost-serviceも停止します。次回の起動までサービスを実行し続けたい場合は、「{displayName}を閉じる」を使用してください。"
 
 msgid "All pages"
 msgstr "すべてのページ"
@@ -2578,6 +2575,9 @@ msgstr "エージェントにデザインドキュメントやレポートを頼
 
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "デスクトップアプリからエージェントに公開してもらいましょう。"
+
+msgid "Ask before you close a terminal, tab, or port that still has a process running in it"
+msgstr "プロセスが実行中のターミナル、タブ、ポートを閉じる前に確認します"
 
 msgid "Ask for approval"
 msgstr "承認を求める"
@@ -3859,9 +3859,6 @@ msgstr "チップをクリックするとプルリクエストを開きます"
 msgid "Click to copy the session ID (resume with `claude --resume <id>`)."
 msgstr "クリックでセッションIDをコピーします(`claude --resume <id>`で再開)。"
 
-msgid "Click to open on GitHub"
-msgstr "クリックしてGitHubで開く"
-
 msgid "Click to open the pull request"
 msgstr "クリックしてプルリクエストを開く"
 
@@ -3905,6 +3902,9 @@ msgstr "閉じる (Esc)"
 #. placeholder {0}: row.title
 msgid "Close {0}"
 msgstr "{0}を閉じる"
+
+msgid "Close {displayName}"
+msgstr "{displayName}を閉じる"
 
 #. placeholder {0}: data.number
 msgid "Close #{0}?"
@@ -4004,9 +4004,6 @@ msgstr "レビューフィルターを閉じる"
 
 msgid "Close session"
 msgstr "セッションを閉じる"
-
-msgid "Close Superset"
-msgstr "Supersetを閉じる"
 
 msgid "Close tab"
 msgstr "タブを閉じる"
@@ -6191,9 +6188,6 @@ msgstr "ダイレクトモード"
 msgid "Directory"
 msgstr "ディレクトリ"
 
-msgid "Disable"
-msgstr "無効にする"
-
 msgid "Disable skill"
 msgstr "スキルを無効にする"
 
@@ -6699,9 +6693,6 @@ msgstr "空のコマンド"
 
 msgid "Emulator"
 msgstr "エミュレータ"
-
-msgid "Enable"
-msgstr "有効にする"
 
 #. placeholder {0}: preset.label
 msgid "Enable {0}"
@@ -8310,6 +8301,9 @@ msgstr "参加するまで非表示"
 msgid "Hide"
 msgstr "隠す"
 
+msgid "Hide {displayName}"
+msgstr "{displayName}を非表示"
+
 msgid "Hide checks"
 msgstr "チェックを隠す"
 
@@ -8916,9 +8910,6 @@ msgstr "クライアントにSuperset MCPをインストール"
 msgid "Install the desktop app"
 msgstr "デスクトップアプリをインストール"
 
-msgid "Install the plugin to connect"
-msgstr "接続するにはプラグインをインストールしてください"
-
 msgid "Install the Superset GitHub App to connect your repositories."
 msgstr "Superset GitHub Appをインストールしてリポジトリを接続します。"
 
@@ -9160,6 +9151,9 @@ msgstr "改善。"
 
 msgid "Its comments and history go with it."
 msgstr "コメントと履歴も削除されます。"
+
+msgid "Its connected accounts were disconnected."
+msgstr "接続済みのアカウントは切断されました。"
 
 msgid "Its own branch and copy of the files"
 msgstr "独自のブランチとファイルのコピー"
@@ -9955,9 +9949,6 @@ msgstr "管理"
 
 msgid "Manage {title}"
 msgstr "{title} を管理"
-
-msgid "Manage accounts"
-msgstr "アカウントを管理"
 
 msgid "Manage accounts…"
 msgstr "アカウントを管理…"
@@ -11559,11 +11550,11 @@ msgstr "全トークン中"
 msgid "Off"
 msgstr "オフ"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
 msgstr "100以上のコーディングエージェントを並列実行できるアプリ、{0}の公式ドキュメント。"
 
-#. placeholder {0}: COMPANY.NAME
+#. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}. Learn how to run 100+ coding agents in parallel on your machine."
 msgstr "{0}の公式ドキュメント。端末上で100以上のコーディングエージェントを並列実行する方法をご紹介します。"
 
@@ -11777,6 +11768,9 @@ msgstr "{0}を開く"
 #. placeholder {0}: plugin.interface.displayName
 msgid "Open {0} website"
 msgstr "{0} のウェブサイトを開く"
+
+msgid "Open {displayName}"
+msgstr "{displayName}を開く"
 
 msgid "Open {filePath}"
 msgstr "{filePath}を開く"
@@ -12098,9 +12092,6 @@ msgstr "シートを開く"
 
 msgid "Open ship options"
 msgstr "送信オプションを開く"
-
-msgid "Open Superset"
-msgstr "Supersetを開く"
 
 msgid "Open Superset on that computer"
 msgstr "そのコンピュータでSupersetを開く"
@@ -13381,17 +13372,21 @@ msgstr "静か"
 msgid "Quit"
 msgstr "終了"
 
+msgid "Quit {displayName}"
+msgstr "{displayName}を終了"
+
+msgctxt "quit confirmation dialog title"
+msgid "Quit {displayName}"
+msgstr "{displayName}を終了"
+
+msgid "Quit {displayName} and stop all background services?"
+msgstr "{displayName}を終了して、すべてのバックグラウンドサービスを停止しますか?"
+
+msgid "Quit {displayName} Completely"
+msgstr "{displayName}を完全に終了"
+
 msgid "Quit Completely"
 msgstr "完全に終了"
-
-msgid "Quit Superset"
-msgstr "Supersetを終了"
-
-msgid "Quit Superset and stop all background services?"
-msgstr "Supersetを終了して、すべてのバックグラウンドサービスを停止しますか?"
-
-msgid "Quit Superset Completely"
-msgstr "Supersetを完全に終了"
 
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "ログイン情報をディスクに保存させるため、先に元のブラウザを終了してください。キーチェーンへのアクセス許可を求められます。"
@@ -15292,8 +15287,8 @@ msgstr "再接続するまでSentryのトリガーは動作しなくなります
 msgid "Separator"
 msgstr "Separator"
 
-msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
-msgstr "サービスの稼働状況は<0>status.superset.sh</0>で、セキュリティとコンプライアンスに関するドキュメントは<1>trust.superset.sh</1>で公開しています。"
+msgid "Service availability is published at <0>{statusHost}</0>, and security and compliance documentation at <1>{trustHost}</1>."
+msgstr "サービスの稼働状況は<0>{statusHost}</0>で、セキュリティとコンプライアンスに関するドキュメントは<1>{trustHost}</1>で公開しています。"
 
 msgid "Session"
 msgstr "セッション"
@@ -18942,6 +18937,9 @@ msgstr "ワークスペースを起動中"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "もっと早く欲しいものがありますか?<0>Discordで教えてください</0>。ここにあるものの多くは、ユーザーの要望から始まりました。"
+
+msgid "Warn before closing a running terminal"
+msgstr "実行中のターミナルを閉じる前に警告"
 
 msgid "Warning"
 msgstr "警告"
