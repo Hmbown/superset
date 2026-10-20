@@ -160,17 +160,6 @@ test("a visit with no name keeps the stored name and image", () => {
 	]);
 });
 
-test("recent visits are newest first and capped", () => {
-	records.touchVisit("ana", 5);
-	expect(records.recentVisits(1)).toEqual([
-		{ userId: "ana", name: "Ana", image: null, lastSeenAt: 5 },
-	]);
-	expect(records.recentVisits(10).map((visit) => visit.userId)).toEqual([
-		"ana",
-		"ben",
-	]);
-});
-
 test("copies a legacy records table once and keeps it", () => {
 	const legacy = new Database(":memory:");
 	legacy.run(`CREATE TABLE records (

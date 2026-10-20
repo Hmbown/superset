@@ -1,8 +1,5 @@
-import {
-	MAX_PRESENCE_VISITORS,
-	type PagePresenceViewer,
-	type PresenceVisitor,
-} from "@superset/shared/page-presence";
+import { MAX_PRESENCE_VISITORS } from "@superset/shared/page-presence";
+import { PresenceVisits } from "@superset/shared/presence-visits";
 import {
 	canOpenWorkspace,
 	parseWorkspaceAccess,
@@ -11,6 +8,13 @@ import {
 } from "@superset/shared/workspace-access";
 import { type Connection, type ConnectionContext, Server } from "partyserver";
 import type { RealtimeEnv } from "./types";
+import { admission, type StoredAccess } from "./utils/admission";
+import {
+	broadcastPresence,
+	SWEEP_MS,
+	scheduleSweep,
+	sweepSilent,
+} from "./utils/presence";
 
 interface Viewer extends WorkspaceActor {
 	name: string;
@@ -19,19 +23,7 @@ interface Viewer extends WorkspaceActor {
 	connectedAt: number;
 }
 
-interface StoredAccess {
-	access: WorkspaceAccess | null;
-	readAt: number;
-}
-
 export const WORKSPACE_CLAIMS_HEADER = "x-superset-workspace-claims";
-
-const SWEEP_MS = 30_000;
-const SILENT_MS = 75_000;
-/** A missed push from the API heals within this. */
-const ACCESS_TTL_MS = 60 * 60_000;
-/** A refusal re-reads access at most this often, so a new share works at once. */
-const ACCESS_RETRY_MS = 60_000;
 
 /**
  * One object per cloud workspace: who is in it now and who has been. An
@@ -43,9 +35,11 @@ export class WorkspaceHub extends Server<RealtimeEnv> {
 
 	private ready = false;
 	private access: StoredAccess | undefined;
+	private readonly visits: PresenceVisits;
 
 	constructor(ctx: DurableObjectState, env: RealtimeEnv) {
 		super(ctx, env);
+		this.visits = new PresenceVisits(ctx.storage.sql);
 		ctx.setWebSocketAutoResponse(
 			new WebSocketRequestResponsePair("ping", "pong"),
 		);
@@ -53,15 +47,7 @@ export class WorkspaceHub extends Server<RealtimeEnv> {
 
 	private schema(): void {
 		if (this.ready) return;
-		this.ctx.storage.sql.exec(
-			`CREATE TABLE IF NOT EXISTS visits (
-				user_id TEXT PRIMARY KEY,
-				name TEXT NOT NULL,
-				image TEXT,
-				first_seen_at INTEGER NOT NULL,
-				last_seen_at INTEGER NOT NULL
-			)`,
-		);
+		this.visits.ensureSchema();
 		this.ready = true;
 	}
 
@@ -104,41 +90,30 @@ export class WorkspaceHub extends Server<RealtimeEnv> {
 			observer: claims.observer === true,
 			connectedAt: Date.now(),
 		};
-		let access: WorkspaceAccess | null;
+		let admitted: boolean;
 		try {
-			access = await this.admit(viewer);
+			admitted = await this.admit(viewer);
 		} catch {
 			connection.close(1013, "unavailable");
 			return;
 		}
-		if (!access) {
+		if (!admitted) {
 			connection.close(4403, "Not found");
 			return;
 		}
 		const now = Date.now();
 		connection.setState(viewer);
 		if (!viewer.observer) {
-			this.ctx.storage.sql.exec(
-				`INSERT INTO visits (user_id, name, image, first_seen_at, last_seen_at)
-				 VALUES (?, ?, ?, ?, ?)
-				 ON CONFLICT (user_id) DO UPDATE SET
-					name = excluded.name,
-					image = excluded.image,
-					last_seen_at = excluded.last_seen_at`,
-				viewer.userId,
-				viewer.name,
-				viewer.image,
-				now,
+			this.visits.record(
+				{ userId: viewer.userId, name: viewer.name, image: viewer.image },
 				now,
 			);
 		}
 		this.announce();
-		if ((await this.ctx.storage.getAlarm()) === null) {
-			await this.ctx.storage.setAlarm(now + SWEEP_MS);
-		}
+		await scheduleSweep(this.ctx.storage, now);
 	}
 
-	/** Called by the API when visibility or sharing changes. */
+	/** Called by the API when the workspace is created or its visibility or sharing changes. */
 	async accessChanged(access: WorkspaceAccess | null): Promise<void> {
 		await this.storeAccess(access);
 		let removed = false;
@@ -157,24 +132,29 @@ export class WorkspaceHub extends Server<RealtimeEnv> {
 		}
 	}
 
-	private async admit(viewer: Viewer): Promise<WorkspaceAccess | null> {
+	private async admit(viewer: Viewer): Promise<boolean> {
 		const stored = await this.readStoredAccess();
-		const age = stored ? Date.now() - stored.readAt : Number.POSITIVE_INFINITY;
-		if (stored && age < ACCESS_TTL_MS) {
-			if (stored.access && canOpenWorkspace(stored.access, viewer)) {
-				return stored.access;
-			}
-			if (age < ACCESS_RETRY_MS) return null;
+		const decision = admission(stored, viewer, Date.now());
+		if (decision.kind === "admit") {
+			if (decision.refresh) this.ctx.waitUntil(this.refreshAccess());
+			return true;
 		}
+		if (decision.kind === "refuse") return false;
 		let access: WorkspaceAccess | null;
 		try {
 			access = await this.fetchAccess();
 		} catch (error) {
-			if (!stored) throw error;
-			access = stored.access;
+			if (stored) return false;
+			throw error;
 		}
-		if (access !== stored?.access) await this.storeAccess(access);
-		return access && canOpenWorkspace(access, viewer) ? access : null;
+		await this.storeAccess(access);
+		return access !== null && canOpenWorkspace(access, viewer);
+	}
+
+	private async refreshAccess(): Promise<void> {
+		try {
+			await this.accessChanged(await this.fetchAccess());
+		} catch {}
 	}
 
 	private async readStoredAccess(): Promise<StoredAccess | undefined> {
@@ -206,33 +186,20 @@ export class WorkspaceHub extends Server<RealtimeEnv> {
 		const viewer = connection.state;
 		if (!viewer) return;
 		this.schema();
-		if (!viewer.observer) {
-			this.ctx.storage.sql.exec(
-				"UPDATE visits SET last_seen_at = ? WHERE user_id = ?",
-				Date.now(),
-				viewer.userId,
-			);
-		}
+		if (!viewer.observer) this.visits.touch(viewer.userId, Date.now());
 		this.announce(connection.id);
 	}
 
 	async onAlarm(): Promise<void> {
 		const now = Date.now();
-		let remaining = 0;
-		let evicted = false;
-		for (const connection of this.getConnections<Viewer>()) {
-			const heardAt =
-				this.ctx.getWebSocketAutoResponseTimestamp(connection)?.getTime() ??
-				connection.state?.connectedAt;
-			if (heardAt && now - heardAt > SILENT_MS) {
-				try {
-					connection.close(4408, "silent");
-				} catch {}
-				evicted = true;
-				continue;
-			}
-			remaining++;
-		}
+		const { evicted, remaining } = sweepSilent(
+			[...this.getConnections<Viewer>()].map((connection) => ({
+				connection,
+				connectedAt: connection.state?.connectedAt,
+				heardAt: this.ctx.getWebSocketAutoResponseTimestamp(connection),
+			})),
+			now,
+		);
 		if (evicted) {
 			this.schema();
 			this.announce();
@@ -240,50 +207,36 @@ export class WorkspaceHub extends Server<RealtimeEnv> {
 		if (remaining > 0) await this.ctx.storage.setAlarm(now + SWEEP_MS);
 	}
 
+	/** Observers hear presence but are not part of it. */
 	private announce(leaving?: string): void {
 		const connections = [...this.getConnections<Viewer>()].filter(
 			(connection) => connection.state && connection.id !== leaving,
 		);
-		const present = connections.filter(
-			(connection) => connection.state?.observer === false,
+		broadcastPresence(
+			connections.map((connection) => ({
+				connection,
+				userId: connection.state?.userId ?? "",
+				seesVisitors: true,
+			})),
+			connections.flatMap((connection) => {
+				const viewer = connection.state;
+				if (!viewer || viewer.observer) return [];
+				return [
+					{
+						userId: viewer.userId,
+						viewer: {
+							id: connection.id,
+							key: viewer.userId,
+							name: viewer.name,
+							image: viewer.image,
+							guest: false,
+							guestNumber: null,
+							color: 0,
+						},
+					},
+				];
+			}),
+			this.visits.recent(MAX_PRESENCE_VISITORS),
 		);
-		const here = new Set(present.map((connection) => connection.state?.userId));
-		const visitors: PresenceVisitor[] = this.ctx.storage.sql
-			.exec<{
-				user_id: string;
-				name: string;
-				image: string | null;
-				last_seen_at: number;
-			}>(
-				"SELECT user_id, name, image, last_seen_at FROM visits ORDER BY last_seen_at DESC LIMIT ?",
-				MAX_PRESENCE_VISITORS,
-			)
-			.toArray()
-			.map((row) => ({
-				userId: row.user_id,
-				name: row.name,
-				image: row.image,
-				lastSeenAt: row.last_seen_at,
-				active: here.has(row.user_id),
-			}));
-		for (const connection of connections) {
-			const userId = connection.state?.userId;
-			const viewers: PagePresenceViewer[] = present
-				.filter((other) => other.state?.userId !== userId)
-				.map((other) => ({
-					id: other.id,
-					key: other.state?.userId ?? other.id,
-					name: other.state?.name ?? "",
-					image: other.state?.image ?? null,
-					guest: false,
-					guestNumber: null,
-					color: 0,
-				}));
-			try {
-				connection.send(
-					JSON.stringify({ type: "presence", viewers, visitors }),
-				);
-			} catch {}
-		}
 	}
 }

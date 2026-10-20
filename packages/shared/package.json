@@ -65,6 +65,10 @@
 			"types": "./src/page-presence.ts",
 			"default": "./src/page-presence.ts"
 		},
+		"./presence-visits": {
+			"types": "./src/presence-visits.ts",
+			"default": "./src/presence-visits.ts"
+		},
 		"./workspace-access": {
 			"types": "./src/workspace-access.ts",
 			"default": "./src/workspace-access.ts"

@@ -39,9 +39,9 @@ export function isRealtimeSecret(presented: string): boolean {
 }
 
 /**
- * Tell the workspace's realtime hub who may open it now, after a visibility or
- * sharing change. Not awaited by the write: a missed push heals when the hub
- * next reads access from the API.
+ * Tell the workspace's realtime hub who may open it now: on create, and after a
+ * visibility or sharing change. Not awaited by the write: a missed push is
+ * corrected by the hub's own hourly read.
  */
 export function pushWorkspaceAccess(
 	organizationId: string,
