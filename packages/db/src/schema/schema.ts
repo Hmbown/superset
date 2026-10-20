@@ -932,6 +932,8 @@ export const cloudWorkspaces = pgTable(
 		deletedAt: timestamp("deleted_at", { withTimezone: true }),
 		/** When the box stops because its organization reached its usage limit; null otherwise. */
 		usageStopAt: timestamp("usage_stop_at", { withTimezone: true }),
+		/** Null on workspaces made before sizes existed; they run large. */
+		machineSize: text("machine_size"),
 		createdByUserId: uuid("created_by_user_id").references(() => users.id, {
 			onDelete: "set null",
 		}),
@@ -1657,6 +1659,7 @@ export const automations = pgTable(
 		continueAgentSession: boolean("continue_agent_session")
 			.notNull()
 			.default(false),
+		machineSize: text("machine_size"),
 
 		// The schedule lives in the automation's `schedule` trigger.
 		enabled: boolean().notNull().default(true),
