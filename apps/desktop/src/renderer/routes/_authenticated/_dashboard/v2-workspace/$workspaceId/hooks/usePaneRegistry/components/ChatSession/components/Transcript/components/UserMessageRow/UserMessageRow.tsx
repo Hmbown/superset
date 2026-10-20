@@ -14,7 +14,6 @@ import { Pencil } from "lucide-react";
 import { useRef, useState } from "react";
 import { useChatPaneActions } from "../../../../providers/ChatPaneActionsProvider";
 import { parseAttachmentTags } from "../../../../utils/attachmentTags";
-import { LEADING_COMMAND } from "../../../../utils/commandChip";
 import {
 	type MessageSegment,
 	splitByElements,
@@ -26,6 +25,7 @@ import { PastedTextBlock } from "./components/PastedTextBlock";
 import { UserMessageEditor } from "./components/UserMessageEditor";
 import { UserMessageText } from "./components/UserMessageText";
 import { useFitsOneLine } from "./hooks/useFitsOneLine";
+import { textElementsFromText } from "./utils/textElementsFromText";
 
 function BookkeepingRow({ label }: { label: string }) {
 	return (
@@ -58,17 +58,10 @@ export function UserMessageRow({
 	const note = readBookkeeping(harness, raw);
 	const { text, attachments, pastedTexts } = parseAttachmentTags(raw);
 	const elements = item.content.find((part) => part.type === "text")?.elements;
-	const leading = LEADING_COMMAND.exec(text)?.[1];
-	const segments: MessageSegment[] = elements?.length
-		? splitByElements(text, elements)
-		: leading && commands?.has(leading)
-			? splitByElements(text, [
-					{
-						byteRange: { start: 0, end: leading.length + 1 },
-						elementKind: "slash_command",
-					},
-				])
-			: [{ text }];
+	const segments: MessageSegment[] = splitByElements(
+		text,
+		elements?.length ? elements : textElementsFromText(text, commands),
+	);
 	const textRef = useRef<HTMLDivElement>(null);
 	const oneLine = useFitsOneLine(textRef);
 	const { editMessage, editableMessageIds } = useChatPaneActions();

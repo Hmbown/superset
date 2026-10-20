@@ -54,10 +54,19 @@ export function ToolCallRow({ item }: { item: ToolCall }) {
 		);
 	} else {
 		const face = command ? "font-mono text-[13px]" : undefined;
+		const verb = command && label !== t`Running` ? t`Running` : null;
 		title = running ? (
-			<span className="min-w-0 truncate">
+			<span className="flex min-w-0 items-baseline gap-1.5 truncate">
+				{verb && (
+					<ShimmerLabel
+						className="shrink-0 font-normal"
+						duration={TITLE_SWEEP_SECONDS}
+					>
+						{verb}
+					</ShimmerLabel>
+				)}
 				<ShimmerLabel
-					className={cn("font-normal", face)}
+					className={cn("min-w-0 truncate font-normal", face)}
 					duration={TITLE_SWEEP_SECONDS}
 				>
 					{label}

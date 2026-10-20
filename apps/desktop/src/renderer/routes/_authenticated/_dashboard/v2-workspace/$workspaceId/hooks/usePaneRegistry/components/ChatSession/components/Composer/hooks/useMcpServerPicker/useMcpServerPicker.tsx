@@ -14,14 +14,14 @@ import { ConnectConnectorDialog } from "renderer/components/ConnectorSection";
 import { PluginIcon } from "renderer/components/PluginIcon";
 import { useInstallAfterConnect } from "renderer/routes/_authenticated/_dashboard/hooks/useInstallAfterConnect";
 import { usePluginMutations } from "renderer/routes/_authenticated/_dashboard/hooks/usePluginMutations";
-import { McpServerPicker } from "../../components/McpServerPicker";
-import type { McpPickerActionRow } from "../../components/McpServerPicker/utils/mcpPickerRows";
 import {
 	findMcpServerTokens,
 	mcpServerChip,
 	mcpServerToken,
 	resolveMcpServerName,
-} from "../../utils/mcpServerChips";
+} from "../../../../utils/mcpServerChips";
+import { McpServerPicker } from "../../components/McpServerPicker";
+import type { McpPickerActionRow } from "../../components/McpServerPicker/utils/mcpPickerRows";
 import { mcpServerIconUrl } from "../../utils/mcpServerIconUrl";
 
 type McpServerPickerControls = {

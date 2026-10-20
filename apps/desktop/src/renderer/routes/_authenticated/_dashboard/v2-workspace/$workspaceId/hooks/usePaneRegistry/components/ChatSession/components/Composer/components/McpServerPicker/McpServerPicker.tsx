@@ -21,7 +21,10 @@ import {
 } from "renderer/assets/app-icons/preset-icons";
 import { PluginIcon } from "renderer/components/PluginIcon";
 import { usePluginCatalog } from "renderer/hooks/usePluginCatalog";
-import { mcpServerChip, mcpServerToken } from "../../utils/mcpServerChips";
+import {
+	mcpServerChip,
+	mcpServerToken,
+} from "../../../../utils/mcpServerChips";
 import { mcpServerIconUrl } from "../../utils/mcpServerIconUrl";
 import {
 	type McpPickerActionRow,
