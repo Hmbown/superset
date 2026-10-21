@@ -16,6 +16,7 @@ import type { PageLink } from "../../../../utils/pageLinks";
 import { PageLinkCard } from "../../../PageLinkCard";
 import type { TranscriptRow } from "../../utils/transcriptRows";
 import { AttachmentRail, type RailImage } from "../AttachmentRail";
+import { ReplyFooter } from "../ReplyFooter";
 import { ItemRow } from "./components/ItemRow";
 import { ToolRunRow } from "./components/ToolRunRow";
 import { TurnStatusRow } from "./components/TurnStatusRow";
@@ -172,5 +173,15 @@ export function TurnGroupSection({
 			);
 		case "turn_status":
 			return <TurnStatusRow message={row.message} status={row.status} />;
+		case "reply_footer":
+			return (
+				<ReplyFooter
+					canForkToWorktree={canForkToWorktree}
+					className="hover:opacity-100"
+					item={row.item}
+					onFork={onFork}
+					text={displayText(snapshot, row.item.id)}
+				/>
+			);
 	}
 }

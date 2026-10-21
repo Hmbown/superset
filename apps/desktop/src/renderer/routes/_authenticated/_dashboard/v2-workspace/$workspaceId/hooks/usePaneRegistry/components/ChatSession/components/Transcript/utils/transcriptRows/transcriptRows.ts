@@ -5,6 +5,7 @@ import {
 	transcriptItemKey,
 } from "@superset/chat/core";
 import type {
+	AgentMessage,
 	ApprovalRequest,
 	Item,
 	ToolCall,
@@ -52,6 +53,12 @@ export type TranscriptRow =
 			groupStart: boolean;
 			status: "failed" | "interrupted";
 			message: string | undefined;
+	  }
+	| {
+			kind: "reply_footer";
+			key: string;
+			groupStart: false;
+			item: AgentMessage;
 	  };
 
 export function transcriptRows(

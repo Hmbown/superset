@@ -49,7 +49,7 @@ import { useNestedItems } from "./providers/NestedItemsProvider";
 import { useTranscriptPlugins } from "./providers/TranscriptPluginsProvider";
 import { copySourceText } from "./utils/copySourceText";
 import { galleryImages } from "./utils/galleryImages";
-import { lastReplyKeys } from "./utils/lastReplyKeys";
+import { replyFooters } from "./utils/replyFooters";
 import { subagentLines } from "./utils/subagentLines";
 import {
 	rowMessageId,
@@ -207,15 +207,17 @@ export function Transcript({
 	}, [approvals, snapshot.items]);
 
 	const { childrenByParent } = useNestedItems();
-	const rows = useMemo(
+	const { rows, inlineReplyKeys } = useMemo(
 		() =>
-			transcriptRows(
-				groups,
-				outbox,
-				pendingApprovalTargets,
-				findPageLinks,
-				commandsInApprovals,
-				(tool) => subagentLines(tool, childrenByParent.get(tool.id)) !== null,
+			replyFooters(
+				transcriptRows(
+					groups,
+					outbox,
+					pendingApprovalTargets,
+					findPageLinks,
+					commandsInApprovals,
+					(tool) => subagentLines(tool, childrenByParent.get(tool.id)) !== null,
+				),
 			),
 		[
 			groups,
@@ -241,7 +243,6 @@ export function Transcript({
 		});
 	}, [rows, entryOverrides]);
 
-	const lastReplies = useMemo(() => lastReplyKeys(rows), [rows]);
 	const gallery = useMemo(() => galleryImages(rows), [rows]);
 	const availableCommands = snapshot.session?.availableCommands;
 	const commands = useMemo(
@@ -343,7 +344,7 @@ export function Transcript({
 					childrenByParent={childrenByParent}
 					isEntryCollapsed={isEntryCollapsed}
 					key={row.key}
-					lastReply={lastReplies.has(row.key)}
+					lastReply={inlineReplyKeys.has(row.key)}
 					messageId={rowMessageId(row)}
 					onDiscardPrompt={onDiscardPrompt}
 					onFork={onFork}

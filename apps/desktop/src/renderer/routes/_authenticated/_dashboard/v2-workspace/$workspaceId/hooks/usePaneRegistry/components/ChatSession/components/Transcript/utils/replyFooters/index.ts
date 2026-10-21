@@ -1,1 +1,1 @@
-export { lastReplyKeys } from "./lastReplyKeys";
+export { replyFooters } from "./replyFooters";

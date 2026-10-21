@@ -13,6 +13,7 @@ import type {
 import { cleanup, fireEvent, render } from "@testing-library/react";
 import { pageLinkFinder } from "../../../../utils/pageLinks";
 import { NestedItemsProvider } from "../../providers/NestedItemsProvider";
+import { replyFooters } from "../../utils/replyFooters";
 import { subagentLines } from "../../utils/subagentLines";
 import { transcriptRows } from "../../utils/transcriptRows";
 import { TurnGroupSection } from "./TurnGroupSection";
@@ -75,13 +76,15 @@ function renderTranscript(
 	onRespond: (approvalId: string, decision: Decision) => void = () => {},
 ) {
 	const childrenByParent = deriveChildrenByParent(snapshot);
-	const rows = transcriptRows(
-		deriveTimeline(snapshot, { nestChildItems: true }),
-		[],
-		new Set(),
-		pageLinkFinder("https://app.superset.sh"),
-		new Set(),
-		(each) => subagentLines(each, childrenByParent.get(each.id)) !== null,
+	const { rows, inlineReplyKeys } = replyFooters(
+		transcriptRows(
+			deriveTimeline(snapshot, { nestChildItems: true }),
+			[],
+			new Set(),
+			pageLinkFinder("https://app.superset.sh"),
+			new Set(),
+			(each) => subagentLines(each, childrenByParent.get(each.id)) !== null,
+		),
 	);
 	const view = render(
 		<NestedItemsProvider
@@ -98,7 +101,7 @@ function renderTranscript(
 					childrenByParent={childrenByParent}
 					isEntryCollapsed={(_key, collapsed) => collapsed}
 					key={row.key}
-					lastReply={false}
+					lastReply={inlineReplyKeys.has(row.key)}
 					onDiscardPrompt={() => {}}
 					onRespond={onRespond}
 					onRetryPrompt={() => {}}
@@ -161,4 +164,24 @@ test("a subagent's pending approval shows in the main transcript and answers the
 	expect(onRespond).toHaveBeenCalledWith("approval:sub:c1:bash-1", {
 		type: "accept",
 	});
+});
+
+test("a reply followed by tool calls shows its footer after them", () => {
+	const reply: Item = {
+		id: "reply-1",
+		kind: "agent_message",
+		text: "Done.",
+		startedAtMs: 1,
+		completedAtMs: 2,
+	} as Item;
+	const { view } = renderTranscript(
+		snapshotOf([reply, tool("a", 3), tool("b", 4)]),
+	);
+
+	const copy = view.getByRole("button", { name: "Copy message" });
+	const run = view.getByText("Done.");
+	expect(
+		run.compareDocumentPosition(copy) & Node.DOCUMENT_POSITION_FOLLOWING,
+	).toBeTruthy();
+	expect(view.container.lastElementChild?.contains(copy)).toBe(true);
 });
