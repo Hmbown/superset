@@ -327,6 +327,14 @@ export const serverErrorMessages: Record<
 					"This environment's repositories are fixed; promote a workspace again to change them",
 			}),
 		),
+	"serverError.environment.limitReached": (params) => {
+		const limit = params?.limit;
+		return i18n._(
+			msg({
+				message: `This organization has used all ${limit} of its environments. Archive one, or contact us to raise the limit`,
+			}),
+		);
+	},
 	"serverError.environment.couldNotRecord": () =>
 		i18n._(
 			msg({

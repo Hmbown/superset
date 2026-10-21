@@ -1,5 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { billingFromCustomer } from "./billing-state";
+import {
+	billingFromCustomer,
+	environmentLimitFromBalances,
+} from "./billing-state";
 
 const NOW = Date.UTC(2026, 9, 13);
 const DAY = 24 * 60 * 60 * 1000;
@@ -81,6 +84,7 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 			paymentState: { kind: "ok" },
 			cloudUsage: null,
 			gatedMachineSizes: [],
+			environmentLimit: 0,
 		});
 	});
 
@@ -151,5 +155,31 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 		expect(
 			billingFromCustomer(customer({ invoices: [invoice("paid")] }), NOW),
 		).toMatchObject({ lapsed: false, paymentState: { kind: "ok" } });
+	});
+});
+
+describe("environmentLimitFromBalances", () => {
+	type Balances = Parameters<typeof environmentLimitFromBalances>[0];
+	const balances = (environments: object) =>
+		({ environments }) as unknown as Balances;
+
+	test("a plan without the feature allows none", () => {
+		expect(environmentLimitFromBalances({} as Balances)).toBe(0);
+	});
+
+	test("the granted amount is the limit, including support grants", () => {
+		expect(
+			environmentLimitFromBalances(
+				balances({ granted: 5, unlimited: false, usage: 0 }),
+			),
+		).toBe(5);
+	});
+
+	test("an unlimited balance has no limit", () => {
+		expect(
+			environmentLimitFromBalances(
+				balances({ granted: 0, unlimited: true, usage: 0 }),
+			),
+		).toBeNull();
 	});
 });

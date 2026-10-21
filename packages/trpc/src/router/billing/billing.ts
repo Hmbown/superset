@@ -10,6 +10,7 @@ import type Stripe from "stripe";
 import { z } from "zod";
 import { env } from "../../env";
 import { protectedProcedure, userError } from "../../trpc";
+import { countActiveEnvironments } from "../environment/environment-capacity";
 
 function subtractMonthsClamped(date: Date, months: number) {
 	const result = new Date(date);
@@ -205,6 +206,18 @@ export const billingRouter = {
 			if (!billingUsesAutumn || !activeOrgId) return null;
 			const billing = await organizationBilling(activeOrgId);
 			return billing.cloudUsage ?? null;
+		},
+	),
+
+	environmentUsage: protectedProcedure.query(
+		async ({ ctx }): Promise<{ used: number; limit: number | null } | null> => {
+			const activeOrgId = ctx.activeOrganizationId;
+			if (!billingUsesAutumn || !activeOrgId) return null;
+			const [billing, used] = await Promise.all([
+				organizationBilling(activeOrgId),
+				countActiveEnvironments(db, activeOrgId),
+			]);
+			return { used, limit: billing.environmentLimit ?? null };
 		},
 	),
 

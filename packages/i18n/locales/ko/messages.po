@@ -1170,6 +1170,9 @@ msgstr "{updatedLabel}이(가) 기본값으로 복원되었습니다"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {파일 #개 업로드 중…}}"
 
+msgid "{used} of {limit} environments"
+msgstr "환경 {limit}개 중 {used}개"
+
 msgid "{used} used"
 msgstr "{used} 사용됨"
 
@@ -17797,6 +17800,9 @@ msgstr "표시 이름만 변경되며 브랜치는 바뀌지 않습니다."
 
 msgid "this organization"
 msgstr "이 조직"
+
+msgid "This organization has used all {limit} of its environments. Archive one, or contact us to raise the limit"
+msgstr "이 조직은 환경 {limit}개를 모두 사용하고 있습니다. 하나를 보관하거나 한도 상향을 요청해 주세요"
 
 msgid "This organization is on the Free plan. Superset Mobile is available for organizations on Pro."
 msgstr "이 조직은 Free 플랜을 사용 중입니다. Superset Mobile은 Pro 플랜 조직에서 사용할 수 있습니다."

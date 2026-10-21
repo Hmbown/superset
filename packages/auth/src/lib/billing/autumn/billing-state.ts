@@ -6,7 +6,7 @@ import {
 	paidPlanIdFromFlags,
 	tierFromFlags,
 } from "./entitlements";
-import { SEATS_FEATURE_ID } from "./features";
+import { ENVIRONMENTS_FEATURE_ID, SEATS_FEATURE_ID } from "./features";
 
 export type PaymentState =
 	| { kind: "ok" }
@@ -30,6 +30,7 @@ export interface OrganizationBilling {
 	paymentState: PaymentState;
 	cloudUsage: CloudUsage | null;
 	gatedMachineSizes: MachineSize[];
+	environmentLimit: number | null;
 }
 
 type AutumnCustomer = Awaited<ReturnType<typeof getAutumnCustomer>>;
@@ -98,5 +99,14 @@ export function billingFromCustomer(
 		paymentState,
 		cloudUsage: cloudUsageFromBalances(customer.balances),
 		gatedMachineSizes: gatedMachineSizesFromFlags(customer.flags),
+		environmentLimit: environmentLimitFromBalances(customer.balances),
 	};
+}
+
+export function environmentLimitFromBalances(
+	balances: AutumnCustomer["balances"],
+): number | null {
+	const balance = balances[ENVIRONMENTS_FEATURE_ID];
+	if (!balance) return 0;
+	return balance.unlimited ? null : balance.granted;
 }

@@ -1170,6 +1170,9 @@ msgstr "{updatedLabel} varsayılanlara geri yüklendi"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {# dosya yükleniyor…}}"
 
+msgid "{used} of {limit} environments"
+msgstr "{limit} ortamdan {used} tanesi"
+
 msgid "{used} used"
 msgstr "{used} kullanıldı"
 
@@ -17797,6 +17800,9 @@ msgstr "Bu yalnızca görünen adı değiştirir, dalı değil."
 
 msgid "this organization"
 msgstr "bu kuruluş"
+
+msgid "This organization has used all {limit} of its environments. Archive one, or contact us to raise the limit"
+msgstr "Bu kuruluş {limit} ortamın tamamını kullanıyor. Birini arşivleyin veya sınırı artırmak için bizimle iletişime geçin"
 
 msgid "This organization is on the Free plan. Superset Mobile is available for organizations on Pro."
 msgstr "Bu kuruluş Ücretsiz planda. Superset Mobile, Pro planındaki kuruluşlar için kullanılabilir."

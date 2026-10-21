@@ -1170,6 +1170,9 @@ msgstr "{updatedLabel}已恢復為預設值"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {正在上傳 # 個檔案…}}"
 
+msgid "{used} of {limit} environments"
+msgstr "已用 {used}/{limit} 個環境"
+
 msgid "{used} used"
 msgstr "已使用 {used}"
 
@@ -17797,6 +17800,9 @@ msgstr "這只會更改顯示名稱，不會更改分支。"
 
 msgid "this organization"
 msgstr "此組織"
+
+msgid "This organization has used all {limit} of its environments. Archive one, or contact us to raise the limit"
+msgstr "此組織已用完全部 {limit} 個環境。請封存一個,或聯絡我們提高上限"
 
 msgid "This organization is on the Free plan. Superset Mobile is available for organizations on Pro."
 msgstr "此組織使用的是免費版。Superset Mobile面向使用專業版的組織開放。"

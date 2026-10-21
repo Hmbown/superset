@@ -58,9 +58,17 @@ export function EnvironmentsSettings({
 		{ enabled: Boolean(organizationId) },
 	);
 
+	const { data: usage } = cloudTrpc.billing.environmentUsage.useQuery();
+	const atLimit = usage?.limit != null && usage.used >= usage.limit;
+	const used = usage?.used ?? 0;
+	const limit = usage?.limit ?? 0;
+
 	const archive = cloudTrpc.environment.archive.useMutation({
 		onSuccess: async () => {
-			await utils.environment.list.invalidate();
+			await Promise.all([
+				utils.environment.list.invalidate(),
+				utils.billing.environmentUsage.invalidate(),
+			]);
 			setSelectedId(null);
 		},
 		onError: (error) => toast.error(errorMessage(error)),
@@ -91,10 +99,23 @@ export function EnvironmentsSettings({
 						</Trans>
 					</p>
 				</div>
-				<Button onClick={() => setEditor({ mode: "create" })} size="sm">
-					<HiOutlinePlus className="h-4 w-4" />
-					<Trans>New environment</Trans>
-				</Button>
+				<div className="flex shrink-0 items-center gap-3">
+					{usage?.limit != null && (
+						<span className="text-xs text-muted-foreground">
+							<Trans>
+								{used} of {limit} environments
+							</Trans>
+						</span>
+					)}
+					<Button
+						onClick={() => setEditor({ mode: "create" })}
+						size="sm"
+						disabled={atLimit}
+					>
+						<HiOutlinePlus className="h-4 w-4" />
+						<Trans>New environment</Trans>
+					</Button>
+				</div>
 			</div>
 
 			{isError ? (

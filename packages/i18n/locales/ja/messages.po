@@ -1170,6 +1170,9 @@ msgstr "{updatedLabel}をデフォルトに復元しました"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {# 件のファイルをアップロード中…}}"
 
+msgid "{used} of {limit} environments"
+msgstr "{limit} 件中 {used} 件の環境"
+
 msgid "{used} used"
 msgstr "{used} 使用済み"
 
@@ -17797,6 +17800,9 @@ msgstr "変更されるのは表示名だけで、ブランチは変わりませ
 
 msgid "this organization"
 msgstr "この組織"
+
+msgid "This organization has used all {limit} of its environments. Archive one, or contact us to raise the limit"
+msgstr "この組織は {limit} 件の環境をすべて使用しています。いずれかをアーカイブするか、上限の引き上げをご依頼ください"
 
 msgid "This organization is on the Free plan. Superset Mobile is available for organizations on Pro."
 msgstr "この組織はFreeプランです。Superset MobileはProプランの組織でご利用いただけます。"

@@ -22,6 +22,7 @@ const FREE: OrganizationBilling = {
 	paymentState: { kind: "ok" },
 	cloudUsage: null,
 	gatedMachineSizes: [],
+	environmentLimit: 0,
 };
 
 const FAIL_OPEN: OrganizationBilling = {
@@ -36,6 +37,7 @@ const FAIL_OPEN: OrganizationBilling = {
 	paymentState: { kind: "ok" },
 	cloudUsage: null,
 	gatedMachineSizes: [],
+	environmentLimit: null,
 };
 
 const redis = new Redis({

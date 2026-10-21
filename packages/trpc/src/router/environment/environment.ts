@@ -25,6 +25,7 @@ import {
 import { jwtProcedure, userError } from "../../trpc";
 import { loadVisibleWorkspace } from "../cloud-workspace/access";
 import { currentBundleSha } from "./current-bundle";
+import { assertEnvironmentCapacity } from "./environment-capacity";
 import { regionForRequest } from "./region-for-request";
 import { secretsRouter } from "./secrets";
 import { decryptSecret, encryptSecret } from "./secrets/utils/crypto";
@@ -259,20 +260,24 @@ export const environmentRouter = {
 					i18nKey: "serverError.environment.hooksRepositoryNotIncluded",
 				});
 			}
-			const [row] = await db
-				.insert(environments)
-				.values({
-					organizationId: input.organizationId,
-					name: input.name,
-					provider: "vercel",
-					sourceKind: "image",
-					sourceRef: SANDBOX_IMAGE_NAME,
-					region: input.region ?? regionForRequest(ctx.headers),
-					bundleSha: await currentBundleSha(),
-					scope: input.scope,
-					createdByUserId: ctx.userId,
-				})
-				.returning();
+			const bundleSha = await currentBundleSha();
+			const [row] = await dbWs.transaction(async (tx) => {
+				await assertEnvironmentCapacity(tx, input.organizationId);
+				return tx
+					.insert(environments)
+					.values({
+						organizationId: input.organizationId,
+						name: input.name,
+						provider: "vercel",
+						sourceKind: "image",
+						sourceRef: SANDBOX_IMAGE_NAME,
+						region: input.region ?? regionForRequest(ctx.headers),
+						bundleSha,
+						scope: input.scope,
+						createdByUserId: ctx.userId,
+					})
+					.returning();
+			});
 			if (!row) {
 				throw userError({
 					code: "INTERNAL_SERVER_ERROR",
@@ -369,6 +374,11 @@ export const environmentRouter = {
 								),
 							);
 
+			if (!target) {
+				await dbWs.transaction((tx) =>
+					assertEnvironmentCapacity(tx, workspace.organizationId),
+				);
+			}
 			const { claim } = await buildSandboxClaim({ row: workspace });
 			const golden = await promoteSandboxToEnvironment({
 				sourceSandbox: workspace.providerSandboxId,
@@ -387,6 +397,9 @@ export const environmentRouter = {
 			};
 			const row = await dbWs
 				.transaction(async (tx) => {
+					if (!target) {
+						await assertEnvironmentCapacity(tx, workspace.organizationId);
+					}
 					const [saved] = target
 						? await tx
 								.update(environments)

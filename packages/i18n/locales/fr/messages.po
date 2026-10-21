@@ -1170,6 +1170,9 @@ msgstr "{updatedLabel} restauré aux valeurs par défaut"
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Envoi de # fichier…} other {Envoi de # fichiers…}}"
 
+msgid "{used} of {limit} environments"
+msgstr "{used} environnements sur {limit}"
+
 msgid "{used} used"
 msgstr "{used} utilisés"
 
@@ -17797,6 +17800,9 @@ msgstr "Cela ne change que le nom affiché, pas la branche."
 
 msgid "this organization"
 msgstr "cette organisation"
+
+msgid "This organization has used all {limit} of its environments. Archive one, or contact us to raise the limit"
+msgstr "Cette organisation utilise déjà ses {limit} environnements. Archivez-en un, ou contactez-nous pour augmenter la limite"
 
 msgid "This organization is on the Free plan. Superset Mobile is available for organizations on Pro."
 msgstr "Cette organisation utilise le forfait Free. Superset Mobile est disponible pour les organisations avec le forfait Pro."
