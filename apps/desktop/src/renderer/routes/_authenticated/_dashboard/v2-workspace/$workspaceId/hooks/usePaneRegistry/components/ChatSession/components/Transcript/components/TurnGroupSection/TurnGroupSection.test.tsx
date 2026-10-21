@@ -185,3 +185,17 @@ test("a reply followed by tool calls shows its footer after them", () => {
 	).toBeTruthy();
 	expect(view.container.lastElementChild?.contains(copy)).toBe(true);
 });
+
+test("a running turn's last tool run shows its last three steps while collapsed", () => {
+	const { view } = renderTranscript(
+		snapshotOf(
+			[tool("a", 1), tool("b", 2), tool("c", 3), tool("d", 4), tool("e", 5)],
+			true,
+		),
+	);
+
+	expect(view.container.textContent).not.toContain("read a.ts");
+	expect(view.container.textContent).not.toContain("read b.ts");
+	for (const id of ["c", "d", "e"])
+		expect(view.container.textContent).toContain(`read ${id}.ts`);
+});

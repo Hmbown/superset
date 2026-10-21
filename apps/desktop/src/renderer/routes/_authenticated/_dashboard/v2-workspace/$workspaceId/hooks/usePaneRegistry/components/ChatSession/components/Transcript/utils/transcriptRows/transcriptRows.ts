@@ -44,6 +44,7 @@ export type TranscriptRow =
 			/** The run's tool calls with the agent's thinking between them, in order. */
 			steps: Item[];
 			defaultCollapsed: boolean;
+			active?: boolean;
 			/** Pages to show as cards under the run, so a collapsed run still shows them. */
 			pages?: readonly PageLink[];
 	  }
@@ -204,6 +205,8 @@ export function transcriptRows(
 		}
 		unwrapLoneCall();
 		placeClock();
+		if (turn?.status === "running" && run && rows.at(-1) === run)
+			run.active = true;
 		if (turn?.status === "failed" || turn?.status === "interrupted") {
 			push({
 				kind: "turn_status",

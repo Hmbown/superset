@@ -231,6 +231,43 @@ describe("transcriptRows", () => {
 		expect(collapsedFlags(new Set(["b1"]))).toEqual([false]);
 	});
 
+	test("only a running turn's last row, when it is a tool run, is active", () => {
+		const activeFlags = (
+			status: "running" | "completed",
+			after: TurnGroup["entries"],
+		) =>
+			transcriptRows(
+				[
+					{
+						turnId: "t1",
+						turn: { id: "t1", status, startedAtMs: 2 },
+						entries: [
+							{ kind: "tool_run", items: [publish("b1", 3), publish("b2", 4)] },
+							...after,
+						],
+					},
+				],
+				[],
+				new Set(),
+				find,
+			)
+				.filter((row) => row.kind === "tool_run")
+				.map((row) => row.kind === "tool_run" && row.active === true);
+		const reply: TurnGroup["entries"][number] = {
+			kind: "item",
+			item: {
+				id: "a1",
+				kind: "agent_message",
+				text: "done",
+				startedAtMs: 5,
+			},
+		};
+
+		expect(activeFlags("running", [])).toEqual([true]);
+		expect(activeFlags("completed", [])).toEqual([false]);
+		expect(activeFlags("running", [reply])).toEqual([false]);
+	});
+
 	test("a settled turn shows a page its tool run printed and its reply did not link", () => {
 		const turn = (status: "running" | "completed"): TurnGroup => ({
 			turnId: "t1",

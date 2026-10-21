@@ -31,8 +31,11 @@ type ToolRunRowProps = {
 	stepTexts: readonly string[];
 	childLists?: readonly (readonly Item[] | undefined)[] | undefined;
 	collapsed: boolean;
+	active?: boolean;
 	onToggle: (rowKey: string, collapsed: boolean) => void;
 };
+
+const ACTIVE_TAIL_STEPS = 3;
 
 function sameChildLists(
 	previous: ToolRunRowProps["childLists"],
@@ -47,6 +50,7 @@ function sameTools(previous: ToolRunRowProps, next: ToolRunRowProps): boolean {
 	return (
 		previous.rowKey === next.rowKey &&
 		previous.collapsed === next.collapsed &&
+		previous.active === next.active &&
 		previous.onToggle === next.onToggle &&
 		previous.steps.length === next.steps.length &&
 		previous.steps.every((step, index) => step === next.steps[index]) &&
@@ -56,6 +60,7 @@ function sameTools(previous: ToolRunRowProps, next: ToolRunRowProps): boolean {
 }
 
 export const ToolRunRow = memo(function ToolRunRow({
+	active = false,
 	collapsed,
 	items,
 	onToggle,
@@ -67,9 +72,29 @@ export const ToolRunRow = memo(function ToolRunRow({
 	const done = items.filter((tool) => tool.status !== "running");
 	const live = done.length === 0;
 	const summary = stepSummary(live ? items : done);
-	const current = collapsed
-		? items.find((tool) => tool.status === "running")
-		: undefined;
+	const tail =
+		collapsed && active ? steps.slice(-ACTIVE_TAIL_STEPS) : undefined;
+	const current =
+		collapsed && !tail
+			? items.find((tool) => tool.status === "running")
+			: undefined;
+	const renderStep = (step: Item) => (
+		<RailStep key={step.id}>
+			{step.kind === "reasoning" ? (
+				<ReasoningRow
+					item={step as ReasoningItem}
+					text={stepTexts[steps.indexOf(step)] ?? ""}
+				/>
+			) : isNestedTool(
+					step as ToolCall,
+					childLists?.[items.indexOf(step as ToolCall)],
+				) ? (
+				<NestedToolCallRow item={step as ToolCall} />
+			) : (
+				<ToolCallRow item={step as ToolCall} />
+			)}
+		</RailStep>
+	);
 	const Icon = toolKindIcon(dominantKind(items));
 	return (
 		<Collapsible
@@ -105,25 +130,8 @@ export const ToolRunRow = memo(function ToolRunRow({
 					<ToolCallRow item={current} />
 				</RailStep>
 			)}
-			<CollapsibleContent>
-				{steps.map((step, index) => (
-					<RailStep key={step.id}>
-						{step.kind === "reasoning" ? (
-							<ReasoningRow
-								item={step as ReasoningItem}
-								text={stepTexts[index] ?? ""}
-							/>
-						) : isNestedTool(
-								step as ToolCall,
-								childLists?.[items.indexOf(step as ToolCall)],
-							) ? (
-							<NestedToolCallRow item={step as ToolCall} />
-						) : (
-							<ToolCallRow item={step as ToolCall} />
-						)}
-					</RailStep>
-				))}
-			</CollapsibleContent>
+			{tail?.map(renderStep)}
+			<CollapsibleContent>{steps.map(renderStep)}</CollapsibleContent>
 		</Collapsible>
 	);
 }, sameTools);

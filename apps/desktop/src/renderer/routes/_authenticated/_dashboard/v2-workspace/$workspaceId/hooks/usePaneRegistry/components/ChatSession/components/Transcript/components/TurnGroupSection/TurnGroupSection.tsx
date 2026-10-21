@@ -157,6 +157,7 @@ export function TurnGroupSection({
 			return (
 				<>
 					<ToolRunRow
+						active={row.active === true}
 						childLists={row.items.map((tool) => childrenByParent.get(tool.id))}
 						collapsed={isEntryCollapsed(row.key, row.defaultCollapsed)}
 						items={row.items}
