@@ -7,11 +7,16 @@ import { env } from "../../../env";
 import { stripeClient } from "../../../stripe";
 import { countBillableSeats } from "../../../utils/billing";
 import { ensureAutumnCustomer, paidAutumnPlanId } from "../autumn/customer";
+import { SEATS_FEATURE_ID } from "../autumn/features";
 import {
 	completeCheckout,
 	syncFromStripeEvent,
 	syncOrganizationSubscription,
 } from "../autumn/projection";
+import {
+	assertAllowancePreview,
+	checkoutSeatAllowanceUpdate,
+} from "../autumn/seat-allowance";
 import { handleStripeBillingEvent } from "../stripe-billing-events";
 import { stripeFallback } from "./stripe-fallback";
 import type { AutumnBillingDeps } from "./stripe-routes-shim";
@@ -30,7 +35,20 @@ const SYNCED_STRIPE_EVENTS = new Set([
 export function autumnBillingDeps(): AutumnBillingDeps {
 	const autumn = autumnClient;
 	return {
-		attach: (params) => autumn.billing.attach(params),
+		attach: async (params) => {
+			const quantity = params.featureQuantities?.find(
+				(item) => item.featureId === SEATS_FEATURE_ID,
+			)?.quantity;
+			if (quantity === undefined)
+				throw new Error("Missing checkout seat quantity");
+			const plan = await autumn.plans.get({ planId: params.planId });
+			const allowance = checkoutSeatAllowanceUpdate(plan, quantity);
+			const request = { ...params, ...allowance };
+			if (allowance) {
+				assertAllowancePreview(await autumn.billing.previewAttach(request));
+			}
+			return autumn.billing.attach(request);
+		},
 		update: (params) => autumn.billing.update(params),
 		managedByAutumn: async (organizationId) =>
 			(await paidAutumnPlanId(organizationId).catch(() => null)) !== null,

@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
+import { SeatAllowanceError } from "@superset/auth/billing";
 import { stripeClient } from "@superset/auth/stripe";
 import { db, dbWs } from "@superset/db/client";
 import type { SQL } from "drizzle-orm";
@@ -153,10 +154,26 @@ stub(stripeClient.customers, {
 	},
 });
 
-const { purgeAccount } = await import("./purgeAccount");
+const { purgeAccount, syncSeatsForPurge } = await import("./purgeAccount");
 const purge = () => purgeAccount(USER_ID);
 
 const realFetch = globalThis.fetch;
+
+describe("syncSeatsForPurge", () => {
+	test("an allowance policy rejection does not block deletion or request a Stripe fallback", async () => {
+		expect(
+			await syncSeatsForPurge("org_1", 5, { allowanceOnly: true }, async () => {
+				throw new SeatAllowanceError("Unsafe allowance preview");
+			}),
+		).toBe("rejected");
+	});
+
+	test("a failed Autumn API update still permits the existing Stripe fallback", async () => {
+		expect(
+			await syncSeatsForPurge("org_1", 5, undefined, async () => false),
+		).toBe("fallback");
+	});
+});
 
 describe("purgeAccount", () => {
 	beforeEach(() => {

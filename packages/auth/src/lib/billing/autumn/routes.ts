@@ -28,6 +28,10 @@ import {
 	ROUTE_ROLES,
 	selfServePlan,
 } from "./routes-policy";
+import {
+	assertAllowancePreview,
+	checkoutSeatAllowanceUpdate,
+} from "./seat-allowance";
 
 interface SessionContext {
 	context: {
@@ -140,19 +144,28 @@ export const autumnBillingRoutes = {
 					1,
 					await countBillableSeats(caller.organizationId),
 				);
-				const result = await autumnClient.billing.attach({
+				const plan = await autumnClient.plans.get({ planId: ctx.body.planId });
+				const allowance = checkoutSeatAllowanceUpdate(plan, seats);
+				const params = {
 					customerId: caller.organizationId,
 					planId: ctx.body.planId,
 					featureQuantities: [{ featureId: SEATS_FEATURE_ID, quantity: seats }],
+					...allowance,
 					successUrl: ctx.body.successUrl,
-					redirectMode: "always",
+					redirectMode: "always" as const,
 					checkoutSessionParams: checkoutSessionParams({
 						planId: ctx.body.planId,
 						organizationId: caller.organizationId,
 						userId: caller.userId,
 						cancelUrl: ctx.body.cancelUrl,
 					}),
-				});
+				};
+				if (allowance) {
+					assertAllowancePreview(
+						await autumnClient.billing.previewAttach(params),
+					);
+				}
+				const result = await autumnClient.billing.attach(params);
 				if (!result.paymentUrl) await afterPlanChange(caller.organizationId);
 				return ctx.json(result);
 			},
@@ -171,6 +184,7 @@ export const autumnBillingRoutes = {
 					1,
 					await countBillableSeats(caller.organizationId),
 				);
+				const plan = await autumnClient.plans.get({ planId: ctx.body.planId });
 				return ctx.json(
 					await autumnClient.billing.previewAttach({
 						customerId: caller.organizationId,
@@ -178,6 +192,7 @@ export const autumnBillingRoutes = {
 						featureQuantities: [
 							{ featureId: SEATS_FEATURE_ID, quantity: seats },
 						],
+						...checkoutSeatAllowanceUpdate(plan, seats),
 					}),
 				);
 			},
