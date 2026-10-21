@@ -1,8 +1,9 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
+import type { SelfServePlanId } from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 
-export type TierId = "free" | "pro" | "enterprise";
+export type TierId = "free" | SelfServePlanId | "enterprise";
 
 export interface PricingFeature {
 	id: string;
@@ -16,9 +17,11 @@ export interface PricingTier {
 	price:
 		| { kind: "fixed"; display: string; note: MessageDescriptor }
 		| {
-				kind: "proSeat";
-				monthly: { note: MessageDescriptor; cadence: MessageDescriptor };
-				yearly: { note: MessageDescriptor; cadence: MessageDescriptor };
+				kind: "seat";
+				plan: SelfServePlanId;
+				note: MessageDescriptor;
+				monthlyCadence: MessageDescriptor;
+				yearlyCadence: MessageDescriptor;
 		  }
 		| { kind: "custom"; display: MessageDescriptor; note: MessageDescriptor };
 	features: PricingFeature[];
@@ -26,7 +29,7 @@ export interface PricingTier {
 	cta: {
 		label: MessageDescriptor;
 		href: string;
-		event: "download_clicked" | "contact_sales_clicked";
+		event: "download_clicked" | "contact_sales_clicked" | "checkout_clicked";
 		variant: "default" | "outline" | "secondary";
 		external?: boolean;
 	};
@@ -95,29 +98,29 @@ export const PRICING_TIERS: PricingTier[] = [
 			message: "For teams that need more power",
 		}),
 		price: {
-			kind: "proSeat",
-			monthly: {
-				note: msg({
-					message: "per user/month",
-				}),
-				cadence: msg({
-					message: "Billed monthly",
-				}),
-			},
-			yearly: {
-				note: msg({
-					message: "per user/month",
-				}),
-				cadence: msg({
-					message: "{yearlyTotal} per user, billed yearly",
-				}),
-			},
+			kind: "seat",
+			plan: "pro",
+			note: msg({
+				message: "per user/month",
+			}),
+			monthlyCadence: msg({
+				message: "Billed monthly",
+			}),
+			yearlyCadence: msg({
+				message: "{yearlyTotal} per user, billed yearly",
+			}),
 		},
 		features: [
 			{
 				id: "everythingInFree",
 				label: msg({
 					message: "Everything in Free",
+				}),
+			},
+			{
+				id: "cloudHours",
+				label: msg({
+					message: "{gbHours} cloud GB-hours per seat each month",
 				}),
 			},
 			{
@@ -159,13 +162,121 @@ export const PRICING_TIERS: PricingTier[] = [
 		],
 		cta: {
 			label: msg({
-				message: "Download app",
+				message: "Get Pro",
 			}),
-			href: "/download",
-			event: "download_clicked",
+			href: "/settings/billing",
+			event: "checkout_clicked",
 			variant: "default",
 		},
 		highlight: true,
+	},
+	{
+		id: "team",
+		name: msg({ message: "Team", context: "plan name" }),
+		description: msg({
+			message: "For teams that run agents every day",
+		}),
+		price: {
+			kind: "seat",
+			plan: "team",
+			note: msg({
+				message: "per user/month",
+			}),
+			monthlyCadence: msg({
+				message: "Billed monthly",
+			}),
+			yearlyCadence: msg({
+				message: "{yearlyTotal} per user, billed yearly",
+			}),
+		},
+		features: [
+			{
+				id: "everythingInPro",
+				label: msg({
+					message: "Everything in Pro",
+				}),
+			},
+			{
+				id: "cloudHours",
+				label: msg({
+					message: "{gbHours} cloud GB-hours per seat each month",
+				}),
+			},
+			{
+				id: "cloudMultiple",
+				label: msg({
+					message: "{multiple}x the cloud GB-hours of Pro",
+				}),
+			},
+			{
+				id: "sharedCloudPool",
+				label: msg({
+					message: "One shared GB-hour pool for the team",
+				}),
+			},
+		],
+		cta: {
+			label: msg({
+				message: "Get Team",
+			}),
+			href: "/settings/billing",
+			event: "checkout_clicked",
+			variant: "outline",
+		},
+	},
+	{
+		id: "ultra",
+		name: msg({ message: "Ultra", context: "plan name" }),
+		description: msg({
+			message: "For people who keep agents running all day",
+		}),
+		price: {
+			kind: "seat",
+			plan: "ultra",
+			note: msg({
+				message: "per user/month",
+			}),
+			monthlyCadence: msg({
+				message: "Billed monthly",
+			}),
+			yearlyCadence: msg({
+				message: "{yearlyTotal} per user, billed yearly",
+			}),
+		},
+		features: [
+			{
+				id: "everythingInTeam",
+				label: msg({
+					message: "Everything in Team",
+				}),
+			},
+			{
+				id: "cloudHours",
+				label: msg({
+					message: "{gbHours} cloud GB-hours per seat each month",
+				}),
+			},
+			{
+				id: "cloudMultiple",
+				label: msg({
+					message: "{multiple}x the cloud GB-hours of Pro",
+				}),
+			},
+			{
+				id: "sharedCloudPool",
+				label: msg({
+					message: "One shared GB-hour pool for the team",
+				}),
+			},
+		],
+		cta: {
+			label: msg({
+				message: "Get Ultra",
+			}),
+			href: "/settings/billing",
+			event: "checkout_clicked",
+			variant: "outline",
+		},
 	},
 	{
 		id: "enterprise",
@@ -246,10 +357,11 @@ export interface ComparisonRow {
 	id: string;
 	label: MessageDescriptor;
 	values: [
-		ComparisonValue | null,
-		ComparisonValue | null,
-		ComparisonValue | null,
+		free: ComparisonValue | null,
+		paid: ComparisonValue | null,
+		enterprise: ComparisonValue | null,
 	];
+	cloudGbHours?: boolean;
 	badge?: {
 		label: MessageDescriptor;
 		variant: "default" | "secondary";
@@ -293,6 +405,14 @@ export const COMPARISON_SECTIONS: ComparisonSection[] = [
 					message: "Projects",
 				}),
 				values: [UNLIMITED, UNLIMITED, UNLIMITED],
+			},
+			{
+				id: "cloudGbHours",
+				label: msg({
+					message: "Cloud GB-hours per seat each month",
+				}),
+				values: [null, null, msg({ message: "Custom" })],
+				cloudGbHours: true,
 			},
 		],
 	},
@@ -454,11 +574,21 @@ export const PRICING_FAQ_ITEMS: PricingFAQItem[] = [
 	{
 		id: "proPricing",
 		question: msg({
-			message: "How does Pro pricing work?",
+			message: "How do the paid plans work?",
 		}),
 		answer: msg({
 			message:
-				"Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team.",
+				"Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team.",
+		}),
+	},
+	{
+		id: "cloudGbHours",
+		question: msg({
+			message: "What are cloud GB-hours?",
+		}),
+		answer: msg({
+			message:
+				"Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour.",
 		}),
 	},
 	{

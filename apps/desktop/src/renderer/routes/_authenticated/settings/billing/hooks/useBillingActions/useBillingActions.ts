@@ -1,6 +1,9 @@
 import { useLingui } from "@lingui/react/macro";
 import { rawErrorMessage } from "@superset/i18n/errors";
-import { autumnProPlanId } from "@superset/shared/billing";
+import {
+	autumnPlanIdFor,
+	type SelfServePlanId,
+} from "@superset/shared/billing";
 import { toast } from "@superset/ui/sonner";
 import { useState } from "react";
 import { env } from "renderer/env.renderer";
@@ -11,6 +14,7 @@ import { authClient } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 
 interface UpgradeOptions {
+	plan?: SelfServePlanId;
 	annual: boolean;
 	seats: number;
 	source: "billing_overview" | "billing_plans";
@@ -34,9 +38,11 @@ export function useBillingActions() {
 	};
 
 	const currentAutumnPlanId = () =>
-		autumnProPlanId({ annual: activePlan?.billingInterval === "year" });
+		activePlan?.autumnPlanId ??
+		autumnPlanIdFor("pro", { annual: activePlan?.billingInterval === "year" });
 
 	const upgrade = async ({
+		plan: targetPlan = "pro",
 		annual,
 		seats,
 		source,
@@ -45,7 +51,7 @@ export function useBillingActions() {
 		if (!activeOrgId) return;
 
 		const checkoutProperties = {
-			plan: "pro",
+			plan: targetPlan,
 			annual,
 			seats,
 			previous_plan: plan,
@@ -70,7 +76,7 @@ export function useBillingActions() {
 						method: "POST",
 						body: {
 							organizationId: activeOrgId,
-							planId: autumnProPlanId({ annual }),
+							planId: autumnPlanIdFor(targetPlan, { annual }),
 							successUrl,
 							cancelUrl: env.NEXT_PUBLIC_WEB_URL,
 						},

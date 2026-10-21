@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import {
-	autumnProPlanId,
+	autumnPlanIdFor,
 	defaultMachineSize,
 	isCloudUsageRefusal,
 	machineSpec,
@@ -8,9 +8,10 @@ import {
 	planAllowsAutomations,
 	planAllowsTriggerKind,
 	planTierFromSubscription,
-	proSeatPricePerMonth,
 	requiredPlanForTriggerKind,
 	resolveCurrentPlan,
+	seatPricePerMonth,
+	selfServePlanFromAutumnPlanId,
 } from "./billing";
 import { LAUNCHED_TRIGGER_KINDS } from "./constants";
 
@@ -158,17 +159,29 @@ describe("isCloudUsageRefusal", () => {
 	});
 });
 
-describe("autumnProPlanId", () => {
-	test("annual picks the annual Pro plan", () => {
-		expect(autumnProPlanId({ annual: true })).toBe("pro_annual");
-		expect(autumnProPlanId({ annual: false })).toBe("pro");
+describe("autumnPlanIdFor", () => {
+	test("annual picks the plan's annual version", () => {
+		expect(autumnPlanIdFor("pro", { annual: true })).toBe("pro_annual");
+		expect(autumnPlanIdFor("pro", { annual: false })).toBe("pro");
+		expect(autumnPlanIdFor("team", { annual: true })).toBe("team_annual");
 	});
 });
 
-describe("proSeatPricePerMonth", () => {
+describe("selfServePlanFromAutumnPlanId", () => {
+	test("maps Autumn plan ids to the plan a customer picks", () => {
+		expect(selfServePlanFromAutumnPlanId("pro_annual")).toBe("pro");
+		expect(selfServePlanFromAutumnPlanId("ultra")).toBe("ultra");
+		expect(selfServePlanFromAutumnPlanId("enterprise")).toBeNull();
+		expect(selfServePlanFromAutumnPlanId(null)).toBeNull();
+	});
+});
+
+describe("seatPricePerMonth", () => {
 	test("yearly is the annual price spread over twelve months", () => {
-		expect(proSeatPricePerMonth({ annual: false })).toBe(20);
-		expect(proSeatPricePerMonth({ annual: true })).toBe(15);
+		expect(seatPricePerMonth("pro", { annual: false })).toBe(20);
+		expect(seatPricePerMonth("pro", { annual: true })).toBe(16);
+		expect(seatPricePerMonth("team", { annual: true })).toBe(54);
+		expect(seatPricePerMonth("ultra", { annual: true })).toBe(200);
 	});
 });
 

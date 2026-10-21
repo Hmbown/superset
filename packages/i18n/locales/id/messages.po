@@ -483,7 +483,7 @@ msgstr "{0} dari {totalCount}"
 msgid "{0} options"
 msgstr "Opsi {0}"
 
-#. placeholder {0}: i18n._(plan.name)
+#. placeholder {0}: i18n._(planName)
 msgid "{0} plan"
 msgstr "Paket {0}"
 
@@ -876,6 +876,9 @@ msgstr "{gate} · {statusLabel}"
 msgid "{gate}: {statusLabel}"
 msgstr "{gate}: {statusLabel}"
 
+msgid "{gbHours} cloud GB-hours per seat each month"
+msgstr "{gbHours} GB-jam cloud per kursi setiap bulan"
+
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {# baris tersembunyi} other {# baris tersembunyi}}"
 
@@ -963,6 +966,9 @@ msgstr "{monthlyPrice} per pengguna/bln jika ditagih bulanan, atau {yearlyPrice}
 msgid "{months}mo ago"
 msgstr "{months}bln lalu"
 
+msgid "{multiple}x the cloud GB-hours of Pro"
+msgstr "{multiple}x GB-jam cloud Pro"
+
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "{myFailedCount} otomatisasi Anda gagal pada run terakhirnya"
 
@@ -1045,6 +1051,12 @@ msgstr "{presetLabel} direset ke setelan bawaan"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · tinggi baris {0}"
+
+msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
+msgstr "{price} per pengguna/bulan, {gbHours} GB-jam cloud per kursi setiap bulan"
+
+msgid "{price}/user/mo"
+msgstr "{price}/pengguna/bln"
 
 msgid "{provider} logo"
 msgstr "Logo {provider}"
@@ -2976,6 +2988,9 @@ msgstr "Di luar itu: F5 bukan klaim jangka dekat"
 msgid "Billed monthly"
 msgstr "Ditagih bulanan"
 
+msgid "Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team."
+msgstr "Jika ditagih bulanan, Pro seharga {monthlyPrice}, Team {teamPrice}, dan Ultra {ultraPrice} per pengguna/bulan. Jika ditagih tahunan, Pro seharga {yearlyPrice}, Team {teamYearlyPrice}, dan Ultra {ultraYearlyPrice} per pengguna/bulan. Anda ditagih per kursi aktif di tim Anda."
+
 msgid "Billed per token."
 msgstr "Ditagih per token."
 
@@ -3472,6 +3487,9 @@ msgstr "Ganti logo organisasi"
 
 msgid "Change organization slug"
 msgstr "Ubah slug organisasi"
+
+msgid "Change plan"
+msgstr "Ubah paket"
 
 msgid "Change preview"
 msgstr "Pratinjau perubahan"
@@ -4052,6 +4070,9 @@ msgstr "Menutup terminal ini akan menghentikan proses yang berjalan."
 msgid "Cloud"
 msgstr "Cloud"
 
+msgid "Cloud GB-hours per seat each month"
+msgstr "GB-jam cloud per kursi setiap bulan"
+
 msgid "Cloud is coming. Become a design partner"
 msgstr "Versi awan segera hadir. Jadi mitra pengembangan"
 
@@ -4070,6 +4091,9 @@ msgstr "Workspace cloud"
 
 msgid "Cloud workspaces"
 msgstr "Workspace cloud"
+
+msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour."
+msgstr "Workspace cloud diukur dalam GB-jam: memori mesin dikali jam mesin berjalan. Mesin 8 GB memakai 8 GB-jam per jam. Setiap kursi menambahkan GB-jam dari paketnya ke satu kumpulan yang dipakai bersama oleh tim Anda: {proGbHours} di Pro, {teamGbHours} di Team, {ultraGbHours} di Ultra. Kumpulan ini diatur ulang setiap bulan, dan pemakaian di atasnya dikenai {overagePrice} per GB-jam."
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Workspace cloud mengabaikan variabel ini. Agen masuk melalui Pengaturan › Agen sebagai gantinya."
@@ -6828,6 +6852,9 @@ msgstr "Tiap menit"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Semua sasaran sudah berkontribusi sesuai bobotnya untuk tingkat berikutnya. Diukur selama 30 hari terakhir."
 
+msgid "Every paid plan includes Superset Mobile, cloud workspaces, automations, and priority support. Your team shares one pool of cloud GB-hours."
+msgstr "Setiap paket berbayar mencakup Superset Mobile, workspace cloud, otomatisasi, dan dukungan prioritas. Tim Anda berbagi satu kumpulan GB-jam cloud."
+
 msgid "Every publish is a version"
 msgstr "Setiap publikasi adalah satu versi"
 
@@ -6866,6 +6893,9 @@ msgstr "Semua yang ada di Pro"
 
 msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
 msgstr "Semua yang ada di Pro ditambah SSO & SAML, provisioning SCIM, pembatasan IP, log audit, SLA khusus, dukungan khusus, dan kontrak khusus. Harganya disesuaikan dengan organisasi Anda. Hubungi kami dan kami akan menyusun paket yang cocok."
+
+msgid "Everything in Team"
+msgstr "Semua yang ada di Team"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "Semuanya bisa diskrip. Buat workspace dan agen dari CLI, sambungkan Superset ke CI dengan SDK, atau biarkan agen Anda mengendalikannya lewat MCP."
@@ -7839,6 +7869,9 @@ msgstr "Untuk perorangan yang baru memulai"
 msgid "For organizations with advanced needs"
 msgstr "Untuk organisasi dengan kebutuhan tingkat lanjut"
 
+msgid "For people who keep agents running all day"
+msgstr "Untuk Anda yang menjalankan agen sepanjang hari"
+
 msgid "For press inquiries and interview requests, email us."
 msgstr "Untuk pertanyaan pers dan permintaan wawancara, kirimi kami email."
 
@@ -7847,6 +7880,9 @@ msgstr "Untuk pertanyaan soal penagihan, <0>hubungi kami</0>."
 
 msgid "For teams that need more power"
 msgstr "Untuk tim yang butuh lebih banyak tenaga"
+
+msgid "For teams that run agents every day"
+msgstr "Untuk tim yang menjalankan agen setiap hari"
 
 msgid "Force merge"
 msgstr "Paksa merge"
@@ -8046,6 +8082,9 @@ msgstr "Manfaatkan Superset lebih jauh"
 msgid "Get notified when Superset is available on Windows & Linux."
 msgstr "Dapatkan pemberitahuan saat Superset tersedia di Windows & Linux."
 
+msgid "Get Pro"
+msgstr "Dapatkan Pro"
+
 msgid "Get started"
 msgstr "Mulai"
 
@@ -8055,11 +8094,17 @@ msgstr "Dapatkan Superset di Mac Anda"
 msgid "Get Superset Pro"
 msgstr "Dapatkan Superset Pro"
 
+msgid "Get Team"
+msgstr "Dapatkan Team"
+
 msgid "Get the best out of Pro"
 msgstr "Maksimalkan Pro"
 
 msgid "Get the iPhone and iPad app"
 msgstr "Dapatkan aplikasi iPhone dan iPad"
+
+msgid "Get Ultra"
+msgstr "Dapatkan Ultra"
 
 msgid "Gets an invite to join {organizationName}"
 msgstr "Akan menerima undangan untuk bergabung ke {organizationName}"
@@ -8494,11 +8539,11 @@ msgstr "Ada yang bisa kami bantu?"
 msgid "How do I get started?"
 msgstr "Bagaimana cara memulai?"
 
+msgid "How do the paid plans work?"
+msgstr "Bagaimana cara kerja paket berbayar?"
+
 msgid "How does pricing work?"
 msgstr "Bagaimana skema harganya?"
-
-msgid "How does Pro pricing work?"
-msgstr "Bagaimana skema harga Pro?"
 
 msgid "How does the parallel agent system work?"
 msgstr "Bagaimana sistem agen paralelnya bekerja?"
@@ -11670,6 +11715,9 @@ msgstr "Satu plugin, setiap agen coding: Claude Code, Codex, Cursor, OpenCode, d
 msgid "One plugin. Every coding agent."
 msgstr "Satu plugin. Setiap agen coding."
 
+msgid "One shared GB-hour pool for the team"
+msgstr "Satu kumpulan GB-jam bersama untuk tim"
+
 msgid "One step left"
 msgstr "Tinggal satu langkah"
 
@@ -13085,9 +13133,6 @@ msgstr "Pro dan Enterprise. Pemicu Microsoft Teams memerlukan Enterprise. Jika A
 
 msgid "Pro Features"
 msgstr "Fitur Pro"
-
-msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro seharga {monthlyPrice} per pengguna/bulan jika ditagih bulanan, atau {yearlyPrice} per pengguna/bulan jika ditagih tahunan (diskon 25%). Anda ditagih per kursi aktif di tim Anda."
 
 msgid "Process"
 msgstr "Proses"
@@ -14691,9 +14736,6 @@ msgstr "Simpan"
 msgid "Save & create workspace"
 msgstr "Simpan & buat workspace"
 
-msgid "Save 25%"
-msgstr "Hemat 25%"
-
 msgid "Save All"
 msgstr "Simpan Semua"
 
@@ -14726,6 +14768,9 @@ msgstr "menyimpan perintah agen"
 
 msgid "Save to get URL"
 msgstr "Simpan untuk dapat URL"
+
+msgid "Save up to {maxDiscount}"
+msgstr "Hemat hingga {maxDiscount}"
 
 msgid "Saved"
 msgstr "Tersimpan"
@@ -16683,9 +16728,6 @@ msgstr "Superset Mobile menjalankan agen di komputer yang Anda hubungkan."
 msgid "Superset Mobile terminal on iPhone"
 msgstr "Terminal Superset Mobile di iPhone"
 
-msgid "Superset Mobile, cloud workspaces, automations, and priority support."
-msgstr "Superset Mobile, workspace cloud, otomatisasi, dan dukungan prioritas."
-
 msgid "Superset needs Full Disk Access to read another browser's data. Grant it in System Settings, then check again."
 msgstr "Superset butuh Full Disk Access untuk membaca data browser lain. Berikan izinnya di System Settings, lalu periksa lagi."
 
@@ -16773,6 +16815,9 @@ msgstr "Ganti organisasi"
 
 msgid "Switch organization or sign in again to restart the host service."
 msgstr "Ganti organisasi atau masuk lagi untuk memulai ulang layanan host."
+
+msgid "Switch plan"
+msgstr "Ganti paket"
 
 msgid "Switch sign-in"
 msgstr "Ganti sesi masuk"
@@ -17002,6 +17047,10 @@ msgstr "tim"
 
 msgid "Team"
 msgstr "Tim"
+
+msgctxt "plan name"
+msgid "Team"
+msgstr "Team"
 
 msgid "Team activity feed"
 msgstr "Feed aktivitas tim"
@@ -17549,6 +17598,9 @@ msgstr "Tema"
 
 msgid "Themes and agents"
 msgstr "Tema dan agen"
+
+msgid "Then {overagePrice} per GB-hour past the plan"
+msgstr "Lalu {overagePrice} per GB-jam di luar paket"
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Perintah ini berjalan otomatis saat workspace dibuat. <0>Baca dokumentasi kami<1/></0>"
@@ -18317,6 +18369,10 @@ msgstr "Tipografi dan perilaku kursor yang dipakai di panel terminal V2."
 msgid "Typography used in V2 editors and diff views."
 msgstr "Tipografi yang dipakai di editor dan tampilan diff V2."
 
+msgctxt "plan name"
+msgid "Ultra"
+msgstr "Ultra"
+
 msgid "Unable to check for updates. Please check your internet connection."
 msgstr "Tidak bisa memeriksa pembaruan. Silakan periksa koneksi internet Anda."
 
@@ -18651,6 +18707,9 @@ msgstr "Upgrade ke {0}"
 
 msgid "Upgrade to Pro"
 msgstr "Upgrade ke Pro"
+
+msgid "Upgrade your plan"
+msgstr "Tingkatkan paket Anda"
 
 msgid "Upload files"
 msgstr "Unggah file"
@@ -19151,6 +19210,9 @@ msgstr "Selamat datang di Superset"
 
 msgid "Welcome to the new Superset"
 msgstr "Selamat datang di Superset baru"
+
+msgid "What are cloud GB-hours?"
+msgstr "Apa itu GB-jam cloud?"
 
 msgid "What are the benefits?"
 msgstr "Apa saja tunjangannya?"

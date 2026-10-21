@@ -11,11 +11,13 @@ import { PricingHero } from "./components/PricingHero";
 import { PricingTiers } from "./components/PricingTiers";
 import { TrustStrip } from "./components/TrustStrip";
 import { PRICING_FAQ_ITEMS } from "./constants";
-import { proSeatPriceValues } from "./utils/proSeatPriceValues";
+import { fetchPlanPrices } from "./utils/fetchPlanPrices";
+import { planPriceValues } from "./utils/planPriceValues";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const lang = await initServerI18n();
 	const i18n = getI18nInstance(lang);
+	const prices = await fetchPlanPrices();
 	return {
 		title: i18n._(
 			msg({
@@ -29,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
 			}),
 			values: {
 				companyName: BRAND.NAME,
-				yearlyPrice: proSeatPriceValues(lang).yearlyPrice,
+				yearlyPrice: planPriceValues(prices, lang).yearlyPrice,
 			},
 		}),
 		alternates: localizedAlternates(lang, "/pricing"),
@@ -42,10 +44,11 @@ export default async function PricingPage() {
 
 	// JSON-LD is machine-facing, so it gets rendered strings rather than the
 	// message descriptors the UI components resolve through Lingui.
-	const prices = proSeatPriceValues(locale);
+	const prices = await fetchPlanPrices();
+	const values = planPriceValues(prices, locale);
 	const faqJsonLdItems = PRICING_FAQ_ITEMS.map((item) => ({
 		question: i18n._(item.question),
-		answer: i18n._({ ...item.answer, values: prices }),
+		answer: i18n._({ ...item.answer, values }),
 	}));
 
 	return (
@@ -55,7 +58,7 @@ export default async function PricingPage() {
 
 			<section className="relative border-b border-border">
 				<div className="max-w-6xl mx-auto px-6 py-12 md:py-16">
-					<PricingTiers />
+					<PricingTiers prices={prices} />
 				</div>
 			</section>
 
@@ -67,13 +70,13 @@ export default async function PricingPage() {
 
 			<section className="relative border-b border-border">
 				<div className="max-w-6xl mx-auto px-6 py-12 md:py-16">
-					<ComparisonTable />
+					<ComparisonTable prices={prices} />
 				</div>
 			</section>
 
 			<section className="relative">
 				<div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
-					<PricingFAQ />
+					<PricingFAQ prices={prices} />
 				</div>
 			</section>
 		</main>

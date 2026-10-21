@@ -1,6 +1,10 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import { PLAN_TIERS, type PlanTier } from "@superset/shared/billing";
+import {
+	PLAN_TIERS,
+	type PlanTier,
+	type SelfServePlanId,
+} from "@superset/shared/billing";
 
 export { PLAN_TIERS, type PlanTier };
 
@@ -106,6 +110,13 @@ export const PLANS: Record<PlanTier, Plan> = {
 		cta: { text: "Contact sales", action: "contact" },
 	},
 };
+
+export const SELF_SERVE_PLAN_NAMES: Record<SelfServePlanId, MessageDescriptor> =
+	{
+		pro: msg({ message: "Pro" }),
+		team: msg({ message: "Team", context: "plan name" }),
+		ultra: msg({ message: "Ultra", context: "plan name" }),
+	};
 
 export interface BillingInfo {
 	organizationId: string;

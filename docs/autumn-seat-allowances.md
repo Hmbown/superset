@@ -4,12 +4,12 @@ Cloud usage remains one shared organization balance in Autumn. Plans can opt in
 to a monthly allowance that scales with billable seats:
 
 ```json
-{ "box_gb_minutes_per_seat": 10000 }
+{ "box_gb_minutes_per_seat": 19200 }
 ```
 
 This is **Autumn plan metadata**, not an environment variable or customer grant.
-The value must be a positive integer. Five seats receive 50,000 GB-minutes; six
-receive 60,000. This is not a per-user cap. An 8 GB box consumes eight GB-minutes
+The value must be a positive integer. Five seats receive 96,000 GB-minutes; six
+receive 115,200. This is not a per-user cap. An 8 GB box consumes eight GB-minutes
 per elapsed minute.
 
 ## Configuration

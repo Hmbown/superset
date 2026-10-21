@@ -5,29 +5,48 @@ import { cn } from "@superset/ui/utils";
 import { Check } from "lucide-react";
 import { DownloadLink } from "@/app/[lang]/components/DownloadLink";
 import { TrackedLink } from "@/app/[lang]/components/TrackedLink";
+import { env } from "@/env";
 import type { PricingTier } from "../../../../constants";
+import { checkoutHref } from "../../../../utils/checkoutHref";
+import { seatPrice } from "../../../../utils/planDisplay";
+import type { PlanPrices } from "../../../../utils/planPricesFromAutumn";
 import {
-	type ProSeatPriceValues,
-	proSeatPriceValues,
-} from "../../../../utils/proSeatPriceValues";
+	cloudHourValues,
+	type PlanPriceValues,
+	planPriceValues,
+} from "../../../../utils/planPriceValues";
 
 interface PricingCardProps {
 	tier: PricingTier;
 	isYearly: boolean;
+	prices: PlanPrices;
+	wide?: boolean;
 }
 
-export function PricingCard({ tier, isYearly }: PricingCardProps) {
+export function PricingCard({
+	tier,
+	isYearly,
+	prices,
+	wide,
+}: PricingCardProps) {
 	const { t, i18n } = useLingui();
+	const values = planPriceValues(prices, i18n.locale);
 	const { display, strikethrough, note, cadence } = resolvePrice(
 		tier,
 		isYearly,
-		proSeatPriceValues(i18n.locale),
+		values,
 	);
+	const overagePrice = values.overagePrice;
+	const featureValues =
+		tier.price.kind === "seat"
+			? cloudHourValues(values.plans[tier.price.plan])
+			: undefined;
 
 	return (
 		<div
 			className={cn(
 				"flex flex-col gap-6 rounded-lg border p-6 md:p-8",
+				wide && "md:col-span-2 lg:col-span-4",
 				tier.highlight
 					? "border-foreground/30 bg-accent/20"
 					: "border-border bg-card/40",
@@ -48,7 +67,7 @@ export function PricingCard({ tier, isYearly }: PricingCardProps) {
 			</div>
 
 			<div className="flex flex-col gap-1">
-				<div className="flex h-10 items-baseline gap-2">
+				<div className="flex min-h-10 flex-wrap items-baseline gap-x-2 gap-y-1">
 					{strikethrough && (
 						<span className="text-2xl font-medium tracking-tight leading-none text-muted-foreground line-through">
 							{strikethrough}
@@ -58,7 +77,7 @@ export function PricingCard({ tier, isYearly }: PricingCardProps) {
 						{typeof display === "string" ? display : t(display)}
 					</span>
 					{note && (
-						<span className="text-sm leading-none text-muted-foreground">
+						<span className="basis-full text-sm leading-none text-muted-foreground">
 							{t(note)}
 						</span>
 					)}
@@ -66,9 +85,14 @@ export function PricingCard({ tier, isYearly }: PricingCardProps) {
 				{cadence && (
 					<p className="text-xs text-muted-foreground">{i18n._(cadence)}</p>
 				)}
+				{tier.price.kind === "seat" && (
+					<p className="mt-2 text-xs text-foreground">
+						<Trans>Then {overagePrice} per GB-hour past the plan</Trans>
+					</p>
+				)}
 			</div>
 
-			<div className="flex flex-col gap-2">
+			<div className={cn("flex flex-col gap-2", wide && "md:max-w-xs")}>
 				<Button asChild variant={tier.cta.variant} size="lg" className="w-full">
 					{tier.cta.external ? (
 						<a href={tier.cta.href} target="_blank" rel="noopener noreferrer">
@@ -80,9 +104,21 @@ export function PricingCard({ tier, isYearly }: PricingCardProps) {
 						</DownloadLink>
 					) : (
 						<TrackedLink
-							href={tier.cta.href}
+							href={
+								tier.price.kind === "seat"
+									? checkoutHref(
+											env.NEXT_PUBLIC_WEB_URL,
+											tier.price.plan,
+											isYearly,
+										)
+									: tier.cta.href
+							}
 							event={tier.cta.event}
-							properties={{ source: "pricing", tier: tier.id }}
+							properties={{
+								source: "pricing",
+								tier: tier.id,
+								yearly: isYearly,
+							}}
 						>
 							{t(tier.cta.label)}
 						</TrackedLink>
@@ -91,14 +127,19 @@ export function PricingCard({ tier, isYearly }: PricingCardProps) {
 				<CtaNote note={tier.ctaNote} />
 			</div>
 
-			<ul className="flex flex-col gap-3 border-t border-border pt-6">
+			<ul
+				className={cn(
+					"flex flex-col gap-3 border-t border-border pt-6",
+					wide && "md:grid md:grid-cols-2 lg:grid-cols-3",
+				)}
+			>
 				{tier.features.map((feature) => (
 					<li
 						key={feature.id}
 						className="flex items-start gap-2.5 text-sm text-foreground"
 					>
 						<Check className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
-						<span>{t(feature.label)}</span>
+						<span>{i18n._({ ...feature.label, values: featureValues })}</span>
 					</li>
 				))}
 			</ul>
@@ -131,7 +172,7 @@ function CtaNote({ note }: { note: PricingTier["ctaNote"] }) {
 function resolvePrice(
 	tier: PricingTier,
 	isYearly: boolean,
-	prices: ProSeatPriceValues,
+	values: PlanPriceValues,
 ): {
 	display: string | MessageDescriptor;
 	strikethrough: string | null;
@@ -146,11 +187,13 @@ function resolvePrice(
 			cadence: tier.price.note,
 		};
 	}
-	const entry = isYearly ? tier.price.yearly : tier.price.monthly;
+	const { plan } = tier.price;
 	return {
-		display: isYearly ? prices.yearlyPrice : prices.monthlyPrice,
-		strikethrough: isYearly ? prices.monthlyPrice : null,
-		note: entry.note,
-		cadence: { ...entry.cadence, values: prices },
+		...seatPrice(plan, values, isYearly),
+		note: tier.price.note,
+		cadence: {
+			...(isYearly ? tier.price.yearlyCadence : tier.price.monthlyCadence),
+			values: { yearlyTotal: values.plans[plan].yearlyTotal },
+		},
 	};
 }

@@ -483,7 +483,7 @@ msgstr "{0} trong {totalCount}"
 msgid "{0} options"
 msgstr "Tùy chọn {0}"
 
-#. placeholder {0}: i18n._(plan.name)
+#. placeholder {0}: i18n._(planName)
 msgid "{0} plan"
 msgstr "Gói {0}"
 
@@ -876,6 +876,9 @@ msgstr "{gate} · {statusLabel}"
 msgid "{gate}: {statusLabel}"
 msgstr "{gate}: {statusLabel}"
 
+msgid "{gbHours} cloud GB-hours per seat each month"
+msgstr "{gbHours} GB-giờ đám mây cho mỗi chỗ mỗi tháng"
+
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {# dòng ẩn} other {# dòng ẩn}}"
 
@@ -963,6 +966,9 @@ msgstr "{monthlyPrice} mỗi người/tháng khi thanh toán theo tháng, hoặc
 msgid "{months}mo ago"
 msgstr "{months} tháng trước"
 
+msgid "{multiple}x the cloud GB-hours of Pro"
+msgstr "Gấp {multiple} lần số GB-giờ đám mây của Pro"
+
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "{myFailedCount} tự động hóa của bạn thất bại ở lần chạy gần nhất"
 
@@ -1045,6 +1051,12 @@ msgstr "Đã đặt lại {presetLabel} về mặc định"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · chiều cao dòng {0}"
+
+msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
+msgstr "{price} mỗi người/tháng, {gbHours} GB-giờ đám mây cho mỗi chỗ mỗi tháng"
+
+msgid "{price}/user/mo"
+msgstr "{price}/người/tháng"
 
 msgid "{provider} logo"
 msgstr "Logo {provider}"
@@ -2976,6 +2988,9 @@ msgstr "Xa hơn: F5 không phải tuyên bố cho tương lai gần"
 msgid "Billed monthly"
 msgstr "Thanh toán theo tháng"
 
+msgid "Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team."
+msgstr "Khi thanh toán hằng tháng, Pro có giá {monthlyPrice}, Team {teamPrice} và Ultra {ultraPrice} mỗi người/tháng. Khi thanh toán hằng năm, Pro có giá {yearlyPrice}, Team {teamYearlyPrice} và Ultra {ultraYearlyPrice} mỗi người/tháng. Bạn trả tiền cho mỗi chỗ đang hoạt động trong nhóm."
+
 msgid "Billed per token."
 msgstr "Tính phí theo token."
 
@@ -3472,6 +3487,9 @@ msgstr "Đổi logo tổ chức"
 
 msgid "Change organization slug"
 msgstr "Đổi slug tổ chức"
+
+msgid "Change plan"
+msgstr "Đổi gói"
 
 msgid "Change preview"
 msgstr "Xem trước thay đổi"
@@ -4052,6 +4070,9 @@ msgstr "Đóng terminal này sẽ kết thúc tiến trình đang chạy."
 msgid "Cloud"
 msgstr "Cloud"
 
+msgid "Cloud GB-hours per seat each month"
+msgstr "GB-giờ đám mây cho mỗi chỗ mỗi tháng"
+
 msgid "Cloud is coming. Become a design partner"
 msgstr "Phiên bản đám mây sắp ra mắt. Trở thành đối tác đồng phát triển"
 
@@ -4070,6 +4091,9 @@ msgstr "Workspace cloud"
 
 msgid "Cloud workspaces"
 msgstr "Không gian làm việc đám mây"
+
+msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour."
+msgstr "Không gian làm việc đám mây được tính bằng GB-giờ: bộ nhớ của máy nhân với số giờ máy chạy. Một máy 8 GB dùng 8 GB-giờ mỗi giờ. Mỗi chỗ cộng số GB-giờ của gói vào một quỹ chung cho cả nhóm: {proGbHours} với Pro, {teamGbHours} với Team, {ultraGbHours} với Ultra. Quỹ được đặt lại mỗi tháng, và phần dùng vượt quỹ có giá {overagePrice} cho mỗi GB-giờ."
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Workspace đám mây bỏ qua biến này. Thay vào đó, các agent đăng nhập trong Cài đặt › Agent."
@@ -6828,6 +6852,9 @@ msgstr "Mỗi phút"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Mọi mục tiêu đều đang đóng góp cho bậc kế tiếp. Đo trong 30 ngày gần nhất."
 
+msgid "Every paid plan includes Superset Mobile, cloud workspaces, automations, and priority support. Your team shares one pool of cloud GB-hours."
+msgstr "Mọi gói trả phí đều có Superset Mobile, không gian làm việc đám mây, tự động hóa và hỗ trợ ưu tiên. Nhóm của bạn dùng chung một quỹ GB-giờ đám mây."
+
 msgid "Every publish is a version"
 msgstr "Mỗi lần xuất bản là một phiên bản"
 
@@ -6866,6 +6893,9 @@ msgstr "Mọi thứ trong gói Pro"
 
 msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
 msgstr "Mọi thứ trong gói Pro cộng thêm SSO & SAML, cấp phát SCIM, giới hạn IP, nhật ký kiểm toán, SLA riêng, hỗ trợ chuyên trách và hợp đồng tùy chỉnh. Giá được điều chỉnh theo tổ chức của bạn. Hãy liên hệ và chúng tôi sẽ xây phương án phù hợp."
+
+msgid "Everything in Team"
+msgstr "Mọi thứ trong gói Team"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "Mọi thứ đều viết script được. Tạo workspace và agent từ CLI, nối Superset vào CI bằng SDK, hoặc để agent của bạn điều khiển qua MCP."
@@ -7839,6 +7869,9 @@ msgstr "Dành cho cá nhân mới bắt đầu"
 msgid "For organizations with advanced needs"
 msgstr "Dành cho tổ chức có nhu cầu nâng cao"
 
+msgid "For people who keep agents running all day"
+msgstr "Dành cho người để agent chạy cả ngày"
+
 msgid "For press inquiries and interview requests, email us."
 msgstr "Với các yêu cầu báo chí và phỏng vấn, hãy gửi email cho chúng tôi."
 
@@ -7847,6 +7880,9 @@ msgstr "Nếu có thắc mắc về thanh toán, hãy <0>liên hệ với chúng
 
 msgid "For teams that need more power"
 msgstr "Dành cho đội cần nhiều sức mạnh hơn"
+
+msgid "For teams that run agents every day"
+msgstr "Dành cho các nhóm chạy agent mỗi ngày"
 
 msgid "Force merge"
 msgstr "Merge cưỡng bức"
@@ -8046,6 +8082,9 @@ msgstr "Khai thác Superset nhiều hơn"
 msgid "Get notified when Superset is available on Windows & Linux."
 msgstr "Nhận thông báo khi Superset có trên Windows & Linux."
 
+msgid "Get Pro"
+msgstr "Dùng gói Pro"
+
 msgid "Get started"
 msgstr "Bắt đầu"
 
@@ -8055,11 +8094,17 @@ msgstr "Cài Superset trên máy Mac"
 msgid "Get Superset Pro"
 msgstr "Mua Superset Pro"
 
+msgid "Get Team"
+msgstr "Dùng gói Team"
+
 msgid "Get the best out of Pro"
 msgstr "Tận dụng tối đa Pro"
 
 msgid "Get the iPhone and iPad app"
 msgstr "Tải ứng dụng cho iPhone và iPad"
+
+msgid "Get Ultra"
+msgstr "Dùng gói Ultra"
 
 msgid "Gets an invite to join {organizationName}"
 msgstr "Sẽ nhận lời mời tham gia {organizationName}"
@@ -8494,11 +8539,11 @@ msgstr "Chúng tôi có thể giúp gì?"
 msgid "How do I get started?"
 msgstr "Tôi bắt đầu thế nào?"
 
+msgid "How do the paid plans work?"
+msgstr "Các gói trả phí hoạt động thế nào?"
+
 msgid "How does pricing work?"
 msgstr "Giá được tính thế nào?"
-
-msgid "How does Pro pricing work?"
-msgstr "Giá gói Pro tính thế nào?"
 
 msgid "How does the parallel agent system work?"
 msgstr "Hệ thống agent song song hoạt động thế nào?"
@@ -11670,6 +11715,9 @@ msgstr "Một plugin, mọi agent lập trình: Claude Code, Codex, Cursor, Open
 msgid "One plugin. Every coding agent."
 msgstr "Một plugin. Mọi agent lập trình."
 
+msgid "One shared GB-hour pool for the team"
+msgstr "Một quỹ GB-giờ dùng chung cho cả nhóm"
+
 msgid "One step left"
 msgstr "Còn một bước nữa"
 
@@ -13085,9 +13133,6 @@ msgstr "Pro và Enterprise. Trigger Microsoft Teams cần Enterprise. Nếu bạ
 
 msgid "Pro Features"
 msgstr "Tính năng Pro"
-
-msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro có giá {monthlyPrice}/người/tháng khi trả theo tháng, hoặc {yearlyPrice}/người/tháng khi trả theo năm (giảm 25%). Bạn được tính phí theo số ghế đang hoạt động trong nhóm."
 
 msgid "Process"
 msgstr "Tiến trình"
@@ -14691,9 +14736,6 @@ msgstr "Lưu"
 msgid "Save & create workspace"
 msgstr "Lưu & tạo workspace"
 
-msgid "Save 25%"
-msgstr "Tiết kiệm 25%"
-
 msgid "Save All"
 msgstr "Lưu tất cả"
 
@@ -14726,6 +14768,9 @@ msgstr "lưu lệnh của agent"
 
 msgid "Save to get URL"
 msgstr "Lưu để lấy URL"
+
+msgid "Save up to {maxDiscount}"
+msgstr "Tiết kiệm đến {maxDiscount}"
 
 msgid "Saved"
 msgstr "Đã lưu"
@@ -16683,9 +16728,6 @@ msgstr "Superset Mobile chạy agent trên những máy tính bạn kết nối.
 msgid "Superset Mobile terminal on iPhone"
 msgstr "Terminal của Superset Mobile trên iPhone"
 
-msgid "Superset Mobile, cloud workspaces, automations, and priority support."
-msgstr "Superset Mobile, workspace đám mây, tự động hóa và hỗ trợ ưu tiên."
-
 msgid "Superset needs Full Disk Access to read another browser's data. Grant it in System Settings, then check again."
 msgstr "Superset cần quyền Full Disk Access để đọc dữ liệu của trình duyệt khác. Cấp quyền trong System Settings rồi kiểm tra lại."
 
@@ -16773,6 +16815,9 @@ msgstr "Chuyển tổ chức"
 
 msgid "Switch organization or sign in again to restart the host service."
 msgstr "Hãy chuyển tổ chức hoặc đăng nhập lại để khởi động lại dịch vụ host."
+
+msgid "Switch plan"
+msgstr "Đổi gói"
 
 msgid "Switch sign-in"
 msgstr "Đổi đăng nhập"
@@ -17002,6 +17047,10 @@ msgstr "nhóm"
 
 msgid "Team"
 msgstr "Nhóm"
+
+msgctxt "plan name"
+msgid "Team"
+msgstr "Team"
 
 msgid "Team activity feed"
 msgstr "Bảng tin hoạt động nhóm"
@@ -17549,6 +17598,9 @@ msgstr "Chủ đề"
 
 msgid "Themes and agents"
 msgstr "Giao diện và agent"
+
+msgid "Then {overagePrice} per GB-hour past the plan"
+msgstr "Sau đó {overagePrice} cho mỗi GB-giờ vượt gói"
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Các lệnh này chạy tự động khi một workspace được tạo. <0>Đọc tài liệu<1/></0>"
@@ -18317,6 +18369,10 @@ msgstr "Kiểu chữ và hành vi con trỏ dùng trong khung terminal V2."
 msgid "Typography used in V2 editors and diff views."
 msgstr "Kiểu chữ dùng trong trình soạn thảo và khung diff V2."
 
+msgctxt "plan name"
+msgid "Ultra"
+msgstr "Ultra"
+
 msgid "Unable to check for updates. Please check your internet connection."
 msgstr "Không thể kiểm tra cập nhật. Vui lòng kiểm tra kết nối internet."
 
@@ -18651,6 +18707,9 @@ msgstr "Nâng cấp lên {0}"
 
 msgid "Upgrade to Pro"
 msgstr "Nâng cấp lên Pro"
+
+msgid "Upgrade your plan"
+msgstr "Nâng cấp gói của bạn"
 
 msgid "Upload files"
 msgstr "Tải tệp lên"
@@ -19151,6 +19210,9 @@ msgstr "Chào mừng đến với Superset"
 
 msgid "Welcome to the new Superset"
 msgstr "Chào mừng đến với Superset mới"
+
+msgid "What are cloud GB-hours?"
+msgstr "GB-giờ đám mây là gì?"
 
 msgid "What are the benefits?"
 msgstr "Phúc lợi gồm những gì?"

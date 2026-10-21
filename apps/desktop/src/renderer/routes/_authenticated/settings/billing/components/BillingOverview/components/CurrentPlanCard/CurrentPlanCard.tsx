@@ -1,12 +1,20 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { i18n } from "@superset/i18n";
-import { isPaymentFailingStatus } from "@superset/shared/billing";
+import {
+	isPaymentFailingStatus,
+	type SelfServePlanId,
+} from "@superset/shared/billing";
 import { Button } from "@superset/ui/button";
 import { format } from "date-fns";
-import { PLANS, type PlanTier } from "../../../../constants";
+import {
+	PLANS,
+	type PlanTier,
+	SELF_SERVE_PLAN_NAMES,
+} from "../../../../constants";
 
 interface CurrentPlanCardProps {
 	currentPlan: PlanTier;
+	selfServePlan?: SelfServePlanId | null;
 	onCancel?: () => void;
 	isCanceling?: boolean;
 	onRestore?: () => void;
@@ -18,6 +26,7 @@ interface CurrentPlanCardProps {
 
 export function CurrentPlanCard({
 	currentPlan,
+	selfServePlan,
 	onCancel,
 	isCanceling,
 	onRestore,
@@ -28,6 +37,10 @@ export function CurrentPlanCard({
 }: CurrentPlanCardProps) {
 	const { t } = useLingui();
 	const plan = PLANS[currentPlan];
+	const planName =
+		currentPlan === "pro" && selfServePlan
+			? SELF_SERVE_PLAN_NAMES[selfServePlan]
+			: plan.name;
 	const isPaidPlan = currentPlan !== "free";
 	const isEnterprise = currentPlan === "enterprise";
 	const isCancelingAtPeriodEnd = isPaidPlan && !isEnterprise && !!cancelAt;
@@ -59,11 +72,11 @@ export function CurrentPlanCard({
 			<div className="min-w-0 flex-1">
 				<div className="flex items-center gap-2">
 					<span className="text-sm font-medium">
-						<Trans>{i18n._(plan.name)} plan</Trans>
+						<Trans>{i18n._(planName)} plan</Trans>
 					</span>
 					{isPaidPlan && (
 						<span className="inline-flex items-center rounded-md bg-foreground px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-background">
-							{i18n._(plan.name)}
+							{i18n._(planName)}
 						</span>
 					)}
 				</div>

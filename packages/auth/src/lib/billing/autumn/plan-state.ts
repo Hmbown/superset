@@ -12,6 +12,7 @@ const AUTUMN_READ_TIMEOUT_MS = 2_000;
 
 const FREE: OrganizationBilling = {
 	tier: "free",
+	autumnPlanId: null,
 	status: null,
 	cancelAt: null,
 	periodStart: null,
@@ -25,6 +26,7 @@ const FREE: OrganizationBilling = {
 
 const FAIL_OPEN: OrganizationBilling = {
 	tier: "pro",
+	autumnPlanId: null,
 	status: "active",
 	cancelAt: null,
 	periodStart: null,

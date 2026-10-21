@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { isSupportedLocale } from "@superset/i18n";
 import { getI18nInstance, preloadServerLocale } from "@superset/i18n/server";
 import { BRAND } from "@superset/shared/brand";
-import { COMPANY } from "@superset/shared/constants";
+import { CANONICAL_URLS, COMPANY } from "@superset/shared/constants";
 import { MCP_CAPABILITIES } from "@/app/[lang]/mcp-install/components/McpCapabilities/constants";
 import {
 	COMPARISON_SECTIONS,
@@ -10,7 +10,17 @@ import {
 	PRICING_FAQ_ITEMS,
 	PRICING_TIERS,
 } from "@/app/[lang]/pricing/constants";
-import { proSeatPriceValues } from "@/app/[lang]/pricing/utils/proSeatPriceValues";
+import { checkoutHref } from "@/app/[lang]/pricing/utils/checkoutHref";
+import { fetchPlanPrices } from "@/app/[lang]/pricing/utils/fetchPlanPrices";
+import {
+	comparisonValue,
+	seatPrice,
+} from "@/app/[lang]/pricing/utils/planDisplay";
+import type { PlanPrices } from "@/app/[lang]/pricing/utils/planPricesFromAutumn";
+import {
+	cloudHourValues,
+	planPriceValues,
+} from "@/app/[lang]/pricing/utils/planPriceValues";
 import { fetchParticipant } from "@/app/[lang]/utils/fetchLeaderboard";
 import { getBlogPost } from "@/lib/blog";
 import { getCategoryPage } from "@/lib/category";
@@ -48,22 +58,36 @@ function cell(i18n: I18n, value: ComparisonValue | null): string {
 	return text(i18n, value);
 }
 
-function pricingPage(i18n: I18n): MarkdownPage {
+function pricingPage(i18n: I18n, planPrices: PlanPrices): MarkdownPage {
 	const baseUrl = COMPANY.MARKETING_URL;
-	const prices = proSeatPriceValues(i18n.locale);
+	const prices = planPriceValues(planPrices, i18n.locale);
 	const tiers = PRICING_TIERS.map((tier) => {
+		const { price: tierPrice } = tier;
 		const price =
-			tier.price.kind === "proSeat"
-				? `${prices.monthlyPrice} ${text(i18n, tier.price.monthly.note)} (${text(i18n, tier.price.monthly.cadence)}) or ${prices.yearlyPrice} ${text(i18n, tier.price.yearly.note)} (${i18n._({ ...tier.price.yearly.cadence, values: prices })})`
-				: `${text(i18n, tier.price.display)} (${text(i18n, tier.price.note)})`;
+			tierPrice.kind === "seat"
+				? [
+						`${seatPrice(tierPrice.plan, prices, false).display} ${text(i18n, tierPrice.note)} (${text(i18n, tierPrice.monthlyCadence)})`,
+						`or ${seatPrice(tierPrice.plan, prices, true).display} ${text(i18n, tierPrice.note)} (${i18n._({ ...tierPrice.yearlyCadence, values: { yearlyTotal: prices.plans[tierPrice.plan].yearlyTotal } })})`,
+						`${prices.plans[tierPrice.plan].gbHours} cloud GB-hours per seat each month, then ${prices.overagePrice} per GB-hour`,
+					].join("; ")
+				: `${text(i18n, tierPrice.display)} (${text(i18n, tierPrice.note)})`;
 		return [
 			`### ${text(i18n, tier.name)}`,
 			"",
 			text(i18n, tier.description),
 			"",
 			`- **Price**: ${price}`,
-			...tier.features.map((feature) => `- ${text(i18n, feature.label)}`),
-			`- [${text(i18n, tier.cta.label)}](${tier.cta.href.startsWith("/") ? baseUrl + tier.cta.href : tier.cta.href})`,
+			...tier.features.map(
+				(feature) =>
+					`- ${i18n._({
+						...feature.label,
+						values:
+							tier.price.kind === "seat"
+								? cloudHourValues(prices.plans[tier.price.plan])
+								: undefined,
+					})}`,
+			),
+			`- [${text(i18n, tier.cta.label)}](${tier.price.kind === "seat" ? checkoutHref(CANONICAL_URLS.APP, tier.price.plan, true) : tier.cta.href.startsWith("/") ? baseUrl + tier.cta.href : tier.cta.href})`,
 			"",
 		];
 	});
@@ -75,7 +99,7 @@ function pricingPage(i18n: I18n): MarkdownPage {
 		`|---|${tierNames.map(() => "---").join("|")}|`,
 		...section.rows.map(
 			(row) =>
-				`| ${text(i18n, row.label)}${row.badge ? ` (${text(i18n, row.badge.label)})` : ""} | ${row.values.map((value) => cell(i18n, value)).join(" | ")} |`,
+				`| ${text(i18n, row.label)}${row.badge ? ` (${text(i18n, row.badge.label)})` : ""} | ${PRICING_TIERS.map((tier) => cell(i18n, comparisonValue(row, tier.id, prices))).join(" | ")} |`,
 		),
 		"",
 	]);
@@ -88,7 +112,7 @@ function pricingPage(i18n: I18n): MarkdownPage {
 	return {
 		title: `${BRAND.NAME} pricing`,
 		url: `${baseUrl}/pricing`,
-		description: `Free for individuals. Pro is ${prices.monthlyPrice} per user/month (or ${prices.yearlyPrice} billed yearly). Enterprise adds SSO, SCIM, audit logs, and an SLA.`,
+		description: `Free for individuals. Pro is ${prices.monthlyPrice}, Team ${prices.teamPrice} and Ultra ${prices.ultraPrice} per user/month (${prices.yearlyPrice}, ${prices.teamYearlyPrice} and ${prices.ultraYearlyPrice} billed yearly). Enterprise adds SSO, SCIM, audit logs, and an SLA.`,
 		content: [
 			"## Plans",
 			"",
@@ -201,8 +225,11 @@ function enterprisePage(i18n: I18n): MarkdownPage {
 	};
 }
 
-const STATIC_PAGES: Record<string, (i18n: I18n) => MarkdownPage> = {
-	pricing: pricingPage,
+const STATIC_PAGES: Record<
+	string,
+	(i18n: I18n) => MarkdownPage | Promise<MarkdownPage>
+> = {
+	pricing: async (i18n) => pricingPage(i18n, await fetchPlanPrices()),
 	"mcp-install": mcpInstallPage,
 	team: teamPage,
 	enterprise: enterprisePage,

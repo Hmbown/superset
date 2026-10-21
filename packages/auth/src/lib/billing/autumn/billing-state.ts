@@ -20,6 +20,7 @@ export type PaymentState =
 
 export interface OrganizationBilling {
 	tier: PlanTier;
+	autumnPlanId: string | null;
 	status: "active" | "trialing" | "past_due" | null;
 	cancelAt: string | null;
 	periodStart: string | null;
@@ -83,6 +84,7 @@ export function billingFromCustomer(
 				: { kind: "ok" };
 	return {
 		tier,
+		autumnPlanId: paidPlanId,
 		status,
 		cancelAt: iso(paid?.expiresAt),
 		periodStart: iso(paid?.currentPeriodStart),

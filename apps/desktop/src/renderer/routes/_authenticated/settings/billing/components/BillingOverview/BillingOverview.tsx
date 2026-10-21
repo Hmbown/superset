@@ -1,6 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useFormat } from "@superset/i18n/react";
-import { isPaymentFailingStatus } from "@superset/shared/billing";
+import {
+	isPaymentFailingStatus,
+	selfServePlanFromAutumnPlanId,
+} from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 import { Button } from "@superset/ui/button";
 import { Link } from "@tanstack/react-router";
@@ -134,6 +137,9 @@ export function BillingOverview({ visibleItems }: BillingOverviewProps) {
 						<div className="divide-y divide-border">
 							<CurrentPlanCard
 								currentPlan={plan}
+								selfServePlan={selfServePlanFromAutumnPlanId(
+									activePlan?.autumnPlanId,
+								)}
 								onCancel={handleCancel}
 								isCanceling={isCanceling}
 								onRestore={handleRestore}

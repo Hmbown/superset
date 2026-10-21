@@ -483,7 +483,7 @@ msgstr "{0} de {totalCount}"
 msgid "{0} options"
 msgstr "Opções de {0}"
 
-#. placeholder {0}: i18n._(plan.name)
+#. placeholder {0}: i18n._(planName)
 msgid "{0} plan"
 msgstr "Plano {0}"
 
@@ -876,6 +876,9 @@ msgstr "{gate} · {statusLabel}"
 msgid "{gate}: {statusLabel}"
 msgstr "{gate}: {statusLabel}"
 
+msgid "{gbHours} cloud GB-hours per seat each month"
+msgstr "{gbHours} GB-horas na nuvem por assento ao mês"
+
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {# linha oculta} other {# linhas ocultas}}"
 
@@ -963,6 +966,9 @@ msgstr "{monthlyPrice} por usuário/mês com cobrança mensal, ou {yearlyPrice} 
 msgid "{months}mo ago"
 msgstr "há {months}mês"
 
+msgid "{multiple}x the cloud GB-hours of Pro"
+msgstr "{multiple}x as GB-horas na nuvem do Pro"
+
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "Suas automações com falha na última execução: {myFailedCount}"
 
@@ -1045,6 +1051,12 @@ msgstr "{presetLabel} redefinido para os padrões"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · altura de linha {0}"
+
+msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
+msgstr "{price} por usuário/mês, {gbHours} GB-horas na nuvem por assento ao mês"
+
+msgid "{price}/user/mo"
+msgstr "{price}/usuário/mês"
 
 msgid "{provider} logo"
 msgstr "logo da {provider}"
@@ -2976,6 +2988,9 @@ msgstr "Além disso: o F5 não é uma promessa de curto prazo"
 msgid "Billed monthly"
 msgstr "Cobrança mensal"
 
+msgid "Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team."
+msgstr "No plano mensal, o Pro custa {monthlyPrice}, o Team {teamPrice} e o Ultra {ultraPrice} por usuário/mês. No plano anual, o Pro custa {yearlyPrice}, o Team {teamYearlyPrice} e o Ultra {ultraYearlyPrice} por usuário/mês. A cobrança é feita por assento ativo na sua equipe."
+
 msgid "Billed per token."
 msgstr "Cobrado por token."
 
@@ -3472,6 +3487,9 @@ msgstr "Trocar o logo da organização"
 
 msgid "Change organization slug"
 msgstr "Alterar o slug da organização"
+
+msgid "Change plan"
+msgstr "Mudar de plano"
 
 msgid "Change preview"
 msgstr "Prévia das alterações"
@@ -4052,6 +4070,9 @@ msgstr "Fechar este terminal encerra o processo em execução."
 msgid "Cloud"
 msgstr "Nuvem"
 
+msgid "Cloud GB-hours per seat each month"
+msgstr "GB-horas na nuvem por assento ao mês"
+
 msgid "Cloud is coming. Become a design partner"
 msgstr "A nuvem está chegando. Torne-se um parceiro de desenvolvimento"
 
@@ -4070,6 +4091,9 @@ msgstr "Área de trabalho na nuvem"
 
 msgid "Cloud workspaces"
 msgstr "Áreas de trabalho na nuvem"
+
+msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour."
+msgstr "As áreas de trabalho na nuvem são medidas em GB-horas: a memória da máquina vezes as horas em que ela fica ligada. Uma máquina de 8 GB usa 8 GB-horas por hora. Cada assento soma as GB-horas do seu plano a um único saldo compartilhado pela equipe: {proGbHours} no Pro, {teamGbHours} no Team, {ultraGbHours} no Ultra. O saldo é renovado todo mês, e o uso além dele custa {overagePrice} por GB-hora."
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Workspaces na nuvem ignoram esta variável. Em vez disso, os agentes entram em Configurações › Agentes."
@@ -6828,6 +6852,9 @@ msgstr "A cada minuto"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Todos os objetivos estão contribuindo para o próximo degrau. Medido nos últimos 30 dias."
 
+msgid "Every paid plan includes Superset Mobile, cloud workspaces, automations, and priority support. Your team shares one pool of cloud GB-hours."
+msgstr "Todo plano pago inclui o Superset Mobile, áreas de trabalho na nuvem, automações e suporte prioritário. Sua equipe compartilha um único saldo de GB-horas na nuvem."
+
 msgid "Every publish is a version"
 msgstr "Cada publicação é uma versão"
 
@@ -6866,6 +6893,9 @@ msgstr "Tudo do Pro"
 
 msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
 msgstr "Tudo do Pro mais SSO e SAML, provisionamento SCIM, restrições de IP, logs de auditoria, SLA personalizado, suporte dedicado e contratos sob medida. O preço é ajustado à sua organização. Fale com a gente e montamos algo que sirva."
+
+msgid "Everything in Team"
+msgstr "Tudo do Team"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "Tudo é scriptável. Crie áreas de trabalho e agentes pela CLI, integre o Superset ao CI com o SDK ou deixe seu agente controlá-lo por MCP."
@@ -7839,6 +7869,9 @@ msgstr "Para quem está começando sozinho"
 msgid "For organizations with advanced needs"
 msgstr "Para organizações com necessidades avançadas"
 
+msgid "For people who keep agents running all day"
+msgstr "Para quem mantém agentes rodando o dia todo"
+
 msgid "For press inquiries and interview requests, email us."
 msgstr "Para pedidos de imprensa e entrevistas, envie um e-mail para nós."
 
@@ -7847,6 +7880,9 @@ msgstr "Para dúvidas sobre faturamento, <0>fale com a gente</0>."
 
 msgid "For teams that need more power"
 msgstr "Para times que precisam de mais"
+
+msgid "For teams that run agents every day"
+msgstr "Para equipes que rodam agentes todos os dias"
 
 msgid "Force merge"
 msgstr "Forçar merge"
@@ -8046,6 +8082,9 @@ msgstr "Aproveitar mais o Superset"
 msgid "Get notified when Superset is available on Windows & Linux."
 msgstr "Receba um aviso quando o Superset estiver disponível para Windows e Linux."
 
+msgid "Get Pro"
+msgstr "Assinar o Pro"
+
 msgid "Get started"
 msgstr "Começar"
 
@@ -8055,11 +8094,17 @@ msgstr "Instale o Superset no seu Mac"
 msgid "Get Superset Pro"
 msgstr "Assinar o Superset Pro"
 
+msgid "Get Team"
+msgstr "Assinar o Team"
+
 msgid "Get the best out of Pro"
 msgstr "Aproveite o Pro ao máximo"
 
 msgid "Get the iPhone and iPad app"
 msgstr "Baixe o app para iPhone e iPad"
+
+msgid "Get Ultra"
+msgstr "Assinar o Ultra"
 
 msgid "Gets an invite to join {organizationName}"
 msgstr "Receberá um convite para entrar em {organizationName}"
@@ -8494,11 +8539,11 @@ msgstr "Como podemos ajudar?"
 msgid "How do I get started?"
 msgstr "Como eu começo?"
 
+msgid "How do the paid plans work?"
+msgstr "Como funcionam os planos pagos?"
+
 msgid "How does pricing work?"
 msgstr "Como funciona o preço?"
-
-msgid "How does Pro pricing work?"
-msgstr "Como funciona o preço do Pro?"
 
 msgid "How does the parallel agent system work?"
 msgstr "Como funciona o sistema de agentes em paralelo?"
@@ -11670,6 +11715,9 @@ msgstr "Um plugin, todos os agentes de código: Claude Code, Codex, Cursor, Open
 msgid "One plugin. Every coding agent."
 msgstr "Um plugin. Todos os agentes de código."
 
+msgid "One shared GB-hour pool for the team"
+msgstr "Um único saldo de GB-horas compartilhado pela equipe"
+
 msgid "One step left"
 msgstr "Falta um passo"
 
@@ -13085,9 +13133,6 @@ msgstr "Pro e Enterprise. Gatilhos do Microsoft Teams exigem Enterprise. Se voc�
 
 msgid "Pro Features"
 msgstr "Recursos Pro"
-
-msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "O Pro custa {monthlyPrice} por usuário/mês na cobrança mensal, ou {yearlyPrice} por usuário/mês na cobrança anual (25% de desconto). A cobrança é por assento ativo no seu time."
 
 msgid "Process"
 msgstr "Processo"
@@ -14691,9 +14736,6 @@ msgstr "Salvar"
 msgid "Save & create workspace"
 msgstr "Salvar e criar a área de trabalho"
 
-msgid "Save 25%"
-msgstr "Economize 25%"
-
 msgid "Save All"
 msgstr "Salvar tudo"
 
@@ -14726,6 +14768,9 @@ msgstr "salvar o comando do agente"
 
 msgid "Save to get URL"
 msgstr "Salve para obter a URL"
+
+msgid "Save up to {maxDiscount}"
+msgstr "Economize até {maxDiscount}"
 
 msgid "Saved"
 msgstr "Salvo"
@@ -16683,9 +16728,6 @@ msgstr "O Superset Mobile roda agentes nos computadores que você conectar."
 msgid "Superset Mobile terminal on iPhone"
 msgstr "Terminal do Superset Mobile no iPhone"
 
-msgid "Superset Mobile, cloud workspaces, automations, and priority support."
-msgstr "Superset Mobile, workspaces na nuvem, automações e suporte prioritário."
-
 msgid "Superset needs Full Disk Access to read another browser's data. Grant it in System Settings, then check again."
 msgstr "O Superset precisa de Acesso Total ao Disco para ler os dados de outro navegador. Conceda em Ajustes do Sistema e verifique novamente."
 
@@ -16773,6 +16815,9 @@ msgstr "Trocar de organização"
 
 msgid "Switch organization or sign in again to restart the host service."
 msgstr "Troque de organização ou entre de novo para reiniciar o serviço do host."
+
+msgid "Switch plan"
+msgstr "Mudar de plano"
 
 msgid "Switch sign-in"
 msgstr "Trocar de login"
@@ -17002,6 +17047,10 @@ msgstr "equipe"
 
 msgid "Team"
 msgstr "Equipe"
+
+msgctxt "plan name"
+msgid "Team"
+msgstr "Team"
 
 msgid "Team activity feed"
 msgstr "Feed de atividades da equipe"
@@ -17549,6 +17598,9 @@ msgstr "Temas"
 
 msgid "Themes and agents"
 msgstr "Temas e agentes"
+
+msgid "Then {overagePrice} per GB-hour past the plan"
+msgstr "Depois, {overagePrice} por GB-hora além do plano"
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Esses comandos rodam automaticamente quando uma área de trabalho é criada. <0>Leia a documentação<1/></0>"
@@ -18317,6 +18369,10 @@ msgstr "Tipografia e comportamento do cursor usados nos painéis de terminal da 
 msgid "Typography used in V2 editors and diff views."
 msgstr "Tipografia usada nos editores e nas visualizações de diff da V2."
 
+msgctxt "plan name"
+msgid "Ultra"
+msgstr "Ultra"
+
 msgid "Unable to check for updates. Please check your internet connection."
 msgstr "Não foi possível verificar atualizações. Verifique sua conexão com a internet."
 
@@ -18651,6 +18707,9 @@ msgstr "Fazer upgrade para {0}"
 
 msgid "Upgrade to Pro"
 msgstr "Fazer upgrade para o Pro"
+
+msgid "Upgrade your plan"
+msgstr "Faça upgrade do seu plano"
 
 msgid "Upload files"
 msgstr "Enviar arquivos"
@@ -19151,6 +19210,9 @@ msgstr "Boas-vindas ao Superset"
 
 msgid "Welcome to the new Superset"
 msgstr "Boas-vindas ao novo Superset"
+
+msgid "What are cloud GB-hours?"
+msgstr "O que são GB-horas na nuvem?"
 
 msgid "What are the benefits?"
 msgstr "Quais são os benefícios?"

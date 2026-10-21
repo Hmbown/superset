@@ -102,6 +102,12 @@ export async function upgradeWithAutumn(
 		});
 	}
 	if (body.plan !== "pro") throw billingError("SUBSCRIPTION_PLAN_NOT_FOUND");
+	const currentPlanId = await deps.currentPlanId(referenceId).catch(() => null);
+	if (currentPlanId && /^(team|ultra)(_annual)?$/.test(currentPlanId)) {
+		throw new APIError("BAD_REQUEST", {
+			message: "Update the app to change this plan.",
+		});
+	}
 	const annual = body.annual ?? false;
 	const live = await deps.findLiveSubscription(referenceId);
 	if (

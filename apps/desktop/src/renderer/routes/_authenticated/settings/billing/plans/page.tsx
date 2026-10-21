@@ -3,7 +3,14 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { i18n } from "@superset/i18n";
 import { useFormat } from "@superset/i18n/react";
-import { PRO_SEAT_PRICE, proSeatPricePerMonth } from "@superset/shared/billing";
+import {
+	isSelfServePlanId,
+	PLAN_PRICE_CURRENCY,
+	SELF_SERVE_PLANS,
+	type SelfServePlanId,
+	seatPricePerMonth,
+	selfServePlanFromAutumnPlanId,
+} from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 import { Badge } from "@superset/ui/badge";
 import { Button } from "@superset/ui/button";
@@ -18,7 +25,6 @@ import { useCurrentPlan } from "renderer/hooks/useCurrentPlan";
 import { track } from "renderer/lib/analytics";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
-import type { PlanTier } from "../constants";
 import { useBillingActions } from "../hooks/useBillingActions";
 
 export const Route = createFileRoute("/_authenticated/settings/billing/plans/")(
@@ -46,10 +52,12 @@ type PlanCardActionButton = {
 	align?: "center" | "start";
 };
 
+type PlanColumnId = "free" | SelfServePlanId | "enterprise";
+
 type PlanCardData = {
-	id: "free" | "pro" | "enterprise";
+	id: PlanColumnId;
 	name: MessageDescriptor;
-	price: PlanCardText | "proSeat";
+	price: PlanCardText | "seat";
 	priceNote?: PlanCardText;
 	billingText: PlanCardText;
 	showBillingToggle?: boolean;
@@ -61,7 +69,8 @@ type ComparisonValue = MessageDescriptor | boolean | null;
 type ComparisonRow = {
 	label: MessageDescriptor;
 	href?: string;
-	values: ComparisonValue[];
+	values: [free: ComparisonValue, paid: ComparisonValue, enterprise: ComparisonValue];
+	cloudGbHours?: boolean;
 	badge?: { label: MessageDescriptor; variant: "default" | "secondary" };
 };
 
@@ -94,7 +103,59 @@ const PLAN_CARDS: PlanCardData[] = [
 	{
 		id: "pro",
 		name: msg({ message: "Pro" }),
-		price: "proSeat",
+		price: "seat",
+		priceNote: msg({
+			message: "per user/month",
+		}),
+		billingText: {
+			monthly: msg({
+				message: "Billed monthly",
+			}),
+			yearly: msg({
+				message: "Billed yearly",
+			}),
+		},
+		showBillingToggle: true,
+		actions: [
+			{
+				label: msg({
+					message: "Upgrade",
+				}),
+				action: "upgrade",
+				variant: "default",
+			},
+		],
+	},
+	{
+		id: "team",
+		name: msg({ message: "Team", context: "plan name" }),
+		price: "seat",
+		priceNote: msg({
+			message: "per user/month",
+		}),
+		billingText: {
+			monthly: msg({
+				message: "Billed monthly",
+			}),
+			yearly: msg({
+				message: "Billed yearly",
+			}),
+		},
+		showBillingToggle: true,
+		actions: [
+			{
+				label: msg({
+					message: "Upgrade",
+				}),
+				action: "upgrade",
+				variant: "default",
+			},
+		],
+	},
+	{
+		id: "ultra",
+		name: msg({ message: "Ultra", context: "plan name" }),
+		price: "seat",
 		priceNote: msg({
 			message: "per user/month",
 		}),
@@ -168,6 +229,13 @@ const COMPARISON_SECTIONS: ComparisonSection[] = [
 					message: "Projects",
 				}),
 				values: [VALUE_UNLIMITED, VALUE_UNLIMITED, VALUE_UNLIMITED],
+			},
+			{
+				label: msg({
+					message: "Cloud GB-hours per seat each month",
+				}),
+				values: [null, null, msg({ message: "Custom" })],
+				cloudGbHours: true,
 			},
 		],
 	},
@@ -324,7 +392,7 @@ function PlansPage() {
 	// then on, and Annual stays the default for free and enterprise, which have
 	// no interval to read.
 	const { t } = useLingui();
-	const { formatCurrency } = useFormat();
+	const { formatCurrency, formatNumber } = useFormat();
 	const [manualIsYearly, setManualIsYearly] = useState<boolean | null>(null);
 	const { upgrade, cancel, restore, isUpgrading, isCanceling, isRestoring } =
 		useBillingActions();
@@ -332,6 +400,15 @@ function PlansPage() {
 
 	const { plan: currentPlan, isReady: planResolved, activePlan } = useCurrentPlan();
 	const cancelAt = activePlan?.cancelAt;
+	const currentColumn: PlanColumnId =
+		currentPlan === "pro"
+			? (selfServePlanFromAutumnPlanId(activePlan?.autumnPlanId) ?? "pro")
+			: currentPlan;
+	const planCards = PLAN_CARDS.filter(
+		(card) =>
+			activePlan?.billingProvider === "autumn" ||
+			(card.id !== "team" && card.id !== "ultra"),
+	);
 
 	const subscriptionIsYearly = activePlan
 		? resolveSubscriptionIsYearly(activePlan)
@@ -348,14 +425,9 @@ function PlansPage() {
 	const memberCount =
 		membersData && membersData.length > 0 ? membersData.length : undefined;
 
-	const currentPlanLabelByTier: Record<PlanTier, string> = {
-		free: t({ message: "Free" }),
-		pro: t({ message: "Pro" }),
-		enterprise: t({
-			message: "Enterprise",
-		}),
-	};
-	const currentPlanLabel = currentPlanLabelByTier[currentPlan];
+	const currentPlanCard =
+		PLAN_CARDS.find((card) => card.id === currentColumn) ?? PLAN_CARDS[0];
+	const currentPlanLabel = currentPlanCard ? i18n._(currentPlanCard.name) : "";
 
 	const getValue = <T,>(value: T | { monthly: T; yearly: T }): T => {
 		if (typeof value === "object" && value !== null && "monthly" in value) {
@@ -364,16 +436,32 @@ function PlansPage() {
 		return value as T;
 	};
 
-	const getPriceLabel = (price: PlanCardData["price"]): string =>
-		price === "proSeat"
-			? formatCurrency(
-					proSeatPricePerMonth({ annual: isYearly }),
-					PRO_SEAT_PRICE.currency,
-					{ minimumFractionDigits: 0 },
-				)
-			: i18n._(getValue(price));
+	const getPriceLabel = (plan: PlanCardData): string => {
+		if (plan.price !== "seat") return i18n._(getValue(plan.price));
+		if (!isSelfServePlanId(plan.id)) return "";
+		return formatCurrency(
+			seatPricePerMonth(plan.id, { annual: isYearly }),
+			PLAN_PRICE_CURRENCY,
+			{ minimumFractionDigits: 0 },
+		);
+	};
 
-	const handlePlanAction = async (action: PlanCardAction) => {
+	const comparisonValueFor = (
+		row: ComparisonRow,
+		column: PlanColumnId,
+	): ComparisonValue | string => {
+		if (row.cloudGbHours && isSelfServePlanId(column)) {
+			return formatNumber(SELF_SERVE_PLANS[column].gbMinutesPerSeat / 60);
+		}
+		if (column === "free") return row.values[0];
+		if (column === "enterprise") return row.values[2];
+		return row.values[1];
+	};
+
+	const handlePlanAction = async (
+		action: PlanCardAction,
+		column: PlanColumnId,
+	) => {
 		if (action === "current") {
 			return;
 		}
@@ -396,7 +484,9 @@ function PlansPage() {
 
 		if (memberCount === undefined) return;
 
+		const targetPlan = isSelfServePlanId(column) ? column : "pro";
 		await upgrade({
+			plan: targetPlan,
 			annual: isYearly,
 			seats: memberCount,
 			source: "billing_plans",
@@ -404,7 +494,7 @@ function PlansPage() {
 		});
 	};
 
-	const renderComparisonValue = (value: ComparisonValue) => {
+	const renderComparisonValue = (value: ComparisonValue | string) => {
 		if (value === null || value === false) {
 			return (
 				<span className="sr-only">
@@ -420,14 +510,18 @@ function PlansPage() {
 		return (
 			<>
 				<HiCheck className="h-3.5 w-3.5 text-muted-foreground" />
-				<span className="text-sm">{i18n._(value)}</span>
+				<span className="text-sm">
+					{typeof value === "string" ? value : i18n._(value)}
+				</span>
 			</>
 		);
 	};
 
 	const highlightColumnIndex = 1;
 	const highlightColumnStart = highlightColumnIndex + 2;
-	const gridColumnsClass = "grid grid-cols-[240px_repeat(3,_1fr)]";
+	const gridStyle = {
+		gridTemplateColumns: `240px repeat(${planCards.length}, minmax(0, 1fr))`,
+	};
 
 	return (
 		<div className="p-6 max-w-7xl w-full">
@@ -470,12 +564,13 @@ function PlansPage() {
 			</div>
 
 			<div className="overflow-x-auto">
-				<div className="relative min-w-[720px]">
+				<div
+					className="relative"
+					style={{ minWidth: 240 + planCards.length * 160 }}
+				>
 					<div
-						className={cn(
-							gridColumnsClass,
-							"pointer-events-none absolute inset-0",
-						)}
+						className="grid pointer-events-none absolute inset-0"
+						style={gridStyle}
 					>
 						<div
 							className="bg-accent/30 border border-border/60 rounded-lg"
@@ -485,14 +580,14 @@ function PlansPage() {
 							}}
 						/>
 					</div>
-					<div className={cn(gridColumnsClass, "relative z-10 items-start")}>
+					<div className="grid relative z-10 items-start" style={gridStyle}>
 						{(["plan", "billing", "cta"] as const).map((rowKey, rowIndex) => (
 							<Fragment key={rowKey}>
 								<div
 									className={cn("px-2", rowKey === "cta" ? "py-3" : "py-2.5")}
 								/>
-								{PLAN_CARDS.map((plan) => {
-									const isCurrent = currentPlan === plan.id;
+								{planCards.map((plan) => {
+									const isCurrent = currentColumn === plan.id;
 									const isDowngrade =
 										plan.id === "free" && currentPlan !== "free";
 									const isOnEnterprise = currentPlan === "enterprise";
@@ -528,7 +623,7 @@ function PlansPage() {
 												variant: "default" as const,
 											},
 										];
-									} else if (isCurrent && plan.id === "pro") {
+									} else if (isCurrent && isSelfServePlanId(plan.id)) {
 										// Before the plan resolves the billing interval is unknown,
 										// so an interval-change action here would be a guess the
 										// user can act on. Hold at "Current plan" until it lands — and
@@ -598,6 +693,23 @@ function PlansPage() {
 												variant: "outline" as const,
 											},
 										];
+									} else if (
+										currentPlan === "pro" &&
+										isSelfServePlanId(plan.id)
+									) {
+										planActions = [
+											{
+												label: isUpgrading
+													? t({
+															message: "Changing...",
+														})
+													: t({
+															message: "Switch plan",
+														}),
+												action: "upgrade" as const,
+												variant: "outline" as const,
+											},
+										];
 									} else {
 										planActions = plan.actions.map((action) => ({
 											...action,
@@ -619,7 +731,7 @@ function PlansPage() {
 																: "text-base font-medium text-muted-foreground",
 														)}
 													>
-														{getPriceLabel(plan.price)}
+														{getPriceLabel(plan)}
 													</div>
 													{plan.priceNote && (
 														<div className="text-xs text-muted-foreground">
@@ -668,7 +780,9 @@ function PlansPage() {
 															action.action === "current" ||
 															(action.action === "upgrade" && isUpgrading)
 														}
-														onClick={() => handlePlanAction(action.action)}
+														onClick={() =>
+															handlePlanAction(action.action, plan.id)
+														}
 													>
 														{action.label}
 													</Button>
@@ -681,7 +795,10 @@ function PlansPage() {
 								{rowIndex < 2 && (
 									<>
 										<div />
-										<div className="col-span-3 h-px bg-border/60" />
+										<div
+											className="h-px bg-border/60"
+											style={{ gridColumn: "2 / -1" }}
+										/>
 									</>
 								)}
 							</Fragment>
@@ -689,12 +806,15 @@ function PlansPage() {
 
 						{COMPARISON_SECTIONS.map((section, sectionIndex) => (
 							<Fragment key={section.title.id}>
-								<div className="col-span-4 pt-6 pb-3 px-2">
+								<div
+									className="pt-6 pb-3 px-2"
+									style={{ gridColumn: "1 / -1" }}
+								>
 									<span className="text-sm font-semibold">
 										{i18n._(section.title)}
 									</span>
 								</div>
-								<div className="col-span-4 h-px bg-border/60" />
+								<div className="h-px bg-border/60" style={{ gridColumn: "1 / -1" }} />
 
 								{section.rows.map((row, rowIndex) => {
 									const isLastRow =
@@ -725,16 +845,16 @@ function PlansPage() {
 													</Badge>
 												)}
 											</div>
-											{row.values.map((value, valueIndex) => (
+											{planCards.map((plan) => (
 												<div
-													key={`${row.label.id}-${valueIndex}`}
+													key={`${row.label.id}-${plan.id}`}
 													className="flex items-center justify-start gap-2 px-4 py-2.5"
 												>
-													{renderComparisonValue(value)}
+													{renderComparisonValue(comparisonValueFor(row, plan.id))}
 												</div>
 											))}
 											{!isLastRow && (
-												<div className="col-span-4 h-px bg-border/60" />
+												<div className="h-px bg-border/60" style={{ gridColumn: "1 / -1" }} />
 											)}
 										</Fragment>
 									);

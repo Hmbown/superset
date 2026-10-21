@@ -483,7 +483,7 @@ msgstr "{totalCount} içinden {0}"
 msgid "{0} options"
 msgstr "{0} seçenekleri"
 
-#. placeholder {0}: i18n._(plan.name)
+#. placeholder {0}: i18n._(planName)
 msgid "{0} plan"
 msgstr "{0} planı"
 
@@ -876,6 +876,9 @@ msgstr "{gate} · {statusLabel}"
 msgid "{gate}: {statusLabel}"
 msgstr "{gate}: {statusLabel}"
 
+msgid "{gbHours} cloud GB-hours per seat each month"
+msgstr "Koltuk başına aylık {gbHours} bulut GB-saat"
+
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {# gizli satır} other {# gizli satır}}"
 
@@ -963,6 +966,9 @@ msgstr "Aylık faturalandırmada kullanıcı başına ayda {monthlyPrice}, yıll
 msgid "{months}mo ago"
 msgstr "{months}ay önce"
 
+msgid "{multiple}x the cloud GB-hours of Pro"
+msgstr "Pro'nun {multiple} katı bulut GB-saat"
+
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "Otomasyonlarınızdan {myFailedCount} tanesi son çalıştırmasında başarısız oldu"
 
@@ -1045,6 +1051,12 @@ msgstr "{presetLabel} varsayılanlara sıfırlandı"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · {0} satır yüksekliği"
+
+msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
+msgstr "Kullanıcı/ay başına {price}, koltuk başına aylık {gbHours} bulut GB-saat"
+
+msgid "{price}/user/mo"
+msgstr "{price}/kullanıcı/ay"
 
 msgid "{provider} logo"
 msgstr "{provider} logosu"
@@ -2976,6 +2988,9 @@ msgstr "Ötesi: F5 yakın vadeli bir iddia değil"
 msgid "Billed monthly"
 msgstr "Aylık faturalandırılır"
 
+msgid "Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team."
+msgstr "Aylık faturalandırmada Pro kullanıcı/ay başına {monthlyPrice}, Team {teamPrice}, Ultra {ultraPrice} tutar. Yıllık faturalandırmada Pro kullanıcı/ay başına {yearlyPrice}, Team {teamYearlyPrice}, Ultra {ultraYearlyPrice} tutar. Ekibinizdeki her etkin koltuk için ücretlendirilirsiniz."
+
 msgid "Billed per token."
 msgstr "Token başına faturalandırılır."
 
@@ -3472,6 +3487,9 @@ msgstr "Kuruluş logosunu değiştir"
 
 msgid "Change organization slug"
 msgstr "Kuruluş slug'ını değiştir"
+
+msgid "Change plan"
+msgstr "Planı değiştir"
 
 msgid "Change preview"
 msgstr "Değişiklik önizlemesi"
@@ -4052,6 +4070,9 @@ msgstr "Bu terminali kapatmak çalışan süreci sonlandırır."
 msgid "Cloud"
 msgstr "Bulut"
 
+msgid "Cloud GB-hours per seat each month"
+msgstr "Koltuk başına aylık bulut GB-saat"
+
 msgid "Cloud is coming. Become a design partner"
 msgstr "Bulut sürümü yakında. Geliştirme ortağı olun"
 
@@ -4070,6 +4091,9 @@ msgstr "Bulut çalışma alanı"
 
 msgid "Cloud workspaces"
 msgstr "Bulut çalışma alanları"
+
+msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour."
+msgstr "Bulut çalışma alanları GB-saat ile ölçülür: makinenin belleği çarpı çalıştığı saat. 8 GB'lık bir makine saatte 8 GB-saat kullanır. Her koltuk, planının GB-saatlerini ekibinizin paylaştığı tek bir havuza ekler: Pro'da {proGbHours}, Team'de {teamGbHours}, Ultra'da {ultraGbHours}. Havuz her ay sıfırlanır ve havuzu aşan kullanım GB-saat başına {overagePrice} tutar."
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Bulut çalışma alanları bu değişkeni yok sayar. Ajanlar bunun yerine Ayarlar › Ajanlar bölümünden oturum açar."
@@ -6828,6 +6852,9 @@ msgstr "Her dakika"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Tüm hedefler bir sonraki basamak için üzerine düşeni yapıyor. Son 30 gün üzerinden ölçülür."
 
+msgid "Every paid plan includes Superset Mobile, cloud workspaces, automations, and priority support. Your team shares one pool of cloud GB-hours."
+msgstr "Her ücretli plan Superset Mobile, bulut çalışma alanları, otomasyonlar ve öncelikli destek içerir. Ekibiniz tek bir bulut GB-saat havuzunu paylaşır."
+
 msgid "Every publish is a version"
 msgstr "Her yayın bir sürümdür"
 
@@ -6866,6 +6893,9 @@ msgstr "Pro'daki her şey"
 
 msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
 msgstr "Pro'daki her şeye ek olarak SSO ve SAML, SCIM sağlama, IP kısıtlamaları, denetim günlükleri, özel SLA, ayrılmış destek ve özel sözleşmeler. Fiyatlandırma kuruluşunuza göre belirlenir. Bize ulaşın, size uygun bir çözüm tasarlayalım."
+
+msgid "Everything in Team"
+msgstr "Team'teki her şey"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "Her şey betiklenebilir. CLI'den çalışma alanı ve ajan başlatın, SDK ile Superset'i CI'ye bağlayın veya ajanınızın MCP üzerinden yönetmesine izin verin."
@@ -7839,6 +7869,9 @@ msgstr "Yeni başlayan bireyler için"
 msgid "For organizations with advanced needs"
 msgstr "Gelişmiş ihtiyaçları olan kuruluşlar için"
 
+msgid "For people who keep agents running all day"
+msgstr "Ajanlarını gün boyu çalıştıranlar için"
+
 msgid "For press inquiries and interview requests, email us."
 msgstr "Basın talepleri ve röportaj istekleri için bize e-posta gönderin."
 
@@ -7847,6 +7880,9 @@ msgstr "Faturalandırmayla ilgili sorularınız için <0>bize ulaşın</0>."
 
 msgid "For teams that need more power"
 msgstr "Daha fazla güce ihtiyaç duyan takımlar için"
+
+msgid "For teams that run agents every day"
+msgstr "Her gün ajan çalıştıran ekipler için"
 
 msgid "Force merge"
 msgstr "Zorla birleştir"
@@ -8046,6 +8082,9 @@ msgstr "Superset'ten daha fazlasını al"
 msgid "Get notified when Superset is available on Windows & Linux."
 msgstr "Superset, Windows ve Linux'ta kullanılabilir olduğunda haberdar olun."
 
+msgid "Get Pro"
+msgstr "Pro planını al"
+
 msgid "Get started"
 msgstr "Başlayın"
 
@@ -8055,11 +8094,17 @@ msgstr "Superset'i Mac'inize alın"
 msgid "Get Superset Pro"
 msgstr "Superset Pro'yu edinin"
 
+msgid "Get Team"
+msgstr "Team planını al"
+
 msgid "Get the best out of Pro"
 msgstr "Pro’dan en iyi şekilde yararlanın"
 
 msgid "Get the iPhone and iPad app"
 msgstr "iPhone ve iPad uygulamasını edinin"
+
+msgid "Get Ultra"
+msgstr "Ultra planını al"
 
 msgid "Gets an invite to join {organizationName}"
 msgstr "{organizationName} kuruluşuna katılma daveti alır"
@@ -8494,11 +8539,11 @@ msgstr "Nasıl yardımcı olabiliriz?"
 msgid "How do I get started?"
 msgstr "Nasıl başlarım?"
 
+msgid "How do the paid plans work?"
+msgstr "Ücretli planlar nasıl işler?"
+
 msgid "How does pricing work?"
 msgstr "Fiyatlandırma nasıl işliyor?"
-
-msgid "How does Pro pricing work?"
-msgstr "Pro fiyatlandırması nasıl işliyor?"
 
 msgid "How does the parallel agent system work?"
 msgstr "Paralel ajan sistemi nasıl çalışıyor?"
@@ -11670,6 +11715,9 @@ msgstr "Tek eklenti, her kodlama ajanı: Claude Code, Codex, Cursor, OpenCode ve
 msgid "One plugin. Every coding agent."
 msgstr "Tek eklenti. Her kodlama ajanı."
 
+msgid "One shared GB-hour pool for the team"
+msgstr "Ekip için tek bir ortak GB-saat havuzu"
+
 msgid "One step left"
 msgstr "Bir adım kaldı"
 
@@ -13085,9 +13133,6 @@ msgstr "Pro ve Enterprise. Microsoft Teams tetikleyicileri Enterprise gerektirir
 
 msgid "Pro Features"
 msgstr "Pro özellikler"
-
-msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro, aylık faturalandırmada kullanıcı başına ayda {monthlyPrice}, yıllık faturalandırmada kullanıcı başına ayda {yearlyPrice} (%25 indirim). Takımınızdaki etkin koltuk başına faturalandırılırsınız."
 
 msgid "Process"
 msgstr "Süreç"
@@ -14691,9 +14736,6 @@ msgstr "Kaydet"
 msgid "Save & create workspace"
 msgstr "Kaydet ve çalışma alanı oluştur"
 
-msgid "Save 25%"
-msgstr "%25 tasarruf"
-
 msgid "Save All"
 msgstr "Tümünü kaydet"
 
@@ -14726,6 +14768,9 @@ msgstr "ajan komutunu kaydetme"
 
 msgid "Save to get URL"
 msgstr "URL için kaydedin"
+
+msgid "Save up to {maxDiscount}"
+msgstr "{maxDiscount}'ye varan tasarruf"
 
 msgid "Saved"
 msgstr "Kaydedildi"
@@ -16683,9 +16728,6 @@ msgstr "Superset Mobile, ajanları bağladığınız bilgisayarlarda çalıştı
 msgid "Superset Mobile terminal on iPhone"
 msgstr "iPhone'da Superset Mobile terminali"
 
-msgid "Superset Mobile, cloud workspaces, automations, and priority support."
-msgstr "Superset Mobile, bulut çalışma alanları, otomasyonlar ve öncelikli destek."
-
 msgid "Superset needs Full Disk Access to read another browser's data. Grant it in System Settings, then check again."
 msgstr "Superset'in başka bir tarayıcının verilerini okuyabilmesi için Tam Disk Erişimi gerekir. Sistem Ayarları'ndan verin, sonra yeniden denetleyin."
 
@@ -16773,6 +16815,9 @@ msgstr "Kuruluş değiştir"
 
 msgid "Switch organization or sign in again to restart the host service."
 msgstr "Host hizmetini yeniden başlatmak için kuruluş değiştirin veya yeniden oturum açın."
+
+msgid "Switch plan"
+msgstr "Plan değiştir"
 
 msgid "Switch sign-in"
 msgstr "Oturumu değiştir"
@@ -17002,6 +17047,10 @@ msgstr "takım"
 
 msgid "Team"
 msgstr "Takım"
+
+msgctxt "plan name"
+msgid "Team"
+msgstr "Team"
 
 msgid "Team activity feed"
 msgstr "Takım etkinlik akışı"
@@ -17549,6 +17598,9 @@ msgstr "Temalar"
 
 msgid "Themes and agents"
 msgstr "Temalar ve ajanlar"
+
+msgid "Then {overagePrice} per GB-hour past the plan"
+msgstr "Plan aşıldığında GB-saat başına {overagePrice}"
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Bu komutlar bir çalışma alanı oluşturulduğunda otomatik olarak çalışır. <0>Belgelerimizi okuyun<1/></0>"
@@ -18317,6 +18369,10 @@ msgstr "V2 terminal panellerinde kullanılan tipografi ve imleç davranışı."
 msgid "Typography used in V2 editors and diff views."
 msgstr "V2 düzenleyicilerde ve fark görünümlerinde kullanılan tipografi."
 
+msgctxt "plan name"
+msgid "Ultra"
+msgstr "Ultra"
+
 msgid "Unable to check for updates. Please check your internet connection."
 msgstr "Güncellemeler denetlenemiyor. Lütfen internet bağlantınızı kontrol edin."
 
@@ -18651,6 +18707,9 @@ msgstr "{0} planına yükselt"
 
 msgid "Upgrade to Pro"
 msgstr "Pro'ya yükselt"
+
+msgid "Upgrade your plan"
+msgstr "Planınızı yükseltin"
 
 msgid "Upload files"
 msgstr "Dosya yükle"
@@ -19151,6 +19210,9 @@ msgstr "Superset'e hoş geldiniz"
 
 msgid "Welcome to the new Superset"
 msgstr "Yeni Superset'e hoş geldiniz"
+
+msgid "What are cloud GB-hours?"
+msgstr "Bulut GB-saat nedir?"
 
 msgid "What are the benefits?"
 msgstr "Yan haklar neler?"

@@ -483,7 +483,7 @@ msgstr "{totalCount}件中{0}件目"
 msgid "{0} options"
 msgstr "{0}のオプション"
 
-#. placeholder {0}: i18n._(plan.name)
+#. placeholder {0}: i18n._(planName)
 msgid "{0} plan"
 msgstr "{0}プラン"
 
@@ -876,6 +876,9 @@ msgstr "{gate} · {statusLabel}"
 msgid "{gate}: {statusLabel}"
 msgstr "{gate}: {statusLabel}"
 
+msgid "{gbHours} cloud GB-hours per seat each month"
+msgstr "1席あたり毎月 {gbHours} クラウド GB 時間"
+
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {非表示の#行} other {非表示の#行}}"
 
@@ -963,6 +966,9 @@ msgstr "1ユーザーあたり月額{monthlyPrice}（月払い）、または{ye
 msgid "{months}mo ago"
 msgstr "{months}か月前"
 
+msgid "{multiple}x the cloud GB-hours of Pro"
+msgstr "Proの{multiple}倍のクラウド GB 時間"
+
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "自分のオートメーションのうち{myFailedCount}件が前回の実行に失敗しました"
 
@@ -1045,6 +1051,12 @@ msgstr "{presetLabel}をデフォルトに戻しました"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · 行の高さ {0}"
+
+msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
+msgstr "1ユーザーあたり月額{price}、1席あたり毎月 {gbHours} クラウド GB 時間"
+
+msgid "{price}/user/mo"
+msgstr "{price}/ユーザー/月"
 
 msgid "{provider} logo"
 msgstr "{provider}のロゴ"
@@ -2976,6 +2988,9 @@ msgstr "その先:F5は近い将来の主張ではない"
 msgid "Billed monthly"
 msgstr "月払い"
 
+msgid "Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team."
+msgstr "月払いの場合、1ユーザーあたり月額でProは{monthlyPrice}、Teamは{teamPrice}、Ultraは{ultraPrice}です。年払いの場合、1ユーザーあたり月額でProは{yearlyPrice}、Teamは{teamYearlyPrice}、Ultraは{ultraYearlyPrice}です。チームのアクティブな席ごとに請求されます。"
+
 msgid "Billed per token."
 msgstr "トークン単位で課金。"
 
@@ -3472,6 +3487,9 @@ msgstr "組織のロゴを変更"
 
 msgid "Change organization slug"
 msgstr "組織スラッグを変更"
+
+msgid "Change plan"
+msgstr "プランを変更"
 
 msgid "Change preview"
 msgstr "変更のプレビュー"
@@ -4052,6 +4070,9 @@ msgstr "このターミナルを閉じると実行中のプロセスが終了し
 msgid "Cloud"
 msgstr "クラウド"
 
+msgid "Cloud GB-hours per seat each month"
+msgstr "1席あたりの毎月のクラウド GB 時間"
+
 msgid "Cloud is coming. Become a design partner"
 msgstr "クラウド版が近日登場。共同開発パートナーを募集中"
 
@@ -4070,6 +4091,9 @@ msgstr "クラウドワークスペース"
 
 msgid "Cloud workspaces"
 msgstr "クラウドワークスペース"
+
+msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour."
+msgstr "クラウドワークスペースは GB 時間で計測されます。マシンのメモリ量に稼働した時間を掛けた値です。8 GBのマシンは1時間あたり8 GB 時間を使います。各席はプランの GB 時間をチーム共有のプールに加えます。Proは{proGbHours}、Teamは{teamGbHours}、Ultraは{ultraGbHours}です。プールは毎月リセットされ、超過した利用は GB 時間あたり{overagePrice}です。"
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "クラウドワークスペースはこの変数を無視します。エージェントは代わりに「設定 › エージェント」でサインインします。"
@@ -6828,6 +6852,9 @@ msgstr "毎分"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "すべての目標が次の段に向けて力を発揮しています。直近30日間で計測。"
 
+msgid "Every paid plan includes Superset Mobile, cloud workspaces, automations, and priority support. Your team shares one pool of cloud GB-hours."
+msgstr "すべての有料プランにSuperset Mobile、クラウドワークスペース、オートメーション、優先サポートが含まれます。クラウド GB 時間はチーム全体で1つのプールを共有します。"
+
 msgid "Every publish is a version"
 msgstr "公開するたびにバージョンが残る"
 
@@ -6866,6 +6893,9 @@ msgstr "Proのすべて"
 
 msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
 msgstr "Proのすべてに加えて、SSOとSAML、SCIMプロビジョニング、IP制限、監査ログ、個別のSLA、専任サポート、個別契約が含まれます。料金は組織に合わせて設定します。ご連絡いただければ、最適な内容をご提案します。"
+
+msgid "Everything in Team"
+msgstr "Teamのすべて"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "すべてスクリプトから操作できます。CLIでワークスペースやエージェントを起動し、SDKでSupersetをCIに組み込み、MCP経由でエージェント自身に操作させることもできます。"
@@ -7839,6 +7869,9 @@ msgstr "これから始める個人向け"
 msgid "For organizations with advanced needs"
 msgstr "高度な要件がある組織向け"
 
+msgid "For people who keep agents running all day"
+msgstr "エージェントを一日中動かす人向け"
+
 msgid "For press inquiries and interview requests, email us."
 msgstr "取材やインタビューのご依頼は、メールでお問い合わせください。"
 
@@ -7847,6 +7880,9 @@ msgstr "請求に関するご質問は<0>お問い合わせ</0>ください。"
 
 msgid "For teams that need more power"
 msgstr "もっと力が必要なチーム向け"
+
+msgid "For teams that run agents every day"
+msgstr "毎日エージェントを動かすチーム向け"
 
 msgid "Force merge"
 msgstr "強制マージ"
@@ -8046,6 +8082,9 @@ msgstr "Supersetをもっと活用する"
 msgid "Get notified when Superset is available on Windows & Linux."
 msgstr "SupersetがWindowsとLinuxで使えるようになったらお知らせします。"
 
+msgid "Get Pro"
+msgstr "Proを始める"
+
 msgid "Get started"
 msgstr "始める"
 
@@ -8055,11 +8094,17 @@ msgstr "MacでSupersetを使う"
 msgid "Get Superset Pro"
 msgstr "Superset Proを入手"
 
+msgid "Get Team"
+msgstr "Teamを始める"
+
 msgid "Get the best out of Pro"
 msgstr "Proを最大限に活用する"
 
 msgid "Get the iPhone and iPad app"
 msgstr "iPhone・iPad アプリを入手"
+
+msgid "Get Ultra"
+msgstr "Ultraを始める"
 
 msgid "Gets an invite to join {organizationName}"
 msgstr "{organizationName}への招待が届きます"
@@ -8494,11 +8539,11 @@ msgstr "どのようなご用件ですか?"
 msgid "How do I get started?"
 msgstr "どう始めればいいですか?"
 
+msgid "How do the paid plans work?"
+msgstr "有料プランの仕組みは?"
+
 msgid "How does pricing work?"
 msgstr "料金はどのような仕組みですか?"
-
-msgid "How does Pro pricing work?"
-msgstr "Proの料金はどのような仕組みですか?"
 
 msgid "How does the parallel agent system work?"
 msgstr "並列エージェントの仕組みはどうなっていますか?"
@@ -11670,6 +11715,9 @@ msgstr "ひとつのプラグインを、すべてのコーディングエージ
 msgid "One plugin. Every coding agent."
 msgstr "ひとつのプラグインを、すべてのコーディングエージェントで。"
 
+msgid "One shared GB-hour pool for the team"
+msgstr "チームで共有する1つの GB 時間プール"
+
 msgid "One step left"
 msgstr "あと1ステップ"
 
@@ -13085,9 +13133,6 @@ msgstr "ProとEnterpriseです。Microsoft TeamsトリガーにはEnterpriseが�
 
 msgid "Pro Features"
 msgstr "Pro機能"
-
-msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Proは月払いで1ユーザーあたり月{monthlyPrice}、年払いなら1ユーザーあたり月{yearlyPrice}(25%割引)です。チームのアクティブなシート数に応じて課金されます。"
 
 msgid "Process"
 msgstr "プロセス"
@@ -14691,9 +14736,6 @@ msgstr "保存"
 msgid "Save & create workspace"
 msgstr "保存してワークスペースを作成"
 
-msgid "Save 25%"
-msgstr "25%お得"
-
 msgid "Save All"
 msgstr "すべて保存"
 
@@ -14726,6 +14768,9 @@ msgstr "エージェントコマンドを保存する"
 
 msgid "Save to get URL"
 msgstr "保存するとURLが表示されます"
+
+msgid "Save up to {maxDiscount}"
+msgstr "最大{maxDiscount}お得"
 
 msgid "Saved"
 msgstr "保存済み"
@@ -16683,9 +16728,6 @@ msgstr "Superset Mobileは、接続したコンピュータ上でエージェン
 msgid "Superset Mobile terminal on iPhone"
 msgstr "iPhone 上の Superset Mobile のターミナル"
 
-msgid "Superset Mobile, cloud workspaces, automations, and priority support."
-msgstr "Superset Mobile、クラウドワークスペース、オートメーション、優先サポート。"
-
 msgid "Superset needs Full Disk Access to read another browser's data. Grant it in System Settings, then check again."
 msgstr "他のブラウザのデータを読み取るには、Supersetにフルディスクアクセスが必要です。システム設定で許可してから再確認してください。"
 
@@ -16773,6 +16815,9 @@ msgstr "組織を切り替え"
 
 msgid "Switch organization or sign in again to restart the host service."
 msgstr "組織を切り替えるか、サインインし直してホストサービスを再起動してください。"
+
+msgid "Switch plan"
+msgstr "プランを切り替え"
 
 msgid "Switch sign-in"
 msgstr "サインインを切り替え"
@@ -17002,6 +17047,10 @@ msgstr "チーム"
 
 msgid "Team"
 msgstr "チーム"
+
+msgctxt "plan name"
+msgid "Team"
+msgstr "Team"
 
 msgid "Team activity feed"
 msgstr "チームのアクティビティフィード"
@@ -17549,6 +17598,9 @@ msgstr "テーマ"
 
 msgid "Themes and agents"
 msgstr "テーマとエージェント"
+
+msgid "Then {overagePrice} per GB-hour past the plan"
+msgstr "超過分は GB 時間あたり{overagePrice}"
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "これらのコマンドはワークスペース作成時に自動的に実行されます。<0>ドキュメントを読む<1/></0>"
@@ -18317,6 +18369,10 @@ msgstr "V2ターミナルパネルで使用するタイポグラフィとカー�
 msgid "Typography used in V2 editors and diff views."
 msgstr "V2エディタと差分ビューで使用するタイポグラフィ。"
 
+msgctxt "plan name"
+msgid "Ultra"
+msgstr "Ultra"
+
 msgid "Unable to check for updates. Please check your internet connection."
 msgstr "アップデートを確認できません。インターネット接続を確認してください。"
 
@@ -18651,6 +18707,9 @@ msgstr "{0}にアップグレード"
 
 msgid "Upgrade to Pro"
 msgstr "Pro にアップグレード"
+
+msgid "Upgrade your plan"
+msgstr "プランをアップグレード"
 
 msgid "Upload files"
 msgstr "ファイルをアップロード"
@@ -19151,6 +19210,9 @@ msgstr "Supersetへようこそ"
 
 msgid "Welcome to the new Superset"
 msgstr "新しいSupersetへようこそ"
+
+msgid "What are cloud GB-hours?"
+msgstr "クラウド GB 時間とは?"
 
 msgid "What are the benefits?"
 msgstr "福利厚生は?"

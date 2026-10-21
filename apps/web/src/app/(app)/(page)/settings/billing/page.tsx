@@ -1,4 +1,5 @@
 import { msg } from "@lingui/core/macro";
+import { isSelfServePlanId } from "@superset/shared/billing";
 import { Button } from "@superset/ui/button";
 import Link from "next/link";
 import { HiCheckCircle } from "react-icons/hi2";
@@ -8,9 +9,14 @@ import { BillingSettings } from "./components/BillingSettings";
 export default async function BillingPage({
 	searchParams,
 }: {
-	searchParams: Promise<{ success?: string; organization?: string }>;
+	searchParams: Promise<{
+		success?: string;
+		organization?: string;
+		plan?: string;
+		interval?: string;
+	}>;
 }) {
-	const { success, organization } = await searchParams;
+	const { success, organization, plan, interval } = await searchParams;
 
 	if (success === "true") {
 		const i18n = await initServerI18n();
@@ -37,5 +43,11 @@ export default async function BillingPage({
 		);
 	}
 
-	return <BillingSettings organizationId={organization} />;
+	return (
+		<BillingSettings
+			organizationId={organization}
+			selectedPlan={isSelfServePlanId(plan) ? plan : undefined}
+			yearly={interval !== "monthly"}
+		/>
+	);
 }

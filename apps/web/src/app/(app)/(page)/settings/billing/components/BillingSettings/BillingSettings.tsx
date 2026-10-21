@@ -2,17 +2,26 @@
 
 import { Trans, useLingui } from "@lingui/react/macro";
 import { authClient } from "@superset/auth/client";
-import { formatCurrency, formatDate } from "@superset/i18n/format";
+import {
+	formatCurrency,
+	formatDate,
+	formatNumber,
+} from "@superset/i18n/format";
 import {
 	isPaymentFailingStatus,
-	PRO_SEAT_PRICE,
-	proSeatPricePerMonth,
+	PLAN_PRICE_CURRENCY,
 	resolveCurrentPlan,
+	SELF_SERVE_PLAN_IDS,
+	SELF_SERVE_PLANS,
+	type SelfServePlanId,
+	seatPricePerMonth,
+	selfServePlanFromAutumnPlanId,
 } from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 import { Button } from "@superset/ui/button";
 import { toast } from "@superset/ui/sonner";
 import { Switch } from "@superset/ui/switch";
+import { cn } from "@superset/ui/utils";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useTRPC } from "@/trpc/react";
@@ -26,14 +35,20 @@ interface BillingSettingsProps {
 	 * organization, and the two sessions do not share that choice.
 	 */
 	organizationId?: string;
+	selectedPlan?: SelfServePlanId;
+	yearly?: boolean;
 }
 
-export function BillingSettings({ organizationId }: BillingSettingsProps) {
+export function BillingSettings({
+	organizationId,
+	selectedPlan,
+	yearly = true,
+}: BillingSettingsProps) {
 	const { t } = useLingui();
 	const trpc = useTRPC();
 	const queryClient = useQueryClient();
 	const { data: session, isPending: sessionPending } = authClient.useSession();
-	const [isYearly, setIsYearly] = useState(true);
+	const [isYearly, setIsYearly] = useState(yearly);
 
 	const activeOrganizationId = session?.session?.activeOrganizationId;
 	const switchingOrganization =
@@ -81,6 +96,14 @@ export function BillingSettings({ organizationId }: BillingSettingsProps) {
 		subscriptionsLoaded: activePlan !== undefined,
 	});
 	const cancelAt = activePlan?.cancelAt;
+	const usesAutumn = activePlan?.billingProvider === "autumn";
+	const selfServePlan =
+		plan === "pro"
+			? (selfServePlanFromAutumnPlanId(activePlan?.autumnPlanId) ?? "pro")
+			: null;
+	const offeredPlans: readonly SelfServePlanId[] = usesAutumn
+		? SELF_SERVE_PLAN_IDS
+		: ["pro"];
 	const periodEnd = activePlan?.periodEnd;
 	const isPaymentFailing = isPaymentFailingStatus(activePlan?.status);
 
@@ -105,9 +128,13 @@ export function BillingSettings({ organizationId }: BillingSettingsProps) {
 		invalidatePlan,
 	});
 
-	const handleUpgrade = async () => {
+	const handleUpgrade = async (target: SelfServePlanId) => {
 		if (memberCount === undefined) return;
-		await upgrade({ annual: isYearly, seats: memberCount });
+		await upgrade({
+			plan: target,
+			annual: isYearly,
+			seats: memberCount,
+		});
 	};
 
 	if (sessionPending || switchingOrganization || activePlan === undefined) {
@@ -118,11 +145,18 @@ export function BillingSettings({ organizationId }: BillingSettingsProps) {
 		);
 	}
 
-	const planLabel = {
-		free: t({ message: "Free" }),
+	const planNames: Record<SelfServePlanId, string> = {
 		pro: t({ message: "Pro" }),
-		enterprise: t({ message: "Enterprise" }),
-	}[plan];
+		team: t({ message: "Team", context: "plan name" }),
+		ultra: t({ message: "Ultra", context: "plan name" }),
+	};
+	const planLabel = selfServePlan
+		? planNames[selfServePlan]
+		: {
+				free: t({ message: "Free" }),
+				pro: t({ message: "Pro" }),
+				enterprise: t({ message: "Enterprise" }),
+			}[plan];
 
 	const planHint =
 		plan === "enterprise"
@@ -214,30 +248,23 @@ export function BillingSettings({ organizationId }: BillingSettingsProps) {
 
 			<CloudUsageCard />
 
-			{plan === "free" && (
+			{(plan === "free" || (selfServePlan && usesAutumn && !cancelAt)) && (
 				<div className="space-y-4 border-t pt-6">
 					<div>
 						<div className="text-sm font-medium">
-							<Trans>Upgrade to Pro</Trans>
+							{plan === "free" ? (
+								<Trans>Upgrade your plan</Trans>
+							) : (
+								<Trans>Change plan</Trans>
+							)}
 						</div>
 						<div className="mt-1 text-sm text-muted-foreground">
 							<Trans>
-								Superset Mobile, cloud workspaces, automations, and priority
-								support.
+								Every paid plan includes Superset Mobile, cloud workspaces,
+								automations, and priority support. Your team shares one pool of
+								cloud GB-hours.
 							</Trans>
 						</div>
-					</div>
-					<div className="flex items-baseline gap-2">
-						<span className="text-2xl font-semibold">
-							{formatCurrency(
-								proSeatPricePerMonth({ annual: isYearly }),
-								PRO_SEAT_PRICE.currency,
-								{ minimumFractionDigits: 0 },
-							)}
-						</span>
-						<span className="text-sm text-muted-foreground">
-							<Trans>per user/month</Trans>
-						</span>
 					</div>
 					<div className="flex items-center gap-2 text-sm text-muted-foreground">
 						<Switch
@@ -251,19 +278,62 @@ export function BillingSettings({ organizationId }: BillingSettingsProps) {
 							<Trans>Billed monthly</Trans>
 						)}
 					</div>
-					{isOwner ? (
-						<Button
-							className="w-full sm:w-auto"
-							onClick={handleUpgrade}
-							disabled={isUpgrading || memberCount === undefined}
-						>
-							{isUpgrading ? (
-								<Trans>Redirecting...</Trans>
-							) : (
-								<Trans>Upgrade to Pro</Trans>
-							)}
-						</Button>
-					) : (
+					<div className="divide-y rounded-md border">
+						{offeredPlans.map((offeredPlan) => {
+							const price = formatCurrency(
+								seatPricePerMonth(offeredPlan, { annual: isYearly }),
+								PLAN_PRICE_CURRENCY,
+								{ minimumFractionDigits: 0 },
+							);
+							const gbHours = formatNumber(
+								SELF_SERVE_PLANS[offeredPlan].gbMinutesPerSeat / 60,
+							);
+							const isCurrent = offeredPlan === selfServePlan;
+							return (
+								<div
+									key={offeredPlan}
+									className={cn(
+										"flex items-center justify-between gap-4 p-4",
+										offeredPlan === selectedPlan &&
+											!isCurrent &&
+											"bg-accent/40",
+									)}
+								>
+									<div className="min-w-0">
+										<div className="text-sm font-medium">
+											{planNames[offeredPlan]}
+										</div>
+										<div className="mt-1 text-sm text-muted-foreground">
+											<Trans>
+												{price} per user/month, {gbHours} cloud GB-hours per
+												seat each month
+											</Trans>
+										</div>
+									</div>
+									{isOwner && (
+										<Button
+											size="sm"
+											className="shrink-0"
+											variant={isCurrent ? "secondary" : "default"}
+											disabled={
+												isCurrent || isUpgrading || memberCount === undefined
+											}
+											onClick={() => handleUpgrade(offeredPlan)}
+										>
+											{isCurrent ? (
+												<Trans>Current plan</Trans>
+											) : plan === "free" ? (
+												<Trans>Upgrade</Trans>
+											) : (
+												<Trans>Switch plan</Trans>
+											)}
+										</Button>
+									)}
+								</div>
+							);
+						})}
+					</div>
+					{!isOwner && (
 						<p className="text-sm text-muted-foreground">
 							<Trans>
 								Only an organization owner can change the plan. Ask yours to

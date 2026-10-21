@@ -10,9 +10,21 @@ import {
 	PRICING_TIERS,
 	type PricingTier,
 } from "../../constants";
-import { proSeatPriceValues } from "../../utils/proSeatPriceValues";
+import { comparisonValue, seatPrice } from "../../utils/planDisplay";
+import type { PlanPrices } from "../../utils/planPricesFromAutumn";
+import {
+	type PlanPriceValues,
+	planPriceValues,
+} from "../../utils/planPriceValues";
 
-export function ComparisonTable() {
+interface ComparisonTableProps {
+	prices: PlanPrices;
+}
+
+export function ComparisonTable({ prices }: ComparisonTableProps) {
+	const { i18n } = useLingui();
+	const values = planPriceValues(prices, i18n.locale);
+
 	return (
 		<div className="flex flex-col gap-8">
 			<div className="flex flex-col gap-3 text-center">
@@ -24,13 +36,13 @@ export function ComparisonTable() {
 				</h2>
 			</div>
 
-			<DesktopTable />
-			<MobileTable />
+			<DesktopTable values={values} />
+			<MobileTable values={values} />
 		</div>
 	);
 }
 
-function DesktopTable() {
+function DesktopTable({ values }: { values: PlanPriceValues }) {
 	const { t } = useLingui();
 
 	return (
@@ -38,17 +50,17 @@ function DesktopTable() {
 			<table className="w-full table-fixed border-separate border-spacing-0">
 				<thead>
 					<tr>
-						<th className="sticky top-16 z-10 w-2/5 border-b border-border bg-background py-4 pr-4 text-left text-sm font-medium text-muted-foreground">
+						<th className="sticky top-16 z-10 w-1/4 border-b border-border bg-background py-4 pr-4 text-left text-sm font-medium text-muted-foreground">
 							<Trans>Features</Trans>
 						</th>
 						{PRICING_TIERS.map((tier) => (
 							<th
 								key={tier.id}
-								className="sticky top-16 z-10 w-1/5 border-b border-border bg-background py-4 px-4 text-left text-sm font-medium text-foreground"
+								className="sticky top-16 z-10 border-b border-border bg-background py-4 px-4 text-left text-sm font-medium text-foreground"
 							>
 								{t(tier.name)}
-								<span className="ml-2 font-normal text-xs text-muted-foreground">
-									<TierPriceLabel tier={tier} />
+								<span className="block font-normal text-xs text-muted-foreground">
+									<TierPriceLabel tier={tier} values={values} />
 								</span>
 							</th>
 						))}
@@ -58,7 +70,7 @@ function DesktopTable() {
 					{COMPARISON_SECTIONS.map((section) => (
 						<DesktopSectionGroup key={section.id} title={t(section.title)}>
 							{section.rows.map((row) => (
-								<DesktopRow key={row.id} row={row} />
+								<DesktopRow key={row.id} row={row} values={values} />
 							))}
 						</DesktopSectionGroup>
 					))}
@@ -68,14 +80,23 @@ function DesktopTable() {
 	);
 }
 
-function TierPriceLabel({ tier }: { tier: PricingTier }) {
-	const { i18n } = useLingui();
+function TierPriceLabel({
+	tier,
+	values,
+}: {
+	tier: PricingTier;
+	values: PlanPriceValues;
+}) {
 	if (tier.price.kind === "fixed") {
 		return <>{tier.price.display}</>;
 	}
-	if (tier.price.kind === "proSeat") {
-		const price = proSeatPriceValues(i18n.locale).yearlyPrice;
-		return <Trans>from {price}/user/mo</Trans>;
+	if (tier.price.kind === "seat") {
+		const price = seatPrice(tier.price.plan, values, true).display;
+		return values.plans[tier.price.plan].hasYearlyDiscount ? (
+			<Trans>from {price}/user/mo</Trans>
+		) : (
+			<Trans>{price}/user/mo</Trans>
+		);
 	}
 	return <Trans>Custom</Trans>;
 }
@@ -91,7 +112,7 @@ function DesktopSectionGroup({
 		<>
 			<tr>
 				<td
-					colSpan={4}
+					colSpan={PRICING_TIERS.length + 1}
 					className="border-b border-border bg-accent/20 px-4 py-3 text-xs font-medium uppercase tracking-wide text-muted-foreground"
 				>
 					{title}
@@ -102,7 +123,13 @@ function DesktopSectionGroup({
 	);
 }
 
-function DesktopRow({ row }: { row: ComparisonRow }) {
+function DesktopRow({
+	row,
+	values,
+}: {
+	row: ComparisonRow;
+	values: PlanPriceValues;
+}) {
 	const { t } = useLingui();
 
 	return (
@@ -113,19 +140,19 @@ function DesktopRow({ row }: { row: ComparisonRow }) {
 					{row.badge && <RowBadge badge={row.badge} />}
 				</div>
 			</td>
-			{row.values.map((value, index) => (
+			{PRICING_TIERS.map((tier) => (
 				<td
-					key={`${row.id}-${index}`}
+					key={`${row.id}-${tier.id}`}
 					className="border-b border-border/60 px-4 py-4 text-sm text-foreground"
 				>
-					<Cell value={value} />
+					<Cell value={comparisonValue(row, tier.id, values)} />
 				</td>
 			))}
 		</tr>
 	);
 }
 
-function MobileTable() {
+function MobileTable({ values }: { values: PlanPriceValues }) {
 	const { t } = useLingui();
 	const [selectedIndex, setSelectedIndex] = useState(1);
 	const selectedTier = PRICING_TIERS[selectedIndex];
@@ -133,7 +160,7 @@ function MobileTable() {
 
 	return (
 		<div className="flex flex-col gap-6 md:hidden">
-			<div className="inline-flex rounded-md border border-border bg-card p-1">
+			<div className="flex overflow-x-auto rounded-md border border-border bg-card p-1">
 				{PRICING_TIERS.map((tier, index) => (
 					<button
 						key={tier.id}
@@ -141,7 +168,7 @@ function MobileTable() {
 						onClick={() => setSelectedIndex(index)}
 						aria-pressed={index === selectedIndex}
 						className={cn(
-							"flex-1 rounded-sm px-3 py-1.5 text-sm font-medium transition-colors",
+							"flex-1 whitespace-nowrap rounded-sm px-2 py-1.5 text-sm font-medium transition-colors",
 							index === selectedIndex
 								? "bg-foreground text-background"
 								: "text-muted-foreground hover:text-foreground",
@@ -169,7 +196,9 @@ function MobileTable() {
 										{row.badge && <RowBadge badge={row.badge} />}
 									</div>
 									<div className="shrink-0 text-sm text-foreground">
-										<Cell value={row.values[selectedIndex] ?? null} />
+										<Cell
+											value={comparisonValue(row, selectedTier.id, values)}
+										/>
 									</div>
 								</li>
 							))}

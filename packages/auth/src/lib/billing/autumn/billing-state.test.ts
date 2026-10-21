@@ -71,6 +71,7 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 			billingFromCustomer(customer({ flags: pro, subscription: {} }), NOW),
 		).toEqual({
 			tier: "pro",
+			autumnPlanId: "pro",
 			status: "active",
 			cancelAt: null,
 			periodStart: new Date(NOW - 10 * DAY).toISOString(),

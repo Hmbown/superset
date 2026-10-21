@@ -148,27 +148,45 @@ export function isCloudUsageRefusal(error: unknown): boolean {
 	);
 }
 
-export function autumnProPlanId({
-	annual,
-}: {
-	annual: boolean;
-}): "pro" | "pro_annual" {
-	return annual ? "pro_annual" : "pro";
+export const SELF_SERVE_PLAN_IDS = ["pro", "team", "ultra"] as const;
+export type SelfServePlanId = (typeof SELF_SERVE_PLAN_IDS)[number];
+
+export function isSelfServePlanId(value: unknown): value is SelfServePlanId {
+	return (SELF_SERVE_PLAN_IDS as readonly unknown[]).includes(value);
 }
 
-// Display copy of the Autumn `pro` and `pro_annual` seat prices; checkout bills
-// from Autumn, so change both together.
-export const PRO_SEAT_PRICE = {
-	currency: "USD",
-	monthlyCents: 2000,
-	yearlyCents: 18000,
-} as const;
+// Display copy of the Autumn `pro`, `team` and `ultra` plans and their
+// `_annual` versions; checkout bills from Autumn, so change both together.
+export const PLAN_PRICE_CURRENCY = "USD";
+export const SELF_SERVE_PLANS: Record<
+	SelfServePlanId,
+	{ monthlyCents: number; yearlyCents: number; gbMinutesPerSeat: number }
+> = {
+	pro: { monthlyCents: 2000, yearlyCents: 19200, gbMinutesPerSeat: 19200 },
+	team: { monthlyCents: 6000, yearlyCents: 64800, gbMinutesPerSeat: 72000 },
+	ultra: { monthlyCents: 20000, yearlyCents: 240000, gbMinutesPerSeat: 240000 },
+};
 
-export function proSeatPricePerMonth({ annual }: { annual: boolean }): number {
-	const cents = annual
-		? PRO_SEAT_PRICE.yearlyCents / 12
-		: PRO_SEAT_PRICE.monthlyCents;
-	return cents / 100;
+export function seatPricePerMonth(
+	plan: SelfServePlanId,
+	{ annual }: { annual: boolean },
+): number {
+	const { monthlyCents, yearlyCents } = SELF_SERVE_PLANS[plan];
+	return (annual ? yearlyCents / 12 : monthlyCents) / 100;
+}
+
+export function autumnPlanIdFor(
+	plan: SelfServePlanId,
+	{ annual }: { annual: boolean },
+): string {
+	return annual ? `${plan}_annual` : plan;
+}
+
+export function selfServePlanFromAutumnPlanId(
+	autumnPlanId: string | null | undefined,
+): SelfServePlanId | null {
+	const plan = autumnPlanId?.replace(/_annual$/, "");
+	return isSelfServePlanId(plan) ? plan : null;
 }
 
 export const MEMORY_GB_PER_VCPU = 2;

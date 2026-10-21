@@ -483,7 +483,7 @@ msgstr "{0} z {totalCount}"
 msgid "{0} options"
 msgstr "Možnosti {0}"
 
-#. placeholder {0}: i18n._(plan.name)
+#. placeholder {0}: i18n._(planName)
 msgid "{0} plan"
 msgstr "Tarif {0}"
 
@@ -876,6 +876,9 @@ msgstr "{gate} · {statusLabel}"
 msgid "{gate}: {statusLabel}"
 msgstr "{gate}: {statusLabel}"
 
+msgid "{gbHours} cloud GB-hours per seat each month"
+msgstr "{gbHours} cloudových GB-hodin na místo měsíčně"
+
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {# skrytý řádek} few {# skryté řádky} many {# skrytého řádku} other {# skrytých řádků}}"
 
@@ -963,6 +966,9 @@ msgstr "{monthlyPrice} na uživatele a měsíc při měsíční fakturaci, nebo 
 msgid "{months}mo ago"
 msgstr "před {months} měs."
 
+msgid "{multiple}x the cloud GB-hours of Pro"
+msgstr "{multiple}× více cloudových GB-hodin než Pro"
+
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "Vaše automatizace s neúspěšným posledním během: {myFailedCount}"
 
@@ -1045,6 +1051,12 @@ msgstr "{presetLabel} obnoveno na výchozí"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize} px · výška řádku {0}"
+
+msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
+msgstr "{price} na uživatele/měsíc, {gbHours} cloudových GB-hodin na místo měsíčně"
+
+msgid "{price}/user/mo"
+msgstr "{price}/uživatele/měs."
 
 msgid "{provider} logo"
 msgstr "logo {provider}"
@@ -2976,6 +2988,9 @@ msgstr "Za obzorem: F5 není tvrzení o blízké budoucnosti"
 msgid "Billed monthly"
 msgstr "Účtováno měsíčně"
 
+msgid "Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team."
+msgstr "Při měsíční platbě stojí Pro {monthlyPrice}, Team {teamPrice} a Ultra {ultraPrice} na uživatele/měsíc. Při roční platbě stojí Pro {yearlyPrice}, Team {teamYearlyPrice} a Ultra {ultraYearlyPrice} na uživatele/měsíc. Platíte za každé aktivní místo ve vašem týmu."
+
 msgid "Billed per token."
 msgstr "Účtováno za tokeny."
 
@@ -3472,6 +3487,9 @@ msgstr "Změnit logo organizace"
 
 msgid "Change organization slug"
 msgstr "Změnit slug organizace"
+
+msgid "Change plan"
+msgstr "Změnit tarif"
 
 msgid "Change preview"
 msgstr "Náhled změn"
@@ -4052,6 +4070,9 @@ msgstr "Zavřením tohoto terminálu ukončíte běžící proces."
 msgid "Cloud"
 msgstr "Cloud"
 
+msgid "Cloud GB-hours per seat each month"
+msgstr "Cloudové GB-hodiny na místo měsíčně"
+
 msgid "Cloud is coming. Become a design partner"
 msgstr "Cloud přichází. Staňte se partnerem pro vývoj"
 
@@ -4070,6 +4091,9 @@ msgstr "Cloudový pracovní prostor"
 
 msgid "Cloud workspaces"
 msgstr "Cloudové pracovní prostory"
+
+msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour."
+msgstr "Cloudové pracovní prostory se účtují v GB-hodinách: paměť stroje krát počet hodin, kdy běží. Stroj s 8 GB spotřebuje 8 GB-hodin za hodinu. Každé místo přidá GB-hodiny ze svého tarifu do jednoho fondu, který sdílí celý tým: {proGbHours} v tarifu Pro, {teamGbHours} v Team, {ultraGbHours} v Ultra. Fond se každý měsíc obnoví a využití nad jeho rámec stojí {overagePrice} za GB-hodinu."
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Cloudové pracovní prostory tuto proměnnou ignorují. Agenti se místo toho přihlašují v Nastavení › Agenti."
@@ -6828,6 +6852,9 @@ msgstr "Každou minutu"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Všechny cíle táhnou k dalšímu stupni. Měřeno za posledních 30 dní."
 
+msgid "Every paid plan includes Superset Mobile, cloud workspaces, automations, and priority support. Your team shares one pool of cloud GB-hours."
+msgstr "Každý placený tarif zahrnuje Superset Mobile, cloudové pracovní prostory, automatizace a prioritní podporu. Váš tým sdílí jeden fond cloudových GB-hodin."
+
 msgid "Every publish is a version"
 msgstr "Každé zveřejnění je verze"
 
@@ -6866,6 +6893,9 @@ msgstr "Vše z tarifu Pro"
 
 msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
 msgstr "Všechno z tarifu Pro a k tomu SSO a SAML, provisioning přes SCIM, omezení podle IP, auditní logy, SLA na míru, dedikovanou podporu a smlouvy na míru. Cena se odvíjí od vaší organizace. Ozvěte se a nachystáme něco, co bude sedět."
+
+msgid "Everything in Team"
+msgstr "Vše z tarifu Team"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "Všechno jde skriptovat. Vytvářejte pracovní prostory a agenty z CLI, zapojte Superset do CI přes SDK nebo ho nechte řídit svého agenta přes MCP."
@@ -7839,6 +7869,9 @@ msgstr "Pro jednotlivce, kteří začínají"
 msgid "For organizations with advanced needs"
 msgstr "Pro organizace s náročnými požadavky"
 
+msgid "For people who keep agents running all day"
+msgstr "Pro ty, jejichž agenti běží celý den"
+
 msgid "For press inquiries and interview requests, email us."
 msgstr "S dotazy médií a žádostmi o rozhovor nám napište e-mail."
 
@@ -7847,6 +7880,9 @@ msgstr "S dotazy k fakturaci se <0>ozvěte nám</0>."
 
 msgid "For teams that need more power"
 msgstr "Pro týmy, které potřebují víc"
+
+msgid "For teams that run agents every day"
+msgstr "Pro týmy, které spouštějí agenty každý den"
 
 msgid "Force merge"
 msgstr "Vynutit sloučení"
@@ -8046,6 +8082,9 @@ msgstr "Využít Superset naplno"
 msgid "Get notified when Superset is available on Windows & Linux."
 msgstr "Dáme vám vědět, až bude Superset dostupný pro Windows a Linux."
 
+msgid "Get Pro"
+msgstr "Získat Pro"
+
 msgid "Get started"
 msgstr "Začít"
 
@@ -8055,11 +8094,17 @@ msgstr "Získejte Superset na svůj Mac"
 msgid "Get Superset Pro"
 msgstr "Pořídit Superset Pro"
 
+msgid "Get Team"
+msgstr "Získat Team"
+
 msgid "Get the best out of Pro"
 msgstr "Využijte Pro naplno"
 
 msgid "Get the iPhone and iPad app"
 msgstr "Stáhnout aplikaci pro iPhone a iPad"
+
+msgid "Get Ultra"
+msgstr "Získat Ultra"
 
 msgid "Gets an invite to join {organizationName}"
 msgstr "Dostane pozvánku do {organizationName}"
@@ -8494,11 +8539,11 @@ msgstr "S čím vám můžeme pomoct?"
 msgid "How do I get started?"
 msgstr "Jak začít?"
 
+msgid "How do the paid plans work?"
+msgstr "Jak fungují placené tarify?"
+
 msgid "How does pricing work?"
 msgstr "Jak funguje cena?"
-
-msgid "How does Pro pricing work?"
-msgstr "Jak funguje cena tarifu Pro?"
 
 msgid "How does the parallel agent system work?"
 msgstr "Jak funguje systém paralelních agentů?"
@@ -11670,6 +11715,9 @@ msgstr "Jeden plugin, každý programovací agent: Claude Code, Codex, Cursor, O
 msgid "One plugin. Every coding agent."
 msgstr "Jeden plugin. Každý programovací agent."
 
+msgid "One shared GB-hour pool for the team"
+msgstr "Jeden sdílený fond GB-hodin pro celý tým"
+
 msgid "One step left"
 msgstr "Zbývá jeden krok"
 
@@ -13085,9 +13133,6 @@ msgstr "Pro a Enterprise. Spouštěče Microsoft Teams vyžadují Enterprise. Kd
 
 msgid "Pro Features"
 msgstr "Funkce Pro"
-
-msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro stojí {monthlyPrice} na uživatele a měsíc při měsíční platbě, nebo {yearlyPrice} na uživatele a měsíc při roční platbě (sleva 25 %). Účtujeme podle aktivních míst ve vašem týmu."
 
 msgid "Process"
 msgstr "Proces"
@@ -14691,9 +14736,6 @@ msgstr "Uložit"
 msgid "Save & create workspace"
 msgstr "Uložit a vytvořit pracovní prostor"
 
-msgid "Save 25%"
-msgstr "Ušetřete 25 %"
-
 msgid "Save All"
 msgstr "Uložit vše"
 
@@ -14726,6 +14768,9 @@ msgstr "uložit příkaz agenta"
 
 msgid "Save to get URL"
 msgstr "Uložením získáte URL"
+
+msgid "Save up to {maxDiscount}"
+msgstr "Ušetřete až {maxDiscount}"
 
 msgid "Saved"
 msgstr "Uloženo"
@@ -16683,9 +16728,6 @@ msgstr "Superset Mobile spouští agenty na počítačích, které připojíte."
 msgid "Superset Mobile terminal on iPhone"
 msgstr "Terminál Superset Mobile na iPhonu"
 
-msgid "Superset Mobile, cloud workspaces, automations, and priority support."
-msgstr "Superset Mobile, cloudové workspaces, automatizace a prioritní podpora."
-
 msgid "Superset needs Full Disk Access to read another browser's data. Grant it in System Settings, then check again."
 msgstr "Superset potřebuje Plný přístup k disku, aby mohl číst data jiného prohlížeče. Povolte ho v Nastavení systému a zkontrolujte to znovu."
 
@@ -16773,6 +16815,9 @@ msgstr "Přepnout organizaci"
 
 msgid "Switch organization or sign in again to restart the host service."
 msgstr "Přepněte organizaci nebo se znovu přihlaste, aby se host service restartovala."
+
+msgid "Switch plan"
+msgstr "Přepnout tarif"
 
 msgid "Switch sign-in"
 msgstr "Přepnout přihlášení"
@@ -17002,6 +17047,10 @@ msgstr "tým"
 
 msgid "Team"
 msgstr "Tým"
+
+msgctxt "plan name"
+msgid "Team"
+msgstr "Team"
 
 msgid "Team activity feed"
 msgstr "Přehled aktivity týmu"
@@ -17549,6 +17598,9 @@ msgstr "Motivy"
 
 msgid "Themes and agents"
 msgstr "Motivy a agenti"
+
+msgid "Then {overagePrice} per GB-hour past the plan"
+msgstr "Poté {overagePrice} za GB-hodinu nad rámec tarifu"
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Tyto příkazy se spustí automaticky při vytvoření pracovního prostoru. <0>Přečtěte si dokumentaci<1/></0>"
@@ -18317,6 +18369,10 @@ msgstr "Typografie a chování kurzoru v terminálových panelech V2."
 msgid "Typography used in V2 editors and diff views."
 msgstr "Typografie použitá v editorech V2 a v zobrazení rozdílů."
 
+msgctxt "plan name"
+msgid "Ultra"
+msgstr "Ultra"
+
 msgid "Unable to check for updates. Please check your internet connection."
 msgstr "Aktualizace nelze zkontrolovat. Zkontrolujte prosím připojení k internetu."
 
@@ -18651,6 +18707,9 @@ msgstr "Přejít na {0}"
 
 msgid "Upgrade to Pro"
 msgstr "Přejít na Pro"
+
+msgid "Upgrade your plan"
+msgstr "Vylepšete svůj tarif"
 
 msgid "Upload files"
 msgstr "Nahrát soubory"
@@ -19151,6 +19210,9 @@ msgstr "Vítejte v Superset"
 
 msgid "Welcome to the new Superset"
 msgstr "Vítejte v novém Superset"
+
+msgid "What are cloud GB-hours?"
+msgstr "Co jsou cloudové GB-hodiny?"
 
 msgid "What are the benefits?"
 msgstr "Jaké jsou benefity?"

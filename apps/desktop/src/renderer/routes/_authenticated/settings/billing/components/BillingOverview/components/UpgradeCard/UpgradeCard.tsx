@@ -1,7 +1,10 @@
 import { Trans } from "@lingui/react/macro";
 import { i18n } from "@superset/i18n";
 import { useFormat } from "@superset/i18n/react";
-import { PRO_SEAT_PRICE, proSeatPricePerMonth } from "@superset/shared/billing";
+import {
+	PLAN_PRICE_CURRENCY,
+	seatPricePerMonth,
+} from "@superset/shared/billing";
 import { Button } from "@superset/ui/button";
 import { PLANS } from "../../../../constants";
 
@@ -14,7 +17,7 @@ export function UpgradeCard({ onUpgrade, isUpgrading }: UpgradeCardProps) {
 	const plan = PLANS.pro;
 	const { formatCurrency } = useFormat();
 	const formatSeatPrice = (annual: boolean) =>
-		formatCurrency(proSeatPricePerMonth({ annual }), PRO_SEAT_PRICE.currency, {
+		formatCurrency(seatPricePerMonth("pro", { annual }), PLAN_PRICE_CURRENCY, {
 			minimumFractionDigits: 0,
 		});
 	const monthlyPrice = formatSeatPrice(false);
