@@ -549,6 +549,7 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 			const parsed: CloseSessionInput = closeSessionInputSchema.parse(input);
 			const wasLive = options.live.get(parsed.sessionId) !== null;
 			replays.delete(parsed.sessionId);
+			subagentItems.forget(parsed.sessionId);
 			try {
 				await options.live.dispose(parsed.sessionId);
 			} finally {
@@ -560,6 +561,7 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 			const closed = await options.live.disposeScope(scopeId);
 			for (const sessionId of closed) {
 				replays.delete(sessionId);
+				subagentItems.forget(sessionId);
 				options.journal.announce(sessionId);
 			}
 		},

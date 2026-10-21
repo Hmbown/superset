@@ -22,6 +22,10 @@ export class SubagentItems {
 
 	constructor(private readonly db: ChatDb) {}
 
+	forget(sessionId: string): void {
+		this.trees.delete(sessionId);
+	}
+
 	observe(envelope: Envelope): void {
 		if (!isDurableEnvelope(envelope) || envelope.event.type !== "item") return;
 		const tree = this.trees.get(envelope.sessionId);

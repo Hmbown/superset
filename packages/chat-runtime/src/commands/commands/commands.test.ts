@@ -1,10 +1,11 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, spyOn, test } from "bun:test";
 import { randomUUID } from "node:crypto";
 import { deriveTimeline, emptySnapshot, reduceMany } from "@superset/chat/core";
 import { type UserMessage, wrapHiddenText } from "@superset/chat/protocol";
 import type { FakeHarnessScript } from "../../harness/fake";
 import { FakeHarness } from "../../harness/fake";
 import type { ChatRuntime } from "../../index";
+import { SubagentItems } from "../../stream";
 import { agentMessage, turn, userMessage } from "../../testing/fixtures";
 import { createTestRuntime } from "../../testing/testRuntime";
 import {
@@ -63,6 +64,19 @@ describe("chat commands", () => {
 
 		expect(scopes).toEqual(["workspace-2"]);
 		await runtime.dispose();
+	});
+
+	test("closing a session drops its cached subagent tree", async () => {
+		const forget = spyOn(SubagentItems.prototype, "forget");
+		try {
+			const { runtime } = newRuntime();
+			const created = createSession(runtime);
+			await runtime.commands.closeSession({ sessionId: created.sessionId });
+			expect(forget).toHaveBeenCalledWith(created.sessionId);
+			await runtime.dispose();
+		} finally {
+			forget.mockRestore();
+		}
 	});
 
 	test("createSession opens a journal and starts the harness", async () => {
