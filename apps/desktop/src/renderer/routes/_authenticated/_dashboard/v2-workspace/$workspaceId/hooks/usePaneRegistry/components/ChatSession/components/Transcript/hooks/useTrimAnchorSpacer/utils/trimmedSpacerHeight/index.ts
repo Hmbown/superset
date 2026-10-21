@@ -1,1 +1,0 @@
-export { trimmedSpacerHeight } from "./trimmedSpacerHeight";

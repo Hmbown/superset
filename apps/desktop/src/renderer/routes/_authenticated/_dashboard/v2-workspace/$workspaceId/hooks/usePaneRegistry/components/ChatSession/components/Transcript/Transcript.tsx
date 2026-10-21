@@ -45,7 +45,6 @@ import { useScrollAnchorKey } from "./hooks/useScrollAnchorKey";
 import { useScrollbarGutter } from "./hooks/useScrollbarGutter";
 import { useTranscriptFind } from "./hooks/useTranscriptFind";
 import { useTranscriptWindow } from "./hooks/useTranscriptWindow";
-import { useTrimAnchorSpacer } from "./hooks/useTrimAnchorSpacer";
 import { ChatImageGalleryProvider } from "./providers/ChatImageGalleryProvider";
 import { copySourceText } from "./utils/copySourceText";
 import { galleryImages } from "./utils/galleryImages";
@@ -146,27 +145,25 @@ export function Transcript({
 	useEffect(() => {
 		if (!scrollable.end) readerScrolledAway.current = false;
 	}, [scrollable.end]);
-	const trimAnchorSpacer = useTrimAnchorSpacer(viewport);
 	const markReaderScroll = useCallback(() => {
 		readerScrolledAway.current = true;
-		trimAnchorSpacer();
-	}, [trimAnchorSpacer]);
+	}, []);
 	const onViewportKeyDown = useCallback(
 		(event: KeyboardEvent<HTMLDivElement>) => {
-			if (SCROLL_KEYS.has(event.key)) markReaderScroll();
+			if (SCROLL_KEYS.has(event.key)) readerScrolledAway.current = true;
 		},
-		[markReaderScroll],
+		[],
 	);
 	const onViewportPointerDown = useCallback(
 		(event: PointerEvent<HTMLDivElement>) => {
 			if (event.target !== event.currentTarget) return;
-			markReaderScroll();
+			readerScrolledAway.current = true;
 			// The scroller counts only wheel, touch and scroll keys as the reader's own scroll.
 			event.currentTarget.dispatchEvent(
 				new WheelEvent("wheel", { bubbles: true }),
 			);
 		},
-		[markReaderScroll],
+		[],
 	);
 
 	const [entryOverrides, setEntryOverrides] = useState<
@@ -251,6 +248,10 @@ export function Transcript({
 		turnRunning: groups.at(-1)?.turn?.status === "running",
 		readerScrolledAway,
 	});
+	useEffect(() => {
+		if (anchorRowKey === null) return;
+		scrollerRef.current.scrollToEnd({ behavior: "smooth" });
+	}, [anchorRowKey]);
 
 	const find = useTranscriptFind({
 		rows,
@@ -322,7 +323,6 @@ export function Transcript({
 		.map((row, offset) => {
 			const index = transcriptWindow.startIndex + offset;
 			const recent = index >= rows.length - RECENT_ROWS_RENDERED_IN_FULL;
-			const scrollAnchor = row.key === anchorRowKey;
 			return (
 				<TranscriptRowItem
 					canForkToWorktree={canForkToWorktree}
@@ -344,14 +344,13 @@ export function Transcript({
 					onToggleEntry={onToggleEntry}
 					rendered={
 						recent ||
-						scrollAnchor ||
+						row.key === anchorRowKey ||
 						seenRowKeys.has(row.key) ||
 						row.key === find.currentRowKey ||
 						row.key === revealRowKey
 					}
 					row={row}
 					rowRef={transcriptWindow.rowRef(row.key)}
-					scrollAnchor={scrollAnchor}
 					snapshot={snapshot}
 				/>
 			);
