@@ -164,8 +164,21 @@ tray menu Linux does not have. Seen 2026-09-11 from a throwaway prompt that
 invited the agent to "try the new image". Recovery is a platform-side
 `vercel sandbox stop` (snapshots the disk, kills everything) followed by the
 app's Retry, which wakes a clean session. Still owed: memory pressure shown in
-the product, and a kill switch for the runaway process short of stopping the
-box. **Open.**
+the product. **The kill switch is done (2026-10-21):** measured on a 2 vCPU / 4 GB
+box, the kernel's killer was the last thing to act — with no swap it drops code
+pages first, and host-service's event loop stalled for 113 s while a 3 GB
+`tsc` refaulted everything. `superset-memguard` (bundle, started by boot as
+root) now ranks every process by what it is — host-service and pty-daemon
+−900, agent sessions −300, everything else the platform's 500 — because the
+kernel copies the score at fork and host-service's protection would otherwise
+reach every tool an agent runs; and it reaps the largest least-protected
+process when `MemAvailable` drops under 8% of the box, so the agent sees an
+exit 137 from its tool instead of the box dying. Boot also writes
+`SUPERSET_SANDBOX_MEMORY_MB` and `SUPERSET_SANDBOX_VCPUS` into every login
+shell from the cgroup, so a hook or an agent can size its work. Still open:
+swap (a small file with low swappiness would let modest overshoots finish;
+with memguard in place it is safe to try), and automatic resume of an agent
+whose own process was reaped while its terminal survived.
 
 ## Untested behaviour
 
