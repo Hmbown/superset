@@ -16,6 +16,7 @@ import type {
 import { toast } from "@superset/ui/sonner";
 import { cn } from "@superset/ui/utils";
 import { workspaceTrpc } from "@superset/workspace-client";
+import { History } from "lucide-react";
 import {
 	memo,
 	type Ref,
@@ -71,6 +72,8 @@ export type ComposerProps = {
 	currentModeId?: string;
 	onSetMode?: (modeId: string) => void;
 	onSend: (content: UserContent[], options: { steer: boolean }) => unknown;
+	/** Opens the pane header's chat history picker, as `/resume` does. */
+	onOpenHistory?: () => void;
 	history?: string[];
 	isActive?: boolean;
 	placeholder?: string;
@@ -128,6 +131,7 @@ export const Composer = memo(function Composer({
 	onCancelTurn,
 	onEnterDrawer,
 	onSend,
+	onOpenHistory,
 	placeholder,
 	target,
 	workspaceId,
@@ -292,12 +296,32 @@ export const Composer = memo(function Composer({
 	);
 
 	const mcpCommand = mcpPicker.command;
+	const resumeCommand = useMemo<PromptInputCommand | null>(
+		() =>
+			onOpenHistory
+				? {
+						id: "superset:resume",
+						title: "/resume",
+						description: t({ message: "Chat history" }),
+						icon: <History className="size-4" />,
+						group: t({ message: "Commands" }),
+						onSelect: () => {
+							queueMicrotask(onOpenHistory);
+						},
+					}
+				: null,
+		[onOpenHistory, t],
+	);
 	const commands = useMemo(() => {
-		const local: PromptInputCommand[] = [...(mcpCommand ? [mcpCommand] : [])];
+		const local: PromptInputCommand[] = [
+			...(mcpCommand ? [mcpCommand] : []),
+			...(resumeCommand ? [resumeCommand] : []),
+		];
 		const agentCommands = toMenuCommands(
 			availableCommands.filter(
 				(command) =>
 					!(mcpCommand && command.name === "mcp") &&
+					!(resumeCommand && command.name === "resume") &&
 					!HIDDEN_AGENT_COMMANDS.has(command.name),
 			),
 			{
@@ -306,7 +330,7 @@ export const Composer = memo(function Composer({
 			},
 		);
 		return [...local, ...agentCommands];
-	}, [availableCommands, mcpCommand, t]);
+	}, [availableCommands, mcpCommand, resumeCommand, t]);
 
 	const send = useCallback(
 		async (
@@ -373,6 +397,10 @@ export const Composer = memo(function Composer({
 				);
 				return;
 			}
+			if (text.trim() === "/resume" && onOpenHistory) {
+				queueMicrotask(onOpenHistory);
+				return;
+			}
 			if (
 				name &&
 				!target &&
@@ -384,7 +412,7 @@ export const Composer = memo(function Composer({
 			}
 			return send(text, files, mentions, pastedTexts, steer);
 		},
-		[availableCommands, blocked, send, t, target, mcpPicker],
+		[availableCommands, blocked, send, t, target, mcpPicker, onOpenHistory],
 	);
 
 	return (
