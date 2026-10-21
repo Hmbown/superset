@@ -106,7 +106,7 @@
         "@dnd-kit/core": "6.3.1",
         "@dnd-kit/sortable": "10.0.0",
         "@dnd-kit/utilities": "3.2.2",
-        "@expo/hub-client": "1.6.0",
+        "@expo/hub-client": "1.8.0",
         "@headless-tree/core": "1.6.3",
         "@headless-tree/react": "1.6.3",
         "@hono/node-server": "2.0.10",
@@ -221,7 +221,7 @@
         "electron-log": "5.4.3",
         "electron-updater": "6.8.3",
         "execa": "9.6.1",
-        "expo-device-hub": "0.17.0",
+        "expo-device-hub": "0.18.0",
         "express": "5.2.1",
         "fast-glob": "3.3.3",
         "file-uri-to-path": "1.0.0",
@@ -993,7 +993,7 @@
         "better-sqlite3": "12.11.1",
         "drizzle-orm": "0.45.2",
         "entities": "7.0.1",
-        "expo-device-hub": "0.17.0",
+        "expo-device-hub": "0.18.0",
         "hono": "4.13.7",
         "mime-types": "3.0.2",
         "node-pty": "1.2.0-beta.14",
@@ -1387,7 +1387,6 @@
     "node-pty",
     "utf-8-validate",
     "esbuild",
-    "node-datachannel",
     "electron",
     "better-sqlite3",
     "bufferutil",
@@ -1978,7 +1977,7 @@
 
     "@expo/fingerprint": ["@expo/fingerprint@0.20.13", "", { "dependencies": { "@expo/env": "^2.4.3", "@expo/spawn-async": "^1.8.0", "arg": "^5.0.2", "chalk": "^4.1.2", "debug": "^4.3.4", "getenv": "^2.0.0", "glob": "^13.0.0", "ignore": "^5.3.1", "minimatch": "^10.2.2", "resolve-from": "^5.0.0", "semver": "^7.6.0" }, "bin": { "fingerprint": "bin/cli.js" } }, "sha512-h1x+w+JpNRu88a/5SMZRzJs9YDGR/f7R8ApCr7OdenhqmJ00hFxQMzvxajDLL+1P2Y2g/ND0xksusqvBqWSW5Q=="],
 
-    "@expo/hub-client": ["@expo/hub-client@1.6.0", "", { "dependencies": { "use-sync-external-store": "^1.7.0" }, "peerDependencies": { "react": ">=18.0.0" } }, "sha512-vVERCE6FEKQ3WkPkTDDgvWEXtIhJ7c45xG1c304ewXRpCJD57jMiFKJ7DEelkeTwOvt47P5ddwfdxKbMUJ+h5Q=="],
+    "@expo/hub-client": ["@expo/hub-client@1.8.0", "", { "dependencies": { "use-sync-external-store": "^1.7.0" }, "peerDependencies": { "react": ">=18.0.0" } }, "sha512-I9JokBdOrC8+GYvlS6krYaqoKYYvmOgMfD+VieLgDqSpJNr4z5O8t9hpLaz7zg32+lFSQ2Mrta7OZoC2OEa/dw=="],
 
     "@expo/image-utils": ["@expo/image-utils@0.11.5", "", { "dependencies": { "@expo/require-utils": "^57.0.5", "@expo/spawn-async": "^1.8.0", "chalk": "^4.0.0", "getenv": "^2.0.0", "jimp-compact": "0.16.1", "parse-png": "^2.1.0", "semver": "^7.6.0" } }, "sha512-KPQBTpmpAfy/Vu9y4wPW808/qtZxjYmyJg8cm2QCPAupp+qEWA3b5zmk0ulOwQ9OgeHxuCPgUqWgkwHFo7UsrQ=="],
 
@@ -4582,7 +4581,7 @@
 
     "expo-device": ["expo-device@57.0.2", "", { "dependencies": { "ua-parser-js": "^0.7.33" }, "peerDependencies": { "expo": "*" } }, "sha512-1A0/FICR3CgrH43FeiDQP3l5eHDmiMoh4EjXfhfoHHkMgdBQdyD0kwDWskiGZlQ3E0Nd0LHkCFH6vJ1ofm/jow=="],
 
-    "expo-device-hub": ["expo-device-hub@0.17.0", "", { "dependencies": { "@fastify/busboy": "^3.2.0", "mediabunny": "1.55.3", "node-datachannel": "^0.32.3", "ws": "^8.21.0", "zustand": "^5.0.15" }, "bin": { "expo-device-hub": "dist/server/cli.mjs" } }, "sha512-azroGhxcGD+BQfquC/cdQEn0fzPPpRtAVK+gt4mlIvWDs+H30O2J/T/QorI0pEnRMJz7ZT+tsbyKWSlhYHeg5w=="],
+    "expo-device-hub": ["expo-device-hub@0.18.0", "", { "dependencies": { "@fastify/busboy": "^3.2.0", "mediabunny": "1.55.3", "node-datachannel": "^0.32.3", "ws": "^8.21.0", "zustand": "^5.0.15" }, "bin": { "expo-device-hub": "dist/server/cli.mjs" } }, "sha512-KaS5dLJjmq14f2ThKvh+c7xwZ5h0Nq6ckhs9gcBWtRtdUiMxg/EmVt6u1/LFjAbVioa+T817LTF/k/ERS59/iQ=="],
 
     "expo-document-picker": ["expo-document-picker@57.0.3", "", { "peerDependencies": { "expo": "*" } }, "sha512-XlxdZ0zzv44JRD8O15DISgIO8FTaZ581oc4kQp6MJoR7vdahjcY+2qCuDt5k1J8/lc0YR+bXon/v81norciuxw=="],
 
