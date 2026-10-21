@@ -1,5 +1,6 @@
 import { type ChildProcess, execFile, spawn } from "node:child_process";
-import { existsSync, mkdirSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync } from "node:fs";
+import { rm } from "node:fs/promises";
 import { createServer } from "node:net";
 import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
@@ -145,7 +146,6 @@ let localServer: LocalServer | null = null;
 function stopLocalServer(): void {
 	localServer?.stop();
 	localServer = null;
-	rmSync(HUB_STATE_DIR, { recursive: true, force: true });
 }
 
 function startLocalServer(): LocalServer {
@@ -433,6 +433,7 @@ export async function disposeLocalDevices(): Promise<void> {
 		]).catch(() => {});
 	}
 	stopLocalServer();
+	await rm(HUB_STATE_DIR, { recursive: true, force: true });
 }
 
 const IOS_ORIENTATION_MESSAGE_TAG = 7;
