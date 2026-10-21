@@ -4511,6 +4511,9 @@ msgstr "Die GitHub-Verbindung ist auf diesem Server nicht eingerichtet"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Durch das Verbinden können Ihre Agenten in {name} in Ihrem Namen lesen und handeln. Prüfen Sie vor dem Fortfahren, was Sie gewähren."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Verbindung mit {deviceName} wird hergestellt …"
+
 msgid "Connecting to the desktop…"
 msgstr "Verbindung zum Desktop wird hergestellt …"
 
@@ -4804,6 +4807,9 @@ msgstr "Relativen Pfad kopieren"
 msgid "Copy Relative Path"
 msgstr "Relativen Pfad kopieren"
 
+msgid "Copy screenshot"
+msgstr "Screenshot kopieren"
+
 msgid "Copy Selection"
 msgstr "Auswahl kopieren"
 
@@ -4979,6 +4985,9 @@ msgstr "Fotos konnte nicht geöffnet werden"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "{0} war nicht erreichbar, um nach Branch „{1}“ zu suchen. Prüfe deine Verbindung und deinen Zugriff auf {2} und versuche es erneut."
 
+msgid "Could not reach {deviceName}."
+msgstr "{deviceName} ist nicht erreichbar."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Der mobile Simulator konnte nicht erreicht werden."
 
@@ -5147,6 +5156,9 @@ msgstr "Pfad konnte nicht kopiert werden"
 
 msgid "Couldn't copy the image"
 msgstr "Bild konnte nicht kopiert werden"
+
+msgid "Couldn't copy the screenshot"
+msgstr "Screenshot konnte nicht kopiert werden"
 
 msgid "Couldn't create workspace"
 msgstr "Arbeitsbereich konnte nicht erstellt werden"
@@ -5329,6 +5341,9 @@ msgstr "Die Hintergrundaufgabe konnte nicht gestoppt werden"
 
 msgid "Couldn't stop the chat"
 msgstr "Chat konnte nicht gestoppt werden"
+
+msgid "Couldn't take a screenshot"
+msgstr "Screenshot konnte nicht erstellt werden"
 
 msgid "Couldn't unstage changes"
 msgstr "Stagen konnte nicht aufgehoben werden"
@@ -14766,8 +14781,8 @@ msgstr "Umfang"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "Die Bewertung beginnt, sobald das Board {0} Tage mit Nutzung sieht."
 
-msgid "Screenshot"
-msgstr "Screenshot"
+msgid "Screenshot copied"
+msgstr "Screenshot kopiert"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Screenshot in die Zwischenablage kopiert"

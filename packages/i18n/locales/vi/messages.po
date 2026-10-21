@@ -4511,6 +4511,9 @@ msgstr "Máy chủ này chưa cấu hình kết nối GitHub"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Kết nối cho phép các tác nhân của bạn đọc và thao tác trong {name} thay mặt bạn. Hãy xem lại những gì bạn đang cấp trước khi tiếp tục."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Đang kết nối với {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Đang kết nối tới màn hình nền…"
 
@@ -4804,6 +4807,9 @@ msgstr "Sao chép đường dẫn tương đối"
 msgid "Copy Relative Path"
 msgstr "Sao chép đường dẫn tương đối"
 
+msgid "Copy screenshot"
+msgstr "Sao chép ảnh chụp màn hình"
+
 msgid "Copy Selection"
 msgstr "Sao chép vùng chọn"
 
@@ -4979,6 +4985,9 @@ msgstr "Không thể mở Photos"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Không thể kết nối tới {0} để tìm nhánh \"{1}\". Hãy kiểm tra kết nối và quyền truy cập {2}, rồi thử lại."
 
+msgid "Could not reach {deviceName}."
+msgstr "Không kết nối được với {deviceName}."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Không thể kết nối tới trình giả lập di động."
 
@@ -5147,6 +5156,9 @@ msgstr "Không thể sao chép đường dẫn"
 
 msgid "Couldn't copy the image"
 msgstr "Không sao chép được hình ảnh"
+
+msgid "Couldn't copy the screenshot"
+msgstr "Không sao chép được ảnh chụp màn hình"
 
 msgid "Couldn't create workspace"
 msgstr "Không thể tạo workspace"
@@ -5329,6 +5341,9 @@ msgstr "Không thể dừng tác vụ nền"
 
 msgid "Couldn't stop the chat"
 msgstr "Không thể dừng trò chuyện"
+
+msgid "Couldn't take a screenshot"
+msgstr "Không chụp được màn hình"
 
 msgid "Couldn't unstage changes"
 msgstr "Không thể bỏ stage các thay đổi"
@@ -14766,8 +14781,8 @@ msgstr "Phạm vi"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "Việc tính điểm bắt đầu khi bảng xếp hạng có {0} ngày sử dụng."
 
-msgid "Screenshot"
-msgstr "Ảnh chụp màn hình"
+msgid "Screenshot copied"
+msgstr "Đã sao chép ảnh chụp màn hình"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Đã sao chép ảnh chụp màn hình vào clipboard"

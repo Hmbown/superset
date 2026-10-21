@@ -4511,6 +4511,9 @@ msgstr "Koneksi GitHub belum dikonfigurasi di server ini"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Menghubungkan memungkinkan agen Anda membaca dan bertindak di {name} atas nama Anda. Tinjau apa yang Anda berikan sebelum melanjutkan."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Menghubungkan ke {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Menghubungkan ke desktop…"
 
@@ -4804,6 +4807,9 @@ msgstr "Salin path relatif"
 msgid "Copy Relative Path"
 msgstr "Salin Path Relatif"
 
+msgid "Copy screenshot"
+msgstr "Salin tangkapan layar"
+
 msgid "Copy Selection"
 msgstr "Salin Pilihan"
 
@@ -4979,6 +4985,9 @@ msgstr "Tidak bisa membuka Photos"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Tidak dapat menjangkau {0} untuk mencari branch \"{1}\". Periksa koneksi dan akses Anda ke {2}, lalu coba lagi."
 
+msgid "Could not reach {deviceName}."
+msgstr "Tidak dapat menjangkau {deviceName}."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Tidak dapat menjangkau simulator seluler."
 
@@ -5147,6 +5156,9 @@ msgstr "Tidak bisa menyalin path"
 
 msgid "Couldn't copy the image"
 msgstr "Gagal menyalin gambar"
+
+msgid "Couldn't copy the screenshot"
+msgstr "Gagal menyalin tangkapan layar"
 
 msgid "Couldn't create workspace"
 msgstr "Tidak bisa membuat workspace"
@@ -5329,6 +5341,9 @@ msgstr "Tidak dapat menghentikan tugas latar belakang"
 
 msgid "Couldn't stop the chat"
 msgstr "Tidak dapat menghentikan obrolan"
+
+msgid "Couldn't take a screenshot"
+msgstr "Gagal mengambil tangkapan layar"
 
 msgid "Couldn't unstage changes"
 msgstr "Tidak bisa meng-unstage perubahan"
@@ -14766,8 +14781,8 @@ msgstr "Cakupan"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "Penilaian dimulai setelah papan melihat {0} hari penggunaan."
 
-msgid "Screenshot"
-msgstr "Tangkapan layar"
+msgid "Screenshot copied"
+msgstr "Tangkapan layar disalin"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Tangkapan layar disalin ke clipboard"

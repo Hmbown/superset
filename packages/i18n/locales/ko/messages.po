@@ -4511,6 +4511,9 @@ msgstr "이 서버에는 GitHub 연결이 구성되어 있지 않습니다"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "연결하면 에이전트가 사용자를 대신해 {name}에서 읽고 작업할 수 있습니다. 계속하기 전에 부여하는 권한을 확인하세요."
 
+msgid "Connecting to {deviceName}…"
+msgstr "{deviceName}에 연결하는 중…"
+
 msgid "Connecting to the desktop…"
 msgstr "데스크톱에 연결하는 중…"
 
@@ -4804,6 +4807,9 @@ msgstr "상대 경로 복사"
 msgid "Copy Relative Path"
 msgstr "상대 경로 복사"
 
+msgid "Copy screenshot"
+msgstr "스크린샷 복사"
+
 msgid "Copy Selection"
 msgstr "선택 항목 복사"
 
@@ -4979,6 +4985,9 @@ msgstr "사진 앱을 열지 못했습니다"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "브랜치 \"{1}\"을(를) 찾기 위해 {0}에 연결할 수 없습니다. 연결 상태와 {2} 접근 권한을 확인한 뒤 다시 시도하세요."
 
+msgid "Could not reach {deviceName}."
+msgstr "{deviceName}에 연결할 수 없습니다."
+
 msgid "Could not reach a mobile simulator."
 msgstr "모바일 시뮬레이터에 연결할 수 없습니다."
 
@@ -5147,6 +5156,9 @@ msgstr "경로를 복사할 수 없습니다"
 
 msgid "Couldn't copy the image"
 msgstr "이미지를 복사하지 못했습니다"
+
+msgid "Couldn't copy the screenshot"
+msgstr "스크린샷을 복사하지 못했습니다"
 
 msgid "Couldn't create workspace"
 msgstr "워크스페이스를 만들지 못했습니다"
@@ -5329,6 +5341,9 @@ msgstr "백그라운드 작업을 중지할 수 없습니다"
 
 msgid "Couldn't stop the chat"
 msgstr "채팅을 중지할 수 없습니다"
+
+msgid "Couldn't take a screenshot"
+msgstr "스크린샷을 찍지 못했습니다"
 
 msgid "Couldn't unstage changes"
 msgstr "스테이징을 해제하지 못했습니다"
@@ -14766,8 +14781,8 @@ msgstr "범위"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "보드가 {0}일치 사용 기록을 확보하면 점수 산정이 시작됩니다."
 
-msgid "Screenshot"
-msgstr "스크린샷"
+msgid "Screenshot copied"
+msgstr "스크린샷을 복사했습니다"
 
 msgid "Screenshot copied to clipboard"
 msgstr "스크린샷을 클립보드에 복사했습니다"

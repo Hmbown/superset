@@ -4511,6 +4511,9 @@ msgstr "Połączenie z GitHubem nie jest skonfigurowane na tym serwerze"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Połączenie pozwoli Twoim agentom czytać i działać w {name} w Twoim imieniu. Sprawdź, co przyznajesz, zanim przejdziesz dalej."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Łączenie z {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Łączenie z pulpitem…"
 
@@ -4804,6 +4807,9 @@ msgstr "Kopiuj ścieżkę względną"
 msgid "Copy Relative Path"
 msgstr "Kopiuj ścieżkę względną"
 
+msgid "Copy screenshot"
+msgstr "Kopiuj zrzut ekranu"
+
 msgid "Copy Selection"
 msgstr "Kopiuj zaznaczenie"
 
@@ -4979,6 +4985,9 @@ msgstr "Nie udało się otworzyć Zdjęć"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Nie udało się połączyć z {0}, aby wyszukać gałąź „{1}”. Sprawdź połączenie i dostęp do {2}, a następnie spróbuj ponownie."
 
+msgid "Could not reach {deviceName}."
+msgstr "Nie można połączyć się z {deviceName}."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Nie można połączyć się z symulatorem mobilnym."
 
@@ -5147,6 +5156,9 @@ msgstr "Nie udało się skopiować ścieżki"
 
 msgid "Couldn't copy the image"
 msgstr "Nie udało się skopiować obrazu"
+
+msgid "Couldn't copy the screenshot"
+msgstr "Nie udało się skopiować zrzutu ekranu"
 
 msgid "Couldn't create workspace"
 msgstr "Nie udało się utworzyć obszaru roboczego"
@@ -5329,6 +5341,9 @@ msgstr "Nie udało się zatrzymać zadania w tle"
 
 msgid "Couldn't stop the chat"
 msgstr "Nie udało się zatrzymać czatu"
+
+msgid "Couldn't take a screenshot"
+msgstr "Nie udało się zrobić zrzutu ekranu"
 
 msgid "Couldn't unstage changes"
 msgstr "Nie udało się usunąć zmian z indeksu"
@@ -14766,8 +14781,8 @@ msgstr "Zakres"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "Punktacja rusza, gdy tablica zobaczy dni z aktywnością: {0}."
 
-msgid "Screenshot"
-msgstr "Zrzut ekranu"
+msgid "Screenshot copied"
+msgstr "Skopiowano zrzut ekranu"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Zrzut ekranu skopiowany do schowka"

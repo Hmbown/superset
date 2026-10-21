@@ -4511,6 +4511,9 @@ msgstr "Bu sunucuda GitHub bağlantısı yapılandırılmamış"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Bağlanmak, aracılarınızın {name} içinde sizin adınıza okuma ve işlem yapmasına izin verir. Devam etmeden önce neyi verdiğinizi gözden geçirin."
 
+msgid "Connecting to {deviceName}…"
+msgstr "{deviceName} cihazına bağlanılıyor…"
+
 msgid "Connecting to the desktop…"
 msgstr "Masaüstüne bağlanılıyor…"
 
@@ -4804,6 +4807,9 @@ msgstr "Göreli yolu kopyala"
 msgid "Copy Relative Path"
 msgstr "Göreli yolu kopyala"
 
+msgid "Copy screenshot"
+msgstr "Ekran görüntüsünü kopyala"
+
 msgid "Copy Selection"
 msgstr "Seçimi kopyala"
 
@@ -4979,6 +4985,9 @@ msgstr "Fotoğraflar açılamadı"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "\"{1}\" dalını aramak için {0} adresine ulaşılamadı. Bağlantınızı ve {2} erişiminizi kontrol edip tekrar deneyin."
 
+msgid "Could not reach {deviceName}."
+msgstr "{deviceName} cihazına ulaşılamadı."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Bir mobil simülatöre ulaşılamadı."
 
@@ -5147,6 +5156,9 @@ msgstr "Yol kopyalanamadı"
 
 msgid "Couldn't copy the image"
 msgstr "Görsel kopyalanamadı"
+
+msgid "Couldn't copy the screenshot"
+msgstr "Ekran görüntüsü kopyalanamadı"
 
 msgid "Couldn't create workspace"
 msgstr "Çalışma alanı oluşturulamadı"
@@ -5329,6 +5341,9 @@ msgstr "Arka plan görevi durdurulamadı"
 
 msgid "Couldn't stop the chat"
 msgstr "Sohbet durdurulamadı"
+
+msgid "Couldn't take a screenshot"
+msgstr "Ekran görüntüsü alınamadı"
 
 msgid "Couldn't unstage changes"
 msgstr "Değişiklikler hazırlıktan çıkarılamadı"
@@ -14766,8 +14781,8 @@ msgstr "Kapsam"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "Puanlama, tablo {0} günlük kullanım gördüğünde başlar."
 
-msgid "Screenshot"
-msgstr "Ekran görüntüsü"
+msgid "Screenshot copied"
+msgstr "Ekran görüntüsü kopyalandı"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Ekran görüntüsü panoya kopyalandı"

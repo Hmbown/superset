@@ -4511,6 +4511,9 @@ msgstr "此伺服器未設定 GitHub 連結"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "連線後，你的代理可代表你在 {name} 中讀取和操作。繼續前請檢查你授予的權限。"
 
+msgid "Connecting to {deviceName}…"
+msgstr "正在連線至 {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "正在連線至桌面…"
 
@@ -4804,6 +4807,9 @@ msgstr "複製相對路徑"
 msgid "Copy Relative Path"
 msgstr "複製相對路徑"
 
+msgid "Copy screenshot"
+msgstr "複製螢幕截圖"
+
 msgid "Copy Selection"
 msgstr "複製所選內容"
 
@@ -4979,6 +4985,9 @@ msgstr "無法開啟「照片」"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "無法連線至 {0} 以尋找分支「{1}」。請檢查網路連線與 {2} 的存取權限，然後再試一次。"
 
+msgid "Could not reach {deviceName}."
+msgstr "無法連線至 {deviceName}。"
+
 msgid "Could not reach a mobile simulator."
 msgstr "無法連線至行動模擬器。"
 
@@ -5147,6 +5156,9 @@ msgstr "無法複製路徑"
 
 msgid "Couldn't copy the image"
 msgstr "無法複製圖片"
+
+msgid "Couldn't copy the screenshot"
+msgstr "無法複製螢幕截圖"
 
 msgid "Couldn't create workspace"
 msgstr "無法建立工作區"
@@ -5329,6 +5341,9 @@ msgstr "無法停止背景工作"
 
 msgid "Couldn't stop the chat"
 msgstr "無法停止聊天"
+
+msgid "Couldn't take a screenshot"
+msgstr "無法擷取螢幕畫面"
 
 msgid "Couldn't unstage changes"
 msgstr "無法取消暫存更改"
@@ -14766,8 +14781,8 @@ msgstr "範圍"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "當看板看到 {0} 天的使用資料後，才會開始計分。"
 
-msgid "Screenshot"
-msgstr "截圖"
+msgid "Screenshot copied"
+msgstr "已複製螢幕截圖"
 
 msgid "Screenshot copied to clipboard"
 msgstr "截圖已複製到剪貼簿"

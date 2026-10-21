@@ -4511,6 +4511,9 @@ msgstr "Подключение GitHub не настроено на этом се
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Подключение позволит вашим агентам читать и действовать в {name} от вашего имени. Проверьте, что вы предоставляете, прежде чем продолжить."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Подключение к {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Подключение к рабочему столу…"
 
@@ -4804,6 +4807,9 @@ msgstr "Скопировать относительный путь"
 msgid "Copy Relative Path"
 msgstr "Скопировать относительный путь"
 
+msgid "Copy screenshot"
+msgstr "Скопировать снимок экрана"
+
 msgid "Copy Selection"
 msgstr "Скопировать выделенное"
 
@@ -4979,6 +4985,9 @@ msgstr "Не удалось открыть «Фото»"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Не удалось подключиться к {0}, чтобы найти ветку «{1}». Проверьте подключение и доступ к {2}, затем повторите попытку."
 
+msgid "Could not reach {deviceName}."
+msgstr "Не удалось подключиться к {deviceName}."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Не удалось подключиться к мобильному симулятору."
 
@@ -5147,6 +5156,9 @@ msgstr "Не удалось скопировать путь"
 
 msgid "Couldn't copy the image"
 msgstr "Не удалось скопировать изображение"
+
+msgid "Couldn't copy the screenshot"
+msgstr "Не удалось скопировать снимок экрана"
 
 msgid "Couldn't create workspace"
 msgstr "Не удалось создать рабочую область"
@@ -5329,6 +5341,9 @@ msgstr "Не удалось остановить фоновую задачу"
 
 msgid "Couldn't stop the chat"
 msgstr "Не удалось остановить чат"
+
+msgid "Couldn't take a screenshot"
+msgstr "Не удалось сделать снимок экрана"
 
 msgid "Couldn't unstage changes"
 msgstr "Не удалось снять индексацию"
@@ -14766,8 +14781,8 @@ msgstr "Область"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "Подсчёт очков начнётся, когда наберётся дней с активностью: {0}."
 
-msgid "Screenshot"
-msgstr "Снимок экрана"
+msgid "Screenshot copied"
+msgstr "Снимок экрана скопирован"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Скриншот скопирован в буфер обмена"

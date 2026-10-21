@@ -295,36 +295,6 @@ function copyParcelWatcherPlatformPackages(nodeModulesDir: string): void {
 	}
 }
 
-/** node-datachannel builds with cmake, not node-gyp, so electron-builder's
- * rebuild skips it and no binary ships unless we fetch its N-API prebuild
- * into the copy that electron-builder collects with expo-device-hub. */
-function fetchNodeDatachannelPrebuild(nodeModulesDir: string): void {
-	const moduleDir = realpathSync(
-		join(
-			realpathSync(join(nodeModulesDir, "expo-device-hub")),
-			"..",
-			"node-datachannel",
-		),
-	);
-	type NodeDatachannelPackageJson = {
-		version: string;
-		binary: { napi_versions: number[] };
-	};
-	const { version, binary } = JSON.parse(
-		readFileSync(join(moduleDir, "package.json"), "utf8"),
-	) as NodeDatachannelPackageJson;
-	const napi = Math.max(...binary.napi_versions);
-	const asset = `node-datachannel-v${version}-napi-v${napi}-${TARGET_PLATFORM}-${TARGET_ARCH}.tar.gz`;
-	const url = `https://github.com/murat-dogan/node-datachannel/releases/download/v${version}/${asset}`;
-	console.log(`  node-datachannel: fetching ${asset}`);
-	rmSync(join(moduleDir, "build"), { recursive: true, force: true });
-	execSync(`curl -sfL "${url}" | tar xz -C "${moduleDir}"`, { stdio: "pipe" });
-	if (!existsSync(join(moduleDir, "build/Release/node_datachannel.node"))) {
-		console.error(`  [ERROR] ${asset} did not contain node_datachannel.node`);
-		process.exit(1);
-	}
-}
-
 function prepareNativeModules() {
 	console.log("Preparing external runtime modules for electron-builder...");
 	console.log(
@@ -342,7 +312,6 @@ function prepareNativeModules() {
 	console.log("\nPreparing ast-grep platform package...");
 	copyAstGrepPlatformPackages(nodeModulesDir);
 	copyParcelWatcherPlatformPackages(nodeModulesDir);
-	fetchNodeDatachannelPrebuild(nodeModulesDir);
 
 	console.log("\nDone!");
 }

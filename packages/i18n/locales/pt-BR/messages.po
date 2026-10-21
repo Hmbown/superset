@@ -4511,6 +4511,9 @@ msgstr "A conexão com o GitHub não está configurada neste servidor"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Conectar permite que seus agentes leiam e ajam no {name} em seu nome. Revise o que você está concedendo antes de continuar."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Conectando a {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Conectando à área de trabalho…"
 
@@ -4804,6 +4807,9 @@ msgstr "Copiar o caminho relativo"
 msgid "Copy Relative Path"
 msgstr "Copiar o caminho relativo"
 
+msgid "Copy screenshot"
+msgstr "Copiar captura de tela"
+
 msgid "Copy Selection"
 msgstr "Copiar seleção"
 
@@ -4979,6 +4985,9 @@ msgstr "Não foi possível abrir o Fotos"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Não foi possível acessar {0} para procurar o branch \"{1}\". Verifique sua conexão e seu acesso a {2} e tente novamente."
 
+msgid "Could not reach {deviceName}."
+msgstr "Não foi possível conectar a {deviceName}."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Não foi possível acessar um simulador móvel."
 
@@ -5147,6 +5156,9 @@ msgstr "Não foi possível copiar o caminho"
 
 msgid "Couldn't copy the image"
 msgstr "Não foi possível copiar a imagem"
+
+msgid "Couldn't copy the screenshot"
+msgstr "Não foi possível copiar a captura de tela"
 
 msgid "Couldn't create workspace"
 msgstr "Não foi possível criar a área de trabalho"
@@ -5329,6 +5341,9 @@ msgstr "Não foi possível parar a tarefa em segundo plano"
 
 msgid "Couldn't stop the chat"
 msgstr "Não foi possível parar o chat"
+
+msgid "Couldn't take a screenshot"
+msgstr "Não foi possível fazer a captura de tela"
 
 msgid "Couldn't unstage changes"
 msgstr "Não foi possível remover as alterações do stage"
@@ -14766,8 +14781,8 @@ msgstr "Escopo"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "A pontuação começa quando o quadro tem {0} dias de uso."
 
-msgid "Screenshot"
-msgstr "Captura de tela"
+msgid "Screenshot copied"
+msgstr "Captura de tela copiada"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Captura de tela copiada para a área de transferência"

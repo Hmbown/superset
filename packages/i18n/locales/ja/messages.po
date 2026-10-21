@@ -4511,6 +4511,9 @@ msgstr "このサーバーでは GitHub の接続が設定されていません"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "接続すると、エージェントがあなたに代わって {name} で読み取りと操作を行えるようになります。続行する前に許可する内容を確認してください。"
 
+msgid "Connecting to {deviceName}…"
+msgstr "{deviceName} に接続中…"
+
 msgid "Connecting to the desktop…"
 msgstr "デスクトップに接続しています…"
 
@@ -4804,6 +4807,9 @@ msgstr "相対パスをコピー"
 msgid "Copy Relative Path"
 msgstr "相対パスをコピー"
 
+msgid "Copy screenshot"
+msgstr "スクリーンショットをコピー"
+
 msgid "Copy Selection"
 msgstr "選択範囲をコピー"
 
@@ -4979,6 +4985,9 @@ msgstr "「写真」を開けませんでした"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "ブランチ「{1}」を探すために {0} に接続できませんでした。接続と {2} へのアクセス権を確認してから、もう一度お試しください。"
 
+msgid "Could not reach {deviceName}."
+msgstr "{deviceName} に接続できませんでした。"
+
 msgid "Could not reach a mobile simulator."
 msgstr "モバイルシミュレーターに接続できませんでした。"
 
@@ -5147,6 +5156,9 @@ msgstr "パスをコピーできませんでした"
 
 msgid "Couldn't copy the image"
 msgstr "画像をコピーできませんでした"
+
+msgid "Couldn't copy the screenshot"
+msgstr "スクリーンショットをコピーできませんでした"
 
 msgid "Couldn't create workspace"
 msgstr "ワークスペースを作成できませんでした"
@@ -5329,6 +5341,9 @@ msgstr "バックグラウンドタスクを停止できませんでした"
 
 msgid "Couldn't stop the chat"
 msgstr "チャットを停止できませんでした"
+
+msgid "Couldn't take a screenshot"
+msgstr "スクリーンショットを撮れませんでした"
 
 msgid "Couldn't unstage changes"
 msgstr "変更をステージ解除できませんでした"
@@ -14766,8 +14781,8 @@ msgstr "範囲"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "{0}日分の使用状況がそろうとスコアリングが始まります。"
 
-msgid "Screenshot"
-msgstr "スクリーンショット"
+msgid "Screenshot copied"
+msgstr "スクリーンショットをコピーしました"
 
 msgid "Screenshot copied to clipboard"
 msgstr "スクリーンショットをクリップボードにコピーしました"

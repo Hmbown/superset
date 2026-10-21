@@ -4511,6 +4511,9 @@ msgstr "Připojení ke GitHubu není na tomto serveru nastaveno"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Připojením umožníte svým agentům číst a jednat v {name} vaším jménem. Než budete pokračovat, zkontrolujte, co udělujete."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Připojování k {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Připojování k ploše…"
 
@@ -4804,6 +4807,9 @@ msgstr "Kopírovat relativní cestu"
 msgid "Copy Relative Path"
 msgstr "Kopírovat relativní cestu"
 
+msgid "Copy screenshot"
+msgstr "Kopírovat snímek obrazovky"
+
 msgid "Copy Selection"
 msgstr "Kopírovat výběr"
 
@@ -4979,6 +4985,9 @@ msgstr "Nepodařilo se otevřít Fotky"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Nepodařilo se spojit s {0} a vyhledat větev „{1}“. Zkontrolujte připojení a přístup k {2} a zkuste to znovu."
 
+msgid "Could not reach {deviceName}."
+msgstr "Nelze se připojit k {deviceName}."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Nepodařilo se připojit k mobilnímu simulátoru."
 
@@ -5147,6 +5156,9 @@ msgstr "Nepodařilo se zkopírovat cestu"
 
 msgid "Couldn't copy the image"
 msgstr "Obrázek se nepodařilo zkopírovat"
+
+msgid "Couldn't copy the screenshot"
+msgstr "Snímek obrazovky se nepodařilo zkopírovat"
 
 msgid "Couldn't create workspace"
 msgstr "Pracovní prostor se nepodařilo vytvořit"
@@ -5329,6 +5341,9 @@ msgstr "Úlohu na pozadí se nepodařilo zastavit"
 
 msgid "Couldn't stop the chat"
 msgstr "Chat se nepodařilo zastavit"
+
+msgid "Couldn't take a screenshot"
+msgstr "Snímek obrazovky se nepodařilo pořídit"
 
 msgid "Couldn't unstage changes"
 msgstr "Nepodařilo se zrušit přípravu změn"
@@ -14766,8 +14781,8 @@ msgstr "Rozsah"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "Bodování začne, jakmile žebříček uvidí dní s aktivitou: {0}."
 
-msgid "Screenshot"
-msgstr "Snímek obrazovky"
+msgid "Screenshot copied"
+msgstr "Snímek obrazovky zkopírován"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Snímek obrazovky zkopírován do schránky"

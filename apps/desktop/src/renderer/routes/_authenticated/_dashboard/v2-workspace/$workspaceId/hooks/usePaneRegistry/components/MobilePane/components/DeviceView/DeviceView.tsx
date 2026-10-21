@@ -5,6 +5,7 @@ import {
 } from "@expo/hub-client";
 import { Trans } from "@lingui/react/macro";
 import { Button } from "@superset/ui/button";
+import { Spinner } from "@superset/ui/spinner";
 import { cn } from "@superset/ui/utils";
 import { type ReactNode, useEffect, useState } from "react";
 import { DeviceActions } from "./components/DeviceActions";
@@ -52,6 +53,9 @@ export function DeviceView({
 		onRotate(landscape ? "landscape" : "portrait");
 	};
 
+	// hub-client paints a black box and a broken image until the first frame.
+	const hasPicture =
+		client.status === "streaming" || client.status === "reconnecting";
 	const [stalled, setStalled] = useState(false);
 	useEffect(() => {
 		setStalled(false);
@@ -83,13 +87,7 @@ export function DeviceView({
 					onToggleTools={() => setToolsOpen((value) => !value)}
 					onToggleLogs={() => setLogsOpen((value) => !value)}
 				/>
-				{!expanded && (
-					<DeviceControls
-						client={client}
-						deviceName={deviceName}
-						onRotate={rotate}
-					/>
-				)}
+				{!expanded && <DeviceControls client={client} onRotate={rotate} />}
 				{!expanded && toolsOpen && (
 					<ToolsPanel client={client} onClose={() => setToolsOpen(false)} />
 				)}
@@ -119,19 +117,39 @@ export function DeviceView({
 						}}
 					>
 						<DeviceScreen client={client} borderRadius={20} />
-						{stalled && onReconnect && (
-							<div className="absolute inset-0 flex items-center justify-center">
+						<div
+							className={cn(
+								"pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-[20px] px-6 text-center text-sm text-muted-foreground",
+								!hasPicture && "bg-muted",
+							)}
+						>
+							{!hasPicture &&
+								(client.status === "error" ? (
+									<span>
+										{client.error ?? (
+											<Trans>Could not reach {deviceName}.</Trans>
+										)}
+									</span>
+								) : (
+									<>
+										<Spinner className="size-4" />
+										<span>
+											<Trans>Connecting to {deviceName}…</Trans>
+										</span>
+									</>
+								))}
+							{stalled && onReconnect && (
 								<Button
 									variant="outline"
 									size="sm"
-									className="mt-16"
+									className="pointer-events-auto"
 									disabled={reconnecting}
 									onClick={onReconnect}
 								>
 									<Trans>Reconnect</Trans>
 								</Button>
-							</div>
-						)}
+							)}
+						</div>
 					</div>
 				</div>
 			</div>

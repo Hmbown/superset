@@ -4511,6 +4511,9 @@ msgstr "La conexión con GitHub no está configurada en este servidor"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Conectar permite que tus agentes lean y actúen en {name} en tu nombre. Revisa lo que estás concediendo antes de continuar."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Conectando con {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Conectando con el escritorio…"
 
@@ -4804,6 +4807,9 @@ msgstr "Copiar ruta relativa"
 msgid "Copy Relative Path"
 msgstr "Copiar la ruta relativa"
 
+msgid "Copy screenshot"
+msgstr "Copiar captura de pantalla"
+
 msgid "Copy Selection"
 msgstr "Copiar selección"
 
@@ -4979,6 +4985,9 @@ msgstr "No se pudo abrir Fotos"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "No se pudo acceder a {0} para buscar la rama \"{1}\". Revisa tu conexión y tu acceso a {2} e inténtalo de nuevo."
 
+msgid "Could not reach {deviceName}."
+msgstr "No se pudo conectar con {deviceName}."
+
 msgid "Could not reach a mobile simulator."
 msgstr "No se pudo acceder a un simulador móvil."
 
@@ -5147,6 +5156,9 @@ msgstr "No se pudo copiar la ruta"
 
 msgid "Couldn't copy the image"
 msgstr "No se pudo copiar la imagen"
+
+msgid "Couldn't copy the screenshot"
+msgstr "No se pudo copiar la captura de pantalla"
 
 msgid "Couldn't create workspace"
 msgstr "No se pudo crear el espacio de trabajo"
@@ -5329,6 +5341,9 @@ msgstr "No se pudo detener la tarea en segundo plano"
 
 msgid "Couldn't stop the chat"
 msgstr "No se pudo detener el chat"
+
+msgid "Couldn't take a screenshot"
+msgstr "No se pudo hacer la captura de pantalla"
 
 msgid "Couldn't unstage changes"
 msgstr "No se pudieron quitar los cambios de preparados"
@@ -14766,8 +14781,8 @@ msgstr "Alcance"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "La puntuación empieza cuando el tablero cuenta con {0} días de uso."
 
-msgid "Screenshot"
-msgstr "Captura de pantalla"
+msgid "Screenshot copied"
+msgstr "Captura de pantalla copiada"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Captura copiada al portapapeles"

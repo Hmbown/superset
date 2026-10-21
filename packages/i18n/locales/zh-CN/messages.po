@@ -4511,6 +4511,9 @@ msgstr "此服务器未配置 GitHub 连接"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "连接后，你的智能体可代表你在 {name} 中读取和操作。继续前请检查你授予的权限。"
 
+msgid "Connecting to {deviceName}…"
+msgstr "正在连接 {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "正在连接桌面…"
 
@@ -4804,6 +4807,9 @@ msgstr "复制相对路径"
 msgid "Copy Relative Path"
 msgstr "复制相对路径"
 
+msgid "Copy screenshot"
+msgstr "复制截图"
+
 msgid "Copy Selection"
 msgstr "复制所选内容"
 
@@ -4979,6 +4985,9 @@ msgstr "无法打开“照片”"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "无法连接 {0} 以查找分支“{1}”。请检查网络连接和对 {2} 的访问权限，然后重试。"
 
+msgid "Could not reach {deviceName}."
+msgstr "无法连接 {deviceName}。"
+
 msgid "Could not reach a mobile simulator."
 msgstr "无法连接到移动模拟器。"
 
@@ -5147,6 +5156,9 @@ msgstr "无法复制路径"
 
 msgid "Couldn't copy the image"
 msgstr "无法复制图片"
+
+msgid "Couldn't copy the screenshot"
+msgstr "无法复制截图"
 
 msgid "Couldn't create workspace"
 msgstr "无法创建工作区"
@@ -5329,6 +5341,9 @@ msgstr "无法停止后台任务"
 
 msgid "Couldn't stop the chat"
 msgstr "无法停止聊天"
+
+msgid "Couldn't take a screenshot"
+msgstr "无法截图"
 
 msgid "Couldn't unstage changes"
 msgstr "无法取消暂存更改"
@@ -14766,8 +14781,8 @@ msgstr "范围"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "当看板看到 {0} 天的使用数据后，才会开始计分。"
 
-msgid "Screenshot"
-msgstr "截图"
+msgid "Screenshot copied"
+msgstr "已复制截图"
 
 msgid "Screenshot copied to clipboard"
 msgstr "截图已复制到剪贴板"

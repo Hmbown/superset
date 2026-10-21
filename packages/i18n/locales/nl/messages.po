@@ -4511,6 +4511,9 @@ msgstr "GitHub koppelen is niet ingesteld op deze server"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Verbinden laat je agents in {name} lezen en handelen namens jou. Controleer wat je verleent voordat je doorgaat."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Verbinden met {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Verbinden met het bureaublad…"
 
@@ -4804,6 +4807,9 @@ msgstr "Relatief pad kopiëren"
 msgid "Copy Relative Path"
 msgstr "Relatief pad kopiëren"
 
+msgid "Copy screenshot"
+msgstr "Screenshot kopiëren"
+
 msgid "Copy Selection"
 msgstr "Selectie kopiëren"
 
@@ -4979,6 +4985,9 @@ msgstr "Kan Foto's niet openen"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Kon {0} niet bereiken om branch \"{1}\" te zoeken. Controleer je verbinding en je toegang tot {2} en probeer het opnieuw."
 
+msgid "Could not reach {deviceName}."
+msgstr "{deviceName} is niet bereikbaar."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Kan geen mobiele simulator bereiken."
 
@@ -5147,6 +5156,9 @@ msgstr "Kan het pad niet kopiëren"
 
 msgid "Couldn't copy the image"
 msgstr "Afbeelding kopiëren mislukt"
+
+msgid "Couldn't copy the screenshot"
+msgstr "Screenshot kopiëren mislukt"
 
 msgid "Couldn't create workspace"
 msgstr "Kan werkruimte niet aanmaken"
@@ -5329,6 +5341,9 @@ msgstr "Kan de achtergrondtaak niet stoppen"
 
 msgid "Couldn't stop the chat"
 msgstr "Kon de chat niet stoppen"
+
+msgid "Couldn't take a screenshot"
+msgstr "Screenshot maken mislukt"
 
 msgid "Couldn't unstage changes"
 msgstr "Kan wijzigingen niet unstagen"
@@ -14766,8 +14781,8 @@ msgstr "Bereik"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "De score start zodra het bord {0} dagen gebruik ziet."
 
-msgid "Screenshot"
-msgstr "Schermafbeelding"
+msgid "Screenshot copied"
+msgstr "Screenshot gekopieerd"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Screenshot naar klembord gekopieerd"

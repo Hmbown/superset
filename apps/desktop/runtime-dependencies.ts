@@ -76,7 +76,6 @@ const externalizedRuntimeModules: ExternalizedRuntimeModule[] = [
 const deviceHubUnpackGlobs = [
 	"**/node_modules/expo-device-hub/**/*",
 	"**/node_modules/ws/**/*",
-	"**/node_modules/node-datachannel/**/*",
 	"**/node_modules/mediabunny/**/*",
 	"**/node_modules/@fastify/busboy/**/*",
 ];
