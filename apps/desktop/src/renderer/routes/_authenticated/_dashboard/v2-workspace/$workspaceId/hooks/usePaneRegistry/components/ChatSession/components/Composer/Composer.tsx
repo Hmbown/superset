@@ -31,12 +31,18 @@ import { useHotkey } from "renderer/hotkeys";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { pagesListInput } from "renderer/routes/_authenticated/_dashboard/utils/pagesListInput";
 import { AgentComposer } from "renderer/routes/_authenticated/components/AgentComposer";
+import {
+	type AgentSwitcher,
+	ModelPicker,
+} from "renderer/routes/_authenticated/components/ModelPicker";
+import {
+	ModePicker,
+	type SessionMode,
+} from "renderer/routes/_authenticated/components/ModePicker";
 import { CHAT_COLUMN_CLASSNAME, CHAT_GUTTER_CLASSNAME } from "../../constants";
 import { commandChip, LEADING_COMMAND } from "../../utils/commandChip";
 import { mcpContextLine } from "../../utils/mcpServerChips";
 import { elementsForChips } from "../../utils/messageElements";
-import { type AgentSwitcher, ModelPicker } from "./components/ModelPicker";
-import { ModePicker, type SessionMode } from "./components/ModePicker";
 import { useAttachmentPreview } from "./hooks/useAttachmentPreview";
 import {
 	takeRecoveredDraftText,

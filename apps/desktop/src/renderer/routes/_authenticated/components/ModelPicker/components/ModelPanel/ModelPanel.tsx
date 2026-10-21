@@ -2,6 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import type { SessionConfigOption } from "@superset/chat/protocol";
 import { DropdownMenuItem } from "@superset/ui/dropdown-menu";
 import { cn } from "@superset/ui/utils";
+import { Settings2 } from "lucide-react";
 import {
 	type KeyboardEvent,
 	type RefObject,
@@ -14,7 +15,7 @@ import {
 	getPresetIcon,
 	useIsDarkTheme,
 } from "renderer/assets/app-icons/preset-icons";
-import { MENU_ROW_CLASS } from "../../../../constants";
+import { MENU_ROW_CLASS } from "../../../composerPickerStyles";
 import { useFavoriteModels } from "../../hooks/useFavoriteModels";
 import type { AgentSwitcher } from "../../types";
 
@@ -119,7 +120,11 @@ export function ModelPanel({
 	const orderedRows = groups.flatMap((group) => group.rows);
 	const tabs = agentSwitcher
 		? [
-				{ presetId: FAVORITES_TAB, label: t({ message: "Favorites" }) },
+				{
+					presetId: FAVORITES_TAB,
+					iconId: undefined,
+					label: t({ message: "Favorites" }),
+				},
 				...agentSwitcher.agents,
 			]
 		: [];
@@ -244,7 +249,7 @@ export function ModelPanel({
 						const icon =
 							entry.presetId === FAVORITES_TAB
 								? null
-								: getPresetIcon(entry.presetId, isDark);
+								: getPresetIcon(entry.iconId ?? entry.presetId, isDark);
 						return (
 							<button
 								aria-label={entry.label}
@@ -332,6 +337,17 @@ export function ModelPanel({
 					))
 				)}
 			</div>
+			{agentSwitcher?.onConfigureAgents ? (
+				<div className="border-t p-1">
+					<DropdownMenuItem
+						className={MENU_ROW_CLASS}
+						onSelect={agentSwitcher.onConfigureAgents}
+					>
+						<Settings2 className="size-3.5 shrink-0 text-muted-foreground" />
+						<span>{t({ message: "Configure agents…" })}</span>
+					</DropdownMenuItem>
+				</div>
+			) : null}
 		</div>
 	);
 }

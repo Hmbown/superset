@@ -17,13 +17,13 @@ import {
 	getPresetIcon,
 	useIsDarkTheme,
 } from "renderer/assets/app-icons/preset-icons";
+import { useOptimisticSelections } from "renderer/routes/_authenticated/hooks/useOptimisticSelections";
 import {
 	MENU_PANEL_CLASS,
 	MENU_ROW_CLASS,
 	PILL_CHEVRON_CLASS,
 	PILL_TRIGGER_CLASS,
-} from "../../constants";
-import { useOptimisticSelections } from "../../hooks/useOptimisticSelections";
+} from "../composerPickerStyles";
 import { EffortSliderCard } from "./components/EffortSliderCard";
 import { ModelPanel } from "./components/ModelPanel";
 import type { AgentSwitcher } from "./types";
@@ -85,8 +85,14 @@ export function ModelPicker({
 	);
 	const choose = (configId: string, value: string) =>
 		select(configId, value, () => onSelect(configId, value));
+	const currentAgent = agentSwitcher?.agents.find(
+		(agent) => agent.presetId === agentSwitcher.currentPresetId,
+	);
 	const agentIcon = agentSwitcher
-		? getPresetIcon(agentSwitcher.currentPresetId, isDark)
+		? getPresetIcon(
+				currentAgent?.iconId ?? agentSwitcher.currentPresetId,
+				isDark,
+			)
 		: undefined;
 	const model = options.find(
 		(option) => option.category === "model" && option.options.length > 0,
@@ -109,9 +115,7 @@ export function ModelPicker({
 	);
 	if (!model && settings.length === 0 && !canSwitchAgent) return null;
 	const showsModels = Boolean(model) || canSwitchAgent;
-	const currentAgentLabel = agentSwitcher?.agents.find(
-		(agent) => agent.presetId === agentSwitcher.currentPresetId,
-	)?.label;
+	const currentAgentLabel = currentAgent?.label;
 	const pillLabel =
 		currentLabel(model) ??
 		model?.label ??

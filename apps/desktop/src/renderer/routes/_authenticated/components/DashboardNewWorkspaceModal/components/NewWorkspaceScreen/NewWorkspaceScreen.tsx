@@ -35,8 +35,6 @@ import { GoIssueOpened } from "react-icons/go";
 import { HiOutlineCheckCircle } from "react-icons/hi2";
 import { LuGitPullRequest } from "react-icons/lu";
 import { SiLinear } from "react-icons/si";
-import { AgentModelSelect } from "renderer/components/AgentModelSelect";
-import { AgentSelect } from "renderer/components/AgentSelect";
 import { GitHubStarPill } from "renderer/components/GitHubStarPill";
 import { IssueLinkCommand } from "renderer/components/IssueLinkCommand";
 import { LinkedIssuePill } from "renderer/components/LinkedIssuePill";
@@ -45,7 +43,10 @@ import { resolveHostUrl } from "renderer/hooks/host-service/useHostTargetUrl";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { useAgentEffortPreference } from "renderer/hooks/useAgentEffortPreference";
 import { useAgentLaunchPreferences } from "renderer/hooks/useAgentLaunchPreferences";
-import { useAgentModelPreference } from "renderer/hooks/useAgentModelPreference";
+import {
+	storeAgentModel,
+	useAgentModelPreference,
+} from "renderer/hooks/useAgentModelPreference";
 import { useAgentModePreference } from "renderer/hooks/useAgentModePreference";
 import { useRelayUrl } from "renderer/hooks/useRelayUrl";
 import { useSelectedHostProjectIds } from "renderer/hooks/useSelectedHostProjectIds";
@@ -59,6 +60,11 @@ import { showHostServiceUnavailableToast } from "renderer/lib/host-service-unava
 import { PageHeader } from "renderer/routes/_authenticated/_dashboard/components/PageHeader";
 import { AgentComposer } from "renderer/routes/_authenticated/components/AgentComposer";
 import { EnvironmentEditorDialog } from "renderer/routes/_authenticated/components/EnvironmentEditorDialog";
+import {
+	type AgentSwitcher,
+	ModelPicker,
+} from "renderer/routes/_authenticated/components/ModelPicker";
+import { ModePicker } from "renderer/routes/_authenticated/components/ModePicker";
 import { useHostWorkspaces } from "renderer/routes/_authenticated/providers/HostWorkspacesProvider";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import { newWorkspaceAttachmentPaths } from "renderer/stores/new-workspace-attachments";
@@ -107,6 +113,7 @@ import {
 } from "../DashboardNewWorkspaceForm/PromptGroup/types";
 import { SymmetricResizeHandles } from "../SymmetricResizeHandles";
 import { AttachmentCard } from "./components/AttachmentCard";
+import { NoAgentToggle } from "./components/NoAgentToggle";
 import { SamplePromptCards } from "./components/SamplePromptCards";
 import { SamplePrompts } from "./components/SamplePrompts";
 import { PROMPT_PLACEHOLDERS } from "./components/SamplePrompts/constants";
@@ -114,6 +121,15 @@ import { SupersetIcon } from "./components/SupersetIcon";
 import { useGitHubRepositoryProjects } from "./hooks/useGitHubRepositoryProjects";
 import { useProjectPreselection } from "./hooks/useProjectPreselection";
 import { useSamplePromptSelection } from "./hooks/useSamplePromptSelection";
+import {
+	catalogConfigOptions,
+	catalogLaunchModes,
+	choiceValue,
+	EFFORT_CONFIG_ID,
+	launchModeId,
+	launchModeValue,
+	MODEL_CONFIG_ID,
+} from "./utils/catalogConfigOptions";
 import { environmentsForRepository } from "./utils/environmentsForRepository";
 
 /** Nested prefixes of one fixed pool — only the form factor varies by arm. */
@@ -592,6 +608,84 @@ export function NewWorkspaceScreen({
 		MODE_STORAGE_KEY,
 		modeSupport ? selectedPresetId : null,
 	);
+	const launchModes = useMemo(
+		() =>
+			modeSupport
+				? catalogLaunchModes(modeSupport.modes, t({ message: "Direct mode" }))
+				: [],
+		[modeSupport, t],
+	);
+	const configOptions = useMemo(
+		() =>
+			catalogConfigOptions({
+				models: modelSupport?.models,
+				model: selectedModel,
+				efforts: effortSupport ? effortOptions : [],
+				effort: effortForLaunch,
+				labels: {
+					model: t({ message: "Model" }),
+					defaultModel: t({ message: "Default model" }),
+					effort: t({ message: "Effort" }),
+					defaultEffort: t({ message: "Default effort" }),
+				},
+			}),
+		[
+			modelSupport,
+			selectedModel,
+			effortSupport,
+			effortOptions,
+			effortForLaunch,
+			t,
+		],
+	);
+	const agentSwitcher = useMemo<AgentSwitcher | undefined>(() => {
+		if (selectedAgent === "none") return undefined;
+		const launchPresetFor = (agentId: string) => {
+			const agent = v2Agents.find((candidate) => candidate.id === agentId);
+			return agent?.launchPresetId ?? agent?.presetId ?? agent?.iconId ?? null;
+		};
+		return {
+			currentPresetId: selectedAgent,
+			agents: v2Agents.map((agent) => {
+				const presetId = launchPresetFor(agent.id);
+				return {
+					presetId: agent.id,
+					iconId: agent.iconId,
+					label: agent.label,
+					models: (presetId
+						? (getAgentModelSupport(presetId)?.models ?? [])
+						: []
+					).map(({ id, label }) => ({ id, label })),
+				};
+			}),
+			onSwitch: (agentId, model) => {
+				const presetId = launchPresetFor(agentId);
+				if (presetId)
+					storeAgentModel(MODEL_STORAGE_KEY, presetId, model?.id ?? null);
+				setSelectedAgent(agentId);
+			},
+			onConfigureAgents: () => {
+				closeModal();
+				void navigate({ to: "/settings/agents" });
+			},
+		};
+	}, [selectedAgent, v2Agents, setSelectedAgent, closeModal, navigate]);
+	const lastAgentRef = useRef<WorkspaceCreateAgent | null>(null);
+	useEffect(() => {
+		if (selectedAgent !== "none") lastAgentRef.current = selectedAgent;
+	}, [selectedAgent]);
+	const toggleNoAgent = useCallback(() => {
+		if (selectedAgent !== "none") {
+			setSelectedAgent("none");
+			return;
+		}
+		const previous = lastAgentRef.current;
+		setSelectedAgent(
+			previous && selectableAgentIds.includes(previous)
+				? previous
+				: (selectableAgentIds[0] ?? "none"),
+		);
+	}, [selectedAgent, selectableAgentIds, setSelectedAgent]);
 
 	const { otherHosts, hostsSettled } = useWorkspaceHostOptions();
 	const selectedRemoteHostPresence = useMemo(
@@ -977,57 +1071,13 @@ export function NewWorkspaceScreen({
 						pending={isCreating}
 						placeholder={promptPlaceholder}
 						toolbar={
-							<div className="flex min-w-0 items-center gap-1.5">
-								<AgentSelect<WorkspaceCreateAgent>
-									agents={v2Agents}
-									value={selectedAgent}
-									placeholder={t({
-										message: "No agent",
-									})}
-									onValueChange={setSelectedAgent}
-									onBeforeConfigureAgents={closeModal}
-									triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto max-w-[160px]`}
-									iconClassName="size-3 object-contain"
-									allowNone
-									noneLabel={t({
-										message: "No agent",
-									})}
-									noneValue="none"
+							launchModes.length > 0 ? (
+								<ModePicker
+									currentModeId={launchModeId(selectedMode)}
+									modes={launchModes}
+									onSelect={(id) => setSelectedMode(launchModeValue(id))}
 								/>
-								{modelSupport && (
-									<AgentModelSelect
-										models={modelSupport.models}
-										value={selectedModel}
-										onValueChange={setSelectedModel}
-										defaultLabel={t({
-											message: "Default model",
-										})}
-										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto max-w-[160px]`}
-									/>
-								)}
-								{effortSupport && effortOptions.length > 0 && (
-									<AgentModelSelect
-										models={effortOptions}
-										value={selectedEffort}
-										onValueChange={setSelectedEffort}
-										defaultLabel={t({
-											message: "Default effort",
-										})}
-										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto max-w-[160px]`}
-									/>
-								)}
-								{modeSupport && (
-									<AgentModelSelect
-										models={modeSupport.modes}
-										value={selectedMode}
-										onValueChange={setSelectedMode}
-										defaultLabel={t({
-											message: "Direct mode",
-										})}
-										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto max-w-[160px]`}
-									/>
-								)}
-							</div>
+							) : undefined
 						}
 						toolbarEnd={
 							<div className="flex items-center gap-2">
@@ -1097,11 +1147,27 @@ export function NewWorkspaceScreen({
 										<LuGitPullRequest className="size-3.5" />
 									</PromptInputButton>
 								</PRLinkCommand>
+								{agentSwitcher && (
+									<ModelPicker
+										agentSwitcher={agentSwitcher}
+										configOptions={configOptions}
+										onSelect={(configId, value) => {
+											if (configId === MODEL_CONFIG_ID)
+												setSelectedModel(choiceValue(value));
+											if (configId === EFFORT_CONFIG_ID)
+												setSelectedEffort(choiceValue(value));
+										}}
+									/>
+								)}
 							</div>
 						}
 					/>
 					<div className="mt-2 flex items-center justify-between gap-2">
 						<div className="flex min-w-0 flex-1 items-center gap-2">
+							<NoAgentToggle
+								noAgent={selectedAgent === "none"}
+								onToggle={toggleNoAgent}
+							/>
 							<DevicePicker
 								hostId={draft.hostId}
 								onSelectHostId={(next) => {

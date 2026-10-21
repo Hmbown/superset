@@ -1,1 +1,4 @@
-export { useAgentModelPreference } from "./useAgentModelPreference";
+export {
+	storeAgentModel,
+	useAgentModelPreference,
+} from "./useAgentModelPreference";

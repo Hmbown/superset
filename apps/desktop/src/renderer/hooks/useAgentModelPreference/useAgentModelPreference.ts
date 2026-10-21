@@ -32,6 +32,26 @@ function readStoredModel(
 	return support?.models.some((model) => model.id === stored) ? stored : null;
 }
 
+export function storeAgentModel(
+	storageKey: string,
+	presetId: string,
+	model: string | null,
+): void {
+	if (typeof window === "undefined") return;
+	const map = readStoredMap(storageKey);
+	if (model) {
+		map[presetId] = model;
+	} else {
+		delete map[presetId];
+	}
+	try {
+		window.localStorage.setItem(storageKey, JSON.stringify(map));
+	} catch {
+		// Quota/security errors only cost persistence of the preference;
+		// the in-memory selection still applies to this dialog.
+	}
+}
+
 /**
  * Last-selected model per agent preset, persisted as a JSON map in
  * localStorage. Keyed by presetId (not config UUID) so the preference
@@ -53,19 +73,7 @@ export function useAgentModelPreference(
 	const setSelectedModel = useCallback(
 		(model: string | null) => {
 			setSelectedModelState(model);
-			if (typeof window === "undefined" || !presetId) return;
-			const map = readStoredMap(storageKey);
-			if (model) {
-				map[presetId] = model;
-			} else {
-				delete map[presetId];
-			}
-			try {
-				window.localStorage.setItem(storageKey, JSON.stringify(map));
-			} catch {
-				// Quota/security errors only cost persistence of the preference;
-				// the in-memory selection above still applies to this dialog.
-			}
+			if (presetId) storeAgentModel(storageKey, presetId, model);
 		},
 		[storageKey, presetId],
 	);

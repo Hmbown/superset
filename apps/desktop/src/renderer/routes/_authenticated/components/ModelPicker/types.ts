@@ -1,5 +1,7 @@
 export type AgentChoice = {
 	presetId: string;
+	// Icon to show when presetId is not a preset, e.g. a custom agent config.
+	iconId?: string;
 	label: string;
 	models: { id: string; label: string }[];
 };
@@ -12,4 +14,5 @@ export type AgentSwitcher = {
 		presetId: string,
 		model: { id: string; label: string } | null,
 	) => void;
+	onConfigureAgents?: () => void;
 };
