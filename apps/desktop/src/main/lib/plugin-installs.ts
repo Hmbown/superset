@@ -113,6 +113,34 @@ export function uninstallPlugin(name: string): InstalledPlugin[] {
 	return next;
 }
 
+export function installOrganizationPlugin(name: string): void {
+	void queuePluginCli(["install", `${name}@organization`, "--update"]);
+}
+
+export function uninstallOrganizationPlugin(
+	name: string,
+	marketplace: string,
+): void {
+	void queuePluginCli(["uninstall", name, "--marketplace", marketplace]);
+}
+
+export function setOrganizationPluginEnabled(
+	name: string,
+	marketplace: string,
+	enabled: boolean,
+): void {
+	void queuePluginCli([
+		enabled ? "enable" : "disable",
+		name,
+		"--marketplace",
+		marketplace,
+	]);
+}
+
+export function syncPlugins(): Promise<void> {
+	return queuePluginCli(["sync"]);
+}
+
 /**
  * Allowlisted against the shipped skill set — the name never touches the
  * filesystem unless it's one of ours.
