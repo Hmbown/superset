@@ -273,6 +273,10 @@ export function ComposerBody({
 				editor.focus();
 				historyNavigationRef.current?.recallOlder();
 			},
+			blur() {
+				editor.update(() => $setSelection(null), { discrete: true });
+				editor.blur();
+			},
 		}),
 		[draftText, editor, focusAtEnd, pasted.restore, splitPastes],
 	);

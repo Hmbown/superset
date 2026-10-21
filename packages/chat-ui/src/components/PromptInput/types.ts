@@ -127,6 +127,7 @@ export type PromptInputHandle = {
 	openPanel(panel: ComposerPanelContent): void;
 	focus(): void;
 	recallPreviousPrompt(): void;
+	blur(): void;
 };
 
 export type PromptInputProps = {
