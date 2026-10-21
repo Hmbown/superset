@@ -556,7 +556,7 @@ export interface BoxSession {
 }
 
 const LIVE_STATUSES = new Set(["pending", "running"]);
-const SESSION_SEARCH_LIMIT = 20;
+const SESSION_PAGE_SIZE = 20;
 
 export function sessionEndedAt(session: {
 	status: string;
@@ -606,17 +606,14 @@ export async function findSandboxSession(
 ): Promise<{ session: BoxSession | null } | null> {
 	const sandbox = await getSandbox(providerSandboxId);
 	if (!sandbox) return null;
-	let seen = 0;
 	for await (const raw of await sandbox.listSessions({
 		sortOrder: "desc",
-		limit: SESSION_SEARCH_LIMIT,
+		limit: SESSION_PAGE_SIZE,
 	})) {
 		const session = toBoxSession(raw);
 		if (session && (sessionId === null || session.id === sessionId)) {
 			return { session };
 		}
-		seen += 1;
-		if (seen >= SESSION_SEARCH_LIMIT) break;
 	}
 	return { session: null };
 }

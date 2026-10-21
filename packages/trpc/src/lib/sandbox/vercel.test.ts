@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { Sandbox } from "@vercel/sandbox";
 import { stub } from "../../../test/stub";
-import { listActiveWorkspaceSandboxes } from "./vercel";
+import { findSandboxSession, listActiveWorkspaceSandboxes } from "./vercel";
 
 type ListOptions = NonNullable<Parameters<typeof Sandbox.list>[0]>;
 
@@ -63,6 +63,39 @@ stub(Sandbox, {
 			yield* ordered;
 		})();
 	},
+});
+
+describe("findSandboxSession", () => {
+	stub(Sandbox, {
+		get: async () => ({
+			listSessions: async () => (async function* () {
+				for (let index = 0; index <= 20; index += 1) {
+					yield {
+						id: `session_${index}`,
+						memory: 16_384,
+						vcpus: 8,
+						status: "stopped",
+						startedAt: NOW - HOUR,
+						stoppedAt: NOW,
+						updatedAt: NOW,
+					};
+				}
+			})(),
+		}),
+	});
+
+	test("settlement finds a recorded session beyond the first page", async () => {
+		expect(await findSandboxSession("workspace", "session_20")).toEqual({
+			session: {
+				id: "session_20",
+				memoryMb: 16_384,
+				vcpus: 8,
+				startedAt: NOW - HOUR,
+				endedAt: NOW,
+				activeCpuMs: null,
+			},
+		});
+	});
 });
 
 describe("listActiveWorkspaceSandboxes", () => {
