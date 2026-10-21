@@ -540,7 +540,6 @@ export class PullRequestRuntimeManager {
 		);
 	}
 
-	/** Every PR any workspace here has linked, archived ones included. */
 	async listLinkedPullRequests(): Promise<
 		{ repository: string; number: number; linkedAt: number }[]
 	> {
@@ -672,7 +671,6 @@ export class PullRequestRuntimeManager {
 		for (const listener of this.linkListeners) listener();
 	}
 
-	/** Fires when a workspace links a PR it has not linked before. */
 	onPullRequestLinked(listener: () => void): () => void {
 		this.linkListeners.add(listener);
 		return () => this.linkListeners.delete(listener);

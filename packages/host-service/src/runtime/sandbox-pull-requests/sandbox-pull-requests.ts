@@ -12,11 +12,6 @@ interface LinkedPullRequest {
 const keyOf = (pullRequest: LinkedPullRequest) =>
 	`${pullRequest.repository.toLowerCase()}#${pullRequest.number}`;
 
-/**
- * Sends the API each PR this box links, once: on boot for what is already
- * linked, then whenever the PR runtime links another. It retries only while a
- * send has failed.
- */
 export function startSandboxPullRequestReporter(args: {
 	apiUrl: string;
 	workspaceId: string;

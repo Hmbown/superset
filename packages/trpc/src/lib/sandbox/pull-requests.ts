@@ -15,10 +15,6 @@ export type ReportSandboxPullRequestsOutcome =
 	| "unauthorized"
 	| "unknown";
 
-/**
- * Records the pull requests a box has linked, once each. Only repositories
- * the workspace checked out count, so a box can't attach another repo's PRs.
- */
 export async function reportSandboxPullRequests(args: {
 	workspaceId: string;
 	presentedSecret: string;

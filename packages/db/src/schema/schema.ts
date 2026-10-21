@@ -1089,11 +1089,6 @@ export const cloudWorkspaceBoots = pgTable(
 	],
 );
 
-/**
- * Every pull request a cloud workspace's box has linked, newest or not. A row
- * outlives its branch being deleted or reused; state comes from
- * `github_pull_requests` by (repository, number), which webhooks keep current.
- */
 export const cloudWorkspacePullRequests = pgTable(
 	"cloud_workspace_pull_requests",
 	{
