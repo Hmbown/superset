@@ -960,9 +960,6 @@ msgstr "{minutes}분 {rest}초"
 msgid "{minutes}m ago"
 msgstr "{minutes}분 전"
 
-msgid "{modKey}↵ to create"
-msgstr "{modKey}↵로 만들기"
-
 msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
 msgstr "월간 결제 시 사용자당 월 {monthlyPrice}, 연간 결제 시 {yearlyPrice}. 클라우드 워크스페이스, 모바일, 우선 지원이 포함됩니다."
 
@@ -2010,9 +2007,6 @@ msgstr "AI · 대화"
 msgid "AI · Status"
 msgstr "AI · 상태"
 
-msgid "AI authentication failed. Please check your AI settings."
-msgstr "AI 인증에 실패했습니다. AI 설정을 확인해 주세요."
-
 msgid "Alert"
 msgstr "경고"
 
@@ -2781,9 +2775,6 @@ msgstr "자동은 시스템 언어를 따릅니다. 나중에 설정에서 변�
 msgid "Auto Save"
 msgstr "자동 저장"
 
-msgid "auto-generated"
-msgstr "자동 생성"
-
 msgid "Auto-run command"
 msgstr "명령 자동 실행"
 
@@ -2970,7 +2961,6 @@ msgid "Base URL"
 msgstr "기본 URL"
 
 #. placeholder {0}: draft.linkedPR.prNumber
-#. placeholder {0}: linkedPR.prNumber
 msgid "based off PR #{0}"
 msgstr "PR #{0} 기반"
 
@@ -3101,12 +3091,6 @@ msgstr "새 worktree에서 분기"
 
 msgid "Branch in this workspace"
 msgstr "이 워크스페이스에서 분기"
-
-msgid "branch name"
-msgstr "브랜치 이름"
-
-msgid "Branch name"
-msgstr "브랜치 이름"
 
 msgid "Branch name copied"
 msgstr "브랜치 이름 복사됨"
@@ -5396,9 +5380,6 @@ msgstr "리포지토리나 로컬 경로를 클론해 새 프로젝트를 만듭
 msgid "Create a new task from the desktop tasks view."
 msgstr "데스크톱 작업 화면에서 새 작업을 만듭니다."
 
-msgid "Create a new workspace"
-msgstr "새 워크스페이스를 만듭니다"
-
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "작업과 클라우드 워크스페이스를 묶는 프로젝트를 만드세요."
 
@@ -5613,10 +5594,6 @@ msgstr "샌드박스 생성 중"
 
 msgid "Creating workspace"
 msgstr "워크스페이스 만드는 중"
-
-#. placeholder {0}: linkedPR.prNumber
-msgid "Creating workspace from PR #{0}..."
-msgstr "PR #{0}에서 워크스페이스를 만드는 중..."
 
 msgid "Creating workspace: {name}"
 msgstr "워크스페이스 만드는 중: {name}"
@@ -6623,9 +6600,6 @@ msgstr "이름 수정"
 msgid "Edit on GitHub"
 msgstr "GitHub에서 편집"
 
-msgid "Edit prefix"
-msgstr "접두사 편집"
-
 msgid "Edit Run Script"
 msgstr "실행 스크립트 편집"
 
@@ -6996,9 +6970,6 @@ msgstr "검토 중"
 msgid "Extended thinking: {activeLabel}"
 msgstr "확장 사고: {activeLabel}"
 
-msgid "external"
-msgstr "외부"
-
 msgid "External Application"
 msgstr "외부 애플리케이션"
 
@@ -7165,9 +7136,6 @@ msgstr "스레드를 만들지 못했습니다"
 msgid "Failed to create workspace"
 msgstr "워크스페이스를 만들지 못했습니다"
 
-msgid "Failed to create workspace from PR"
-msgstr "PR에서 워크스페이스를 만들지 못했습니다"
-
 msgid "Failed to delete"
 msgstr "삭제하지 못했습니다"
 
@@ -7286,17 +7254,11 @@ msgstr "새 창을 열지 못했습니다: {0}"
 msgid "Failed to open new window: {message}"
 msgstr "새 창을 열지 못했습니다: {message}"
 
-msgid "Failed to open project"
-msgstr "프로젝트를 열지 못했습니다"
-
 msgid "Failed to open task"
 msgstr "작업을 열지 못했습니다"
 
 msgid "Failed to open the billing portal"
 msgstr "결제 포털을 열지 못했습니다"
-
-msgid "Failed to open worktree"
-msgstr "worktree를 열지 못했습니다"
 
 #. placeholder {0}: error.message
 msgid "Failed to open: {0}"
@@ -7304,12 +7266,6 @@ msgstr "열지 못했습니다: {0}"
 
 msgid "Failed to post reply"
 msgstr "답글을 게시하지 못했습니다"
-
-msgid "Failed to prepare agent launch"
-msgstr "에이전트 실행 준비에 실패했습니다"
-
-msgid "Failed to process attachments"
-msgstr "첨부 파일을 처리하지 못했습니다"
 
 msgid "Failed to push branch"
 msgstr "브랜치를 푸시하지 못했습니다"
@@ -9639,9 +9595,6 @@ msgstr "{0}–{1}번 줄"
 msgid "Link"
 msgstr "링크"
 
-msgid "Link ↵"
-msgstr "연결 ↵"
-
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "클론하려면 먼저 프로젝트에 GitHub 리포지토리를 연결하세요."
 
@@ -9795,9 +9748,6 @@ msgstr "그룹 불러오는 중…"
 msgid "Loading issue…"
 msgstr "이슈 불러오는 중…"
 
-msgid "Loading issues..."
-msgstr "이슈를 불러오는 중..."
-
 msgid "Loading issues…"
 msgstr "이슈 불러오는 중…"
 
@@ -9818,9 +9768,6 @@ msgstr "프로젝트 불러오는 중…"
 
 msgid "Loading pull request…"
 msgstr "풀 리퀘스트 불러오는 중…"
-
-msgid "Loading pull requests..."
-msgstr "풀 리퀘스트 불러오는 중..."
 
 msgid "Loading pull requests…"
 msgstr "풀 리퀘스트 불러오는 중…"
@@ -12148,9 +12095,6 @@ msgstr "풀 리퀘스트 #{number} 열기"
 msgid "Open pull request options"
 msgstr "풀 리퀘스트 옵션 열기"
 
-msgid "Open pull requests"
-msgstr "열린 풀 리퀘스트"
-
 msgid "Open recent"
 msgstr "최근 항목 열기"
 
@@ -12264,9 +12208,6 @@ msgstr "폴더 열기"
 
 msgid "Opening pages"
 msgstr "페이지 열기"
-
-msgid "Opening worktree..."
-msgstr "worktree를 여는 중..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "에이전트가 프로젝트에 필요한 것을 설치하고 .superset/config.json을 작성하는 클라우드 워크스페이스를 엽니다"
@@ -12969,9 +12910,6 @@ msgstr "PR URL"
 msgid "PR URL must match {repoMismatch}."
 msgstr "PR URL이 {repoMismatch}과(와) 일치해야 합니다."
 
-msgid "PR URL must match {selectedRepositoryLabel}."
-msgstr "PR URL이 {selectedRepositoryLabel}과(와) 일치해야 합니다."
-
 msgid "Prediction progress"
 msgstr "예측 진행 상황"
 
@@ -13639,9 +13577,6 @@ msgstr "최근 프롬프트"
 
 msgid "Recent PRs"
 msgstr "최근 PR"
-
-msgid "Recent pull requests"
-msgstr "최근 풀 리퀘스트"
 
 msgid "Recently deleted"
 msgstr "최근 삭제됨"
@@ -14627,9 +14562,6 @@ msgstr "일정이나 이벤트로 실행, 필요할 때 실행, 일시 중지, �
 
 msgid "Run script"
 msgstr "스크립트 실행"
-
-msgid "Run setup script"
-msgstr "설정 스크립트 실행"
 
 msgid "Run setup script in each imported workspace"
 msgstr "가져온 각 워크스페이스에서 설정 스크립트 실행"
@@ -18855,12 +18787,6 @@ msgstr "user@example.com"
 msgid "user@host, ssh://user@host:2222, or an ssh config alias"
 msgstr "user@host, ssh://user@host:2222 또는 ssh 설정 별칭"
 
-msgid "Using random branch name (AI generation timed out)"
-msgstr "임의의 브랜치 이름을 사용합니다 (AI 생성 시간 초과)"
-
-msgid "Using random branch name (AI generation unavailable)"
-msgstr "임의의 브랜치 이름을 사용합니다 (AI 생성 사용 불가)"
-
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId가 워크스페이스의 프로젝트와 일치하지 않습니다"
 
@@ -19463,9 +19389,6 @@ msgstr "워크스페이스를 보관했습니다"
 msgid "Workspace created"
 msgstr "워크스페이스를 만들었습니다"
 
-msgid "Workspace created from PR"
-msgstr "PR에서 워크스페이스를 만들었습니다"
-
 msgid "Workspace details"
 msgstr "워크스페이스 세부 정보"
 
@@ -19480,9 +19403,6 @@ msgstr "워크스페이스 레이아웃"
 
 msgid "Workspace name"
 msgstr "워크스페이스 이름"
-
-msgid "Workspace name (optional)"
-msgstr "워크스페이스 이름 (선택)"
 
 msgid "Workspace not found"
 msgstr "워크스페이스를 찾을 수 없음"
@@ -19552,9 +19472,6 @@ msgstr "worktree 없음"
 
 msgid "Worktree on this device"
 msgstr "이 기기의 worktree"
-
-msgid "Worktree opened"
-msgstr "worktree를 열었습니다"
 
 msgid "Worktree out of sync"
 msgstr "worktree가 동기화되지 않음"

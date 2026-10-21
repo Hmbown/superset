@@ -960,9 +960,6 @@ msgstr "{minutes} Min. {rest} Sek."
 msgid "{minutes}m ago"
 msgstr "vor {minutes} Min."
 
-msgid "{modKey}↵ to create"
-msgstr "{modKey}↵ zum Erstellen"
-
 msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
 msgstr "{monthlyPrice} pro Nutzer/Mon. bei monatlicher Abrechnung oder {yearlyPrice} bei jährlicher Abrechnung. Cloud-Arbeitsbereiche, Mobile, priorisierter Support."
 
@@ -2010,9 +2007,6 @@ msgstr "KI · Unterhaltung"
 msgid "AI · Status"
 msgstr "KI · Status"
 
-msgid "AI authentication failed. Please check your AI settings."
-msgstr "KI-Authentifizierung fehlgeschlagen. Bitte prüfe deine KI-Einstellungen."
-
 msgid "Alert"
 msgstr "Alert"
 
@@ -2781,9 +2775,6 @@ msgstr "Automatisch folgt deiner Systemsprache. Du kannst sie später in den Ein
 msgid "Auto Save"
 msgstr "Automatisches Speichern"
 
-msgid "auto-generated"
-msgstr "automatisch erzeugt"
-
 msgid "Auto-run command"
 msgstr "Befehl automatisch ausführen"
 
@@ -2970,7 +2961,6 @@ msgid "Base URL"
 msgstr "Basis-URL"
 
 #. placeholder {0}: draft.linkedPR.prNumber
-#. placeholder {0}: linkedPR.prNumber
 msgid "based off PR #{0}"
 msgstr "basierend auf PR #{0}"
 
@@ -3101,12 +3091,6 @@ msgstr "In einem neuen Worktree verzweigen"
 
 msgid "Branch in this workspace"
 msgstr "In diesem Workspace verzweigen"
-
-msgid "branch name"
-msgstr "Branch-Name"
-
-msgid "Branch name"
-msgstr "Branch-Name"
 
 msgid "Branch name copied"
 msgstr "Branch-Name kopiert"
@@ -5396,9 +5380,6 @@ msgstr "Erstelle ein neues Projekt, indem du ein Repository oder einen lokalen P
 msgid "Create a new task from the desktop tasks view."
 msgstr "Erstelle eine neue Aufgabe aus der Aufgabenansicht im Desktop."
 
-msgid "Create a new workspace"
-msgstr "Neuen Arbeitsbereich erstellen"
-
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "Erstelle ein Projekt, um Aufgaben und Cloud-Arbeitsbereiche zu gruppieren."
 
@@ -5613,10 +5594,6 @@ msgstr "Sandbox wird erstellt"
 
 msgid "Creating workspace"
 msgstr "Arbeitsbereich wird erstellt"
-
-#. placeholder {0}: linkedPR.prNumber
-msgid "Creating workspace from PR #{0}..."
-msgstr "Arbeitsbereich wird aus PR #{0} erstellt..."
 
 msgid "Creating workspace: {name}"
 msgstr "Arbeitsbereich wird erstellt: {name}"
@@ -6623,9 +6600,6 @@ msgstr "Namen bearbeiten"
 msgid "Edit on GitHub"
 msgstr "Auf GitHub bearbeiten"
 
-msgid "Edit prefix"
-msgstr "Präfix bearbeiten"
-
 msgid "Edit Run Script"
 msgstr "Run-Skript bearbeiten"
 
@@ -6996,9 +6970,6 @@ msgstr "In Prüfung"
 msgid "Extended thinking: {activeLabel}"
 msgstr "Erweitertes Nachdenken: {activeLabel}"
 
-msgid "external"
-msgstr "extern"
-
 msgid "External Application"
 msgstr "Externe Anwendung"
 
@@ -7165,9 +7136,6 @@ msgstr "Thread konnte nicht erstellt werden"
 msgid "Failed to create workspace"
 msgstr "Arbeitsbereich konnte nicht erstellt werden"
 
-msgid "Failed to create workspace from PR"
-msgstr "Arbeitsbereich konnte nicht aus PR erstellt werden"
-
 msgid "Failed to delete"
 msgstr "Löschen fehlgeschlagen"
 
@@ -7286,17 +7254,11 @@ msgstr "Neues Fenster konnte nicht geöffnet werden: {0}"
 msgid "Failed to open new window: {message}"
 msgstr "Neues Fenster konnte nicht geöffnet werden: {message}"
 
-msgid "Failed to open project"
-msgstr "Projekt konnte nicht geöffnet werden"
-
 msgid "Failed to open task"
 msgstr "Aufgabe konnte nicht geöffnet werden"
 
 msgid "Failed to open the billing portal"
 msgstr "Das Abrechnungsportal konnte nicht geöffnet werden"
-
-msgid "Failed to open worktree"
-msgstr "Worktree konnte nicht geöffnet werden"
 
 #. placeholder {0}: error.message
 msgid "Failed to open: {0}"
@@ -7304,12 +7266,6 @@ msgstr "Öffnen fehlgeschlagen: {0}"
 
 msgid "Failed to post reply"
 msgstr "Antwort konnte nicht gesendet werden"
-
-msgid "Failed to prepare agent launch"
-msgstr "Agent-Start konnte nicht vorbereitet werden"
-
-msgid "Failed to process attachments"
-msgstr "Anhänge konnten nicht verarbeitet werden"
 
 msgid "Failed to push branch"
 msgstr "Branch konnte nicht gepusht werden"
@@ -9639,9 +9595,6 @@ msgstr "Zeilen {0}–{1}"
 msgid "Link"
 msgstr "Link"
 
-msgid "Link ↵"
-msgstr "Verknüpfen ↵"
-
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Verknüpfe zuerst ein GitHub-Repository mit dem Projekt, um klonen zu können."
 
@@ -9795,9 +9748,6 @@ msgstr "Gruppen werden geladen…"
 msgid "Loading issue…"
 msgstr "Issue wird geladen…"
 
-msgid "Loading issues..."
-msgstr "Issues werden geladen..."
-
 msgid "Loading issues…"
 msgstr "Issues werden geladen…"
 
@@ -9818,9 +9768,6 @@ msgstr "Projekte werden geladen…"
 
 msgid "Loading pull request…"
 msgstr "Pull Request wird geladen…"
-
-msgid "Loading pull requests..."
-msgstr "Pull Requests werden geladen..."
 
 msgid "Loading pull requests…"
 msgstr "Pull Requests werden geladen…"
@@ -12148,9 +12095,6 @@ msgstr "Pull Request #{number} öffnen"
 msgid "Open pull request options"
 msgstr "Pull-Request-Optionen öffnen"
 
-msgid "Open pull requests"
-msgstr "Offene Pull Requests"
-
 msgid "Open recent"
 msgstr "Zuletzt geöffnet"
 
@@ -12264,9 +12208,6 @@ msgstr "Ordner öffnen"
 
 msgid "Opening pages"
 msgstr "Seiten öffnen"
-
-msgid "Opening worktree..."
-msgstr "Worktree wird geöffnet..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Öffnet einen Cloud-Arbeitsbereich, in dem ein Agent installiert, was das Projekt braucht, und dessen .superset/config.json schreibt"
@@ -12969,9 +12910,6 @@ msgstr "PR-URL"
 msgid "PR URL must match {repoMismatch}."
 msgstr "Die PR-URL muss zu {repoMismatch} passen."
 
-msgid "PR URL must match {selectedRepositoryLabel}."
-msgstr "Die PR-URL muss zu {selectedRepositoryLabel} passen."
-
 msgid "Prediction progress"
 msgstr "Fortschritt der Vorhersage"
 
@@ -13639,9 +13577,6 @@ msgstr "Letzte Prompts"
 
 msgid "Recent PRs"
 msgstr "Letzte PRs"
-
-msgid "Recent pull requests"
-msgstr "Letzte Pull Requests"
 
 msgid "Recently deleted"
 msgstr "Kürzlich gelöscht"
@@ -14627,9 +14562,6 @@ msgstr "Nach Zeitplan oder bei Ereignissen ausführen, bei Bedarf starten, pausi
 
 msgid "Run script"
 msgstr "Skript ausführen"
-
-msgid "Run setup script"
-msgstr "Setup-Skript ausführen"
 
 msgid "Run setup script in each imported workspace"
 msgstr "Setup-Skript in jedem importierten Arbeitsbereich ausführen"
@@ -18855,12 +18787,6 @@ msgstr "user@example.com"
 msgid "user@host, ssh://user@host:2222, or an ssh config alias"
 msgstr "user@host, ssh://user@host:2222 oder ein Alias aus der ssh-Konfiguration"
 
-msgid "Using random branch name (AI generation timed out)"
-msgstr "Zufälliger Branch-Name wird verwendet (KI-Generierung: Zeitüberschreitung)"
-
-msgid "Using random branch name (AI generation unavailable)"
-msgstr "Zufälliger Branch-Name wird verwendet (KI-Generierung nicht verfügbar)"
-
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId passt nicht zum Projekt des Arbeitsbereichs"
 
@@ -19463,9 +19389,6 @@ msgstr "Arbeitsbereich archiviert"
 msgid "Workspace created"
 msgstr "Arbeitsbereich erstellt"
 
-msgid "Workspace created from PR"
-msgstr "Arbeitsbereich aus PR erstellt"
-
 msgid "Workspace details"
 msgstr "Arbeitsbereichsdetails"
 
@@ -19480,9 +19403,6 @@ msgstr "Arbeitsbereich-Layout"
 
 msgid "Workspace name"
 msgstr "Name des Arbeitsbereichs"
-
-msgid "Workspace name (optional)"
-msgstr "Name des Arbeitsbereichs (optional)"
 
 msgid "Workspace not found"
 msgstr "Arbeitsbereich nicht gefunden"
@@ -19552,9 +19472,6 @@ msgstr "Worktree fehlt"
 
 msgid "Worktree on this device"
 msgstr "Worktree auf diesem Gerät"
-
-msgid "Worktree opened"
-msgstr "Worktree geöffnet"
 
 msgid "Worktree out of sync"
 msgstr "Worktree nicht synchron"

@@ -960,9 +960,6 @@ msgstr "{minutes} mnt {rest} dtk"
 msgid "{minutes}m ago"
 msgstr "{minutes}m lalu"
 
-msgid "{modKey}↵ to create"
-msgstr "{modKey}↵ untuk membuat"
-
 msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
 msgstr "{monthlyPrice} per pengguna/bln jika ditagih bulanan, atau {yearlyPrice} jika ditagih tahunan. Workspace cloud, mobile, dukungan prioritas."
 
@@ -2010,9 +2007,6 @@ msgstr "AI · Percakapan"
 msgid "AI · Status"
 msgstr "AI · Status"
 
-msgid "AI authentication failed. Please check your AI settings."
-msgstr "Autentikasi AI gagal. Silakan periksa pengaturan AI Anda."
-
 msgid "Alert"
 msgstr "Alert"
 
@@ -2781,9 +2775,6 @@ msgstr "Otomatis mengikuti bahasa sistem Anda. Anda bisa mengubahnya nanti di Pe
 msgid "Auto Save"
 msgstr "Simpan Otomatis"
 
-msgid "auto-generated"
-msgstr "dibuat otomatis"
-
 msgid "Auto-run command"
 msgstr "Jalankan perintah otomatis"
 
@@ -2970,7 +2961,6 @@ msgid "Base URL"
 msgstr "URL dasar"
 
 #. placeholder {0}: draft.linkedPR.prNumber
-#. placeholder {0}: linkedPR.prNumber
 msgid "based off PR #{0}"
 msgstr "berdasarkan PR #{0}"
 
@@ -3101,12 +3091,6 @@ msgstr "Cabangkan di worktree baru"
 
 msgid "Branch in this workspace"
 msgstr "Cabangkan di ruang kerja ini"
-
-msgid "branch name"
-msgstr "nama branch"
-
-msgid "Branch name"
-msgstr "Nama branch"
 
 msgid "Branch name copied"
 msgstr "Nama branch disalin"
@@ -5396,9 +5380,6 @@ msgstr "Buat proyek baru dengan meng-clone repositori atau path lokal."
 msgid "Create a new task from the desktop tasks view."
 msgstr "Buat tugas baru dari tampilan tugas desktop."
 
-msgid "Create a new workspace"
-msgstr "Buat workspace baru"
-
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "Buat proyek untuk mengelompokkan tugas dan workspace cloud."
 
@@ -5613,10 +5594,6 @@ msgstr "Membuat sandbox"
 
 msgid "Creating workspace"
 msgstr "Membuat workspace"
-
-#. placeholder {0}: linkedPR.prNumber
-msgid "Creating workspace from PR #{0}..."
-msgstr "Membuat workspace dari PR #{0}..."
 
 msgid "Creating workspace: {name}"
 msgstr "Membuat workspace: {name}"
@@ -6623,9 +6600,6 @@ msgstr "Edit nama"
 msgid "Edit on GitHub"
 msgstr "Edit di GitHub"
 
-msgid "Edit prefix"
-msgstr "Edit prefix"
-
 msgid "Edit Run Script"
 msgstr "Edit Skrip Run"
 
@@ -6996,9 +6970,6 @@ msgstr "Sedang dijajaki"
 msgid "Extended thinking: {activeLabel}"
 msgstr "Extended thinking: {activeLabel}"
 
-msgid "external"
-msgstr "eksternal"
-
 msgid "External Application"
 msgstr "Aplikasi Eksternal"
 
@@ -7165,9 +7136,6 @@ msgstr "Gagal membuat thread"
 msgid "Failed to create workspace"
 msgstr "Gagal membuat workspace"
 
-msgid "Failed to create workspace from PR"
-msgstr "Gagal membuat workspace dari PR"
-
 msgid "Failed to delete"
 msgstr "Gagal menghapus"
 
@@ -7286,17 +7254,11 @@ msgstr "Gagal membuka jendela baru: {0}"
 msgid "Failed to open new window: {message}"
 msgstr "Gagal membuka jendela baru: {message}"
 
-msgid "Failed to open project"
-msgstr "Gagal membuka proyek"
-
 msgid "Failed to open task"
 msgstr "Gagal membuka tugas"
 
 msgid "Failed to open the billing portal"
 msgstr "Gagal membuka portal penagihan"
-
-msgid "Failed to open worktree"
-msgstr "Gagal membuka worktree"
 
 #. placeholder {0}: error.message
 msgid "Failed to open: {0}"
@@ -7304,12 +7266,6 @@ msgstr "Gagal membuka: {0}"
 
 msgid "Failed to post reply"
 msgstr "Gagal mengirim balasan"
-
-msgid "Failed to prepare agent launch"
-msgstr "Gagal menyiapkan peluncuran agen"
-
-msgid "Failed to process attachments"
-msgstr "Gagal memproses lampiran"
 
 msgid "Failed to push branch"
 msgstr "Gagal mem-push branch"
@@ -9639,9 +9595,6 @@ msgstr "Baris {0}–{1}"
 msgid "Link"
 msgstr "Tautan"
 
-msgid "Link ↵"
-msgstr "Tautkan ↵"
-
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Tautkan dulu repositori GitHub ke proyeknya agar bisa di-clone."
 
@@ -9795,9 +9748,6 @@ msgstr "Memuat grup…"
 msgid "Loading issue…"
 msgstr "Memuat issue…"
 
-msgid "Loading issues..."
-msgstr "Memuat issue..."
-
 msgid "Loading issues…"
 msgstr "Memuat issue…"
 
@@ -9818,9 +9768,6 @@ msgstr "Memuat proyek…"
 
 msgid "Loading pull request…"
 msgstr "Memuat pull request…"
-
-msgid "Loading pull requests..."
-msgstr "Memuat pull request..."
 
 msgid "Loading pull requests…"
 msgstr "Memuat pull request…"
@@ -12148,9 +12095,6 @@ msgstr "Buka pull request #{number}"
 msgid "Open pull request options"
 msgstr "Buka opsi pull request"
 
-msgid "Open pull requests"
-msgstr "Pull request terbuka"
-
 msgid "Open recent"
 msgstr "Buka yang terbaru"
 
@@ -12264,9 +12208,6 @@ msgstr "Membuka folder"
 
 msgid "Opening pages"
 msgstr "Membuka halaman"
-
-msgid "Opening worktree..."
-msgstr "Membuka worktree..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Membuka workspace cloud tempat agen memasang yang dibutuhkan proyek dan menulis .superset/config.json miliknya"
@@ -12969,9 +12910,6 @@ msgstr "URL PR"
 msgid "PR URL must match {repoMismatch}."
 msgstr "URL PR harus cocok dengan {repoMismatch}."
 
-msgid "PR URL must match {selectedRepositoryLabel}."
-msgstr "URL PR harus cocok dengan {selectedRepositoryLabel}."
-
 msgid "Prediction progress"
 msgstr "Progres prediksi"
 
@@ -13639,9 +13577,6 @@ msgstr "Prompt terbaru"
 
 msgid "Recent PRs"
 msgstr "PR terbaru"
-
-msgid "Recent pull requests"
-msgstr "Pull request terbaru"
 
 msgid "Recently deleted"
 msgstr "Baru dihapus"
@@ -14627,9 +14562,6 @@ msgstr "Jalankan sesuai jadwal atau saat ada event, sesuai permintaan, jeda, lan
 
 msgid "Run script"
 msgstr "Jalankan skrip"
-
-msgid "Run setup script"
-msgstr "Jalankan skrip setup"
 
 msgid "Run setup script in each imported workspace"
 msgstr "Jalankan skrip setup di tiap workspace yang diimpor"
@@ -18855,12 +18787,6 @@ msgstr "user@example.com"
 msgid "user@host, ssh://user@host:2222, or an ssh config alias"
 msgstr "user@host, ssh://user@host:2222, atau alias dari konfigurasi ssh"
 
-msgid "Using random branch name (AI generation timed out)"
-msgstr "Memakai nama branch acak (pembuatan AI kehabisan waktu)"
-
-msgid "Using random branch name (AI generation unavailable)"
-msgstr "Memakai nama branch acak (pembuatan AI tidak tersedia)"
-
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId tidak cocok dengan proyek workspace"
 
@@ -19463,9 +19389,6 @@ msgstr "Workspace diarsipkan"
 msgid "Workspace created"
 msgstr "Workspace dibuat"
 
-msgid "Workspace created from PR"
-msgstr "Workspace dibuat dari PR"
-
 msgid "Workspace details"
 msgstr "Detail workspace"
 
@@ -19480,9 +19403,6 @@ msgstr "Tata letak workspace"
 
 msgid "Workspace name"
 msgstr "Nama workspace"
-
-msgid "Workspace name (optional)"
-msgstr "Nama workspace (opsional)"
 
 msgid "Workspace not found"
 msgstr "Workspace tidak ditemukan"
@@ -19552,9 +19472,6 @@ msgstr "Worktree hilang"
 
 msgid "Worktree on this device"
 msgstr "Worktree di perangkat ini"
-
-msgid "Worktree opened"
-msgstr "Worktree dibuka"
 
 msgid "Worktree out of sync"
 msgstr "Worktree tidak sinkron"

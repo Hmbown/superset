@@ -960,9 +960,6 @@ msgstr "{minutes} мин {rest} с"
 msgid "{minutes}m ago"
 msgstr "{minutes} мин. назад"
 
-msgid "{modKey}↵ to create"
-msgstr "{modKey}↵ — создать"
-
 msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
 msgstr "{monthlyPrice} за пользователя в месяц при помесячной оплате или {yearlyPrice} при оплате за год. Облачные рабочие области, мобильное приложение, приоритетная поддержка."
 
@@ -2010,9 +2007,6 @@ msgstr "AI · диалог"
 msgid "AI · Status"
 msgstr "AI · статус"
 
-msgid "AI authentication failed. Please check your AI settings."
-msgstr "Не удалось выполнить аутентификацию AI. Проверьте настройки AI."
-
 msgid "Alert"
 msgstr "Оповещение"
 
@@ -2781,9 +2775,6 @@ msgstr "Авто следует языку системы. Позже это м�
 msgid "Auto Save"
 msgstr "Автосохранение"
 
-msgid "auto-generated"
-msgstr "генерируется автоматически"
-
 msgid "Auto-run command"
 msgstr "Команда автозапуска"
 
@@ -2970,7 +2961,6 @@ msgid "Base URL"
 msgstr "Базовый URL"
 
 #. placeholder {0}: draft.linkedPR.prNumber
-#. placeholder {0}: linkedPR.prNumber
 msgid "based off PR #{0}"
 msgstr "на основе PR #{0}"
 
@@ -3101,12 +3091,6 @@ msgstr "Ответвить в новом worktree"
 
 msgid "Branch in this workspace"
 msgstr "Ответвить в этом рабочем пространстве"
-
-msgid "branch name"
-msgstr "имя ветки"
-
-msgid "Branch name"
-msgstr "Имя ветки"
 
 msgid "Branch name copied"
 msgstr "Имя ветки скопировано"
@@ -5396,9 +5380,6 @@ msgstr "Создайте проект, клонировав репозитори
 msgid "Create a new task from the desktop tasks view."
 msgstr "Создайте задачу из раздела задач в приложении."
 
-msgid "Create a new workspace"
-msgstr "Создать новую рабочую область"
-
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "Создайте проект, чтобы объединить задачи и облачные рабочие области."
 
@@ -5613,10 +5594,6 @@ msgstr "Создаётся песочница"
 
 msgid "Creating workspace"
 msgstr "Создание рабочей области"
-
-#. placeholder {0}: linkedPR.prNumber
-msgid "Creating workspace from PR #{0}..."
-msgstr "Создание рабочей области из PR #{0}..."
 
 msgid "Creating workspace: {name}"
 msgstr "Создание рабочей области: {name}"
@@ -6623,9 +6600,6 @@ msgstr "Изменить имя"
 msgid "Edit on GitHub"
 msgstr "Изменить на GitHub"
 
-msgid "Edit prefix"
-msgstr "Изменить префикс"
-
 msgid "Edit Run Script"
 msgstr "Изменить скрипт запуска"
 
@@ -6996,9 +6970,6 @@ msgstr "Изучаем"
 msgid "Extended thinking: {activeLabel}"
 msgstr "Расширенное мышление: {activeLabel}"
 
-msgid "external"
-msgstr "внешняя"
-
 msgid "External Application"
 msgstr "Внешнее приложение"
 
@@ -7165,9 +7136,6 @@ msgstr "Не удалось создать ветку обсуждения"
 msgid "Failed to create workspace"
 msgstr "Не удалось создать рабочую область"
 
-msgid "Failed to create workspace from PR"
-msgstr "Не удалось создать рабочую область из PR"
-
 msgid "Failed to delete"
 msgstr "Не удалось удалить"
 
@@ -7286,17 +7254,11 @@ msgstr "Не удалось открыть новое окно: {0}"
 msgid "Failed to open new window: {message}"
 msgstr "Не удалось открыть новое окно: {message}"
 
-msgid "Failed to open project"
-msgstr "Не удалось открыть проект"
-
 msgid "Failed to open task"
 msgstr "Не удалось открыть задачу"
 
 msgid "Failed to open the billing portal"
 msgstr "Не удалось открыть портал оплаты"
-
-msgid "Failed to open worktree"
-msgstr "Не удалось открыть worktree"
 
 #. placeholder {0}: error.message
 msgid "Failed to open: {0}"
@@ -7304,12 +7266,6 @@ msgstr "Не удалось открыть: {0}"
 
 msgid "Failed to post reply"
 msgstr "Не удалось отправить ответ"
-
-msgid "Failed to prepare agent launch"
-msgstr "Не удалось подготовить запуск агента"
-
-msgid "Failed to process attachments"
-msgstr "Не удалось обработать вложения"
 
 msgid "Failed to push branch"
 msgstr "Не удалось отправить ветку"
@@ -9639,9 +9595,6 @@ msgstr "Строки {0}–{1}"
 msgid "Link"
 msgstr "Ссылка"
 
-msgid "Link ↵"
-msgstr "Привязать ↵"
-
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Сначала свяжите проект с репозиторием GitHub, чтобы включить клонирование."
 
@@ -9795,9 +9748,6 @@ msgstr "Загрузка групп…"
 msgid "Loading issue…"
 msgstr "Загрузка задачи…"
 
-msgid "Loading issues..."
-msgstr "Загрузка задач..."
-
 msgid "Loading issues…"
 msgstr "Загрузка задач…"
 
@@ -9818,9 +9768,6 @@ msgstr "Загрузка проектов…"
 
 msgid "Loading pull request…"
 msgstr "Загрузка пул-реквеста…"
-
-msgid "Loading pull requests..."
-msgstr "Загрузка пул-реквестов..."
 
 msgid "Loading pull requests…"
 msgstr "Загрузка пул-реквестов…"
@@ -12148,9 +12095,6 @@ msgstr "Открыть пул-реквест #{number}"
 msgid "Open pull request options"
 msgstr "Открыть параметры пул-реквеста"
 
-msgid "Open pull requests"
-msgstr "Открытые пул-реквесты"
-
 msgid "Open recent"
 msgstr "Открыть недавние"
 
@@ -12264,9 +12208,6 @@ msgstr "Открытие папок"
 
 msgid "Opening pages"
 msgstr "Открытие страниц"
-
-msgid "Opening worktree..."
-msgstr "Открытие worktree..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Открывает облачную рабочую область, где агент устанавливает всё нужное проекту и записывает его .superset/config.json"
@@ -12969,9 +12910,6 @@ msgstr "URL PR"
 msgid "PR URL must match {repoMismatch}."
 msgstr "URL пул-реквеста должен соответствовать {repoMismatch}."
 
-msgid "PR URL must match {selectedRepositoryLabel}."
-msgstr "URL пул-реквеста должен соответствовать {selectedRepositoryLabel}."
-
 msgid "Prediction progress"
 msgstr "Прогресс по прогнозу"
 
@@ -13639,9 +13577,6 @@ msgstr "Недавние промпты"
 
 msgid "Recent PRs"
 msgstr "Недавние PR"
-
-msgid "Recent pull requests"
-msgstr "Недавние пул-реквесты"
 
 msgid "Recently deleted"
 msgstr "Недавно удалённые"
@@ -14627,9 +14562,6 @@ msgstr "Запуск по расписанию или по событиям, з�
 
 msgid "Run script"
 msgstr "Запустить скрипт"
-
-msgid "Run setup script"
-msgstr "Запустить скрипт установки"
 
 msgid "Run setup script in each imported workspace"
 msgstr "Запускать скрипт установки в каждой импортированной рабочей области"
@@ -18855,12 +18787,6 @@ msgstr "user@example.com"
 msgid "user@host, ssh://user@host:2222, or an ssh config alias"
 msgstr "user@host, ssh://user@host:2222 или псевдоним из конфигурации ssh"
 
-msgid "Using random branch name (AI generation timed out)"
-msgstr "Используется случайное имя ветки (истекло время генерации AI)"
-
-msgid "Using random branch name (AI generation unavailable)"
-msgstr "Используется случайное имя ветки (генерация AI недоступна)"
-
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId не совпадает с проектом рабочей области"
 
@@ -19463,9 +19389,6 @@ msgstr "Рабочая область в архиве"
 msgid "Workspace created"
 msgstr "Рабочая область создана"
 
-msgid "Workspace created from PR"
-msgstr "Рабочая область создана из PR"
-
 msgid "Workspace details"
 msgstr "Сведения о рабочей области"
 
@@ -19480,9 +19403,6 @@ msgstr "Раскладка рабочих областей"
 
 msgid "Workspace name"
 msgstr "Название рабочего пространства"
-
-msgid "Workspace name (optional)"
-msgstr "Имя рабочей области (необязательно)"
 
 msgid "Workspace not found"
 msgstr "Рабочая область не найдена"
@@ -19552,9 +19472,6 @@ msgstr "Worktree отсутствует"
 
 msgid "Worktree on this device"
 msgstr "Worktree на этом устройстве"
-
-msgid "Worktree opened"
-msgstr "Worktree открыт"
 
 msgid "Worktree out of sync"
 msgstr "Worktree рассинхронизирован"
