@@ -2487,6 +2487,31 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
+	it("keeps pdev notifications out of the transcript, except errors", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message",
+			messageId: "n1",
+			content: [{ type: "text", text: "MCP servers need attention" }],
+			_meta: { piAcp: { notify: { level: "warning" } } },
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message",
+			messageId: "n2",
+			content: [{ type: "text", text: "extension crashed" }],
+			_meta: { piAcp: { notify: { level: "error" } } },
+		});
+		await flush();
+		const items = itemsOf(events);
+		expect(items.some((item) => item.kind === "agent_message")).toBe(false);
+		expect(
+			items.filter((item) => item.kind === "notice").map((item) => item.text),
+		).toEqual(["extension crashed"]);
+		await adapter.dispose();
+	});
+
 	it("keeps the model a replayed v2 message reports", async () => {
 		const agent = new FakeAcpAgent();
 		agent.replayUpdates = [

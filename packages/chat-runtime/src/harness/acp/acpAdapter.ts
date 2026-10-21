@@ -456,6 +456,9 @@ export class AcpAdapter implements HarnessAdapter {
 				this.replaying || this.isPdevAgent()
 					? undefined
 					: this.currentModelLabel(),
+			onNotify: (level, text) => {
+				if (level === "error" && text) this.emitNotice("error", text);
+			},
 			nextStartMs: () => this.nextStartMs(),
 			now: () => this.now(),
 			mintId: () => this.mintId(),

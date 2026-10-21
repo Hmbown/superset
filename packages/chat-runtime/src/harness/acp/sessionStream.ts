@@ -57,6 +57,7 @@ export type SessionStreamOptions = {
 	) => ItemAttachment | null;
 	reportedModel?: (raw: unknown) => string | undefined;
 	defaultModel?: () => string | undefined;
+	onNotify?: (level: string, text: string) => void;
 	nextStartMs: () => number;
 	now: () => number;
 	mintId: () => string;
@@ -119,7 +120,16 @@ export class SessionStream {
 			case "user_message_chunk":
 				this.appendText("user_message", raw, turnId);
 				return;
-			case "agent_message":
+			case "agent_message": {
+				const level = notifyLevelOf(raw);
+				if (level !== undefined) {
+					const parsed = acpMessageSchema.safeParse(raw);
+					this.options.onNotify?.(
+						level,
+						parsed.success ? messageText(parsed.data.content ?? []) : "",
+					);
+					return;
+				}
 				this.handleMessage(
 					"agent_message",
 					raw,
@@ -127,6 +137,7 @@ export class SessionStream {
 					this.options.reportedModel?.(raw),
 				);
 				return;
+			}
 			case "agent_thought":
 				this.handleMessage("reasoning", raw, turnId);
 				return;
@@ -465,4 +476,12 @@ export class SessionStream {
 	private emit(item: Item, turnId: string): void {
 		this.options.emitItem(item, turnId);
 	}
+}
+
+function notifyLevelOf(raw: unknown): string | undefined {
+	const meta = (raw as { _meta?: { piAcp?: { notify?: { level?: unknown } } } })
+		?._meta;
+	const notify = meta?.piAcp?.notify;
+	if (!notify) return undefined;
+	return typeof notify.level === "string" ? notify.level : "info";
 }
