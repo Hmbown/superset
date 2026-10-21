@@ -2453,7 +2453,7 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
-	it("drops the pdev/ prefix from pdev's own model option labels", async () => {
+	it("drops the pdev/ prefix from pdev's labels and never names a message after the Auto alias", async () => {
 		const agent = new FakeAcpAgent();
 		agent.agentName = "paradev";
 		agent.newSessionConfigOptions = [
@@ -2477,14 +2477,12 @@ describe("AcpAdapter on protocol v2", () => {
 		);
 		expect(model?.options[0]).toMatchObject({ label: "Auto" });
 
-		// A message the agent did not name a model for falls back to that label.
 		adapter.prompt([{ type: "text", text: "hi" }]);
 		await flush();
-		expect(
-			itemsOf(events)
-				.filter((item) => item.kind === "agent_message")
-				.at(-1),
-		).toMatchObject({ model: "Auto" });
+		const message = itemsOf(events)
+			.filter((item) => item.kind === "agent_message")
+			.at(-1);
+		expect(message?.kind === "agent_message" && message.model).toBeFalsy();
 
 		await adapter.dispose();
 	});

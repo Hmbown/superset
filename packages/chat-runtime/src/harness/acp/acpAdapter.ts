@@ -453,7 +453,9 @@ export class AcpAdapter implements HarnessAdapter {
 				this.attachmentOf(block, referenceId),
 			reportedModel: resolvedModelOf,
 			defaultModel: () =>
-				this.replaying ? undefined : this.currentModelLabel(),
+				this.replaying || this.isPdevAgent()
+					? undefined
+					: this.currentModelLabel(),
 			nextStartMs: () => this.nextStartMs(),
 			now: () => this.now(),
 			mintId: () => this.mintId(),
