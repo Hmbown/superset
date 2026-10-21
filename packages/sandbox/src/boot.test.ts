@@ -27,7 +27,9 @@ describe("superset-boot", () => {
 	test("memguard ranks the box above sessions above everything else, and never pid 1", () => {
 		expect(memguard).toMatch(/host_pid.*\n\s*want=-900/);
 		expect(memguard).toMatch(/claude.*codex.*\n\s*want=-300/);
-		expect(memguard).toMatch(/Xvnc.*xfce4-session.*xfwm4.*websockify.*\n\s*want=-300/);
+		expect(memguard).toMatch(
+			/Xvnc.*xfce4-session.*xfwm4.*websockify.*\n\s*want=-300/,
+		);
 		expect(memguard).toMatch(/\[ "\$pid" = 1 \]/);
 		expect(memguard).toMatch(
 			/victim_at_or_above 500 \|\| victim_at_or_above 0 \|\| victim_at_or_above -300/,
