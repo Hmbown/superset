@@ -670,6 +670,12 @@ export const cloudWorkspaceRecordRouter = {
 				});
 			}
 			const row = await loadVisibleWorkspace(ctx, input.id);
+			if (row.status === "deleted") {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Workspace not found",
+				});
+			}
 			return recordPullRequests(row, input.pullRequests);
 		}),
 

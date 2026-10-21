@@ -13,12 +13,7 @@ export const reportedPullRequestsSchema = z
 		z.object({
 			repository: z.string().regex(/^[^/\s]+\/[^/\s]+$/),
 			number: z.number().int().positive().max(2_147_483_647),
-			linkedAt: z
-				.number()
-				.int()
-				.positive()
-				.max(8_640_000_000_000_000)
-				.optional(),
+			linkedAt: z.number().int().positive().optional(),
 		}),
 	)
 	.max(200);
@@ -56,7 +51,7 @@ export async function recordPullRequests(
 				repositoryId,
 				prNumber: pullRequest.number,
 				...(pullRequest.linkedAt && {
-					linkedAt: new Date(pullRequest.linkedAt),
+					linkedAt: new Date(Math.min(pullRequest.linkedAt, Date.now())),
 				}),
 			},
 		];
