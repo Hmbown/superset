@@ -877,10 +877,9 @@ cloud workspaces if your account has them, else this machine. The old name
   workspace that shares the project's own checkout keeps that folder.
 
 `deleted` lists the archived IDs; the field keeps its old name so existing
-scripts still work. Each ID is reported on its own: an unknown ID lands in
-`notFound`, an ID that errors lands in `failed` with its reason, and the rest of
-the batch still runs. The command exits non-zero when `notFound` or `failed` is
-not empty, and with `--json` the full result is still printed.
+scripts still work. Each ID is reported on its own: unknown IDs land in
+`notFound`, errors land in `failed` with a reason, and the rest of the batch
+still runs. The command exits non-zero if either list is not empty.
 
 ```bash
 superset workspaces archive ws_a ws_b ws_c
