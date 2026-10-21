@@ -96,8 +96,9 @@ fan-out reaches. The box's PR runtime already keeps every PR it has linked
 host-service: everything on boot, then each new link as the runtime records
 it), and the API records it in `cloud_workspace_pull_requests` for the
 repositories the workspace checked out. State still comes from
-`github_pull_requests`. A PR reaches the table at most a sweep of the PR
-runtime (5 minutes) after it is opened. Reaches a box only through a host-service release.
+`github_pull_requests`. After a successful send, a PR reaches the table at
+most a sweep of the PR runtime (5 minutes) after it is opened; a failed send
+retries with back-off up to 5 minutes more. Reaches a box only through a host-service release.
 **Open:** no client reads the table yet. A repository renamed or transferred
 after the box linked a PR is reported under its old name; the API answers with
 it in `ignored` and the link is lost.
