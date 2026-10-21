@@ -69,6 +69,7 @@ export function AcpChatPane({
 	onSessionCreated,
 	onSwitchAgent,
 	onOpenAgentChat,
+	onOpenForkedChat,
 	onRewound,
 	pendingPrompts,
 	sessionId,
@@ -95,6 +96,7 @@ export function AcpChatPane({
 	onOpenLink?: OpenLink;
 	onSwitchAgent?: (target: AgentSwitchTarget) => void;
 	onOpenAgentChat?: (target: AgentSwitchTarget) => void;
+	onOpenForkedChat?: (sessionId: string) => void;
 	onRewound?: (prompt: string) => void;
 	modelId?: string;
 	modelLabel?: string;
@@ -218,10 +220,8 @@ export function AcpChatPane({
 		void start(harness, agentSessionId);
 	}, [sessionId, harness, agentSessionId, start]);
 
-	// Branching opens the copy in this pane; the agent keeps the original, so
-	// nothing is lost by following the fork. The agent copies the session whole
-	// — `session/fork` takes no truncation point — so where it was clicked from
-	// makes no difference to what the branch contains.
+	// The agent copies the session whole — `session/fork` takes no truncation
+	// point — so where it was clicked from makes no difference to the branch.
 	const forkHere = useCallback(() => {
 		if (!sessionId) return;
 		void wiring.transport
@@ -232,21 +232,13 @@ export function AcpChatPane({
 			})
 			.then((forked) => {
 				if (forked) {
-					if (!mounted.current) {
+					if (!mounted.current || !onOpenForkedChat) {
 						void wiring.transport
 							.closeSession({ sessionId: forked.sessionId })
 							.catch(() => undefined);
 						return;
 					}
-					onSessionCreated(forked.sessionId);
-					void wiring.transport
-						.closeSession({ sessionId })
-						.catch((error: unknown) =>
-							console.warn(
-								"[acp-chat] could not close the branched-from chat",
-								error,
-							),
-						);
+					onOpenForkedChat(forked.sessionId);
 					return;
 				}
 				// The adapter declines rather than sending a `session/fork` an
@@ -258,7 +250,7 @@ export function AcpChatPane({
 				console.error("[acp-chat] fork failed", error);
 				toast.error(t({ message: "Couldn't branch the conversation" }));
 			});
-	}, [wiring.transport, sessionId, workspaceId, onSessionCreated, t]);
+	}, [wiring.transport, sessionId, workspaceId, onOpenForkedChat, t]);
 
 	// A worktree of its own cannot resume this session — the agent keys its
 	// sessions to a project directory — so that branch is a fresh chat handed

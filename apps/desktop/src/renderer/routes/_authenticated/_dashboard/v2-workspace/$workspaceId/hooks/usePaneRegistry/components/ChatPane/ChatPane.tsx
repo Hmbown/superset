@@ -123,6 +123,26 @@ export function ChatPane({
 						],
 					})
 				}
+				onOpenForkedChat={(sessionId) => {
+					const { agent, chatModelId, chatModelLabel, chatModeId, chatTitle } =
+						latest.current;
+					ctx.store.getState().addTab({
+						panes: [
+							{
+								kind: "chat-v3",
+								data: {
+									terminalId: crypto.randomUUID(),
+									sessionId,
+									...(agent ? { agent: { id: agent.id } } : {}),
+									...(chatModelId ? { chatModelId } : {}),
+									...(chatModelLabel ? { chatModelLabel } : {}),
+									...(chatModeId ? { chatModeId } : {}),
+									...(chatTitle ? { chatTitle } : {}),
+								} satisfies ChatPaneData,
+							},
+						],
+					});
+				}}
 				onRewound={(prompt) => {
 					const { agent, chatModelId, chatModelLabel, chatModeId } =
 						latest.current;

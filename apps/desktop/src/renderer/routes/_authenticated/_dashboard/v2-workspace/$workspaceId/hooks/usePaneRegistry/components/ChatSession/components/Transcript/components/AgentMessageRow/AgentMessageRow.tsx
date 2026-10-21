@@ -118,7 +118,8 @@ export function AgentMessageRow({
 									</span>
 									<span className="text-[11px] text-muted-foreground">
 										<Trans>
-											The agent copies the conversation; the branch opens here
+											The agent copies the conversation; the branch opens in a
+											new tab
 										</Trans>
 									</span>
 								</DropdownMenuItem>
