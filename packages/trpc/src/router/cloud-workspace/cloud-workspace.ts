@@ -44,7 +44,7 @@ import {
 import { recordCloudWorkspaceActivity } from "./activity";
 import { queueSettleWorkspace, settleWorkspaceNow } from "./meter";
 import { nextSandboxNameFor } from "./provision";
-import { queueReap } from "./reap";
+import { queueReap, reapWorkspaceFiles } from "./reap";
 import { cloudWorkspaceRecordRouter } from "./record";
 import { cloudWorkspaceSharingRouter } from "./sharing";
 import { queueProvision, startCloudWorkspace } from "./start";
@@ -605,6 +605,7 @@ export const cloudWorkspaceRouter = {
 							),
 						);
 						await deleteSandbox(row.providerSandboxId);
+						await reapWorkspaceFiles(row.id);
 					});
 				}
 				await recordCloudWorkspaceActivity(
