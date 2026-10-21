@@ -96,7 +96,7 @@ export function AcpChatPane({
 	onOpenLink?: OpenLink;
 	onSwitchAgent?: (target: AgentSwitchTarget) => void;
 	onOpenAgentChat?: (target: AgentSwitchTarget) => void;
-	onOpenForkedChat?: (sessionId: string) => void;
+	onOpenForkedChat?: (fork: { sessionId: string; terminalId: string }) => void;
 	onRewound?: (prompt: string) => void;
 	modelId?: string;
 	modelLabel?: string;
@@ -224,11 +224,13 @@ export function AcpChatPane({
 	// point — so where it was clicked from makes no difference to the branch.
 	const forkHere = useCallback(() => {
 		if (!sessionId) return;
+		const terminalId = crypto.randomUUID();
 		void wiring.transport
 			.forkSession({
 				commandId: crypto.randomUUID(),
 				sessionId,
 				workspaceId,
+				terminalId,
 			})
 			.then((forked) => {
 				if (forked) {
@@ -238,7 +240,7 @@ export function AcpChatPane({
 							.catch(() => undefined);
 						return;
 					}
-					onOpenForkedChat(forked.sessionId);
+					onOpenForkedChat({ sessionId: forked.sessionId, terminalId });
 					return;
 				}
 				// The adapter declines rather than sending a `session/fork` an

@@ -506,6 +506,40 @@ describe("chat commands", () => {
 		await runtime.dispose();
 	});
 
+	test("forkSession gives the branch the terminal it asks for, so the source keeps its own", async () => {
+		class ForkingHarness extends FakeHarness {
+			async fork() {
+				return "agent-forked";
+			}
+		}
+		const runtime = createTestRuntime({
+			harnesses: new Map([[FAKE_HARNESS, () => new ForkingHarness(SCRIPT)]]),
+		});
+		const source = runtime.commands.createSession({
+			commandId: randomUUID(),
+			scopeId: "workspace-1",
+			harness: FAKE_HARNESS,
+			cwd: "/tmp/workspace",
+			terminalId: "terminal-source",
+		});
+
+		const forked = await runtime.commands.forkSession({
+			commandId: randomUUID(),
+			sessionId: source.sessionId,
+			cwd: "/tmp/workspace",
+			terminalId: "terminal-branch",
+		});
+
+		expect(forked).not.toBeNull();
+		expect(runtime.live.require(forked?.sessionId ?? "").terminalId).toBe(
+			"terminal-branch",
+		);
+		expect(runtime.live.require(source.sessionId).terminalId).toBe(
+			"terminal-source",
+		);
+		await runtime.dispose();
+	});
+
 	test("rewindSession hands over a message sent into a running turn instead of forking", async () => {
 		const cuts: (string | undefined)[] = [];
 		class CuttingHarness extends FakeHarness {

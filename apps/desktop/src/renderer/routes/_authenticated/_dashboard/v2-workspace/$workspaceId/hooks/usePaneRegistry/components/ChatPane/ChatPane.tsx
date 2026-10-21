@@ -123,7 +123,7 @@ export function ChatPane({
 						],
 					})
 				}
-				onOpenForkedChat={(sessionId) => {
+				onOpenForkedChat={({ sessionId, terminalId }) => {
 					const { agent, chatModelId, chatModelLabel, chatModeId, chatTitle } =
 						latest.current;
 					ctx.store.getState().addTab({
@@ -131,7 +131,7 @@ export function ChatPane({
 							{
 								kind: "chat-v3",
 								data: {
-									terminalId: crypto.randomUUID(),
+									terminalId,
 									sessionId,
 									...(agent ? { agent: { id: agent.id } } : {}),
 									...(chatModelId ? { chatModelId } : {}),

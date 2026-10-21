@@ -428,7 +428,7 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 				cwd: parsed.cwd,
 				harness: parsed.harness ?? source.harness,
 				resume: { harnessSessionId: forked },
-				terminalId: live.terminalId,
+				terminalId: parsed.terminalId ?? live.terminalId,
 			});
 		},
 

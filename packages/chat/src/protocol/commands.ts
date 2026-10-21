@@ -92,6 +92,7 @@ export const forkSessionInputSchema = z.object({
 	...commandBaseFields,
 	fromItemId: z.string().min(1).optional(),
 	harness: z.string().min(1).optional(),
+	terminalId: z.string().min(1).optional(),
 });
 export type ForkSessionInput = z.infer<typeof forkSessionInputSchema>;
 
