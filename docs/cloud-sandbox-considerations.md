@@ -170,7 +170,7 @@ box, the kernel's killer was the last thing to act — with no swap it drops cod
 pages first, and host-service's event loop stalled for 113 s while a 3 GB
 `tsc` refaulted everything. `superset-memguard` (bundle, started by boot as
 root) now ranks every process by what it is — host-service and pty-daemon
-−900, agent sessions −300, everything else the platform's 500 — because the
+−900, agent and desktop sessions −300, everything else the platform's 500 — because the
 kernel copies the score at fork and host-service's protection would otherwise
 reach every tool an agent runs; and it reaps the largest least-protected
 process when `MemAvailable` drops under 8% of the box, so the agent sees an
