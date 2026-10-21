@@ -45,7 +45,6 @@ import { CHAT_COLUMN_CLASSNAME, CHAT_GUTTER_CLASSNAME } from "../../constants";
 import { commandChip, LEADING_COMMAND } from "../../utils/commandChip";
 import { mcpContextLine } from "../../utils/mcpServerChips";
 import { elementsForChips } from "../../utils/messageElements";
-import { useAttachmentPreview } from "./hooks/useAttachmentPreview";
 import {
 	takeRecoveredDraftText,
 	useComposerDraft,
@@ -148,7 +147,6 @@ export const Composer = memo(function Composer({
 	const trpcUtils = workspaceTrpc.useUtils();
 	const cloudUtils = cloudTrpc.useUtils();
 	const uploadAttachments = useUploadAttachments(workspaceId);
-	const attachmentPreview = useAttachmentPreview();
 	const { storedDraft, onChange, clearDraft } = useComposerDraft(
 		draftKey,
 		draftPersisted,
@@ -415,7 +413,6 @@ export const Composer = memo(function Composer({
 				history={history}
 				key={draftKey}
 				mentionProviders={mentionProviders}
-				onAttachmentClick={attachmentPreview.onAttachmentClick}
 				onChange={onChange}
 				onStop={stop}
 				onSubmit={handleSubmit}
@@ -457,7 +454,6 @@ export const Composer = memo(function Composer({
 					) : undefined
 				}
 			/>
-			{attachmentPreview.overlay}
 			{mcpPicker.dialog}
 		</div>
 	);

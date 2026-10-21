@@ -1,64 +1,55 @@
-import { beforeEach, describe, expect, it } from "bun:test";
+import { afterEach, beforeEach, describe, expect, it } from "bun:test";
+import type { PromptInputAttachment } from "@superset/chat-ui/PromptInput";
 import {
-	newWorkspaceAttachmentPaths,
-	newWorkspaceAttachmentsStore,
+	setNewWorkspaceAttachments,
+	useNewWorkspaceAttachments,
 } from "./new-workspace-attachments";
 import { useNewWorkspaceDraftStore } from "./new-workspace-draft";
 
-const imageFile = {
+const image: PromptInputAttachment = {
 	id: "file-1",
-	type: "file" as const,
-	url: "blob:renderer/one",
-	mediaType: "image/png",
-	filename: "one.png",
+	file: new File(["png"], "one.png", { type: "image/png" }),
+	previewUrl: "blob:renderer/one",
+};
+const notes: PromptInputAttachment = {
+	id: "file-2",
+	file: new File(["md"], "notes.md", { type: "text/markdown" }),
 };
 
-describe("newWorkspaceAttachmentsStore", () => {
+const attachments = () => useNewWorkspaceAttachments.getState().attachments;
+
+describe("newWorkspaceAttachments", () => {
+	const original = URL.revokeObjectURL;
+	let revoked: string[] = [];
 	beforeEach(() => {
-		newWorkspaceAttachmentsStore.set([]);
-		newWorkspaceAttachmentPaths.clear();
-	});
-
-	it("retains files independent of any mounted provider", () => {
-		newWorkspaceAttachmentsStore.set([imageFile]);
-		expect(newWorkspaceAttachmentsStore.get()).toEqual([imageFile]);
-	});
-
-	it("keeps files across non-reset draft updates", () => {
-		newWorkspaceAttachmentsStore.set([imageFile]);
-		useNewWorkspaceDraftStore.getState().updateDraft({ prompt: "hello" });
-		expect(newWorkspaceAttachmentsStore.get()).toEqual([imageFile]);
-	});
-
-	it("clears files, revokes blob URLs, and drops source paths on draft reset", () => {
-		const revoked: string[] = [];
-		const original = URL.revokeObjectURL;
+		revoked = [];
 		URL.revokeObjectURL = (url: string) => {
 			revoked.push(url);
 		};
-		try {
-			newWorkspaceAttachmentsStore.set([imageFile]);
-			newWorkspaceAttachmentPaths.set("one.png", "/tmp/one.png");
-
-			useNewWorkspaceDraftStore.getState().resetDraft();
-
-			expect(newWorkspaceAttachmentsStore.get()).toEqual([]);
-			expect(revoked).toEqual(["blob:renderer/one"]);
-			expect(newWorkspaceAttachmentPaths.size).toBe(0);
-		} finally {
-			URL.revokeObjectURL = original;
-		}
+		useNewWorkspaceAttachments.setState({ attachments: [] });
+	});
+	afterEach(() => {
+		URL.revokeObjectURL = original;
 	});
 
-	it("notifies subscribers when files change", () => {
-		let calls = 0;
-		const unsubscribe = newWorkspaceAttachmentsStore.subscribe(() => {
-			calls += 1;
-		});
-		newWorkspaceAttachmentsStore.set([imageFile]);
-		expect(calls).toBe(1);
-		unsubscribe();
-		newWorkspaceAttachmentsStore.set([]);
-		expect(calls).toBe(1);
+	it("keeps attachments across non-reset draft updates", () => {
+		setNewWorkspaceAttachments([image]);
+		useNewWorkspaceDraftStore.getState().updateDraft({ prompt: "hello" });
+		expect(attachments()).toEqual([image]);
+	});
+
+	it("revokes the preview of an attachment that is dropped, and only that one", () => {
+		setNewWorkspaceAttachments([image, notes]);
+		setNewWorkspaceAttachments([image]);
+		expect(revoked).toEqual([]);
+		setNewWorkspaceAttachments([]);
+		expect(revoked).toEqual(["blob:renderer/one"]);
+	});
+
+	it("clears attachments and revokes previews on draft reset", () => {
+		setNewWorkspaceAttachments([image, notes]);
+		useNewWorkspaceDraftStore.getState().resetDraft();
+		expect(attachments()).toEqual([]);
+		expect(revoked).toEqual(["blob:renderer/one"]);
 	});
 });

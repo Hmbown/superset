@@ -1,4 +1,4 @@
-import type { FileUIPart } from "ai";
+import type { PromptInputAttachment } from "@superset/chat-ui/PromptInput";
 import { useCallback, useEffect } from "react";
 import {
 	awaitUploads,
@@ -32,50 +32,44 @@ export interface UseUploadAttachmentsApi {
  * a cloud one and has no host yet.
  */
 export function useUploadAttachments({
-	files,
+	attachments,
 	hostUrl,
 }: {
-	files: (FileUIPart & { id: string })[];
+	attachments: readonly PromptInputAttachment[];
 	hostUrl: string | null;
 }): UseUploadAttachmentsApi {
 	useEffect(() => {
 		if (hostUrl) {
-			for (const file of files) {
-				startUpload(hostUrl, {
-					id: file.id,
-					url: file.url,
-					mediaType: file.mediaType,
-					filename: file.filename,
-				});
-			}
+			for (const { id, file } of attachments)
+				startUpload(hostUrl, { id, file });
 		}
-		pruneAttachmentUploads(new Set(files.map((f) => f.id)));
-	}, [files, hostUrl]);
+		pruneAttachmentUploads(new Set(attachments.map(({ id }) => id)));
+	}, [attachments, hostUrl]);
 
 	const awaitForCurrent = useCallback(async () => {
 		if (!hostUrl) return { readyIds: [], ready: [], errors: [] };
 		const result = await awaitUploads(
 			hostUrl,
-			files.map((f) => f.id),
+			attachments.map(({ id }) => id),
 		);
-		const errors: UploadFailure[] = result.failures.map((failure) => {
-			const file = files.find((f) => f.id === failure.fileId);
-			return { filename: file?.filename, message: failure.message };
-		});
-		const ready = files.flatMap((file) => {
-			const attachmentId = readyAttachmentId(file.id, hostUrl);
+		const errors: UploadFailure[] = result.failures.map((failure) => ({
+			filename: attachments.find(({ id }) => id === failure.fileId)?.file.name,
+			message: failure.message,
+		}));
+		const ready = attachments.flatMap(({ id, file }) => {
+			const attachmentId = readyAttachmentId(id, hostUrl);
 			return attachmentId
 				? [
 						{
 							attachmentId,
-							name: file.filename ?? attachmentId,
-							mimeType: file.mediaType ?? "application/octet-stream",
+							name: file.name || attachmentId,
+							mimeType: file.type || "application/octet-stream",
 						},
 					]
 				: [];
 		});
 		return { readyIds: result.readyIds, ready, errors };
-	}, [hostUrl, files]);
+	}, [hostUrl, attachments]);
 
 	return { awaitUploads: awaitForCurrent };
 }

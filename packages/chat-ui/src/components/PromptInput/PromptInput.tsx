@@ -51,8 +51,8 @@ export function PromptInput({
 	onSubmit,
 	onStop,
 	stopOnEscape = true,
-	header,
-	onAddFiles,
+	attachments,
+	onAttachmentsChange,
 	allowEmptySubmit = false,
 	disabled = false,
 	pending = false,
@@ -89,8 +89,8 @@ export function PromptInput({
 					onSubmit={onSubmit}
 					onStop={onStop}
 					stopOnEscape={stopOnEscape}
-					header={header}
-					onAddFiles={onAddFiles}
+					attachments={attachments}
+					onAttachmentsChange={onAttachmentsChange}
 					allowEmptySubmit={allowEmptySubmit}
 					disabled={disabled}
 					pending={pending}

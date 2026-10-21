@@ -17,12 +17,15 @@ function previewImage(attachment: PromptInputAttachment): PreviewImage | null {
 	};
 }
 
-/** Previews the composer's pending images, stepping through them in pill order. */
+/**
+ * Previews the composer's pending images, stepping through them in pill order.
+ * Returns false for an attachment it cannot preview.
+ */
 export function useAttachmentPreview(): {
 	onAttachmentClick: (
 		attachment: PromptInputAttachment,
 		attachments: readonly PromptInputAttachment[],
-	) => void;
+	) => boolean;
 	overlay: ReactNode;
 } {
 	const saveImageToDownloads = useSaveImageToDownloads();
@@ -39,9 +42,10 @@ export function useAttachmentPreview(): {
 				return image ? [image] : [];
 			});
 			const index = images.findIndex((image) => image.id === attachment.id);
-			if (index === -1) return;
+			if (index === -1) return false;
 			setPreview({ images, index });
 			setOpen(true);
+			return true;
 		},
 		[],
 	);

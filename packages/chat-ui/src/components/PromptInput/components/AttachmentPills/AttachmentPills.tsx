@@ -17,6 +17,7 @@ import {
 import type { PromptInputAttachment } from "../../types";
 import type { PastedTextEntry } from "../../utils/pasteUndo";
 import { RemoveButton } from "./components/RemoveButton";
+import { UploadOverlay } from "./components/UploadOverlay";
 
 export type AttachmentPillsProps = {
 	attachments: PromptInputAttachment[];
@@ -87,6 +88,7 @@ export function AttachmentPills({
 						<div key={attachment.id} className="relative shrink-0">
 							<button
 								type="button"
+								aria-busy={attachment.upload?.state === "pending"}
 								aria-label={filename}
 								className="group/attachment relative block size-16 cursor-pointer overflow-hidden rounded-xl border-[0.5px] border-border bg-foreground/[0.04]"
 								onClick={() => onAttachmentClick?.(attachment, attachments)}
@@ -108,6 +110,7 @@ export function AttachmentPills({
 									/>
 								)}
 								<span className="pointer-events-none absolute inset-0 bg-foreground/[0.02] opacity-0 transition-opacity duration-150 group-hover/attachment:opacity-100" />
+								<UploadOverlay upload={attachment.upload} />
 							</button>
 							<RemoveButton onClick={() => onRemove(attachment.id)} />
 						</div>
@@ -117,6 +120,7 @@ export function AttachmentPills({
 					<div key={attachment.id} className="relative shrink-0">
 						<button
 							type="button"
+							aria-busy={attachment.upload?.state === "pending"}
 							onClick={() => onAttachmentClick?.(attachment, attachments)}
 							className="group/attachment relative flex h-16 w-[200px] cursor-pointer items-center gap-2.5 overflow-hidden rounded-xl border-[0.5px] border-border bg-foreground/[0.03] px-2.5 text-left"
 						>
@@ -134,6 +138,7 @@ export function AttachmentPills({
 									</div>
 								)}
 							</div>
+							<UploadOverlay upload={attachment.upload} />
 						</button>
 						<RemoveButton onClick={() => onRemove(attachment.id)} />
 					</div>

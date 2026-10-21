@@ -86,8 +86,11 @@ export type PromptInputCommand = {
 export type PromptInputAttachment = {
 	id: string;
 	file: File;
-	// Object URL for image attachments; owned and revoked by the composer.
+	// Object URL for image and video attachments, made by the composer. It
+	// revokes the URLs it drops; a host that owns the list revokes on reset.
 	previewUrl?: string;
+	// Set by a host that uploads attachments as they are added.
+	upload?: { state: "pending" } | { state: "error"; message: string };
 };
 
 export type PromptInputSubmitPayload = {
@@ -158,8 +161,10 @@ export type PromptInputProps = {
 	) => false | void | Promise<void>;
 	onStop?: () => void;
 	stopOnEscape?: boolean;
-	header?: ReactNode;
-	onAddFiles?: (files: File[]) => void;
+	// Hands the attachment list to the host, which then owns it and passes it
+	// back in; without these the composer keeps its own.
+	attachments?: PromptInputAttachment[];
+	onAttachmentsChange?: (attachments: PromptInputAttachment[]) => void;
 	allowEmptySubmit?: boolean;
 	// Blocks sending, from the button and from Enter; typing still works.
 	disabled?: boolean;

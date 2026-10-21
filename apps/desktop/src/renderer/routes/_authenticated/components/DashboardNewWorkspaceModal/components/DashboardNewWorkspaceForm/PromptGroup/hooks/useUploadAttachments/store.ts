@@ -1,7 +1,6 @@
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { create } from "zustand";
-import { useShallow } from "zustand/react/shallow";
 
 export type UploadState =
 	| { kind: "pending" }
@@ -30,23 +29,22 @@ const promiseMap = new Map<string, Map<string, Promise<UploadState>>>();
  */
 export const CLOUD_UPLOAD_TARGET = "cloud";
 
-async function fetchBlob(url: string): Promise<Blob> {
-	return await (await fetch(url)).blob();
+function mediaTypeOf(file: File): string {
+	return file.type || "application/octet-stream";
 }
 
-async function uploadToCloud(file: StartUploadInput): Promise<string> {
-	const blob = await fetchBlob(file.url);
+async function uploadToCloud({ file }: StartUploadInput): Promise<string> {
 	const { fileId, upload } = await apiTrpcClient.attachment.createUpload.mutate(
 		{
-			name: file.filename ?? "attachment",
-			contentType: file.mediaType,
-			sizeBytes: blob.size,
+			name: file.name || "attachment",
+			contentType: mediaTypeOf(file),
+			sizeBytes: file.size,
 		},
 	);
 	const response = await fetch(upload.url, {
 		method: "PUT",
 		headers: upload.headers,
-		body: blob,
+		body: file,
 	});
 	if (!response.ok) {
 		throw new Error(`Upload failed (${response.status})`);
@@ -54,14 +52,8 @@ async function uploadToCloud(file: StartUploadInput): Promise<string> {
 	return fileId;
 }
 
-async function fetchBase64(url: string): Promise<string> {
-	if (url.startsWith("data:")) {
-		const commaIndex = url.indexOf(",");
-		if (commaIndex === -1) return "";
-		return url.slice(commaIndex + 1);
-	}
-	const response = await fetch(url);
-	const buffer = await response.arrayBuffer();
+async function base64Of(file: File): Promise<string> {
+	const buffer = await file.arrayBuffer();
 	let binary = "";
 	const bytes = new Uint8Array(buffer);
 	for (let i = 0; i < bytes.length; i += 1) {
@@ -81,16 +73,13 @@ function setEntry(fileId: string, hostUrl: string, state: UploadState): void {
 
 export interface StartUploadInput {
 	id: string;
-	url: string;
-	mediaType: string;
-	filename?: string;
+	file: File;
 }
 
 /**
  * Idempotent: if an upload for `(hostUrl, file.id)` is already in flight or
- * settled, this is a no-op. The store only persists the upload status —
- * filename/mediaType live in the prompt-input library and are joined at
- * read time by the hook.
+ * settled, this is a no-op. The store only persists the upload status; the
+ * file itself stays with the composer's attachment.
  */
 export function startUpload(hostUrl: string, file: StartUploadInput): void {
 	let byHost = promiseMap.get(file.id);
@@ -111,9 +100,9 @@ export function startUpload(hostUrl: string, file: StartUploadInput): void {
 							await getHostServiceClientByUrl(
 								hostUrl,
 							).attachments.upload.mutate({
-								data: { kind: "base64", data: await fetchBase64(file.url) },
-								mediaType: file.mediaType,
-								originalFilename: file.filename,
+								data: { kind: "base64", data: await base64Of(file.file) },
+								mediaType: mediaTypeOf(file.file),
+								originalFilename: file.file.name || undefined,
 							})
 						).attachmentId;
 			const next: UploadState = {
@@ -176,40 +165,11 @@ export function readyAttachmentId(
 	return entry?.kind === "ready" ? entry.attachmentId : null;
 }
 
-export function useUploadStateFor(
-	fileId: string,
-	hostUrl: string | null,
-): UploadState | null {
-	return useAttachmentUploadsStore((s) => {
-		if (!hostUrl) return null;
-		return s.entries[fileId]?.[hostUrl] ?? null;
-	});
-}
-
-/**
- * Returns the file ids that have an upload entry under `hostUrl` — i.e. the
- * files attached *while* on that host. Used to filter the prompt-input
- * library's flat file list down to a per-host view: switching hosts hides
- * other hosts' files without revoking their blob URLs or upload state.
- */
-export function useFileIdsForHost(hostUrl: string | null): string[] {
-	return useAttachmentUploadsStore(
-		useShallow((s) => {
-			if (!hostUrl) return [];
-			const ids: string[] = [];
-			for (const [fileId, byHost] of Object.entries(s.entries)) {
-				if (byHost[hostUrl]) ids.push(fileId);
-			}
-			return ids;
-		}),
-	);
-}
-
 /**
  * Drops cached upload state for any fileId not in `liveFileIds`. Called by
  * the hook on every re-render so the store stays a strict downstream of the
- * prompt-input library's `attachments.files` — clearing the library
- * automatically empties the store on the next effect tick.
+ * composer's attachments — clearing them empties the store on the next
+ * effect tick.
  */
 export function pruneAttachmentUploads(liveFileIds: Set<string>): void {
 	for (const fileId of promiseMap.keys()) {

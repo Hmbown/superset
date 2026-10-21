@@ -131,8 +131,8 @@ export type ComposerBodyProps = Required<
 		| "stopOnEscape"
 		| "onAttachmentClick"
 		| "ref"
-		| "header"
-		| "onAddFiles"
+		| "attachments"
+		| "onAttachmentsChange"
 		| "allowEmptySubmit"
 		| "autoFocus"
 		| "history"
@@ -187,8 +187,8 @@ export function ComposerBody({
 	stopOnEscape = true,
 	onAttachmentClick,
 	ref,
-	header,
-	onAddFiles,
+	attachments: hostAttachments,
+	onAttachmentsChange,
 	allowEmptySubmit,
 	autoFocus,
 	history,
@@ -270,7 +270,27 @@ export function ComposerBody({
 		}),
 		[draftText, editor, focusAtEnd, pasted.restore, splitPastes],
 	);
-	const [attachments, setAttachments] = useState<PromptInputAttachment[]>([]);
+	const [ownAttachments, setOwnAttachments] = useState<
+		PromptInputAttachment[]
+	>([]);
+	const attachments = hostAttachments ?? ownAttachments;
+	const attachmentsRef = useRef(attachments);
+	attachmentsRef.current = attachments;
+	const onAttachmentsChangeRef = useRef(onAttachmentsChange);
+	onAttachmentsChangeRef.current = onAttachmentsChange;
+	const isHostOwned = hostAttachments !== undefined;
+	const setAttachments = useCallback(
+		(
+			update: (previous: PromptInputAttachment[]) => PromptInputAttachment[],
+		) => {
+			if (isHostOwned) {
+				onAttachmentsChangeRef.current?.(update(attachmentsRef.current));
+			} else {
+				setOwnAttachments(update);
+			}
+		},
+		[isHostOwned],
+	);
 	const [isEmpty, setIsEmpty] = useState(true);
 	const [dragging, setDragging] = useState(false);
 	const [mentionQuery, setMentionQuery] = useState<string | null>(null);
@@ -361,10 +381,6 @@ export function ComposerBody({
 	const addFiles = (files: FileList | File[]) => {
 		const incoming = Array.from(files);
 		if (incoming.length === 0) return;
-		if (onAddFiles) {
-			onAddFiles(incoming);
-			return;
-		}
 		setAttachments((previous) => [
 			...previous,
 			...incoming.map((file) => ({
@@ -865,7 +881,6 @@ export function ComposerBody({
 					<Trans>Drop to attach</Trans>
 				</span>
 			</div>
-			{header}
 			<AttachmentPills
 				attachments={attachments}
 				pastedTexts={pasted.cards}

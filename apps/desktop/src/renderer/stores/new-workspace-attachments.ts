@@ -1,26 +1,35 @@
-import { createPromptInputAttachmentsStore } from "@superset/ui/ai-elements/prompt-input";
+import type { PromptInputAttachment } from "@superset/chat-ui/PromptInput";
 import { useNewWorkspaceDraftStore } from "renderer/stores/new-workspace-draft";
+import { create } from "zustand";
 
 /**
- * Module-scoped attachment state for the new-workspace draft. Keeps attached
- * files alive across navigation the same way the prompt text survives in
- * useNewWorkspaceDraftStore — the create surfaces mount and unmount, this
- * store does not.
+ * The new-workspace composer's attachments. Module scoped so attached files
+ * survive navigation and composer remounts, the same way the prompt text
+ * survives in useNewWorkspaceDraftStore.
  */
-export const newWorkspaceAttachmentsStore = createPromptInputAttachmentsStore();
+export const useNewWorkspaceAttachments = create<{
+	attachments: PromptInputAttachment[];
+}>(() => ({ attachments: [] }));
 
-/**
- * Source paths for dropped/picked files, keyed by filename — attachment items
- * only keep an object URL, and Finder reveal needs the original path. Module
- * scoped so reveal keeps working for attachments restored after navigation.
- */
-export const newWorkspaceAttachmentPaths = new Map<string, string>();
+function revokeDropped(
+	previous: readonly PromptInputAttachment[],
+	next: readonly PromptInputAttachment[],
+): void {
+	const kept = new Set(next.map((attachment) => attachment.previewUrl));
+	for (const { previewUrl } of previous) {
+		if (previewUrl && !kept.has(previewUrl)) URL.revokeObjectURL(previewUrl);
+	}
+}
+
+export function setNewWorkspaceAttachments(
+	next: PromptInputAttachment[],
+): void {
+	revokeDropped(useNewWorkspaceAttachments.getState().attachments, next);
+	useNewWorkspaceAttachments.setState({ attachments: next });
+}
 
 // A draft reset (successful create or explicit discard) clears attachments
 // with it, even while no create surface is mounted.
 useNewWorkspaceDraftStore.subscribe((state, prevState) => {
-	if (state.resetKey !== prevState.resetKey) {
-		newWorkspaceAttachmentsStore.clear();
-		newWorkspaceAttachmentPaths.clear();
-	}
+	if (state.resetKey !== prevState.resetKey) setNewWorkspaceAttachments([]);
 });

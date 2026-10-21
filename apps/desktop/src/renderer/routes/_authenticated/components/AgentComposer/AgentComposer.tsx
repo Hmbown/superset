@@ -3,11 +3,14 @@ import type {
 	ComposerChipMatch,
 	ComposerMentionEntry,
 	ComposerMentionProvider,
+	PromptInputAttachment,
 	PromptInputCommand,
 	PromptInputProps,
 } from "@superset/chat-ui/PromptInput";
 import { PromptInput } from "@superset/chat-ui/PromptInput";
 import { useCallback, useMemo, useRef } from "react";
+import { electronTrpc } from "renderer/lib/electron-trpc";
+import { useAttachmentPreview } from "./hooks/useAttachmentPreview";
 import { useComposerDictation } from "./hooks/useComposerDictation";
 import { usePluginMentionProvider } from "./hooks/usePluginMentionProvider";
 import { useTrackerMentionProvider } from "./hooks/useTrackerMentionProvider";
@@ -24,6 +27,14 @@ export type AgentComposerProps = Omit<
 	findChips?: (text: string) => ComposerChipMatch[];
 	onChipInsert?: (chip: ComposerChip) => void;
 };
+
+function sourcePathOf(file: File): string | null {
+	try {
+		return window.webUtils.getPathForFile(file) || null;
+	} catch {
+		return null;
+	}
+}
 
 function reportingInserts(
 	provider: ComposerMentionProvider,
@@ -64,8 +75,24 @@ export function AgentComposer({
 	dictation,
 	findChips: findMoreChips,
 	onChipInsert,
+	onAttachmentClick: onAttachmentClickOverride,
 	...props
 }: AgentComposerProps) {
+	const attachmentPreview = useAttachmentPreview();
+	const openInFinder = electronTrpc.external.openInFinder.useMutation();
+	const previewAttachment = attachmentPreview.onAttachmentClick;
+	const revealInFinder = openInFinder.mutate;
+	const onAttachmentClick = useCallback(
+		(
+			attachment: PromptInputAttachment,
+			attachments: readonly PromptInputAttachment[],
+		) => {
+			if (previewAttachment(attachment, attachments)) return;
+			const path = sourcePathOf(attachment.file);
+			if (path) revealInFinder(path);
+		},
+		[previewAttachment, revealInFinder],
+	);
 	const { provider: pluginProvider, findChips: findPluginChips } =
 		usePluginMentionProvider();
 	const findChips = useCallback(
@@ -101,12 +128,16 @@ export function AgentComposer({
 			: all;
 	}, [pluginProvider, trackerProvider, mentionProviders, reportsInserts]);
 	return (
-		<PromptInput
-			{...props}
-			commands={commands}
-			dictation={dictation ?? composerDictation}
-			findChips={findChips}
-			mentionProviders={providers}
-		/>
+		<>
+			<PromptInput
+				{...props}
+				onAttachmentClick={onAttachmentClickOverride ?? onAttachmentClick}
+				commands={commands}
+				dictation={dictation ?? composerDictation}
+				findChips={findChips}
+				mentionProviders={providers}
+			/>
+			{attachmentPreview.overlay}
+		</>
 	);
 }

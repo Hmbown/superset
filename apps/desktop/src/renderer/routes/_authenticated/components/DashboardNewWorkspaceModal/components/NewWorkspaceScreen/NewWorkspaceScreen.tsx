@@ -1,9 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { ComposerChip } from "@superset/chat-ui/PromptInput";
-import {
-	isDropHandled,
-	markDropHandled,
-} from "@superset/chat-ui/utils/handledDrops";
+import { ComposerDropZone } from "@superset/chat-ui/ComposerDropZone";
+import type {
+	ComposerChip,
+	PromptInputAttachment,
+} from "@superset/chat-ui/PromptInput";
 import {
 	getAgentEffortSupport,
 	getAgentEfforts,
@@ -12,7 +12,6 @@ import {
 } from "@superset/shared/agent-models";
 import { startableCloudEnvironments } from "@superset/shared/cloud-environments";
 import { CLOUD_HOST_ID } from "@superset/shared/host-routing";
-import { useProviderAttachments } from "@superset/ui/ai-elements/prompt-input";
 import { Button } from "@superset/ui/button";
 import { applyAttachmentConstraints } from "@superset/ui/lib/attachment-constraints";
 import { isEnterSubmit } from "@superset/ui/lib/keyboard";
@@ -21,14 +20,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { useNavigate } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { HistoryIcon, Settings2Icon } from "lucide-react";
-import {
-	type DragEvent as ReactDragEvent,
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { LuGitPullRequest } from "react-icons/lu";
 import { GitHubStarPill } from "renderer/components/GitHubStarPill";
 import { useHostProjects } from "renderer/hooks/host-projects/useHostProjects";
@@ -47,7 +39,6 @@ import { useV2AgentChoices } from "renderer/hooks/useV2AgentChoices";
 import { CLOUD_AGENT_CHOICES } from "renderer/hooks/useV2AgentChoices/cloud-agent-choices";
 import { track } from "renderer/lib/analytics";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
-import { electronTrpc } from "renderer/lib/electron-trpc";
 import { showHostServiceUnavailableToast } from "renderer/lib/host-service-unavailable";
 import { PageHeader } from "renderer/routes/_authenticated/_dashboard/components/PageHeader";
 import { AgentComposer } from "renderer/routes/_authenticated/components/AgentComposer";
@@ -64,7 +55,10 @@ import {
 	findLinkedContextChips,
 	linkedContextOfChip,
 } from "renderer/routes/_authenticated/utils/linkedContextChips";
-import { newWorkspaceAttachmentPaths } from "renderer/stores/new-workspace-attachments";
+import {
+	setNewWorkspaceAttachments,
+	useNewWorkspaceAttachments,
+} from "renderer/stores/new-workspace-attachments";
 import { useNewWorkspacePromptContext } from "renderer/stores/new-workspace-prompt-context";
 import {
 	NEW_WORKSPACE_SCREEN_DEFAULT_WIDTH,
@@ -92,7 +86,7 @@ import { useLinkedContext } from "../DashboardNewWorkspaceForm/PromptGroup/hooks
 import { useSubmitWorkspace } from "../DashboardNewWorkspaceForm/PromptGroup/hooks/useSubmitWorkspace";
 import {
 	CLOUD_UPLOAD_TARGET,
-	useFileIdsForHost,
+	useAttachmentUploadsStore,
 	useUploadAttachments,
 } from "../DashboardNewWorkspaceForm/PromptGroup/hooks/useUploadAttachments";
 import {
@@ -103,7 +97,6 @@ import {
 	type WorkspaceCreateAgent,
 } from "../DashboardNewWorkspaceForm/PromptGroup/types";
 import { SymmetricResizeHandles } from "../SymmetricResizeHandles";
-import { AttachmentCard } from "./components/AttachmentCard";
 import { NoAgentToggle } from "./components/NoAgentToggle";
 import { SamplePromptCards } from "./components/SamplePromptCards";
 import { SamplePrompts } from "./components/SamplePrompts";
@@ -158,7 +151,6 @@ export function NewWorkspaceScreen({
 	const { t } = useLingui();
 	const navigate = useNavigate();
 	const [promptSeed, setPromptSeed] = useState(0);
-	const openInFinderMutation = electronTrpc.external.openInFinder.useMutation();
 	const {
 		closeModal,
 		draft,
@@ -167,18 +159,31 @@ export function NewWorkspaceScreen({
 		selectSession,
 		resetKey,
 	} = useDashboardNewWorkspaceDraft();
-	const attachments = useProviderAttachments();
-	const addAttachments = useCallback(
-		(files: File[] | FileList) => {
-			const accepted = applyAttachmentConstraints({
-				files,
-				currentCount: attachments.files.length,
-				constraints: { maxFiles: 5, maxFileSize: 10 * 1024 * 1024 },
-				onError: (error) => toast.error(error.message),
-			});
-			if (accepted.length > 0) attachments.add(accepted);
+	const storedAttachments = useNewWorkspaceAttachments(
+		(state) => state.attachments,
+	);
+	const changeAttachments = useCallback(
+		(next: PromptInputAttachment[]) => {
+			const known = new Set(storedAttachments.map(({ id }) => id));
+			const added = next.filter(({ id }) => !known.has(id));
+			const accepted = new Set(
+				applyAttachmentConstraints({
+					files: added.map(({ file }) => file),
+					currentCount: next.length - added.length,
+					constraints: { maxFiles: 5, maxFileSize: 10 * 1024 * 1024 },
+					onError: (error) => toast.error(error.message),
+				}),
+			);
+			for (const { file, previewUrl } of added) {
+				if (previewUrl && !accepted.has(file)) URL.revokeObjectURL(previewUrl);
+			}
+			setNewWorkspaceAttachments(
+				next
+					.filter(({ id, file }) => known.has(id) || accepted.has(file))
+					.map(({ upload: _upload, ...attachment }) => attachment),
+			);
 		},
-		[attachments],
+		[storedAttachments],
 	);
 	const hostService = useLocalHostService();
 	const { activeHostUrl, machineId } = hostService;
@@ -201,74 +206,6 @@ export function NewWorkspaceScreen({
 	useEffect(() => {
 		if (!isOpen) return;
 		track("new_workspace_screen_shown");
-	}, [isOpen]);
-
-	// Main-area drop zone. dragover fires continuously while a
-	// drag is over it, so a short timeout self-heals every missed-event
-	// case (Esc-cancelled drags, drops outside the window) that an enter/leave
-	// counter gets permanently stuck on.
-	const [isDraggingFiles, setIsDraggingFiles] = useState(false);
-	const dragEndTimerRef = useRef<number | null>(null);
-	const clearDragEndTimer = () => {
-		if (dragEndTimerRef.current !== null)
-			window.clearTimeout(dragEndTimerRef.current);
-		dragEndTimerRef.current = null;
-	};
-	const recordPaths = (files: FileList | null | undefined) => {
-		for (const file of Array.from(files ?? [])) {
-			try {
-				const path = window.webUtils.getPathForFile(file);
-				if (!path) continue;
-				// Attachment items only expose the basename, so the map is
-				// name-keyed; a second same-named file from elsewhere makes the
-				// name ambiguous — poison it so no card reveals the wrong file.
-				const existing = newWorkspaceAttachmentPaths.get(file.name);
-				newWorkspaceAttachmentPaths.set(
-					file.name,
-					existing !== undefined && existing !== path ? "" : path,
-				);
-			} catch {
-				// pasted/synthetic files have no filesystem path
-			}
-		}
-	};
-	const recordPathsRef = useRef(recordPaths);
-	recordPathsRef.current = recordPaths;
-	const handleDragOver = (e: ReactDragEvent<HTMLDivElement>) => {
-		if (!e.dataTransfer.types.includes("Files")) return;
-		e.preventDefault();
-		setIsDraggingFiles(true);
-		clearDragEndTimer();
-		dragEndTimerRef.current = window.setTimeout(
-			() => setIsDraggingFiles(false),
-			200,
-		);
-	};
-	const handleDrop = (e: ReactDragEvent<HTMLDivElement>) => {
-		recordPaths(e.dataTransfer.files);
-		clearDragEndTimer();
-		setIsDraggingFiles(false);
-		const files = e.dataTransfer.files;
-		if (isDropHandled(e.nativeEvent) || files.length === 0) return;
-		e.preventDefault();
-		markDropHandled(e.nativeEvent);
-		addAttachments(files);
-	};
-	useEffect(() => {
-		if (!isOpen) return;
-		const onChange = (e: Event) => {
-			if (e.target instanceof HTMLInputElement && e.target.type === "file") {
-				recordPathsRef.current(e.target.files);
-			}
-		};
-		document.addEventListener("change", onChange, true);
-		return () => {
-			document.removeEventListener("change", onChange, true);
-			if (dragEndTimerRef.current !== null)
-				window.clearTimeout(dragEndTimerRef.current);
-			dragEndTimerRef.current = null;
-			setIsDraggingFiles(false);
-		};
 	}, [isOpen]);
 
 	// ── Projects ─────────────────────────────────────────────────────
@@ -726,14 +663,26 @@ export function NewWorkspaceScreen({
 			? CLOUD_UPLOAD_TARGET
 			: launchHostUrl;
 	const uploadAttachments = useUploadAttachments({
-		files: attachments.files,
+		attachments: storedAttachments,
 		hostUrl: uploadTarget,
 	});
-	const fileIdsForCurrentHost = useFileIdsForHost(uploadTarget);
-	const visibleFiles = useMemo(() => {
-		const idSet = new Set(fileIdsForCurrentHost);
-		return attachments.files.filter((file) => idSet.has(file.id));
-	}, [attachments.files, fileIdsForCurrentHost]);
+	const uploadEntries = useAttachmentUploadsStore((state) => state.entries);
+	const composerAttachments = useMemo(
+		() =>
+			storedAttachments.map((attachment): PromptInputAttachment => {
+				if (!uploadTarget) return attachment;
+				const upload = uploadEntries[attachment.id]?.[uploadTarget];
+				if (upload?.kind === "ready") return attachment;
+				return {
+					...attachment,
+					upload:
+						upload?.kind === "error"
+							? { state: "error", message: upload.message }
+							: { state: "pending" },
+				};
+			}),
+		[storedAttachments, uploadEntries, uploadTarget],
+	);
 	const promptContext = useNewWorkspacePromptContext({
 		projectId,
 		hostId: draft.hostId,
@@ -871,28 +820,7 @@ export function NewWorkspaceScreen({
 
 	// ── Render ───────────────────────────────────────────────────────
 	return (
-		// biome-ignore lint/a11y/noStaticElementInteractions: drag-and-drop target; keyboard users attach via the composer's file picker
-		<div
-			className="absolute inset-0 z-40 flex flex-col items-center overflow-y-auto bg-background"
-			onDragOver={handleDragOver}
-			onDrop={handleDrop}
-		>
-			<AnimatePresence>
-				{isDraggingFiles && (
-					<motion.div
-						key="drop-overlay"
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.075, ease: "easeOut" }}
-						className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center bg-background/70"
-					>
-						<span className="rounded-lg border border-border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md">
-							<Trans>Drop to attach</Trans>
-						</span>
-					</motion.div>
-				)}
-			</AnimatePresence>
+		<ComposerDropZone className="absolute inset-0 z-40 flex flex-col items-center overflow-y-auto bg-background">
 			<PageHeader
 				className="sticky top-0 z-10 w-full bg-background"
 				end={
@@ -1003,32 +931,9 @@ export function NewWorkspaceScreen({
 						className="w-full"
 						defaultValue={draft.prompt}
 						disabled={isCreating}
-						header={
-							visibleFiles.length > 0 && (
-								<div className="flex items-start gap-2 self-stretch overflow-x-auto px-3 pt-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-									{visibleFiles.map((file) => {
-										const sourcePath = file.filename
-											? newWorkspaceAttachmentPaths.get(file.filename) || null
-											: null;
-										return (
-											<AttachmentCard
-												key={file.id}
-												file={file}
-												hostUrl={uploadTarget}
-												onRemove={(id) => attachments.remove(id)}
-												onOpenFile={
-													sourcePath
-														? () => openInFinderMutation.mutate(sourcePath)
-														: null
-												}
-											/>
-										);
-									})}
-								</div>
-							)
-						}
+						attachments={composerAttachments}
 						key={`${resetKey}-${promptSeed}-${placeholderRoll}`}
-						onAddFiles={addAttachments}
+						onAttachmentsChange={changeAttachments}
 						findChips={findLinkedChips}
 						mentionProviders={gitHubMentionProviders}
 						onChange={(prompt) => {
@@ -1202,6 +1107,6 @@ export function NewWorkspaceScreen({
 					/>
 				</div>
 			</div>
-		</div>
+		</ComposerDropZone>
 	);
 }
