@@ -546,7 +546,12 @@ export function HomeScreen() {
 	// Cloud rows' projects come from the API instead.
 	const cloudRepos = useCloudRepos();
 	const cloudPullRequests = useCloudPullRequests({
-		enabled: listItems.some((item) => item.kind === "cloudRow"),
+		active: listItems.some(
+			(item) => item.kind === "cloudRow" && item.row.status !== "deleted",
+		),
+		archived: listItems.some(
+			(item) => item.kind === "cloudRow" && item.row.status === "deleted",
+		),
 	});
 	const repoPrefixesByProject = useMemo(
 		() =>

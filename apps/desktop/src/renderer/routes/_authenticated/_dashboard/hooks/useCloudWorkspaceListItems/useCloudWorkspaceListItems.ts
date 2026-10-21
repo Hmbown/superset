@@ -32,7 +32,8 @@ export function useCloudWorkspaceListItems(workspaces: CloudWorkspaceRow[]) {
 		organizationId,
 	});
 	const { byWorkspace: pullRequestsById } = useCloudPullRequests({
-		enabled: workspaces.length > 0,
+		active: workspaces.some((workspace) => workspace.status !== "deleted"),
+		archived: workspaces.some((workspace) => workspace.status === "deleted"),
 	});
 
 	const toItem = (workspace: CloudWorkspaceRow): CloudWorkspaceListItem => {

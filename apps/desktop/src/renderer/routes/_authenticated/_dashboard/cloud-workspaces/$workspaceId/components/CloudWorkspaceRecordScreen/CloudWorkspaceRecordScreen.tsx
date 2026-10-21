@@ -118,7 +118,8 @@ export function CloudWorkspaceRecordScreen({
 	const data = record.data;
 	const listed = workspaces?.find((row) => row.id === workspaceId);
 	const { byWorkspace: pullRequestsById } = useCloudPullRequests({
-		enabled: true,
+		active: data !== undefined && data.status !== "deleted",
+		archived: data?.status === "deleted",
 	});
 	const pullRequests: CloudPullRequest[] =
 		pullRequestsById.get(workspaceId) ?? [];

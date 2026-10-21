@@ -15,7 +15,7 @@ import {
 	toPullRequestState,
 	toReviewDecision,
 } from "../integration/github/pull-request-shape";
-import { visibleTo } from "./access";
+import { isListed, visibleTo } from "./access";
 
 export const reportedPullRequestsSchema = z
 	.array(
@@ -72,7 +72,7 @@ export async function recordPullRequests(
 		.values(rows)
 		.onConflictDoNothing()
 		.returning({ prNumber: cloudWorkspacePullRequests.prNumber });
-	if (inserted.length > 0) nudge(workspace.organizationId, "cloud_workspaces");
+	if (inserted.length > 0) nudge(workspace.organizationId, "pull_requests");
 	return { ignored: [...ignored] };
 }
 
@@ -94,10 +94,15 @@ const pullRequestColumns = {
 	updatedAt: githubPullRequests.updatedAt,
 };
 
-export async function listPullRequests(organizationId: string, userId: string) {
+export async function listPullRequests(
+	organizationId: string,
+	userId: string,
+	archived: boolean,
+) {
 	const visibleInOrganization = and(
 		eq(cloudWorkspaces.organizationId, organizationId),
 		visibleTo(userId),
+		isListed(archived),
 	);
 	const [linked, onBranch] = await Promise.all([
 		db

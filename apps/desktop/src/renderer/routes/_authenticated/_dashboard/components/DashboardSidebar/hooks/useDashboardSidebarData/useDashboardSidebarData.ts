@@ -475,7 +475,8 @@ export function useDashboardSidebarData({
 		[allHostWorkspaces],
 	);
 	const { byWorkspace: cloudPullRequestsById } = useCloudPullRequests({
-		enabled: inlineCloudWorkspaces && shownCloudRows.length > 0,
+		active: inlineCloudWorkspaces && shownCloudRows.length > 0,
+		archived: false,
 	});
 	const cloudLayout = useMemo(
 		() =>

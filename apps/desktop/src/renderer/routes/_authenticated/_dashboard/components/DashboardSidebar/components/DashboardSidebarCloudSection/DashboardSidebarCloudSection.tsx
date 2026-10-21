@@ -184,7 +184,8 @@ export function DashboardSidebarCloudSection({
 		branchById.get(workspace.id) ?? workspace.branch;
 
 	const { byWorkspace: pullRequestsById } = useCloudPullRequests({
-		enabled: shown.length > 0,
+		active: shown.length > 0,
+		archived: false,
 	});
 	const pullRequestOf = (workspace: { id: string }) =>
 		pullRequestsById.get(workspace.id)?.[0] ?? null;

@@ -144,7 +144,7 @@ describe("listPullRequests", () => {
 			[pullRequest(3, "open", null), pullRequest(4, "closed", null)],
 		];
 
-		const listed = await listPullRequests("org-1", "user-1");
+		const listed = await listPullRequests("org-1", "user-1", false);
 
 		expect(listed.map((row) => row.number)).toEqual([3, 2, 1]);
 	});
@@ -155,7 +155,7 @@ describe("listPullRequests", () => {
 			[pullRequest(5, "closed", null), pullRequest(4, "open", null)],
 		];
 
-		const listed = await listPullRequests("org-1", "user-1");
+		const listed = await listPullRequests("org-1", "user-1", false);
 
 		expect(listed.map((row) => row.number)).toEqual([4]);
 	});
