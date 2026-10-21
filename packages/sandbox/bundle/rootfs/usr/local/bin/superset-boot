@@ -44,7 +44,7 @@ set +a
 # file below is written only after the passes. The lock is held until it is.
 # A reexec inherits fd 9 with the lock still on it.
 [ -e "/proc/$$/fd/9" ] || exec 9> /run/superset-boot.lock
-flock -n 9 || exit 0
+flock -n -E 75 9 || { [ $? -eq 75 ] && exit 0; refuse "cannot take the boot lock"; }
 if [ -f "${SUPERSET_RUN_DIR}/host-service.pid" ] && kill -0 "$(cat "${SUPERSET_RUN_DIR}/host-service.pid")" 2>/dev/null; then
 	exit 0
 fi
