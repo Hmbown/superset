@@ -7,7 +7,7 @@
 #          host-service's protection would otherwise reach every tool an agent
 #          runs and leave the kernel nothing to kill but the box itself.
 #            -900  host-service, pty-daemon: the box and its terminals
-#            -300  a session: an agent (claude, codex, an ACP adapter), resumable
+#            -300  a session: an agent (claude, codex, pdev, an ACP adapter), resumable
 #                  from disk with the work in flight lost; the desktop (Xvnc,
 #                  its window manager and stream), gone until the next wake
 #             500  everything else, the platform's default: what an agent or a
@@ -57,7 +57,7 @@ scan() {
 		script="${args[1]:-}"
 		if [ "$pid" = "$host_pid" ] || [[ "$script" == */pty-daemon.js ]]; then
 			want=-900
-		elif [[ "$comm" == claude || "$comm" == codex || "$script" == */node_modules/@agentclientprotocol/* || "$script" == */node_modules/pi-acp/* ]]; then
+		elif [[ "$comm" == claude || "$comm" == codex || "$comm" == pdev || "$script" == */node_modules/@agentclientprotocol/* || "$script" == */node_modules/pi-acp/* ]]; then
 			want=-300
 		elif [[ "$comm" == Xvnc || "$comm" == xfce4-session || "$comm" == xfwm4 || "$comm" == websockify ]]; then
 			want=-300
