@@ -68,19 +68,20 @@ stub(Sandbox, {
 describe("findSandboxSession", () => {
 	stub(Sandbox, {
 		get: async () => ({
-			listSessions: async () => (async function* () {
-				for (let index = 0; index <= 20; index += 1) {
-					yield {
-						id: `session_${index}`,
-						memory: 16_384,
-						vcpus: 8,
-						status: "stopped",
-						startedAt: NOW - HOUR,
-						stoppedAt: NOW,
-						updatedAt: NOW,
-					};
-				}
-			})(),
+			listSessions: async () =>
+				(async function* () {
+					for (let index = 0; index <= 20; index += 1) {
+						yield {
+							id: `session_${index}`,
+							memory: 16_384,
+							vcpus: 8,
+							status: "stopped",
+							startedAt: NOW - HOUR,
+							stoppedAt: NOW,
+							updatedAt: NOW,
+						};
+					}
+				})(),
 		}),
 	});
 

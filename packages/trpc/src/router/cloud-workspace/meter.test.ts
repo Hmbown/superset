@@ -35,7 +35,11 @@ let autumnCalls: { method: string; params: unknown; headers?: unknown }[];
 let stopped: string[];
 let usageStopAt: Date | null;
 let delayedSettles: number[];
-type UsageEvent = { featureId: string; value: number; properties: Record<string, unknown> };
+type UsageEvent = {
+	featureId: string;
+	value: number;
+	properties: Record<string, unknown>;
+};
 let usageEvents: UsageEvent[] | null;
 let reservations: Map<string, UsageEvent>;
 
@@ -45,7 +49,10 @@ function chain(rows: () => unknown[], onFrom?: (table: unknown) => void) {
 			writes.push(values);
 			return link;
 		},
-		from: (table: unknown) => { onFrom?.(table); return link; },
+		from: (table: unknown) => {
+			onFrom?.(table);
+			return link;
+		},
 		where: () =>
 			Object.assign(Promise.resolve().then(rows), {
 				returning: async () => rows(),
@@ -57,14 +64,29 @@ function chain(rows: () => unknown[], onFrom?: (table: unknown) => void) {
 
 stub(db, {
 	update: () => chain(() => (boot ? [boot] : [])),
-	insert: () => ({ values: async (values: Record<string, unknown>) => { writes.push(values); } }),
+	insert: () => ({
+		values: async (values: Record<string, unknown>) => {
+			writes.push(values);
+		},
+	}),
 	select: () => {
 		let source: unknown;
 		return chain(
-			() => source === cloudWorkspaceBoots
-				? (boot ? [boot] : [])
-				: [{ providerSandboxId: "ws-box", createdByUserId: "user_1", usageStopAt }],
-			(table) => { source = table; },
+			() =>
+				source === cloudWorkspaceBoots
+					? boot
+						? [boot]
+						: []
+					: [
+							{
+								providerSandboxId: "ws-box",
+								createdByUserId: "user_1",
+								usageStopAt,
+							},
+						],
+			(table) => {
+				source = table;
+			},
 		);
 	},
 });
@@ -114,10 +136,15 @@ stub(autumnClient.balances, {
 	finalize: async (params: unknown, options?: { headers?: unknown }) => {
 		autumnCalls.push({ method: "finalize", params, headers: options?.headers });
 		if (finalizeError) throw finalizeError;
-		const finalize = params as Parameters<typeof autumnClient.balances.finalize>[0];
+		const finalize = params as Parameters<
+			typeof autumnClient.balances.finalize
+		>[0];
 		const reservation = reservations.get(finalize.lockId);
 		if (usageEvents && reservation) {
-			const finalValue = finalize.action === "release" ? 0 : (finalize.overrideValue ?? reservation.value);
+			const finalValue =
+				finalize.action === "release"
+					? 0
+					: (finalize.overrideValue ?? reservation.value);
 			usageEvents.push({
 				featureId: reservation.featureId,
 				value: finalValue - reservation.value,
@@ -227,11 +254,17 @@ describe("settleBoot", () => {
 		autumnCalls = [];
 		expect(await settleBoot("boot_1")).toBe("closed");
 		expect(autumnCalls.map((call) => call.method)).toEqual(["track"]);
-		expect(autumnCalls[0]?.headers).toEqual({ "Idempotency-Key": "boot_1:active-cpu" });
+		expect(autumnCalls[0]?.headers).toEqual({
+			"Idempotency-Key": "boot_1:active-cpu",
+		});
 	});
 
 	test("an already-recorded CPU event closes the boot without retrying forever", async () => {
-		session = { ...(session as BoxSession), endedAt: NOW, activeCpuMs: 3 * MINUTE };
+		session = {
+			...(session as BoxSession),
+			endedAt: NOW,
+			activeCpuMs: 3 * MINUTE,
+		};
 		trackError = autumnError(409);
 		expect(await settleBoot("boot_1")).toBe("closed");
 	});
@@ -275,8 +308,12 @@ describe("settleBoot", () => {
 		await settleBoot("boot_1");
 		expect(
 			autumnCalls.find((call) => call.method === "check")?.params,
-		).toMatchObject({ properties: { userId: "user_1", bootId: "boot_1", lockSeq: 1 } });
-		expect(autumnCalls.find((call) => call.method === "finalize")?.params).not.toHaveProperty("properties");
+		).toMatchObject({
+			properties: { userId: "user_1", bootId: "boot_1", lockSeq: 1 },
+		});
+		expect(
+			autumnCalls.find((call) => call.method === "finalize")?.params,
+		).not.toHaveProperty("properties");
 	});
 
 	test("minutes a lock can no longer take are tracked once, keyed by that lock", async () => {
@@ -342,13 +379,16 @@ describe("Autumn attribution and Vercel runtime parity", () => {
 
 	async function reserve(userId: string | null = "user_1") {
 		usageEvents = [];
-		const { bootId } = await authorizeBoot({
-			organizationId: "org_1",
-			cloudWorkspaceId: "ws_1",
-			createdByUserId: userId,
-			memoryMb: 16_384,
-			vcpus: 8,
-		}, { billingEnabled: true });
+		const { bootId } = await authorizeBoot(
+			{
+				organizationId: "org_1",
+				cloudWorkspaceId: "ws_1",
+				createdByUserId: userId,
+				memoryMb: 16_384,
+				vcpus: 8,
+			},
+			{ billingEnabled: true },
+		);
 		if (!bootId) throw new Error("Missing authorized boot");
 		boot = { ...boot, id: bootId, finalizedThrough: null };
 		return bootId;
@@ -356,25 +396,45 @@ describe("Autumn attribution and Vercel runtime parity", () => {
 
 	function userTotal(featureId: string, userId = "user_1") {
 		return (usageEvents ?? [])
-			.filter((event) => event.featureId === featureId && event.properties.userId === userId)
+			.filter(
+				(event) =>
+					event.featureId === featureId && event.properties.userId === userId,
+			)
 			.reduce((sum, event) => sum + event.value, 0);
 	}
 
 	test("settled per-user GB-minutes exactly equal the provider session duration", async () => {
 		const bootId = await reserve();
-		session = { ...(session as BoxSession), endedAt: NOW, activeCpuMs: 2 * MINUTE };
+		session = {
+			...(session as BoxSession),
+			endedAt: NOW,
+			activeCpuMs: 2 * MINUTE,
+		};
 		expect(await settleBoot(bootId)).toBe("closed");
-		const expected = gbMinutes({ ms: NOW - session.startedAt, memoryMb: session.memoryMb });
+		const expected = gbMinutes({
+			ms: NOW - session.startedAt,
+			memoryMb: session.memoryMb,
+		});
 		expect(userTotal("box_gb_minutes")).toBe(expected);
 		expect(userTotal("active_cpu_minutes")).toBe(2);
-		expect(usageEvents?.filter((event) => event.featureId === "box_gb_minutes").map((event) => event.value)).toEqual([480, expected - 480]);
-		expect(autumnCalls.filter((call) => call.method === "track")).toHaveLength(1);
+		expect(
+			usageEvents
+				?.filter((event) => event.featureId === "box_gb_minutes")
+				.map((event) => event.value),
+		).toEqual([480, expected - 480]);
+		expect(autumnCalls.filter((call) => call.method === "track")).toHaveLength(
+			1,
+		);
 	});
 
 	test("a running counter contains finalized runtime plus the next reservation", async () => {
 		const bootId = await reserve();
 		await settleBoot(bootId);
-		const confirmed = (autumnCalls.find((call) => call.method === "finalize")?.params as { overrideValue: number }).overrideValue;
+		const confirmed = (
+			autumnCalls.find((call) => call.method === "finalize")?.params as {
+				overrideValue: number;
+			}
+		).overrideValue;
 		expect(userTotal("box_gb_minutes")).toBeCloseTo(confirmed + 480, 6);
 		expect(reservations.size).toBe(1);
 	});
