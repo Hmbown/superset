@@ -223,6 +223,7 @@ export const Composer = memo(function Composer({
 	}, [isActive]);
 	const searchFiles = useCallback(
 		async (query: string) => {
+			if (!query) return [];
 			const { matches } = await trpcUtils.filesystem.searchFiles.fetch({
 				workspaceId,
 				query,
@@ -278,7 +279,7 @@ export const Composer = memo(function Composer({
 				source: {
 					kind: "search",
 					search: searchFiles,
-					emptyState: t({ message: "No matching files" }),
+					emptyState: t({ message: "Type to search files..." }),
 				},
 			},
 			{
@@ -288,7 +289,7 @@ export const Composer = memo(function Composer({
 				source: {
 					kind: "search",
 					search: searchPages,
-					emptyState: t({ message: "No matching pages" }),
+					emptyState: t({ message: "No pages yet" }),
 				},
 			},
 		],
