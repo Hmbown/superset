@@ -4,7 +4,11 @@ import { and, eq, inArray, isNull } from "drizzle-orm";
 import { autumnClient } from "../../../autumn";
 import { stripeClient } from "../../../stripe";
 import { paidPlanIdFromFlags } from "./entitlements";
-import { SEATS_FEATURE_ID } from "./features";
+import {
+	applySeatUpdate,
+	SeatAllowanceError,
+	seatUpdateForCustomer,
+} from "./seat-allowance";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -68,29 +72,41 @@ export async function paidAutumnPlanId(
 	return paidPlanIdFromFlags(customer.flags);
 }
 
+export async function buildAutumnSeatUpdate(
+	organizationId: string,
+	quantity: number,
+	{ allowanceOnly = false }: { allowanceOnly?: boolean } = {},
+) {
+	const customer = await getAutumnCustomer(organizationId);
+	const planId = paidPlanIdFromFlags(customer.flags);
+	if (!planId) return null;
+	const catalog = await autumnClient.plans.get({ planId });
+	return seatUpdateForCustomer(customer, organizationId, quantity, {
+		allowanceOnly,
+		metadata: catalog.metadata,
+	});
+}
+
 export async function setAutumnSeats(
 	organizationId: string,
 	quantity: number,
+	options?: { allowanceOnly?: boolean },
 ): Promise<boolean> {
-	const planId = await paidAutumnPlanId(organizationId);
-	if (!planId) {
-		console.error(
-			`[billing/seats] ${organizationId} has no paid Autumn plan; seats not set through Autumn`,
-		);
-		return false;
-	}
 	try {
-		await autumnClient.billing.update({
-			customerId: organizationId,
-			planId,
-			featureQuantities: [{ featureId: SEATS_FEATURE_ID, quantity }],
-		});
+		const update = await buildAutumnSeatUpdate(
+			organizationId,
+			quantity,
+			options,
+		);
+		if (!update) return options?.allowanceOnly === true;
+		await applySeatUpdate(update, autumnClient.billing, options);
 		return true;
 	} catch (error) {
 		console.error(
-			`[billing/seats] ${organizationId} seats not set through Autumn; falling back to Stripe`,
+			`[billing/seats] ${organizationId} seats or cloud allowance not set through Autumn`,
 			error,
 		);
+		if (error instanceof SeatAllowanceError) throw error;
 		return false;
 	}
 }

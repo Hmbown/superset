@@ -834,12 +834,18 @@ export const auth = betterAuth({
 					}
 
 					if (!subscription?.stripeSubscriptionId) return;
-					if (subscription.plan === "enterprise") return;
-
 					const quantity = Math.max(
 						1,
 						await countBillableSeats(organization.id),
 					);
+					if (subscription.plan === "enterprise") {
+						if (billingUsesAutumn) {
+							await setAutumnSeats(organization.id, quantity, {
+								allowanceOnly: true,
+							});
+						}
+						return;
+					}
 
 					const stripeSub = await stripeClient.subscriptions.retrieve(
 						subscription.stripeSubscriptionId,
@@ -963,12 +969,18 @@ export const auth = betterAuth({
 					});
 
 					if (!subscription?.stripeSubscriptionId) return;
-					if (subscription.plan === "enterprise") return;
-
 					const quantity = Math.max(
 						1,
 						await countBillableSeats(organization.id),
 					);
+					if (subscription.plan === "enterprise") {
+						if (billingUsesAutumn) {
+							await setAutumnSeats(organization.id, quantity, {
+								allowanceOnly: true,
+							});
+						}
+						return;
+					}
 
 					const stripeSub = await stripeClient.subscriptions.retrieve(
 						subscription.stripeSubscriptionId,

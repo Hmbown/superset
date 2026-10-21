@@ -38,6 +38,8 @@ in the Upstash console and watched by a Sentry cron monitor) finalizes each
 running box's memory GB-minutes and takes the next lock; a box whose next lock
 is refused is stopped. Stopping, archiving or deleting a box settles the rest.
 Environment builds are not billed. Prices and limits live in Autumn, not here.
+Paid plans can opt into [seat-scaled shared allowances](autumn-seat-allowances.md)
+through Autumn plan metadata; rollout requires a sandbox billing preview first.
 Still owed: our own idle stop (boxes run until Vercel's session timeout, and
 every minute is billed), per-member billing for Teams, and confirming Autumn's
 lock behaviour (retried and expired finalize) in its sandbox.

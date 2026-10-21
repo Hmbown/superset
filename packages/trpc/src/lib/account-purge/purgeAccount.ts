@@ -1,6 +1,7 @@
 import { autumnClient, billingUsesAutumn } from "@superset/auth/autumn";
 import {
 	paidAutumnPlanId,
+	SeatAllowanceError,
 	seatItem,
 	setAutumnSeats,
 } from "@superset/auth/billing";
@@ -26,6 +27,26 @@ import { and, count, eq, ne } from "drizzle-orm";
 import { settleOrganizationNow } from "../../router/cloud-workspace/meter";
 import { purgePageStorageForUser } from "../page-store";
 import { deletePostHogPerson } from "../posthog-persons";
+
+export async function syncSeatsForPurge(
+	organizationId: string,
+	quantity: number,
+	options?: { allowanceOnly?: boolean },
+	sync: typeof setAutumnSeats = setAutumnSeats,
+): Promise<"updated" | "fallback" | "rejected"> {
+	try {
+		return (await sync(organizationId, quantity, options))
+			? "updated"
+			: "fallback";
+	} catch (error) {
+		if (!(error instanceof SeatAllowanceError)) throw error;
+		console.error(
+			`[account-purge] ${organizationId} allowance sync rejected`,
+			error,
+		);
+		return "rejected";
+	}
+}
 
 async function deleteCustomerIfNeverCharged(customerId: string) {
 	for await (const charge of stripeClient.charges.list({
@@ -85,24 +106,35 @@ export async function purgeAccount(userId: string): Promise<void> {
 				),
 			});
 			if (
+				billingUsesAutumn &&
+				subscription?.stripeSubscriptionId &&
+				subscription.plan === "enterprise"
+			) {
+				await syncSeatsForPurge(membership.organizationId, remainingSeats, {
+					allowanceOnly: true,
+				});
+			}
+			if (
 				subscription?.stripeSubscriptionId &&
 				subscription.plan !== "enterprise"
 			) {
-				const seatsSetInAutumn =
-					billingUsesAutumn &&
-					(await setAutumnSeats(membership.organizationId, remainingSeats));
-				const stripeSub = await stripeClient.subscriptions.retrieve(
-					subscription.stripeSubscriptionId,
-				);
-				const itemId = seatItem(stripeSub)?.id;
-				if (!seatsSetInAutumn && itemId) {
-					await stripeClient.subscriptions.update(
+				const seatSync = billingUsesAutumn
+					? await syncSeatsForPurge(membership.organizationId, remainingSeats)
+					: "fallback";
+				if (seatSync === "fallback") {
+					const stripeSub = await stripeClient.subscriptions.retrieve(
 						subscription.stripeSubscriptionId,
-						{
-							items: [{ id: itemId, quantity: remainingSeats }],
-							proration_behavior: "create_prorations",
-						},
 					);
+					const itemId = seatItem(stripeSub)?.id;
+					if (itemId) {
+						await stripeClient.subscriptions.update(
+							subscription.stripeSubscriptionId,
+							{
+								items: [{ id: itemId, quantity: remainingSeats }],
+								proration_behavior: "create_prorations",
+							},
+						);
+					}
 				}
 			}
 			continue;
