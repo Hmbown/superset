@@ -398,6 +398,7 @@ export const Composer = memo(function Composer({
 				return;
 			}
 			if (text.trim() === "/resume" && onOpenHistory) {
+				if (files.length > 0 || pastedTexts.length > 0) return false;
 				queueMicrotask(onOpenHistory);
 				return;
 			}
