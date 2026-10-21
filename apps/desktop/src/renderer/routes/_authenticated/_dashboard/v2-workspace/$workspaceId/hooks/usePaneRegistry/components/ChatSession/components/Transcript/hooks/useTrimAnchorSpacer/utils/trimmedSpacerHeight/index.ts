@@ -1,0 +1,1 @@
+export { trimmedSpacerHeight } from "./trimmedSpacerHeight";

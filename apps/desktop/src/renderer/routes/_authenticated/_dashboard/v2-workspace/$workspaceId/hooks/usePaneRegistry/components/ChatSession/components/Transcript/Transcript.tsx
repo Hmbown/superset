@@ -45,6 +45,7 @@ import { useScrollAnchorKey } from "./hooks/useScrollAnchorKey";
 import { useScrollbarGutter } from "./hooks/useScrollbarGutter";
 import { useTranscriptFind } from "./hooks/useTranscriptFind";
 import { useTranscriptWindow } from "./hooks/useTranscriptWindow";
+import { useTrimAnchorSpacer } from "./hooks/useTrimAnchorSpacer";
 import { ChatImageGalleryProvider } from "./providers/ChatImageGalleryProvider";
 import { copySourceText } from "./utils/copySourceText";
 import { galleryImages } from "./utils/galleryImages";
@@ -145,25 +146,27 @@ export function Transcript({
 	useEffect(() => {
 		if (!scrollable.end) readerScrolledAway.current = false;
 	}, [scrollable.end]);
+	const trimAnchorSpacer = useTrimAnchorSpacer(viewport);
 	const markReaderScroll = useCallback(() => {
 		readerScrolledAway.current = true;
-	}, []);
+		trimAnchorSpacer();
+	}, [trimAnchorSpacer]);
 	const onViewportKeyDown = useCallback(
 		(event: KeyboardEvent<HTMLDivElement>) => {
-			if (SCROLL_KEYS.has(event.key)) readerScrolledAway.current = true;
+			if (SCROLL_KEYS.has(event.key)) markReaderScroll();
 		},
-		[],
+		[markReaderScroll],
 	);
 	const onViewportPointerDown = useCallback(
 		(event: PointerEvent<HTMLDivElement>) => {
 			if (event.target !== event.currentTarget) return;
-			readerScrolledAway.current = true;
+			markReaderScroll();
 			// The scroller counts only wheel, touch and scroll keys as the reader's own scroll.
 			event.currentTarget.dispatchEvent(
 				new WheelEvent("wheel", { bubbles: true }),
 			);
 		},
-		[],
+		[markReaderScroll],
 	);
 
 	const [entryOverrides, setEntryOverrides] = useState<
