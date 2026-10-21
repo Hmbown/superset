@@ -1,8 +1,4 @@
-import {
-	type MachineSize,
-	type PlanTier,
-	planTierFromSubscription,
-} from "@superset/shared/billing";
+import type { MachineSize, PlanTier } from "@superset/shared/billing";
 import { type CloudUsage, cloudUsageFromBalances } from "./cloud-usage";
 import type { getAutumnCustomer } from "./customer";
 import {
@@ -37,70 +33,10 @@ export interface OrganizationBilling {
 
 type AutumnCustomer = Awaited<ReturnType<typeof getAutumnCustomer>>;
 
-export const FREE_BILLING: OrganizationBilling = {
-	tier: "free",
-	status: null,
-	cancelAt: null,
-	periodStart: null,
-	periodEnd: null,
-	billingInterval: null,
-	lapsed: false,
-	paymentState: { kind: "ok" },
-	cloudUsage: null,
-	gatedMachineSizes: [],
-};
-
 const UNPAID_INVOICE = new Set(["open", "uncollectible"]);
 
 function iso(ms: number | null | undefined): string | null {
 	return ms ? new Date(ms).toISOString() : null;
-}
-
-/**
- * The plan as the Stripe webhook projected it into `subscriptions`. Served
- * when an organization pays in Stripe but Autumn has no record of it, which
- * is what a missed import looks like; Autumn knows nothing about usage or
- * machine sizes for such an organization, so those read as none.
- */
-export function billingFromSubscriptionRow(
-	row:
-		| {
-				plan: string | null;
-				status: string | null;
-				cancelAt: Date | null;
-				periodStart: Date | null;
-				periodEnd: Date | null;
-				billingInterval: string | null;
-		  }
-		| null
-		| undefined,
-): OrganizationBilling {
-	const tier = planTierFromSubscription(row);
-	if (!row || tier === "free") return FREE_BILLING;
-	const status =
-		row.status === "trialing" || row.status === "past_due"
-			? row.status
-			: "active";
-	return {
-		tier,
-		status,
-		cancelAt: row.cancelAt?.toISOString() ?? null,
-		periodStart: row.periodStart?.toISOString() ?? null,
-		periodEnd: row.periodEnd?.toISOString() ?? null,
-		billingInterval: row.billingInterval,
-		lapsed: false,
-		paymentState:
-			status === "past_due"
-				? {
-						kind: "past_due",
-						amountDue: null,
-						currency: null,
-						hostedInvoiceUrl: null,
-					}
-				: { kind: "ok" },
-		cloudUsage: null,
-		gatedMachineSizes: [],
-	};
 }
 
 export function billingFromCustomer(

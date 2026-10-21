@@ -1,8 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import {
-	billingFromCustomer,
-	billingFromSubscriptionRow,
-} from "./billing-state";
+import { billingFromCustomer } from "./billing-state";
 
 const NOW = Date.UTC(2026, 9, 13);
 const DAY = 24 * 60 * 60 * 1000;
@@ -153,50 +150,5 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 		expect(
 			billingFromCustomer(customer({ invoices: [invoice("paid")] }), NOW),
 		).toMatchObject({ lapsed: false, paymentState: { kind: "ok" } });
-	});
-});
-
-describe("an org Autumn does not know reads its plan from the Stripe projection", () => {
-	const row = {
-		plan: "pro",
-		status: "active",
-		cancelAt: null,
-		periodStart: new Date(NOW - 10 * DAY),
-		periodEnd: new Date(NOW + 20 * DAY),
-		billingInterval: "year",
-	};
-
-	test("an active paid row reads as that tier with its dates", () => {
-		expect(billingFromSubscriptionRow(row)).toMatchObject({
-			tier: "pro",
-			status: "active",
-			periodStart: new Date(NOW - 10 * DAY).toISOString(),
-			periodEnd: new Date(NOW + 20 * DAY).toISOString(),
-			billingInterval: "year",
-			lapsed: false,
-			paymentState: { kind: "ok" },
-			cloudUsage: null,
-			gatedMachineSizes: [],
-		});
-	});
-
-	test("a failing payment keeps its past_due state without an invoice to point at", () => {
-		expect(
-			billingFromSubscriptionRow({ ...row, status: "past_due" }),
-		).toMatchObject({
-			tier: "pro",
-			status: "past_due",
-			paymentState: { kind: "past_due", amountDue: null },
-		});
-	});
-
-	test("no row, an ended row, or an unknown plan reads as free", () => {
-		expect(billingFromSubscriptionRow(undefined).tier).toBe("free");
-		expect(
-			billingFromSubscriptionRow({ ...row, status: "canceled" }).tier,
-		).toBe("free");
-		expect(billingFromSubscriptionRow({ ...row, plan: "platinum" }).tier).toBe(
-			"free",
-		);
 	});
 });
