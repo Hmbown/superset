@@ -209,9 +209,7 @@ msgstr "{0, plural, one {雲端#個結果} other {雲端#個結果}}"
 msgid "{0, plural, one {# result on this host} other {# results on this host}}"
 msgstr "{0, plural, one {此主機上#個結果} other {此主機上#個結果}}"
 
-#. placeholder {0}: pullRequests.length
 #. placeholder {0}: results.length
-#. placeholder {0}: searchResults.length
 msgid "{0, plural, one {# result} other {# results}}"
 msgstr "{0, plural, one {#個結果} other {#個結果}}"
 
@@ -2637,9 +2635,6 @@ msgstr "已指派"
 msgid "Assigned to me"
 msgstr "指派給我"
 
-msgid "Assigned to you"
-msgstr "指派給你"
-
 msgid "Assignee"
 msgstr "負責人"
 
@@ -4444,9 +4439,6 @@ msgstr "連線你的GitHub儲存庫並同步拉取請求。追蹤整個團隊的
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "請先連接你的 Linear 帳戶，再於 Linear 中管理任務。"
 
-msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
-msgstr "請在 設定 → 整合 中連結你的Linear帳號，以連結Linear議題。"
-
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "連結你的Linear帳號後，即可在Superset中瀏覽、更新Linear議題並開始工作。"
 
@@ -5188,14 +5180,8 @@ msgstr "無法載入貢獻者，請直接輸入使用者名稱。"
 msgid "Couldn't load earlier messages. Retry"
 msgstr "無法載入較早的訊息。重試"
 
-msgid "Couldn't load issues: {msg}"
-msgstr "無法載入議題：{msg}"
-
 msgid "Couldn't load pages"
 msgstr "無法載入頁面"
-
-msgid "Couldn't load pull requests: {msg}"
-msgstr "無法載入拉取請求：{msg}"
 
 msgid "Couldn't load review comments"
 msgstr "無法載入審查評論"
@@ -7250,9 +7236,6 @@ msgstr "開啟新視窗失敗：{0}"
 
 msgid "Failed to open new window: {message}"
 msgstr "開啟新視窗失敗：{message}"
-
-msgid "Failed to open task"
-msgstr "開啟任務失敗"
 
 msgid "Failed to open the billing portal"
 msgstr "開啟帳單門戶失敗"
@@ -9604,15 +9587,6 @@ msgstr "連結已複製"
 msgid "Link copied"
 msgstr "連結已複製"
 
-msgid "Link GitHub issue"
-msgstr "關聯GitHub議題"
-
-msgid "Link Linear issue"
-msgstr "連結Linear議題"
-
-msgid "Link pull request"
-msgstr "關聯拉取請求"
-
 msgid "Link task"
 msgstr "關聯任務"
 
@@ -11092,14 +11066,8 @@ msgstr "未登記姓名"
 msgid "No one in {organizationName} matches. Type a full email to invite someone new."
 msgstr "{organizationName} 中沒有相符的人。輸入完整電子郵件地址即可邀請新成員。"
 
-msgid "No open issues found."
-msgstr "未找到開啟的議題。"
-
 msgid "No open issues."
 msgstr "沒有開啟的議題。"
-
-msgid "No open pull requests found."
-msgstr "未找到開啟的拉取請求。"
 
 msgid "No open pull requests."
 msgstr "沒有開啟的拉取請求。"
@@ -12019,9 +11987,6 @@ msgstr "在GitHub中開啟議題"
 msgid "Open issue in Linear"
 msgstr "在Linear中開啟議題"
 
-msgid "Open issues"
-msgstr "開啟的議題"
-
 msgid "Open leaderboard"
 msgstr "開啟排行榜"
 
@@ -12072,9 +12037,6 @@ msgstr "開啟專案"
 msgid "Open Projects"
 msgstr "開啟專案"
 
-msgid "Open PRs"
-msgstr "開啟的PR"
-
 msgid "Open pull request"
 msgstr "開啟拉取請求"
 
@@ -12118,9 +12080,6 @@ msgstr "在那台電腦上開啟Superset"
 
 msgid "Open System Settings"
 msgstr "開啟系統設定"
-
-msgid "Open task {title}"
-msgstr "開啟任務{title}"
 
 msgid "Open Terminal"
 msgstr "開啟終端"
@@ -13566,14 +13525,8 @@ msgstr "最近使用的 App"
 msgid "Recent invoices"
 msgstr "最近的帳單"
 
-msgid "Recent issues"
-msgstr "最近的議題"
-
 msgid "Recent prompts"
 msgstr "最近的提示詞"
-
-msgid "Recent PRs"
-msgstr "最近的PR"
 
 msgid "Recently deleted"
 msgstr "最近刪除"
@@ -13791,12 +13744,6 @@ msgstr "移除圖示"
 
 msgid "Remove image"
 msgstr "移除圖片"
-
-msgid "Remove linked issue"
-msgstr "移除關聯的議題"
-
-msgid "Remove linked PR"
-msgstr "移除關聯的PR"
 
 msgid "Remove member"
 msgstr "移除成員"
@@ -14983,9 +14930,6 @@ msgstr "搜尋了tooltip的樣式覆蓋"
 msgid "Searching for Kbd usages"
 msgstr "正在搜尋Kbd的使用處"
 
-msgid "Searching..."
-msgstr "正在搜尋..."
-
 msgid "Searching…"
 msgstr "搜尋中…"
 
@@ -15540,9 +15484,6 @@ msgstr "顯示邊框"
 
 msgid "Show checks"
 msgstr "顯示檢查"
-
-msgid "Show closed"
-msgstr "顯示已關閉"
 
 msgid "Show CPU and memory usage in the top bar"
 msgstr "在頂欄顯示CPU和記憶體用量"

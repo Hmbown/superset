@@ -209,9 +209,7 @@ msgstr "{0, plural, one {クラウドで#件} other {クラウドで#件}}"
 msgid "{0, plural, one {# result on this host} other {# results on this host}}"
 msgstr "{0, plural, one {このホストで#件} other {このホストで#件}}"
 
-#. placeholder {0}: pullRequests.length
 #. placeholder {0}: results.length
-#. placeholder {0}: searchResults.length
 msgid "{0, plural, one {# result} other {# results}}"
 msgstr "{0, plural, one {#件の結果} other {#件の結果}}"
 
@@ -2637,9 +2635,6 @@ msgstr "割り当て"
 msgid "Assigned to me"
 msgstr "自分に割り当て"
 
-msgid "Assigned to you"
-msgstr "あなたに割り当て"
-
 msgid "Assignee"
 msgstr "担当者"
 
@@ -4444,9 +4439,6 @@ msgstr "GitHubリポジトリを接続してプルリクエストを同期しま
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "タスクを Linear で管理する前に、Linear アカウントを接続してください。"
 
-msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
-msgstr "Linear issueをリンクするには、設定 → 連携でLinearアカウントを接続してください。"
-
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Linearアカウントを接続すると、SupersetからLinear issueの閲覧・更新・作業開始ができます。"
 
@@ -5188,14 +5180,8 @@ msgstr "コントリビューターを読み込めませんでした — ユー�
 msgid "Couldn't load earlier messages. Retry"
 msgstr "以前のメッセージを読み込めませんでした。再試行"
 
-msgid "Couldn't load issues: {msg}"
-msgstr "Issueを読み込めませんでした: {msg}"
-
 msgid "Couldn't load pages"
 msgstr "ページを読み込めませんでした"
-
-msgid "Couldn't load pull requests: {msg}"
-msgstr "プルリクエストを読み込めませんでした: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "レビューコメントを読み込めませんでした"
@@ -7250,9 +7236,6 @@ msgstr "新規ウィンドウを開けませんでした: {0}"
 
 msgid "Failed to open new window: {message}"
 msgstr "新規ウィンドウを開けませんでした: {message}"
-
-msgid "Failed to open task"
-msgstr "タスクを開けませんでした"
 
 msgid "Failed to open the billing portal"
 msgstr "請求ポータルを開けませんでした"
@@ -9604,15 +9587,6 @@ msgstr "リンクをコピーしました"
 msgid "Link copied"
 msgstr "リンクをコピーしました"
 
-msgid "Link GitHub issue"
-msgstr "GitHub issueをリンク"
-
-msgid "Link Linear issue"
-msgstr "Linear issueをリンク"
-
-msgid "Link pull request"
-msgstr "プルリクエストをリンク"
-
 msgid "Link task"
 msgstr "タスクをリンク"
 
@@ -11092,14 +11066,8 @@ msgstr "登録された名前はありません"
 msgid "No one in {organizationName} matches. Type a full email to invite someone new."
 msgstr "{organizationName}に一致するユーザーはいません。新しいユーザーを招待するには、メールアドレスをすべて入力してください。"
 
-msgid "No open issues found."
-msgstr "オープンなIssueが見つかりません。"
-
 msgid "No open issues."
 msgstr "オープンなissueはありません。"
-
-msgid "No open pull requests found."
-msgstr "オープンなプルリクエストが見つかりません。"
 
 msgid "No open pull requests."
 msgstr "オープンなプルリクエストはありません。"
@@ -12019,9 +11987,6 @@ msgstr "GitHubでissueを開く"
 msgid "Open issue in Linear"
 msgstr "Linearでissueを開く"
 
-msgid "Open issues"
-msgstr "オープンなIssue"
-
 msgid "Open leaderboard"
 msgstr "リーダーボードを開く"
 
@@ -12072,9 +12037,6 @@ msgstr "プロジェクトを開く"
 msgid "Open Projects"
 msgstr "プロジェクトを開く"
 
-msgid "Open PRs"
-msgstr "オープンなPR"
-
 msgid "Open pull request"
 msgstr "プルリクエストを開く"
 
@@ -12118,9 +12080,6 @@ msgstr "そのコンピュータでSupersetを開く"
 
 msgid "Open System Settings"
 msgstr "システム設定を開く"
-
-msgid "Open task {title}"
-msgstr "タスク{title}を開く"
 
 msgid "Open Terminal"
 msgstr "ターミナルを開く"
@@ -13566,14 +13525,8 @@ msgstr "最近使ったアプリ"
 msgid "Recent invoices"
 msgstr "最近の請求書"
 
-msgid "Recent issues"
-msgstr "最近のIssue"
-
 msgid "Recent prompts"
 msgstr "最近のプロンプト"
-
-msgid "Recent PRs"
-msgstr "最近のPR"
 
 msgid "Recently deleted"
 msgstr "最近削除した項目"
@@ -13791,12 +13744,6 @@ msgstr "アイコンを削除"
 
 msgid "Remove image"
 msgstr "画像を削除"
-
-msgid "Remove linked issue"
-msgstr "リンクされたIssueを削除"
-
-msgid "Remove linked PR"
-msgstr "リンクされたPRを削除"
 
 msgid "Remove member"
 msgstr "メンバーを削除"
@@ -14983,9 +14930,6 @@ msgstr "tooltipのオーバーライドを検索"
 msgid "Searching for Kbd usages"
 msgstr "Kbdの使用箇所を検索中"
 
-msgid "Searching..."
-msgstr "検索中..."
-
 msgid "Searching…"
 msgstr "検索中…"
 
@@ -15540,9 +15484,6 @@ msgstr "境界線を表示"
 
 msgid "Show checks"
 msgstr "チェックを表示"
-
-msgid "Show closed"
-msgstr "クローズ済みも表示"
 
 msgid "Show CPU and memory usage in the top bar"
 msgstr "トップバーにCPUとメモリ使用量を表示"

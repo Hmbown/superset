@@ -209,9 +209,7 @@ msgstr "{0, plural, one {# результат в облаке} few {# резул
 msgid "{0, plural, one {# result on this host} other {# results on this host}}"
 msgstr "{0, plural, one {# результат на этом хосте} few {# результата на этом хосте} many {# результатов на этом хосте} other {# результата на этом хосте}}"
 
-#. placeholder {0}: pullRequests.length
 #. placeholder {0}: results.length
-#. placeholder {0}: searchResults.length
 msgid "{0, plural, one {# result} other {# results}}"
 msgstr "{0, plural, one {# результат} few {# результата} many {# результатов} other {# результата}}"
 
@@ -2637,9 +2635,6 @@ msgstr "Назначена"
 msgid "Assigned to me"
 msgstr "Назначенные мне"
 
-msgid "Assigned to you"
-msgstr "Назначенные вам"
-
 msgid "Assignee"
 msgstr "Исполнитель"
 
@@ -4444,9 +4439,6 @@ msgstr "Подключите репозитории GitHub и синхрониз
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "Подключите свой аккаунт Linear, прежде чем вести задачи в Linear."
 
-msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
-msgstr "Подключите свой аккаунт Linear в разделе Настройки → Интеграции, чтобы связывать задачи Linear."
-
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Подключите свой аккаунт Linear, чтобы просматривать, обновлять задачи Linear и начинать работу над ними в Superset."
 
@@ -5188,14 +5180,8 @@ msgstr "Не удалось загрузить контрибьюторов — 
 msgid "Couldn't load earlier messages. Retry"
 msgstr "Не удалось загрузить более ранние сообщения. Повторить"
 
-msgid "Couldn't load issues: {msg}"
-msgstr "Не удалось загрузить задачи: {msg}"
-
 msgid "Couldn't load pages"
 msgstr "Не удалось загрузить страницы"
-
-msgid "Couldn't load pull requests: {msg}"
-msgstr "Не удалось загрузить пул-реквесты: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "Не удалось загрузить комментарии ревью"
@@ -7250,9 +7236,6 @@ msgstr "Не удалось открыть новое окно: {0}"
 
 msgid "Failed to open new window: {message}"
 msgstr "Не удалось открыть новое окно: {message}"
-
-msgid "Failed to open task"
-msgstr "Не удалось открыть задачу"
 
 msgid "Failed to open the billing portal"
 msgstr "Не удалось открыть портал оплаты"
@@ -9604,15 +9587,6 @@ msgstr "ссылка скопирована"
 msgid "Link copied"
 msgstr "Ссылка скопирована"
 
-msgid "Link GitHub issue"
-msgstr "Привязать задачу GitHub"
-
-msgid "Link Linear issue"
-msgstr "Связать задачу Linear"
-
-msgid "Link pull request"
-msgstr "Привязать пул-реквест"
-
 msgid "Link task"
 msgstr "Привязать задачу"
 
@@ -11092,14 +11066,8 @@ msgstr "Имя не указано"
 msgid "No one in {organizationName} matches. Type a full email to invite someone new."
 msgstr "В {organizationName} никто не найден. Введите полный email, чтобы пригласить нового человека."
 
-msgid "No open issues found."
-msgstr "Открытых задач не найдено."
-
 msgid "No open issues."
 msgstr "Нет открытых задач."
-
-msgid "No open pull requests found."
-msgstr "Открытых пул-реквестов не найдено."
 
 msgid "No open pull requests."
 msgstr "Нет открытых пул-реквестов."
@@ -12019,9 +11987,6 @@ msgstr "Открыть задачу на GitHub"
 msgid "Open issue in Linear"
 msgstr "Открыть задачу в Linear"
 
-msgid "Open issues"
-msgstr "Открытые задачи"
-
 msgid "Open leaderboard"
 msgstr "Открыть рейтинг"
 
@@ -12072,9 +12037,6 @@ msgstr "Открыть проект"
 msgid "Open Projects"
 msgstr "Открыть проекты"
 
-msgid "Open PRs"
-msgstr "Открытые PR"
-
 msgid "Open pull request"
 msgstr "Открыть пул-реквест"
 
@@ -12118,9 +12080,6 @@ msgstr "Откройте Superset на этом компьютере"
 
 msgid "Open System Settings"
 msgstr "Открыть Системные настройки"
-
-msgid "Open task {title}"
-msgstr "Открыть задачу {title}"
 
 msgid "Open Terminal"
 msgstr "Открыть терминал"
@@ -13566,14 +13525,8 @@ msgstr "Недавние приложения"
 msgid "Recent invoices"
 msgstr "Недавние счета"
 
-msgid "Recent issues"
-msgstr "Недавние задачи"
-
 msgid "Recent prompts"
 msgstr "Недавние промпты"
-
-msgid "Recent PRs"
-msgstr "Недавние PR"
 
 msgid "Recently deleted"
 msgstr "Недавно удалённые"
@@ -13791,12 +13744,6 @@ msgstr "Удалить иконку"
 
 msgid "Remove image"
 msgstr "Убрать изображение"
-
-msgid "Remove linked issue"
-msgstr "Отвязать задачу"
-
-msgid "Remove linked PR"
-msgstr "Отвязать PR"
 
 msgid "Remove member"
 msgstr "Удалить участника"
@@ -14983,9 +14930,6 @@ msgstr "Искали переопределения tooltip"
 msgid "Searching for Kbd usages"
 msgstr "Ищем использования Kbd"
 
-msgid "Searching..."
-msgstr "Поиск..."
-
 msgid "Searching…"
 msgstr "Поиск…"
 
@@ -15540,9 +15484,6 @@ msgstr "Показывать границы"
 
 msgid "Show checks"
 msgstr "Показать проверки"
-
-msgid "Show closed"
-msgstr "Показать закрытые"
 
 msgid "Show CPU and memory usage in the top bar"
 msgstr "Показывать загрузку CPU и памяти в верхней панели"

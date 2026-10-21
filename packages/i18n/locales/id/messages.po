@@ -209,9 +209,7 @@ msgstr "{0, plural, one {# hasil di Cloud} other {# hasil di Cloud}}"
 msgid "{0, plural, one {# result on this host} other {# results on this host}}"
 msgstr "{0, plural, one {# hasil di host ini} other {# hasil di host ini}}"
 
-#. placeholder {0}: pullRequests.length
 #. placeholder {0}: results.length
-#. placeholder {0}: searchResults.length
 msgid "{0, plural, one {# result} other {# results}}"
 msgstr "{0, plural, one {# hasil} other {# hasil}}"
 
@@ -2637,9 +2635,6 @@ msgstr "Ditugaskan"
 msgid "Assigned to me"
 msgstr "Ditugaskan kepada saya"
 
-msgid "Assigned to you"
-msgstr "Ditugaskan kepada Anda"
-
 msgid "Assignee"
 msgstr "Penerima tugas"
 
@@ -4444,9 +4439,6 @@ msgstr "Hubungkan repositori GitHub Anda dan sinkronkan pull request. Lacak stat
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "Hubungkan akun Linear Anda sebelum melacak tugas di Linear."
 
-msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
-msgstr "Hubungkan akun Linear Anda di Pengaturan → Integrasi untuk menautkan issue Linear."
-
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Hubungkan akun Linear Anda untuk menelusuri, memperbarui, dan mulai mengerjakan issue Linear dari Superset."
 
@@ -5188,14 +5180,8 @@ msgstr "Tidak bisa memuat kontributor — ketik username saja."
 msgid "Couldn't load earlier messages. Retry"
 msgstr "Tidak dapat memuat pesan sebelumnya. Coba lagi"
 
-msgid "Couldn't load issues: {msg}"
-msgstr "Tidak bisa memuat issue: {msg}"
-
 msgid "Couldn't load pages"
 msgstr "Tidak dapat memuat halaman"
-
-msgid "Couldn't load pull requests: {msg}"
-msgstr "Tidak bisa memuat pull request: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "Tidak bisa memuat komentar review"
@@ -7250,9 +7236,6 @@ msgstr "Gagal membuka jendela baru: {0}"
 
 msgid "Failed to open new window: {message}"
 msgstr "Gagal membuka jendela baru: {message}"
-
-msgid "Failed to open task"
-msgstr "Gagal membuka tugas"
 
 msgid "Failed to open the billing portal"
 msgstr "Gagal membuka portal penagihan"
@@ -9604,15 +9587,6 @@ msgstr "tautan disalin"
 msgid "Link copied"
 msgstr "Tautan disalin"
 
-msgid "Link GitHub issue"
-msgstr "Tautkan issue GitHub"
-
-msgid "Link Linear issue"
-msgstr "Tautkan issue Linear"
-
-msgid "Link pull request"
-msgstr "Tautkan pull request"
-
 msgid "Link task"
 msgstr "Tautkan tugas"
 
@@ -11092,14 +11066,8 @@ msgstr "Tidak ada nama tersimpan"
 msgid "No one in {organizationName} matches. Type a full email to invite someone new."
 msgstr "Tidak ada yang cocok di {organizationName}. Ketik email lengkap untuk mengundang orang baru."
 
-msgid "No open issues found."
-msgstr "Tidak ada issue terbuka."
-
 msgid "No open issues."
 msgstr "Tidak ada issue terbuka."
-
-msgid "No open pull requests found."
-msgstr "Tidak ada pull request terbuka."
 
 msgid "No open pull requests."
 msgstr "Tidak ada pull request terbuka."
@@ -12019,9 +11987,6 @@ msgstr "Buka issue di GitHub"
 msgid "Open issue in Linear"
 msgstr "Buka issue di Linear"
 
-msgid "Open issues"
-msgstr "Issue terbuka"
-
 msgid "Open leaderboard"
 msgstr "Buka papan peringkat"
 
@@ -12072,9 +12037,6 @@ msgstr "Buka Proyek"
 msgid "Open Projects"
 msgstr "Buka Proyek"
 
-msgid "Open PRs"
-msgstr "PR terbuka"
-
 msgid "Open pull request"
 msgstr "Buka pull request"
 
@@ -12118,9 +12080,6 @@ msgstr "Buka Superset di komputer itu"
 
 msgid "Open System Settings"
 msgstr "Buka System Settings"
-
-msgid "Open task {title}"
-msgstr "Buka tugas {title}"
 
 msgid "Open Terminal"
 msgstr "Buka Terminal"
@@ -13566,14 +13525,8 @@ msgstr "Aplikasi terbaru"
 msgid "Recent invoices"
 msgstr "Faktur terbaru"
 
-msgid "Recent issues"
-msgstr "Issue terbaru"
-
 msgid "Recent prompts"
 msgstr "Prompt terbaru"
-
-msgid "Recent PRs"
-msgstr "PR terbaru"
 
 msgid "Recently deleted"
 msgstr "Baru dihapus"
@@ -13791,12 +13744,6 @@ msgstr "Hapus ikon"
 
 msgid "Remove image"
 msgstr "Hapus gambar"
-
-msgid "Remove linked issue"
-msgstr "Hapus issue yang ditautkan"
-
-msgid "Remove linked PR"
-msgstr "Hapus PR yang ditautkan"
 
 msgid "Remove member"
 msgstr "Hapus anggota"
@@ -14983,9 +14930,6 @@ msgstr "Mencari penimpaan tooltip"
 msgid "Searching for Kbd usages"
 msgstr "Mencari penggunaan Kbd"
 
-msgid "Searching..."
-msgstr "Mencari..."
-
 msgid "Searching…"
 msgstr "Mencari…"
 
@@ -15540,9 +15484,6 @@ msgstr "Tampilkan Batas"
 
 msgid "Show checks"
 msgstr "Tampilkan check"
-
-msgid "Show closed"
-msgstr "Tampilkan yang ditutup"
 
 msgid "Show CPU and memory usage in the top bar"
 msgstr "Tampilkan penggunaan CPU dan memori di bilah atas"

@@ -7,6 +7,7 @@ import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId"
 import { useOpenNewWorkspace } from "renderer/hooks/useOpenNewWorkspace";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { deriveBranchName } from "renderer/routes/_authenticated/utils/deriveBranchName";
+import { linkedContextPrompt } from "renderer/routes/_authenticated/utils/linkedContextChips";
 import { linkedIssueFromLinear } from "renderer/routes/_authenticated/utils/linkedIssueFromLinear";
 import { useNewWorkspaceDraftStore } from "renderer/stores/new-workspace-draft";
 import type { LinearIssue } from "../../utils/linearIssueTypes";
@@ -67,6 +68,7 @@ export function useLinearIssueActions() {
 			store.resetDraft();
 			store.updateDraft({
 				linkedIssues: [linkedIssue],
+				prompt: linkedContextPrompt([linkedIssue]),
 				branchName: deriveBranchName(linkedIssue),
 				branchNameEdited: true,
 				branchNameFromProvider: !!linkedIssue.branch,

@@ -209,9 +209,7 @@ msgstr "{0, plural, one {云端#个结果} other {云端#个结果}}"
 msgid "{0, plural, one {# result on this host} other {# results on this host}}"
 msgstr "{0, plural, one {此主机上#个结果} other {此主机上#个结果}}"
 
-#. placeholder {0}: pullRequests.length
 #. placeholder {0}: results.length
-#. placeholder {0}: searchResults.length
 msgid "{0, plural, one {# result} other {# results}}"
 msgstr "{0, plural, one {#个结果} other {#个结果}}"
 
@@ -2637,9 +2635,6 @@ msgstr "已指派"
 msgid "Assigned to me"
 msgstr "分配给我"
 
-msgid "Assigned to you"
-msgstr "分配给你"
-
 msgid "Assignee"
 msgstr "负责人"
 
@@ -4444,9 +4439,6 @@ msgstr "连接你的GitHub仓库并同步拉取请求。跟踪整个团队的CI�
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "请先连接你的 Linear 账户，再在 Linear 中管理任务。"
 
-msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
-msgstr "请在 设置 → 集成 中连接你的Linear账号，以关联Linear议题。"
-
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "连接你的Linear账号后，即可在Superset中浏览、更新Linear议题并开始工作。"
 
@@ -5188,14 +5180,8 @@ msgstr "无法加载贡献者，请直接输入用户名。"
 msgid "Couldn't load earlier messages. Retry"
 msgstr "无法加载更早的消息。重试"
 
-msgid "Couldn't load issues: {msg}"
-msgstr "无法加载议题：{msg}"
-
 msgid "Couldn't load pages"
 msgstr "无法加载页面"
-
-msgid "Couldn't load pull requests: {msg}"
-msgstr "无法加载拉取请求：{msg}"
 
 msgid "Couldn't load review comments"
 msgstr "无法加载审查评论"
@@ -7250,9 +7236,6 @@ msgstr "打开新窗口失败：{0}"
 
 msgid "Failed to open new window: {message}"
 msgstr "打开新窗口失败：{message}"
-
-msgid "Failed to open task"
-msgstr "打开任务失败"
 
 msgid "Failed to open the billing portal"
 msgstr "打开账单门户失败"
@@ -9604,15 +9587,6 @@ msgstr "链接已复制"
 msgid "Link copied"
 msgstr "链接已复制"
 
-msgid "Link GitHub issue"
-msgstr "关联GitHub议题"
-
-msgid "Link Linear issue"
-msgstr "关联Linear议题"
-
-msgid "Link pull request"
-msgstr "关联拉取请求"
-
 msgid "Link task"
 msgstr "关联任务"
 
@@ -11092,14 +11066,8 @@ msgstr "未登记姓名"
 msgid "No one in {organizationName} matches. Type a full email to invite someone new."
 msgstr "{organizationName} 中没有匹配的人。输入完整邮箱地址即可邀请新成员。"
 
-msgid "No open issues found."
-msgstr "未找到打开的议题。"
-
 msgid "No open issues."
 msgstr "没有开启的议题。"
-
-msgid "No open pull requests found."
-msgstr "未找到打开的拉取请求。"
 
 msgid "No open pull requests."
 msgstr "没有打开的拉取请求。"
@@ -12019,9 +11987,6 @@ msgstr "在GitHub中打开议题"
 msgid "Open issue in Linear"
 msgstr "在Linear中打开议题"
 
-msgid "Open issues"
-msgstr "打开的议题"
-
 msgid "Open leaderboard"
 msgstr "打开排行榜"
 
@@ -12072,9 +12037,6 @@ msgstr "打开项目"
 msgid "Open Projects"
 msgstr "打开项目"
 
-msgid "Open PRs"
-msgstr "打开的PR"
-
 msgid "Open pull request"
 msgstr "打开拉取请求"
 
@@ -12118,9 +12080,6 @@ msgstr "在那台电脑上打开Superset"
 
 msgid "Open System Settings"
 msgstr "打开系统设置"
-
-msgid "Open task {title}"
-msgstr "打开任务{title}"
 
 msgid "Open Terminal"
 msgstr "打开终端"
@@ -13566,14 +13525,8 @@ msgstr "最近使用的应用"
 msgid "Recent invoices"
 msgstr "最近的账单"
 
-msgid "Recent issues"
-msgstr "最近的议题"
-
 msgid "Recent prompts"
 msgstr "最近的提示词"
-
-msgid "Recent PRs"
-msgstr "最近的PR"
 
 msgid "Recently deleted"
 msgstr "最近删除"
@@ -13791,12 +13744,6 @@ msgstr "移除图标"
 
 msgid "Remove image"
 msgstr "移除图片"
-
-msgid "Remove linked issue"
-msgstr "移除关联的议题"
-
-msgid "Remove linked PR"
-msgstr "移除关联的PR"
 
 msgid "Remove member"
 msgstr "移除成员"
@@ -14983,9 +14930,6 @@ msgstr "搜索了tooltip的样式覆盖"
 msgid "Searching for Kbd usages"
 msgstr "正在搜索Kbd的使用处"
 
-msgid "Searching..."
-msgstr "正在搜索..."
-
 msgid "Searching…"
 msgstr "搜索中…"
 
@@ -15540,9 +15484,6 @@ msgstr "显示边框"
 
 msgid "Show checks"
 msgstr "显示检查"
-
-msgid "Show closed"
-msgstr "显示已关闭"
 
 msgid "Show CPU and memory usage in the top bar"
 msgstr "在顶栏显示CPU和内存用量"

@@ -13,6 +13,7 @@ import { WorkItemDetailHeader } from "renderer/routes/_authenticated/_dashboard/
 import { WorkItemDetailState } from "renderer/routes/_authenticated/_dashboard/components/WorkItemDetailState";
 import { useProjectHost } from "renderer/routes/_authenticated/_dashboard/hooks/useProjectHost";
 import { parsePositiveIntegerParam } from "renderer/routes/_authenticated/_dashboard/utils/parsePositiveIntegerParam";
+import { linkedContextPrompt } from "renderer/routes/_authenticated/utils/linkedContextChips";
 import {
 	type LinkedIssue,
 	useNewWorkspaceDraftStore,
@@ -94,7 +95,11 @@ function IssueDetailPage() {
 		};
 		resetDraft();
 		selectProject(projectId);
-		updateDraft({ hostId, linkedIssues: [linkedIssue] });
+		updateDraft({
+			hostId,
+			linkedIssues: [linkedIssue],
+			prompt: linkedContextPrompt([linkedIssue]),
+		});
 		openNewWorkspace(projectId);
 	};
 

@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import type { ComposerChip } from "@superset/chat-ui/PromptInput";
 import {
 	isDropHandled,
 	markDropHandled,
@@ -11,10 +12,7 @@ import {
 } from "@superset/shared/agent-models";
 import { startableCloudEnvironments } from "@superset/shared/cloud-environments";
 import { CLOUD_HOST_ID } from "@superset/shared/host-routing";
-import {
-	PromptInputButton,
-	useProviderAttachments,
-} from "@superset/ui/ai-elements/prompt-input";
+import { useProviderAttachments } from "@superset/ui/ai-elements/prompt-input";
 import { Button } from "@superset/ui/button";
 import { applyAttachmentConstraints } from "@superset/ui/lib/attachment-constraints";
 import { isEnterSubmit } from "@superset/ui/lib/keyboard";
@@ -31,13 +29,8 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { GoIssueOpened } from "react-icons/go";
-import { HiOutlineCheckCircle } from "react-icons/hi2";
 import { LuGitPullRequest } from "react-icons/lu";
-import { SiLinear } from "react-icons/si";
 import { GitHubStarPill } from "renderer/components/GitHubStarPill";
-import { IssueLinkCommand } from "renderer/components/IssueLinkCommand";
-import { LinkedIssuePill } from "renderer/components/LinkedIssuePill";
 import { useHostProjects } from "renderer/hooks/host-projects/useHostProjects";
 import { resolveHostUrl } from "renderer/hooks/host-service/useHostTargetUrl";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
@@ -50,7 +43,6 @@ import {
 import { useAgentModePreference } from "renderer/hooks/useAgentModePreference";
 import { useRelayUrl } from "renderer/hooks/useRelayUrl";
 import { useSelectedHostProjectIds } from "renderer/hooks/useSelectedHostProjectIds";
-import { useTaskTracker } from "renderer/hooks/useTaskTracker";
 import { useV2AgentChoices } from "renderer/hooks/useV2AgentChoices";
 import { CLOUD_AGENT_CHOICES } from "renderer/hooks/useV2AgentChoices/cloud-agent-choices";
 import { track } from "renderer/lib/analytics";
@@ -65,8 +57,13 @@ import {
 	ModelPicker,
 } from "renderer/routes/_authenticated/components/ModelPicker";
 import { ModePicker } from "renderer/routes/_authenticated/components/ModePicker";
+import { useGitHubMentionProviders } from "renderer/routes/_authenticated/hooks/useGitHubMentionProviders";
 import { useHostWorkspaces } from "renderer/routes/_authenticated/providers/HostWorkspacesProvider";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
+import {
+	findLinkedContextChips,
+	linkedContextOfChip,
+} from "renderer/routes/_authenticated/utils/linkedContextChips";
 import { newWorkspaceAttachmentPaths } from "renderer/stores/new-workspace-attachments";
 import { useNewWorkspacePromptContext } from "renderer/stores/new-workspace-prompt-context";
 import {
@@ -87,12 +84,7 @@ import { useWorkspaceHostOptions } from "../DashboardNewWorkspaceForm/components
 import { CheckoutPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/CheckoutPickerPill";
 import { CompareBaseBranchPicker } from "../DashboardNewWorkspaceForm/PromptGroup/components/CompareBaseBranchPicker";
 import { EnvironmentPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/EnvironmentPickerPill";
-import { GitHubIssueLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/GitHubIssueLinkCommand";
-import { LinearIssueLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinearIssueLinkCommand";
-import { LinkedGitHubIssuePill } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinkedGitHubIssuePill";
-import { LinkedPRPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinkedPRPill";
 import { MachineSizePickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/MachineSizePickerPill";
-import { PRLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/PRLinkCommand";
 import { ProjectPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/ProjectPickerPill";
 import { PromptHistoryCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/PromptHistoryCommand";
 import { useBranchPickerController } from "../DashboardNewWorkspaceForm/PromptGroup/hooks/useBranchPickerController";
@@ -108,7 +100,6 @@ import {
 	EFFORT_STORAGE_KEY,
 	MODE_STORAGE_KEY,
 	MODEL_STORAGE_KEY,
-	PILL_BUTTON_CLASS,
 	type WorkspaceCreateAgent,
 } from "../DashboardNewWorkspaceForm/PromptGroup/types";
 import { SymmetricResizeHandles } from "../SymmetricResizeHandles";
@@ -441,16 +432,19 @@ export function NewWorkspaceScreen({
 		},
 		[updateDraft],
 	);
-	const {
-		addLinkedIssue,
-		addLinkedLinearIssue,
-		addLinkedGitHubIssue,
-		removeLinkedIssue,
-		setLinkedPR,
-		removeLinkedPR,
-	} = useLinkedContext(draft.linkedIssues, updateDraft);
-	const linkTaskLabel = t({ message: "Link task" });
-	const taskTracker = useTaskTracker();
+	const { link, unlinkMissing } = useLinkedContext(updateDraft);
+	const findLinkedChips = useCallback(
+		(text: string) =>
+			findLinkedContextChips(text, draft.linkedIssues, draft.linkedPR),
+		[draft.linkedIssues, draft.linkedPR],
+	);
+	const linkChip = useCallback(
+		(chip: ComposerChip) => {
+			const context = linkedContextOfChip(chip);
+			if (context) link(context);
+		},
+		[link],
+	);
 
 	// Restore the last-used launch host once per mount, like the modal does.
 	// A host named in the URL (the sidebar's Cloud "+") wins, and applies when
@@ -521,6 +515,10 @@ export function NewWorkspaceScreen({
 			}) ?? null
 		);
 	}, [draft.hostId, machineId, activeHostUrl, activeOrganizationId, relayUrl]);
+	const gitHubMentionProviders = useGitHubMentionProviders({
+		projectId,
+		hostUrl: launchHostUrl,
+	});
 
 	const promptCardsVariant = useNewWorkspacePromptCardsVariant(isOpen);
 	const promptLayout =
@@ -1006,40 +1004,8 @@ export function NewWorkspaceScreen({
 						defaultValue={draft.prompt}
 						disabled={isCreating}
 						header={
-							(draft.linkedPR ||
-								draft.linkedIssues.length > 0 ||
-								visibleFiles.length > 0) && (
+							visibleFiles.length > 0 && (
 								<div className="flex items-start gap-2 self-stretch overflow-x-auto px-3 pt-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-									{draft.linkedPR && (
-										<div className="shrink-0">
-											<LinkedPRPill
-												prNumber={draft.linkedPR.prNumber}
-												title={draft.linkedPR.title}
-												state={draft.linkedPR.state}
-												onRemove={removeLinkedPR}
-											/>
-										</div>
-									)}
-									{draft.linkedIssues.map((issue) => (
-										<div key={issue.url ?? issue.slug} className="shrink-0">
-											{issue.source === "github" && issue.number != null ? (
-												<LinkedGitHubIssuePill
-													issueNumber={issue.number}
-													title={issue.title}
-													state={issue.state ?? "open"}
-													onRemove={() => removeLinkedIssue(issue.slug)}
-												/>
-											) : (
-												<LinkedIssuePill
-													slug={issue.slug}
-													title={issue.title}
-													url={issue.url}
-													taskId={issue.taskId}
-													onRemove={() => removeLinkedIssue(issue.slug)}
-												/>
-											)}
-										</div>
-									))}
 									{visibleFiles.map((file) => {
 										const sourcePath = file.filename
 											? newWorkspaceAttachmentPaths.get(file.filename) || null
@@ -1063,7 +1029,13 @@ export function NewWorkspaceScreen({
 						}
 						key={`${resetKey}-${promptSeed}-${placeholderRoll}`}
 						onAddFiles={addAttachments}
-						onChange={(prompt) => updateDraft({ prompt })}
+						findChips={findLinkedChips}
+						mentionProviders={gitHubMentionProviders}
+						onChange={(prompt) => {
+							updateDraft({ prompt });
+							unlinkMissing(prompt);
+						}}
+						onChipInsert={linkChip}
 						onSubmit={() => {
 							handleSubmit();
 							return false;
@@ -1081,72 +1053,6 @@ export function NewWorkspaceScreen({
 						}
 						toolbarEnd={
 							<div className="flex items-center gap-2">
-								{!taskTracker ? null : taskTracker === "linear" ? (
-									<LinearIssueLinkCommand
-										onSelect={addLinkedLinearIssue}
-										tooltipLabel={t({ message: "Link Linear issue" })}
-									>
-										<PromptInputButton
-											aria-label={t({ message: "Link Linear issue" })}
-											className={`${PILL_BUTTON_CLASS} w-[22px]`}
-										>
-											<SiLinear className="size-3.5" />
-										</PromptInputButton>
-									</LinearIssueLinkCommand>
-								) : (
-									<IssueLinkCommand
-										onSelect={addLinkedIssue}
-										tooltipLabel={linkTaskLabel}
-									>
-										<PromptInputButton
-											aria-label={linkTaskLabel}
-											className={`${PILL_BUTTON_CLASS} w-[22px]`}
-										>
-											<HiOutlineCheckCircle className="size-3.5" />
-										</PromptInputButton>
-									</IssueLinkCommand>
-								)}
-								<GitHubIssueLinkCommand
-									onSelect={(issue) =>
-										addLinkedGitHubIssue(
-											issue.issueNumber,
-											issue.title,
-											issue.url,
-											issue.state,
-										)
-									}
-									projectId={projectId}
-									hostId={draft.hostId}
-									tooltipLabel={t({
-										message: "Link GitHub issue",
-									})}
-								>
-									<PromptInputButton
-										aria-label={t({
-											message: "Link GitHub issue",
-										})}
-										className={`${PILL_BUTTON_CLASS} w-[22px]`}
-									>
-										<GoIssueOpened className="size-3.5" />
-									</PromptInputButton>
-								</GitHubIssueLinkCommand>
-								<PRLinkCommand
-									onSelect={setLinkedPR}
-									projectId={projectId}
-									hostId={draft.hostId}
-									tooltipLabel={t({
-										message: "Link pull request",
-									})}
-								>
-									<PromptInputButton
-										aria-label={t({
-											message: "Link pull request",
-										})}
-										className={`${PILL_BUTTON_CLASS} w-[22px]`}
-									>
-										<LuGitPullRequest className="size-3.5" />
-									</PromptInputButton>
-								</PRLinkCommand>
 								{agentSwitcher && (
 									<ModelPicker
 										agentSwitcher={agentSwitcher}

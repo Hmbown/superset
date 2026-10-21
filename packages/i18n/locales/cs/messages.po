@@ -209,9 +209,7 @@ msgstr "{0, plural, one {# výsledek v Cloudu} few {# výsledky v Cloudu} many {
 msgid "{0, plural, one {# result on this host} other {# results on this host}}"
 msgstr "{0, plural, one {# výsledek na tomto hostu} few {# výsledky na tomto hostu} many {# výsledku na tomto hostu} other {# výsledků na tomto hostu}}"
 
-#. placeholder {0}: pullRequests.length
 #. placeholder {0}: results.length
-#. placeholder {0}: searchResults.length
 msgid "{0, plural, one {# result} other {# results}}"
 msgstr "{0, plural, one {# výsledek} few {# výsledky} many {# výsledku} other {# výsledků}}"
 
@@ -2637,9 +2635,6 @@ msgstr "Přiřazeno"
 msgid "Assigned to me"
 msgstr "Přiřazené mně"
 
-msgid "Assigned to you"
-msgstr "Přiřazené vám"
-
 msgid "Assignee"
 msgstr "Řešitel"
 
@@ -4444,9 +4439,6 @@ msgstr "Připojte své GitHub repozitáře a synchronizujte pull requesty. Sledu
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "Než začnete sledovat úkoly v Linearu, připojte svůj účet Linear."
 
-msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
-msgstr "Připojte svůj účet Linear v Nastavení → Integrace, abyste mohli propojovat Linear issues."
-
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Připojte svůj účet Linear a procházejte, upravujte a začněte pracovat na Linear issues přímo ze Superset."
 
@@ -5188,14 +5180,8 @@ msgstr "Nepodařilo se načíst přispěvatele — zadejte uživatelské jméno.
 msgid "Couldn't load earlier messages. Retry"
 msgstr "Starší zprávy se nepodařilo načíst. Zkusit znovu"
 
-msgid "Couldn't load issues: {msg}"
-msgstr "Nepodařilo se načíst issues: {msg}"
-
 msgid "Couldn't load pages"
 msgstr "Stránky se nepodařilo načíst"
-
-msgid "Couldn't load pull requests: {msg}"
-msgstr "Nepodařilo se načíst pull requesty: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "Nepodařilo se načíst komentáře k revizi"
@@ -7250,9 +7236,6 @@ msgstr "Nepodařilo se otevřít nové okno: {0}"
 
 msgid "Failed to open new window: {message}"
 msgstr "Nepodařilo se otevřít nové okno: {message}"
-
-msgid "Failed to open task"
-msgstr "Nepodařilo se otevřít úkol"
 
 msgid "Failed to open the billing portal"
 msgstr "Nepodařilo se otevřít fakturační portál"
@@ -9604,15 +9587,6 @@ msgstr "odkaz zkopírován"
 msgid "Link copied"
 msgstr "Odkaz zkopírován"
 
-msgid "Link GitHub issue"
-msgstr "Propojit GitHub issue"
-
-msgid "Link Linear issue"
-msgstr "Propojit Linear issue"
-
-msgid "Link pull request"
-msgstr "Propojit pull request"
-
 msgid "Link task"
 msgstr "Propojit úkol"
 
@@ -11092,14 +11066,8 @@ msgstr "Není uloženo žádné jméno"
 msgid "No one in {organizationName} matches. Type a full email to invite someone new."
 msgstr "V {organizationName} nikdo neodpovídá. Zadejte celou e-mailovou adresu a pozvěte někoho nového."
 
-msgid "No open issues found."
-msgstr "Nenalezeny žádné otevřené issues."
-
 msgid "No open issues."
 msgstr "Žádné otevřené issues."
-
-msgid "No open pull requests found."
-msgstr "Nenalezeny žádné otevřené pull requesty."
 
 msgid "No open pull requests."
 msgstr "Žádné otevřené pull requesty."
@@ -12019,9 +11987,6 @@ msgstr "Otevřít issue na GitHubu"
 msgid "Open issue in Linear"
 msgstr "Otevřít issue v Linearu"
 
-msgid "Open issues"
-msgstr "Otevřené issues"
-
 msgid "Open leaderboard"
 msgstr "Otevřít žebříček"
 
@@ -12072,9 +12037,6 @@ msgstr "Otevřít projekt"
 msgid "Open Projects"
 msgstr "Otevřít projekty"
 
-msgid "Open PRs"
-msgstr "Otevřené PR"
-
 msgid "Open pull request"
 msgstr "Otevřít pull request"
 
@@ -12118,9 +12080,6 @@ msgstr "Otevřete Superset na tomto počítači"
 
 msgid "Open System Settings"
 msgstr "Otevřít Nastavení systému"
-
-msgid "Open task {title}"
-msgstr "Otevřít úkol {title}"
 
 msgid "Open Terminal"
 msgstr "Otevřít terminál"
@@ -13566,14 +13525,8 @@ msgstr "Nedávné aplikace"
 msgid "Recent invoices"
 msgstr "Poslední faktury"
 
-msgid "Recent issues"
-msgstr "Nedávné issues"
-
 msgid "Recent prompts"
 msgstr "Nedávné prompty"
-
-msgid "Recent PRs"
-msgstr "Nedávné PR"
 
 msgid "Recently deleted"
 msgstr "Nedávno smazané"
@@ -13791,12 +13744,6 @@ msgstr "Odebrat ikonu"
 
 msgid "Remove image"
 msgstr "Odebrat obrázek"
-
-msgid "Remove linked issue"
-msgstr "Odebrat propojenou issue"
-
-msgid "Remove linked PR"
-msgstr "Odebrat propojený PR"
 
 msgid "Remove member"
 msgstr "Odebrat člena"
@@ -14983,9 +14930,6 @@ msgstr "Hledány přepisy tooltipů"
 msgid "Searching for Kbd usages"
 msgstr "Hledám použití Kbd"
 
-msgid "Searching..."
-msgstr "Hledám..."
-
 msgid "Searching…"
 msgstr "Hledání…"
 
@@ -15540,9 +15484,6 @@ msgstr "Zobrazit ohraničení"
 
 msgid "Show checks"
 msgstr "Zobrazit kontroly"
-
-msgid "Show closed"
-msgstr "Zobrazit uzavřené"
 
 msgid "Show CPU and memory usage in the top bar"
 msgstr "Zobrazovat využití CPU a paměti v horní liště"

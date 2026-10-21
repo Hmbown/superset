@@ -14,6 +14,7 @@ import { serializeProjectFilters } from "renderer/routes/_authenticated/_dashboa
 import type { ProjectQueryTarget } from "renderer/routes/_authenticated/_dashboard/hooks/useProjectQueryTargets";
 import { useWorkItemsList } from "renderer/routes/_authenticated/_dashboard/hooks/useWorkItemsList";
 import { GitHubAuthorAvatar } from "renderer/routes/_authenticated/_dashboard/tasks/components/GitHubAuthorAvatar";
+import { linkedContextPrompt } from "renderer/routes/_authenticated/utils/linkedContextChips";
 import {
 	type LinkedIssue,
 	useNewWorkspaceDraftStore,
@@ -153,7 +154,11 @@ export function GitHubIssuesContent({
 		};
 		resetDraft();
 		selectProject(issue.projectId);
-		updateDraft({ hostId: issue.hostId, linkedIssues: [linkedIssue] });
+		updateDraft({
+			hostId: issue.hostId,
+			linkedIssues: [linkedIssue],
+			prompt: linkedContextPrompt([linkedIssue]),
+		});
 		openNewWorkspace(issue.projectId);
 	};
 

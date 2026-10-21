@@ -209,9 +209,7 @@ msgstr "{0, plural, one {# resultaat in Cloud} other {# resultaten in Cloud}}"
 msgid "{0, plural, one {# result on this host} other {# results on this host}}"
 msgstr "{0, plural, one {# resultaat op deze host} other {# resultaten op deze host}}"
 
-#. placeholder {0}: pullRequests.length
 #. placeholder {0}: results.length
-#. placeholder {0}: searchResults.length
 msgid "{0, plural, one {# result} other {# results}}"
 msgstr "{0, plural, one {# resultaat} other {# resultaten}}"
 
@@ -2637,9 +2635,6 @@ msgstr "Toegewezen"
 msgid "Assigned to me"
 msgstr "Aan mij toegewezen"
 
-msgid "Assigned to you"
-msgstr "Aan jou toegewezen"
-
 msgid "Assignee"
 msgstr "Toegewezen persoon"
 
@@ -4444,9 +4439,6 @@ msgstr "Koppel je GitHub-repository's en synchroniseer pull requests. Volg CI-st
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "Koppel je Linear-account voordat je taken in Linear bijhoudt."
 
-msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
-msgstr "Koppel je Linear-account in Instellingen → Integraties om Linear-issues te koppelen."
-
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Koppel je Linear-account om Linear-issues vanuit Superset te bekijken, bij te werken en eraan te beginnen."
 
@@ -5188,14 +5180,8 @@ msgstr "Kan contributors niet laden — typ in plaats daarvan een gebruikersnaam
 msgid "Couldn't load earlier messages. Retry"
 msgstr "Eerdere berichten konden niet worden geladen. Opnieuw proberen"
 
-msgid "Couldn't load issues: {msg}"
-msgstr "Kan issues niet laden: {msg}"
-
 msgid "Couldn't load pages"
 msgstr "Kan pagina's niet laden"
-
-msgid "Couldn't load pull requests: {msg}"
-msgstr "Kan pull requests niet laden: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "Kan reviewopmerkingen niet laden"
@@ -7250,9 +7236,6 @@ msgstr "Openen van nieuw venster mislukt: {0}"
 
 msgid "Failed to open new window: {message}"
 msgstr "Openen van nieuw venster mislukt: {message}"
-
-msgid "Failed to open task"
-msgstr "Openen van taak mislukt"
 
 msgid "Failed to open the billing portal"
 msgstr "Openen van het facturatieportaal mislukt"
@@ -9604,15 +9587,6 @@ msgstr "link gekopieerd"
 msgid "Link copied"
 msgstr "Link gekopieerd"
 
-msgid "Link GitHub issue"
-msgstr "GitHub-issue koppelen"
-
-msgid "Link Linear issue"
-msgstr "Linear-issue koppelen"
-
-msgid "Link pull request"
-msgstr "Pull request koppelen"
-
 msgid "Link task"
 msgstr "Taak koppelen"
 
@@ -11092,14 +11066,8 @@ msgstr "Geen naam bekend"
 msgid "No one in {organizationName} matches. Type a full email to invite someone new."
 msgstr "Niemand in {organizationName} komt overeen. Typ een volledig e-mailadres om iemand nieuw uit te nodigen."
 
-msgid "No open issues found."
-msgstr "Geen open issues gevonden."
-
 msgid "No open issues."
 msgstr "Geen open issues."
-
-msgid "No open pull requests found."
-msgstr "Geen open pull requests gevonden."
 
 msgid "No open pull requests."
 msgstr "Geen open pull requests."
@@ -12019,9 +11987,6 @@ msgstr "Issue openen in GitHub"
 msgid "Open issue in Linear"
 msgstr "Issue openen in Linear"
 
-msgid "Open issues"
-msgstr "Open issues"
-
 msgid "Open leaderboard"
 msgstr "Ranglijst openen"
 
@@ -12072,9 +12037,6 @@ msgstr "Project openen"
 msgid "Open Projects"
 msgstr "Projecten openen"
 
-msgid "Open PRs"
-msgstr "Open PR's"
-
 msgid "Open pull request"
 msgstr "Pull request openen"
 
@@ -12118,9 +12080,6 @@ msgstr "Open Superset op die computer"
 
 msgid "Open System Settings"
 msgstr "Systeeminstellingen openen"
-
-msgid "Open task {title}"
-msgstr "Taak {title} openen"
 
 msgid "Open Terminal"
 msgstr "Terminal openen"
@@ -13566,14 +13525,8 @@ msgstr "Recente apps"
 msgid "Recent invoices"
 msgstr "Recente facturen"
 
-msgid "Recent issues"
-msgstr "Recente issues"
-
 msgid "Recent prompts"
 msgstr "Recente prompts"
-
-msgid "Recent PRs"
-msgstr "Recente PR's"
 
 msgid "Recently deleted"
 msgstr "Onlangs verwijderd"
@@ -13791,12 +13744,6 @@ msgstr "Icoon verwijderen"
 
 msgid "Remove image"
 msgstr "Afbeelding verwijderen"
-
-msgid "Remove linked issue"
-msgstr "Gekoppelde issue verwijderen"
-
-msgid "Remove linked PR"
-msgstr "Gekoppelde PR verwijderen"
 
 msgid "Remove member"
 msgstr "Lid verwijderen"
@@ -14983,9 +14930,6 @@ msgstr "Gezocht naar tooltip-overrides"
 msgid "Searching for Kbd usages"
 msgstr "Zoeken naar Kbd-gebruik"
 
-msgid "Searching..."
-msgstr "Zoeken..."
-
 msgid "Searching…"
 msgstr "Zoeken…"
 
@@ -15540,9 +15484,6 @@ msgstr "Toon randen"
 
 msgid "Show checks"
 msgstr "Checks tonen"
-
-msgid "Show closed"
-msgstr "Gesloten tonen"
 
 msgid "Show CPU and memory usage in the top bar"
 msgstr "Toon CPU- en geheugengebruik in de bovenbalk"

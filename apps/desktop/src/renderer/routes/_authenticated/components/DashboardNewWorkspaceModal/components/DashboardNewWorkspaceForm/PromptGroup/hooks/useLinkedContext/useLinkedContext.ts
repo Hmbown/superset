@@ -1,127 +1,80 @@
 import { useCallback } from "react";
 import { deriveBranchName } from "renderer/routes/_authenticated/utils/deriveBranchName";
 import {
-	type LinearIssueReference,
-	linkedIssueFromLinear,
-} from "renderer/routes/_authenticated/utils/linkedIssueFromLinear";
+	hasToken,
+	type LinkedContext,
+	linkedIssueToken,
+	linkedPRToken,
+} from "renderer/routes/_authenticated/utils/linkedContextChips";
 import { useNewWorkspaceDraftStore } from "renderer/stores/new-workspace-draft";
 import type {
 	DashboardNewWorkspaceDraft,
 	LinkedIssue,
-	LinkedPR,
 } from "../../../../../DashboardNewWorkspaceDraftContext";
 
 function seedsWorkspaceNames(issue: LinkedIssue): boolean {
 	return issue.source === "internal" || issue.source === "linear";
 }
 
+function isSameIssue(a: LinkedIssue, b: LinkedIssue): boolean {
+	return a.source === "github" && b.source === "github"
+		? a.number === b.number
+		: a.slug === b.slug;
+}
+
 /**
- * Bundle of handlers that mutate `linkedIssues` / `linkedPR` on the draft.
- * Pure delegation — no state of its own. Co-located with PromptGroup
- * because that's the only consumer.
- *
- * `linkedIssues` is needed to dedupe adds and to filter on remove;
- * setLinkedPR / removeLinkedPR don't need to read the current PR, so the
- * hook doesn't ask for it.
+ * Links and unlinks the draft's issues and PR. The composer's chips drive it:
+ * inserting a chip links its item, and an item whose chip is gone from the
+ * prompt is unlinked. Reads the store, not a render-time snapshot, so a link
+ * and a prune in the same tick see each other.
  */
 export function useLinkedContext(
-	linkedIssues: LinkedIssue[],
 	updateDraft: (patch: Partial<DashboardNewWorkspaceDraft>) => void,
 ) {
-	const addSeedingIssue = useCallback(
+	const linkIssue = useCallback(
 		(issue: LinkedIssue) => {
-			if (linkedIssues.some((linked) => linked.slug === issue.slug)) return;
+			const draft = useNewWorkspaceDraftStore.getState();
+			if (draft.linkedIssues.some((linked) => isSameIssue(linked, issue)))
+				return;
 			const patch: Partial<DashboardNewWorkspaceDraft> = {
-				linkedIssues: [...linkedIssues, issue],
+				linkedIssues: [...draft.linkedIssues, issue],
 			};
 			// Seed the workspace/branch fields from the issue so the branch
 			// matches the provider's format (Linear autolinks it back to the
 			// issue). Never overwrite something the user already typed.
-			const draft = useNewWorkspaceDraftStore.getState();
-			if (!draft.branchNameEdited && !draft.branchName.trim()) {
-				patch.branchName = deriveBranchName(issue);
-				patch.branchNameEdited = true;
-				patch.branchNameFromProvider = !!issue.branch?.trim();
-			}
-			if (!draft.workspaceNameEdited && !draft.workspaceName.trim()) {
-				patch.workspaceName = issue.title;
-				patch.workspaceNameEdited = true;
+			if (seedsWorkspaceNames(issue)) {
+				if (!draft.branchNameEdited && !draft.branchName.trim()) {
+					patch.branchName = deriveBranchName(issue);
+					patch.branchNameEdited = true;
+					patch.branchNameFromProvider = !!issue.branch?.trim();
+				}
+				if (!draft.workspaceNameEdited && !draft.workspaceName.trim()) {
+					patch.workspaceName = issue.title;
+					patch.workspaceNameEdited = true;
+				}
 			}
 			updateDraft(patch);
 		},
-		[linkedIssues, updateDraft],
+		[updateDraft],
 	);
 
-	const addLinkedIssue = useCallback(
-		(
-			slug: string,
-			title: string,
-			taskId: string | undefined,
-			url?: string,
-			branch?: string,
-		) =>
-			addSeedingIssue({
-				slug,
-				title,
-				source: "internal",
-				taskId,
-				url,
-				branch,
-			}),
-		[addSeedingIssue],
-	);
-
-	const addLinkedLinearIssue = useCallback(
-		(issue: LinearIssueReference) =>
-			addSeedingIssue(linkedIssueFromLinear(issue)),
-		[addSeedingIssue],
-	);
-
-	const addLinkedGitHubIssue = useCallback(
-		(issueNumber: number, title: string, url: string, state: string) => {
-			if (linkedIssues.some((i) => i.url === url)) return;
-			updateDraft({
-				linkedIssues: [
-					...linkedIssues,
-					{
-						slug: `#${issueNumber}`,
-						title,
-						source: "github",
-						url,
-						number: issueNumber,
-						state: state.toLowerCase() === "closed" ? "closed" : "open",
-					},
-				],
-			});
-		},
-		[linkedIssues, updateDraft],
-	);
-
-	const removeLinkedIssue = useCallback(
-		(slug: string) => {
-			const removed = linkedIssues.find((i) => i.slug === slug);
-			const remaining = linkedIssues.filter((i) => i.slug !== slug);
+	const unlinkIssue = useCallback(
+		(issue: LinkedIssue) => {
+			const draft = useNewWorkspaceDraftStore.getState();
+			const remaining = draft.linkedIssues.filter(
+				(linked) => !isSameIssue(linked, issue),
+			);
 			const patch: Partial<DashboardNewWorkspaceDraft> = {
 				linkedIssues: remaining,
 			};
 			// Clear the seeded names, but only when they still match what the
 			// issue seeded — a user edit sticks. When another internal issue is
 			// still linked, hand the seed to it instead of going blank.
-			if (removed && seedsWorkspaceNames(removed)) {
-				const draft = useNewWorkspaceDraftStore.getState();
+			if (seedsWorkspaceNames(issue)) {
 				const next = remaining.find(seedsWorkspaceNames);
-				const seededBranch = deriveBranchName({
-					slug: removed.slug,
-					title: removed.title,
-					branch: removed.branch,
-				});
-				if (draft.branchName === seededBranch) {
+				if (draft.branchName === deriveBranchName(issue)) {
 					if (next) {
-						patch.branchName = deriveBranchName({
-							slug: next.slug,
-							title: next.title,
-							branch: next.branch,
-						});
+						patch.branchName = deriveBranchName(next);
 						patch.branchNameEdited = true;
 						patch.branchNameFromProvider = !!next.branch?.trim();
 					} else {
@@ -130,7 +83,7 @@ export function useLinkedContext(
 						patch.branchNameFromProvider = false;
 					}
 				}
-				if (draft.workspaceName === removed.title) {
+				if (draft.workspaceName === issue.title) {
 					if (next) {
 						patch.workspaceName = next.title;
 						patch.workspaceNameEdited = true;
@@ -142,25 +95,28 @@ export function useLinkedContext(
 			}
 			updateDraft(patch);
 		},
-		[linkedIssues, updateDraft],
-	);
-
-	const setLinkedPR = useCallback(
-		(pr: LinkedPR) => updateDraft({ linkedPR: pr }),
 		[updateDraft],
 	);
 
-	const removeLinkedPR = useCallback(
-		() => updateDraft({ linkedPR: null }),
-		[updateDraft],
+	const link = useCallback(
+		(context: LinkedContext) => {
+			if (context.kind === "pr") updateDraft({ linkedPR: context.pr });
+			else linkIssue(context.issue);
+		},
+		[linkIssue, updateDraft],
 	);
 
-	return {
-		addLinkedIssue,
-		addLinkedLinearIssue,
-		addLinkedGitHubIssue,
-		removeLinkedIssue,
-		setLinkedPR,
-		removeLinkedPR,
-	};
+	const unlinkMissing = useCallback(
+		(prompt: string) => {
+			const draft = useNewWorkspaceDraftStore.getState();
+			for (const issue of draft.linkedIssues) {
+				if (!hasToken(prompt, linkedIssueToken(issue))) unlinkIssue(issue);
+			}
+			if (draft.linkedPR && !hasToken(prompt, linkedPRToken(draft.linkedPR)))
+				updateDraft({ linkedPR: null });
+		},
+		[unlinkIssue, updateDraft],
+	);
+
+	return { link, unlinkMissing };
 }

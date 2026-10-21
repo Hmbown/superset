@@ -38,6 +38,7 @@ import { type ReactNode, useState } from "react";
 import { useCopyToClipboard } from "renderer/hooks/useCopyToClipboard";
 import { useOpenNewWorkspace } from "renderer/hooks/useOpenNewWorkspace";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
+import { linkedContextPrompt } from "renderer/routes/_authenticated/utils/linkedContextChips";
 import { normalizePRState } from "renderer/screens/main/components/PRIcon";
 import {
 	type LinkedPR,
@@ -242,7 +243,11 @@ export function PullRequestActions({
 		};
 		resetDraft();
 		selectProject(projectId);
-		updateDraft({ hostId, linkedPR });
+		updateDraft({
+			hostId,
+			linkedPR,
+			prompt: linkedContextPrompt([], linkedPR),
+		});
 		openNewWorkspace(projectId);
 	};
 

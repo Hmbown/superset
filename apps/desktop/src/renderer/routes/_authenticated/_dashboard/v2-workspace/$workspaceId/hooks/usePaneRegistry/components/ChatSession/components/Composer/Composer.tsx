@@ -15,7 +15,7 @@ import type {
 } from "@superset/chat-ui/PromptInput";
 import { toast } from "@superset/ui/sonner";
 import { cn } from "@superset/ui/utils";
-import { workspaceTrpc } from "@superset/workspace-client";
+import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
 import {
 	memo,
 	type Ref,
@@ -30,6 +30,7 @@ import { env } from "renderer/env.renderer";
 import { useHotkey } from "renderer/hotkeys";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { pagesListInput } from "renderer/routes/_authenticated/_dashboard/utils/pagesListInput";
+import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
 import { AgentComposer } from "renderer/routes/_authenticated/components/AgentComposer";
 import {
 	type AgentSwitcher,
@@ -39,6 +40,7 @@ import {
 	ModePicker,
 	type SessionMode,
 } from "renderer/routes/_authenticated/components/ModePicker";
+import { useGitHubMentionProviders } from "renderer/routes/_authenticated/hooks/useGitHubMentionProviders";
 import { CHAT_COLUMN_CLASSNAME, CHAT_GUTTER_CLASSNAME } from "../../constants";
 import { commandChip, LEADING_COMMAND } from "../../utils/commandChip";
 import { mcpContextLine } from "../../utils/mcpServerChips";
@@ -271,6 +273,12 @@ export const Composer = memo(function Composer({
 		[cloudUtils],
 	);
 
+	const { workspace } = useWorkspace();
+	const { hostUrl } = useWorkspaceClient();
+	const gitHubMentionProviders = useGitHubMentionProviders({
+		projectId: workspace.projectId,
+		hostUrl,
+	});
 	const mentionProviders = useMemo<ComposerMentionProvider[]>(
 		() => [
 			{
@@ -293,8 +301,9 @@ export const Composer = memo(function Composer({
 					emptyState: t({ message: "No matching pages" }),
 				},
 			},
+			...gitHubMentionProviders,
 		],
-		[searchFiles, searchPages, t],
+		[searchFiles, searchPages, gitHubMentionProviders, t],
 	);
 
 	const mcpCommand = mcpPicker.command;

@@ -209,9 +209,7 @@ msgstr "{0, plural, one {# risultato nel Cloud} other {# risultati nel Cloud}}"
 msgid "{0, plural, one {# result on this host} other {# results on this host}}"
 msgstr "{0, plural, one {# risultato su questo host} other {# risultati su questo host}}"
 
-#. placeholder {0}: pullRequests.length
 #. placeholder {0}: results.length
-#. placeholder {0}: searchResults.length
 msgid "{0, plural, one {# result} other {# results}}"
 msgstr "{0, plural, one {# risultato} other {# risultati}}"
 
@@ -2637,9 +2635,6 @@ msgstr "Assegnata"
 msgid "Assigned to me"
 msgstr "Assegnate a me"
 
-msgid "Assigned to you"
-msgstr "Assegnate a te"
-
 msgid "Assignee"
 msgstr "Assegnatario"
 
@@ -4444,9 +4439,6 @@ msgstr "Collega i tuoi repository GitHub e sincronizza le pull request. Tieni tr
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "Collega il tuo account Linear prima di gestire le attività in Linear."
 
-msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
-msgstr "Collega il tuo account Linear in Impostazioni → Integrazioni per collegare le issue Linear."
-
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Collega il tuo account Linear per sfogliare, aggiornare e iniziare a lavorare sulle issue Linear da Superset."
 
@@ -5188,14 +5180,8 @@ msgstr "Impossibile caricare i contributori — digita invece un nome utente."
 msgid "Couldn't load earlier messages. Retry"
 msgstr "Impossibile caricare i messaggi precedenti. Riprova"
 
-msgid "Couldn't load issues: {msg}"
-msgstr "Impossibile caricare le issue: {msg}"
-
 msgid "Couldn't load pages"
 msgstr "Impossibile caricare le pagine"
-
-msgid "Couldn't load pull requests: {msg}"
-msgstr "Impossibile caricare le pull request: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "Impossibile caricare i commenti di revisione"
@@ -7250,9 +7236,6 @@ msgstr "Apertura della nuova finestra non riuscita: {0}"
 
 msgid "Failed to open new window: {message}"
 msgstr "Apertura della nuova finestra non riuscita: {message}"
-
-msgid "Failed to open task"
-msgstr "Apertura del task non riuscita"
 
 msgid "Failed to open the billing portal"
 msgstr "Apertura del portale di fatturazione non riuscita"
@@ -9604,15 +9587,6 @@ msgstr "link copiato"
 msgid "Link copied"
 msgstr "Link copiato"
 
-msgid "Link GitHub issue"
-msgstr "Collega una issue GitHub"
-
-msgid "Link Linear issue"
-msgstr "Collega issue Linear"
-
-msgid "Link pull request"
-msgstr "Collega una pull request"
-
 msgid "Link task"
 msgstr "Collega un task"
 
@@ -11092,14 +11066,8 @@ msgstr "Nessun nome registrato"
 msgid "No one in {organizationName} matches. Type a full email to invite someone new."
 msgstr "Nessuno in {organizationName} corrisponde. Inserisci un indirizzo email completo per invitare qualcuno di nuovo."
 
-msgid "No open issues found."
-msgstr "Nessuna issue aperta trovata."
-
 msgid "No open issues."
 msgstr "Nessuna issue aperta."
-
-msgid "No open pull requests found."
-msgstr "Nessuna pull request aperta trovata."
 
 msgid "No open pull requests."
 msgstr "Nessuna pull request aperta."
@@ -12019,9 +11987,6 @@ msgstr "Apri la issue in GitHub"
 msgid "Open issue in Linear"
 msgstr "Apri l'issue in Linear"
 
-msgid "Open issues"
-msgstr "Issue aperte"
-
 msgid "Open leaderboard"
 msgstr "Apri la classifica"
 
@@ -12072,9 +12037,6 @@ msgstr "Apri progetto"
 msgid "Open Projects"
 msgstr "Apri Progetti"
 
-msgid "Open PRs"
-msgstr "PR aperte"
-
 msgid "Open pull request"
 msgstr "Apri la pull request"
 
@@ -12118,9 +12080,6 @@ msgstr "Apri Superset su quel computer"
 
 msgid "Open System Settings"
 msgstr "Apri Impostazioni di Sistema"
-
-msgid "Open task {title}"
-msgstr "Apri il task {title}"
 
 msgid "Open Terminal"
 msgstr "Apri il terminale"
@@ -13566,14 +13525,8 @@ msgstr "App recenti"
 msgid "Recent invoices"
 msgstr "Fatture recenti"
 
-msgid "Recent issues"
-msgstr "Issue recenti"
-
 msgid "Recent prompts"
 msgstr "Prompt recenti"
-
-msgid "Recent PRs"
-msgstr "PR recenti"
 
 msgid "Recently deleted"
 msgstr "Eliminati di recente"
@@ -13791,12 +13744,6 @@ msgstr "Rimuovi l'icona"
 
 msgid "Remove image"
 msgstr "Rimuovi immagine"
-
-msgid "Remove linked issue"
-msgstr "Rimuovi la issue collegata"
-
-msgid "Remove linked PR"
-msgstr "Rimuovi la PR collegata"
 
 msgid "Remove member"
 msgstr "Rimuovi il membro"
@@ -14983,9 +14930,6 @@ msgstr "Ricerca delle sostituzioni dei tooltip"
 msgid "Searching for Kbd usages"
 msgstr "Ricerca degli usi di Kbd"
 
-msgid "Searching..."
-msgstr "Ricerca..."
-
 msgid "Searching…"
 msgstr "Ricerca in corso…"
 
@@ -15540,9 +15484,6 @@ msgstr "Mostra bordi"
 
 msgid "Show checks"
 msgstr "Mostra i controlli"
-
-msgid "Show closed"
-msgstr "Mostra chiuse"
 
 msgid "Show CPU and memory usage in the top bar"
 msgstr "Mostra l'uso di CPU e memoria nella barra superiore"

@@ -209,9 +209,7 @@ msgstr "{0, plural, one {클라우드에서 결과 #개} other {클라우드에�
 msgid "{0, plural, one {# result on this host} other {# results on this host}}"
 msgstr "{0, plural, one {이 호스트에서 결과 #개} other {이 호스트에서 결과 #개}}"
 
-#. placeholder {0}: pullRequests.length
 #. placeholder {0}: results.length
-#. placeholder {0}: searchResults.length
 msgid "{0, plural, one {# result} other {# results}}"
 msgstr "{0, plural, one {결과 #개} other {결과 #개}}"
 
@@ -2637,9 +2635,6 @@ msgstr "할당됨"
 msgid "Assigned to me"
 msgstr "나에게 할당됨"
 
-msgid "Assigned to you"
-msgstr "나에게 할당됨"
-
 msgid "Assignee"
 msgstr "담당자"
 
@@ -4444,9 +4439,6 @@ msgstr "GitHub 리포지토리를 연결하고 풀 리퀘스트를 동기화하�
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "Linear에서 작업을 관리하려면 먼저 Linear 계정을 연결하세요."
 
-msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
-msgstr "Linear 이슈를 연결하려면 설정 → 연동에서 Linear 계정을 연결하세요."
-
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Linear 계정을 연결하면 Superset에서 Linear 이슈를 탐색하고, 업데이트하고, 작업을 시작할 수 있습니다."
 
@@ -5188,14 +5180,8 @@ msgstr "기여자를 불러오지 못했습니다 — 대신 사용자 이름을
 msgid "Couldn't load earlier messages. Retry"
 msgstr "이전 메시지를 불러올 수 없습니다. 다시 시도"
 
-msgid "Couldn't load issues: {msg}"
-msgstr "이슈를 불러오지 못했습니다: {msg}"
-
 msgid "Couldn't load pages"
 msgstr "페이지를 불러올 수 없습니다"
-
-msgid "Couldn't load pull requests: {msg}"
-msgstr "풀 리퀘스트를 불러오지 못했습니다: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "리뷰 코멘트를 불러오지 못했습니다"
@@ -7250,9 +7236,6 @@ msgstr "새 창을 열지 못했습니다: {0}"
 
 msgid "Failed to open new window: {message}"
 msgstr "새 창을 열지 못했습니다: {message}"
-
-msgid "Failed to open task"
-msgstr "작업을 열지 못했습니다"
 
 msgid "Failed to open the billing portal"
 msgstr "결제 포털을 열지 못했습니다"
@@ -9604,15 +9587,6 @@ msgstr "링크를 복사했습니다"
 msgid "Link copied"
 msgstr "링크 복사됨"
 
-msgid "Link GitHub issue"
-msgstr "GitHub 이슈 연결"
-
-msgid "Link Linear issue"
-msgstr "Linear 이슈 연결"
-
-msgid "Link pull request"
-msgstr "풀 리퀘스트 연결"
-
 msgid "Link task"
 msgstr "작업 연결"
 
@@ -11092,14 +11066,8 @@ msgstr "등록된 이름 없음"
 msgid "No one in {organizationName} matches. Type a full email to invite someone new."
 msgstr "{organizationName}에 일치하는 사람이 없습니다. 새로운 사람을 초대하려면 전체 이메일 주소를 입력하세요."
 
-msgid "No open issues found."
-msgstr "열린 이슈를 찾을 수 없습니다."
-
 msgid "No open issues."
 msgstr "열린 이슈가 없습니다."
-
-msgid "No open pull requests found."
-msgstr "열린 풀 리퀘스트를 찾을 수 없습니다."
 
 msgid "No open pull requests."
 msgstr "열린 풀 리퀘스트가 없습니다."
@@ -12019,9 +11987,6 @@ msgstr "GitHub에서 이슈 열기"
 msgid "Open issue in Linear"
 msgstr "Linear에서 이슈 열기"
 
-msgid "Open issues"
-msgstr "열린 이슈"
-
 msgid "Open leaderboard"
 msgstr "리더보드 열기"
 
@@ -12072,9 +12037,6 @@ msgstr "프로젝트 열기"
 msgid "Open Projects"
 msgstr "프로젝트 열기"
 
-msgid "Open PRs"
-msgstr "열린 PR"
-
 msgid "Open pull request"
 msgstr "풀 리퀘스트 열기"
 
@@ -12118,9 +12080,6 @@ msgstr "해당 컴퓨터에서 Superset 열기"
 
 msgid "Open System Settings"
 msgstr "시스템 설정 열기"
-
-msgid "Open task {title}"
-msgstr "{title} 작업 열기"
 
 msgid "Open Terminal"
 msgstr "터미널 열기"
@@ -13566,14 +13525,8 @@ msgstr "최근 앱"
 msgid "Recent invoices"
 msgstr "최근 청구서"
 
-msgid "Recent issues"
-msgstr "최근 이슈"
-
 msgid "Recent prompts"
 msgstr "최근 프롬프트"
-
-msgid "Recent PRs"
-msgstr "최근 PR"
 
 msgid "Recently deleted"
 msgstr "최근 삭제됨"
@@ -13791,12 +13744,6 @@ msgstr "아이콘 제거"
 
 msgid "Remove image"
 msgstr "이미지 제거"
-
-msgid "Remove linked issue"
-msgstr "연결된 이슈 제거"
-
-msgid "Remove linked PR"
-msgstr "연결된 PR 제거"
 
 msgid "Remove member"
 msgstr "멤버 제거"
@@ -14983,9 +14930,6 @@ msgstr "툴팁 재정의를 검색함"
 msgid "Searching for Kbd usages"
 msgstr "Kbd 사용처를 검색하는 중"
 
-msgid "Searching..."
-msgstr "검색 중..."
-
 msgid "Searching…"
 msgstr "검색 중…"
 
@@ -15540,9 +15484,6 @@ msgstr "테두리 표시"
 
 msgid "Show checks"
 msgstr "검사 표시"
-
-msgid "Show closed"
-msgstr "닫힌 항목 표시"
 
 msgid "Show CPU and memory usage in the top bar"
 msgstr "상단 바에 CPU와 메모리 사용량을 표시합니다"

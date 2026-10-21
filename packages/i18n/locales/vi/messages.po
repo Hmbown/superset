@@ -209,9 +209,7 @@ msgstr "{0, plural, one {# kết quả trên Cloud} other {# kết quả trên C
 msgid "{0, plural, one {# result on this host} other {# results on this host}}"
 msgstr "{0, plural, one {# kết quả trên host này} other {# kết quả trên host này}}"
 
-#. placeholder {0}: pullRequests.length
 #. placeholder {0}: results.length
-#. placeholder {0}: searchResults.length
 msgid "{0, plural, one {# result} other {# results}}"
 msgstr "{0, plural, one {# kết quả} other {# kết quả}}"
 
@@ -2637,9 +2635,6 @@ msgstr "Được giao"
 msgid "Assigned to me"
 msgstr "Giao cho tôi"
 
-msgid "Assigned to you"
-msgstr "Giao cho bạn"
-
 msgid "Assignee"
 msgstr "Người phụ trách"
 
@@ -4444,9 +4439,6 @@ msgstr "Kết nối các repository GitHub của bạn và đồng bộ pull req
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "Hãy kết nối tài khoản Linear của bạn trước khi theo dõi công việc trong Linear."
 
-msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
-msgstr "Kết nối tài khoản Linear của bạn trong Cài đặt → Tích hợp để liên kết issue Linear."
-
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Kết nối tài khoản Linear của bạn để duyệt, cập nhật và bắt đầu làm việc trên issue Linear ngay trong Superset."
 
@@ -5188,14 +5180,8 @@ msgstr "Không thể tải danh sách người đóng góp — hãy nhập tên 
 msgid "Couldn't load earlier messages. Retry"
 msgstr "Không thể tải các tin nhắn trước đó. Thử lại"
 
-msgid "Couldn't load issues: {msg}"
-msgstr "Không thể tải issue: {msg}"
-
 msgid "Couldn't load pages"
 msgstr "Không thể tải các trang"
-
-msgid "Couldn't load pull requests: {msg}"
-msgstr "Không thể tải pull request: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "Không thể tải bình luận review"
@@ -7250,9 +7236,6 @@ msgstr "Không thể mở cửa sổ mới: {0}"
 
 msgid "Failed to open new window: {message}"
 msgstr "Không thể mở cửa sổ mới: {message}"
-
-msgid "Failed to open task"
-msgstr "Không thể mở tác vụ"
 
 msgid "Failed to open the billing portal"
 msgstr "Không thể mở cổng thanh toán"
@@ -9604,15 +9587,6 @@ msgstr "đã sao chép liên kết"
 msgid "Link copied"
 msgstr "Đã sao chép liên kết"
 
-msgid "Link GitHub issue"
-msgstr "Liên kết issue GitHub"
-
-msgid "Link Linear issue"
-msgstr "Liên kết issue Linear"
-
-msgid "Link pull request"
-msgstr "Liên kết pull request"
-
 msgid "Link task"
 msgstr "Liên kết tác vụ"
 
@@ -11092,14 +11066,8 @@ msgstr "Chưa có tên nào được lưu"
 msgid "No one in {organizationName} matches. Type a full email to invite someone new."
 msgstr "Không có ai trong {organizationName} khớp. Nhập đầy đủ email để mời người mới."
 
-msgid "No open issues found."
-msgstr "Không có issue nào đang mở."
-
 msgid "No open issues."
 msgstr "Không có issue nào đang mở."
-
-msgid "No open pull requests found."
-msgstr "Không có pull request nào đang mở."
 
 msgid "No open pull requests."
 msgstr "Không có pull request nào đang mở."
@@ -12019,9 +11987,6 @@ msgstr "Mở issue trong GitHub"
 msgid "Open issue in Linear"
 msgstr "Mở issue trong Linear"
 
-msgid "Open issues"
-msgstr "Issue đang mở"
-
 msgid "Open leaderboard"
 msgstr "Mở bảng xếp hạng"
 
@@ -12072,9 +12037,6 @@ msgstr "Mở dự án"
 msgid "Open Projects"
 msgstr "Mở Dự án"
 
-msgid "Open PRs"
-msgstr "PR đang mở"
-
 msgid "Open pull request"
 msgstr "Mở pull request"
 
@@ -12118,9 +12080,6 @@ msgstr "Mở Superset trên máy tính đó"
 
 msgid "Open System Settings"
 msgstr "Mở System Settings"
-
-msgid "Open task {title}"
-msgstr "Mở tác vụ {title}"
 
 msgid "Open Terminal"
 msgstr "Mở terminal"
@@ -13566,14 +13525,8 @@ msgstr "Ứng dụng gần đây"
 msgid "Recent invoices"
 msgstr "Hóa đơn gần đây"
 
-msgid "Recent issues"
-msgstr "Issue gần đây"
-
 msgid "Recent prompts"
 msgstr "Prompt gần đây"
-
-msgid "Recent PRs"
-msgstr "PR gần đây"
 
 msgid "Recently deleted"
 msgstr "Đã xóa gần đây"
@@ -13791,12 +13744,6 @@ msgstr "Gỡ biểu tượng"
 
 msgid "Remove image"
 msgstr "Xóa hình ảnh"
-
-msgid "Remove linked issue"
-msgstr "Gỡ issue đã liên kết"
-
-msgid "Remove linked PR"
-msgstr "Gỡ PR đã liên kết"
 
 msgid "Remove member"
 msgstr "Gỡ thành viên"
@@ -14983,9 +14930,6 @@ msgstr "Đã tìm các chỗ ghi đè tooltip"
 msgid "Searching for Kbd usages"
 msgstr "Đang tìm các chỗ dùng Kbd"
 
-msgid "Searching..."
-msgstr "Đang tìm..."
-
 msgid "Searching…"
 msgstr "Đang tìm…"
 
@@ -15540,9 +15484,6 @@ msgstr "Hiển thị đường viền"
 
 msgid "Show checks"
 msgstr "Hiện check"
-
-msgid "Show closed"
-msgstr "Hiện issue đã đóng"
 
 msgid "Show CPU and memory usage in the top bar"
 msgstr "Hiện mức dùng CPU và bộ nhớ trên thanh trên cùng"
