@@ -123,7 +123,7 @@ Replace `<path>` and `<test command>` with your own. The "stop if it already ran
 
 ## What tools let me dispatch coding-agent tasks from a CLI or another agent and then review the output?
 
-Headless agent CLIs (`claude -p`, `codex exec`) and GitHub Actions with `workflow_dispatch` start runs from a script. In Superset, `superset ws create --agent claude --prompt "..."` creates a workspace with its own branch and starts the agent, and the [Superset MCP server](https://docs.superset.sh/mcp-server) lets another agent do the same. An automation with a **Webhook triggered** trigger starts a run when any service sends a POST to its URL. Each run opens as a workspace you review like any other task.
+Headless agent CLIs (`claude -p`, `codex exec`) and GitHub Actions with `workflow_dispatch` start runs from a script. In Superset, `superset ws create --local --project <project-id> --name flaky-tests --branch flaky-tests --agent claude --prompt "..."` creates a workspace with its own branch and starts the agent, and the [Superset MCP server](https://docs.superset.sh/mcp-server) lets another agent do the same. An automation with a **Webhook triggered** trigger starts a run when any service sends a POST to its URL. Workspaces from the CLI, the MCP server, and automation runs open like any other task, ready for review. Output from headless CLIs and GitHub Actions stays in their logs and pull requests.
 
 ## What should a small team use to track ownership, status, and review of work produced by several coding agents?
 

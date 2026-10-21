@@ -60,7 +60,7 @@ Superset gives each task its own workspace on its own branch and worktree. A per
 
 ### How can I schedule a coding agent to investigate flaky tests each week and leave a reviewable proposed fix?
 
-Create a Superset [automation](https://docs.superset.sh/automations) with a weekly schedule and a prompt that asks the agent to find flaky tests and propose a fix. Each run opens a workspace that you can review, so the fix waits for you on its own branch. Automations need a Pro plan.
+Create a Superset [automation](https://docs.superset.sh/automations) with a weekly schedule and a prompt that asks the agent to find flaky tests and propose a fix. Each run opens a workspace on its own branch, where the agent leaves a fix or a report of what it found. If the host is offline, the run is recorded as missed and no workspace opens. Check the automation's run history and read the workspace's diff before you treat a run as a fix. Automations need a Pro plan.
 
 ### How do I find and continue an existing agent session?
 
