@@ -315,6 +315,14 @@ missing. The CLI bundle has the same gap.
 
 ## Lifecycle
 
+**A tag-filtered sandbox list is not sorted by status time. Fixed.** The usage
+reconciler scans by `statusUpdatedAt` and stops at entries older than the maximum
+session length. Vercel's server-side tag filter uses creation-order pagination
+even when that sort is requested. An old stopped entry therefore hid older
+workspaces that had resumed recently, leaving them running without meter records.
+`listActiveWorkspaceSandboxes` now lists without the tag filter and checks
+`kind: workspace` locally, so the status-time cutoff is safe.
+
 **Delete was not wired.** The generic delete routed to the owning host, which
 for a cloud workspace deleted the row *inside* the sandbox and left the
 sandbox running (and billing) plus the `cloud_workspaces` row intact — the
