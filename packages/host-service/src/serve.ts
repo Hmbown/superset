@@ -92,6 +92,7 @@ async function main(): Promise<void> {
 		launchSandboxAgent,
 		resumeCrashedAgents,
 		readLinkedPullRequests,
+		onPullRequestLinked,
 		terminalAgentStore,
 	} = createApp({
 		config: {
@@ -182,6 +183,7 @@ async function main(): Promise<void> {
 				workspaceId: sandboxWorkspaceId,
 				hostSecret: env.HOST_SERVICE_SECRET,
 				read: readLinkedPullRequests,
+				onLinked: onPullRequestLinked,
 			});
 		}
 

@@ -2022,6 +2022,45 @@ describe("PullRequestRuntimeManager workspace PR history", () => {
 		const history = await manager.getPullRequestHistoryByWorkspaces(["ws"]);
 		expect(history[0]?.pullRequests.map((pr) => pr.number)).toEqual([101]);
 	});
+
+	test("announces a link only the first time a workspace links a PR", async () => {
+		const db = createRealDb();
+		seedProject(db);
+		seedWorkspace(db, {
+			id: "ws",
+			branch: "branch-a",
+			headSha: "sha-branch-a",
+			upstreamOwner: REPO.owner,
+			upstreamRepo: REPO.name,
+			upstreamBranch: "branch-a",
+		});
+		const prsByBranch = new Map([["branch-a", 101]]);
+		const manager = createManager(db, { execGh: historyExecGh(prsByBranch) });
+		let links = 0;
+		manager.onPullRequestLinked(() => links++);
+
+		await withSilencedWarnings(() =>
+			manager.refreshPullRequestsByWorkspaces(["ws"]),
+		);
+		await withSilencedWarnings(() =>
+			manager.refreshPullRequestsByWorkspaces(["ws"]),
+		);
+		expect(links).toBe(1);
+
+		db.update(workspaces)
+			.set({
+				branch: "branch-b",
+				headSha: "sha-branch-b",
+				upstreamBranch: "branch-b",
+			})
+			.where(eq(workspaces.id, "ws"))
+			.run();
+		prsByBranch.set("branch-b", 102);
+		await withSilencedWarnings(() =>
+			manager.refreshPullRequestsByWorkspaces(["ws"]),
+		);
+		expect(links).toBe(2);
+	});
 });
 
 // Typed handle on the private timer-path refresh (no bypass), so a test can

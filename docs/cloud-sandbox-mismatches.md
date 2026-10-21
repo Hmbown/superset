@@ -93,11 +93,11 @@ showed a stale or missing PR for every box but the open one, which the host
 fan-out reaches. The box's PR runtime already keeps every PR it has linked
 (`workspace_pull_requests` in host.db), so the box reports each one once to
 `POST /api/cloud-workspaces/:id/pull-requests` (`sandbox-pull-requests` in
-host-service, polling that local history every 30 seconds), and the API
-records it in `cloud_workspace_pull_requests` for the repositories the
-workspace checked out. State still comes from `github_pull_requests`. A PR
-reaches the table at most a sweep of the PR runtime (5 minutes) plus a poll
-after it is opened. Reaches a box only through a host-service release.
+host-service: everything on boot, then each new link as the runtime records
+it), and the API records it in `cloud_workspace_pull_requests` for the
+repositories the workspace checked out. State still comes from
+`github_pull_requests`. A PR reaches the table at most a sweep of the PR
+runtime (5 minutes) after it is opened. Reaches a box only through a host-service release.
 **Open:** no client reads the table yet. A repository renamed or transferred
 after the box linked a PR is reported under its old name; the API answers with
 it in `ignored` and the link is lost.

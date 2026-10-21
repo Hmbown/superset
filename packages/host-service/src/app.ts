@@ -127,6 +127,7 @@ export interface CreateAppResult {
 	readLinkedPullRequests: () => Promise<
 		{ repository: string; number: number; linkedAt: number }[]
 	>;
+	onPullRequestLinked: (listener: () => void) => () => void;
 	terminalAgentStore: TerminalAgentStore;
 	dispose: () => Promise<void>;
 }
@@ -636,6 +637,8 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		launchSandboxAgent,
 		resumeCrashedAgents,
 		readLinkedPullRequests: () => pullRequestRuntime.listLinkedPullRequests(),
+		onPullRequestLinked: (listener) =>
+			pullRequestRuntime.onPullRequestLinked(listener),
 		terminalAgentStore,
 		dispose,
 	};

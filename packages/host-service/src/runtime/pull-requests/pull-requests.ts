@@ -280,6 +280,7 @@ export class PullRequestRuntimeManager {
 	private readonly missingWorktrees = new Map<string, string>();
 	private missingWorktreeProbeTimer: ReturnType<typeof setInterval> | null =
 		null;
+	private readonly linkListeners = new Set<() => void>();
 
 	constructor(options: PullRequestRuntimeManagerOptions) {
 		this.db = options.db;
@@ -662,11 +663,19 @@ export class PullRequestRuntimeManager {
 		pullRequestId: string,
 		linkedAt: number,
 	): void {
-		this.db
+		const { changes } = this.db
 			.insert(workspacePullRequests)
 			.values({ workspaceId, pullRequestId, linkedAt })
 			.onConflictDoNothing()
 			.run();
+		if (changes === 0) return;
+		for (const listener of this.linkListeners) listener();
+	}
+
+	/** Fires when a workspace links a PR it has not linked before. */
+	onPullRequestLinked(listener: () => void): () => void {
+		this.linkListeners.add(listener);
+		return () => this.linkListeners.delete(listener);
 	}
 
 	private async syncWorkspaceBranches(): Promise<void> {

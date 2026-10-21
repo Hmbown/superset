@@ -7,6 +7,7 @@ describe("startSandboxPullRequestReporter", () => {
 	let bodies: Linked[][];
 	let status: number;
 	let linked: Linked[];
+	let emitLinked: () => void;
 	let stop: () => void;
 
 	async function advance(ms: number) {
@@ -33,6 +34,10 @@ describe("startSandboxPullRequestReporter", () => {
 			workspaceId: "w",
 			hostSecret: "s",
 			read: async () => linked,
+			onLinked: (listener) => {
+				emitLinked = listener;
+				return () => {};
+			},
 		});
 		await advance(0);
 	});
@@ -43,34 +48,38 @@ describe("startSandboxPullRequestReporter", () => {
 		jest.useRealTimers();
 	});
 
-	test("sends each linked PR once", async () => {
+	test("sends what is linked on boot, then only when a PR is linked", async () => {
 		expect(bodies).toEqual([
 			[{ repository: "acme/app", number: 1, linkedAt: 100 }],
 		]);
-		await advance(30_000);
+		await advance(10 * 60 * 1000);
 		expect(bodies).toHaveLength(1);
 
 		linked = [...linked, { repository: "acme/app", number: 2, linkedAt: 200 }];
-		await advance(30_000);
+		emitLinked();
+		await advance(1_000);
 		expect(bodies[1]).toEqual([
 			{ repository: "acme/app", number: 2, linkedAt: 200 },
 		]);
 	});
 
-	test("resends what failed, waiting longer each time", async () => {
+	test("retries a failed send, waiting longer each time, until it goes through", async () => {
 		linked = [...linked, { repository: "acme/app", number: 2, linkedAt: 200 }];
 		status = 500;
-		await advance(30_000);
-		expect(bodies).toHaveLength(2);
-		await advance(59_000);
-		expect(bodies).toHaveLength(2);
-		status = 200;
+		emitLinked();
 		await advance(1_000);
+		expect(bodies).toHaveLength(2);
+		await advance(5_000);
 		expect(bodies).toHaveLength(3);
-		expect(bodies[2]).toEqual([
+		await advance(9_999);
+		expect(bodies).toHaveLength(3);
+		status = 200;
+		await advance(1);
+		expect(bodies).toHaveLength(4);
+		expect(bodies[3]).toEqual([
 			{ repository: "acme/app", number: 2, linkedAt: 200 },
 		]);
-		await advance(30_000);
-		expect(bodies).toHaveLength(3);
+		await advance(10 * 60 * 1000);
+		expect(bodies).toHaveLength(4);
 	});
 });
