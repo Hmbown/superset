@@ -1,10 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { packPluginBundle } from "@superset/shared/plugins/bundle";
-import type { PluginManifest } from "./manifest";
-import {
-	organizationPluginProblem,
-	readOrganizationBundle,
-} from "./organization";
+import type { PluginManifest } from "../../router/plugins/manifest";
+import { organizationPluginProblem, readOrganizationBundle } from "./rules";
 
 function manifest(extension: Record<string, unknown>): PluginManifest {
 	return {
@@ -42,9 +39,12 @@ describe("organizationPluginProblem", () => {
 		).toContain("name of a Superset plugin");
 	});
 
-	test("a plugin with no connector needs an https tool server", () => {
+	test("a plugin with only skills is allowed", () => {
+		expect(organizationPluginProblem(manifest({}))).toBeNull();
+	});
+
+	test("a plugin's own tool server must be https", () => {
 		const mcp = (url: string) => ({ mcp: { type: "streamable-http", url } });
-		expect(organizationPluginProblem(manifest({}))).toContain("no tools");
 		expect(
 			organizationPluginProblem(manifest(mcp("http://tools.test/mcp"))),
 		).toContain("https");

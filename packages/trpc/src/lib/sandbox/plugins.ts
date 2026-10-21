@@ -1,13 +1,20 @@
 import { db } from "@superset/db/client";
 import { organizationPlugins, pluginInstalls } from "@superset/db/schema";
 import type { SandboxPlugin } from "@superset/shared/sandbox-contract";
-import { and, asc, eq, isNotNull, isNull, or } from "drizzle-orm";
+import { and, asc, eq, isNull, or } from "drizzle-orm";
+import {
+	accessibleTo,
+	ensureManagedInstalls,
+	memberRole,
+} from "../organization-plugins";
 
 export async function creatorPlugins(
 	userId: string | null,
 	organizationId: string,
 ): Promise<SandboxPlugin[]> {
 	if (!userId) return [];
+	await ensureManagedInstalls(userId, organizationId);
+	const role = await memberRole(userId, organizationId);
 	return await db
 		.select({
 			marketplace: pluginInstalls.marketplace,
@@ -27,7 +34,7 @@ export async function creatorPlugins(
 					isNull(pluginInstalls.organizationId),
 					and(
 						eq(pluginInstalls.organizationId, organizationId),
-						isNotNull(organizationPlugins.publishedAt),
+						accessibleTo(role),
 					),
 				),
 			),

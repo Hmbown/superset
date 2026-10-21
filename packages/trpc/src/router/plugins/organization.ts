@@ -1,39 +1,36 @@
 import { db } from "@superset/db/client";
-import { organizationPlugins } from "@superset/db/schema";
-import { getConnector } from "@superset/shared/connectors";
 import {
+	organizationPluginSources,
+	organizationPlugins,
+} from "@superset/db/schema";
+import { ROLE_HIERARCHY } from "@superset/shared/auth";
+import {
+	ORGANIZATION_PLUGIN_ACCESS,
 	organizationMarketplace,
-	PLUGIN_CATALOG,
 } from "@superset/shared/plugins";
-import {
-	PluginBundleError,
-	pluginBundleHash,
-	unpackPluginBundle,
-} from "@superset/shared/plugins/bundle";
-import { pluginManifestSchema } from "@superset/shared/plugins/manifest-schema";
 import type { TRPCRouterRecord } from "@trpc/server";
-import { and, asc, eq, isNotNull } from "drizzle-orm";
+import { Client } from "@upstash/qstash";
+import { and, asc, eq } from "drizzle-orm";
 import { z } from "zod";
+import { env } from "../../env";
 import { userError } from "../../i18n-error";
-import { getObject, putObject } from "../../lib/r2";
+import {
+	accessibleTo,
+	memberRole,
+	organizationBundleKey,
+	syncOrganizationPluginSource,
+} from "../../lib/organization-plugins";
+import { getObject } from "../../lib/r2";
 import { protectedProcedure } from "../../trpc";
+import { findInstalledRepository } from "../integration/github/find-installed-repository";
 import { verifyOrgAdmin } from "../integration/utils";
 import { requireActiveOrgId } from "../utils/active-org";
-import {
-	type PluginManifest,
-	pluginConnector,
-	supersetExtension,
-} from "./manifest";
-import { connectorServer } from "./proxy/resolve-target";
+import { type PluginManifest, pluginConnector } from "./manifest";
 
-function invalid(reason: string) {
-	return userError({
-		code: "BAD_REQUEST",
-		message: `This plugin cannot be added to the organization: ${reason}`,
-		i18nKey: "serverError.plugins.organizationPluginInvalid",
-		params: { reason },
-	});
-}
+const qstash = new Client({ token: env.QSTASH_TOKEN });
+
+export const ORGANIZATION_PLUGIN_SYNC_PATH =
+	"/api/organization-plugins/jobs/sync";
 
 function unknown(name: string) {
 	return userError({
@@ -44,59 +41,12 @@ function unknown(name: string) {
 	});
 }
 
-/** Why an organization may not publish this manifest, or null when it may. */
-export function organizationPluginProblem(
-	manifest: PluginManifest,
-): string | null {
-	if (PLUGIN_CATALOG.some((plugin) => plugin.name === manifest.name)) {
-		return `"${manifest.name}" is the name of a Superset plugin`;
-	}
-
-	const slug = pluginConnector(manifest);
-	const url = supersetExtension(manifest)?.mcp?.url;
-
-	if (slug) {
-		const connector = getConnector(slug);
-		if (!connector) return `"${slug}" is not a connector Superset knows`;
-		if (!connector.methods.some((method) => connectorServer(method))) {
-			return `the ${slug} connector has no tool server of its own, so an organization plugin cannot use it`;
-		}
-		return null;
-	}
-
-	if (!url) return "it names no connector and no mcp url, so it has no tools";
-	if (!url.startsWith("https://")) return "its mcp url must be https";
-	return null;
-}
-
-function bundleKey(organizationId: string, contentHash: string): string {
-	return `organization-plugins/${organizationId}/${contentHash}.json.gz`;
-}
-
-/** The manifest a bundle carries, after every rule an organization plugin must pass. */
-export function readOrganizationBundle(bundle: Uint8Array): PluginManifest {
-	let raw: unknown;
-	try {
-		raw = JSON.parse(
-			unpackPluginBundle(bundle).get("plugin.json")?.toString("utf8") ?? "",
-		);
-	} catch (error) {
-		throw invalid(
-			error instanceof PluginBundleError
-				? error.message
-				: "its plugin.json is not valid JSON",
-		);
-	}
-	const parsed = pluginManifestSchema.safeParse(raw);
-	if (!parsed.success) {
-		throw invalid(
-			parsed.error.issues[0]?.message ?? "plugin.json is not valid",
-		);
-	}
-	const manifest = parsed.data as PluginManifest;
-	const problem = organizationPluginProblem(manifest);
-	if (problem) throw invalid(problem);
-	return manifest;
+function unknownSource() {
+	return userError({
+		code: "NOT_FOUND",
+		message: "That plugin source does not exist",
+		i18nKey: "serverError.plugins.unknownPluginSource",
+	});
 }
 
 async function requireAdmin(ctx: Parameters<typeof requireActiveOrgId>[0]) {
@@ -105,121 +55,168 @@ async function requireAdmin(ctx: Parameters<typeof requireActiveOrgId>[0]) {
 	return organizationId;
 }
 
-export const organizationPluginsRouter = {
-	list: protectedProcedure.query(async ({ ctx }) => {
-		const organizationId = requireActiveOrgId(ctx);
-		const isAdmin = await verifyOrgAdmin(
-			ctx.session.user.id,
-			organizationId,
-		).then(
-			() => true,
-			() => false,
-		);
-		const rows = await db
-			.select()
-			.from(organizationPlugins)
-			.where(
-				and(
-					eq(organizationPlugins.organizationId, organizationId),
-					isAdmin ? undefined : isNotNull(organizationPlugins.publishedAt),
-				),
-			)
-			.orderBy(asc(organizationPlugins.name));
+async function isAdmin(userId: string, organizationId: string) {
+	return verifyOrgAdmin(userId, organizationId).then(
+		() => true,
+		() => false,
+	);
+}
 
-		return rows.map((row) => ({
-			name: row.name,
-			version: row.version,
-			marketplace: organizationMarketplace(organizationId),
-			description: (row.manifest as PluginManifest).description ?? "",
-			connector: pluginConnector(row.manifest as PluginManifest) ?? null,
-			publishedAt: row.publishedAt,
-			uploadedByUserId: row.uploadedByUserId,
-			updatedAt: row.updatedAt,
-		}));
+async function requestSync(sourceId: string) {
+	if (env.NODE_ENV === "development") {
+		await syncOrganizationPluginSource(sourceId);
+		return;
+	}
+	await qstash.publishJSON({
+		url: `${env.NEXT_PUBLIC_API_URL}${ORGANIZATION_PLUGIN_SYNC_PATH}`,
+		body: { sourceId },
+		retries: 3,
+	});
+}
+
+const policySchema = z.partialRecord(
+	z.enum(ROLE_HIERARCHY),
+	z.enum(ORGANIZATION_PLUGIN_ACCESS),
+);
+
+const sourcesRouter = {
+	list: protectedProcedure.query(async ({ ctx }) => {
+		const organizationId = await requireAdmin(ctx);
+		return db
+			.select()
+			.from(organizationPluginSources)
+			.where(eq(organizationPluginSources.organizationId, organizationId))
+			.orderBy(asc(organizationPluginSources.repo));
 	}),
 
-	upload: protectedProcedure
+	add: protectedProcedure
 		.input(
 			z.object({
-				/** The plugin tree, packed by `packPluginBundle` and base64-encoded. */
-				bundle: z.string().min(1),
-				/** The version this upload expects to replace; refused if another upload landed first. */
-				replaces: z.string().min(1).optional(),
+				repo: z
+					.string()
+					.regex(/^[\w.-]+\/[\w.-]+$/, "owner/name of a GitHub repository"),
+				ref: z.string().min(1).optional(),
+				path: z.string().optional(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
 			const organizationId = await requireAdmin(ctx);
-			const bundle = Buffer.from(input.bundle, "base64");
-			const manifest = readOrganizationBundle(bundle);
-			const contentHash = pluginBundleHash(bundle);
-
-			const [existing] = await db
-				.select({
-					id: organizationPlugins.id,
-					version: organizationPlugins.version,
-				})
-				.from(organizationPlugins)
-				.where(
-					and(
-						eq(organizationPlugins.organizationId, organizationId),
-						eq(organizationPlugins.name, manifest.name),
-					),
-				)
-				.limit(1);
-
-			if (existing?.version === manifest.version) {
-				throw invalid(`version ${manifest.version} is already uploaded`);
-			}
-			if (input.replaces && existing && existing.version !== input.replaces) {
-				throw invalid(
-					`it was built on version ${input.replaces}, and version ${existing.version} is current`,
-				);
+			const { repo } = await findInstalledRepository(
+				organizationId,
+				input.repo,
+			);
+			const path = (input.path ?? "")
+				.split("/")
+				.filter((s) => s && s !== ".")
+				.join("/");
+			if (path.split("/").includes("..")) {
+				throw userError({
+					code: "BAD_REQUEST",
+					message: "The path must stay inside the repository",
+					i18nKey: "serverError.plugins.pluginSourcePathOutside",
+				});
 			}
 
-			await putObject({
-				key: bundleKey(organizationId, contentHash),
-				body: bundle,
-				contentType: "application/gzip",
-				bucket: "private",
-			});
-
-			const [row] = await db
-				.insert(organizationPlugins)
+			const [source] = await db
+				.insert(organizationPluginSources)
 				.values({
 					organizationId,
-					name: manifest.name,
-					version: manifest.version,
-					manifest,
-					contentHash,
-					uploadedByUserId: ctx.session.user.id,
+					repo: repo.fullName,
+					ref: input.ref ?? null,
+					path,
+					addedByUserId: ctx.session.user.id,
 				})
 				.onConflictDoUpdate({
 					target: [
-						organizationPlugins.organizationId,
-						organizationPlugins.name,
+						organizationPluginSources.organizationId,
+						organizationPluginSources.repo,
+						organizationPluginSources.path,
 					],
-					set: {
-						version: manifest.version,
-						manifest,
-						contentHash,
-						uploadedByUserId: ctx.session.user.id,
-					},
+					set: { ref: input.ref ?? null },
 				})
 				.returning();
+			if (!source) throw unknownSource();
 
-			return {
-				name: manifest.name,
-				version: manifest.version,
-				marketplace: organizationMarketplace(organizationId),
-				publishedAt: row?.publishedAt ?? null,
-				replaced: existing?.version ?? null,
-			};
+			await requestSync(source.id);
+			return source;
 		}),
+
+	sync: protectedProcedure
+		.input(z.object({ id: z.string().uuid() }))
+		.mutation(async ({ ctx, input }) => {
+			const organizationId = await requireAdmin(ctx);
+			const source = await db.query.organizationPluginSources.findFirst({
+				where: and(
+					eq(organizationPluginSources.id, input.id),
+					eq(organizationPluginSources.organizationId, organizationId),
+				),
+			});
+			if (!source) throw unknownSource();
+			await requestSync(source.id);
+			return { requested: source.id };
+		}),
+
+	remove: protectedProcedure
+		.input(z.object({ id: z.string().uuid() }))
+		.mutation(async ({ ctx, input }) => {
+			const organizationId = await requireAdmin(ctx);
+			const [row] = await db
+				.delete(organizationPluginSources)
+				.where(
+					and(
+						eq(organizationPluginSources.id, input.id),
+						eq(organizationPluginSources.organizationId, organizationId),
+					),
+				)
+				.returning({ id: organizationPluginSources.id });
+			if (!row) throw unknownSource();
+			return { removed: row.id };
+		}),
+} satisfies TRPCRouterRecord;
+
+export const organizationPluginsRouter = {
+	list: protectedProcedure.query(async ({ ctx }) => {
+		const organizationId = requireActiveOrgId(ctx);
+		const userId = ctx.session.user.id;
+		const admin = await isAdmin(userId, organizationId);
+		const role = await memberRole(userId, organizationId);
+		const rows = await db
+			.select({
+				plugin: organizationPlugins,
+				repo: organizationPluginSources.repo,
+			})
+			.from(organizationPlugins)
+			.leftJoin(
+				organizationPluginSources,
+				eq(organizationPluginSources.id, organizationPlugins.sourceId),
+			)
+			.where(
+				and(
+					eq(organizationPlugins.organizationId, organizationId),
+					admin ? undefined : accessibleTo(role),
+				),
+			)
+			.orderBy(asc(organizationPlugins.name));
+
+		return rows.map(({ plugin, repo }) => ({
+			name: plugin.name,
+			version: plugin.version,
+			marketplace: organizationMarketplace(organizationId),
+			description: (plugin.manifest as PluginManifest).description ?? "",
+			connector: pluginConnector(plugin.manifest as PluginManifest) ?? null,
+			sourceId: plugin.sourceId,
+			repo: repo ?? null,
+			policy: plugin.installPolicy,
+			removedFromSourceAt: plugin.removedFromSourceAt,
+			updatedAt: plugin.updatedAt,
+		}));
+	}),
 
 	bundle: protectedProcedure
 		.input(z.object({ name: z.string().min(1) }))
 		.query(async ({ ctx, input }) => {
 			const organizationId = requireActiveOrgId(ctx);
+			const role = await memberRole(ctx.session.user.id, organizationId);
 			const [row] = await db
 				.select({
 					name: organizationPlugins.name,
@@ -231,14 +228,14 @@ export const organizationPluginsRouter = {
 					and(
 						eq(organizationPlugins.organizationId, organizationId),
 						eq(organizationPlugins.name, input.name),
-						isNotNull(organizationPlugins.publishedAt),
+						accessibleTo(role),
 					),
 				)
 				.limit(1);
 			if (!row) throw unknown(input.name);
 
 			const object = await getObject(
-				bundleKey(organizationId, row.contentHash),
+				organizationBundleKey(organizationId, row.contentHash),
 			);
 			if (!object) throw unknown(input.name);
 			return {
@@ -248,13 +245,13 @@ export const organizationPluginsRouter = {
 			};
 		}),
 
-	setPublished: protectedProcedure
-		.input(z.object({ name: z.string().min(1), published: z.boolean() }))
+	setPolicy: protectedProcedure
+		.input(z.object({ name: z.string().min(1), policy: policySchema }))
 		.mutation(async ({ ctx, input }) => {
 			const organizationId = await requireAdmin(ctx);
 			const [row] = await db
 				.update(organizationPlugins)
-				.set({ publishedAt: input.published ? new Date() : null })
+				.set({ installPolicy: input.policy })
 				.where(
 					and(
 						eq(organizationPlugins.organizationId, organizationId),
@@ -263,23 +260,8 @@ export const organizationPluginsRouter = {
 				)
 				.returning();
 			if (!row) throw unknown(input.name);
-			return { name: row.name, publishedAt: row.publishedAt };
+			return { name: row.name, policy: row.installPolicy };
 		}),
 
-	remove: protectedProcedure
-		.input(z.object({ name: z.string().min(1) }))
-		.mutation(async ({ ctx, input }) => {
-			const organizationId = await requireAdmin(ctx);
-			const [row] = await db
-				.delete(organizationPlugins)
-				.where(
-					and(
-						eq(organizationPlugins.organizationId, organizationId),
-						eq(organizationPlugins.name, input.name),
-					),
-				)
-				.returning({ name: organizationPlugins.name });
-			if (!row) throw unknown(input.name);
-			return { removed: row.name };
-		}),
+	sources: sourcesRouter,
 } satisfies TRPCRouterRecord;

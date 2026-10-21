@@ -887,11 +887,22 @@ export const serverErrorMessages: Record<
 			message: "Plugin {plugin} is not installed",
 			values: params,
 		}),
-	"serverError.plugins.organizationPluginInvalid": (params) =>
+	"serverError.plugins.managedByOrganization": (params) =>
 		i18n._({
-			id: "serverError.plugins.organizationPluginInvalid",
-			message: "This plugin cannot be added to the organization: {reason}",
+			id: "serverError.plugins.managedByOrganization",
+			message:
+				"Your organization installs {plugin} for you, so it cannot be uninstalled. You can disable it.",
 			values: params,
+		}),
+	"serverError.plugins.pluginSourcePathOutside": () =>
+		i18n._({
+			id: "serverError.plugins.pluginSourcePathOutside",
+			message: "The path must stay inside the repository",
+		}),
+	"serverError.plugins.unknownPluginSource": () =>
+		i18n._({
+			id: "serverError.plugins.unknownPluginSource",
+			message: "That plugin source does not exist",
 		}),
 	"serverError.plugins.unknownPlugin": (params) =>
 		i18n._({

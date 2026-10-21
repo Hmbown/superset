@@ -51,14 +51,13 @@ async function organizationPlugin(
 	const plugin = plugins.find(
 		(p) =>
 			p.name === name &&
-			p.publishedAt &&
 			(!marketplace ||
 				marketplace === ORGANIZATION ||
 				p.marketplace === marketplace),
 	);
 	if (!plugin && named) {
 		throw new CLIError(
-			`Your organization has no published plugin "${name}".`,
+			`Your organization has no plugin "${name}".`,
 			"See what it has: superset plugins organization list",
 		);
 	}

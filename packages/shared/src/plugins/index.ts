@@ -1,5 +1,6 @@
 export * from "./manifests.generated";
 
+import type { OrganizationRole } from "../auth/roles/roles";
 import { firstPartyManifest } from "./manifests.generated";
 
 export const DEFAULT_MARKETPLACE = "superset";
@@ -15,6 +16,32 @@ export function organizationMarketplace(organizationId: string): string {
 
 export function isOrganizationMarketplace(marketplace: string): boolean {
 	return marketplace.startsWith(ORGANIZATION_MARKETPLACE_PREFIX);
+}
+
+export const ORGANIZATION_PLUGIN_ACCESS = [
+	"unavailable",
+	"available",
+	"installed",
+] as const;
+
+export type OrganizationPluginAccess =
+	(typeof ORGANIZATION_PLUGIN_ACCESS)[number];
+
+export type OrganizationPluginPolicy = Partial<
+	Record<OrganizationRole, OrganizationPluginAccess>
+>;
+
+/** A plugin a repository sync adds stays with the admins until one of them opens it to members. */
+export const DEFAULT_ORGANIZATION_PLUGIN_POLICY: OrganizationPluginPolicy = {
+	owner: "available",
+	admin: "available",
+};
+
+export function organizationPluginAccess(
+	policy: OrganizationPluginPolicy,
+	role: string,
+): OrganizationPluginAccess {
+	return policy[role as OrganizationRole] ?? "unavailable";
 }
 
 export const SUPERSET_HOSTED_PLUGINS = [

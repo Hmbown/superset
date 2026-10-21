@@ -1,51 +1,17 @@
-import fs from "node:fs";
-import path from "node:path";
 import { writePluginTree } from "@superset/agent-setup";
 import { CLIError } from "@superset/cli-framework";
+import { organizationMarketplace } from "@superset/shared/plugins";
 import {
-	PLUGIN_TREE_ENTRIES,
-	packPluginBundle,
 	pluginBundleHash,
 	unpackPluginBundle,
 } from "@superset/shared/plugins/bundle";
 import type { ApiClient } from "../api-client";
-import { type InstallPluginResult, recordPlugin } from "./install";
-
-function readTree(root: string): Map<string, Buffer> {
-	const files = new Map<string, Buffer>();
-	const walk = (relative: string) => {
-		const absolute = path.join(root, relative);
-		const stat = fs.lstatSync(absolute);
-		if (stat.isSymbolicLink()) {
-			throw new CLIError(`Refusing to upload "${relative}": it is a symlink.`);
-		}
-		if (stat.isDirectory()) {
-			for (const entry of fs.readdirSync(absolute)) {
-				if (entry.startsWith(".")) continue;
-				walk(path.posix.join(relative, entry));
-			}
-		} else if (stat.isFile()) {
-			files.set(relative, fs.readFileSync(absolute));
-		}
-	};
-	for (const entry of PLUGIN_TREE_ENTRIES) {
-		if (fs.existsSync(path.join(root, entry))) walk(entry);
-	}
-	return files;
-}
-
-/** A plugin directory, or its plugin.json, packed the way the API stores it. */
-export function packPluginDirectory(target: string): string {
-	const resolved = path.resolve(target);
-	const root =
-		path.basename(resolved) === "plugin.json"
-			? path.dirname(resolved)
-			: resolved;
-	if (!fs.existsSync(path.join(root, "plugin.json"))) {
-		throw new CLIError(`No plugin.json in ${root}.`);
-	}
-	return packPluginBundle(readTree(root)).toString("base64");
-}
+import { readInstalledPlugins } from "./host";
+import {
+	type InstallPluginResult,
+	recordPlugin,
+	removePlugin,
+} from "./install";
 
 export async function installOrganizationPlugin(
 	api: ApiClient,
@@ -55,7 +21,7 @@ export async function installOrganizationPlugin(
 	const bundle = Buffer.from(download.bundle, "base64");
 	if (pluginBundleHash(bundle) !== download.contentHash) {
 		throw new CLIError(
-			`The download of "${name}" does not match what was uploaded. Try again.`,
+			`The download of "${name}" does not match what your organization synced. Try again.`,
 		);
 	}
 	const installPath = writePluginTree(
@@ -70,4 +36,46 @@ export async function installOrganizationPlugin(
 		version: download.version,
 		installPath,
 	});
+}
+
+/**
+ * Brings this machine's organization plugins in line with the account: the
+ * ones the member installed or the organization installs for them land or
+ * update here, and ones the member lost access to are removed.
+ */
+export async function reconcileOrganizationPlugins(
+	api: ApiClient,
+): Promise<{ installed: string[]; removed: string[]; failed: string[] }> {
+	const organization = await api.user.myOrganization.query();
+	if (!organization) return { installed: [], removed: [], failed: [] };
+	const marketplace = organizationMarketplace(organization.id);
+
+	const wanted = (await api.plugins.list.query()).filter(
+		(plugin) => plugin.installed && plugin.marketplace === marketplace,
+	);
+	const local = readInstalledPlugins().filter(
+		(plugin) => plugin.marketplace === marketplace,
+	);
+
+	const result = {
+		installed: [] as string[],
+		removed: [] as string[],
+		failed: [] as string[],
+	};
+	for (const plugin of wanted) {
+		const here = local.find((entry) => entry.name === plugin.name);
+		if (here?.installPath && here.version === plugin.latestVersion) continue;
+		try {
+			await installOrganizationPlugin(api, plugin.name);
+			result.installed.push(plugin.name);
+		} catch {
+			result.failed.push(plugin.name);
+		}
+	}
+	for (const entry of local) {
+		if (wanted.some((plugin) => plugin.name === entry.name)) continue;
+		await removePlugin(entry.name, marketplace);
+		result.removed.push(entry.name);
+	}
+	return result;
 }

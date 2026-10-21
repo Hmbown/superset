@@ -1,6 +1,7 @@
 import { db } from "@superset/db/client";
 import { organizationPlugins, pluginInstalls } from "@superset/db/schema";
-import { and, asc, countDistinct, eq, isNotNull } from "drizzle-orm";
+import { and, asc, countDistinct, eq } from "drizzle-orm";
+import { accessibleTo, memberRole } from "../../lib/organization-plugins";
 import { installConnector, type PluginManifest } from "./manifest";
 
 export interface InstalledPlugin {
@@ -21,11 +22,12 @@ interface InstallRow {
 /**
  * The manifest an install runs with. An organization plugin is read from the
  * organization's row every time: the copy on the install is whatever was
- * current when the member installed it, and an admin may have changed or
- * unpublished the plugin since.
+ * current when the member installed it, and an admin may have changed the
+ * plugin or taken it away from the member's role since.
  */
 async function resolveInstall(
-	row: InstallRow,
+	userId: string,
+	row: InstallRow & { organizationId: string | null },
 	pluginName: string,
 ): Promise<InstalledPlugin | null> {
 	if (!row.organizationPluginId) {
@@ -37,6 +39,9 @@ async function resolveInstall(
 		};
 	}
 
+	const role = row.organizationId
+		? await memberRole(userId, row.organizationId)
+		: null;
 	const [published] = await db
 		.select({
 			manifest: organizationPlugins.manifest,
@@ -46,7 +51,7 @@ async function resolveInstall(
 		.where(
 			and(
 				eq(organizationPlugins.id, row.organizationPluginId),
-				isNotNull(organizationPlugins.publishedAt),
+				accessibleTo(role),
 			),
 		)
 		.limit(1);
@@ -87,6 +92,7 @@ export async function installedPlugin(
 			manifest: pluginInstalls.manifest,
 			marketplace: pluginInstalls.marketplace,
 			organizationPluginId: pluginInstalls.organizationPluginId,
+			organizationId: pluginInstalls.organizationId,
 		})
 		.from(pluginInstalls)
 		.where(
@@ -109,7 +115,7 @@ export async function installedPlugin(
 
 	const row = rows[0];
 	if (!row) return null;
-	return resolveInstall(row, pluginName);
+	return resolveInstall(userId, row, pluginName);
 }
 
 export async function installRecord(
@@ -166,6 +172,7 @@ export async function installById(
 			marketplace: pluginInstalls.marketplace,
 			pluginName: pluginInstalls.pluginName,
 			organizationPluginId: pluginInstalls.organizationPluginId,
+			organizationId: pluginInstalls.organizationId,
 		})
 		.from(pluginInstalls)
 		.where(
@@ -178,7 +185,7 @@ export async function installById(
 		.limit(1);
 
 	if (!row) return null;
-	return resolveInstall(row, row.pluginName);
+	return resolveInstall(userId, row, row.pluginName);
 }
 
 export async function installedManifest(

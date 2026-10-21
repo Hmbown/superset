@@ -10,12 +10,18 @@ import {
 	firstPartyManifest,
 	isOrganizationMarketplace,
 	organizationMarketplace,
+	organizationPluginAccess,
 } from "@superset/shared/plugins";
 import type { TRPCError, TRPCRouterRecord } from "@trpc/server";
-import { and, asc, eq, isNotNull, isNull } from "drizzle-orm";
+import { and, asc, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { userError } from "../../i18n-error";
 import { AmbiguousConnectionError } from "../../lib/connectors/lookup";
+import {
+	accessibleTo,
+	ensureManagedInstalls,
+	memberRole,
+} from "../../lib/organization-plugins";
 import { createTRPCRouter, protectedProcedure } from "../../trpc";
 import { requireActiveOrgId } from "../utils/active-org";
 import {
@@ -307,6 +313,12 @@ const connectionsRouter = {
 export const pluginsRouter = createTRPCRouter({
 	list: protectedProcedure.query(async ({ ctx }) => {
 		const organizationId = ctx.activeOrganizationId;
+		const role = organizationId
+			? await memberRole(ctx.session.user.id, organizationId)
+			: null;
+		if (organizationId) {
+			await ensureManagedInstalls(ctx.session.user.id, organizationId);
+		}
 		const [everyInstall, live, published] = await Promise.all([
 			db
 				.select()
@@ -334,7 +346,7 @@ export const pluginsRouter = createTRPCRouter({
 						.where(
 							and(
 								eq(organizationPlugins.organizationId, organizationId),
-								isNotNull(organizationPlugins.publishedAt),
+								accessibleTo(role),
 							),
 						)
 						.orderBy(asc(organizationPlugins.name))
@@ -343,11 +355,27 @@ export const pluginsRouter = createTRPCRouter({
 
 		const publishedById = new Map(published.map((row) => [row.id, row]));
 		const installs = everyInstall.flatMap(
-			(row): ((typeof everyInstall)[number] & { latest?: string })[] => {
+			(
+				row,
+			): ((typeof everyInstall)[number] & {
+				latest?: string;
+				managed?: boolean;
+			})[] => {
 				if (!row.organizationPluginId) return [row];
 				const current = publishedById.get(row.organizationPluginId);
 				return current
-					? [{ ...row, manifest: current.manifest, latest: current.version }]
+					? [
+							{
+								...row,
+								manifest: current.manifest,
+								latest: current.version,
+								managed:
+									organizationPluginAccess(
+										current.installPolicy,
+										role ?? "",
+									) === "installed",
+							},
+						]
 					: [];
 			},
 		);
@@ -376,6 +404,7 @@ export const pluginsRouter = createTRPCRouter({
 				enabled: row.enabled,
 				installedAt: row.installedAt as Date | null,
 				latestVersion: latest ?? null,
+				managed: row.managed ?? false,
 				connections: held_,
 				accounts: accountLabels(held_),
 			};
@@ -410,6 +439,7 @@ export const pluginsRouter = createTRPCRouter({
 					enabled: false,
 					installedAt: null as Date | null,
 					latestVersion: (manifest.version as string) ?? null,
+					managed: false,
 					connections: held_,
 					accounts: accountLabels(held_),
 				};
@@ -438,6 +468,7 @@ export const pluginsRouter = createTRPCRouter({
 							enabled: false,
 							installedAt: null as Date | null,
 							latestVersion: row.version as string | null,
+							managed: false,
 							connections: held_,
 							accounts: accountLabels(held_),
 						};
@@ -457,6 +488,7 @@ export const pluginsRouter = createTRPCRouter({
 		.mutation(async ({ ctx, input }) => {
 			if (input.marketplace && isOrganizationMarketplace(input.marketplace)) {
 				const organizationId = requireActiveOrgId(ctx);
+				const role = await memberRole(ctx.session.user.id, organizationId);
 				const [plugin] =
 					input.marketplace === organizationMarketplace(organizationId)
 						? await db
@@ -466,7 +498,7 @@ export const pluginsRouter = createTRPCRouter({
 									and(
 										eq(organizationPlugins.organizationId, organizationId),
 										eq(organizationPlugins.name, input.name),
-										isNotNull(organizationPlugins.publishedAt),
+										accessibleTo(role),
 									),
 								)
 								.limit(1)
@@ -622,10 +654,34 @@ export const pluginsRouter = createTRPCRouter({
 					manifest: pluginInstalls.manifest,
 					marketplace: pluginInstalls.marketplace,
 					pluginName: pluginInstalls.pluginName,
+					organizationId: pluginInstalls.organizationId,
+					policy: organizationPlugins.installPolicy,
 				})
 				.from(pluginInstalls)
+				.leftJoin(
+					organizationPlugins,
+					eq(organizationPlugins.id, pluginInstalls.organizationPluginId),
+				)
 				.where(eq(pluginInstalls.id, id))
 				.limit(1);
+
+			if (uninstalled?.policy && uninstalled.organizationId) {
+				const role = await memberRole(
+					ctx.session.user.id,
+					uninstalled.organizationId,
+				);
+				if (
+					organizationPluginAccess(uninstalled.policy, role ?? "") ===
+					"installed"
+				) {
+					throw userError({
+						code: "FORBIDDEN",
+						message: `Your organization installs ${input.name} for you, so it cannot be uninstalled. You can disable it.`,
+						i18nKey: "serverError.plugins.managedByOrganization",
+						params: { plugin: input.name },
+					});
+				}
+			}
 
 			await db.delete(pluginInstalls).where(eq(pluginInstalls.id, id));
 
