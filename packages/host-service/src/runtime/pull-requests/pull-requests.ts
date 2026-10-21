@@ -550,13 +550,23 @@ export class PullRequestRuntimeManager {
 			.map((row) => row.id);
 		const histories =
 			await this.getPullRequestHistoryByWorkspaces(workspaceIds);
-		return histories.flatMap((history) =>
-			history.pullRequests.map((pullRequest) => ({
-				repository: `${pullRequest.repoOwner}/${pullRequest.repoName}`,
-				number: pullRequest.number,
-				linkedAt: pullRequest.linkedAt,
-			})),
-		);
+		const earliest = new Map<
+			string,
+			{ repository: string; number: number; linkedAt: number }
+		>();
+		for (const pullRequest of histories.flatMap((h) => h.pullRequests)) {
+			const repository = `${pullRequest.repoOwner}/${pullRequest.repoName}`;
+			const key = `${repository.toLowerCase()}#${pullRequest.number}`;
+			const seen = earliest.get(key);
+			if (!seen || pullRequest.linkedAt < seen.linkedAt) {
+				earliest.set(key, {
+					repository,
+					number: pullRequest.number,
+					linkedAt: pullRequest.linkedAt,
+				});
+			}
+		}
+		return [...earliest.values()];
 	}
 
 	// User-initiated "Remove PR Link". Recording the removed PR id keeps the
