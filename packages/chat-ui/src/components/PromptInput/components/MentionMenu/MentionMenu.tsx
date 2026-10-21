@@ -2,7 +2,6 @@
 
 import { Trans } from "@lingui/react/macro";
 import { cn } from "@superset/ui/utils";
-import { useEffect } from "react";
 import type { MentionSection } from "../../hooks/useMentionSources";
 import type { ComposerMentionEntry } from "../../types";
 
@@ -11,7 +10,6 @@ export type MentionMenuProps = {
 	selectedIndex: number | null;
 	onHighlight: (index: number) => void;
 	onSelect: (entry: ComposerMentionEntry) => void;
-	onSelectionChange?: (entry: ComposerMentionEntry | null) => void;
 	className?: string;
 };
 
@@ -20,18 +18,8 @@ export function MentionMenu({
 	selectedIndex,
 	onHighlight,
 	onSelect,
-	onSelectionChange,
 	className,
 }: MentionMenuProps) {
-	const flatEntries = sections.flatMap((section) => section.entries);
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: flatEntries identity churns per render; selection identity is (index, length)
-	useEffect(() => {
-		onSelectionChange?.(
-			selectedIndex == null ? null : (flatEntries[selectedIndex] ?? null),
-		);
-	}, [selectedIndex, flatEntries.length]);
-
 	if (sections.length === 0) return null;
 	let flatIndex = -1;
 	return (

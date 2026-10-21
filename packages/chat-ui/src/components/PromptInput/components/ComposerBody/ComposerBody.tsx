@@ -33,6 +33,7 @@ import {
 } from "lexical";
 import {
 	ArrowUpIcon,
+	LoaderCircleIcon,
 	MicIcon,
 	PaperclipIcon,
 	RefreshCcwIcon,
@@ -111,7 +112,7 @@ function matchCommandToken(text: string) {
 export type ComposerBodyProps = Required<
 	Pick<
 		PromptInputProps,
-		"placeholder" | "status" | "submitWhileStreaming" | "placement"
+		"placeholder" | "status" | "submitWhileStreaming" | "disabled" | "pending"
 	>
 > &
 	Pick<
@@ -128,15 +129,11 @@ export type ComposerBodyProps = Required<
 		| "onSubmit"
 		| "onStop"
 		| "stopOnEscape"
-		| "onMentionHighlight"
 		| "onAttachmentClick"
-		| "onChipClick"
 		| "ref"
 		| "header"
 		| "onAddFiles"
 		| "allowEmptySubmit"
-		| "clearOnSubmit"
-		| "hideSubmit"
 		| "autoFocus"
 		| "history"
 	>;
@@ -177,7 +174,8 @@ export function ComposerBody({
 	dictation,
 	status,
 	submitWhileStreaming,
-	placement,
+	disabled,
+	pending,
 	toolbar,
 	toolbarEnd,
 	defaultValue,
@@ -187,15 +185,11 @@ export function ComposerBody({
 	onSubmit,
 	onStop,
 	stopOnEscape = true,
-	onMentionHighlight,
 	onAttachmentClick,
-	onChipClick,
 	ref,
 	header,
 	onAddFiles,
 	allowEmptySubmit,
-	clearOnSubmit,
-	hideSubmit,
 	autoFocus,
 	history,
 }: ComposerBodyProps) {
@@ -292,26 +286,24 @@ export function ComposerBody({
 	// Lexical command listeners register once; this ref bridges them to live React state.
 	const stateRef = useRef({
 		attachments,
-		onChipClick,
 		onStop,
 		stopOnEscape,
 		onSubmit,
 		status,
 		submitWhileStreaming,
 		allowEmptySubmit,
-		clearOnSubmit,
+		blocked: disabled || pending,
 		history,
 	});
 	stateRef.current = {
 		attachments,
-		onChipClick,
 		onStop,
 		stopOnEscape,
 		onSubmit,
 		status,
 		submitWhileStreaming,
 		allowEmptySubmit,
-		clearOnSubmit,
+		blocked: disabled || pending,
 		history,
 	};
 	const historyNavigationRef = useRef<{
@@ -491,15 +483,12 @@ export function ComposerBody({
 		void entry.select(actionContextRef.current);
 	};
 
-	useEffect(() => {
-		if (mentionQuery == null) onMentionHighlight?.(null);
-	}, [mentionQuery, onMentionHighlight]);
-
 	const releaseAttachment = (attachment: PromptInputAttachment) => {
 		if (attachment.previewUrl) URL.revokeObjectURL(attachment.previewUrl);
 	};
 
 	const submit = ({ steer = false }: { steer?: boolean } = {}) => {
+		if (stateRef.current.blocked) return;
 		if (
 			stateRef.current.status === "streaming" &&
 			!stateRef.current.submitWhileStreaming
@@ -532,7 +521,6 @@ export function ComposerBody({
 		)
 			return;
 		historyNavigationRef.current?.reset();
-		if (!stateRef.current.clearOnSubmit) return;
 		pasted.clear();
 		editor.update(() => $getRoot().clear());
 		setAttachments((previous) => {
@@ -626,8 +614,8 @@ export function ComposerBody({
 			},
 			COMMAND_PRIORITY_HIGH,
 		);
-		// Chips are decorator nodes: clicks select them as a node selection (and
-		// notify the app), and Backspace/Delete remove the selected chips.
+		// Chips are decorator nodes: clicks select them as a node selection, and
+		// Backspace/Delete remove the selected chips.
 		const unregisterClick = editor.registerCommand<MouseEvent>(
 			CLICK_COMMAND,
 			(event) => {
@@ -640,7 +628,6 @@ export function ComposerBody({
 				const selection = $createNodeSelection();
 				selection.add(node.getKey());
 				$setSelection(selection);
-				stateRef.current.onChipClick?.(node.toChip());
 				return true;
 			},
 			COMMAND_PRIORITY_LOW,
@@ -834,8 +821,7 @@ export function ComposerBody({
 			<div
 				ref={setMenuSlot}
 				className={cn(
-					"pointer-events-none absolute inset-x-0 [&>*]:pointer-events-auto",
-					placement === "bottom" ? "top-full pt-2" : "bottom-full pb-2",
+					"pointer-events-none absolute inset-x-0 bottom-full pb-2 [&>*]:pointer-events-auto",
 				)}
 			>
 				{browseOpen && (
@@ -844,7 +830,6 @@ export function ComposerBody({
 						className="max-w-80"
 						selectedIndex={browseIndex}
 						onHighlight={setBrowseIndex}
-						onSelectionChange={onMentionHighlight}
 						onSelect={selectBrowseEntry}
 					/>
 				)}
@@ -853,20 +838,13 @@ export function ComposerBody({
 				<div
 					role="dialog"
 					aria-label={panel.title}
-					className={cn(
-						"absolute inset-x-0 z-30",
-						placement === "bottom" ? "top-full pt-2" : "bottom-full pb-2",
-					)}
+					className="absolute inset-x-0 bottom-full z-30 pb-2"
 				>
 					{panel.render({ close: closePanel })}
 				</div>
 			) : (
 				panel && (
-					<ComposerPanel
-						title={panel.title}
-						placement={placement}
-						onClose={() => setPanel(null)}
-					>
+					<ComposerPanel title={panel.title} onClose={() => setPanel(null)}>
 						{panel.render({ close: closePanel })}
 					</ComposerPanel>
 				)
@@ -948,7 +926,6 @@ export function ComposerBody({
 										sections={sections}
 										selectedIndex={selectedIndex}
 										onHighlight={setHighlightedIndex}
-										onSelectionChange={onMentionHighlight}
 										onSelect={(entry) => {
 											const option = mentionOptions.find(
 												(candidate) => candidate.entry.id === entry.id,
@@ -1110,8 +1087,7 @@ export function ComposerBody({
 								<MicIcon className="size-4" />
 							</button>
 						)}
-						{hideSubmit ? null : status === "streaming" &&
-							!(submitWhileStreaming && canSend) ? (
+						{status === "streaming" && !(submitWhileStreaming && canSend) ? (
 							<button
 								type="button"
 								aria-label={t({
@@ -1128,10 +1104,11 @@ export function ComposerBody({
 								aria-label={t({
 									message: "Send message",
 								})}
-								disabled={!canSend}
+								aria-busy={pending}
+								disabled={!canSend || disabled || pending}
 								onClick={() => submit()}
 								className={
-									canSend
+									canSend && !disabled && !pending
 										? cn(
 												FOOTER_BUTTON_CLASS,
 												"cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90",
@@ -1139,7 +1116,11 @@ export function ComposerBody({
 										: INACTIVE_SEND_BUTTON_CLASS
 								}
 							>
-								<ArrowUpIcon className="size-4" />
+								{pending ? (
+									<LoaderCircleIcon className="size-4 animate-spin" />
+								) : (
+									<ArrowUpIcon className="size-4" />
+								)}
 							</button>
 						)}
 					</>

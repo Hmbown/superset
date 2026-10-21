@@ -136,7 +136,6 @@ export type PromptInputProps = {
 	commands: PromptInputCommand[];
 	status?: "ready" | "streaming";
 	submitWhileStreaming?: boolean;
-	placement?: "top" | "bottom";
 	// Enables the mic button; the app owns speech-to-text.
 	dictation?: PromptInputDictation;
 	toolbar?: ReactNode;
@@ -162,16 +161,16 @@ export type PromptInputProps = {
 	header?: ReactNode;
 	onAddFiles?: (files: File[]) => void;
 	allowEmptySubmit?: boolean;
-	clearOnSubmit?: boolean;
-	hideSubmit?: boolean;
+	// Blocks sending, from the button and from Enter; typing still works.
+	disabled?: boolean;
+	// A send the host is still handling: blocks sending and spins the button.
+	pending?: boolean;
 	autoFocus?: boolean;
-	onMentionHighlight?: (entry: ComposerMentionEntry | null) => void;
 	/** The clicked pill, and every pending attachment in order. */
 	onAttachmentClick?: (
 		attachment: PromptInputAttachment,
 		attachments: readonly PromptInputAttachment[],
 	) => void;
-	onChipClick?: (chip: ComposerChip) => void;
 	history?: string[];
 	className?: string;
 };

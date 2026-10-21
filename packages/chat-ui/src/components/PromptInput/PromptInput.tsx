@@ -42,7 +42,6 @@ export function PromptInput({
 	dictation,
 	status = "ready",
 	submitWhileStreaming = false,
-	placement = "top",
 	toolbar,
 	toolbarEnd,
 	defaultValue,
@@ -55,12 +54,10 @@ export function PromptInput({
 	header,
 	onAddFiles,
 	allowEmptySubmit = false,
-	clearOnSubmit = true,
-	hideSubmit = false,
+	disabled = false,
+	pending = false,
 	autoFocus = false,
-	onMentionHighlight,
 	onAttachmentClick,
-	onChipClick,
 	history,
 	className,
 }: PromptInputProps) {
@@ -83,7 +80,6 @@ export function PromptInput({
 					dictation={dictation}
 					status={status}
 					submitWhileStreaming={submitWhileStreaming}
-					placement={placement}
 					toolbar={toolbar}
 					toolbarEnd={toolbarEnd}
 					defaultValue={defaultValue}
@@ -96,12 +92,10 @@ export function PromptInput({
 					header={header}
 					onAddFiles={onAddFiles}
 					allowEmptySubmit={allowEmptySubmit}
-					clearOnSubmit={clearOnSubmit}
-					hideSubmit={hideSubmit}
+					disabled={disabled}
+					pending={pending}
 					autoFocus={autoFocus}
-					onMentionHighlight={onMentionHighlight}
 					onAttachmentClick={onAttachmentClick}
-					onChipClick={onChipClick}
 					history={history}
 				/>
 			</LexicalRoot>

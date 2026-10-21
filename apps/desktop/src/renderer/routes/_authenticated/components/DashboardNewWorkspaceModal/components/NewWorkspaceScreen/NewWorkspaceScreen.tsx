@@ -1,5 +1,4 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { PromptInputHandle } from "@superset/chat-ui/PromptInput";
 import {
 	isDropHandled,
 	markDropHandled,
@@ -20,16 +19,10 @@ import { Button } from "@superset/ui/button";
 import { applyAttachmentConstraints } from "@superset/ui/lib/attachment-constraints";
 import { isEnterSubmit } from "@superset/ui/lib/keyboard";
 import { toast } from "@superset/ui/sonner";
-import { Spinner } from "@superset/ui/spinner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { useNavigate } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-	ArrowUpIcon,
-	HistoryIcon,
-	PaperclipIcon,
-	Settings2Icon,
-} from "lucide-react";
+import { HistoryIcon, Settings2Icon } from "lucide-react";
 import {
 	type DragEvent as ReactDragEvent,
 	useCallback,
@@ -168,7 +161,6 @@ export function NewWorkspaceScreen({
 		resetKey,
 	} = useDashboardNewWorkspaceDraft();
 	const attachments = useProviderAttachments();
-	const composerRef = useRef<PromptInputHandle>(null);
 	const addAttachments = useCallback(
 		(files: File[] | FileList) => {
 			const accepted = applyAttachmentConstraints({
@@ -916,9 +908,9 @@ export function NewWorkspaceScreen({
 					<AgentComposer
 						allowEmptySubmit
 						autoFocus
-						clearOnSubmit={false}
 						className="w-full"
 						defaultValue={draft.prompt}
+						disabled={isCreating}
 						header={
 							(draft.linkedPR ||
 								draft.linkedIssues.length > 0 ||
@@ -975,13 +967,15 @@ export function NewWorkspaceScreen({
 								</div>
 							)
 						}
-						hideSubmit
 						key={`${resetKey}-${promptSeed}-${placeholderRoll}`}
 						onAddFiles={addAttachments}
 						onChange={(prompt) => updateDraft({ prompt })}
-						onSubmit={handleSubmit}
+						onSubmit={() => {
+							handleSubmit();
+							return false;
+						}}
+						pending={isCreating}
 						placeholder={promptPlaceholder}
-						ref={composerRef}
 						toolbar={
 							<div className="flex min-w-0 items-center gap-1.5">
 								<AgentSelect<WorkspaceCreateAgent>
@@ -1103,36 +1097,6 @@ export function NewWorkspaceScreen({
 										<LuGitPullRequest className="size-3.5" />
 									</PromptInputButton>
 								</PRLinkCommand>
-								<Tooltip>
-									<TooltipTrigger asChild>
-										<PromptInputButton
-											aria-label={t({
-												message: "Add attachment",
-											})}
-											className={`${PILL_BUTTON_CLASS} w-[22px]`}
-											onClick={() => composerRef.current?.openFileDialog()}
-										>
-											<PaperclipIcon className="size-3.5" />
-										</PromptInputButton>
-									</TooltipTrigger>
-									<TooltipContent side="bottom">
-										<Trans>Add attachment</Trans>
-									</TooltipContent>
-								</Tooltip>
-								<PromptInputButton
-									className="size-[22px] rounded-full border border-transparent bg-foreground/10 shadow-none p-[5px] hover:bg-foreground/20"
-									disabled={needsSetup || isCreating}
-									onClick={(e) => {
-										e.preventDefault();
-										handleSubmit();
-									}}
-								>
-									{isCreating ? (
-										<Spinner className="size-3.5 text-muted-foreground" />
-									) : (
-										<ArrowUpIcon className="size-3.5 text-muted-foreground" />
-									)}
-								</PromptInputButton>
 							</div>
 						}
 					/>

@@ -355,10 +355,7 @@ export const Composer = memo(function Composer({
 			pastedTexts,
 			steer,
 		}: PromptInputSubmitPayload) => {
-			if (
-				blocked ||
-				(text.trim() === "" && files.length === 0 && pastedTexts.length === 0)
-			)
+			if (text.trim() === "" && files.length === 0 && pastedTexts.length === 0)
 				return;
 			const name = LEADING_COMMAND.exec(text.trim())?.[1];
 			const input = promptInputRef.current;
@@ -384,7 +381,7 @@ export const Composer = memo(function Composer({
 			}
 			return send(text, files, mentions, pastedTexts, steer);
 		},
-		[availableCommands, blocked, send, t, target, mcpPicker],
+		[availableCommands, send, t, target, mcpPicker],
 	);
 
 	return (
@@ -395,10 +392,10 @@ export const Composer = memo(function Composer({
 		>
 			<AgentComposer
 				className={CHAT_COLUMN_CLASSNAME}
-				clearOnSubmit={!blocked}
 				collapseLargePastes
 				commands={commands}
 				defaultValue={storedDraft}
+				disabled={blocked}
 				findChips={mcpPicker.findChips}
 				history={history}
 				key={draftKey}
