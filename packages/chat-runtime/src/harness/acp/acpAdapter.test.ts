@@ -2115,6 +2115,35 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
+	it("a v2 permission with null description and subject still asks", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ defaultModeId: "default", clientApprovalModes: true },
+		);
+		await flush();
+		adapter.prompt([{ type: "text", text: "run" }]);
+		await flush();
+
+		agent.requestPermissionWith(
+			{ ...v2Permission, description: null, subject: null },
+			9304,
+		);
+		agent.requestPermissionWith(
+			{ ...v2Permission, subject: { toolCall: { title: null } } },
+			9305,
+		);
+		await flush();
+
+		expect(
+			itemsOf(events).filter((item) => item.kind === "approval_request"),
+		).toHaveLength(2);
+
+		await adapter.dispose();
+	});
+
 	it("a v2 permission is auto-approved in an auto-approving mode", async () => {
 		const agent = new FakeAcpAgent();
 		const { adapter, events } = startAdapter(

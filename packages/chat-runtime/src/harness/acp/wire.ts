@@ -364,11 +364,15 @@ export const acpRequestPermissionParamsSchema = z.looseObject({
 	sessionId: z.string().min(1),
 	toolCall: acpToolCallUpdateSchema.partial({ toolCallId: true }).optional(),
 	title: z.string().nullable().optional(),
-	description: z.string().optional(),
+	description: z.string().nullable().optional(),
 	subject: z
 		.looseObject({
-			toolCall: z.looseObject({ title: z.string().optional() }).optional(),
+			toolCall: z
+				.looseObject({ title: z.string().nullable().optional() })
+				.nullable()
+				.optional(),
 		})
+		.nullable()
 		.optional(),
 	options: z.array(acpPermissionOptionSchema),
 });
