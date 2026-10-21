@@ -99,14 +99,15 @@ export function billingFromCustomer(
 		paymentState,
 		cloudUsage: cloudUsageFromBalances(customer.balances),
 		gatedMachineSizes: gatedMachineSizesFromFlags(customer.flags),
-		environmentLimit: environmentLimitFromBalances(customer.balances),
+		environmentLimit: environmentLimitFromBalances(customer.balances, tier),
 	};
 }
 
 export function environmentLimitFromBalances(
 	balances: AutumnCustomer["balances"],
+	tier: PlanTier,
 ): number | null {
 	const balance = balances[ENVIRONMENTS_FEATURE_ID];
-	if (!balance) return 0;
+	if (!balance) return tier === "free" ? 0 : null;
 	return balance.unlimited ? null : balance.granted;
 }

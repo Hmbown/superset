@@ -84,7 +84,7 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 			paymentState: { kind: "ok" },
 			cloudUsage: null,
 			gatedMachineSizes: [],
-			environmentLimit: 0,
+			environmentLimit: null,
 		});
 	});
 
@@ -163,14 +163,16 @@ describe("environmentLimitFromBalances", () => {
 	const balances = (environments: object) =>
 		({ environments }) as unknown as Balances;
 
-	test("a plan without the feature allows none", () => {
-		expect(environmentLimitFromBalances({} as Balances)).toBe(0);
+	test("a paid plan without the feature has no limit; free allows none", () => {
+		expect(environmentLimitFromBalances({} as Balances, "pro")).toBeNull();
+		expect(environmentLimitFromBalances({} as Balances, "free")).toBe(0);
 	});
 
 	test("the granted amount is the limit, including support grants", () => {
 		expect(
 			environmentLimitFromBalances(
 				balances({ granted: 5, unlimited: false, usage: 0 }),
+				"pro",
 			),
 		).toBe(5);
 	});
@@ -179,6 +181,7 @@ describe("environmentLimitFromBalances", () => {
 		expect(
 			environmentLimitFromBalances(
 				balances({ granted: 0, unlimited: true, usage: 0 }),
+				"enterprise",
 			),
 		).toBeNull();
 	});
