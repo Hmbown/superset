@@ -16,7 +16,6 @@ import {
 import { captureBillingEvent } from "../billing-analytics";
 import { resend } from "../resend";
 import { organizationForStripeCustomer } from "./autumn/customer";
-import { seatItem } from "./autumn/subscription-row";
 import { NOTIFY_SLACK_URL } from "./subscription-events";
 
 const qstash = new Client({ token: env.QSTASH_TOKEN });
@@ -321,16 +320,14 @@ export async function handleStripeBillingEvent(
 			| Partial<Stripe.Subscription>
 			| undefined;
 
-		const previousSeat = previousAttributes?.items?.data?.find(
-			(item) => item.price?.recurring?.usage_type !== "metered",
-		);
-		const previousPriceId = previousSeat?.price?.id;
-		const currentPriceId = seatItem(stripeSubscription)?.price?.id;
+		const previousPriceId = previousAttributes?.items?.data?.[0]?.price?.id;
+		const currentPriceId = stripeSubscription.items.data[0]?.price?.id;
 
 		if (!previousPriceId || previousPriceId === currentPriceId) return;
 
 		const previousInterval =
-			previousSeat?.price?.recurring?.interval === "year"
+			previousAttributes?.items?.data?.[0]?.price?.recurring?.interval ===
+			"year"
 				? "yearly"
 				: "monthly";
 
