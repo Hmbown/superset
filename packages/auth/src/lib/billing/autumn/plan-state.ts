@@ -1,27 +1,26 @@
-import type { MachineSize, PlanTier } from "@superset/shared/billing";
+import { db } from "@superset/db/client";
+import { subscriptions } from "@superset/db/schema";
+import {
+	ACTIVE_SUBSCRIPTION_STATUSES,
+	type MachineSize,
+	type PlanTier,
+} from "@superset/shared/billing";
 import { Redis } from "@upstash/redis";
 import { AutumnError } from "autumn-js";
+import { and, desc, eq, inArray } from "drizzle-orm";
 import { env } from "../../../env";
-import { billingFromCustomer, type OrganizationBilling } from "./billing-state";
+import {
+	billingFromCustomer,
+	billingFromSubscriptionRow,
+	FREE_BILLING,
+	type OrganizationBilling,
+} from "./billing-state";
 import { getAutumnCustomer } from "./customer";
 
 const MEMORY_TTL_MS = 10_000;
 const SHARED_TTL_SECONDS = 60;
 const LAST_KNOWN_TTL_SECONDS = 24 * 60 * 60;
 const AUTUMN_READ_TIMEOUT_MS = 2_000;
-
-const FREE: OrganizationBilling = {
-	tier: "free",
-	status: null,
-	cancelAt: null,
-	periodStart: null,
-	periodEnd: null,
-	billingInterval: null,
-	lapsed: false,
-	paymentState: { kind: "ok" },
-	cloudUsage: null,
-	gatedMachineSizes: [],
-};
 
 const FAIL_OPEN: OrganizationBilling = {
 	tier: "pro",
@@ -62,7 +61,7 @@ async function readShared(key: string): Promise<OrganizationBilling | null> {
 	}
 }
 
-async function fetchBilling(
+async function billingFromAutumn(
 	organizationId: string,
 ): Promise<OrganizationBilling> {
 	try {
@@ -73,9 +72,46 @@ async function fetchBilling(
 			Date.now(),
 		);
 	} catch (error) {
-		if (error instanceof AutumnError && error.statusCode === 404) return FREE;
+		if (error instanceof AutumnError && error.statusCode === 404) {
+			return FREE_BILLING;
+		}
 		throw error;
 	}
+}
+
+async function billingFromStripeProjection(
+	organizationId: string,
+): Promise<OrganizationBilling> {
+	return billingFromSubscriptionRow(
+		await db.query.subscriptions.findFirst({
+			where: and(
+				eq(subscriptions.referenceId, organizationId),
+				inArray(subscriptions.status, [...ACTIVE_SUBSCRIPTION_STATUSES]),
+			),
+			orderBy: desc(subscriptions.createdAt),
+			columns: {
+				plan: true,
+				status: true,
+				cancelAt: true,
+				periodStart: true,
+				periodEnd: true,
+				billingInterval: true,
+			},
+		}),
+	);
+}
+
+async function fetchBilling(
+	organizationId: string,
+): Promise<OrganizationBilling> {
+	const autumn = await billingFromAutumn(organizationId);
+	if (autumn.tier !== "free") return autumn;
+	const projected = await billingFromStripeProjection(organizationId);
+	if (projected.tier === "free") return autumn;
+	console.error(
+		`[billing/plan-state] ${organizationId} pays in Stripe (${projected.tier}) but Autumn reads free; serving the Stripe projection until the import links it`,
+	);
+	return projected;
 }
 
 export async function organizationBilling(

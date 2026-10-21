@@ -331,6 +331,13 @@ async function main() {
 	console.log(
 		`[autumn-import] ${apply ? "imported" : "would import"} ${counts.imported}, ${apply ? "re-imaged" : "would re-image"} ${counts.reimported}, already linked ${counts.alreadyLinked}, skipped ${counts.skipped}, drifted ${counts.drifted}, of ${seen.size} organizations. Flip BILLING_PROVIDER only when skipped and drifted are both 0.`,
 	);
+	const unlinked = apply ? 0 : counts.imported + counts.reimported;
+	if (unlinked + counts.skipped + counts.drifted > 0) {
+		console.error(
+			`[autumn-import] Autumn does not match Stripe for ${unlinked + counts.skipped + counts.drifted} organizations; they read wrong in the app until this is clean.`,
+		);
+		process.exitCode = 1;
+	}
 }
 
 await main();
