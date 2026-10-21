@@ -23,7 +23,7 @@ describe("parseMarketplace", () => {
 			"",
 		);
 		expect(problems).toEqual([]);
-		expect(entries).toEqual([
+		expect(entries.map(({ name, dir }) => ({ name, dir }))).toEqual([
 			{ name: "ours", dir: "plugins/ours" },
 			{ name: "codex", dir: "plugins/codex" },
 		]);
@@ -37,7 +37,7 @@ describe("parseMarketplace", () => {
 			},
 			"tools",
 		);
-		expect(entries).toEqual([{ name: "a", dir: "tools/plugins/a" }]);
+		expect(entries.map((e) => e.dir)).toEqual(["tools/plugins/a"]);
 	});
 
 	test("refuses sources outside the repository", () => {

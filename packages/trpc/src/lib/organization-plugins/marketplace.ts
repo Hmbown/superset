@@ -17,6 +17,8 @@ const MANIFEST_FILES = [
 export interface MarketplaceEntry {
 	name: string;
 	dir: string;
+	/** What the entry says about the plugin, which stands in for a plugin.json the directory does not have. */
+	declared: { name: string; version?: string; description?: string };
 }
 
 export interface MarketplaceProblem {
@@ -67,8 +69,12 @@ export function parseMarketplace(
 	for (const item of catalog.plugins as {
 		name?: unknown;
 		source?: unknown;
+		version?: unknown;
+		description?: unknown;
 	}[]) {
 		const name = typeof item?.name === "string" ? item.name : null;
+		const text = (value: unknown) =>
+			typeof value === "string" && value ? value : undefined;
 		if (!name) {
 			problems.push({ name: "?", reason: "an entry has no name" });
 			continue;
@@ -91,7 +97,15 @@ export function parseMarketplace(
 			});
 			continue;
 		}
-		entries.push({ name, dir });
+		entries.push({
+			name,
+			dir,
+			declared: {
+				name,
+				version: text(item.version),
+				description: text(item.description),
+			},
+		});
 	}
 	return { entries, problems };
 }

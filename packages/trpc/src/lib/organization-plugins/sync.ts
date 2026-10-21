@@ -38,21 +38,25 @@ async function bundleFor(
 	entry: MarketplaceEntry,
 ): Promise<{ bundle: Buffer; skills: ReturnType<typeof skillsIn> }> {
 	const manifestPath = findManifestFile(snapshot.paths, entry.dir);
-	if (!manifestPath) throw new Error("it has no plugin.json");
 	const tree = pluginTreeFiles(snapshot.paths, entry.dir);
-	const contents = await readAll(snapshot, [manifestPath, ...tree.keys()]);
+	const contents = await readAll(snapshot, [
+		...(manifestPath ? [manifestPath] : []),
+		...tree.keys(),
+	]);
 
 	const files = new Map<string, Uint8Array>();
 	for (const [repoPath, bundlePath] of tree) {
 		files.set(bundlePath, contents.get(repoPath) as Buffer);
 	}
-	let manifest: Record<string, unknown>;
-	try {
-		manifest = JSON.parse(
-			(contents.get(manifestPath) as Buffer).toString("utf8"),
-		);
-	} catch {
-		throw new Error(`${manifestPath} is not valid JSON`);
+	let manifest: Record<string, unknown> = { ...entry.declared };
+	if (manifestPath) {
+		try {
+			manifest = JSON.parse(
+				(contents.get(manifestPath) as Buffer).toString("utf8"),
+			);
+		} catch {
+			throw new Error(`${manifestPath} is not valid JSON`);
+		}
 	}
 	if (manifest.name !== entry.name) {
 		throw new Error(
