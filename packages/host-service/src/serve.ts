@@ -179,10 +179,12 @@ async function main(): Promise<void> {
 				store: terminalAgentStore,
 			});
 			startSandboxPullRequestReporter({
-				apiUrl: env.SUPERSET_API_URL,
-				workspaceId: sandboxWorkspaceId,
-				hostSecret: env.HOST_SERVICE_SECRET,
 				read: readLinkedPullRequests,
+				report: (pullRequests) =>
+					api.cloudWorkspace.reportPullRequests.mutate({
+						id: sandboxWorkspaceId,
+						pullRequests,
+					}),
 				onLinked: onPullRequestLinked,
 			});
 		}

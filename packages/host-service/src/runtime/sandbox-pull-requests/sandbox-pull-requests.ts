@@ -13,10 +13,8 @@ const keyOf = (pullRequest: LinkedPullRequest) =>
 	`${pullRequest.repository.toLowerCase()}#${pullRequest.number}`;
 
 export function startSandboxPullRequestReporter(args: {
-	apiUrl: string;
-	workspaceId: string;
-	hostSecret: string;
 	read: () => Promise<LinkedPullRequest[]>;
+	report: (pullRequests: LinkedPullRequest[]) => Promise<{ ignored: string[] }>;
 	onLinked: (listener: () => void) => () => void;
 }): () => void {
 	const sent = new Set<string>();
@@ -26,33 +24,7 @@ export function startSandboxPullRequestReporter(args: {
 	let rerun = false;
 	let stopped = false;
 
-	const sendBatch = async (batch: LinkedPullRequest[]) => {
-		const response = await fetch(
-			`${args.apiUrl}/api/cloud-workspaces/${args.workspaceId}/pull-requests`,
-			{
-				method: "POST",
-				headers: {
-					authorization: `Bearer ${args.hostSecret}`,
-					"content-type": "application/json",
-				},
-				body: JSON.stringify({ pullRequests: batch }),
-				signal: AbortSignal.timeout(10_000),
-			},
-		);
-		if (!response.ok) throw new Error(`answered ${response.status}`);
-		for (const pullRequest of batch) sent.add(keyOf(pullRequest));
-		const { ignored } = (await response.json().catch(() => ({}))) as {
-			ignored?: string[];
-		};
-		if (ignored?.length) {
-			console.warn(
-				"[sandbox-pull-requests] not this workspace's repositories:",
-				ignored.join(", "),
-			);
-		}
-	};
-
-	const report = async () => {
+	const sendUnsent = async () => {
 		timer = null;
 		if (running) {
 			rerun = true;
@@ -62,7 +34,15 @@ export function startSandboxPullRequestReporter(args: {
 		try {
 			const unsent = (await args.read()).filter((pr) => !sent.has(keyOf(pr)));
 			for (let i = 0; i < unsent.length && !stopped; i += BATCH_SIZE) {
-				await sendBatch(unsent.slice(i, i + BATCH_SIZE));
+				const batch = unsent.slice(i, i + BATCH_SIZE);
+				const { ignored } = await args.report(batch);
+				for (const pullRequest of batch) sent.add(keyOf(pullRequest));
+				if (ignored.length > 0) {
+					console.warn(
+						"[sandbox-pull-requests] not this workspace's repositories:",
+						ignored.join(", "),
+					);
+				}
 			}
 			retryMs = MIN_RETRY_MS;
 		} catch (error) {
@@ -83,11 +63,11 @@ export function startSandboxPullRequestReporter(args: {
 
 	const schedule = (wait: number) => {
 		if (stopped || timer) return;
-		timer = setTimeout(() => void report(), wait);
+		timer = setTimeout(() => void sendUnsent(), wait);
 	};
 
 	const unsubscribe = args.onLinked(() => schedule(SETTLE_MS));
-	void report();
+	void sendUnsent();
 	return () => {
 		stopped = true;
 		unsubscribe();

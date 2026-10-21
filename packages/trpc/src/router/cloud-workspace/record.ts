@@ -32,6 +32,10 @@ import { primaryRepository } from "../../lib/sandbox";
 import { jwtProcedure } from "../../trpc";
 import { loadVisibleWorkspace, visibleTo } from "./access";
 import { recordCloudWorkspaceActivity } from "./activity";
+import {
+	recordPullRequests,
+	reportedPullRequestsSchema,
+} from "./pull-requests";
 
 const DESCRIPTION_MAX_LENGTH = 20_000;
 
@@ -649,6 +653,24 @@ export const cloudWorkspaceRecordRouter = {
 			);
 			nudge(row.organizationId, "cloud_workspaces");
 			return { description };
+		}),
+
+	reportPullRequests: jwtProcedure
+		.input(
+			z.object({
+				id: z.string().uuid(),
+				pullRequests: reportedPullRequestsSchema,
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			if (ctx.sandboxCaller && ctx.sandboxCaller.workspaceId !== input.id) {
+				throw new TRPCError({
+					code: "FORBIDDEN",
+					message: "A cloud workspace can only report its own pull requests",
+				});
+			}
+			const row = await loadVisibleWorkspace(ctx, input.id);
+			return recordPullRequests(row, input.pullRequests);
 		}),
 
 	setProject: jwtProcedure

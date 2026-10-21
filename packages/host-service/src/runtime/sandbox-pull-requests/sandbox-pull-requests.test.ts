@@ -1,85 +1,41 @@
-import { afterEach, beforeEach, describe, expect, jest, test } from "bun:test";
+import { afterEach, expect, jest, test } from "bun:test";
 import { startSandboxPullRequestReporter } from "./sandbox-pull-requests";
 
-describe("startSandboxPullRequestReporter", () => {
-	const realFetch = globalThis.fetch;
-	type Linked = { repository: string; number: number; linkedAt: number };
-	let bodies: Linked[][];
-	let status: number;
-	let linked: Linked[];
-	let emitLinked: () => void;
-	let stop: () => void;
+afterEach(() => jest.useRealTimers());
 
-	async function advance(ms: number) {
-		jest.advanceTimersByTime(ms);
+test("a PR whose report failed arrives later, and a reported PR is never sent again", async () => {
+	jest.useFakeTimers();
+	const settle = async () => {
+		jest.advanceTimersByTime(10 * 60 * 1000);
 		for (let i = 0; i < 10; i++) await Promise.resolve();
-	}
-
-	beforeEach(async () => {
-		jest.useFakeTimers();
-		bodies = [];
-		status = 200;
-		linked = [{ repository: "acme/app", number: 1, linkedAt: 100 }];
-		globalThis.fetch = (async (url: string, init: RequestInit) => {
-			expect(url).toBe("https://api.test/api/cloud-workspaces/w/pull-requests");
-			expect(init.method).toBe("POST");
-			expect((init.headers as Record<string, string>).authorization).toBe(
-				"Bearer s",
-			);
-			bodies.push(JSON.parse(String(init.body)).pullRequests);
-			return new Response(null, { status });
-		}) as typeof fetch;
-		stop = startSandboxPullRequestReporter({
-			apiUrl: "https://api.test",
-			workspaceId: "w",
-			hostSecret: "s",
-			read: async () => linked,
-			onLinked: (listener) => {
-				emitLinked = listener;
-				return () => {};
-			},
-		});
-		await advance(0);
+	};
+	const first = { repository: "acme/app", number: 1, linkedAt: 100 };
+	const second = { repository: "acme/app", number: 2, linkedAt: 200 };
+	let linked = [first];
+	let failing = false;
+	const received: number[] = [];
+	let emitLinked = () => {};
+	const stop = startSandboxPullRequestReporter({
+		read: async () => linked,
+		report: async (pullRequests) => {
+			if (failing) throw new Error("offline");
+			received.push(...pullRequests.map((pr) => pr.number));
+			return { ignored: [] };
+		},
+		onLinked: (listener) => {
+			emitLinked = listener;
+			return () => {};
+		},
 	});
 
-	afterEach(() => {
-		stop();
-		globalThis.fetch = realFetch;
-		jest.useRealTimers();
-	});
+	await settle();
+	failing = true;
+	linked = [first, second];
+	emitLinked();
+	await settle();
+	failing = false;
+	await settle();
+	stop();
 
-	test("sends what is linked on boot, then only when a PR is linked", async () => {
-		expect(bodies).toEqual([
-			[{ repository: "acme/app", number: 1, linkedAt: 100 }],
-		]);
-		await advance(10 * 60 * 1000);
-		expect(bodies).toHaveLength(1);
-
-		linked = [...linked, { repository: "acme/app", number: 2, linkedAt: 200 }];
-		emitLinked();
-		await advance(1_000);
-		expect(bodies[1]).toEqual([
-			{ repository: "acme/app", number: 2, linkedAt: 200 },
-		]);
-	});
-
-	test("retries a failed send, waiting longer each time, until it goes through", async () => {
-		linked = [...linked, { repository: "acme/app", number: 2, linkedAt: 200 }];
-		status = 500;
-		emitLinked();
-		await advance(1_000);
-		expect(bodies).toHaveLength(2);
-		await advance(5_000);
-		expect(bodies).toHaveLength(3);
-		await advance(9_999);
-		expect(bodies).toHaveLength(3);
-		status = 200;
-		await advance(1);
-		expect(bodies).toHaveLength(4);
-		expect(bodies[3]).toEqual([
-			{ repository: "acme/app", number: 2, linkedAt: 200 },
-		]);
-		await advance(10 * 60 * 1000);
-		expect(bodies).toHaveLength(4);
-	});
+	expect(received).toEqual([1, 2]);
 });

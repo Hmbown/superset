@@ -92,7 +92,7 @@ moves on from it: new branches, one PR each. Looking PRs up by that branch
 showed a stale or missing PR for every box but the open one, which the host
 fan-out reaches. The box's PR runtime already keeps every PR it has linked
 (`workspace_pull_requests` in host.db), so the box reports each one once to
-`POST /api/cloud-workspaces/:id/pull-requests` (`sandbox-pull-requests` in
+`cloudWorkspace.reportPullRequests` (`sandbox-pull-requests` in
 host-service: everything on boot, then each new link as the runtime records
 it), and the API records it in `cloud_workspace_pull_requests` for the
 repositories the workspace checked out. State still comes from
