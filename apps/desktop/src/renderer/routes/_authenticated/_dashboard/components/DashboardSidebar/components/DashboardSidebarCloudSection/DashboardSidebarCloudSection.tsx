@@ -22,11 +22,7 @@ import {
 import { buildCloudSidebar } from "renderer/routes/_authenticated/_dashboard/utils/buildCloudSidebar";
 import { useHostWorkspaces } from "renderer/routes/_authenticated/providers/HostWorkspacesProvider";
 import { useSidebarSectionsCollapseStore } from "renderer/stores/sidebar-sections-collapse";
-import {
-	type CloudPullRequestRef,
-	cloudPullRequestRefKey,
-	useCloudPullRequests,
-} from "../../../../hooks/useCloudPullRequests";
+import { useCloudPullRequests } from "../../../../hooks/useCloudPullRequests";
 import { DashboardSidebarSectionHeader } from "../DashboardSidebarSectionHeader";
 import { DashboardSidebarCloudGroup } from "./components/DashboardSidebarCloudGroup";
 import { DashboardSidebarCloudHoverCard } from "./components/DashboardSidebarCloudHoverCard";
@@ -187,33 +183,11 @@ export function DashboardSidebarCloudSection({
 	const branchOf = (workspace: { id: string; branch: string }) =>
 		branchById.get(workspace.id) ?? workspace.branch;
 
-	const pullRequestRefs = useMemo<CloudPullRequestRef[]>(
-		() =>
-			shown.flatMap((workspace) => {
-				const repoFullName = repoFullNameById.get(workspace.id);
-				return repoFullName
-					? [
-							{
-								repoFullName,
-								headBranch: branchById.get(workspace.id) ?? workspace.branch,
-							},
-						]
-					: [];
-			}),
-		[shown, repoFullNameById, branchById],
-	);
-	const cloudPullRequests = useCloudPullRequests(pullRequestRefs);
-	const pullRequestOf = (workspace: { id: string; branch: string }) => {
-		const repoFullName = repoFullNameById.get(workspace.id);
-		return repoFullName
-			? (cloudPullRequests.byRef.get(
-					cloudPullRequestRefKey({
-						repoFullName,
-						headBranch: branchOf(workspace),
-					}),
-				) ?? null)
-			: null;
-	};
+	const { byWorkspace: pullRequestsById } = useCloudPullRequests({
+		enabled: shown.length > 0,
+	});
+	const pullRequestOf = (workspace: { id: string }) =>
+		pullRequestsById.get(workspace.id)?.[0] ?? null;
 
 	const hoverCard = useCloudHoverCard();
 	const openUrl = electronTrpc.external.openUrl.useMutation();
@@ -223,9 +197,6 @@ export function DashboardSidebarCloudSection({
 				(workspace) => workspace.id === hoverCard.hoveredWorkspaceId,
 			)
 		: undefined;
-	const hoveredPullRequest = hoveredWorkspace
-		? pullRequestOf(hoveredWorkspace)
-		: null;
 	useEffect(() => {
 		if (hoverCard.hoveredWorkspaceId) {
 			void onWorkspaceHover?.(hoverCard.hoveredWorkspaceId);
@@ -342,7 +313,7 @@ export function DashboardSidebarCloudSection({
 						workspace={hoveredWorkspace}
 						repositories={repositoriesById.get(hoveredWorkspace.id) ?? []}
 						tasks={tasksById.get(hoveredWorkspace.id) ?? []}
-						pullRequests={hoveredPullRequest ? [hoveredPullRequest] : []}
+						pullRequests={pullRequestsById.get(hoveredWorkspace.id) ?? []}
 						now={now}
 						onOpenDetails={() =>
 							navigate({

@@ -46,6 +46,7 @@ import {
 import { recordCloudWorkspaceActivity } from "./activity";
 import { queueSettleWorkspace, settleWorkspaceNow } from "./meter";
 import { nextSandboxNameFor } from "./provision";
+import { listPullRequests } from "./pull-requests";
 import { queueReap } from "./reap";
 import { cloudWorkspaceRecordRouter } from "./record";
 import { cloudWorkspaceSharingRouter } from "./sharing";
@@ -260,6 +261,14 @@ export const cloudWorkspaceRouter = {
 				primary:
 					primaryByWorkspace.get(row.cloudWorkspaceId) === row.repositoryId,
 			}));
+		}),
+
+	pullRequests: jwtProcedure
+		.input(z.object({ organizationId: z.string().uuid() }))
+		.query(async ({ ctx, input }) => {
+			await assertCloudAccess(ctx);
+			assertMember(ctx.organizationIds, input.organizationId);
+			return listPullRequests(input.organizationId, ctx.userId);
 		}),
 
 	machineSizes: jwtProcedure

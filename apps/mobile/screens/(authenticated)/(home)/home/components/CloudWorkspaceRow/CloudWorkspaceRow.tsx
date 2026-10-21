@@ -70,7 +70,7 @@ export function CloudWorkspaceRow({
 	const isMine = owner !== null && owner.userId === viewerId;
 	const [repoOwner, repoName] = repoFullName?.split("/") ?? [];
 	const prStatus = pullRequest
-		? PULL_REQUEST_STATUS[pullRequestStatus({ ...pullRequest, mergedAt: null })]
+		? PULL_REQUEST_STATUS[pullRequestStatus(pullRequest)]
 		: null;
 
 	const body = (

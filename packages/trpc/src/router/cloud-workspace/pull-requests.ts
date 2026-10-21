@@ -2,11 +2,20 @@ import { db } from "@superset/db/client";
 import {
 	cloudWorkspacePullRequests,
 	cloudWorkspaceRepositories,
+	cloudWorkspaces,
+	githubPullRequests,
 	githubRepositories,
 } from "@superset/db/schema";
-import { eq } from "drizzle-orm";
+import { and, desc, eq, ne, sql } from "drizzle-orm";
 import { z } from "zod";
 import { nudge } from "../../lib/realtime";
+import {
+	toChecks,
+	toChecksStatus,
+	toPullRequestState,
+	toReviewDecision,
+} from "../integration/github/pull-request-shape";
+import { visibleTo } from "./access";
 
 export const reportedPullRequestsSchema = z
 	.array(
@@ -65,4 +74,113 @@ export async function recordPullRequests(
 		.returning({ prNumber: cloudWorkspacePullRequests.prNumber });
 	if (inserted.length > 0) nudge(workspace.organizationId, "cloud_workspaces");
 	return { ignored: [...ignored] };
+}
+
+const pullRequestColumns = {
+	cloudWorkspaceId: cloudWorkspaces.id,
+	repoFullName: githubRepositories.fullName,
+	headBranch: githubPullRequests.headBranch,
+	number: githubPullRequests.prNumber,
+	url: githubPullRequests.url,
+	title: githubPullRequests.title,
+	state: githubPullRequests.state,
+	isDraft: githubPullRequests.isDraft,
+	additions: githubPullRequests.additions,
+	deletions: githubPullRequests.deletions,
+	reviewDecision: githubPullRequests.reviewDecision,
+	checksStatus: githubPullRequests.checksStatus,
+	checks: githubPullRequests.checks,
+	mergedAt: githubPullRequests.mergedAt,
+	updatedAt: githubPullRequests.updatedAt,
+};
+
+export async function listPullRequests(organizationId: string, userId: string) {
+	const visibleInOrganization = and(
+		eq(cloudWorkspaces.organizationId, organizationId),
+		visibleTo(userId),
+	);
+	const [linked, onBranch] = await Promise.all([
+		db
+			.select({
+				...pullRequestColumns,
+				linkedAt: cloudWorkspacePullRequests.linkedAt,
+			})
+			.from(cloudWorkspacePullRequests)
+			.innerJoin(
+				cloudWorkspaces,
+				eq(cloudWorkspacePullRequests.cloudWorkspaceId, cloudWorkspaces.id),
+			)
+			.innerJoin(
+				githubRepositories,
+				eq(cloudWorkspacePullRequests.repositoryId, githubRepositories.id),
+			)
+			.innerJoin(
+				githubPullRequests,
+				and(
+					eq(githubPullRequests.repositoryId, githubRepositories.id),
+					eq(githubPullRequests.prNumber, cloudWorkspacePullRequests.prNumber),
+				),
+			)
+			.where(visibleInOrganization),
+		db
+			.select({ ...pullRequestColumns, linkedAt: sql<Date | null>`null` })
+			.from(cloudWorkspaceRepositories)
+			.innerJoin(
+				cloudWorkspaces,
+				eq(cloudWorkspaceRepositories.cloudWorkspaceId, cloudWorkspaces.id),
+			)
+			.innerJoin(
+				githubRepositories,
+				eq(cloudWorkspaceRepositories.repositoryId, githubRepositories.id),
+			)
+			.innerJoin(
+				githubPullRequests,
+				and(
+					eq(githubPullRequests.repositoryId, githubRepositories.id),
+					eq(githubPullRequests.headBranch, cloudWorkspaces.branch),
+					ne(githubPullRequests.headBranch, githubRepositories.defaultBranch),
+				),
+			)
+			.where(visibleInOrganization)
+			.orderBy(desc(githubPullRequests.updatedAt)),
+	]);
+
+	const byKey = new Map<string, (typeof onBranch)[number]>();
+	for (const row of linked) {
+		byKey.set(
+			`${row.cloudWorkspaceId}\n${row.repoFullName}#${row.number}`,
+			row,
+		);
+	}
+	const branchMatchByWorkspaceRepository = new Map<
+		string,
+		(typeof onBranch)[number]
+	>();
+	for (const row of onBranch) {
+		const key = `${row.cloudWorkspaceId}\n${row.repoFullName}`;
+		const existing = branchMatchByWorkspaceRepository.get(key);
+		if (!existing || (existing.state !== "open" && row.state === "open")) {
+			branchMatchByWorkspaceRepository.set(key, row);
+		}
+	}
+	for (const row of branchMatchByWorkspaceRepository.values()) {
+		const key = `${row.cloudWorkspaceId}\n${row.repoFullName}#${row.number}`;
+		if (!byKey.has(key)) byKey.set(key, row);
+	}
+
+	return [...byKey.values()]
+		.map((row) => ({
+			...row,
+			state: toPullRequestState(row.state, row.mergedAt),
+			reviewDecision: toReviewDecision(row.reviewDecision),
+			checksStatus: toChecksStatus(row.checksStatus),
+			checks: toChecks(row.checks),
+		}))
+		.sort(
+			(left, right) =>
+				Number(right.state === "open") - Number(left.state === "open") ||
+				(right.linkedAt?.getTime() ?? Number.POSITIVE_INFINITY) -
+					(left.linkedAt?.getTime() ?? Number.POSITIVE_INFINITY) ||
+				right.updatedAt.getTime() - left.updatedAt.getTime(),
+		);
 }

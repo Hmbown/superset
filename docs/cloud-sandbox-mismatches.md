@@ -99,7 +99,12 @@ repositories the workspace checked out. State still comes from
 `github_pull_requests`. After a successful send, a PR reaches the table at
 most a sweep of the PR runtime (5 minutes) after it is opened; a failed send
 retries with back-off up to 5 minutes more. Reaches a box only through a host-service release.
-**Open:** no client reads the table yet. A repository renamed or transferred
+`cloudWorkspace.pullRequests` is what desktop and mobile list, badge and
+hover-card a cloud workspace with: every linked PR, plus the PR on
+`cloud_workspaces.branch` for a box that has not reported yet, open ones first
+and then the newest link. Inside an open workspace both apps still ask the
+box itself.
+**Open:** a repository renamed or transferred
 after the box linked a PR is reported under its old name; the API answers with
 it in `ignored` and the link is lost.
 
