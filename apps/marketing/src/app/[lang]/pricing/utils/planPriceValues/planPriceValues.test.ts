@@ -102,13 +102,13 @@ describe("planPriceValues", () => {
 		expect(values.byFamily.pro).toMatchObject({ gbHours: null, pack: null });
 		expect(values.byFamily.team).toMatchObject({
 			multiple: null,
-			pack: "$1 per 1,000 GB-minutes",
+			pack: "$0.06 per GB-hour",
 		});
 		expect(values.byFamily.ultra).toMatchObject({
 			multiple: "3.3",
 			baseName: "Team",
 		});
-		expect(values.packPrice).toBe("$1");
+		expect(values.packPrice).toBe("$0.06");
 		expect(featureShown({ needs: "gbHours" }, values.byFamily.pro)).toBe(false);
 		expect(featureShown({ needs: "pack" }, values.byFamily.team)).toBe(true);
 	});

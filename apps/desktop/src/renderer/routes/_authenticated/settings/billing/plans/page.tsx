@@ -5,6 +5,7 @@ import { i18n } from "@superset/i18n";
 import { useFormat } from "@superset/i18n/react";
 import {
 	familyForPlan,
+	gbHourPackPricePerGbHour,
 	offersYearlyDiscount,
 	PLAN_PRICE_CURRENCY,
 	type PlanFamily,
@@ -427,7 +428,7 @@ function PlansPage() {
 			const pack = plan.family.pack;
 			return pack
 				? t({
-						message: `${formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })} per ${formatNumber(pack.gbMinutes)} GB-minutes`,
+						message: `${formatCurrency(gbHourPackPricePerGbHour(pack), PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0, maximumFractionDigits: 2 })} per GB-hour`,
 					})
 				: null;
 		}

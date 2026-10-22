@@ -351,6 +351,10 @@ export function gbHourPackPurchase(
 	return { gbMinutes: units * pack.gbMinutes, price: units * pack.price };
 }
 
+export function gbHourPackPricePerGbHour(pack: GbHourPack): number {
+	return (pack.price * 60) / pack.gbMinutes;
+}
+
 /** The purchasable lineup, one entry per family, ordered for display. */
 export function planCatalogFromAutumn(
 	plans: AutumnCatalogPlan[],

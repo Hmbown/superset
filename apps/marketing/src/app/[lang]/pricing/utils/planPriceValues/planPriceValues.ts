@@ -6,6 +6,7 @@ import {
 	formatNumber,
 } from "@superset/i18n/format";
 import {
+	gbHourPackPricePerGbHour,
 	maxYearlyDiscount,
 	offersYearlyDiscount,
 	PLAN_PRICE_CURRENCY,
@@ -36,7 +37,6 @@ export interface PlanPriceValues {
 	planPrices: string;
 	allowances: string;
 	overagePrice: string | null;
-	packGbMinutes: string | null;
 	packPrice: string | null;
 }
 
@@ -47,7 +47,7 @@ const MONTHLY_PRICE_ITEM = msg({
 	message: "{name}: {monthly} per user/month",
 });
 const ALLOWANCE_ITEM = msg({ message: "{gbHours} on {name}" });
-const PACK_ITEM = msg({ message: "{price} per {gbMinutes} GB-minutes" });
+const PACK_ITEM = msg({ message: "{price} per GB-hour" });
 
 export function planPriceValues(
 	catalog: PlanFamily[],
@@ -92,8 +92,7 @@ export function planPriceValues(
 				? i18n._({
 						...PACK_ITEM,
 						values: {
-							gbMinutes: number(family.pack.gbMinutes, 0),
-							price: currency(family.pack.price),
+							price: currency(gbHourPackPricePerGbHour(family.pack)),
 						},
 					})
 				: null,
@@ -143,8 +142,7 @@ export function planPriceValues(
 			families.find((set) => set.gbHours)?.overage ??
 			families[0]?.overage ??
 			null,
-		packGbMinutes: firstPack ? number(firstPack.gbMinutes, 0) : null,
-		packPrice: firstPack ? currency(firstPack.price) : null,
+		packPrice: firstPack ? currency(gbHourPackPricePerGbHour(firstPack)) : null,
 	};
 }
 
@@ -171,7 +169,6 @@ export function faqValues(values: PlanPriceValues) {
 		planPrices: values.planPrices,
 		allowances: values.allowances,
 		overagePrice: values.overagePrice,
-		packGbMinutes: values.packGbMinutes,
 		packPrice: values.packPrice,
 	};
 }

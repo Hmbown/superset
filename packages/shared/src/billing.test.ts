@@ -5,6 +5,7 @@ import {
 	defaultMachineSize,
 	familyForPlan,
 	fromAutumnRest,
+	gbHourPackPricePerGbHour,
 	gbHourPackPurchase,
 	isCloudUsageRefusal,
 	machineSpec,
@@ -260,6 +261,7 @@ describe("planCatalogFromAutumn", () => {
 			gbMinutes: 25000,
 			price: 25,
 		});
+		expect(gbHourPackPricePerGbHour({ gbMinutes: 1000, price: 1 })).toBe(0.06);
 		expect(gbHourPackPurchase({ gbMinutes: 60000, price: 60 }, 25)).toEqual({
 			gbMinutes: 60000,
 			price: 60,
