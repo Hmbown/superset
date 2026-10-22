@@ -1,8 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import {
 	type AutumnCatalogPlan,
+	catalogPlansFrom,
 	defaultMachineSize,
 	familyForPlan,
+	fromAutumnRest,
 	isCloudUsageRefusal,
 	machineSpec,
 	maxYearlyDiscount,
@@ -163,20 +165,34 @@ describe("isCloudUsageRefusal", () => {
 	});
 });
 
-function autumnPlan(
+function seatLicense(
 	id: string,
 	seatPrice: number,
 	interval: "month" | "year",
+	gbMinutes: number,
+): AutumnCatalogPlan {
+	return {
+		id,
+		name: id,
+		price: { amount: seatPrice, interval },
+		items: [{ featureId: "box_gb_minutes", included: gbMinutes }],
+	};
+}
+
+function parentPlan(
+	id: string,
+	licensePlanId: string,
 	metadata: Record<string, unknown>,
 ): AutumnCatalogPlan {
 	return {
 		id,
 		name: id,
 		metadata,
+		licenses: [{ licensePlanId }],
 		items: [
-			{ featureId: "seats", price: { amount: seatPrice, interval } },
 			{
 				featureId: "box_gb_minutes",
+				included: 0,
 				price: { amount: 1, interval: "month", billingUnits: 1000 },
 			},
 		],
@@ -184,48 +200,53 @@ function autumnPlan(
 }
 
 const lineup = planCatalogFromAutumn([
-	autumnPlan("ultra", 200, "month", {
+	seatLicense("ultra_seat", 200, "month", 240000),
+	seatLicense("ultra_seat_annual", 2400, "year", 240000),
+	seatLicense("pro_seat", 20, "month", 19200),
+	seatLicense("pro_seat_annual", 192, "year", 19200),
+	parentPlan("ultra", "ultra_seat", {
 		self_serve: true,
 		family: "ultra",
 		display_order: 3,
 	}),
-	autumnPlan("ultra_annual", 2400, "year", {
+	parentPlan("ultra_annual", "ultra_seat_annual", {
 		self_serve: true,
 		family: "ultra",
 		display_order: 3,
 	}),
-	autumnPlan("pro_annual", 192, "year", {
+	parentPlan("pro_v2_annual", "pro_seat_annual", {
 		self_serve: true,
 		family: "pro",
 		display_order: 1,
 	}),
-	autumnPlan("pro", 20, "month", {
+	parentPlan("pro_v2", "pro_seat", {
 		self_serve: true,
 		family: "pro",
 		display_order: 1,
-		box_gb_minutes_per_seat: 19200,
 	}),
-	autumnPlan("enterprise", 400, "year", { family: "enterprise" }),
-	autumnPlan("broken", 10, "month", {
-		self_serve: true,
-		family: "broken",
-		box_gb_minutes_per_seat: -5,
-	}),
+	{
+		id: "pro",
+		name: "Pro",
+		metadata: { self_serve: false, family: "pro" },
+		items: [{ featureId: "seats", price: { amount: 20, interval: "month" } }],
+	},
+	parentPlan("enterprise", "pro_seat", { family: "enterprise" }),
+	parentPlan("broken", "missing_seat", { self_serve: true, family: "broken" }),
 ]);
 
 describe("planCatalogFromAutumn", () => {
-	test("groups self-serve plans into families ordered by display_order, reading interval from the seat price", () => {
-		expect(lineup.map((family) => family.family)).toEqual([
-			"pro",
-			"ultra",
-			"broken",
-		]);
+	test("prices each family from its seat license and orders by display_order", () => {
+		expect(lineup.map((family) => family.family)).toEqual(["pro", "ultra"]);
 		const [pro] = lineup;
-		expect(pro?.monthly?.id).toBe("pro");
-		expect(pro?.yearly?.id).toBe("pro_annual");
+		expect(pro?.monthly).toEqual({
+			id: "pro_v2",
+			name: "pro_v2",
+			interval: "month",
+			seatPrice: 20,
+		});
+		expect(pro?.yearly?.id).toBe("pro_v2_annual");
 		expect(pro?.gbMinutesPerSeat).toBe(19200);
 		expect(pro?.overagePerGbHour).toBe(0.06);
-		expect(lineup[2]?.gbMinutesPerSeat).toBeNull();
 	});
 
 	test("a yearly plan without a discount is not offered; checkout stays monthly", () => {
@@ -233,19 +254,67 @@ describe("planCatalogFromAutumn", () => {
 		if (!pro || !ultra) throw new Error("lineup");
 		expect(offersYearlyDiscount(pro)).toBe(true);
 		expect(offersYearlyDiscount(ultra)).toBe(false);
-		expect(planForInterval(pro, true)?.id).toBe("pro_annual");
+		expect(planForInterval(pro, true)?.id).toBe("pro_v2_annual");
 		expect(planForInterval(ultra, true)?.id).toBe("ultra");
 		expect(seatPricePerMonth(pro, true)).toBe(16);
 		expect(seatPricePerMonth(ultra, true)).toBe(200);
 		expect(maxYearlyDiscount(lineup)).toBeCloseTo(0.2);
 	});
 
-	test("finds the family and interval of an Autumn plan id", () => {
-		expect(familyForPlan(lineup, "pro_annual")).toMatchObject({
+	test("an organization on a retired plan of a family shows as that family", () => {
+		expect(familyForPlan(lineup, "pro")).toMatchObject({
 			family: { family: "pro" },
+			interval: "month",
+		});
+		expect(familyForPlan(lineup, "pro_v2_annual")).toMatchObject({
 			interval: "year",
 		});
 		expect(familyForPlan(lineup, "enterprise")).toBeNull();
+	});
+
+	test("the lineup keeps license and retired plans and drops enterprise contracts", () => {
+		const plans = catalogPlansFrom(
+			[
+				parentPlan("team", "team_seat", { self_serve: true, family: "team" }),
+				seatLicense("team_seat", 60, "month", 72000),
+				seatLicense("enterprise_seat", 400, "year", 0),
+				parentPlan("enterprise_acme", "enterprise_seat", {}),
+				{ id: "pro", name: "Pro", items: [] },
+			],
+			["pro"],
+		);
+		expect(plans.map((plan) => plan.id)).toEqual(["team", "team_seat", "pro"]);
+	});
+
+	test("Autumn's REST shape maps onto the catalog", () => {
+		const [team] = planCatalogFromAutumn(
+			[
+				{
+					id: "team_seat",
+					name: "Team seat",
+					price: { amount: 60, interval: "month" },
+					items: [{ feature_id: "box_gb_minutes", included: 72000 }],
+				},
+				{
+					id: "team",
+					name: "Team",
+					metadata: { self_serve: true, family: "team", display_order: 2 },
+					licenses: [{ license_plan_id: "team_seat" }],
+					items: [
+						{
+							feature_id: "box_gb_minutes",
+							included: 0,
+							price: { amount: 1, interval: "month", billing_units: 1000 },
+						},
+					],
+				},
+			].map(fromAutumnRest),
+		);
+		expect(team).toMatchObject({
+			monthly: { id: "team", seatPrice: 60 },
+			gbMinutesPerSeat: 72000,
+			overagePerGbHour: 0.06,
+		});
 	});
 });
 

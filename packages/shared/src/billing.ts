@@ -163,21 +163,67 @@ export const PLAN_METADATA = {
 	selfServe: "self_serve",
 	family: "family",
 	displayOrder: "display_order",
-	gbMinutesPerSeat: "box_gb_minutes_per_seat",
 } as const;
+
+interface CatalogPrice {
+	amount?: number | null;
+	interval?: string | null;
+	billingUnits?: number | null;
+}
 
 export interface AutumnCatalogPlan {
 	id: string;
 	name: string;
 	metadata?: Record<string, unknown> | null;
+	price?: CatalogPrice | null;
+	licenses?: Array<{ licensePlanId: string }> | null;
 	items: Array<{
 		featureId: string;
+		included?: number | null;
+		price?: CatalogPrice | null;
+	}>;
+}
+
+export interface AutumnRestPlan {
+	id: string;
+	name: string;
+	metadata?: Record<string, unknown> | null;
+	price?: { amount?: number | null; interval?: string | null } | null;
+	licenses?: Array<{ license_plan_id: string }> | null;
+	items: Array<{
+		feature_id: string;
+		included?: number | null;
 		price?: {
 			amount?: number | null;
 			interval?: string | null;
-			billingUnits?: number | null;
+			billing_units?: number | null;
 		} | null;
 	}>;
+}
+
+export function fromAutumnRest(plan: AutumnRestPlan): AutumnCatalogPlan {
+	return {
+		id: plan.id,
+		name: plan.name,
+		metadata: plan.metadata,
+		price: plan.price
+			? { amount: plan.price.amount, interval: plan.price.interval }
+			: null,
+		licenses: plan.licenses?.map((license) => ({
+			licensePlanId: license.license_plan_id,
+		})),
+		items: plan.items.map((item) => ({
+			featureId: item.feature_id,
+			included: item.included,
+			price: item.price
+				? {
+						amount: item.price.amount,
+						interval: item.price.interval,
+						billingUnits: item.price.billing_units,
+					}
+				: null,
+		})),
+	};
 }
 
 export type PlanInterval = "month" | "year";
@@ -195,6 +241,7 @@ export interface PlanFamily {
 	displayOrder: number;
 	monthly: CatalogPlan | null;
 	yearly: CatalogPlan | null;
+	legacy: CatalogPlan[];
 	gbMinutesPerSeat: number | null;
 	overagePerGbHour: number | null;
 }
@@ -206,14 +253,48 @@ export function isSelfServeAutumnPlan(plan: AutumnCatalogPlan): boolean {
 	);
 }
 
+/** The seat license plan a parent plan sells, when seats are licenses. */
+export function seatLicensePlan(
+	plan: AutumnCatalogPlan,
+	plans: AutumnCatalogPlan[],
+): AutumnCatalogPlan | null {
+	const licensePlanId = plan.licenses?.[0]?.licensePlanId;
+	return plans.find((candidate) => candidate.id === licensePlanId) ?? null;
+}
+
+/** Self-serve plans plus the license and legacy plans the lineup refers to. */
+export function catalogPlansFrom(
+	plans: AutumnCatalogPlan[],
+	legacyPlanIds: readonly string[],
+): AutumnCatalogPlan[] {
+	const selfServe = plans.filter(isSelfServeAutumnPlan);
+	const licenseIds = new Set(
+		selfServe.flatMap(
+			(plan) => plan.licenses?.map((license) => license.licensePlanId) ?? [],
+		),
+	);
+	return plans.filter(
+		(plan) =>
+			isSelfServeAutumnPlan(plan) ||
+			licenseIds.has(plan.id) ||
+			legacyPlanIds.includes(plan.id),
+	);
+}
+
 function positiveNumber(value: unknown): number | null {
 	return typeof value === "number" && Number.isFinite(value) && value > 0
 		? value
 		: null;
 }
 
-function catalogPlan(plan: AutumnCatalogPlan): CatalogPlan | null {
-	const price = plan.items.find((item) => item.featureId === "seats")?.price;
+function catalogPlan(
+	plan: AutumnCatalogPlan,
+	plans: AutumnCatalogPlan[],
+): CatalogPlan | null {
+	const license = seatLicensePlan(plan, plans);
+	const price = license
+		? license.price
+		: plan.items.find((item) => item.featureId === "seats")?.price;
 	const interval = price?.interval;
 	if (price?.amount == null || (interval !== "month" && interval !== "year")) {
 		return null;
@@ -221,9 +302,20 @@ function catalogPlan(plan: AutumnCatalogPlan): CatalogPlan | null {
 	return { id: plan.id, name: plan.name, interval, seatPrice: price.amount };
 }
 
+function gbMinutesPerSeat(
+	plan: AutumnCatalogPlan,
+	plans: AutumnCatalogPlan[],
+): number | null {
+	return positiveNumber(
+		seatLicensePlan(plan, plans)?.items.find(
+			(item) => item.featureId === "box_gb_minutes",
+		)?.included,
+	);
+}
+
 function overagePerGbHour(plan: AutumnCatalogPlan): number | null {
 	const price = plan.items.find(
-		(item) => item.featureId === "box_gb_minutes",
+		(item) => item.featureId === "box_gb_minutes" && item.price,
 	)?.price;
 	if (price?.amount == null) return null;
 	return (price.amount * 60) / (price.billingUnits ?? 1);
@@ -235,7 +327,7 @@ export function planCatalogFromAutumn(
 ): PlanFamily[] {
 	const families = new Map<string, PlanFamily>();
 	for (const plan of plans.filter(isSelfServeAutumnPlan)) {
-		const priced = catalogPlan(plan);
+		const priced = catalogPlan(plan, plans);
 		if (!priced) continue;
 		const key = plan.metadata?.[PLAN_METADATA.family] as string;
 		const family = families.get(key) ?? {
@@ -244,6 +336,7 @@ export function planCatalogFromAutumn(
 			displayOrder: Number.POSITIVE_INFINITY,
 			monthly: null,
 			yearly: null,
+			legacy: [],
 			gbMinutesPerSeat: null,
 			overagePerGbHour: null,
 		};
@@ -258,11 +351,17 @@ export function planCatalogFromAutumn(
 			positiveNumber(plan.metadata?.[PLAN_METADATA.displayOrder]) ??
 				Number.POSITIVE_INFINITY,
 		);
-		family.gbMinutesPerSeat ??= positiveNumber(
-			plan.metadata?.[PLAN_METADATA.gbMinutesPerSeat],
-		);
+		family.gbMinutesPerSeat ??= gbMinutesPerSeat(plan, plans);
 		family.overagePerGbHour ??= overagePerGbHour(plan);
 		families.set(key, family);
+	}
+	for (const plan of plans) {
+		if (isSelfServeAutumnPlan(plan)) continue;
+		const family = families.get(
+			plan.metadata?.[PLAN_METADATA.family] as string,
+		);
+		const priced = family && catalogPlan(plan, plans);
+		if (priced) family.legacy.push(priced);
 	}
 	return [...families.values()].sort(
 		(a, b) =>
@@ -303,6 +402,8 @@ export function familyForPlan(
 			return { family, interval: "month" };
 		}
 		if (family.yearly?.id === autumnPlanId) return { family, interval: "year" };
+		const legacy = family.legacy.find((plan) => plan.id === autumnPlanId);
+		if (legacy) return { family, interval: legacy.interval };
 	}
 	return null;
 }

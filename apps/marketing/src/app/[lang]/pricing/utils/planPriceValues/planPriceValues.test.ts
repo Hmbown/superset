@@ -11,19 +11,32 @@ function plan(
 	seatPrice: number,
 	interval: "month" | "year",
 	metadata: Record<string, unknown>,
-): AutumnCatalogPlan {
-	return {
-		id,
-		name: id === "team" ? "Team" : id === "ultra" ? "Ultra" : "Pro",
-		metadata,
-		items: [
-			{ featureId: "seats", price: { amount: seatPrice, interval } },
-			{
-				featureId: "box_gb_minutes",
-				price: { amount: 1, interval: "month", billingUnits: 1000 },
-			},
-		],
-	};
+	gbMinutesPerSeat = 0,
+): AutumnCatalogPlan[] {
+	return [
+		{
+			id: `${id}_seat`,
+			name: `${id} seat`,
+			price: { amount: seatPrice, interval },
+			items: [{ featureId: "box_gb_minutes", included: gbMinutesPerSeat }],
+		},
+		{
+			id,
+			name: id.startsWith("team")
+				? "Team"
+				: id.startsWith("ultra")
+					? "Ultra"
+					: "Pro",
+			metadata,
+			licenses: [{ licensePlanId: `${id}_seat` }],
+			items: [
+				{
+					featureId: "box_gb_minutes",
+					price: { amount: 1, interval: "month", billingUnits: 1000 },
+				},
+			],
+		},
+	];
 }
 
 const pro = { self_serve: true, family: "pro", display_order: 1 };
@@ -33,15 +46,12 @@ const ultra = { self_serve: true, family: "ultra", display_order: 3 };
 describe("planPriceValues", () => {
 	test("formats each family's prices, GB-hours and multiple of the base plan", () => {
 		const catalog = planCatalogFromAutumn([
-			plan("pro", 20, "month", { ...pro, box_gb_minutes_per_seat: 19200 }),
-			plan("pro_annual", 192, "year", pro),
-			plan("team", 60, "month", { ...team, box_gb_minutes_per_seat: 72000 }),
-			plan("team_annual", 648, "year", team),
-			plan("ultra", 200, "month", {
-				...ultra,
-				box_gb_minutes_per_seat: 240000,
-			}),
-			plan("ultra_annual", 2400, "year", ultra),
+			...plan("pro", 20, "month", pro, 19200),
+			...plan("pro_annual", 192, "year", pro, 19200),
+			...plan("team", 60, "month", team, 72000),
+			...plan("team_annual", 648, "year", team, 72000),
+			...plan("ultra", 200, "month", ultra, 240000),
+			...plan("ultra_annual", 2400, "year", ultra, 240000),
 		]);
 		const values = planPriceValues(catalog, setupI18n({ locale: "en" }));
 		expect(values.byFamily.team).toMatchObject({

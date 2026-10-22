@@ -1,11 +1,12 @@
 import {
+	type AutumnRestPlan,
+	fromAutumnRest,
 	type PlanFamily,
 	planCatalogFromAutumn,
 } from "@superset/shared/billing";
 import { Redis } from "@upstash/redis";
 import { cacheLife } from "next/cache";
 import { env } from "@/env";
-import { type AutumnRestPlan, fromAutumnRest } from "../autumnRestPlan";
 
 const AUTUMN_PLANS_URL = "https://api.useautumn.com/v1/plans.list";
 const AUTUMN_API_VERSION = "2.4.0";

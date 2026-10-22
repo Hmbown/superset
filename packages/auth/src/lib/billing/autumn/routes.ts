@@ -1,6 +1,5 @@
 import { db } from "@superset/db/client";
 import { members, subscriptions } from "@superset/db/schema";
-import { isSelfServeAutumnPlan } from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 import { AutumnError } from "autumn-js";
 import type { BetterAuthPlugin } from "better-auth";
@@ -15,12 +14,11 @@ import { z } from "zod";
 import { autumnClient, billingUsesAutumn } from "../../../autumn";
 import { countBillableSeats } from "../../../utils/billing";
 import { LEGACY_CLIENT_PLAN_IDS } from "../legacy/plan-ids";
-import { isSelfServePlan, selfServeAutumnPlans } from "./catalog";
+import { catalogAutumnPlans, isSelfServePlan } from "./catalog";
 import { ensureAutumnCustomer, paidAutumnPlanId } from "./customer";
 import {
 	ACTIVE_CPU_MINUTES_FEATURE_ID,
 	BOX_GB_MINUTES_FEATURE_ID,
-	SEATS_FEATURE_ID,
 } from "./features";
 import { invalidateOrganizationBilling } from "./plan-state";
 import { syncOrganizationSubscription } from "./projection";
@@ -31,10 +29,7 @@ import {
 	OWNER_EXPAND,
 	ROUTE_ROLES,
 } from "./routes-policy";
-import {
-	assertAllowancePreview,
-	checkoutSeatAllowanceUpdate,
-} from "./seat-allowance";
+import { seatPurchase } from "./seats";
 
 interface SessionContext {
 	context: {
@@ -165,30 +160,20 @@ export const autumnBillingRoutes = {
 					1,
 					await countBillableSeats(caller.organizationId),
 				);
-				const plan = await autumnClient.plans.get({ planId: ctx.body.planId });
-				const allowance = checkoutSeatAllowanceUpdate(plan, seats);
-				const params = {
+				const purchase = await seatPurchase(ctx.body.planId, seats);
+				const result = await autumnClient.billing.attach({
 					customerId: caller.organizationId,
 					planId: ctx.body.planId,
-					featureQuantities: [{ featureId: SEATS_FEATURE_ID, quantity: seats }],
-					...allowance,
+					...purchase.quantities,
 					successUrl: ctx.body.successUrl,
-					redirectMode: "always" as const,
+					redirectMode: "always",
 					checkoutSessionParams: checkoutSessionParams({
-						yearly:
-							plan.items.find((item) => item.featureId === SEATS_FEATURE_ID)
-								?.price?.interval === "year",
+						yearly: purchase.yearly,
 						organizationId: caller.organizationId,
 						userId: caller.userId,
 						cancelUrl: ctx.body.cancelUrl,
 					}),
-				};
-				if (allowance) {
-					assertAllowancePreview(
-						await autumnClient.billing.previewAttach(params),
-					);
-				}
-				const result = await autumnClient.billing.attach(params);
+				});
 				if (!result.paymentUrl) await afterPlanChange(caller.organizationId);
 				return ctx.json(result);
 			},
@@ -207,15 +192,12 @@ export const autumnBillingRoutes = {
 					1,
 					await countBillableSeats(caller.organizationId),
 				);
-				const plan = await autumnClient.plans.get({ planId: ctx.body.planId });
+				const { quantities } = await seatPurchase(ctx.body.planId, seats);
 				return ctx.json(
 					await autumnClient.billing.previewAttach({
 						customerId: caller.organizationId,
 						planId: ctx.body.planId,
-						featureQuantities: [
-							{ featureId: SEATS_FEATURE_ID, quantity: seats },
-						],
-						...checkoutSeatAllowanceUpdate(plan, seats),
+						...quantities,
 					}),
 				);
 			},
@@ -312,21 +294,8 @@ export const autumnBillingRoutes = {
 				use: [sessionMiddleware],
 			},
 			async (ctx) => {
-				const caller = await billingCaller(ctx, "listPlans");
-				const plans = await autumnClient.plans
-					.list({ customerId: caller.organizationId })
-					.then((result) => ({
-						...result,
-						list: result.list.filter(isSelfServeAutumnPlan),
-					}))
-					.catch(async (error: unknown) => {
-						console.error(
-							"[billing/routes] listPlans fell back to the catalog",
-							error,
-						);
-						return { list: await selfServeAutumnPlans() };
-					});
-				return ctx.json(plans);
+				await billingCaller(ctx, "listPlans");
+				return ctx.json({ list: await catalogAutumnPlans() });
 			},
 		),
 		autumnAggregateEvents: createAuthEndpoint(

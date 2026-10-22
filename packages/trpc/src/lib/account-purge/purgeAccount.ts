@@ -84,15 +84,7 @@ export async function purgeAccount(userId: string): Promise<void> {
 					eq(subscriptions.status, "active"),
 				),
 			});
-			if (
-				billingUsesAutumn &&
-				subscription?.stripeSubscriptionId &&
-				subscription.plan === "enterprise"
-			) {
-				await setAutumnSeats(membership.organizationId, remainingSeats, {
-					allowanceOnly: true,
-				});
-			}
+
 			if (
 				subscription?.stripeSubscriptionId &&
 				subscription.plan !== "enterprise"

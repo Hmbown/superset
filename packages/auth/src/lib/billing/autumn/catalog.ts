@@ -1,28 +1,45 @@
-import { isSelfServeAutumnPlan } from "@superset/shared/billing";
-import { autumnClient } from "../../../autumn";
+import {
+	type AutumnCatalogPlan,
+	type AutumnRestPlan,
+	catalogPlansFrom,
+	fromAutumnRest,
+	isSelfServeAutumnPlan,
+	seatLicensePlan,
+} from "@superset/shared/billing";
+import { autumnRest } from "../../../autumn";
+import { LEGACY_CLIENT_PLAN_IDS } from "../legacy/plan-ids";
 import { billingRedis } from "./redis";
-
-type AutumnPlans = Awaited<ReturnType<typeof autumnClient.plans.list>>["list"];
 
 const MEMORY_TTL_MS = 60_000;
 const SHARED_TTL_SECONDS = 5 * 60;
 const LAST_KNOWN_TTL_SECONDS = 30 * 24 * 60 * 60;
-const SHARED_KEY = "billing:catalog";
-const LAST_KNOWN_KEY = "billing:catalog:last";
+const SHARED_KEY = "billing:catalog:v2";
+const LAST_KNOWN_KEY = "billing:catalog:v2:last";
 
-let memory: { plans: AutumnPlans; expiresAt: number } | null = null;
+let memory: { plans: AutumnCatalogPlan[]; expiresAt: number } | null = null;
 
-async function readShared(key: string): Promise<AutumnPlans | null> {
+async function readShared(key: string): Promise<AutumnCatalogPlan[] | null> {
 	try {
-		return await billingRedis.get<AutumnPlans>(key);
+		return await billingRedis.get<AutumnCatalogPlan[]>(key);
 	} catch (error) {
 		console.error("[billing/catalog] cache read failed", error);
 		return null;
 	}
 }
 
-/** The self-serve Autumn plans, served from the last good copy when Autumn fails. */
-export async function selfServeAutumnPlans(): Promise<AutumnPlans> {
+async function fetchAutumnPlans(): Promise<AutumnCatalogPlan[]> {
+	const { list } = await autumnRest<{ list: AutumnRestPlan[] }>(
+		"plans.list",
+		{},
+	);
+	return catalogPlansFrom(list.map(fromAutumnRest), LEGACY_CLIENT_PLAN_IDS);
+}
+
+/**
+ * The self-serve plans with their seat licenses and the retired plans
+ * organizations still hold, served from the last good copy when Autumn fails.
+ */
+export async function catalogAutumnPlans(): Promise<AutumnCatalogPlan[]> {
 	if (memory && memory.expiresAt > Date.now()) return memory.plans;
 	const shared = await readShared(SHARED_KEY);
 	if (shared) {
@@ -30,8 +47,7 @@ export async function selfServeAutumnPlans(): Promise<AutumnPlans> {
 		return shared;
 	}
 	try {
-		const { list } = await autumnClient.plans.list({});
-		const plans = list.filter(isSelfServeAutumnPlan);
+		const plans = await fetchAutumnPlans();
 		memory = { plans, expiresAt: Date.now() + MEMORY_TTL_MS };
 		await billingRedis
 			.pipeline()
@@ -54,5 +70,16 @@ export async function selfServeAutumnPlans(): Promise<AutumnPlans> {
 }
 
 export async function isSelfServePlan(planId: string): Promise<boolean> {
-	return (await selfServeAutumnPlans()).some((plan) => plan.id === planId);
+	return (await catalogAutumnPlans()).some(
+		(plan) => plan.id === planId && isSelfServeAutumnPlan(plan),
+	);
+}
+
+/** The seat license a plan sells, or null when its seats are a feature quantity. */
+export async function seatLicenseFor(
+	planId: string,
+): Promise<AutumnCatalogPlan | null> {
+	const plans = await catalogAutumnPlans();
+	const plan = plans.find((candidate) => candidate.id === planId);
+	return plan ? seatLicensePlan(plan, plans) : null;
 }

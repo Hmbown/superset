@@ -45,6 +45,16 @@ function iso(ms: number | null | undefined): string | null {
 	return ms ? new Date(ms).toISOString() : null;
 }
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+function intervalFromPeriod(
+	start: number | null | undefined,
+	end: number | null | undefined,
+): "month" | "year" | null {
+	if (!start || !end) return null;
+	return end - start > 100 * DAY_MS ? "year" : "month";
+}
+
 export function billingFromCustomer(
 	customer: Pick<
 		AutumnCustomer,
@@ -98,7 +108,7 @@ export function billingFromCustomer(
 			paid?.plan?.price?.interval ??
 			paid?.plan?.items.find((item) => item.featureId === SEATS_FEATURE_ID)
 				?.price?.interval ??
-			null,
+			intervalFromPeriod(paid?.currentPeriodStart, paid?.currentPeriodEnd),
 		lapsed,
 		paymentState,
 		cloudUsage: cloudUsageFromBalances(customer.balances),
