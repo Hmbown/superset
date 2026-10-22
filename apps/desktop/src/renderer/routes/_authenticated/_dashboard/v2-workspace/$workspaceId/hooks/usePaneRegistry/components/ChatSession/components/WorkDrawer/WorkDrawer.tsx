@@ -111,10 +111,12 @@ export function WorkDrawer({
 	const now = useNow(1000, running.length > 0, readNow).getTime();
 	const paneThird = usePaneThird(paneRef);
 
+	const showQueuedHeader = prompts.length > 1;
 	const entries = new Map<string, Entry>();
 	if (prompts.length > 0) {
-		entries.set("header:queued", { kind: "header", section: "queued" });
-		if (!collapsed.queued)
+		if (showQueuedHeader)
+			entries.set("header:queued", { kind: "header", section: "queued" });
+		if (!showQueuedHeader || !collapsed.queued)
 			for (const prompt of prompts)
 				entries.set(`queued:${prompt.id}`, { kind: "queued", prompt });
 	}
@@ -349,6 +351,7 @@ export function WorkDrawer({
 									)
 								}
 								expanded={!collapsed.queued}
+								showHeader={showQueuedHeader}
 								onToggle={() => toggle("queued")}
 								count={queuedCount}
 								title={t({ message: "Queued" })}

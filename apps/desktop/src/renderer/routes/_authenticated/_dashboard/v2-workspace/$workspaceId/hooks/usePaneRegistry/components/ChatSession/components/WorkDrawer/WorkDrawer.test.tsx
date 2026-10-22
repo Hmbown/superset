@@ -125,14 +125,22 @@ const stops = (view: ReturnType<typeof render>) => [
 
 test("queued and running share one drawer", () => {
 	const { view } = renderDrawer({
-		queue: queueOf([prompt("q1", "What is the status?")]),
+		queue: queueOf([
+			prompt("q1", "What is the status?"),
+			prompt("q2", "And the next step?"),
+		]),
 		tasks: [exploreTask, shell("task-1", "bun dev")],
 	});
 	const drawers = view.container.querySelectorAll("[data-work-drawer]");
 	expect(drawers).toHaveLength(1);
-	expect(view.getByRole("button", { name: /^Queued 1/ })).toBeTruthy();
+	expect(view.getByRole("button", { name: /^Queued 2/ })).toBeTruthy();
 	expect(view.getByRole("button", { name: /^Running 2/ })).toBeTruthy();
-	expect(rowNames(view)).toEqual(["What is the status?", "Explore", "bun dev"]);
+	expect(rowNames(view)).toEqual([
+		"What is the status?",
+		"And the next step?",
+		"Explore",
+		"bun dev",
+	]);
 });
 
 test("an empty section is omitted and an empty drawer is hidden", () => {
@@ -140,6 +148,10 @@ test("an empty section is omitted and an empty drawer is hidden", () => {
 	expect(onlyRunning.view.queryByRole("button", { name: /Queued/ })).toBeNull();
 	cleanup();
 	const onlyQueued = renderDrawer({ queue: queueOf([prompt("q1", "next")]) });
+	expect(
+		onlyQueued.view.queryByRole("button", { name: /^Queued \d/ }),
+	).toBeNull();
+	expect(rowNames(onlyQueued.view)).toEqual(["next"]);
 	expect(onlyQueued.view.queryByRole("button", { name: /Running/ })).toBeNull();
 	cleanup();
 	const idle = renderDrawer({
@@ -242,16 +254,16 @@ test("the drawer caps its height and scrolls", () => {
 
 test("a section collapses", () => {
 	const { view } = renderDrawer({
-		queue: queueOf([prompt("q1", "next")]),
+		queue: queueOf([prompt("q1", "next"), prompt("q2", "after")]),
 		tasks: [shell("task-1", "bun dev")],
 	});
-	const header = view.getByRole("button", { name: /^Queued 1/ });
+	const header = view.getByRole("button", { name: /^Queued 2/ });
 	expect(header.getAttribute("aria-expanded")).toBe("true");
 	fireEvent.click(header);
 	expect(header.getAttribute("aria-expanded")).toBe("false");
 	expect(rowNames(view)).toEqual(["bun dev"]);
 	fireEvent.click(header);
-	expect(rowNames(view)).toEqual(["next", "bun dev"]);
+	expect(rowNames(view)).toEqual(["next", "after", "bun dev"]);
 });
 
 test("a collapsed running section summarizes its rows", () => {
