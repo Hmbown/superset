@@ -158,6 +158,13 @@ export function BillingOverview({ visibleItems }: BillingOverviewProps) {
 								onRestore={handleRestore}
 								isRestoring={isRestoring}
 								cancelAt={activePlan?.cancelAt}
+								nextPlanName={
+									activePlan?.scheduledPlanId
+										? (familyForPlan(catalog, activePlan.scheduledPlanId)
+												?.family.name ?? null)
+										: null
+								}
+								switchAt={activePlan?.scheduledAt}
 								periodEnd={activePlan?.periodEnd}
 								status={activePlan?.status}
 							/>

@@ -33,6 +33,8 @@ export interface OrganizationBilling {
 	autumnPlanId: string | null;
 	status: "active" | "trialing" | "past_due" | null;
 	cancelAt: string | null;
+	scheduledPlanId: string | null;
+	scheduledAt: string | null;
 	periodStart: string | null;
 	periodEnd: string | null;
 	billingInterval: string | null;
@@ -78,9 +80,8 @@ export function billingFromCustomer(
 					subscription.status !== "scheduled",
 			)
 		: undefined;
-	const continues = customer.subscriptions.some(
-		(subscription) =>
-			subscription.planId === paidPlanId && subscription.status === "scheduled",
+	const next = customer.subscriptions.find(
+		(subscription) => subscription.status === "scheduled",
 	);
 	const unpaidInvoice = (customer.invoices ?? [])
 		.filter((invoice) => UNPAID_INVOICE.has(invoice.status))
@@ -114,7 +115,10 @@ export function billingFromCustomer(
 		tier,
 		autumnPlanId: paidPlanId,
 		status,
-		cancelAt: continues ? null : iso(paid?.expiresAt),
+		cancelAt: next ? null : iso(paid?.expiresAt),
+		scheduledPlanId: next && next.planId !== paidPlanId ? next.planId : null,
+		scheduledAt:
+			next && next.planId !== paidPlanId ? iso(next.startedAt) : null,
 		periodStart: iso(paid?.currentPeriodStart),
 		periodEnd: iso(
 			seatRenewal({

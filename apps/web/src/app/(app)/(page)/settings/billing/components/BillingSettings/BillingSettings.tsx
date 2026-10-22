@@ -104,6 +104,11 @@ export function BillingSettings({
 		enabled: usesAutumn,
 	});
 	const catalog = catalogQuery.data ?? [];
+	const scheduledAt = activePlan?.scheduledAt;
+	const nextPlanName = activePlan?.scheduledPlanId
+		? (familyForPlan(catalog, activePlan.scheduledPlanId)?.family.name ?? null)
+		: null;
+	const isSwitching = Boolean(nextPlanName && scheduledAt);
 	const currentFamily =
 		plan === "pro"
 			? (familyForPlan(catalog, activePlan?.autumnPlanId)?.family ?? null)
@@ -166,13 +171,17 @@ export function BillingSettings({
 	const planHint =
 		plan === "enterprise"
 			? t({ message: "Managed by your organization admin." })
-			: cancelAt
+			: isSwitching && scheduledAt
 				? t({
-						message: `Cancels ${formatDate(cancelAt)} — downgrades to Free at the end of the billing period.`,
+						message: `Switches to ${nextPlanName} on ${formatDate(scheduledAt)}.`,
 					})
-				: plan === "pro" && periodEnd
-					? t({ message: `Renews ${formatDate(periodEnd)}.` })
-					: null;
+				: cancelAt
+					? t({
+							message: `Cancels ${formatDate(cancelAt)} — downgrades to Free at the end of the billing period.`,
+						})
+					: plan === "pro" && periodEnd
+						? t({ message: `Renews ${formatDate(periodEnd)}.` })
+						: null;
 	const seatHint =
 		plan === "pro" && !cancelAt && !isPaymentFailing && periodEnd
 			? t({
@@ -228,7 +237,7 @@ export function BillingSettings({
 				</div>
 				{plan === "pro" && isOwner && (
 					<div className="shrink-0">
-						{cancelAt ? (
+						{cancelAt || isSwitching ? (
 							<Button
 								variant="outline"
 								size="sm"
@@ -237,6 +246,8 @@ export function BillingSettings({
 							>
 								{isRestoring ? (
 									<Trans>Restoring...</Trans>
+								) : isSwitching ? (
+									<Trans>Keep {planLabel}</Trans>
 								) : (
 									<Trans>Restore plan</Trans>
 								)}

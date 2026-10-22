@@ -17,6 +17,8 @@ const FREE: OrganizationBilling = {
 	autumnPlanId: null,
 	status: null,
 	cancelAt: null,
+	scheduledPlanId: null,
+	scheduledAt: null,
 	periodStart: null,
 	periodEnd: null,
 	billingInterval: null,
@@ -33,6 +35,8 @@ const FAIL_OPEN: OrganizationBilling = {
 	autumnPlanId: null,
 	status: "active",
 	cancelAt: null,
+	scheduledPlanId: null,
+	scheduledAt: null,
 	periodStart: null,
 	periodEnd: null,
 	billingInterval: null,
@@ -64,6 +68,8 @@ async function readShared(key: string): Promise<OrganizationBilling | null> {
 		return {
 			...value,
 			planTier: value.planTier ?? value.tier,
+			scheduledPlanId: value.scheduledPlanId ?? null,
+			scheduledAt: value.scheduledAt ?? null,
 			environmentLimit:
 				value.environmentLimit !== undefined
 					? value.environmentLimit

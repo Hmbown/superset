@@ -9395,6 +9395,12 @@ msgstr "剛剛"
 msgid "Kbd"
 msgstr "Kbd"
 
+msgid "Keep {planLabel}"
+msgstr "保留 {planLabel}"
+
+msgid "Keep {planName}"
+msgstr "保留 {planName}"
+
 msgid "Keep docs fresh"
 msgstr "讓文件保持最新"
 
@@ -17021,6 +17027,11 @@ msgstr "切換到工作區8"
 
 msgid "Switch to Workspace 9"
 msgstr "切換到工作區9"
+
+#. placeholder {0}: format(new Date(switchAt), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(scheduledAt)
+msgid "Switches to {nextPlanName} on {0}."
+msgstr "將於 {0} 切換至 {nextPlanName}。"
 
 msgid "Symbol, light"
 msgstr "圖形標誌，淺色"

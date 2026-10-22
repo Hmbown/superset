@@ -74,6 +74,8 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 			autumnPlanId: "pro",
 			status: "active",
 			cancelAt: null,
+			scheduledPlanId: null,
+			scheduledAt: null,
 			periodStart: new Date(NOW - 10 * DAY).toISOString(),
 			periodEnd: new Date(NOW + 20 * DAY).toISOString(),
 			billingInterval: "month",
@@ -117,6 +119,26 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 		expect(billingFromCustomer(source, NOW).cancelAt).toBe(
 			new Date(NOW + 20 * DAY).toISOString(),
 		);
+	});
+
+	test("a downgrade scheduled for renewal names the next plan instead of a cancellation", () => {
+		const source = customer({
+			flags: pro,
+			subscription: { planId: "pro", expiresAt: NOW + 20 * DAY },
+		});
+		const active = source.subscriptions[0];
+		if (!active) throw new Error("Missing fixture subscription");
+		source.subscriptions.push({
+			...active,
+			planId: "pro_v2",
+			status: "scheduled",
+			expiresAt: null,
+			startedAt: NOW + 20 * DAY,
+		} as never);
+		const billing = billingFromCustomer(source, NOW);
+		expect(billing.cancelAt).toBeNull();
+		expect(billing.scheduledPlanId).toBe("pro_v2");
+		expect(billing.scheduledAt).toBe(new Date(NOW + 20 * DAY).toISOString());
 	});
 
 	test("the plan tier is the plan's family, else the entitlement tier", () => {

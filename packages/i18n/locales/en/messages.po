@@ -9395,6 +9395,12 @@ msgstr "just now"
 msgid "Kbd"
 msgstr "Kbd"
 
+msgid "Keep {planLabel}"
+msgstr "Keep {planLabel}"
+
+msgid "Keep {planName}"
+msgstr "Keep {planName}"
+
 msgid "Keep docs fresh"
 msgstr "Keep docs fresh"
 
@@ -17021,6 +17027,11 @@ msgstr "Switch to Workspace 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Switch to Workspace 9"
+
+#. placeholder {0}: format(new Date(switchAt), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(scheduledAt)
+msgid "Switches to {nextPlanName} on {0}."
+msgstr "Switches to {nextPlanName} on {0}."
 
 msgid "Symbol, light"
 msgstr "Symbol, light"

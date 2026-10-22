@@ -9395,6 +9395,12 @@ msgstr "vừa xong"
 msgid "Kbd"
 msgstr "Kbd"
 
+msgid "Keep {planLabel}"
+msgstr "Giữ {planLabel}"
+
+msgid "Keep {planName}"
+msgstr "Giữ {planName}"
+
 msgid "Keep docs fresh"
 msgstr "Giữ tài liệu luôn mới"
 
@@ -17021,6 +17027,11 @@ msgstr "Chuyển tới workspace 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Chuyển tới workspace 9"
+
+#. placeholder {0}: format(new Date(switchAt), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(scheduledAt)
+msgid "Switches to {nextPlanName} on {0}."
+msgstr "Chuyển sang {nextPlanName} vào {0}."
 
 msgid "Symbol, light"
 msgstr "Biểu tượng, sáng"

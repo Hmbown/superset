@@ -9395,6 +9395,12 @@ msgstr "たった今"
 msgid "Kbd"
 msgstr "Kbd"
 
+msgid "Keep {planLabel}"
+msgstr "{planLabel} を維持"
+
+msgid "Keep {planName}"
+msgstr "{planName} を維持"
+
 msgid "Keep docs fresh"
 msgstr "ドキュメントを最新に保つ"
 
@@ -17021,6 +17027,11 @@ msgstr "ワークスペース8に切り替え"
 
 msgid "Switch to Workspace 9"
 msgstr "ワークスペース9に切り替え"
+
+#. placeholder {0}: format(new Date(switchAt), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(scheduledAt)
+msgid "Switches to {nextPlanName} on {0}."
+msgstr "{0} に {nextPlanName} に切り替わります。"
 
 msgid "Symbol, light"
 msgstr "シンボル（明色）"
