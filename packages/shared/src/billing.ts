@@ -74,6 +74,14 @@ export const PLAN_RANK: Record<PlanTier, number> = {
 	enterprise: 2,
 };
 
+/**
+ * Environments an organization may hold when its plan carries no
+ * `environments` feature in Autumn.
+ * TODO(harshith): remove once every plan in Autumn sets `environments`; the
+ * fallback exists only so the cap ships before the dashboard is configured.
+ */
+export const DEFAULT_ENVIRONMENT_LIMIT = 10;
+
 /** The tier an org needs to create, run, or resume an automation. */
 export const AUTOMATIONS_REQUIRED_PLAN: Exclude<PlanTier, "free"> = "pro";
 
@@ -133,4 +141,92 @@ export function requiredPlanForTriggerKind(
 export function planAllowsTriggerKind(plan: PlanTier, kind: string): boolean {
 	const required = TRIGGER_KIND_REQUIRED_PLAN[kind];
 	return required === undefined || PLAN_RANK[plan] >= PLAN_RANK[required];
+}
+
+export const CLOUD_USAGE_REFUSAL_KEYS = [
+	"serverError.cloudWorkspace.cloudNeedsPaidPlan",
+	"serverError.cloudWorkspace.usageLimitReached",
+] as const;
+
+export function isCloudUsageRefusal(error: unknown): boolean {
+	const data = (error as { data?: { i18nKey?: unknown } | null } | null)?.data;
+	return (
+		typeof data?.i18nKey === "string" &&
+		(CLOUD_USAGE_REFUSAL_KEYS as readonly string[]).includes(data.i18nKey)
+	);
+}
+
+export function autumnProPlanId({
+	annual,
+}: {
+	annual: boolean;
+}): "pro" | "pro_annual" {
+	return annual ? "pro_annual" : "pro";
+}
+
+// Display copy of the Autumn `pro` and `pro_annual` seat prices; checkout bills
+// from Autumn, so change both together.
+export const PRO_SEAT_PRICE = {
+	currency: "USD",
+	monthlyCents: 2000,
+	yearlyCents: 18000,
+} as const;
+
+export function proSeatPricePerMonth({ annual }: { annual: boolean }): number {
+	const cents = annual
+		? PRO_SEAT_PRICE.yearlyCents / 12
+		: PRO_SEAT_PRICE.monthlyCents;
+	return cents / 100;
+}
+
+export const MEMORY_GB_PER_VCPU = 2;
+/** The size an environment's golden box is built at. */
+export const GOLDEN_BOX_VCPUS = 8;
+
+export const MACHINE_SIZE_VCPUS = {
+	small: 2,
+	medium: 4,
+	large: 8,
+	xlarge: 16,
+	"2xlarge": 32,
+} as const;
+export type MachineSize = keyof typeof MACHINE_SIZE_VCPUS;
+export const MACHINE_SIZES = Object.keys(MACHINE_SIZE_VCPUS) as [
+	MachineSize,
+	...MachineSize[],
+];
+/** Every organization can run these; the rest need an Autumn feature each. */
+export const OPEN_MACHINE_SIZES: readonly MachineSize[] = [
+	"small",
+	"medium",
+	"large",
+];
+export const DEFAULT_MACHINE_SIZE: MachineSize = "medium";
+
+export function isMachineSize(value: unknown): value is MachineSize {
+	return typeof value === "string" && Object.hasOwn(MACHINE_SIZE_VCPUS, value);
+}
+
+export function offeredMachineSizes(
+	gated: readonly MachineSize[],
+): MachineSize[] {
+	return MACHINE_SIZES.filter(
+		(size) => OPEN_MACHINE_SIZES.includes(size) || gated.includes(size),
+	);
+}
+
+export function defaultMachineSize(
+	offered: readonly MachineSize[],
+): MachineSize {
+	return offered.includes(DEFAULT_MACHINE_SIZE)
+		? DEFAULT_MACHINE_SIZE
+		: (offered[0] ?? DEFAULT_MACHINE_SIZE);
+}
+
+export function machineSpec(size: MachineSize): {
+	vcpus: number;
+	memoryGb: number;
+} {
+	const vcpus = MACHINE_SIZE_VCPUS[size];
+	return { vcpus, memoryGb: vcpus * MEMORY_GB_PER_VCPU };
 }

@@ -43,6 +43,7 @@ export const SETTING_ITEM_ID = {
 	BEHAVIOR_AGENT_SESSION_PLACEMENT: "behavior-agent-session-placement",
 	BEHAVIOR_CHANGES_OPEN_TARGET: "behavior-changes-open-target",
 	BEHAVIOR_RESOURCE_MONITOR: "behavior-resource-monitor",
+	BEHAVIOR_DICTATION: "behavior-dictation",
 	USAGE_IN_SIDEBAR: "usage-in-sidebar",
 	BEHAVIOR_OPEN_LINKS_IN_APP: "behavior-open-links-in-app",
 	BEHAVIOR_STAR_GITHUB: "behavior-star-github",
@@ -64,6 +65,7 @@ export const SETTING_ITEM_ID = {
 	TERMINAL_LINK_BEHAVIOR: "terminal-link-behavior",
 	TERMINAL_BACKGROUND_LIMIT: "terminal-background-limit",
 	TERMINAL_COPY_ON_SELECT: "terminal-copy-on-select",
+	TERMINAL_CLOSE_CONFIRM: "terminal-close-confirm",
 
 	LINKS_FILE: "links-file",
 	LINKS_FOLDER: "links-folder",
@@ -75,6 +77,7 @@ export const SETTING_ITEM_ID = {
 	EXPERIMENTAL_V1_MIGRATION: "experimental-v1-migration",
 	EXPERIMENTAL_INLINE_WORKSPACE_PORTS: "experimental-inline-workspace-ports",
 	EXPERIMENTAL_WORKSPACE_AGENTS: "experimental-workspace-agents",
+	EXPERIMENTAL_NEW_SIDEBAR: "experimental-new-sidebar",
 	EXPERIMENTAL_WAIT_FOR_SETUP_BEFORE_AGENT:
 		"experimental-wait-for-setup-before-agent",
 
@@ -194,6 +197,8 @@ export const SETTING_ITEM_VARIANT: Record<SettingItemId, SettingVariant> = {
 	// The top-bar Changes control is a v2-only surface.
 	[SETTING_ITEM_ID.BEHAVIOR_CHANGES_OPEN_TARGET]: "v2",
 	[SETTING_ITEM_ID.BEHAVIOR_RESOURCE_MONITOR]: "shared",
+	// The agent composers that offer dictation are v2-only.
+	[SETTING_ITEM_ID.BEHAVIOR_DICTATION]: "v2",
 	// The home sidebar (DashboardSidebar) only renders for v2 users.
 	[SETTING_ITEM_ID.USAGE_IN_SIDEBAR]: "v2",
 	[SETTING_ITEM_ID.BEHAVIOR_OPEN_LINKS_IN_APP]: "v1",
@@ -218,6 +223,7 @@ export const SETTING_ITEM_VARIANT: Record<SettingItemId, SettingVariant> = {
 	[SETTING_ITEM_ID.TERMINAL_LINK_BEHAVIOR]: "v1",
 	[SETTING_ITEM_ID.TERMINAL_BACKGROUND_LIMIT]: "v2",
 	[SETTING_ITEM_ID.TERMINAL_COPY_ON_SELECT]: "v2",
+	[SETTING_ITEM_ID.TERMINAL_CLOSE_CONFIRM]: "v2",
 
 	[SETTING_ITEM_ID.LINKS_FILE]: "v2",
 	[SETTING_ITEM_ID.LINKS_FOLDER]: "v2",
@@ -229,6 +235,7 @@ export const SETTING_ITEM_VARIANT: Record<SettingItemId, SettingVariant> = {
 	[SETTING_ITEM_ID.EXPERIMENTAL_V1_MIGRATION]: "v2",
 	[SETTING_ITEM_ID.EXPERIMENTAL_INLINE_WORKSPACE_PORTS]: "v2",
 	[SETTING_ITEM_ID.EXPERIMENTAL_WORKSPACE_AGENTS]: "v2",
+	[SETTING_ITEM_ID.EXPERIMENTAL_NEW_SIDEBAR]: "v2",
 	// Gates both the v1 renderer launch and the v2 host-side launch.
 	[SETTING_ITEM_ID.EXPERIMENTAL_WAIT_FOR_SETUP_BEFORE_AGENT]: "shared",
 
@@ -910,6 +917,24 @@ export const SETTINGS_ITEMS: SettingsItem[] = [
 		],
 	},
 	{
+		id: SETTING_ITEM_ID.BEHAVIOR_DICTATION,
+		section: "behavior",
+		title: "Dictation",
+		description:
+			"Show a microphone in the chat composer. Speech is transcribed by ChatGPT when Codex is signed in to it, otherwise on your Mac when possible, and otherwise by Superset's servers.",
+		keywords: [
+			"dictation",
+			"dictate",
+			"voice",
+			"speech",
+			"microphone",
+			"mic",
+			"transcribe",
+			"chat",
+			"composer",
+		],
+	},
+	{
 		id: SETTING_ITEM_ID.USAGE_IN_SIDEBAR,
 		section: "usage",
 		title: "Show usage tab on sidebar",
@@ -1203,6 +1228,27 @@ export const SETTINGS_ITEMS: SettingsItem[] = [
 		],
 	},
 	{
+		id: SETTING_ITEM_ID.TERMINAL_CLOSE_CONFIRM,
+		section: "terminal",
+		title: "Warn before closing a running terminal",
+		description: "Ask before closing a terminal or port with a running process",
+		keywords: [
+			"terminal",
+			"close",
+			"delete",
+			"tab",
+			"pane",
+			"port",
+			"warn",
+			"warning",
+			"confirm",
+			"prompt",
+			"running",
+			"process",
+			"ask",
+		],
+	},
+	{
 		id: SETTING_ITEM_ID.TERMINAL_LINK_BEHAVIOR,
 		section: "terminal",
 		title: "Link Behavior",
@@ -1430,6 +1476,24 @@ export const SETTINGS_ITEMS: SettingsItem[] = [
 			"workspace",
 			"workspaces",
 			"status",
+			"toggle",
+			"switch",
+		],
+	},
+	{
+		id: SETTING_ITEM_ID.EXPERIMENTAL_NEW_SIDEBAR,
+		section: "experimental",
+		title: "New sidebar",
+		description:
+			"Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row",
+		keywords: [
+			"experimental",
+			"sidebar",
+			"cloud",
+			"workspaces",
+			"projects",
+			"filter",
+			"redesign",
 			"toggle",
 			"switch",
 		],

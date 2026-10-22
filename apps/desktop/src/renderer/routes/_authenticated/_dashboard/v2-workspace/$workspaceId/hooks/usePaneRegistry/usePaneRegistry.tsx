@@ -23,7 +23,7 @@ import {
 	Monitor,
 	Smartphone,
 } from "lucide-react";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import {
 	LuArrowDownToLine,
 	LuBot,
@@ -71,21 +71,19 @@ import {
 import {
 	findTerminalPaneLocation,
 	focusOrAddTerminalPane,
+	focusTerminalPane,
 } from "../../utils/focusTerminalPane";
 import { openPagePaneInStore } from "../../utils/openPagePaneInStore";
-import { openSubagentPaneInStore } from "../../utils/openSubagentPaneInStore";
 import { useAgentSessionLauncher } from "../useAgentSessionLauncher";
 import type { OpenReviewDiff } from "../useReviewCommentNavigation";
 import type { TerminalLauncher } from "../useV2TerminalLauncher";
 import { AccountUsage } from "./components/AccountUsage";
-import {
-	AgentSurfaceToggle,
-	AgentTerminalPane,
-	useAgentSurfaceSwitch,
-} from "./components/AgentTerminalPane";
+import { AgentTerminalPane } from "./components/AgentTerminalPane";
 import { BrowserPane, BrowserPaneToolbar } from "./components/BrowserPane";
 import { ChangesListPane } from "./components/ChangesListPane";
 import { ChatPane } from "./components/ChatPane";
+import { ChatHistoryPicker } from "./components/ChatPane/components/ChatHistoryPicker";
+import { ChatPaneTitle } from "./components/ChatPaneTitle";
 import { CommentPane } from "./components/CommentPane";
 import { CommentPaneHeaderExtras } from "./components/CommentPane/components/CommentPaneHeaderExtras";
 import { CommentPaneTitle } from "./components/CommentPane/components/CommentPaneTitle";
@@ -163,6 +161,7 @@ interface UsePaneRegistryOptions {
 	launcher: TerminalLauncher;
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
 	linkedStores?: StoreApi<WorkspaceStore<PaneViewerData>>[];
+	onOpenSubagent: (data: SubagentPaneData) => void;
 	onSearch?: () => void;
 }
 
@@ -173,17 +172,13 @@ export function usePaneRegistry({
 	launcher,
 	store,
 	linkedStores,
+	onOpenSubagent,
 	onSearch,
 }: UsePaneRegistryOptions): PaneRegistry<PaneViewerData> {
 	const { t } = useLingui();
 	const { workspace } = useWorkspace();
 	const workspaceId = workspace.id;
-	const agentSurface = useAgentSurfaceSwitch(workspaceId);
-	const closeChatWithUndo = useUndoableChatClose({
-		workspaceId,
-		store,
-		stopChat: agentSurface.stopChat,
-	});
+	const closeChatWithUndo = useUndoableChatClose({ workspaceId, store });
 	const host = useWorkspaceHostTarget(workspaceId);
 	const desktopUrl =
 		host.status === "ready" && host.kind === "sandbox" ? host.desktopUrl : null;
@@ -243,6 +238,17 @@ export function usePaneRegistry({
 
 	const { createNewAgentSession, focusAgentTerminal } = useAgentSessionLauncher(
 		{ workspaceId, store },
+	);
+
+	const chatPaneIcon = useCallback(
+		({ agent, terminalId }: ChatPaneData) => (
+			<TerminalPaneIcon
+				agentId={agent?.id}
+				workspaceId={workspaceId}
+				terminalId={terminalId}
+			/>
+		),
+		[workspaceId],
 	);
 
 	return useMemo<PaneRegistry<PaneViewerData>>(
@@ -462,52 +468,43 @@ export function usePaneRegistry({
 							launcher={launcher}
 							workspaceId={workspaceId}
 						/>
-						<AgentSurfaceToggle
-							pane={{
-								kind: "terminal",
-								data: ctx.pane.data as TerminalPaneData,
-							}}
-							onChange={(surface, agent) =>
-								void agentSurface.switchSurface(ctx, surface, agent)
-							}
-							workspaceId={workspaceId}
-						/>
 						<V2NotificationStatusIndicator
 							sources={getV2NotificationSourcesForPane(ctx.pane)}
 						/>
 					</div>
 				),
 				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) => {
-					const { terminalId } = ctx.pane.data as TerminalPaneData;
+					const data = ctx.pane.data as TerminalPaneData;
+					const { terminalId } = data;
 					return (
-						<TerminalPaneHeaderExtras
-							workspaceId={workspaceId}
-							terminalId={terminalId}
-							terminalInstanceId={ctx.pane.id}
-							onNewShell={() =>
-								replaceEndedTerminal({
-									store: ctx.store,
-									paneId: ctx.pane.id,
-									terminalId,
-									create: () => launcher.create(),
-									dispose: (id) =>
-										workspaceTrpcUtils.client.terminal.killSession.mutate({
-											terminalId: id,
-											workspaceId,
-										}),
-									prepare: () =>
-										terminalRuntimeRegistry.prepareReplacement(
-											terminalId,
-											ctx.pane.id,
-											t({ message: "New shell" }),
-										),
-								})
-							}
-							onCreateNewAgentSession={createNewAgentSession}
-							onOpenSubagent={(data) =>
-								openSubagentPaneInStore(ctx.store, data)
-							}
-						/>
+						<div className="flex items-center gap-1">
+							<TerminalPaneHeaderExtras
+								workspaceId={workspaceId}
+								terminalId={terminalId}
+								terminalInstanceId={ctx.pane.id}
+								onNewShell={() =>
+									replaceEndedTerminal({
+										store: ctx.store,
+										paneId: ctx.pane.id,
+										terminalId,
+										create: () => launcher.create(),
+										dispose: (id) =>
+											workspaceTrpcUtils.client.terminal.killSession.mutate({
+												terminalId: id,
+												workspaceId,
+											}),
+										prepare: () =>
+											terminalRuntimeRegistry.prepareReplacement(
+												terminalId,
+												ctx.pane.id,
+												t({ message: "New shell" }),
+											),
+									})
+								}
+								onCreateNewAgentSession={createNewAgentSession}
+								onOpenSubagent={onOpenSubagent}
+							/>
+						</div>
 					);
 				},
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
@@ -785,19 +782,10 @@ export function usePaneRegistry({
 					t({
 						message: "Mobile",
 					}),
-				renderPane: () => <MobilePane />,
+				renderPane: () => <MobilePane workspaceId={workspaceId} />,
 			},
 			"chat-v3": {
-				getIcon: (ctx) => {
-					const { agent, terminalId } = ctx.pane.data as ChatPaneData;
-					return (
-						<TerminalPaneIcon
-							agentId={agent?.id}
-							workspaceId={workspaceId}
-							terminalId={terminalId}
-						/>
-					);
-				},
+				getIcon: (ctx) => chatPaneIcon(ctx.pane.data as ChatPaneData),
 				getTitle: () =>
 					t({
 						message: "Chat",
@@ -810,21 +798,30 @@ export function usePaneRegistry({
 					};
 				},
 				onAfterClose: closeChatWithUndo,
+				renderTitle: (ctx: RendererContext<PaneViewerData>) => {
+					const data = ctx.pane.data as ChatPaneData;
+					return (
+						<ChatPaneTitle
+							chatKey={data.terminalId}
+							icon={chatPaneIcon(data)}
+							isActive={ctx.isActive}
+							title={ctx.pane.titleOverride ?? t({ message: "Chat" })}
+						/>
+					);
+				},
 				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) => {
 					const data = ctx.pane.data as ChatPaneData;
 					return (
 						<div className="flex items-center gap-1">
+							<ChatHistoryPicker
+								context={ctx}
+								workspaceId={workspaceId}
+								linkedStores={linkedStores}
+							/>
 							<AccountUsage
 								key={`${workspaceId}:${data.terminalId}`}
 								workspaceId={workspaceId}
 								terminalId={data.terminalId}
-							/>
-							<AgentSurfaceToggle
-								pane={{ kind: "chat", data }}
-								onChange={(surface, agent) =>
-									void agentSurface.switchSurface(ctx, surface, agent)
-								}
-								workspaceId={workspaceId}
 							/>
 						</div>
 					);
@@ -931,12 +928,13 @@ export function usePaneRegistry({
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
 					<SubagentPane
 						data={ctx.pane.data as SubagentPaneData}
-						onOpenParent={() =>
-							focusOrAddTerminalPane(
-								ctx.store,
-								(ctx.pane.data as SubagentPaneData).terminalId,
-							)
-						}
+						onOpenParent={() => {
+							const { terminalId } = ctx.pane.data as SubagentPaneData;
+							const focused = [store, ...(linkedStores ?? [])].some((s) =>
+								focusTerminalPane(s, terminalId),
+							);
+							if (!focused) focusOrAddTerminalPane(store, terminalId);
+						}}
 					/>
 				),
 			},
@@ -1000,7 +998,6 @@ export function usePaneRegistry({
 			store,
 			linkedStores,
 			workspaceId,
-			agentSurface,
 			closeChatWithUndo,
 			clearWorkspaceRunTerminal,
 			clearShortcut,
@@ -1018,6 +1015,8 @@ export function usePaneRegistry({
 			workspaceTrpcUtils,
 			t,
 			desktopUrl,
+			chatPaneIcon,
+			onOpenSubagent,
 		],
 	);
 }

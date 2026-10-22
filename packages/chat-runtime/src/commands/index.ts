@@ -5,6 +5,7 @@ export type {
 	CommandsOptions,
 	CreateSessionCommandInput,
 	CreateSessionResult,
+	DiscoverSessionsCommandInput,
 	GetSessionResult,
 	ResumeSessionInput,
 } from "./commands";
