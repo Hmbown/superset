@@ -60,20 +60,29 @@ PostHog, not in code. Pro's seat license has no GB-minutes.
 ## Extra GB-hours
 
 A plan sells extra GB-minutes through a one-off prepaid `box_gb_minutes` item:
-`interval: one_off`, `billing_method: prepaid`, `billing_units: 1000`, `amount: 1`
-($1 per 1,000 GB-minutes, the overage rate). They never expire and are used
-after the monthly pool. Owners enter a whole amount from $5 to $2,000
-(`GB_HOUR_PURCHASE_AMOUNT`), and `gbHourPackPurchase` rounds it up to whole
-units of the subscribed plan version's item.
+`interval: one_off`, `billing_method: prepaid`, `billing_units: 60`, `amount: 0.06`
+($0.06 per GB-hour, the overage rate). They never expire and are used after the
+monthly pool. Owners pick or enter a whole number of GB-hours from 100 to 30,000
+(`GB_HOUR_PURCHASE`), and `gbHourPurchase` rounds it up to whole units of the
+subscribed plan version's item.
 
 - Buying: `POST /autumn/buyGbHours` (owners) sends `billing.update` with
-  `featureQuantities` of the GB-minutes the amount buys. The quantity is the
-  amount to buy, not a new total, so purchases stack.
+  `featureQuantities` of the GB-minutes bought. The quantity is the amount to
+  buy, not a new total, so purchases stack.
 - Auto top-up: `POST /autumn/setAutoTopup` (owners) writes the customer's
-  `billingControls.autoTopups` (threshold in GB-minutes, the owner's amount per
+  `billingControls.autoTopups` (threshold in GB-minutes, the GB-hours to buy per
   top-up, at most 10 a month). Autumn fires it when a tracked event takes the balance below
   the threshold; one large event that jumps straight into overage does not.
 - Past the monthly pool and the bought hours, usage is overage at the plan's rate.
+
+## Plan changes
+
+Clients call `POST /autumn/previewAttach` and show the charge in their own
+confirm dialog, then `POST /autumn/attach` with `confirmed: true`, which uses
+`redirectMode: "if_required"`: Autumn charges the saved card with no page in
+between, and only a customer without a card goes to Stripe Checkout. Without
+`confirmed` (released clients) attach keeps `redirectMode: "always"`, so those
+clients still get Autumn's confirm page instead of being charged without one.
 
 ## Known Autumn behavior
 

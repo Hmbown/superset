@@ -12,6 +12,7 @@ function plan(
 	interval: "month" | "year",
 	metadata: Record<string, unknown>,
 	gbMinutesPerSeat = 0,
+	environments = 0,
 ): AutumnCatalogPlan[] {
 	return [
 		{
@@ -34,6 +35,7 @@ function plan(
 					featureId: "box_gb_minutes",
 					price: { amount: 1, interval: "month", billingUnits: 1000 },
 				},
+				{ featureId: "environments", included: environments },
 			],
 		},
 	];
@@ -48,10 +50,10 @@ describe("planPriceValues", () => {
 		const catalog = planCatalogFromAutumn([
 			...plan("pro", 20, "month", pro, 19200),
 			...plan("pro_annual", 192, "year", pro, 19200),
-			...plan("team", 60, "month", team, 72000),
-			...plan("team_annual", 648, "year", team, 72000),
-			...plan("ultra", 200, "month", ultra, 240000),
-			...plan("ultra_annual", 2400, "year", ultra, 240000),
+			...plan("team", 60, "month", team, 72000, 5),
+			...plan("team_annual", 648, "year", team, 72000, 5),
+			...plan("ultra", 200, "month", ultra, 240000, 10),
+			...plan("ultra_annual", 2400, "year", ultra, 240000, 10),
 		]);
 		const values = planPriceValues(catalog, setupI18n({ locale: "en" }));
 		expect(values.byFamily.team).toMatchObject({
@@ -61,6 +63,8 @@ describe("planPriceValues", () => {
 			gbHours: "1,200",
 			multiple: "3.8",
 			overage: "$0.06",
+			overageRate: "$0.06 per GB-hour",
+			environments: "5",
 			previousName: "Pro",
 			baseName: "Pro",
 		});
@@ -68,7 +72,9 @@ describe("planPriceValues", () => {
 			yearly: "$200",
 			yearlyTotal: null,
 			hasYearlyDiscount: false,
+			environments: "10",
 		});
+		expect(values.byFamily.pro).toMatchObject({ environments: null });
 		expect(values.maxDiscount).toBe("20%");
 		expect(values.fromPrice).toBe("$16");
 	});
@@ -99,7 +105,11 @@ describe("planPriceValues", () => {
 			...withPack(plan("ultra", 200, "month", ultra, 240000)),
 		]);
 		const values = planPriceValues(catalog, setupI18n({ locale: "en" }));
-		expect(values.byFamily.pro).toMatchObject({ gbHours: null, pack: null });
+		expect(values.byFamily.pro).toMatchObject({
+			gbHours: null,
+			overageRate: null,
+			pack: null,
+		});
 		expect(values.byFamily.team).toMatchObject({
 			multiple: null,
 			pack: "$0.06 per GB-hour",

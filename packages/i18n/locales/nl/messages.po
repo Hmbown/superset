@@ -409,6 +409,10 @@ msgstr "{0} eindigend op {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{0} bestanden bestaan al in {where}. Wil je ze vervangen?"
 
+#. placeholder {0}: formatNumber(hours)
+msgid "{0} GB-hours"
+msgstr "{0} GB-uren"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} geïnstalleerd"
@@ -825,6 +829,9 @@ msgstr "{count} hosts draaien een oudere hostservice dan deze app"
 msgid "{count}/day"
 msgstr "{count}/dag"
 
+msgid "{credit} of credit goes toward your next invoices."
+msgstr "{credit} tegoed wordt verrekend met je volgende facturen."
+
 msgid "{current} of {total}"
 msgstr "{current} van {total}"
 
@@ -921,6 +928,9 @@ msgstr "{hours}u {minutes}m"
 
 msgid "{hours}h ago"
 msgstr "{hours}u geleden"
+
+msgid "{hoursLabel} GB-hours ({amount})"
+msgstr "{hoursLabel} GB-uren ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {# worktree als werkruimte geïmporteerd} other {# worktrees als werkruimtes geïmporteerd}}"
@@ -1039,9 +1049,6 @@ msgstr "{noun, select, repository {Geef minstens één repository op.} channel {
 msgid "{openCount} open"
 msgstr "{openCount} open"
 
-msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
-msgstr "{packPrice} koopt {packGbMinutes} GB-minuten ({packGbHours} GB-uren). Gebruikt na de maandelijkse pool, en verlopen nooit."
-
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} kan namens jou gegevens in je {pluginLabel}-account lezen en wijzigen, ook in toekomstige versies van deze pagina. Wat de pagina leest, kan ze naar andere websites sturen. Sta alleen pagina’s toe die je vertrouwt."
 
@@ -1118,6 +1125,9 @@ msgstr "{pullRequestCount, plural, one {# PR} other {# PR's}}"
 
 msgid "{queued, plural, one {# message waiting in the queue} other {# messages waiting in the queue}}"
 msgstr "{queued, plural, one {# bericht wacht in de wachtrij} other {# berichten wachten in de wachtrij}}"
+
+msgid "{rate} per GB-hour. Used after the monthly pool, and never expire."
+msgstr "{rate} per GB-uur. Gebruikt na de maandelijkse pool, en verlopen nooit."
 
 msgid "{readPercent}% read"
 msgstr "{readPercent}% gelezen"
@@ -1890,8 +1900,8 @@ msgstr "Voeg je eigen terminalagent toe aan dit apparaat."
 msgid "Added {added} files to {where}"
 msgstr "{added} bestanden toegevoegd aan {where}"
 
-msgid "Added {buyGbHours} GB-hours."
-msgstr "{buyGbHours} GB-uren toegevoegd."
+msgid "Added {bought} GB-hours."
+msgstr "{bought} GB-uren toegevoegd."
 
 msgid "Added 1 file to {where}"
 msgstr "1 bestand toegevoegd aan {where}"
@@ -2310,9 +2320,6 @@ msgstr "Ook: @superset/ui/spinner"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Weet altijd welke agent jou nodig heeft, met meldingen die rechtstreeks naar de vastgelopen agent linken."
-
-msgid "Amount to spend"
-msgstr "Bedrag"
 
 msgid "An agent completes multi-file changes end to end."
 msgstr "Een agent voltooit wijzigingen over meerdere bestanden van begin tot eind."
@@ -2833,9 +2840,6 @@ msgstr "Automatisch opslaan"
 msgid "Auto top-up"
 msgstr "Automatisch bijkopen"
 
-msgid "Auto top-up amount"
-msgstr "Bedrag voor automatisch bijkopen"
-
 msgid "auto-generated"
 msgstr "automatisch gegenereerd"
 
@@ -3348,14 +3352,17 @@ msgstr "Knoppen, toggles en toetsenbordaanwijzingen"
 msgid "Buy"
 msgstr "Kopen"
 
-msgid "Buy {buyGbHours} GB-hours"
-msgstr "{buyGbHours} GB-uren kopen"
-
 msgid "Buy extra GB-hours"
 msgstr "Extra GB-uren kopen"
 
-msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
-msgstr "Koopt {topupGbHours} GB-uren voor {topupPrice} wanneer er minder GB-uren over zijn dan het gekozen aantal."
+msgid "Buy for {total}"
+msgstr "Kopen voor {total}"
+
+msgid "Buy GB-hours"
+msgstr "GB-uren kopen"
+
+msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
+msgstr "Koopt met je opgeslagen kaart meer GB-uren wanneer gekochte GB-uren opraken. Maximaal 10 keer per maand."
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -4158,6 +4165,9 @@ msgstr "Als je deze terminal sluit, wordt het draaiende proces beëindigd."
 msgid "Cloud"
 msgstr "Cloud"
 
+msgid "Cloud environments"
+msgstr "Cloudomgevingen"
+
 msgid "Cloud GB-hours per seat each month"
 msgstr "Cloud-GB-uren per gebruiker per maand"
 
@@ -4459,6 +4469,9 @@ msgstr "Ingesteld voor {agent}"
 
 msgid "Confirm before quitting"
 msgstr "Bevestigen voor afsluiten"
+
+msgid "Confirm switch"
+msgstr "Wissel bevestigen"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -5787,6 +5800,12 @@ msgstr "Aangepast"
 msgid "Custom agent…"
 msgstr "Eigen agent…"
 
+msgid "Custom amount"
+msgstr "Eigen aantal"
+
+msgid "Custom amount of GB-hours"
+msgstr "Eigen aantal GB-uren"
+
 msgid "Custom components beyond the shadcn set"
 msgstr "Eigen componenten buiten de shadcn-set"
 
@@ -6637,6 +6656,9 @@ msgstr "Dropdownmenu"
 msgid "Dropdown, context, and application menus"
 msgstr "Dropdown-, context- en applicatiemenu's"
 
+msgid "Due today"
+msgstr "Vandaag te betalen"
+
 msgid "Duration"
 msgstr "Duur"
 
@@ -6886,11 +6908,11 @@ msgstr "Voer een geldige herhalingsregel in."
 msgid "Enter a value."
 msgstr "Voer een waarde in."
 
-msgid "Enter a whole amount from {minAmount} to {maxAmount}."
-msgstr "Voer een heel bedrag in van {minAmount} tot {maxAmount}."
-
 msgid "Enter a whole number"
 msgstr "Voer een geheel getal in"
+
+msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
+msgstr "Voer een heel getal in van {minHours} tot {maxHours} GB-uren."
 
 msgid "Enter URL or search..."
 msgstr "Voer URL of zoekterm in..."
@@ -7128,6 +7150,9 @@ msgstr "Externe editor"
 
 msgid "extra ${used} of ${limit}"
 msgstr "extra ${used} van ${limit}"
+
+msgid "Extra GB-hours"
+msgstr "Extra GB-uren"
 
 msgid "Extra GB-hours, bought as needed"
 msgstr "Extra GB-uren, gekocht wanneer nodig"
@@ -8149,8 +8174,14 @@ msgstr "Drempels"
 msgid "Gates open"
 msgstr "Open drempels"
 
+msgid "GB-hours"
+msgstr "GB-uren"
+
 msgid "GB-hours over the plan: {overage}"
 msgstr "GB-uren boven het abonnement: {overage}"
+
+msgid "GB-hours past the pool"
+msgstr "GB-uren boven de pool"
 
 msgid "GB-hours used: {used}"
 msgstr "Gebruikte GB-uren: {used}"
@@ -10897,6 +10928,9 @@ msgstr "Volgende (Enter)"
 msgid "Next branch"
 msgstr "Volgende branch"
 
+msgid "Next charge: {nextTotal} on {nextDate}, plus any usage past the pool."
+msgstr "Volgende afschrijving: {nextTotal} op {nextDate}, plus gebruik boven de pool."
+
 msgid "Next comment"
 msgstr "Volgende opmerking"
 
@@ -11761,6 +11795,9 @@ msgstr "van alle tokens"
 
 msgid "Off"
 msgstr "Uit"
+
+msgid "Off. Buys more GB-hours when they run low."
+msgstr "Uit. Koopt meer GB-uren wanneer ze opraken."
 
 #. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
@@ -12767,6 +12804,9 @@ msgstr "Gepauzeerd"
 msgctxt "project state"
 msgid "Paused"
 msgstr "Gepauzeerd"
+
+msgid "Pay {total}"
+msgstr "{total} betalen"
 
 msgid "Pay now"
 msgstr "Nu betalen"
@@ -16976,6 +17016,9 @@ msgstr "Login wisselen"
 msgid "Switch sign-in…"
 msgstr "Login wisselen…"
 
+msgid "Switch to {planName}"
+msgstr "Overstappen naar {planName}"
+
 msgid "Switch to Active Workspace"
 msgstr "Overschakelen naar actieve werkruimte"
 
@@ -17443,6 +17486,9 @@ msgstr "De beste agent verandert.<0/>Jouw workflow niet."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "De knop valt nu op. Ik heb het gecontroleerd in je paneel."
+
+msgid "The change starts now. You pay only the difference for the rest of this period."
+msgstr "De wijziging gaat nu in. Je betaalt alleen het verschil voor de rest van deze periode."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "De cloudwerkruimte had gestart moeten zijn, maar reageerde niet op tijd. De volgende run probeert het opnieuw."
@@ -18340,6 +18386,9 @@ msgstr "Topmodellen"
 
 msgid "Top tier. Nothing left to clear."
 msgstr "Hoogste niveau. Er valt niets meer te halen."
+
+msgid "Top-up amount"
+msgstr "Bijkoopaantal"
 
 msgid "Topic"
 msgstr "Onderwerp"
@@ -19469,6 +19518,12 @@ msgstr "Wat volgt"
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "Als een trigger afgaat, opent de gekozen Mac een nieuwe werkruimte en begint de agent aan je prompt. Runs vanuit een gebeurtenis bevatten die gebeurtenis, dus de agent weet waar hij naar moet kijken. Antwoord in de run om verder te gaan."
 
+msgid "When bought GB-hours fall below"
+msgstr "Wanneer gekochte GB-uren dalen onder"
+
+msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
+msgstr "Wanneer er minder dan {topupThreshold} GB-uren over zijn, {topupGbHours} GB-uren kopen ({topupPrice})."
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Als dit uitstaat, kan niets anders bij de bestanden en tools op dit apparaat. Je kunt vanaf hier nog steeds verbinden met externe sandboxes. <0>Meer informatie<1/></0>"
 
@@ -20019,6 +20074,9 @@ msgstr "Je abonnement bevat geen cloudomgevingen."
 
 msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
 msgstr "Je abonnement bevat geen cloudomgevingen. Upgrade in Instellingen, Facturering om er een te maken."
+
+msgid "Your plan switches to {planName} on {startDate}. Nothing is charged today."
+msgstr "Je abonnement gaat op {startDate} over naar {planName}. Vandaag wordt niets afgeschreven."
 
 msgid "Your rank"
 msgstr "Je positie"

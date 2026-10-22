@@ -22,6 +22,7 @@ function family(
 		gbMinutesPerSeat,
 		overagePerGbHour: null,
 		pack: null,
+		environments: null,
 	};
 }
 

@@ -409,6 +409,10 @@ msgstr "{0} se terminant par {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{0} fichiers existent déjà dans {where}. Voulez-vous les remplacer ?"
 
+#. placeholder {0}: formatNumber(hours)
+msgid "{0} GB-hours"
+msgstr "{0} Go-heures"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} installé"
@@ -825,6 +829,9 @@ msgstr "{count} hôtes exécutent un service d'hôte plus ancien que cette appli
 msgid "{count}/day"
 msgstr "{count}/jour"
 
+msgid "{credit} of credit goes toward your next invoices."
+msgstr "{credit} de crédit sera déduit de vos prochaines factures."
+
 msgid "{current} of {total}"
 msgstr "{current} sur {total}"
 
@@ -921,6 +928,9 @@ msgstr "{hours} h {minutes} min"
 
 msgid "{hours}h ago"
 msgstr "il y a {hours} h"
+
+msgid "{hoursLabel} GB-hours ({amount})"
+msgstr "{hoursLabel} Go-heures ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {# worktree importé en tant qu'espace de travail} other {# worktrees importés en tant qu'espaces de travail}}"
@@ -1039,9 +1049,6 @@ msgstr "{noun, select, repository {Indiquez au moins un dépôt.} channel {Indiq
 msgid "{openCount} open"
 msgstr "{openCount} ouvertes"
 
-msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
-msgstr "{packPrice} achète {packGbMinutes} Go-minutes ({packGbHours} Go-heures). Utilisées après la réserve mensuelle, elles n'expirent jamais."
-
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} peut lire et modifier les données de votre compte {pluginLabel} en votre nom, y compris dans les futures versions de cette page. Elle peut envoyer ce qu’elle lit à d’autres sites web. N’autorisez que les pages de confiance."
 
@@ -1118,6 +1125,9 @@ msgstr "{pullRequestCount, plural, one {# PR} other {# PR}}"
 
 msgid "{queued, plural, one {# message waiting in the queue} other {# messages waiting in the queue}}"
 msgstr "{queued, plural, one {# message en attente dans la file} other {# messages en attente dans la file}}"
+
+msgid "{rate} per GB-hour. Used after the monthly pool, and never expire."
+msgstr "{rate} par Go-heure. Utilisées après la réserve mensuelle, elles n'expirent jamais."
 
 msgid "{readPercent}% read"
 msgstr "{readPercent} % lu"
@@ -1890,8 +1900,8 @@ msgstr "Ajoutez votre propre agent de terminal sur cet appareil."
 msgid "Added {added} files to {where}"
 msgstr "{added} fichiers ajoutés à {where}"
 
-msgid "Added {buyGbHours} GB-hours."
-msgstr "{buyGbHours} Go-heures ajoutées."
+msgid "Added {bought} GB-hours."
+msgstr "{bought} Go-heures ajoutées."
 
 msgid "Added 1 file to {where}"
 msgstr "1 fichier ajouté à {where}"
@@ -2310,9 +2320,6 @@ msgstr "Également : @superset/ui/spinner"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Sachez toujours quel agent a besoin de vous, grâce à des notifications qui mènent directement à l'agent bloqué."
-
-msgid "Amount to spend"
-msgstr "Montant"
 
 msgid "An agent completes multi-file changes end to end."
 msgstr "Un agent mène des changements multi-fichiers de bout en bout."
@@ -2833,9 +2840,6 @@ msgstr "Enregistrement automatique"
 msgid "Auto top-up"
 msgstr "Recharge automatique"
 
-msgid "Auto top-up amount"
-msgstr "Montant de la recharge automatique"
-
 msgid "auto-generated"
 msgstr "généré automatiquement"
 
@@ -3348,14 +3352,17 @@ msgstr "Boutons, bascules et affordances clavier"
 msgid "Buy"
 msgstr "Acheter"
 
-msgid "Buy {buyGbHours} GB-hours"
-msgstr "Acheter {buyGbHours} Go-heures"
-
 msgid "Buy extra GB-hours"
 msgstr "Acheter des Go-heures supplémentaires"
 
-msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
-msgstr "Achète {topupGbHours} Go-heures pour {topupPrice} quand il reste moins de Go-heures que le nombre choisi."
+msgid "Buy for {total}"
+msgstr "Acheter pour {total}"
+
+msgid "Buy GB-hours"
+msgstr "Acheter des Go-heures"
+
+msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
+msgstr "Achète des Go-heures avec votre carte enregistrée quand les Go-heures achetées s'épuisent. Au maximum 10 recharges par mois."
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -4158,6 +4165,9 @@ msgstr "Fermer ce terminal mettra fin au processus en cours."
 msgid "Cloud"
 msgstr "Cloud"
 
+msgid "Cloud environments"
+msgstr "Environnements cloud"
+
 msgid "Cloud GB-hours per seat each month"
 msgstr "GB-heures cloud par siège et par mois"
 
@@ -4459,6 +4469,9 @@ msgstr "Configuré pour {agent}"
 
 msgid "Confirm before quitting"
 msgstr "Confirmer avant de quitter"
+
+msgid "Confirm switch"
+msgstr "Confirmer le changement"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -5787,6 +5800,12 @@ msgstr "Personnalisé"
 msgid "Custom agent…"
 msgstr "Agent personnalisé…"
 
+msgid "Custom amount"
+msgstr "Montant personnalisé"
+
+msgid "Custom amount of GB-hours"
+msgstr "Nombre personnalisé de Go-heures"
+
 msgid "Custom components beyond the shadcn set"
 msgstr "Composants personnalisés au-delà de l'ensemble shadcn"
 
@@ -6637,6 +6656,9 @@ msgstr "Menu déroulant"
 msgid "Dropdown, context, and application menus"
 msgstr "Menus déroulants, contextuels et applicatifs"
 
+msgid "Due today"
+msgstr "À payer aujourd'hui"
+
 msgid "Duration"
 msgstr "Durée"
 
@@ -6886,11 +6908,11 @@ msgstr "Saisissez une règle de récurrence valide."
 msgid "Enter a value."
 msgstr "Saisissez une valeur."
 
-msgid "Enter a whole amount from {minAmount} to {maxAmount}."
-msgstr "Saisissez un montant entier de {minAmount} à {maxAmount}."
-
 msgid "Enter a whole number"
 msgstr "Saisissez un nombre entier"
+
+msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
+msgstr "Saisissez un nombre entier de {minHours} à {maxHours} Go-heures."
 
 msgid "Enter URL or search..."
 msgstr "Saisir une URL ou rechercher..."
@@ -7128,6 +7150,9 @@ msgstr "Éditeur externe"
 
 msgid "extra ${used} of ${limit}"
 msgstr "supplément de {used} $ sur {limit} $"
+
+msgid "Extra GB-hours"
+msgstr "Go-heures supplémentaires"
 
 msgid "Extra GB-hours, bought as needed"
 msgstr "Go-heures supplémentaires, achetées selon les besoins"
@@ -8149,8 +8174,14 @@ msgstr "Portes"
 msgid "Gates open"
 msgstr "Portes ouvertes"
 
+msgid "GB-hours"
+msgstr "Go-heures"
+
 msgid "GB-hours over the plan: {overage}"
 msgstr "GB-heures au-delà du forfait : {overage}"
+
+msgid "GB-hours past the pool"
+msgstr "Go-heures au-delà de la réserve"
 
 msgid "GB-hours used: {used}"
 msgstr "GB-heures utilisées : {used}"
@@ -10897,6 +10928,9 @@ msgstr "Suivant (Entrée)"
 msgid "Next branch"
 msgstr "Branche suivante"
 
+msgid "Next charge: {nextTotal} on {nextDate}, plus any usage past the pool."
+msgstr "Prochain prélèvement : {nextTotal} le {nextDate}, plus l'utilisation au-delà de la réserve."
+
 msgid "Next comment"
 msgstr "Commentaire suivant"
 
@@ -11761,6 +11795,9 @@ msgstr "de tous les tokens"
 
 msgid "Off"
 msgstr "Désactivée"
+
+msgid "Off. Buys more GB-hours when they run low."
+msgstr "Désactivée. Achète des Go-heures quand elles s'épuisent."
 
 #. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
@@ -12767,6 +12804,9 @@ msgstr "En pause"
 msgctxt "project state"
 msgid "Paused"
 msgstr "En pause"
+
+msgid "Pay {total}"
+msgstr "Payer {total}"
 
 msgid "Pay now"
 msgstr "Payer maintenant"
@@ -16976,6 +17016,9 @@ msgstr "Changer de connexion"
 msgid "Switch sign-in…"
 msgstr "Changer de connexion…"
 
+msgid "Switch to {planName}"
+msgstr "Passer à {planName}"
+
 msgid "Switch to Active Workspace"
 msgstr "Basculer vers un espace de travail actif"
 
@@ -17443,6 +17486,9 @@ msgstr "Le meilleur agent changera.<0/>Pas votre façon de travailler."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Le bouton ressort maintenant. Je l'ai vérifié dans votre volet."
+
+msgid "The change starts now. You pay only the difference for the rest of this period."
+msgstr "Le changement s'applique tout de suite. Vous payez seulement la différence pour le reste de la période."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "L'espace de travail cloud aurait dû démarrer, mais n'a pas répondu à temps. La prochaine exécution réessaiera."
@@ -18340,6 +18386,9 @@ msgstr "Modèles les plus utilisés"
 
 msgid "Top tier. Nothing left to clear."
 msgstr "Palier maximal. Il n'y a plus rien à franchir."
+
+msgid "Top-up amount"
+msgstr "Montant de recharge"
 
 msgid "Topic"
 msgstr "Sujet"
@@ -19469,6 +19518,12 @@ msgstr "La suite"
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "Quand un déclencheur se produit, le Mac choisi ouvre un nouvel espace de travail et l'agent démarre sur votre prompt. Les exécutions déclenchées par un événement incluent cet événement, l'agent sait donc quoi regarder. Répondez dans l'exécution pour continuer."
 
+msgid "When bought GB-hours fall below"
+msgstr "Quand les Go-heures achetées passent sous"
+
+msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
+msgstr "Quand il reste moins de {topupThreshold} Go-heures, acheter {topupGbHours} Go-heures ({topupPrice})."
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Si désactivé, rien d'autre ne peut accéder aux fichiers et aux outils de cet appareil. Vous pouvez toujours vous connecter à des sandbox distants depuis ici. <0>En savoir plus<1/></0>"
 
@@ -20019,6 +20074,9 @@ msgstr "Votre forfait n'inclut pas d'environnements cloud."
 
 msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
 msgstr "Votre forfait n'inclut pas d'environnements cloud. Passez à un forfait supérieur dans Paramètres, Facturation pour en créer un."
+
+msgid "Your plan switches to {planName} on {startDate}. Nothing is charged today."
+msgstr "Votre forfait passe à {planName} le {startDate}. Rien n'est facturé aujourd'hui."
 
 msgid "Your rank"
 msgstr "Votre rang"

@@ -409,6 +409,10 @@ msgstr "{0}，尾号{1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{where}中已存在{0}个文件。是否要替换它们？"
 
+#. placeholder {0}: formatNumber(hours)
+msgid "{0} GB-hours"
+msgstr "{0} GB 小时"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0}已安装"
@@ -825,6 +829,9 @@ msgstr "{count} 台主机运行的主机服务比此应用旧"
 msgid "{count}/day"
 msgstr "{count}/天"
 
+msgid "{credit} of credit goes toward your next invoices."
+msgstr "{credit} 的抵扣额将用于后续账单。"
+
 msgid "{current} of {total}"
 msgstr "第 {current} 项，共 {total} 项"
 
@@ -921,6 +928,9 @@ msgstr "{hours}小时{minutes}分"
 
 msgid "{hours}h ago"
 msgstr "{hours}小时前"
+
+msgid "{hoursLabel} GB-hours ({amount})"
+msgstr "{hoursLabel} GB 小时（{amount}）"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {已将#个worktree导入为工作区} other {已将#个worktree导入为工作区}}"
@@ -1039,9 +1049,6 @@ msgstr "{noun, select, repository {请至少指定一个仓库。} channel {请�
 msgid "{openCount} open"
 msgstr "{openCount}项已开启"
 
-msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
-msgstr "{packPrice} 可购买 {packGbMinutes} GB 分钟（{packGbHours} GB 小时）。在每月额度池之后使用，永不过期。"
-
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} 可以以你的身份读取和更改你的 {pluginLabel} 账户中的数据，包括此页面的未来版本。它可以把读取的内容发送到其他网站。只允许你信任的页面。"
 
@@ -1118,6 +1125,9 @@ msgstr "{pullRequestCount, plural, other {# 个 PR}}"
 
 msgid "{queued, plural, one {# message waiting in the queue} other {# messages waiting in the queue}}"
 msgstr "{queued, plural, one {队列中有 # 条消息等待} other {队列中有 # 条消息等待}}"
+
+msgid "{rate} per GB-hour. Used after the monthly pool, and never expire."
+msgstr "每 GB 小时 {rate}。在每月额度池之后使用，永不过期。"
 
 msgid "{readPercent}% read"
 msgstr "已读{readPercent}%"
@@ -1890,8 +1900,8 @@ msgstr "向此设备添加你自己的终端智能体。"
 msgid "Added {added} files to {where}"
 msgstr "已向{where}添加{added}个文件"
 
-msgid "Added {buyGbHours} GB-hours."
-msgstr "已添加 {buyGbHours} GB 小时。"
+msgid "Added {bought} GB-hours."
+msgstr "已添加 {bought} GB 小时。"
 
 msgid "Added 1 file to {where}"
 msgstr "已向{where}添加1个文件"
@@ -2310,9 +2320,6 @@ msgstr "另有：@superset/ui/spinner"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "随时知道哪个智能体需要你，通知可直接跳转到被阻塞的智能体。"
-
-msgid "Amount to spend"
-msgstr "金额"
 
 msgid "An agent completes multi-file changes end to end."
 msgstr "智能体能端到端完成跨文件改动。"
@@ -2833,9 +2840,6 @@ msgstr "自动保存"
 msgid "Auto top-up"
 msgstr "自动充值"
 
-msgid "Auto top-up amount"
-msgstr "自动充值金额"
-
 msgid "auto-generated"
 msgstr "自动生成"
 
@@ -3348,14 +3352,17 @@ msgstr "按钮、切换控件和键盘提示"
 msgid "Buy"
 msgstr "购买"
 
-msgid "Buy {buyGbHours} GB-hours"
-msgstr "购买 {buyGbHours} GB 小时"
-
 msgid "Buy extra GB-hours"
 msgstr "购买额外 GB 小时"
 
-msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
-msgstr "当剩余 GB 小时少于所选数量时，以 {topupPrice} 购买 {topupGbHours} GB 小时。"
+msgid "Buy for {total}"
+msgstr "以 {total} 购买"
+
+msgid "Buy GB-hours"
+msgstr "购买 GB 小时"
+
+msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
+msgstr "当购买的 GB 小时不足时，用已保存的卡购买更多 GB 小时。每月最多 10 次。"
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -4158,6 +4165,9 @@ msgstr "关闭此终端将结束正在运行的进程。"
 msgid "Cloud"
 msgstr "云端"
 
+msgid "Cloud environments"
+msgstr "云端环境"
+
 msgid "Cloud GB-hours per seat each month"
 msgstr "每席位每月云端 GB 小时"
 
@@ -4459,6 +4469,9 @@ msgstr "已为 {agent} 配置"
 
 msgid "Confirm before quitting"
 msgstr "退出前确认"
+
+msgid "Confirm switch"
+msgstr "确认切换"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -5787,6 +5800,12 @@ msgstr "自定义"
 msgid "Custom agent…"
 msgstr "自定义智能体…"
 
+msgid "Custom amount"
+msgstr "自定义数量"
+
+msgid "Custom amount of GB-hours"
+msgstr "自定义 GB 小时数量"
+
 msgid "Custom components beyond the shadcn set"
 msgstr "shadcn组件集之外的自定义组件"
 
@@ -6637,6 +6656,9 @@ msgstr "下拉菜单"
 msgid "Dropdown, context, and application menus"
 msgstr "下拉菜单、右键菜单和应用菜单"
 
+msgid "Due today"
+msgstr "今日应付"
+
 msgid "Duration"
 msgstr "耗时"
 
@@ -6886,11 +6908,11 @@ msgstr "请输入有效的重复规则。"
 msgid "Enter a value."
 msgstr "请输入一个值。"
 
-msgid "Enter a whole amount from {minAmount} to {maxAmount}."
-msgstr "请输入 {minAmount} 到 {maxAmount} 之间的整数金额。"
-
 msgid "Enter a whole number"
 msgstr "输入整数"
+
+msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
+msgstr "请输入 {minHours} 到 {maxHours} 之间的整数 GB 小时。"
 
 msgid "Enter URL or search..."
 msgstr "输入URL或搜索..."
@@ -7128,6 +7150,9 @@ msgstr "外部编辑器"
 
 msgid "extra ${used} of ${limit}"
 msgstr "额外用量${used}/${limit}"
+
+msgid "Extra GB-hours"
+msgstr "额外 GB 小时"
 
 msgid "Extra GB-hours, bought as needed"
 msgstr "按需购买的额外 GB 小时"
@@ -8149,8 +8174,14 @@ msgstr "关卡"
 msgid "Gates open"
 msgstr "已开启关卡"
 
+msgid "GB-hours"
+msgstr "GB 小时"
+
 msgid "GB-hours over the plan: {overage}"
 msgstr "超出套餐的 GB 小时：{overage}"
+
+msgid "GB-hours past the pool"
+msgstr "超出额度池的 GB 小时"
 
 msgid "GB-hours used: {used}"
 msgstr "已用 GB 小时：{used}"
@@ -10897,6 +10928,9 @@ msgstr "下一个匹配项（Enter）"
 msgid "Next branch"
 msgstr "下一个分支"
 
+msgid "Next charge: {nextTotal} on {nextDate}, plus any usage past the pool."
+msgstr "下次扣款：{nextDate} 扣 {nextTotal}，另加超出额度池的用量。"
+
 msgid "Next comment"
 msgstr "下一条评论"
 
@@ -11761,6 +11795,9 @@ msgstr "占全部token"
 
 msgid "Off"
 msgstr "关闭"
+
+msgid "Off. Buys more GB-hours when they run low."
+msgstr "已关闭。不足时购买更多 GB 小时。"
 
 #. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
@@ -12767,6 +12804,9 @@ msgstr "已暂停"
 msgctxt "project state"
 msgid "Paused"
 msgstr "已暂停"
+
+msgid "Pay {total}"
+msgstr "支付 {total}"
 
 msgid "Pay now"
 msgstr "立即支付"
@@ -16976,6 +17016,9 @@ msgstr "切换登录"
 msgid "Switch sign-in…"
 msgstr "切换登录…"
 
+msgid "Switch to {planName}"
+msgstr "切换到 {planName}"
+
 msgid "Switch to Active Workspace"
 msgstr "切换到活动工作区"
 
@@ -17443,6 +17486,9 @@ msgstr "最好的智能体会变。<0/>你的工作流不该变。"
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "按钮现在更醒目了。我已在你的窗格中确认过。"
+
+msgid "The change starts now. You pay only the difference for the rest of this period."
+msgstr "变更立即生效。您只需支付本期剩余时间的差价。"
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "云端工作区本应已启动，但没有及时响应。下次运行时会重试。"
@@ -18340,6 +18386,9 @@ msgstr "模型排行"
 
 msgid "Top tier. Nothing left to clear."
 msgstr "最高等级。没有更多可以达成的了。"
+
+msgid "Top-up amount"
+msgstr "充值数量"
 
 msgid "Topic"
 msgstr "主题"
@@ -19469,6 +19518,12 @@ msgstr "接下来"
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "触发器触发时，你选的 Mac 会打开一个新工作区，智能体开始执行你的提示词。由事件触发的运行会带上该事件，所以智能体知道要看什么。在运行中回复即可继续。"
 
+msgid "When bought GB-hours fall below"
+msgstr "当购买的 GB 小时低于"
+
+msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
+msgstr "剩余不足 {topupThreshold} GB 小时时，购买 {topupGbHours} GB 小时（{topupPrice}）。"
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "关闭后，其他设备无法访问本设备上的文件和工具。你仍可以从这里连接到远程沙箱。<0>了解更多<1/></0>"
 
@@ -20019,6 +20074,9 @@ msgstr "你的套餐不包含云端环境。"
 
 msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
 msgstr "你的套餐不包含云端环境。请在设置的账单中升级后再创建。"
+
+msgid "Your plan switches to {planName} on {startDate}. Nothing is charged today."
+msgstr "您的方案将于 {startDate} 切换到 {planName}。今天不扣费。"
 
 msgid "Your rank"
 msgstr "你的排名"

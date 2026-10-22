@@ -245,6 +245,7 @@ export interface PlanFamily {
 	gbMinutesPerSeat: number | null;
 	overagePerGbHour: number | null;
 	pack: GbHourPack | null;
+	environments: number | null;
 }
 
 /** A one-off purchase of cloud GB-minutes that never expires. */
@@ -320,6 +321,12 @@ function gbMinutesPerSeat(
 	);
 }
 
+function environmentLimit(plan: AutumnCatalogPlan): number | null {
+	return positiveNumber(
+		plan.items.find((item) => item.featureId === "environments")?.included,
+	);
+}
+
 function overagePerGbHour(plan: AutumnCatalogPlan): number | null {
 	const price = plan.items.find(
 		(item) =>
@@ -340,19 +347,19 @@ export function gbHourPack(plan: AutumnCatalogPlan): GbHourPack | null {
 	return gbMinutes && amount ? { gbMinutes, price: amount } : null;
 }
 
-export const GB_HOUR_PURCHASE_AMOUNT = { min: 5, max: 2000 };
+export const GB_HOUR_PURCHASE = { min: 100, max: 30_000 };
 
-/** What a purchase of about `amount` buys: whole pack units, never past the maximum amount. */
-export function gbHourPackPurchase(
-	pack: GbHourPack,
-	amount: number,
-): GbHourPack {
-	const maxUnits = Math.max(
-		1,
-		Math.floor(GB_HOUR_PURCHASE_AMOUNT.max / pack.price),
+/** What buying about `gbHours` costs: whole pack units, never past the maximum. */
+export function gbHourPurchase(pack: GbHourPack, gbHours: number): GbHourPack {
+	const unitsFor = (hours: number) => (hours * 60) / pack.gbMinutes;
+	const units = Math.min(
+		Math.max(1, Math.floor(unitsFor(GB_HOUR_PURCHASE.max))),
+		Math.max(1, Math.ceil(unitsFor(gbHours))),
 	);
-	const units = Math.min(maxUnits, Math.max(1, Math.ceil(amount / pack.price)));
-	return { gbMinutes: units * pack.gbMinutes, price: units * pack.price };
+	return {
+		gbMinutes: units * pack.gbMinutes,
+		price: Math.round(units * pack.price * 100) / 100,
+	};
 }
 
 export function gbHourPackPricePerGbHour(pack: GbHourPack): number {
@@ -378,6 +385,7 @@ export function planCatalogFromAutumn(
 			gbMinutesPerSeat: null,
 			overagePerGbHour: null,
 			pack: null,
+			environments: null,
 		};
 		if (priced.interval === "month") {
 			family.monthly = priced;
@@ -393,6 +401,7 @@ export function planCatalogFromAutumn(
 		family.gbMinutesPerSeat ??= gbMinutesPerSeat(plan, plans);
 		family.overagePerGbHour ??= overagePerGbHour(plan);
 		family.pack ??= gbHourPack(plan);
+		family.environments ??= environmentLimit(plan);
 		families.set(key, family);
 	}
 	for (const plan of plans) {

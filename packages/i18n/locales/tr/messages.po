@@ -409,6 +409,10 @@ msgstr "{1} ile biten {0}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{where} konumunda {0} dosya zaten var. Bunları değiştirmek istiyor musunuz?"
 
+#. placeholder {0}: formatNumber(hours)
+msgid "{0} GB-hours"
+msgstr "{0} GB-saat"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} kuruldu"
@@ -825,6 +829,9 @@ msgstr "{count} ana makine bu uygulamadan daha eski bir ana makine hizmeti çal�
 msgid "{count}/day"
 msgstr "{count}/gün"
 
+msgid "{credit} of credit goes toward your next invoices."
+msgstr "{credit} kredi sonraki faturalarınızdan düşülür."
+
 msgid "{current} of {total}"
 msgstr "{current} / {total}"
 
@@ -921,6 +928,9 @@ msgstr "{hours}sa {minutes}dk"
 
 msgid "{hours}h ago"
 msgstr "{hours}sa önce"
+
+msgid "{hoursLabel} GB-hours ({amount})"
+msgstr "{hoursLabel} GB-saat ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {# worktree çalışma alanı olarak içe aktarıldı} other {# worktree çalışma alanı olarak içe aktarıldı}}"
@@ -1039,9 +1049,6 @@ msgstr "{noun, select, repository {En az bir depo belirtin.} channel {En az bir 
 msgid "{openCount} open"
 msgstr "{openCount} açık"
 
-msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
-msgstr "{packPrice} ile {packGbMinutes} GB-dakika ({packGbHours} GB-saat) alınır. Aylık havuzdan sonra kullanılır ve süresi dolmaz."
-
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle}, sizin adınıza {pluginLabel} hesabınızdaki verileri okuyabilir ve değiştirebilir; bu, sayfanın gelecek sürümlerini de kapsar. Okuduklarını başka web sitelerine gönderebilir. Yalnızca güvendiğiniz sayfalara izin verin."
 
@@ -1118,6 +1125,9 @@ msgstr "{pullRequestCount, plural, one {# PR} other {# PR}}"
 
 msgid "{queued, plural, one {# message waiting in the queue} other {# messages waiting in the queue}}"
 msgstr "{queued, plural, one {Kuyrukta bekleyen # mesaj} other {Kuyrukta bekleyen # mesaj}}"
+
+msgid "{rate} per GB-hour. Used after the monthly pool, and never expire."
+msgstr "GB-saat başına {rate}. Aylık havuzdan sonra kullanılır ve süresi dolmaz."
 
 msgid "{readPercent}% read"
 msgstr "%{readPercent} okundu"
@@ -1890,8 +1900,8 @@ msgstr "Bu cihaza kendi terminal ajanınızı ekleyin."
 msgid "Added {added} files to {where}"
 msgstr "{where} konumuna {added} dosya eklendi"
 
-msgid "Added {buyGbHours} GB-hours."
-msgstr "{buyGbHours} GB-saat eklendi."
+msgid "Added {bought} GB-hours."
+msgstr "{bought} GB-saat eklendi."
 
 msgid "Added 1 file to {where}"
 msgstr "{where} konumuna 1 dosya eklendi"
@@ -2310,9 +2320,6 @@ msgstr "Ayrıca: @superset/ui/spinner"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Doğrudan engellenen ajana bağlanan bildirimlerle, hangi ajanın size ihtiyacı olduğunu her zaman bilin."
-
-msgid "Amount to spend"
-msgstr "Tutar"
 
 msgid "An agent completes multi-file changes end to end."
 msgstr "Bir ajan, çok dosyalı değişiklikleri baştan sona tamamlar."
@@ -2833,9 +2840,6 @@ msgstr "Otomatik Kaydetme"
 msgid "Auto top-up"
 msgstr "Otomatik yükleme"
 
-msgid "Auto top-up amount"
-msgstr "Otomatik yükleme tutarı"
-
 msgid "auto-generated"
 msgstr "otomatik oluşturulur"
 
@@ -3348,14 +3352,17 @@ msgstr "Düğmeler, anahtarlar ve klavye ipuçları"
 msgid "Buy"
 msgstr "Satın al"
 
-msgid "Buy {buyGbHours} GB-hours"
-msgstr "{buyGbHours} GB-saat satın al"
-
 msgid "Buy extra GB-hours"
 msgstr "Ek GB-saat satın al"
 
-msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
-msgstr "Kalan GB-saat seçilen sayının altına düştüğünde {topupPrice} karşılığında {topupGbHours} GB-saat satın alır."
+msgid "Buy for {total}"
+msgstr "{total} karşılığında satın al"
+
+msgid "Buy GB-hours"
+msgstr "GB-saat satın al"
+
+msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
+msgstr "Satın alınan GB-saatler azaldığında kayıtlı kartınızla daha fazla GB-saat satın alır. Ayda en fazla 10 yükleme."
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -4158,6 +4165,9 @@ msgstr "Bu terminali kapatmak çalışan süreci sonlandırır."
 msgid "Cloud"
 msgstr "Bulut"
 
+msgid "Cloud environments"
+msgstr "Bulut ortamları"
+
 msgid "Cloud GB-hours per seat each month"
 msgstr "Koltuk başına aylık bulut GB-saat"
 
@@ -4459,6 +4469,9 @@ msgstr "{agent} için yapılandırıldı"
 
 msgid "Confirm before quitting"
 msgstr "Çıkmadan önce onay iste"
+
+msgid "Confirm switch"
+msgstr "Geçişi onayla"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -5787,6 +5800,12 @@ msgstr "Özel"
 msgid "Custom agent…"
 msgstr "Özel ajan…"
 
+msgid "Custom amount"
+msgstr "Özel miktar"
+
+msgid "Custom amount of GB-hours"
+msgstr "Özel GB-saat miktarı"
+
 msgid "Custom components beyond the shadcn set"
 msgstr "shadcn setinin ötesindeki özel bileşenler"
 
@@ -6637,6 +6656,9 @@ msgstr "Açılır menü"
 msgid "Dropdown, context, and application menus"
 msgstr "Açılır, bağlam ve uygulama menüleri"
 
+msgid "Due today"
+msgstr "Bugün ödenecek"
+
 msgid "Duration"
 msgstr "Süre"
 
@@ -6886,11 +6908,11 @@ msgstr "Geçerli bir yineleme kuralı girin."
 msgid "Enter a value."
 msgstr "Bir değer girin."
 
-msgid "Enter a whole amount from {minAmount} to {maxAmount}."
-msgstr "{minAmount} ile {maxAmount} arasında tam bir tutar girin."
-
 msgid "Enter a whole number"
 msgstr "Bir tam sayı girin"
+
+msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
+msgstr "{minHours} ile {maxHours} GB-saat arasında tam sayı girin."
 
 msgid "Enter URL or search..."
 msgstr "URL girin veya arayın..."
@@ -7128,6 +7150,9 @@ msgstr "Harici düzenleyici"
 
 msgid "extra ${used} of ${limit}"
 msgstr "ek ${used}/${limit}"
+
+msgid "Extra GB-hours"
+msgstr "Ek GB-saat"
 
 msgid "Extra GB-hours, bought as needed"
 msgstr "İhtiyaç duyuldukça satın alınan ek GB-saat"
@@ -8149,8 +8174,14 @@ msgstr "Eşikler"
 msgid "Gates open"
 msgstr "Açık eşikler"
 
+msgid "GB-hours"
+msgstr "GB-saat"
+
 msgid "GB-hours over the plan: {overage}"
 msgstr "Plan dışı GB-saat: {overage}"
+
+msgid "GB-hours past the pool"
+msgstr "Havuzu aşan GB-saatler"
 
 msgid "GB-hours used: {used}"
 msgstr "Kullanılan GB-saat: {used}"
@@ -10897,6 +10928,9 @@ msgstr "Sonraki (Enter)"
 msgid "Next branch"
 msgstr "Sonraki dal"
 
+msgid "Next charge: {nextTotal} on {nextDate}, plus any usage past the pool."
+msgstr "Sonraki ödeme: {nextDate} tarihinde {nextTotal}, artı havuzu aşan kullanım."
+
 msgid "Next comment"
 msgstr "Sonraki yorum"
 
@@ -11761,6 +11795,9 @@ msgstr "tüm token'ların"
 
 msgid "Off"
 msgstr "Kapalı"
+
+msgid "Off. Buys more GB-hours when they run low."
+msgstr "Kapalı. Azaldığında daha fazla GB-saat satın alır."
 
 #. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
@@ -12767,6 +12804,9 @@ msgstr "Duraklatıldı"
 msgctxt "project state"
 msgid "Paused"
 msgstr "Duraklatıldı"
+
+msgid "Pay {total}"
+msgstr "{total} öde"
 
 msgid "Pay now"
 msgstr "Şimdi öde"
@@ -16976,6 +17016,9 @@ msgstr "Oturumu değiştir"
 msgid "Switch sign-in…"
 msgstr "Oturumu değiştir…"
 
+msgid "Switch to {planName}"
+msgstr "{planName} planına geç"
+
 msgid "Switch to Active Workspace"
 msgstr "Etkin çalışma alanına geç"
 
@@ -17443,6 +17486,9 @@ msgstr "En iyi ajan değişecek.<0/>İş akışınız değişmemeli."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Düğme artık öne çıkıyor. Bölmenizde kontrol ettim."
+
+msgid "The change starts now. You pay only the difference for the rest of this period."
+msgstr "Değişiklik hemen başlar. Dönemin kalanı için yalnızca farkı ödersiniz."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Bulut çalışma alanının başlamış olması gerekiyordu ancak zamanında yanıt vermedi. Bir sonraki çalıştırma yeniden deneyecek."
@@ -18340,6 +18386,9 @@ msgstr "En çok kullanılan modeller"
 
 msgid "Top tier. Nothing left to clear."
 msgstr "En üst katman. Geçilecek başka bir şey kalmadı."
+
+msgid "Top-up amount"
+msgstr "Yükleme miktarı"
 
 msgid "Topic"
 msgstr "Konu"
@@ -19469,6 +19518,12 @@ msgstr "Sırada ne var"
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "Bir tetikleyici çalıştığında seçtiğiniz Mac yeni bir çalışma alanı açar ve ajan isteminize başlar. Olaylardan gelen çalıştırmalar olayı içerir, böylece ajan neye bakacağını bilir. Devam etmek için çalıştırmaya yanıt verin."
 
+msgid "When bought GB-hours fall below"
+msgstr "Satın alınan GB-saat şunun altına düştüğünde"
+
+msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
+msgstr "{topupThreshold} GB-saatten az kaldığında {topupGbHours} GB-saat satın al ({topupPrice})."
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Kapalıyken başka hiçbir şey bu cihazdaki dosya ve araçlara erişemez. Buradan uzak sandbox'lara yine de bağlanabilirsiniz. <0>Daha fazla bilgi<1/></0>"
 
@@ -20019,6 +20074,9 @@ msgstr "Planınız bulut ortamlarını içermiyor."
 
 msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
 msgstr "Planınız bulut ortamlarını içermiyor. Oluşturmak için Ayarlar, Faturalandırma bölümünden yükseltin."
+
+msgid "Your plan switches to {planName} on {startDate}. Nothing is charged today."
+msgstr "Planınız {startDate} tarihinde {planName} olarak değişir. Bugün ücret alınmaz."
 
 msgid "Your rank"
 msgstr "Sıralamanız"

@@ -409,6 +409,10 @@ msgstr "{0} berakhiran {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{0} file sudah ada di {where}. Ingin menggantinya?"
 
+#. placeholder {0}: formatNumber(hours)
+msgid "{0} GB-hours"
+msgstr "{0} GB-jam"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} terpasang"
@@ -825,6 +829,9 @@ msgstr "{count} host menjalankan layanan host yang lebih lama dari aplikasi ini"
 msgid "{count}/day"
 msgstr "{count}/hari"
 
+msgid "{credit} of credit goes toward your next invoices."
+msgstr "{credit} kredit akan dipotong dari tagihan berikutnya."
+
 msgid "{current} of {total}"
 msgstr "{current} dari {total}"
 
@@ -921,6 +928,9 @@ msgstr "{hours}j {minutes}m"
 
 msgid "{hours}h ago"
 msgstr "{hours}j lalu"
+
+msgid "{hoursLabel} GB-hours ({amount})"
+msgstr "{hoursLabel} GB-jam ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {Mengimpor # worktree sebagai workspace} other {Mengimpor # worktree sebagai workspace}}"
@@ -1039,9 +1049,6 @@ msgstr "{noun, select, repository {Tentukan minimal satu repositori.} channel {T
 msgid "{openCount} open"
 msgstr "{openCount} terbuka"
 
-msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
-msgstr "{packPrice} membeli {packGbMinutes} GB-menit ({packGbHours} GB-jam). Dipakai setelah kumpulan bulanan, dan tidak pernah kedaluwarsa."
-
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} dapat membaca dan mengubah data di akun {pluginLabel} Anda atas nama Anda, termasuk di versi halaman ini yang akan datang. Halaman ini dapat mengirim apa yang dibacanya ke situs web lain. Izinkan hanya halaman yang Anda percayai."
 
@@ -1118,6 +1125,9 @@ msgstr "{pullRequestCount, plural, other {# PR}}"
 
 msgid "{queued, plural, one {# message waiting in the queue} other {# messages waiting in the queue}}"
 msgstr "{queued, plural, one {# pesan menunggu dalam antrean} other {# pesan menunggu dalam antrean}}"
+
+msgid "{rate} per GB-hour. Used after the monthly pool, and never expire."
+msgstr "{rate} per GB-jam. Dipakai setelah kumpulan bulanan, dan tidak pernah kedaluwarsa."
 
 msgid "{readPercent}% read"
 msgstr "{readPercent}% dibaca"
@@ -1890,8 +1900,8 @@ msgstr "Tambahkan agen terminal Anda sendiri ke perangkat ini."
 msgid "Added {added} files to {where}"
 msgstr "Menambahkan {added} file ke {where}"
 
-msgid "Added {buyGbHours} GB-hours."
-msgstr "{buyGbHours} GB-jam ditambahkan."
+msgid "Added {bought} GB-hours."
+msgstr "{bought} GB-jam ditambahkan."
 
 msgid "Added 1 file to {where}"
 msgstr "Menambahkan 1 file ke {where}"
@@ -2310,9 +2320,6 @@ msgstr "Juga: @superset/ui/spinner"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Selalu tahu agen mana yang membutuhkan Anda, dengan notifikasi yang langsung menuju agen yang terhambat."
-
-msgid "Amount to spend"
-msgstr "Jumlah"
 
 msgid "An agent completes multi-file changes end to end."
 msgstr "Agen menyelesaikan perubahan lintas file dari awal sampai akhir."
@@ -2833,9 +2840,6 @@ msgstr "Simpan Otomatis"
 msgid "Auto top-up"
 msgstr "Isi ulang otomatis"
 
-msgid "Auto top-up amount"
-msgstr "Jumlah isi ulang otomatis"
-
 msgid "auto-generated"
 msgstr "dibuat otomatis"
 
@@ -3348,14 +3352,17 @@ msgstr "Tombol, toggle, dan afordansi keyboard"
 msgid "Buy"
 msgstr "Beli"
 
-msgid "Buy {buyGbHours} GB-hours"
-msgstr "Beli {buyGbHours} GB-jam"
-
 msgid "Buy extra GB-hours"
 msgstr "Beli GB-jam tambahan"
 
-msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
-msgstr "Membeli {topupGbHours} GB-jam seharga {topupPrice} saat sisa GB-jam kurang dari jumlah yang dipilih."
+msgid "Buy for {total}"
+msgstr "Beli seharga {total}"
+
+msgid "Buy GB-hours"
+msgstr "Beli GB-jam"
+
+msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
+msgstr "Membeli lebih banyak GB-jam dengan kartu tersimpan saat GB-jam yang dibeli hampir habis. Paling banyak 10 kali isi ulang per bulan."
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -4158,6 +4165,9 @@ msgstr "Menutup terminal ini akan menghentikan proses yang berjalan."
 msgid "Cloud"
 msgstr "Cloud"
 
+msgid "Cloud environments"
+msgstr "Environment cloud"
+
 msgid "Cloud GB-hours per seat each month"
 msgstr "GB-jam cloud per kursi setiap bulan"
 
@@ -4459,6 +4469,9 @@ msgstr "Dikonfigurasi untuk {agent}"
 
 msgid "Confirm before quitting"
 msgstr "Konfirmasi sebelum keluar"
+
+msgid "Confirm switch"
+msgstr "Konfirmasi perpindahan"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -5787,6 +5800,12 @@ msgstr "Kustom"
 msgid "Custom agent…"
 msgstr "Agen kustom…"
 
+msgid "Custom amount"
+msgstr "Jumlah khusus"
+
+msgid "Custom amount of GB-hours"
+msgstr "Jumlah GB-jam khusus"
+
 msgid "Custom components beyond the shadcn set"
 msgstr "Komponen kustom di luar set shadcn"
 
@@ -6637,6 +6656,9 @@ msgstr "Menu Dropdown"
 msgid "Dropdown, context, and application menus"
 msgstr "Menu dropdown, konteks, dan aplikasi"
 
+msgid "Due today"
+msgstr "Jatuh tempo hari ini"
+
 msgid "Duration"
 msgstr "Durasi"
 
@@ -6886,11 +6908,11 @@ msgstr "Masukkan aturan pengulangan yang valid."
 msgid "Enter a value."
 msgstr "Masukkan sebuah nilai."
 
-msgid "Enter a whole amount from {minAmount} to {maxAmount}."
-msgstr "Masukkan jumlah bulat dari {minAmount} sampai {maxAmount}."
-
 msgid "Enter a whole number"
 msgstr "Masukkan bilangan bulat"
+
+msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
+msgstr "Masukkan bilangan bulat dari {minHours} sampai {maxHours} GB-jam."
 
 msgid "Enter URL or search..."
 msgstr "Masukkan URL atau cari..."
@@ -7128,6 +7150,9 @@ msgstr "Editor eksternal"
 
 msgid "extra ${used} of ${limit}"
 msgstr "tambahan ${used} dari ${limit}"
+
+msgid "Extra GB-hours"
+msgstr "GB-jam tambahan"
 
 msgid "Extra GB-hours, bought as needed"
 msgstr "GB-jam tambahan, dibeli sesuai kebutuhan"
@@ -8149,8 +8174,14 @@ msgstr "Gerbang"
 msgid "Gates open"
 msgstr "Gerbang terbuka"
 
+msgid "GB-hours"
+msgstr "GB-jam"
+
 msgid "GB-hours over the plan: {overage}"
 msgstr "GB-jam di atas paket: {overage}"
+
+msgid "GB-hours past the pool"
+msgstr "GB-jam di luar kumpulan"
 
 msgid "GB-hours used: {used}"
 msgstr "GB-jam terpakai: {used}"
@@ -10897,6 +10928,9 @@ msgstr "Berikutnya (Enter)"
 msgid "Next branch"
 msgstr "Branch berikutnya"
 
+msgid "Next charge: {nextTotal} on {nextDate}, plus any usage past the pool."
+msgstr "Tagihan berikutnya: {nextTotal} pada {nextDate}, ditambah pemakaian di luar kumpulan."
+
 msgid "Next comment"
 msgstr "Komentar berikutnya"
 
@@ -11761,6 +11795,9 @@ msgstr "dari semua token"
 
 msgid "Off"
 msgstr "Mati"
+
+msgid "Off. Buys more GB-hours when they run low."
+msgstr "Nonaktif. Membeli GB-jam lagi saat hampir habis."
 
 #. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
@@ -12767,6 +12804,9 @@ msgstr "Dijeda"
 msgctxt "project state"
 msgid "Paused"
 msgstr "Dijeda"
+
+msgid "Pay {total}"
+msgstr "Bayar {total}"
 
 msgid "Pay now"
 msgstr "Bayar sekarang"
@@ -16976,6 +17016,9 @@ msgstr "Ganti sesi masuk"
 msgid "Switch sign-in…"
 msgstr "Ganti sesi masuk…"
 
+msgid "Switch to {planName}"
+msgstr "Pindah ke {planName}"
+
 msgid "Switch to Active Workspace"
 msgstr "Beralih ke workspace aktif"
 
@@ -17443,6 +17486,9 @@ msgstr "Agen terbaik akan berganti.<0/>Alur kerja Anda tidak perlu."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Tombolnya kini menonjol. Saya sudah memeriksanya di panel Anda."
+
+msgid "The change starts now. You pay only the difference for the rest of this period."
+msgstr "Perubahan berlaku sekarang. Anda hanya membayar selisih untuk sisa periode ini."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Workspace cloud seharusnya sudah berjalan, tetapi tidak merespons tepat waktu. Run berikutnya akan mencoba lagi."
@@ -18340,6 +18386,9 @@ msgstr "Model teratas"
 
 msgid "Top tier. Nothing left to clear."
 msgstr "Tingkat tertinggi. Tidak ada lagi yang perlu dicapai."
+
+msgid "Top-up amount"
+msgstr "Jumlah isi ulang"
 
 msgid "Topic"
 msgstr "Topik"
@@ -19469,6 +19518,12 @@ msgstr "Selanjutnya"
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "Saat pemicu aktif, Mac yang Anda pilih membuka workspace baru dan agen mulai mengerjakan prompt Anda. Run dari peristiwa menyertakan peristiwanya, jadi agen tahu apa yang perlu dilihat. Balas di run untuk melanjutkan."
 
+msgid "When bought GB-hours fall below"
+msgstr "Saat GB-jam yang dibeli turun di bawah"
+
+msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
+msgstr "Saat sisa GB-jam kurang dari {topupThreshold}, beli {topupGbHours} GB-jam ({topupPrice})."
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Saat nonaktif, tidak ada yang bisa mengakses file dan alat di perangkat ini. Anda tetap bisa terhubung ke sandbox jarak jauh dari sini. <0>Pelajari lebih lanjut<1/></0>"
 
@@ -20019,6 +20074,9 @@ msgstr "Paket Anda tidak mencakup lingkungan cloud."
 
 msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
 msgstr "Paket Anda tidak mencakup lingkungan cloud. Tingkatkan paket di Pengaturan, Penagihan untuk membuatnya."
+
+msgid "Your plan switches to {planName} on {startDate}. Nothing is charged today."
+msgstr "Paket Anda pindah ke {planName} pada {startDate}. Tidak ada tagihan hari ini."
 
 msgid "Your rank"
 msgstr "Peringkat Anda"

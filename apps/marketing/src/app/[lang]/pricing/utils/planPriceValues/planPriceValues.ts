@@ -24,6 +24,8 @@ export interface FamilyPriceSet {
 	gbHours: string | null;
 	multiple: string | null;
 	overage: string | null;
+	overageRate: string | null;
+	environments: string | null;
 	pack: string | null;
 	previousName: string | null;
 	baseName: string;
@@ -65,6 +67,8 @@ export function planPriceValues(
 		formatNumber(value, { maximumFractionDigits: digits }, locale);
 	const base = catalog.find((family) => family.gbMinutesPerSeat);
 	const firstPack = catalog.find((family) => family.pack)?.pack;
+	const perGbHour = (value: number) =>
+		i18n._({ ...PACK_ITEM, values: { price: currency(value) } });
 	const families = catalog.map((family, index): FamilyPriceSet => {
 		const hasYearlyDiscount = offersYearlyDiscount(family);
 		return {
@@ -88,13 +92,13 @@ export function planPriceValues(
 				family.overagePerGbHour == null
 					? null
 					: currency(family.overagePerGbHour),
+			overageRate:
+				family.gbMinutesPerSeat && family.overagePerGbHour != null
+					? perGbHour(family.overagePerGbHour)
+					: null,
+			environments: family.environments ? number(family.environments, 0) : null,
 			pack: family.pack
-				? i18n._({
-						...PACK_ITEM,
-						values: {
-							price: currency(gbHourPackPricePerGbHour(family.pack)),
-						},
-					})
+				? perGbHour(gbHourPackPricePerGbHour(family.pack))
 				: null,
 			previousName: catalog[index - 1]?.name ?? null,
 			baseName: base?.name ?? family.name,

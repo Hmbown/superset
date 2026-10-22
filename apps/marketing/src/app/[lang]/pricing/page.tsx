@@ -64,7 +64,7 @@ export default async function PricingPage() {
 			<PricingHero />
 
 			<section className="relative border-b border-border">
-				<div className="max-w-6xl mx-auto px-6 py-12 md:py-16">
+				<div className="max-w-[88rem] mx-auto px-6 py-12 md:py-16">
 					<PricingTiers catalog={catalog} />
 				</div>
 			</section>
@@ -76,7 +76,7 @@ export default async function PricingPage() {
 			</section>
 
 			<section className="relative border-b border-border">
-				<div className="max-w-6xl mx-auto px-6 py-12 md:py-16">
+				<div className="max-w-7xl mx-auto px-6 py-12 md:py-16">
 					<ComparisonTable catalog={catalog} />
 				</div>
 			</section>

@@ -23,6 +23,7 @@ import {
 } from "../../../utils/settings-search";
 import { useBillingActions } from "../../hooks/useBillingActions";
 import { usePlanCatalog } from "../../hooks/usePlanCatalog";
+import { PlanChangeDialog } from "../PlanChangeDialog";
 import { BillingDetails } from "./components/BillingDetails";
 import { CloudUsageCard } from "./components/CloudUsageCard";
 import { CurrentPlanCard } from "./components/CurrentPlanCard";
@@ -47,6 +48,10 @@ export function BillingOverview({ visibleItems }: BillingOverviewProps) {
 		isUpgrading,
 		isCanceling,
 		isRestoring,
+		pendingChange,
+		confirmChange,
+		dismissChange,
+		isConfirming,
 	} = useBillingActions();
 
 	// Ownership must be judged against the org being billed. The session's
@@ -94,6 +99,7 @@ export function BillingOverview({ visibleItems }: BillingOverviewProps) {
 		const target = upsellFamily ? planForInterval(upsellFamily, annual) : null;
 		await upgrade({
 			planId: target?.id ?? "",
+			planName: upsellFamily?.name ?? "",
 			annual: target ? target.interval === "year" : annual,
 			seats: memberCount,
 			source: "billing_overview",
@@ -184,6 +190,12 @@ export function BillingOverview({ visibleItems }: BillingOverviewProps) {
 				{showOverview && isOwner && plan !== "free" && <BillingDetails />}
 				<RecentInvoices />
 			</div>
+			<PlanChangeDialog
+				change={pendingChange}
+				isConfirming={isConfirming}
+				onConfirm={confirmChange}
+				onDismiss={dismissChange}
+			/>
 		</div>
 	);
 }

@@ -409,6 +409,10 @@ msgstr "{0} 끝자리 {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{where}에 파일 {0}개가 이미 있습니다. 바꿀까요?"
 
+#. placeholder {0}: formatNumber(hours)
+msgid "{0} GB-hours"
+msgstr "{0} GB 시간"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} 설치됨"
@@ -825,6 +829,9 @@ msgstr "{count}개의 호스트가 이 앱보다 오래된 호스트 서비스�
 msgid "{count}/day"
 msgstr "하루 {count}개"
 
+msgid "{credit} of credit goes toward your next invoices."
+msgstr "{credit} 크레딧은 다음 청구서에 적용됩니다."
+
 msgid "{current} of {total}"
 msgstr "{total}개 중 {current}번째"
 
@@ -921,6 +928,9 @@ msgstr "{hours}시간 {minutes}분"
 
 msgid "{hours}h ago"
 msgstr "{hours}시간 전"
+
+msgid "{hoursLabel} GB-hours ({amount})"
+msgstr "{hoursLabel} GB 시간 ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {worktree #개를 워크스페이스로 가져왔습니다} other {worktree #개를 워크스페이스로 가져왔습니다}}"
@@ -1039,9 +1049,6 @@ msgstr "{noun, select, repository {리포지토리를 하나 이상 지정하세
 msgid "{openCount} open"
 msgstr "{openCount}개 열림"
 
-msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
-msgstr "{packPrice}에 {packGbMinutes} GB 분({packGbHours} GB 시간)을 구매합니다. 월간 풀 다음에 사용되며 만료되지 않습니다."
-
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle}은(는) 사용자 본인으로서 {pluginLabel} 계정의 데이터를 읽고 변경할 수 있으며, 이 페이지의 향후 버전에도 적용됩니다. 읽은 내용을 다른 웹사이트로 보낼 수 있습니다. 신뢰하는 페이지만 허용하세요."
 
@@ -1118,6 +1125,9 @@ msgstr "{pullRequestCount, plural, other {PR #개}}"
 
 msgid "{queued, plural, one {# message waiting in the queue} other {# messages waiting in the queue}}"
 msgstr "{queued, plural, one {대기열에서 대기 중인 메시지 #개} other {대기열에서 대기 중인 메시지 #개}}"
+
+msgid "{rate} per GB-hour. Used after the monthly pool, and never expire."
+msgstr "GB 시간당 {rate}. 월간 풀 다음에 사용되며 만료되지 않습니다."
 
 msgid "{readPercent}% read"
 msgstr "{readPercent}% 읽음"
@@ -1890,8 +1900,8 @@ msgstr "이 기기에 직접 만든 터미널 에이전트를 추가합니다."
 msgid "Added {added} files to {where}"
 msgstr "{where}에 파일 {added}개를 추가했습니다"
 
-msgid "Added {buyGbHours} GB-hours."
-msgstr "{buyGbHours} GB 시간을 추가했습니다."
+msgid "Added {bought} GB-hours."
+msgstr "{bought} GB 시간을 추가했습니다."
 
 msgid "Added 1 file to {where}"
 msgstr "{where}에 파일 1개를 추가했습니다"
@@ -2310,9 +2320,6 @@ msgstr "참고: @superset/ui/spinner"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "어떤 에이전트가 나를 필요로 하는지 항상 알 수 있습니다. 알림을 누르면 막힌 에이전트로 바로 이동합니다."
-
-msgid "Amount to spend"
-msgstr "금액"
 
 msgid "An agent completes multi-file changes end to end."
 msgstr "에이전트가 여러 파일에 걸친 변경을 처음부터 끝까지 완료합니다."
@@ -2833,9 +2840,6 @@ msgstr "자동 저장"
 msgid "Auto top-up"
 msgstr "자동 충전"
 
-msgid "Auto top-up amount"
-msgstr "자동 충전 금액"
-
 msgid "auto-generated"
 msgstr "자동 생성"
 
@@ -3348,14 +3352,17 @@ msgstr "버튼, 토글, 키보드 어포던스"
 msgid "Buy"
 msgstr "구매"
 
-msgid "Buy {buyGbHours} GB-hours"
-msgstr "{buyGbHours} GB 시간 구매"
-
 msgid "Buy extra GB-hours"
 msgstr "추가 GB 시간 구매"
 
-msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
-msgstr "남은 GB 시간이 선택한 수보다 적어지면 {topupGbHours} GB 시간을 {topupPrice}에 구매합니다."
+msgid "Buy for {total}"
+msgstr "{total}에 구매"
+
+msgid "Buy GB-hours"
+msgstr "GB 시간 구매"
+
+msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
+msgstr "구매한 GB 시간이 부족해지면 저장된 카드로 GB 시간을 더 구매합니다. 한 달에 최대 10회입니다."
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -4158,6 +4165,9 @@ msgstr "이 터미널을 닫으면 실행 중인 프로세스가 종료됩니다
 msgid "Cloud"
 msgstr "클라우드"
 
+msgid "Cloud environments"
+msgstr "클라우드 환경"
+
 msgid "Cloud GB-hours per seat each month"
 msgstr "좌석당 매월 클라우드 GB 시간"
 
@@ -4459,6 +4469,9 @@ msgstr "{agent}용으로 설정됨"
 
 msgid "Confirm before quitting"
 msgstr "종료 전 확인"
+
+msgid "Confirm switch"
+msgstr "변경 확인"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -5787,6 +5800,12 @@ msgstr "사용자 지정"
 msgid "Custom agent…"
 msgstr "사용자 지정 에이전트…"
 
+msgid "Custom amount"
+msgstr "직접 입력"
+
+msgid "Custom amount of GB-hours"
+msgstr "GB 시간 직접 입력"
+
 msgid "Custom components beyond the shadcn set"
 msgstr "shadcn 세트를 넘어선 커스텀 컴포넌트"
 
@@ -6637,6 +6656,9 @@ msgstr "드롭다운 메뉴"
 msgid "Dropdown, context, and application menus"
 msgstr "드롭다운, 컨텍스트, 애플리케이션 메뉴"
 
+msgid "Due today"
+msgstr "오늘 결제 금액"
+
 msgid "Duration"
 msgstr "소요 시간"
 
@@ -6886,11 +6908,11 @@ msgstr "유효한 반복 규칙을 입력하세요."
 msgid "Enter a value."
 msgstr "값을 입력하세요."
 
-msgid "Enter a whole amount from {minAmount} to {maxAmount}."
-msgstr "{minAmount}에서 {maxAmount} 사이의 정수 금액을 입력하세요."
-
 msgid "Enter a whole number"
 msgstr "정수 입력"
+
+msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
+msgstr "{minHours}에서 {maxHours} GB 시간 사이의 정수를 입력하세요."
 
 msgid "Enter URL or search..."
 msgstr "URL 또는 검색어 입력..."
@@ -7128,6 +7150,9 @@ msgstr "외부 편집기"
 
 msgid "extra ${used} of ${limit}"
 msgstr "${limit} 중 추가 ${used}"
+
+msgid "Extra GB-hours"
+msgstr "추가 GB 시간"
 
 msgid "Extra GB-hours, bought as needed"
 msgstr "필요할 때 구매하는 추가 GB 시간"
@@ -8149,8 +8174,14 @@ msgstr "관문"
 msgid "Gates open"
 msgstr "열린 관문"
 
+msgid "GB-hours"
+msgstr "GB 시간"
+
 msgid "GB-hours over the plan: {overage}"
 msgstr "플랜 초과 GB 시간: {overage}"
+
+msgid "GB-hours past the pool"
+msgstr "풀을 넘는 GB 시간"
 
 msgid "GB-hours used: {used}"
 msgstr "사용한 GB 시간: {used}"
@@ -10897,6 +10928,9 @@ msgstr "다음 (Enter)"
 msgid "Next branch"
 msgstr "다음 브랜치"
 
+msgid "Next charge: {nextTotal} on {nextDate}, plus any usage past the pool."
+msgstr "다음 결제: {nextDate}에 {nextTotal}, 풀을 넘는 사용량 추가."
+
 msgid "Next comment"
 msgstr "다음 코멘트"
 
@@ -11761,6 +11795,9 @@ msgstr "전체 토큰 대비"
 
 msgid "Off"
 msgstr "끔"
+
+msgid "Off. Buys more GB-hours when they run low."
+msgstr "꺼짐. 부족해지면 GB 시간을 더 구매합니다."
 
 #. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
@@ -12767,6 +12804,9 @@ msgstr "일시 중지됨"
 msgctxt "project state"
 msgid "Paused"
 msgstr "일시 중지됨"
+
+msgid "Pay {total}"
+msgstr "{total} 결제"
 
 msgid "Pay now"
 msgstr "지금 결제"
@@ -16976,6 +17016,9 @@ msgstr "로그인 전환"
 msgid "Switch sign-in…"
 msgstr "로그인 전환…"
 
+msgid "Switch to {planName}"
+msgstr "{planName}(으)로 변경"
+
 msgid "Switch to Active Workspace"
 msgstr "활성 워크스페이스로 전환"
 
@@ -17443,6 +17486,9 @@ msgstr "최고의 에이전트는 바뀝니다.<0/>워크플로는 그럴 필요
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "버튼이 이제 눈에 띕니다. 패널에서 확인했습니다."
+
+msgid "The change starts now. You pay only the difference for the rest of this period."
+msgstr "변경은 바로 적용됩니다. 남은 기간에 대한 차액만 결제합니다."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "클라우드 워크스페이스가 시작되었어야 하지만 제시간에 응답하지 않았습니다. 다음 실행에서 다시 시도합니다."
@@ -18340,6 +18386,9 @@ msgstr "상위 모델"
 
 msgid "Top tier. Nothing left to clear."
 msgstr "최고 등급입니다. 더 달성할 것이 없습니다."
+
+msgid "Top-up amount"
+msgstr "충전량"
 
 msgid "Topic"
 msgstr "주제"
@@ -19469,6 +19518,12 @@ msgstr "다음 계획"
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "트리거가 실행되면 선택한 Mac이 새 워크스페이스를 열고 에이전트가 프롬프트를 시작합니다. 이벤트로 시작된 실행에는 이벤트가 포함되어 에이전트가 무엇을 봐야 할지 압니다. 계속하려면 실행에 답장하세요."
 
+msgid "When bought GB-hours fall below"
+msgstr "구매한 GB 시간이 다음보다 적어지면"
+
+msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
+msgstr "남은 GB 시간이 {topupThreshold}보다 적어지면 {topupGbHours} GB 시간을 구매합니다({topupPrice})."
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "끄면 이 기기의 파일과 도구에 아무것도 접근할 수 없습니다. 여기에서 원격 샌드박스로 나가는 연결은 계속 사용할 수 있습니다. <0>자세히 알아보기<1/></0>"
 
@@ -20019,6 +20074,9 @@ msgstr "현재 플랜에는 클라우드 환경이 포함되어 있지 않습니
 
 msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
 msgstr "현재 플랜에는 클라우드 환경이 포함되어 있지 않습니다. 환경을 만들려면 설정, 결제에서 업그레이드하세요."
+
+msgid "Your plan switches to {planName} on {startDate}. Nothing is charged today."
+msgstr "{startDate}에 플랜이 {planName}(으)로 바뀝니다. 오늘은 결제되지 않습니다."
 
 msgid "Your rank"
 msgstr "내 순위"

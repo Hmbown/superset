@@ -43,8 +43,8 @@ export function PricingCard({
 	return (
 		<div
 			className={cn(
-				"flex flex-col gap-6 rounded-lg border p-6 md:p-8",
-				wide && "md:col-span-full",
+				"flex flex-col gap-6 rounded-lg border p-6 md:p-8 xl:p-6",
+				wide && "md:col-span-2 xl:col-span-1",
 				tier.highlight
 					? "border-foreground/30 bg-accent/20"
 					: "border-border bg-card/40",
@@ -69,7 +69,14 @@ export function PricingCard({
 							{strikethrough}
 						</span>
 					)}
-					<span className="text-4xl font-medium tracking-tight leading-none text-foreground">
+					<span
+						className={cn(
+							"font-medium tracking-tight leading-none text-foreground",
+							tier.price.kind === "custom"
+								? "text-3xl break-words"
+								: "text-4xl",
+						)}
+					>
 						{typeof display === "string" ? display : t(display)}
 					</span>
 					{note && (
@@ -83,7 +90,12 @@ export function PricingCard({
 				)}
 			</div>
 
-			<div className={cn("flex flex-col gap-2", wide && "md:max-w-xs")}>
+			<div
+				className={cn(
+					"flex flex-col gap-2",
+					wide && "md:max-w-xs xl:max-w-none",
+				)}
+			>
 				<Button asChild variant={tier.cta.variant} size="lg" className="w-full">
 					{tier.cta.external ? (
 						<a href={tier.cta.href} target="_blank" rel="noopener noreferrer">
@@ -121,7 +133,7 @@ export function PricingCard({
 			<ul
 				className={cn(
 					"flex flex-col gap-3 border-t border-border pt-6",
-					wide && "md:grid md:grid-cols-2 lg:grid-cols-3",
+					wide && "md:grid md:grid-cols-2 lg:grid-cols-3 xl:flex",
 				)}
 			>
 				{tier.features

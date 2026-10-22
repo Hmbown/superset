@@ -409,6 +409,10 @@ msgstr "{0} končící na {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "V {where} už existuje {0} souborů. Chcete je nahradit?"
 
+#. placeholder {0}: formatNumber(hours)
+msgid "{0} GB-hours"
+msgstr "{0} GB-hodin"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} nainstalováno"
@@ -825,6 +829,9 @@ msgstr "{count} hostitelů používá starší službu hostitele než tato aplik
 msgid "{count}/day"
 msgstr "{count}/den"
 
+msgid "{credit} of credit goes toward your next invoices."
+msgstr "{credit} kreditu se odečte z dalších faktur."
+
 msgid "{current} of {total}"
 msgstr "{current} z {total}"
 
@@ -921,6 +928,9 @@ msgstr "{hours} h {minutes} m"
 
 msgid "{hours}h ago"
 msgstr "před {hours} h"
+
+msgid "{hoursLabel} GB-hours ({amount})"
+msgstr "{hoursLabel} GB-hodin ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {Importován # worktree jako pracovní prostor} few {Importovány # worktree jako pracovní prostory} many {Importováno # worktree jako pracovní prostory} other {Importováno # worktree jako pracovní prostory}}"
@@ -1039,9 +1049,6 @@ msgstr "{noun, select, repository {Zadejte alespoň jeden repozitář.} channel 
 msgid "{openCount} open"
 msgstr "{openCount} otevřených"
 
-msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
-msgstr "{packPrice} koupí {packGbMinutes} GB-minut ({packGbHours} GB-hodin). Čerpají se po měsíčním fondu a nikdy nevyprší."
-
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} může vaším jménem číst a měnit data ve vašem účtu {pluginLabel}, a to i v budoucích verzích této stránky. Co načte, může odeslat na jiné weby. Povolte jen stránky, kterým důvěřujete."
 
@@ -1118,6 +1125,9 @@ msgstr "{pullRequestCount, plural, one {# PR} few {# PR} many {# PR} other {# PR
 
 msgid "{queued, plural, one {# message waiting in the queue} other {# messages waiting in the queue}}"
 msgstr "{queued, plural, one {# zpráva čeká ve frontě} few {# zprávy čekají ve frontě} many {# zprávy čeká ve frontě} other {# zpráv čeká ve frontě}}"
+
+msgid "{rate} per GB-hour. Used after the monthly pool, and never expire."
+msgstr "{rate} za GB-hodinu. Čerpají se po měsíčním fondu a nikdy nevyprší."
 
 msgid "{readPercent}% read"
 msgstr "přečteno {readPercent} %"
@@ -1890,8 +1900,8 @@ msgstr "Přidejte na toto zařízení vlastního terminálového agenta."
 msgid "Added {added} files to {where}"
 msgstr "Přidáno {added} souborů do {where}"
 
-msgid "Added {buyGbHours} GB-hours."
-msgstr "Přidáno {buyGbHours} GB-hodin."
+msgid "Added {bought} GB-hours."
+msgstr "Přidáno {bought} GB-hodin."
 
 msgid "Added 1 file to {where}"
 msgstr "Přidán 1 soubor do {where}"
@@ -2310,9 +2320,6 @@ msgstr "Také: @superset/ui/spinner"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Vždy víte, který agent vás potřebuje — oznámení vedou přímo na zablokovaného agenta."
-
-msgid "Amount to spend"
-msgstr "Částka"
 
 msgid "An agent completes multi-file changes end to end."
 msgstr "Agent dokončí změnu napříč více soubory od začátku do konce."
@@ -2833,9 +2840,6 @@ msgstr "Automatické ukládání"
 msgid "Auto top-up"
 msgstr "Automatické dobití"
 
-msgid "Auto top-up amount"
-msgstr "Částka automatického dobití"
-
 msgid "auto-generated"
 msgstr "automaticky"
 
@@ -3348,14 +3352,17 @@ msgstr "Tlačítka, přepínače a klávesové prvky"
 msgid "Buy"
 msgstr "Koupit"
 
-msgid "Buy {buyGbHours} GB-hours"
-msgstr "Koupit {buyGbHours} GB-hodin"
-
 msgid "Buy extra GB-hours"
 msgstr "Koupit další GB-hodiny"
 
-msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
-msgstr "Koupí {topupGbHours} GB-hodin za {topupPrice}, když zbývá méně GB-hodin, než je zvolený počet."
+msgid "Buy for {total}"
+msgstr "Koupit za {total}"
+
+msgid "Buy GB-hours"
+msgstr "Koupit GB-hodiny"
+
+msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
+msgstr "Koupí další GB-hodiny uloženou kartou, když koupené GB-hodiny docházejí. Nejvýše 10 dobití měsíčně."
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -4158,6 +4165,9 @@ msgstr "Zavřením tohoto terminálu ukončíte běžící proces."
 msgid "Cloud"
 msgstr "Cloud"
 
+msgid "Cloud environments"
+msgstr "Cloudová prostředí"
+
 msgid "Cloud GB-hours per seat each month"
 msgstr "Cloudové GB-hodiny na místo měsíčně"
 
@@ -4459,6 +4469,9 @@ msgstr "Nastaveno pro {agent}"
 
 msgid "Confirm before quitting"
 msgstr "Potvrdit před ukončením"
+
+msgid "Confirm switch"
+msgstr "Potvrdit změnu"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -5787,6 +5800,12 @@ msgstr "Vlastní"
 msgid "Custom agent…"
 msgstr "Vlastní agent…"
 
+msgid "Custom amount"
+msgstr "Vlastní množství"
+
+msgid "Custom amount of GB-hours"
+msgstr "Vlastní počet GB-hodin"
+
 msgid "Custom components beyond the shadcn set"
 msgstr "Vlastní komponenty nad rámec sady shadcn"
 
@@ -6637,6 +6656,9 @@ msgstr "Rozbalovací nabídka"
 msgid "Dropdown, context, and application menus"
 msgstr "Rozbalovací, kontextové a aplikační nabídky"
 
+msgid "Due today"
+msgstr "K úhradě dnes"
+
 msgid "Duration"
 msgstr "Trvání"
 
@@ -6886,11 +6908,11 @@ msgstr "Zadejte platné pravidlo opakování."
 msgid "Enter a value."
 msgstr "Zadejte hodnotu."
 
-msgid "Enter a whole amount from {minAmount} to {maxAmount}."
-msgstr "Zadejte celou částku od {minAmount} do {maxAmount}."
-
 msgid "Enter a whole number"
 msgstr "Zadejte celé číslo"
+
+msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
+msgstr "Zadejte celé číslo od {minHours} do {maxHours} GB-hodin."
 
 msgid "Enter URL or search..."
 msgstr "Zadejte URL nebo hledejte..."
@@ -7128,6 +7150,9 @@ msgstr "Externí editor"
 
 msgid "extra ${used} of ${limit}"
 msgstr "navíc {used} $ z {limit} $"
+
+msgid "Extra GB-hours"
+msgstr "Další GB-hodiny"
 
 msgid "Extra GB-hours, bought as needed"
 msgstr "Další GB-hodiny, kupované podle potřeby"
@@ -8149,8 +8174,14 @@ msgstr "Brány"
 msgid "Gates open"
 msgstr "Otevřené brány"
 
+msgid "GB-hours"
+msgstr "GB-hodiny"
+
 msgid "GB-hours over the plan: {overage}"
 msgstr "GB-hodiny nad rámec plánu: {overage}"
+
+msgid "GB-hours past the pool"
+msgstr "GB-hodiny nad fond"
 
 msgid "GB-hours used: {used}"
 msgstr "Využité GB-hodiny: {used}"
@@ -10897,6 +10928,9 @@ msgstr "Další (Enter)"
 msgid "Next branch"
 msgstr "Další větev"
 
+msgid "Next charge: {nextTotal} on {nextDate}, plus any usage past the pool."
+msgstr "Další platba: {nextTotal} dne {nextDate}, plus využití nad fond."
+
 msgid "Next comment"
 msgstr "Další komentář"
 
@@ -11761,6 +11795,9 @@ msgstr "ze všech tokenů"
 
 msgid "Off"
 msgstr "Vypnuto"
+
+msgid "Off. Buys more GB-hours when they run low."
+msgstr "Vypnuto. Koupí další GB-hodiny, když docházejí."
 
 #. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
@@ -12767,6 +12804,9 @@ msgstr "Pozastaveno"
 msgctxt "project state"
 msgid "Paused"
 msgstr "Pozastaveno"
+
+msgid "Pay {total}"
+msgstr "Zaplatit {total}"
 
 msgid "Pay now"
 msgstr "Zaplatit"
@@ -16976,6 +17016,9 @@ msgstr "Přepnout přihlášení"
 msgid "Switch sign-in…"
 msgstr "Přepnout přihlášení…"
 
+msgid "Switch to {planName}"
+msgstr "Přejít na {planName}"
+
 msgid "Switch to Active Workspace"
 msgstr "Přepnout na aktivní pracovní prostor"
 
@@ -17443,6 +17486,9 @@ msgstr "Nejlepší agent se změní.<0/>Vaše workflow ne."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Tlačítko je teď výrazné. Zkontroloval jsem to ve vašem panelu."
+
+msgid "The change starts now. You pay only the difference for the rest of this period."
+msgstr "Změna platí hned. Platíte jen rozdíl za zbytek období."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Cloudový pracovní prostor se měl spustit, ale neodpověděl včas. Další běh to zkusí znovu."
@@ -18340,6 +18386,9 @@ msgstr "Nejlepší modely"
 
 msgid "Top tier. Nothing left to clear."
 msgstr "Nejvyšší úroveň. Není už co pokořit."
+
+msgid "Top-up amount"
+msgstr "Množství dobití"
 
 msgid "Topic"
 msgstr "Téma"
@@ -19469,6 +19518,12 @@ msgstr "Co bude dál"
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "Když se spouštěč spustí, Mac, který jste vybrali, otevře nový pracovní prostor a agent začne pracovat na vašem promptu. Běhy z událostí obsahují i danou událost, takže agent ví, na co se podívat. Odpovězte v běhu a agent bude pokračovat."
 
+msgid "When bought GB-hours fall below"
+msgstr "Když koupené GB-hodiny klesnou pod"
+
+msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
+msgstr "Když zbývá méně než {topupThreshold} GB-hodin, koupit {topupGbHours} GB-hodin ({topupPrice})."
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Když je vypnuto, nic jiného se nedostane k souborům a nástrojům na tomto zařízení. Odsud se stále můžete připojovat ke vzdáleným sandboxům. <0>Zjistit více<1/></0>"
 
@@ -20019,6 +20074,9 @@ msgstr "Váš plán nezahrnuje cloudová prostředí."
 
 msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
 msgstr "Váš plán nezahrnuje cloudová prostředí. Pro vytvoření přejděte na vyšší plán v Nastavení, Fakturace."
+
+msgid "Your plan switches to {planName} on {startDate}. Nothing is charged today."
+msgstr "Váš plán se změní na {planName} dne {startDate}. Dnes se nic neúčtuje."
 
 msgid "Your rank"
 msgstr "Vaše pozice"

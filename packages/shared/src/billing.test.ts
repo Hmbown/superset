@@ -6,7 +6,7 @@ import {
 	familyForPlan,
 	fromAutumnRest,
 	gbHourPackPricePerGbHour,
-	gbHourPackPurchase,
+	gbHourPurchase,
 	isCloudUsageRefusal,
 	machineSpec,
 	maxYearlyDiscount,
@@ -256,19 +256,20 @@ describe("planCatalogFromAutumn", () => {
 		expect(pro?.pack).toEqual({ gbMinutes: 1000, price: 1 });
 	});
 
-	test("a GB-hour purchase rounds up to whole pack units", () => {
-		expect(gbHourPackPurchase({ gbMinutes: 1000, price: 1 }, 25)).toEqual({
-			gbMinutes: 25000,
-			price: 25,
+	test("a GB-hour purchase rounds up to whole pack units, never past the maximum", () => {
+		const perGbHour = { gbMinutes: 60, price: 0.06 };
+		expect(gbHourPurchase(perGbHour, 500)).toEqual({
+			gbMinutes: 30000,
+			price: 30,
 		});
-		expect(gbHourPackPricePerGbHour({ gbMinutes: 1000, price: 1 })).toBe(0.06);
-		expect(gbHourPackPurchase({ gbMinutes: 60000, price: 60 }, 2000)).toEqual({
-			gbMinutes: 1980000,
-			price: 1980,
+		expect(gbHourPackPricePerGbHour(perGbHour)).toBeCloseTo(0.06);
+		expect(gbHourPurchase({ gbMinutes: 1000, price: 1 }, 100)).toEqual({
+			gbMinutes: 6000,
+			price: 6,
 		});
-		expect(gbHourPackPurchase({ gbMinutes: 60000, price: 60 }, 25)).toEqual({
-			gbMinutes: 60000,
-			price: 60,
+		expect(gbHourPurchase(perGbHour, 50_000)).toEqual({
+			gbMinutes: 1_800_000,
+			price: 1800,
 		});
 	});
 

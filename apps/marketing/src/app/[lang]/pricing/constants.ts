@@ -311,23 +311,21 @@ export interface ComparisonRow {
 		paid: ComparisonValue | null,
 		enterprise: ComparisonValue | null,
 	];
-	cloudGbHours?: boolean;
-	cloudPack?: boolean;
-	badge?: {
-		label: MessageDescriptor;
-		variant: "default" | "secondary";
-	};
+	cloud?: "gbHours" | "environments" | "overageRate" | "pack";
 }
 
 export interface ComparisonSection {
 	id: string;
 	title: MessageDescriptor;
+	badge?: MessageDescriptor;
 	rows: ComparisonRow[];
 }
 
 const UNLIMITED = msg({
 	message: "Unlimited",
 });
+
+const CUSTOM = msg({ message: "Custom" });
 
 export const COMPARISON_SECTIONS: ComparisonSection[] = [
 	{
@@ -357,23 +355,40 @@ export const COMPARISON_SECTIONS: ComparisonSection[] = [
 				}),
 				values: [UNLIMITED, UNLIMITED, UNLIMITED],
 			},
+		],
+	},
+	{
+		id: "cloud",
+		title: msg({ message: "Cloud workspaces" }),
+		badge: BETA,
+		rows: [
 			{
 				id: "cloudGbHours",
 				label: msg({
 					message: "Cloud GB-hours per seat each month",
 				}),
-				values: [null, null, msg({ message: "Custom" })],
-				cloudGbHours: true,
-				badge: { label: BETA, variant: "secondary" },
+				values: [null, null, CUSTOM],
+				cloud: "gbHours",
+			},
+			{
+				id: "cloudEnvironments",
+				label: msg({ message: "Cloud environments" }),
+				values: [null, null, CUSTOM],
+				cloud: "environments",
+			},
+			{
+				id: "overage",
+				label: msg({ message: "GB-hours past the pool" }),
+				values: [null, null, CUSTOM],
+				cloud: "overageRate",
 			},
 			{
 				id: "gbHourPacks",
 				label: msg({
 					message: "Extra GB-hours, bought as needed",
 				}),
-				values: [null, null, msg({ message: "Custom" })],
-				cloudPack: true,
-				badge: { label: BETA, variant: "secondary" },
+				values: [null, null, CUSTOM],
+				cloud: "pack",
 			},
 		],
 	},

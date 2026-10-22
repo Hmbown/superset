@@ -1,9 +1,9 @@
 import { db } from "@superset/db/client";
 import { members, subscriptions } from "@superset/db/schema";
 import {
-	GB_HOUR_PURCHASE_AMOUNT,
+	GB_HOUR_PURCHASE,
 	gbHourPack,
-	gbHourPackPurchase,
+	gbHourPurchase,
 } from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 import { AutumnError } from "autumn-js";
@@ -134,6 +134,7 @@ export const autumnBillingRoutes = {
 					currentPlanId: z.string().nullable().optional(),
 					successUrl: z.string().min(1),
 					cancelUrl: z.string().optional(),
+					confirmed: z.boolean().optional(),
 				}),
 				use: [
 					sessionMiddleware,
@@ -194,7 +195,7 @@ export const autumnBillingRoutes = {
 					planId: ctx.body.planId,
 					...purchase.quantities,
 					successUrl: ctx.body.successUrl,
-					redirectMode: "always",
+					redirectMode: ctx.body.confirmed ? "if_required" : "always",
 					checkoutSessionParams: checkoutSessionParams({
 						yearly: purchase.yearly,
 						organizationId: caller.organizationId,
@@ -212,11 +213,11 @@ export const autumnBillingRoutes = {
 				method: "POST",
 				body: z.object({
 					...organizationBody,
-					amount: z
+					gbHours: z
 						.number()
 						.int()
-						.min(GB_HOUR_PURCHASE_AMOUNT.min)
-						.max(GB_HOUR_PURCHASE_AMOUNT.max),
+						.min(GB_HOUR_PURCHASE.min)
+						.max(GB_HOUR_PURCHASE.max),
 				}),
 				use: [sessionMiddleware],
 			},
@@ -229,7 +230,7 @@ export const autumnBillingRoutes = {
 					featureQuantities: [
 						{
 							featureId: BOX_GB_MINUTES_FEATURE_ID,
-							quantity: gbHourPackPurchase(pack, ctx.body.amount).gbMinutes,
+							quantity: gbHourPurchase(pack, ctx.body.gbHours).gbMinutes,
 						},
 					],
 				});
@@ -245,11 +246,11 @@ export const autumnBillingRoutes = {
 					...organizationBody,
 					enabled: z.boolean(),
 					thresholdGbHours: z.number().int().min(0).max(100_000),
-					amount: z
+					gbHours: z
 						.number()
 						.int()
-						.min(GB_HOUR_PURCHASE_AMOUNT.min)
-						.max(GB_HOUR_PURCHASE_AMOUNT.max),
+						.min(GB_HOUR_PURCHASE.min)
+						.max(GB_HOUR_PURCHASE.max),
 				}),
 				use: [sessionMiddleware],
 			},
@@ -264,7 +265,7 @@ export const autumnBillingRoutes = {
 								featureId: BOX_GB_MINUTES_FEATURE_ID,
 								enabled: ctx.body.enabled,
 								threshold: ctx.body.thresholdGbHours * 60,
-								quantity: gbHourPackPurchase(pack, ctx.body.amount).gbMinutes,
+								quantity: gbHourPurchase(pack, ctx.body.gbHours).gbMinutes,
 								purchaseLimit: {
 									interval: "month",
 									limit: AUTO_TOPUP_MONTHLY_LIMIT,

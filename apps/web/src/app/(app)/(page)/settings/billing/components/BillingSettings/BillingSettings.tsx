@@ -26,6 +26,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useTRPC } from "@/trpc/react";
 import { CloudUsageCard } from "./components/CloudUsageCard";
+import { PlanChangeDialog } from "./components/PlanChangeDialog";
 import { useBillingActions } from "./hooks/useBillingActions";
 import { usePlanCatalog } from "./hooks/usePlanCatalog";
 
@@ -135,6 +136,10 @@ export function BillingSettings({
 		isCanceling,
 		isRestoring,
 		isOpeningPortal,
+		pendingChange,
+		confirmChange,
+		dismissChange,
+		isConfirming,
 	} = useBillingActions({
 		activeOrganizationId,
 		activePlan,
@@ -147,6 +152,7 @@ export function BillingSettings({
 		if (memberCount === undefined || !target) return;
 		await upgrade({
 			planId: target.id,
+			planName: family.name,
 			annual: target.interval === "year",
 			seats: memberCount,
 		});
@@ -421,6 +427,12 @@ export function BillingSettings({
 					.
 				</Trans>
 			</p>
+			<PlanChangeDialog
+				change={pendingChange}
+				isConfirming={isConfirming}
+				onConfirm={confirmChange}
+				onDismiss={dismissChange}
+			/>
 		</div>
 	);
 }

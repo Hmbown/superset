@@ -409,6 +409,10 @@ msgstr "{0} kết thúc bằng {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{0} tệp đã tồn tại trong {where}. Bạn có muốn thay thế chúng không?"
 
+#. placeholder {0}: formatNumber(hours)
+msgid "{0} GB-hours"
+msgstr "{0} GB-giờ"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "Đã cài {0}"
@@ -825,6 +829,9 @@ msgstr "{count} máy chủ đang chạy dịch vụ máy chủ cũ hơn ứng d�
 msgid "{count}/day"
 msgstr "{count}/ngày"
 
+msgid "{credit} of credit goes toward your next invoices."
+msgstr "{credit} tín dụng sẽ được trừ vào các hóa đơn tiếp theo."
+
 msgid "{current} of {total}"
 msgstr "{current} / {total}"
 
@@ -921,6 +928,9 @@ msgstr "{hours} giờ {minutes} phút"
 
 msgid "{hours}h ago"
 msgstr "{hours} giờ trước"
+
+msgid "{hoursLabel} GB-hours ({amount})"
+msgstr "{hoursLabel} GB-giờ ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {Đã nhập # worktree thành workspace} other {Đã nhập # worktree thành workspace}}"
@@ -1039,9 +1049,6 @@ msgstr "{noun, select, repository {Hãy chỉ định ít nhất một repo.} ch
 msgid "{openCount} open"
 msgstr "{openCount} còn mở"
 
-msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
-msgstr "{packPrice} mua được {packGbMinutes} GB-phút ({packGbHours} GB-giờ). Được dùng sau quỹ hằng tháng và không bao giờ hết hạn."
-
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} có thể thay bạn đọc và thay đổi dữ liệu trong tài khoản {pluginLabel} của bạn, kể cả trong các phiên bản sau của trang này. Trang có thể gửi những gì nó đọc được đến các trang web khác. Chỉ cho phép những trang bạn tin tưởng."
 
@@ -1118,6 +1125,9 @@ msgstr "{pullRequestCount, plural, other {# PR}}"
 
 msgid "{queued, plural, one {# message waiting in the queue} other {# messages waiting in the queue}}"
 msgstr "{queued, plural, one {# tin nhắn đang chờ trong hàng đợi} other {# tin nhắn đang chờ trong hàng đợi}}"
+
+msgid "{rate} per GB-hour. Used after the monthly pool, and never expire."
+msgstr "{rate} cho mỗi GB-giờ. Được dùng sau quỹ hằng tháng và không bao giờ hết hạn."
 
 msgid "{readPercent}% read"
 msgstr "đã đọc {readPercent}%"
@@ -1890,8 +1900,8 @@ msgstr "Thêm agent terminal của riêng bạn vào thiết bị này."
 msgid "Added {added} files to {where}"
 msgstr "Đã thêm {added} tệp vào {where}"
 
-msgid "Added {buyGbHours} GB-hours."
-msgstr "Đã thêm {buyGbHours} GB-giờ."
+msgid "Added {bought} GB-hours."
+msgstr "Đã thêm {bought} GB-giờ."
 
 msgid "Added 1 file to {where}"
 msgstr "Đã thêm 1 tệp vào {where}"
@@ -2310,9 +2320,6 @@ msgstr "Ngoài ra: @superset/ui/spinner"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Luôn biết agent nào cần bạn, với thông báo dẫn thẳng tới agent đang bị chặn."
-
-msgid "Amount to spend"
-msgstr "Số tiền"
 
 msgid "An agent completes multi-file changes end to end."
 msgstr "Agent hoàn thành trọn vẹn các thay đổi trên nhiều tệp."
@@ -2833,9 +2840,6 @@ msgstr "Tự động lưu"
 msgid "Auto top-up"
 msgstr "Tự động nạp thêm"
 
-msgid "Auto top-up amount"
-msgstr "Số tiền tự động nạp thêm"
-
 msgid "auto-generated"
 msgstr "tự động tạo"
 
@@ -3348,14 +3352,17 @@ msgstr "Nút, công tắc và gợi ý phím"
 msgid "Buy"
 msgstr "Mua"
 
-msgid "Buy {buyGbHours} GB-hours"
-msgstr "Mua {buyGbHours} GB-giờ"
-
 msgid "Buy extra GB-hours"
 msgstr "Mua thêm GB-giờ"
 
-msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
-msgstr "Mua {topupGbHours} GB-giờ với giá {topupPrice} khi số GB-giờ còn lại ít hơn mức đã chọn."
+msgid "Buy for {total}"
+msgstr "Mua với giá {total}"
+
+msgid "Buy GB-hours"
+msgstr "Mua GB-giờ"
+
+msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
+msgstr "Mua thêm GB-giờ bằng thẻ đã lưu khi số GB-giờ đã mua sắp hết. Tối đa 10 lần nạp mỗi tháng."
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -4158,6 +4165,9 @@ msgstr "Đóng terminal này sẽ kết thúc tiến trình đang chạy."
 msgid "Cloud"
 msgstr "Cloud"
 
+msgid "Cloud environments"
+msgstr "Môi trường đám mây"
+
 msgid "Cloud GB-hours per seat each month"
 msgstr "GB-giờ đám mây cho mỗi người dùng mỗi tháng"
 
@@ -4459,6 +4469,9 @@ msgstr "Đã cấu hình cho {agent}"
 
 msgid "Confirm before quitting"
 msgstr "Xác nhận trước khi thoát"
+
+msgid "Confirm switch"
+msgstr "Xác nhận chuyển"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -5787,6 +5800,12 @@ msgstr "Tùy chỉnh"
 msgid "Custom agent…"
 msgstr "Agent tùy chỉnh…"
 
+msgid "Custom amount"
+msgstr "Số lượng tùy chọn"
+
+msgid "Custom amount of GB-hours"
+msgstr "Số GB-giờ tùy chọn"
+
 msgid "Custom components beyond the shadcn set"
 msgstr "Component tùy chỉnh ngoài bộ shadcn"
 
@@ -6637,6 +6656,9 @@ msgstr "Dropdown Menu"
 msgid "Dropdown, context, and application menus"
 msgstr "Menu thả xuống, menu ngữ cảnh và menu ứng dụng"
 
+msgid "Due today"
+msgstr "Phải trả hôm nay"
+
 msgid "Duration"
 msgstr "Thời lượng"
 
@@ -6886,11 +6908,11 @@ msgstr "Hãy nhập một quy tắc lặp hợp lệ."
 msgid "Enter a value."
 msgstr "Hãy nhập một giá trị."
 
-msgid "Enter a whole amount from {minAmount} to {maxAmount}."
-msgstr "Nhập số tiền nguyên từ {minAmount} đến {maxAmount}."
-
 msgid "Enter a whole number"
 msgstr "Nhập một số nguyên"
+
+msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
+msgstr "Nhập số nguyên từ {minHours} đến {maxHours} GB-giờ."
 
 msgid "Enter URL or search..."
 msgstr "Nhập URL hoặc tìm kiếm..."
@@ -7128,6 +7150,9 @@ msgstr "Trình soạn thảo ngoài"
 
 msgid "extra ${used} of ${limit}"
 msgstr "dùng thêm ${used} trên ${limit}"
+
+msgid "Extra GB-hours"
+msgstr "GB-giờ bổ sung"
 
 msgid "Extra GB-hours, bought as needed"
 msgstr "GB-giờ bổ sung, mua khi cần"
@@ -8149,8 +8174,14 @@ msgstr "Cổng"
 msgid "Gates open"
 msgstr "Cổng còn mở"
 
+msgid "GB-hours"
+msgstr "GB-giờ"
+
 msgid "GB-hours over the plan: {overage}"
 msgstr "GB-giờ vượt gói: {overage}"
+
+msgid "GB-hours past the pool"
+msgstr "GB-giờ vượt quỹ"
 
 msgid "GB-hours used: {used}"
 msgstr "GB-giờ đã dùng: {used}"
@@ -10897,6 +10928,9 @@ msgstr "Tiếp (Enter)"
 msgid "Next branch"
 msgstr "Nhánh kế tiếp"
 
+msgid "Next charge: {nextTotal} on {nextDate}, plus any usage past the pool."
+msgstr "Lần thu tiếp theo: {nextTotal} vào {nextDate}, cộng phần sử dụng vượt quỹ."
+
 msgid "Next comment"
 msgstr "Bình luận tiếp theo"
 
@@ -11761,6 +11795,9 @@ msgstr "trên tổng số token"
 
 msgid "Off"
 msgstr "Tắt"
+
+msgid "Off. Buys more GB-hours when they run low."
+msgstr "Tắt. Mua thêm GB-giờ khi sắp hết."
 
 #. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
@@ -12767,6 +12804,9 @@ msgstr "Đã tạm dừng"
 msgctxt "project state"
 msgid "Paused"
 msgstr "Tạm dừng"
+
+msgid "Pay {total}"
+msgstr "Thanh toán {total}"
 
 msgid "Pay now"
 msgstr "Thanh toán ngay"
@@ -16976,6 +17016,9 @@ msgstr "Đổi đăng nhập"
 msgid "Switch sign-in…"
 msgstr "Đổi đăng nhập…"
 
+msgid "Switch to {planName}"
+msgstr "Chuyển sang {planName}"
+
 msgid "Switch to Active Workspace"
 msgstr "Chuyển sang workspace đang hoạt động"
 
@@ -17443,6 +17486,9 @@ msgstr "Agent tốt nhất sẽ thay đổi.<0/>Quy trình của bạn thì khô
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Nút giờ đã nổi bật. Tôi đã kiểm tra trong ngăn của bạn."
+
+msgid "The change starts now. You pay only the difference for the rest of this period."
+msgstr "Thay đổi có hiệu lực ngay. Bạn chỉ trả phần chênh lệch cho thời gian còn lại của kỳ này."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Workspace cloud lẽ ra đã khởi động nhưng không phản hồi kịp. Lần chạy tiếp theo sẽ thử lại."
@@ -18340,6 +18386,9 @@ msgstr "Mô hình hàng đầu"
 
 msgid "Top tier. Nothing left to clear."
 msgstr "Hạng cao nhất. Không còn gì để vượt qua."
+
+msgid "Top-up amount"
+msgstr "Số lượng nạp"
 
 msgid "Topic"
 msgstr "Chủ đề"
@@ -19469,6 +19518,12 @@ msgstr "Tiếp theo"
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "Khi trigger kích hoạt, chiếc Mac bạn chọn mở một workspace mới và agent bắt đầu với prompt của bạn. Lượt chạy do sự kiện có kèm sự kiện đó, nên agent biết cần xem gì. Trả lời trong lượt chạy để tiếp tục."
 
+msgid "When bought GB-hours fall below"
+msgstr "Khi số GB-giờ đã mua xuống dưới"
+
+msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
+msgstr "Khi còn ít hơn {topupThreshold} GB-giờ, mua {topupGbHours} GB-giờ ({topupPrice})."
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Khi tắt, không gì khác có thể truy cập tệp và công cụ trên thiết bị này. Bạn vẫn có thể kết nối tới sandbox từ xa từ đây. <0>Tìm hiểu thêm<1/></0>"
 
@@ -20019,6 +20074,9 @@ msgstr "Gói của bạn không bao gồm môi trường đám mây."
 
 msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
 msgstr "Gói của bạn không bao gồm môi trường đám mây. Nâng cấp trong Cài đặt, Thanh toán để tạo môi trường."
+
+msgid "Your plan switches to {planName} on {startDate}. Nothing is charged today."
+msgstr "Gói của bạn chuyển sang {planName} vào {startDate}. Hôm nay không bị tính phí."
 
 msgid "Your rank"
 msgstr "Thứ hạng của bạn"

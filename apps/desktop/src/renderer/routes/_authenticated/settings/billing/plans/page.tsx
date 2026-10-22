@@ -26,6 +26,7 @@ import { useCurrentPlan } from "renderer/hooks/useCurrentPlan";
 import { track } from "renderer/lib/analytics";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
+import { PlanChangeDialog } from "../components/PlanChangeDialog";
 import { useBillingActions } from "../hooks/useBillingActions";
 import { usePlanCatalog } from "../hooks/usePlanCatalog";
 
@@ -80,6 +81,9 @@ type ComparisonSection = {
 	title: MessageDescriptor;
 	rows: ComparisonRow[];
 };
+
+const LABEL_COLUMN_WIDTH = 180;
+const PLAN_COLUMN_MIN_WIDTH = 144;
 
 const FREE_CARD: PlanCardData = {
 	id: "free",
@@ -363,8 +367,18 @@ function PlansPage() {
 	const catalogQuery = usePlanCatalog();
 	const catalog = catalogQuery.data ?? [];
 	const [manualIsYearly, setManualIsYearly] = useState<boolean | null>(null);
-	const { upgrade, cancel, restore, isUpgrading, isCanceling, isRestoring } =
-		useBillingActions();
+	const {
+		upgrade,
+		cancel,
+		restore,
+		isUpgrading,
+		isCanceling,
+		isRestoring,
+		pendingChange,
+		confirmChange,
+		dismissChange,
+		isConfirming,
+	} = useBillingActions();
 	const openUrl = electronTrpc.external.openUrl.useMutation();
 
 	const { plan: currentPlan, isReady: planResolved, activePlan } = useCurrentPlan();
@@ -467,6 +481,7 @@ function PlansPage() {
 		if (!target) return;
 		await upgrade({
 			planId: target.id,
+			planName: plan.family?.name ?? target.name,
 			annual: target.interval === "year",
 			seats: memberCount,
 			source: "billing_plans",
@@ -503,7 +518,7 @@ function PlansPage() {
 	);
 	const highlightColumnStart = highlightColumnIndex + 2;
 	const gridStyle = {
-		gridTemplateColumns: `240px repeat(${planCards.length}, minmax(0, 1fr))`,
+		gridTemplateColumns: `${LABEL_COLUMN_WIDTH}px repeat(${planCards.length}, minmax(0, 1fr))`,
 	};
 
 	return (
@@ -561,7 +576,9 @@ function PlansPage() {
 			<div className="overflow-x-auto">
 				<div
 					className="relative"
-					style={{ minWidth: 240 + planCards.length * 160 }}
+					style={{
+						minWidth: LABEL_COLUMN_WIDTH + planCards.length * PLAN_COLUMN_MIN_WIDTH,
+					}}
 				>
 					<div
 						className="grid pointer-events-none absolute inset-0"
@@ -856,6 +873,12 @@ function PlansPage() {
 					</div>
 				</div>
 			</div>
+			<PlanChangeDialog
+				change={pendingChange}
+				isConfirming={isConfirming}
+				onConfirm={confirmChange}
+				onDismiss={dismissChange}
+			/>
 		</div>
 	);
 }

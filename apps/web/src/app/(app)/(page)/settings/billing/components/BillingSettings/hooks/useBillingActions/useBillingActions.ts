@@ -13,6 +13,27 @@ import { useTRPC } from "@/trpc/react";
 
 type PortalFlowType = "general" | "payment_method_update";
 
+interface UpgradeOptions {
+	planId: string;
+	planName: string;
+	annual: boolean;
+	seats: number;
+}
+
+export interface PlanChangePreview {
+	total: number;
+	currency: string;
+	lineItems: { displayName: string; description: string; total: number }[];
+	nextCycle?: { startsAt: number; total: number };
+	incoming: { planId: string; effectiveAt: number | null }[];
+	redirectToCheckout: boolean;
+}
+
+export interface PendingPlanChange {
+	options: UpgradeOptions;
+	preview: PlanChangePreview;
+}
+
 interface UseBillingActionsOptions {
 	activeOrganizationId: string | null | undefined;
 	activePlan:
@@ -38,68 +59,103 @@ export function useBillingActions({
 	const [isUpgrading, setIsUpgrading] = useState(false);
 	const [isCanceling, setIsCanceling] = useState(false);
 	const [isRestoring, setIsRestoring] = useState(false);
+	const [pendingChange, setPendingChange] = useState<PendingPlanChange | null>(
+		null,
+	);
+	const [isConfirming, setIsConfirming] = useState(false);
 
 	const usesAutumn = activePlan?.billingProvider === "autumn";
 	const billingUrl = `${env.NEXT_PUBLIC_WEB_URL}/settings/billing`;
 	const currentAutumnPlanId = activePlan?.autumnPlanId ?? "";
 
-	const upgrade = async ({
-		planId,
-		annual,
-		seats,
-	}: {
-		planId: string;
-		annual: boolean;
-		seats: number;
-	}) => {
-		if (!activeOrganizationId) return;
+	const checkoutPropertiesFor = (options: UpgradeOptions) => ({
+		plan: options.planId,
+		annual: options.annual,
+		seats: options.seats,
+		previous_plan: plan,
+		source: "web_billing",
+	});
 
-		const checkoutProperties = {
-			plan: planId,
-			annual,
-			seats,
-			previous_plan: plan,
-			source: "web_billing",
-		};
+	const onCheckoutFailed = (
+		options: UpgradeOptions,
+		status: number | undefined,
+		error: unknown,
+	) => {
+		posthog.capture("checkout_failed", {
+			...checkoutPropertiesFor(options),
+			status,
+			error: rawErrorMessage(error),
+		});
+		toast.error(t({ message: "Could not start checkout. Please try again." }));
+	};
+
+	const attachConfirmed = async (options: UpgradeOptions) => {
+		if (!activeOrganizationId) return;
+		await authClient.$fetch<{ paymentUrl: string | null }>("/autumn/attach", {
+			method: "POST",
+			body: {
+				organizationId: activeOrganizationId,
+				planId: options.planId,
+				currentPlanId: activePlan?.autumnPlanId ?? null,
+				successUrl: `${billingUrl}?success=true`,
+				cancelUrl: billingUrl,
+				confirmed: true,
+			},
+			onSuccess: (ctx) => {
+				if (ctx.data?.paymentUrl) {
+					posthog.capture(
+						"checkout_redirected",
+						checkoutPropertiesFor(options),
+					);
+					window.location.assign(ctx.data.paymentUrl);
+				} else {
+					toast.success(t({ message: "Plan updated" }));
+				}
+			},
+			onError: (ctx) =>
+				onCheckoutFailed(options, ctx.response?.status, ctx.error),
+		});
+	};
+
+	const confirmChange = async () => {
+		if (!pendingChange) return;
+		setIsConfirming(true);
+		try {
+			await attachConfirmed(pendingChange.options);
+			setPendingChange(null);
+		} finally {
+			setIsConfirming(false);
+			await invalidatePlan();
+		}
+	};
+
+	const dismissChange = () => setPendingChange(null);
+
+	const upgrade = async (options: UpgradeOptions) => {
+		if (!activeOrganizationId) return;
+		const { planId, annual, seats } = options;
+		const checkoutProperties = checkoutPropertiesFor(options);
 		posthog.capture("checkout_started", checkoutProperties);
 
 		const successUrl = `${billingUrl}?success=true`;
-		const onCheckoutFailed = (status: number | undefined, error: unknown) => {
-			posthog.capture("checkout_failed", {
-				...checkoutProperties,
-				status,
-				error: rawErrorMessage(error),
-			});
-			toast.error(
-				t({ message: "Could not start checkout. Please try again." }),
-			);
-		};
 
 		setIsUpgrading(true);
 		try {
 			if (usesAutumn) {
-				await authClient.$fetch<{ paymentUrl: string | null }>(
-					"/autumn/attach",
-					{
+				const { data: preview, error } =
+					await authClient.$fetch<PlanChangePreview>("/autumn/previewAttach", {
 						method: "POST",
-						body: {
-							organizationId: activeOrganizationId,
-							planId,
-							currentPlanId: activePlan?.autumnPlanId ?? null,
-							successUrl,
-							cancelUrl: billingUrl,
-						},
-						onSuccess: (ctx) => {
-							if (ctx.data?.paymentUrl) {
-								posthog.capture("checkout_redirected", checkoutProperties);
-								window.location.assign(ctx.data.paymentUrl);
-							} else {
-								toast.success(t({ message: "Plan updated" }));
-							}
-						},
-						onError: (ctx) => onCheckoutFailed(ctx.response?.status, ctx.error),
-					},
-				);
+						body: { organizationId: activeOrganizationId, planId },
+					});
+				if (error || !preview) {
+					onCheckoutFailed(options, error?.status, error);
+					return;
+				}
+				if (preview.redirectToCheckout) {
+					await attachConfirmed(options);
+				} else {
+					setPendingChange({ options, preview });
+				}
 				return;
 			}
 
@@ -121,7 +177,8 @@ export function useBillingActions({
 							window.location.assign(ctx.data.url);
 						}
 					},
-					onError: (ctx) => onCheckoutFailed(ctx.response?.status, ctx.error),
+					onError: (ctx) =>
+						onCheckoutFailed(options, ctx.response?.status, ctx.error),
 				},
 			);
 		} finally {
@@ -196,6 +253,10 @@ export function useBillingActions({
 
 	return {
 		upgrade,
+		pendingChange,
+		confirmChange,
+		dismissChange,
+		isConfirming,
 		cancel,
 		restore,
 		openPortal,

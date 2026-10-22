@@ -102,13 +102,13 @@ function pricingPage(i18n: I18n, catalog: PlanFamily[]): MarkdownPage {
 	});
 	const tierNames = allTiers.map(tierName);
 	const comparison = COMPARISON_SECTIONS.flatMap((section) => [
-		`### ${text(i18n, section.title)}`,
+		`### ${text(i18n, section.title)}${section.badge ? ` (${text(i18n, section.badge)})` : ""}`,
 		"",
 		`| | ${tierNames.join(" | ")} |`,
 		`|---|${tierNames.map(() => "---").join("|")}|`,
 		...section.rows.map(
 			(row) =>
-				`| ${text(i18n, row.label)}${row.badge ? ` (${text(i18n, row.badge.label)})` : ""} | ${allTiers.map((tier) => cell(i18n, comparisonValue(row, tier, prices))).join(" | ")} |`,
+				`| ${text(i18n, row.label)} | ${allTiers.map((tier) => cell(i18n, comparisonValue(row, tier, prices))).join(" | ")} |`,
 		),
 		"",
 	]);
