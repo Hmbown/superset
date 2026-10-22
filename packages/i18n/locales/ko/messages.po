@@ -3070,8 +3070,8 @@ msgstr "결제"
 msgid "Billing details"
 msgstr "결제 정보"
 
-msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
-msgstr "결제 문제로 클라우드 워크스페이스를 시작할 수 없습니다. 조직에 유료 플랜이 필요하거나 클라우드 사용 한도에 도달했습니다. 설정 > 결제에서 업그레이드하거나 한도를 올리거나, 자동화를 기기에서 실행하세요."
+msgid "Billing refused to start a cloud workspace: the organization's plan does not include cloud workspaces, or it reached its cloud usage limit. Cloud workspaces need the Team or Ultra plan. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "결제에서 클라우드 워크스페이스 시작을 거부했습니다. 조직의 플랜에 클라우드 워크스페이스가 포함되어 있지 않거나 클라우드 사용 한도에 도달했습니다. 클라우드 워크스페이스에는 Team 또는 Ultra 플랜이 필요합니다. 설정 > 결제에서 업그레이드하거나 한도를 높이거나, 기기에서 자동화를 실행하세요."
 
 msgid "Binary"
 msgstr "바이너리"
@@ -4167,10 +4167,6 @@ msgstr "클라우드 버전이 곧 출시됩니다. 공동 개발 파트너가 �
 msgid "Cloud sandboxes"
 msgstr "클라우드 샌드박스"
 
-#. js-lingui-explicit-id
-msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
-msgstr "{account}에는 클라우드 샌드박스가 활성화되어 있지 않습니다. Superset 팀에 액세스를 요청하세요."
-
 msgid "Cloud usage"
 msgstr "클라우드 사용량"
 
@@ -4183,14 +4179,18 @@ msgstr "클라우드 워크스페이스"
 msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan."
 msgstr "클라우드 워크스페이스는 GB 시간으로 측정됩니다. 머신의 메모리에 실행 시간을 곱한 값입니다. 8 GB 머신은 시간당 8 GB 시간을 사용합니다. 각 좌석은 플랜의 GB 시간을 팀이 공유하는 하나의 풀에 더합니다: {allowances}. 풀은 매달 초기화되며, 초과 사용량은 각 플랜에 표시된 요금으로 GB 시간당 청구됩니다."
 
+#. js-lingui-explicit-id
+msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
+msgstr "{account}에는 클라우드 워크스페이스가 활성화되어 있지 않습니다. Team 및 Ultra 플랜에 포함되어 있습니다. 설정의 결제에서 업그레이드하세요."
+
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "클라우드 워크스페이스는 이 변수를 무시합니다. 에이전트는 대신 설정 › 에이전트에서 로그인합니다."
 
-msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
-msgstr "클라우드 워크스페이스에는 유료 플랜이 필요합니다. 설정의 결제에서 업그레이드하면 시작할 수 있습니다."
-
 msgid "Cloud workspaces need a project for now"
 msgstr "현재 클라우드 워크스페이스에는 프로젝트가 필요합니다"
+
+msgid "Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one."
+msgstr "클라우드 워크스페이스에는 Team 또는 Ultra 플랜이 필요합니다. 시작하려면 설정의 결제에서 업그레이드하세요."
 
 msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
 msgstr "클라우드 워크스페이스를 프로젝트 아래에 표시하고, 로컬/클라우드 필터와 새로 디자인한 워크스페이스 행을 제공합니다."
@@ -7003,11 +7003,11 @@ msgstr "{previousPlan}의 모든 기능"
 msgid "Everything in Free"
 msgstr "무료 플랜의 모든 기능"
 
-msgid "Everything in Pro"
-msgstr "Pro의 모든 기능"
+msgid "Everything in Ultra"
+msgstr "Ultra의 모든 기능"
 
-msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
-msgstr "Pro의 모든 기능에 더해 SSO 및 SAML, SCIM 프로비저닝, IP 제한, 감사 로그, 맞춤 SLA, 전담 지원, 맞춤 계약이 포함됩니다. 가격은 조직에 맞춰 책정합니다. 문의해 주시면 적합한 범위를 잡아 드립니다."
+msgid "Everything in Ultra plus custom cloud GB-hours, SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
+msgstr "Ultra의 모든 기능에 더해 맞춤 클라우드 GB 시간, SSO 및 SAML, SCIM 프로비저닝, IP 제한, 감사 로그, 맞춤 SLA, 전담 지원, 맞춤 계약을 제공합니다. 가격은 조직에 맞게 정해집니다. 문의해 주시면 알맞은 구성을 제안해 드립니다."
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "모든 것이 스크립트로 가능합니다. CLI에서 워크스페이스와 에이전트를 띄우고, SDK로 Superset을 CI에 연결하고, MCP로 에이전트가 직접 조작하게 하세요."
@@ -19814,8 +19814,8 @@ msgstr "네. Superset은 모델 제공사가 아니라 에이전트가 실행되
 msgid "Yes. Use superset automations in the CLI to create, run, and pause them."
 msgstr "네. CLI의 superset automations로 만들고, 실행하고, 일시 중지할 수 있습니다."
 
-msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Changes take effect at the end of your current billing period."
-msgstr "네. 앱 안의 결제 설정에서 언제든 업그레이드, 다운그레이드, 해지할 수 있습니다. 변경 사항은 현재 결제 주기가 끝날 때 적용됩니다."
+msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Upgrades start right away, and you pay only the difference for the rest of the period. Downgrades and cancellations take effect at the end of your current billing period."
+msgstr "네. 앱의 결제 설정에서 언제든지 업그레이드, 다운그레이드 또는 해지할 수 있습니다. 업그레이드는 즉시 적용되며 남은 기간에 대한 차액만 지불합니다. 다운그레이드와 해지는 현재 결제 기간이 끝날 때 적용됩니다."
 
 msgid "Yes. You don't need US work authorization to apply. But you should be willing to relocate to San Francisco."
 msgstr "네. 지원할 때 미국 취업 허가는 필요 없습니다. 다만 샌프란시스코로 이주할 의향이 있어야 합니다."

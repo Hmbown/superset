@@ -3070,8 +3070,8 @@ msgstr "Оплата"
 msgid "Billing details"
 msgstr "Платёжные данные"
 
-msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
-msgstr "Оплата не позволила запустить облачную рабочую область: организации нужен платный тариф или достигнут лимит использования облака. Перейдите на другой тариф или увеличьте лимит в разделе «Настройки > Оплата» либо запустите автоматизацию на устройстве."
+msgid "Billing refused to start a cloud workspace: the organization's plan does not include cloud workspaces, or it reached its cloud usage limit. Cloud workspaces need the Team or Ultra plan. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "Биллинг отказался запустить облачное рабочее пространство: план организации не включает облачные рабочие пространства, или достигнут лимит использования облака. Облачным рабочим пространствам нужен план Team или Ultra. Повысьте план или увеличьте лимит в разделе Настройки > Оплата, либо запустите автоматизацию на устройстве."
 
 msgid "Binary"
 msgstr "Бинарный"
@@ -4167,10 +4167,6 @@ msgstr "Облачная версия скоро появится. Станьт�
 msgid "Cloud sandboxes"
 msgstr "Облачные песочницы"
 
-#. js-lingui-explicit-id
-msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
-msgstr "Облачные песочницы не включены для {account}. Запросите доступ у команды Superset."
-
 msgid "Cloud usage"
 msgstr "Использование облака"
 
@@ -4183,14 +4179,18 @@ msgstr "Облачные рабочие области"
 msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan."
 msgstr "Облачные рабочие пространства тарифицируются в ГБ-часах: память машины, умноженная на часы её работы. Машина с 8 ГБ расходует 8 ГБ-часов в час. Каждое место добавляет ГБ-часы своего тарифа в общий пул команды: {allowances}. Пул обновляется каждый месяц, а использование сверх него оплачивается за ГБ-час по ставке, указанной в каждом тарифе."
 
+#. js-lingui-explicit-id
+msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
+msgstr "Облачные рабочие пространства не включены для {account}. Они входят в планы Team и Ultra: повысьте план в разделе Настройки, Оплата."
+
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Облачные рабочие пространства игнорируют эту переменную. Вместо этого агенты входят в систему в разделе «Настройки › Агенты»."
 
-msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
-msgstr "Для облачных рабочих областей нужен платный тариф. Перейдите на него в разделе «Настройки», «Оплата», чтобы запустить облачную рабочую область."
-
 msgid "Cloud workspaces need a project for now"
 msgstr "Пока облачным рабочим пространствам нужен проект"
+
+msgid "Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one."
+msgstr "Облачным рабочим пространствам нужен план Team или Ultra. Повысьте план в разделе Настройки, Оплата, чтобы запустить его."
 
 msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
 msgstr "Облачные рабочие пространства внутри проектов, фильтр «локальные / облачные» и обновлённая строка рабочего пространства."
@@ -7003,11 +7003,11 @@ msgstr "Всё из тарифа {previousPlan}"
 msgid "Everything in Free"
 msgstr "Всё из бесплатного тарифа"
 
-msgid "Everything in Pro"
-msgstr "Всё из Pro"
+msgid "Everything in Ultra"
+msgstr "Всё из Ultra"
 
-msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
-msgstr "Всё из Pro плюс SSO и SAML, провижининг SCIM, ограничения по IP, журналы аудита, индивидуальный SLA, выделенная поддержка и индивидуальные договоры. Цена подбирается под организацию. Напишите нам, и мы соберём подходящий вариант."
+msgid "Everything in Ultra plus custom cloud GB-hours, SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
+msgstr "Всё из Ultra, а также индивидуальные облачные ГБ-часы, SSO и SAML, SCIM-провижининг, ограничения по IP, журналы аудита, индивидуальный SLA, выделенная поддержка и индивидуальные договоры. Цена подбирается под вашу организацию. Свяжитесь с нами, и мы подберём подходящий вариант."
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "Всё скриптуется. Поднимайте рабочие области и агентов из CLI, встраивайте Superset в CI через SDK или дайте агенту водить его по MCP."
@@ -19814,8 +19814,8 @@ msgstr "Да. Superset — это место, где работают ваши �
 msgid "Yes. Use superset automations in the CLI to create, run, and pause them."
 msgstr "Да. Используйте superset automations в CLI, чтобы создавать, запускать и приостанавливать их."
 
-msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Changes take effect at the end of your current billing period."
-msgstr "Да. Повысить, понизить тариф или отменить подписку можно в любой момент в настройках оплаты внутри приложения. Изменения вступают в силу в конце текущего оплаченного периода."
+msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Upgrades start right away, and you pay only the difference for the rest of the period. Downgrades and cancellations take effect at the end of your current billing period."
+msgstr "Да. Вы можете повысить или понизить план либо отменить подписку в любой момент в настройках оплаты в приложении. Повышение действует сразу, и вы платите только разницу за остаток периода. Понижение и отмена вступают в силу в конце текущего расчётного периода."
 
 msgid "Yes. You don't need US work authorization to apply. But you should be willing to relocate to San Francisco."
 msgstr "Да. Для отклика не нужно разрешение на работу в США. Но вы должны быть готовы переехать в Сан-Франциско."

@@ -111,9 +111,9 @@ export const ENTERPRISE_TIER: PricingTier = {
 	},
 	features: [
 		{
-			id: "everythingInPro",
+			id: "everythingInUltra",
 			label: msg({
-				message: "Everything in Pro",
+				message: "Everything in Ultra",
 			}),
 		},
 		{
@@ -509,7 +509,7 @@ export interface PricingFAQItem {
 	id: string;
 	question: MessageDescriptor;
 	answer: MessageDescriptor;
-	needs?: "pack";
+	needs?: "prices" | "gbHours" | "pack";
 }
 
 export const PRICING_FAQ_ITEMS: PricingFAQItem[] = [
@@ -532,6 +532,7 @@ export const PRICING_FAQ_ITEMS: PricingFAQItem[] = [
 			message:
 				"Paid plans are priced per user per month and billed for each active seat on your team. {planPrices}.",
 		}),
+		needs: "prices",
 	},
 	{
 		id: "cloudGbHours",
@@ -542,6 +543,7 @@ export const PRICING_FAQ_ITEMS: PricingFAQItem[] = [
 			message:
 				"Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan.",
 		}),
+		needs: "gbHours",
 	},
 	{
 		id: "buyGbHours",
@@ -561,7 +563,7 @@ export const PRICING_FAQ_ITEMS: PricingFAQItem[] = [
 		}),
 		answer: msg({
 			message:
-				"Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Changes take effect at the end of your current billing period.",
+				"Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Upgrades start right away, and you pay only the difference for the rest of the period. Downgrades and cancellations take effect at the end of your current billing period.",
 		}),
 	},
 	{
@@ -571,7 +573,7 @@ export const PRICING_FAQ_ITEMS: PricingFAQItem[] = [
 		}),
 		answer: msg({
 			message:
-				"Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits.",
+				"Everything in Ultra plus custom cloud GB-hours, SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits.",
 		}),
 	},
 	{

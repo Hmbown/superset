@@ -3070,8 +3070,8 @@ msgstr "Facturación"
 msgid "Billing details"
 msgstr "Datos de facturación"
 
-msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
-msgstr "La facturación impidió iniciar un espacio de trabajo en la nube: la organización necesita un plan de pago o alcanzó su límite de uso en la nube. Mejora el plan o aumenta el límite en Configuración > Facturación, o ejecuta la automatización en un dispositivo."
+msgid "Billing refused to start a cloud workspace: the organization's plan does not include cloud workspaces, or it reached its cloud usage limit. Cloud workspaces need the Team or Ultra plan. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "La facturación rechazó iniciar un espacio de trabajo en la nube: el plan de la organización no incluye espacios en la nube, o alcanzó su límite de uso en la nube. Los espacios en la nube necesitan el plan Team o Ultra. Mejora el plan o sube el límite en Configuración > Facturación, o ejecuta la automatización en un dispositivo."
 
 msgid "Binary"
 msgstr "Binario"
@@ -4167,10 +4167,6 @@ msgstr "La nube está por llegar. Conviértete en socio de diseño"
 msgid "Cloud sandboxes"
 msgstr "Sandboxes en la nube"
 
-#. js-lingui-explicit-id
-msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
-msgstr "Los sandboxes en la nube no están habilitados para {account}. Solicita acceso al equipo de Superset."
-
 msgid "Cloud usage"
 msgstr "Uso de la nube"
 
@@ -4183,14 +4179,18 @@ msgstr "Espacios de trabajo en la nube"
 msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan."
 msgstr "Los espacios de trabajo en la nube se miden en GB-horas: la memoria de la máquina por las horas que funciona. Una máquina de 8 GB usa 8 GB-horas por hora. Cada puesto suma las GB-horas de su plan a un único fondo que comparte tu equipo: {allowances}. El fondo se reinicia cada mes, y el uso que lo supere se factura por GB-hora a la tarifa indicada en cada plan."
 
+#. js-lingui-explicit-id
+msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
+msgstr "Los espacios de trabajo en la nube no están habilitados para {account}. Vienen con los planes Team y Ultra: mejora tu plan en Configuración, Facturación."
+
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Los espacios de trabajo en la nube ignoran esta variable. Los agentes inician sesión en Configuración › Agentes en su lugar."
 
-msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
-msgstr "Los espacios de trabajo en la nube necesitan un plan de pago. Mejora el plan en Configuración, Facturación para iniciar uno."
-
 msgid "Cloud workspaces need a project for now"
 msgstr "Los espacios de trabajo en la nube necesitan un proyecto por ahora"
+
+msgid "Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one."
+msgstr "Los espacios de trabajo en la nube necesitan el plan Team o Ultra. Mejora tu plan en Configuración, Facturación para iniciar uno."
 
 msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
 msgstr "Espacios de trabajo en la nube bajo sus proyectos, un filtro local y nube, y la fila de espacio de trabajo rediseñada."
@@ -7003,11 +7003,11 @@ msgstr "Todo lo de {previousPlan}"
 msgid "Everything in Free"
 msgstr "Todo lo del plan Gratis"
 
-msgid "Everything in Pro"
-msgstr "Todo lo de Pro"
+msgid "Everything in Ultra"
+msgstr "Todo lo de Ultra"
 
-msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
-msgstr "Todo lo de Pro más SSO y SAML, aprovisionamiento SCIM, restricciones de IP, registros de auditoría, un SLA a medida, soporte dedicado y contratos a medida. El precio se adapta a tu organización. Escríbenos y prepararemos algo que encaje."
+msgid "Everything in Ultra plus custom cloud GB-hours, SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
+msgstr "Todo lo de Ultra más GB-horas en la nube a medida, SSO y SAML, aprovisionamiento SCIM, restricciones de IP, registros de auditoría, un SLA personalizado, soporte dedicado y contratos personalizados. El precio se adapta a tu organización. Escríbenos y definiremos algo a tu medida."
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "Todo se puede automatizar con scripts. Crea espacios de trabajo y agentes desde la CLI, conecta Superset a tu CI con el SDK o deja que tu agente lo maneje por MCP."
@@ -19814,8 +19814,8 @@ msgstr "Sí. Superset es el espacio de trabajo en el que se ejecutan tus agentes
 msgid "Yes. Use superset automations in the CLI to create, run, and pause them."
 msgstr "Sí. Usa superset automations en la CLI para crearlas, ejecutarlas y pausarlas."
 
-msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Changes take effect at the end of your current billing period."
-msgstr "Sí. Puedes subir de plan, bajar de plan o cancelar en cualquier momento desde la configuración de facturación dentro de la app. Los cambios se aplican al final de tu periodo de facturación actual."
+msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Upgrades start right away, and you pay only the difference for the rest of the period. Downgrades and cancellations take effect at the end of your current billing period."
+msgstr "Sí. Puedes mejorar, reducir o cancelar tu plan en cualquier momento desde la configuración de facturación de la app. Las mejoras empiezan de inmediato y solo pagas la diferencia por el resto del período. Las reducciones y cancelaciones se aplican al final de tu período de facturación actual."
 
 msgid "Yes. You don't need US work authorization to apply. But you should be willing to relocate to San Francisco."
 msgstr "Sí. No necesitas autorización de trabajo en EE. UU. para postular. Pero deberías estar dispuesto a mudarte a San Francisco."

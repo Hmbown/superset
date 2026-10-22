@@ -60,7 +60,7 @@ export function refusalFor(result: {
 
 const REFUSAL_MESSAGES: Record<Refusal, string> = {
 	cloudNeedsPaidPlan:
-		"Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one.",
+		"Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one.",
 	usageLimitReached:
 		"Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace.",
 };

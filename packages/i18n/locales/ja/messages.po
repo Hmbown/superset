@@ -3070,8 +3070,8 @@ msgstr "請求"
 msgid "Billing details"
 msgstr "請求先情報"
 
-msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
-msgstr "請求の都合でクラウドワークスペースを起動できませんでした。組織に有料プランが必要か、クラウドの利用上限に達しています。「設定 > 請求」でアップグレードするか上限を引き上げるか、オートメーションをデバイスで実行してください。"
+msgid "Billing refused to start a cloud workspace: the organization's plan does not include cloud workspaces, or it reached its cloud usage limit. Cloud workspaces need the Team or Ultra plan. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "課金によりクラウドワークスペースの起動が拒否されました。組織のプランにクラウドワークスペースが含まれていないか、クラウド利用上限に達しています。クラウドワークスペースには Team または Ultra プランが必要です。設定 > 請求でアップグレードするか上限を上げてください。またはデバイスで自動化を実行してください。"
 
 msgid "Binary"
 msgstr "バイナリ"
@@ -4167,10 +4167,6 @@ msgstr "クラウド版が近日登場。共同開発パートナーを募集中
 msgid "Cloud sandboxes"
 msgstr "クラウドサンドボックス"
 
-#. js-lingui-explicit-id
-msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
-msgstr "クラウドサンドボックスは {account} では有効になっていません。Superset チームにアクセス権をリクエストしてください。"
-
 msgid "Cloud usage"
 msgstr "クラウド使用量"
 
@@ -4183,14 +4179,18 @@ msgstr "クラウドワークスペース"
 msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan."
 msgstr "クラウドワークスペースは GB 時間で計測されます。マシンのメモリに稼働時間を掛けた値です。8 GB のマシンは1時間あたり 8 GB 時間を使います。各席はプランの GB 時間をチームで共有する1つのプールに追加します: {allowances}。プールは毎月リセットされ、超過分は各プランに記載の単価で GB 時間ごとに請求されます。"
 
+#. js-lingui-explicit-id
+msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
+msgstr "{account} ではクラウドワークスペースが有効になっていません。Team と Ultra プランで利用できます。設定の請求からアップグレードしてください。"
+
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "クラウドワークスペースはこの変数を無視します。エージェントは代わりに「設定 › エージェント」でサインインします。"
 
-msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
-msgstr "クラウドワークスペースには有料プランが必要です。「設定」の「請求」でアップグレードすると起動できます。"
-
 msgid "Cloud workspaces need a project for now"
 msgstr "現在、クラウドワークスペースにはプロジェクトが必要です"
+
+msgid "Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one."
+msgstr "クラウドワークスペースには Team または Ultra プランが必要です。起動するには設定の請求からアップグレードしてください。"
 
 msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
 msgstr "クラウドワークスペースをプロジェクトの下に表示し、ローカル/クラウドの絞り込みと新しいワークスペース行を追加します。"
@@ -7003,11 +7003,11 @@ msgstr "{previousPlan} のすべての機能"
 msgid "Everything in Free"
 msgstr "Freeのすべて"
 
-msgid "Everything in Pro"
-msgstr "Proのすべて"
+msgid "Everything in Ultra"
+msgstr "Ultra のすべて"
 
-msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
-msgstr "Proのすべてに加えて、SSOとSAML、SCIMプロビジョニング、IP制限、監査ログ、個別のSLA、専任サポート、個別契約が含まれます。料金は組織に合わせて設定します。ご連絡いただければ、最適な内容をご提案します。"
+msgid "Everything in Ultra plus custom cloud GB-hours, SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
+msgstr "Ultra のすべてに加えて、カスタムのクラウド GB 時間、SSO と SAML、SCIM プロビジョニング、IP 制限、監査ログ、カスタム SLA、専任サポート、カスタム契約。価格は組織に合わせて設定します。お問い合わせいただければ、最適なプランをご提案します。"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "すべてスクリプトから操作できます。CLIでワークスペースやエージェントを起動し、SDKでSupersetをCIに組み込み、MCP経由でエージェント自身に操作させることもできます。"
@@ -19814,8 +19814,8 @@ msgstr "はい。Supersetはエージェントが動くワークスペースで�
 msgid "Yes. Use superset automations in the CLI to create, run, and pause them."
 msgstr "はい。CLIの superset automations で作成、実行、一時停止ができます。"
 
-msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Changes take effect at the end of your current billing period."
-msgstr "はい。アプリ内の請求設定から、いつでもアップグレード、ダウングレード、解約ができます。変更は現在の請求期間の終了時に適用されます。"
+msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Upgrades start right away, and you pay only the difference for the rest of the period. Downgrades and cancellations take effect at the end of your current billing period."
+msgstr "はい。アプリ内の請求設定から、いつでもアップグレード、ダウングレード、解約ができます。アップグレードはすぐに適用され、期間の残りについて差額のみをお支払いいただきます。ダウングレードと解約は現在の請求期間の終了時に適用されます。"
 
 msgid "Yes. You don't need US work authorization to apply. But you should be willing to relocate to San Francisco."
 msgstr "はい。応募に米国の就労許可は必要ありません。ただし、サンフランシスコへ移住する意思が必要です。"

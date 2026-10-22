@@ -11,7 +11,9 @@ import { env } from "@/env";
 const AUTUMN_PLANS_URL = "https://api.useautumn.com/v1/plans.list";
 const AUTUMN_API_VERSION = "2.4.0";
 const AUTUMN_TIMEOUT_MS = 3000;
-const LAST_GOOD_KEY = "marketing:plan-catalog:last";
+const LAST_GOOD_KEY = `marketing:plan-catalog:${
+	env.AUTUMN_SECRET_KEY.startsWith("am_sk_test") ? "sandbox" : "live"
+}:last`;
 
 export async function fetchPlanCatalog(): Promise<PlanFamily[]> {
 	"use cache";

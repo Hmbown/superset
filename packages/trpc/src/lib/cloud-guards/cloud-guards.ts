@@ -6,6 +6,11 @@ import { eq } from "drizzle-orm";
 import { userError } from "../../i18n-error";
 import { posthog } from "../analytics";
 
+interface CloudAccessContext {
+	userId: string;
+	session: { user: { id: string; email: string } } | null;
+}
+
 /**
  * Gate every cloud-sandbox procedure — workspaces, environments, secrets — on
  * the flag the clients already hide the Cloud option behind, so the allowlist
@@ -17,32 +22,30 @@ import { posthog } from "../analytics";
  * Fails closed — `isFeatureEnabled` resolves undefined when PostHog is
  * unreachable, so an outage suspends cloud access rather than opening it.
  */
-export async function assertCloudAccess(ctx: {
-	userId: string;
-	session: { user: { id: string; email: string } } | null;
-	activeOrganizationId?: string | null;
-}): Promise<void> {
-	const { enabled, account } = await cloudAccess(ctx);
+export async function assertCloudAccess(
+	ctx: CloudAccessContext,
+	organizationId: string | null,
+): Promise<void> {
+	const { enabled, account } = await cloudAccess(ctx, organizationId);
 	if (enabled) return;
 
 	throw userError({
 		code: "FORBIDDEN",
-		message: `Cloud sandboxes are not enabled for ${account || "this account"}. Ask the Superset team for access.`,
+		message: `Cloud workspaces are not enabled for ${account || "this account"}. They come with the Team and Ultra plans: upgrade in Settings, Billing.`,
 		i18nKey: "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly",
 		params: { account: account || "this account" },
 	});
 }
 
 /** `enabled` is undefined when PostHog could not answer. */
-export async function cloudAccess(ctx: {
-	userId: string;
-	session: { user: { id: string; email: string } } | null;
-	activeOrganizationId?: string | null;
-}): Promise<{ enabled: boolean | undefined; account: string }> {
+export async function cloudAccess(
+	ctx: CloudAccessContext,
+	organizationId: string | null,
+): Promise<{ enabled: boolean | undefined; account: string }> {
 	const [email, planTier] = await Promise.all([
 		currentEmail(ctx),
-		ctx.activeOrganizationId
-			? organizationBilling(ctx.activeOrganizationId)
+		organizationId
+			? organizationBilling(organizationId)
 					.then((billing) => billing.planTier)
 					.catch(() => "unknown")
 			: "none",

@@ -3070,8 +3070,8 @@ msgstr "Fakturace"
 msgid "Billing details"
 msgstr "Fakturační údaje"
 
-msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
-msgstr "Fakturace zabránila spuštění cloudového pracovního prostoru: organizace potřebuje placený tarif, nebo dosáhla limitu využití cloudu. Přejděte na vyšší tarif nebo zvyšte limit v Nastavení > Fakturace, případně spusťte automatizaci na zařízení."
+msgid "Billing refused to start a cloud workspace: the organization's plan does not include cloud workspaces, or it reached its cloud usage limit. Cloud workspaces need the Team or Ultra plan. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "Fakturace odmítla spustit cloudový pracovní prostor: plán organizace nezahrnuje cloudové pracovní prostory, nebo organizace dosáhla limitu využití cloudu. Cloudové pracovní prostory vyžadují plán Team nebo Ultra. Přejděte na vyšší plán nebo zvyšte limit v Nastavení > Fakturace, nebo spusťte automatizaci na zařízení."
 
 msgid "Binary"
 msgstr "Binární"
@@ -4167,10 +4167,6 @@ msgstr "Cloud přichází. Staňte se partnerem pro vývoj"
 msgid "Cloud sandboxes"
 msgstr "Cloudové sandboxy"
 
-#. js-lingui-explicit-id
-msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
-msgstr "Cloudové sandboxy nejsou pro {account} povoleny. Požádejte tým Superset o přístup."
-
 msgid "Cloud usage"
 msgstr "Využití cloudu"
 
@@ -4183,14 +4179,18 @@ msgstr "Cloudové pracovní prostory"
 msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan."
 msgstr "Cloudové pracovní prostory se měří v GB-hodinách: paměť stroje krát počet hodin, kdy běží. Stroj s 8 GB spotřebuje 8 GB-hodin za hodinu. Každé místo přidá GB-hodiny svého plánu do jednoho fondu, který tým sdílí: {allowances}. Fond se každý měsíc obnoví a využití nad jeho rámec se účtuje za GB-hodinu podle sazby uvedené u každého plánu."
 
+#. js-lingui-explicit-id
+msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
+msgstr "Cloudové pracovní prostory nejsou pro {account} zapnuté. Jsou součástí plánů Team a Ultra: přejděte na vyšší plán v Nastavení, Fakturace."
+
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Cloudové pracovní prostory tuto proměnnou ignorují. Agenti se místo toho přihlašují v Nastavení › Agenti."
 
-msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
-msgstr "Cloudové pracovní prostory vyžadují placený tarif. Pro spuštění přejděte na vyšší tarif v Nastavení, Fakturace."
-
 msgid "Cloud workspaces need a project for now"
 msgstr "Cloudové pracovní prostory zatím potřebují projekt"
+
+msgid "Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one."
+msgstr "Cloudové pracovní prostory vyžadují plán Team nebo Ultra. Přejděte na vyšší plán v Nastavení, Fakturace, abyste ho mohli spustit."
 
 msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
 msgstr "Cloudové pracovní prostory pod jejich projekty, filtr místní a cloud a přepracovaný řádek pracovního prostoru."
@@ -7003,11 +7003,11 @@ msgstr "Vše z plánu {previousPlan}"
 msgid "Everything in Free"
 msgstr "Vše z tarifu Free"
 
-msgid "Everything in Pro"
-msgstr "Vše z tarifu Pro"
+msgid "Everything in Ultra"
+msgstr "Vše z Ultra"
 
-msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
-msgstr "Všechno z tarifu Pro a k tomu SSO a SAML, provisioning přes SCIM, omezení podle IP, auditní logy, SLA na míru, dedikovanou podporu a smlouvy na míru. Cena se odvíjí od vaší organizace. Ozvěte se a nachystáme něco, co bude sedět."
+msgid "Everything in Ultra plus custom cloud GB-hours, SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
+msgstr "Vše z Ultra a navíc GB-hodiny v cloudu na míru, SSO a SAML, zřizování SCIM, omezení IP, auditní protokoly, SLA na míru, vyhrazená podpora a smlouvy na míru. Cena se přizpůsobí vaší organizaci. Ozvěte se a navrhneme vhodné řešení."
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "Všechno jde skriptovat. Vytvářejte pracovní prostory a agenty z CLI, zapojte Superset do CI přes SDK nebo ho nechte řídit svého agenta přes MCP."
@@ -19814,8 +19814,8 @@ msgstr "Ano. Superset je pracovní prostor, ve kterém vaši agenti běží, ne 
 msgid "Yes. Use superset automations in the CLI to create, run, and pause them."
 msgstr "Ano. Příkazem superset automations v CLI je můžete vytvářet, spouštět a pozastavovat."
 
-msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Changes take effect at the end of your current billing period."
-msgstr "Ano. Kdykoli můžete tarif zvýšit, snížit nebo zrušit v nastavení fakturace v aplikaci. Změny se projeví na konci aktuálního fakturačního období."
+msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Upgrades start right away, and you pay only the difference for the rest of the period. Downgrades and cancellations take effect at the end of your current billing period."
+msgstr "Ano. Plán můžete kdykoli zvýšit, snížit nebo zrušit v nastavení fakturace v aplikaci. Zvýšení platí hned a platíte jen rozdíl za zbytek období. Snížení a zrušení platí od konce aktuálního fakturačního období."
 
 msgid "Yes. You don't need US work authorization to apply. But you should be willing to relocate to San Francisco."
 msgstr "Ano. K přihlášce nepotřebujete pracovní povolení v USA. Měli byste ale být ochotni přestěhovat se do San Francisca."

@@ -29,7 +29,7 @@ import { fetchParticipant } from "@/app/[lang]/utils/fetchLeaderboard";
 import { getBlogPost } from "@/lib/blog";
 import { getCategoryPage } from "@/lib/category";
 import { getChangelogEntry } from "@/lib/changelog";
-import { getComparisonPage } from "@/lib/compare";
+import { getPricedComparisonPage } from "@/lib/compare-prices";
 import {
 	buildFrontmatter,
 	MARKDOWN_HEADERS,
@@ -128,7 +128,7 @@ function pricingPage(i18n: I18n, catalog: PlanFamily[]): MarkdownPage {
 	return {
 		title: `${BRAND.NAME} pricing`,
 		url: `${baseUrl}/pricing`,
-		description: `Free for individuals. ${prices.planPrices}. Enterprise adds SSO, SCIM, audit logs, and an SLA.`,
+		description: `Free for individuals. ${prices.planPrices ? `${prices.planPrices}. ` : ""}Enterprise adds SSO, SCIM, audit logs, and an SLA.`,
 		content: [
 			"## Plans",
 			"",
@@ -274,7 +274,7 @@ async function loadPage(
 		};
 	}
 	if (section === "compare") {
-		const page = getComparisonPage(slug);
+		const page = await getPricedComparisonPage(slug);
 		if (!page) return undefined;
 		return {
 			title: page.title,

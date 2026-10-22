@@ -174,8 +174,14 @@ export function faqValues(values: PlanPriceValues) {
 }
 
 export function faqShown(
-	item: { needs?: "pack" },
+	item: { needs?: "prices" | "gbHours" | "pack" },
 	values: PlanPriceValues,
 ): boolean {
-	return !item.needs || Boolean(values.packPrice);
+	if (!item.needs) return true;
+	const needed = {
+		prices: values.planPrices,
+		gbHours: values.allowances,
+		pack: values.packPrice,
+	}[item.needs];
+	return Boolean(needed);
 }

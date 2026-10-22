@@ -525,8 +525,8 @@ export const cloudWorkspaceRecordRouter = {
 	tasks: jwtProcedure
 		.input(z.object({ organizationId: z.string().uuid() }))
 		.query(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, input.organizationId);
+			await assertCloudAccess(ctx, input.organizationId);
 			const visible = await db
 				.select({ id: cloudWorkspaces.id })
 				.from(cloudWorkspaces)
@@ -543,8 +543,8 @@ export const cloudWorkspaceRecordRouter = {
 	labels: jwtProcedure
 		.input(z.object({ organizationId: z.string().uuid() }))
 		.query(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, input.organizationId);
+			await assertCloudAccess(ctx, input.organizationId);
 			return db
 				.select({
 					cloudWorkspaceId: cloudWorkspaceLabels.cloudWorkspaceId,

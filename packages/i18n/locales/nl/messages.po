@@ -3070,8 +3070,8 @@ msgstr "Facturering"
 msgid "Billing details"
 msgstr "Factuurgegevens"
 
-msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
-msgstr "Facturering heeft het starten van een cloudwerkruimte geweigerd: de organisatie heeft een betaald abonnement nodig of heeft haar limiet voor cloudgebruik bereikt. Upgrade of verhoog de limiet in Instellingen > Facturering, of voer de automatisering uit op een apparaat."
+msgid "Billing refused to start a cloud workspace: the organization's plan does not include cloud workspaces, or it reached its cloud usage limit. Cloud workspaces need the Team or Ultra plan. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "Facturering weigerde een cloudwerkruimte te starten: het abonnement van de organisatie bevat geen cloudwerkruimtes, of de limiet voor cloudgebruik is bereikt. Cloudwerkruimtes vereisen het Team- of Ultra-abonnement. Upgrade of verhoog de limiet in Instellingen > Facturering, of voer de automatisering uit op een apparaat."
 
 msgid "Binary"
 msgstr "Binair"
@@ -4167,10 +4167,6 @@ msgstr "De cloud komt eraan. Word ontwerppartner"
 msgid "Cloud sandboxes"
 msgstr "Cloudsandboxen"
 
-#. js-lingui-explicit-id
-msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
-msgstr "Cloudsandboxen zijn niet ingeschakeld voor {account}. Vraag het Superset-team om toegang."
-
 msgid "Cloud usage"
 msgstr "Cloudgebruik"
 
@@ -4183,14 +4179,18 @@ msgstr "Cloudwerkruimtes"
 msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan."
 msgstr "Cloudwerkruimtes worden gemeten in GB-uren: het geheugen van de machine maal de uren dat hij draait. Een machine van 8 GB gebruikt 8 GB-uren per uur. Elke plek voegt de GB-uren van zijn abonnement toe aan één pool die je team deelt: {allowances}. De pool wordt elke maand gereset en gebruik daarboven wordt per GB-uur gefactureerd tegen het tarief van elk abonnement."
 
+#. js-lingui-explicit-id
+msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
+msgstr "Cloudwerkruimtes zijn niet ingeschakeld voor {account}. Ze horen bij de Team- en Ultra-abonnementen: upgrade in Instellingen, Facturering."
+
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Cloudworkspaces negeren deze variabele. Agents melden zich in plaats daarvan aan via Instellingen › Agents."
 
-msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
-msgstr "Cloudwerkruimtes vereisen een betaald abonnement. Upgrade in Instellingen, Facturering om er een te starten."
-
 msgid "Cloud workspaces need a project for now"
 msgstr "Cloudwerkruimtes hebben voorlopig een project nodig"
+
+msgid "Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one."
+msgstr "Cloudwerkruimtes vereisen het Team- of Ultra-abonnement. Upgrade in Instellingen, Facturering om er een te starten."
 
 msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
 msgstr "Cloudwerkruimtes onder hun projecten, een filter voor lokaal en cloud, en de vernieuwde werkruimterij."
@@ -7003,11 +7003,11 @@ msgstr "Alles uit {previousPlan}"
 msgid "Everything in Free"
 msgstr "Alles uit Free"
 
-msgid "Everything in Pro"
-msgstr "Alles uit Pro"
+msgid "Everything in Ultra"
+msgstr "Alles van Ultra"
 
-msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
-msgstr "Alles uit Pro plus SSO & SAML, SCIM-provisioning, IP-beperkingen, auditlogs, een SLA op maat, toegewijde support en maatwerkcontracten. De prijs wordt afgestemd op je organisatie. Neem contact op, dan stellen we iets passends samen."
+msgid "Everything in Ultra plus custom cloud GB-hours, SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
+msgstr "Alles van Ultra plus GB-uren in de cloud op maat, SSO & SAML, SCIM-provisioning, IP-beperkingen, auditlogs, een SLA op maat, toegewijde support en contracten op maat. De prijs is afgestemd op je organisatie. Neem contact op en we stellen iets passends samen."
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "Alles is scriptbaar. Start werkruimtes en agents vanaf de CLI, koppel Superset aan CI met de SDK, of laat je agent het via MCP aansturen."
@@ -19814,8 +19814,8 @@ msgstr "Ja. Superset is de werkruimte waarin je agents draaien, geen modelprovid
 msgid "Yes. Use superset automations in the CLI to create, run, and pause them."
 msgstr "Ja. Gebruik superset automations in de CLI om ze te maken, te starten en te pauzeren."
 
-msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Changes take effect at the end of your current billing period."
-msgstr "Ja. Je kunt op elk moment upgraden, downgraden of opzeggen via de facturatie-instellingen in de app. Wijzigingen gaan in aan het eind van je huidige factuurperiode."
+msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Upgrades start right away, and you pay only the difference for the rest of the period. Downgrades and cancellations take effect at the end of your current billing period."
+msgstr "Ja. Je kunt op elk moment upgraden, downgraden of opzeggen via de factureringsinstellingen in de app. Upgrades gaan direct in en je betaalt alleen het verschil voor de rest van de periode. Downgrades en opzeggingen gaan in aan het einde van je huidige factureringsperiode."
 
 msgid "Yes. You don't need US work authorization to apply. But you should be willing to relocate to San Francisco."
 msgstr "Ja. Je hebt geen Amerikaanse werkvergunning nodig om te solliciteren. Maar je moet wel bereid zijn om naar San Francisco te verhuizen."

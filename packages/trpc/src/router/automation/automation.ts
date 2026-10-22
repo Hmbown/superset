@@ -296,11 +296,7 @@ async function resolveTarget(
 		await verifyHostAccess(userId, organizationId, hostId);
 	}
 	if (plan.cloud) {
-		await assertCloudAccess({
-			userId,
-			session: ctx.session,
-			activeOrganizationId: organizationId,
-		});
+		await assertCloudAccess({ userId, session: ctx.session }, organizationId);
 		if (!isCloudAgentId(agent)) {
 			throw userError({
 				code: "BAD_REQUEST",

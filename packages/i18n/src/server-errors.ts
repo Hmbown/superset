@@ -262,14 +262,14 @@ export const serverErrorMessages: Record<
 		i18n._({
 			id: "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly",
 			message:
-				"Cloud sandboxes are not enabled for {account}. Ask the Superset team for access.",
+				"Cloud workspaces are not enabled for {account}. They come with the Team and Ultra plans: upgrade in Settings, Billing.",
 			values: params,
 		}),
 	"serverError.cloudWorkspace.cloudNeedsPaidPlan": () =>
 		i18n._(
 			msg({
 				message:
-					"Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one.",
+					"Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one.",
 			}),
 		),
 	"serverError.cloudWorkspace.usageLimitReached": () =>

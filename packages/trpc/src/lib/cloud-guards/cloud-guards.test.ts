@@ -47,12 +47,12 @@ describe("assertCloudAccess", () => {
 
 	test("allows an account the flag is enabled for", async () => {
 		flagResult = true;
-		await assertCloudAccess(signedIn("Someone@Superset.sh"));
+		await assertCloudAccess(signedIn("Someone@Superset.sh"), null);
 	});
 
 	test("evaluates cloud-workspaces for the user, by normalized email", async () => {
 		flagResult = true;
-		await assertCloudAccess(signedIn("Someone@Superset.sh"));
+		await assertCloudAccess(signedIn("Someone@Superset.sh"), null);
 
 		expect(calls).toHaveLength(1);
 		expect(calls[0]?.key).toBe("cloud-workspaces");
@@ -65,7 +65,7 @@ describe("assertCloudAccess", () => {
 
 	test("spends no query when the loaded session is this user", async () => {
 		flagResult = true;
-		await assertCloudAccess(signedIn("someone@superset.sh"));
+		await assertCloudAccess(signedIn("someone@superset.sh"), null);
 		expect(lookups).toBe(0);
 	});
 
@@ -73,7 +73,7 @@ describe("assertCloudAccess", () => {
 	// loaded row is only usable when it is this user's.
 	test("looks the user up when the session is somebody else", async () => {
 		flagResult = true;
-		await assertCloudAccess(signedIn("other@superset.sh", "user-2"));
+		await assertCloudAccess(signedIn("other@superset.sh", "user-2"), null);
 
 		expect(lookups).toBe(1);
 		expect(calls[0]?.options?.personProperties).toEqual({
@@ -85,7 +85,7 @@ describe("assertCloudAccess", () => {
 	test("refuses an account the flag is disabled for", async () => {
 		flagResult = false;
 		await expect(
-			assertCloudAccess(signedIn("someone@example.com")),
+			assertCloudAccess(signedIn("someone@example.com"), null),
 		).rejects.toThrow(/not enabled for/);
 	});
 
@@ -95,7 +95,7 @@ describe("assertCloudAccess", () => {
 	test("refuses when the flag cannot be evaluated", async () => {
 		flagResult = undefined;
 		await expect(
-			assertCloudAccess(signedIn("someone@superset.sh")),
+			assertCloudAccess(signedIn("someone@superset.sh"), null),
 		).rejects.toThrow(/not enabled for/);
 	});
 
@@ -103,7 +103,7 @@ describe("assertCloudAccess", () => {
 		flagResult = false;
 		storedEmail = null;
 		await expect(
-			assertCloudAccess({ userId: "user-1", session: null }),
+			assertCloudAccess({ userId: "user-1", session: null }, null),
 		).rejects.toThrow(/this account/);
 	});
 });

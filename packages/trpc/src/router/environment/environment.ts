@@ -202,8 +202,8 @@ export const environmentRouter = {
 	list: jwtProcedure
 		.input(z.object({ organizationId: z.string().uuid() }))
 		.query(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, input.organizationId);
+			await assertCloudAccess(ctx, input.organizationId);
 			const rows = await db
 				.select()
 				.from(environments)
@@ -229,8 +229,8 @@ export const environmentRouter = {
 	get: jwtProcedure
 		.input(z.object({ id: z.string().uuid() }))
 		.query(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			const row = await loadEnvironment(input.id, ctx);
+			await assertCloudAccess(ctx, row.organizationId);
 			const repos = await repositoriesByEnvironment([row]);
 			return { ...row, repositories: repos.get(row.id) ?? [] };
 		}),
@@ -250,8 +250,8 @@ export const environmentRouter = {
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, input.organizationId);
+			await assertCloudAccess(ctx, input.organizationId);
 			const limit = await assertEnvironmentCapacity(input.organizationId);
 			if (
 				input.hooksRepositoryId &&
@@ -516,8 +516,8 @@ export const environmentRouter = {
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			const current = await loadEnvironment(input.id, ctx);
+			await assertCloudAccess(ctx, current.organizationId);
 
 			// A golden was built for its repositories: cloned, set up, snapshotted.
 			// A different set means a different golden, so it is promoted again.
@@ -582,8 +582,8 @@ export const environmentRouter = {
 	archive: jwtProcedure
 		.input(z.object({ id: z.string().uuid() }))
 		.mutation(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			const environment = await loadEnvironment(input.id, ctx);
+			await assertCloudAccess(ctx, environment.organizationId);
 			const [archived] = await db
 				.update(environments)
 				.set({ archivedAt: new Date() })

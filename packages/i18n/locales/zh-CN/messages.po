@@ -3070,8 +3070,8 @@ msgstr "账单"
 msgid "Billing details"
 msgstr "账单信息"
 
-msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
-msgstr "账单原因导致无法启动云端工作区：组织需要付费方案，或已达到云端用量上限。请在“设置 > 账单”中升级或提高上限，或在设备上运行该自动化。"
+msgid "Billing refused to start a cloud workspace: the organization's plan does not include cloud workspaces, or it reached its cloud usage limit. Cloud workspaces need the Team or Ultra plan. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "计费系统拒绝启动云工作区：组织的方案不包含云工作区，或已达到云使用上限。云工作区需要 Team 或 Ultra 方案。请在设置 > 账单中升级或提高上限，或在设备上运行此自动化。"
 
 msgid "Binary"
 msgstr "二进制"
@@ -4167,10 +4167,6 @@ msgstr "云端版本即将推出。成为共创伙伴"
 msgid "Cloud sandboxes"
 msgstr "云端沙箱"
 
-#. js-lingui-explicit-id
-msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
-msgstr "{account} 尚未启用云端沙箱。请向 Superset 团队申请访问权限。"
-
 msgid "Cloud usage"
 msgstr "云端用量"
 
@@ -4183,14 +4179,18 @@ msgstr "云工作区"
 msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan."
 msgstr "云端工作区按 GB 小时计量：机器内存乘以运行小时数。8 GB 的机器每小时使用 8 GB 小时。每个席位都会把其套餐的 GB 小时加入团队共享的同一个额度池：{allowances}。额度池每月重置，超出部分按各套餐标示的价格以每 GB 小时计费。"
 
+#. js-lingui-explicit-id
+msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
+msgstr "{account} 未开通云工作区。云工作区包含在 Team 和 Ultra 方案中：请在设置的账单中升级。"
+
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "云工作区会忽略此变量。智能体改为在「设置 › 智能体」中登录。"
 
-msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
-msgstr "云端工作区需要付费方案。请在“设置”中的“账单”升级后启动。"
-
 msgid "Cloud workspaces need a project for now"
 msgstr "云工作区目前需要一个项目"
+
+msgid "Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one."
+msgstr "云工作区需要 Team 或 Ultra 方案。请在设置的账单中升级后启动。"
 
 msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
 msgstr "云工作区显示在所属项目下，提供本地与云端筛选，以及重新设计的工作区行。"
@@ -7003,11 +7003,11 @@ msgstr "包含 {previousPlan} 的全部功能"
 msgid "Everything in Free"
 msgstr "免费版的全部内容"
 
-msgid "Everything in Pro"
-msgstr "Pro的全部内容"
+msgid "Everything in Ultra"
+msgstr "Ultra 的全部功能"
 
-msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
-msgstr "包含Pro的全部内容，另加SSO与SAML、SCIM账号开通、IP限制、审计日志、定制SLA、专属支持和定制合同。价格按你的组织量身定制。联系我们，一起把范围定下来。"
+msgid "Everything in Ultra plus custom cloud GB-hours, SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
+msgstr "Ultra 的全部功能，外加定制云 GB 小时、SSO 与 SAML、SCIM 配置、IP 限制、审计日志、定制 SLA、专属支持和定制合同。价格根据您的组织定制。联系我们，我们会为您制定合适的方案。"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "一切都能脚本化。用CLI创建工作区和智能体，用SDK把Superset接进CI，或者让你的智能体通过MCP来驱动它。"
@@ -19814,8 +19814,8 @@ msgstr "需要。Superset是智能体运行的工作区，不是模型提供商�
 msgid "Yes. Use superset automations in the CLI to create, run, and pause them."
 msgstr "可以。在 CLI 中用 superset automations 创建、运行和暂停它们。"
 
-msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Changes take effect at the end of your current billing period."
-msgstr "可以。你随时能在应用内的账单设置里升级、降级或取消。变更会在当前计费周期结束时生效。"
+msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Upgrades start right away, and you pay only the difference for the rest of the period. Downgrades and cancellations take effect at the end of your current billing period."
+msgstr "可以。您可以随时在应用的账单设置中升级、降级或取消。升级立即生效，您只需支付本期剩余时间的差价。降级和取消在当前计费周期结束时生效。"
 
 msgid "Yes. You don't need US work authorization to apply. But you should be willing to relocate to San Francisco."
 msgstr "提供。申请时不需要美国工作许可，但你需要愿意搬到旧金山。"

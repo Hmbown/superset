@@ -342,12 +342,16 @@ export function gbHourPack(plan: AutumnCatalogPlan): GbHourPack | null {
 
 export const GB_HOUR_PURCHASE_AMOUNT = { min: 5, max: 2000 };
 
-/** What a purchase of about `amount` buys, rounded up to whole pack units. */
+/** What a purchase of about `amount` buys: whole pack units, never past the maximum amount. */
 export function gbHourPackPurchase(
 	pack: GbHourPack,
 	amount: number,
 ): GbHourPack {
-	const units = Math.max(1, Math.ceil(amount / pack.price));
+	const maxUnits = Math.max(
+		1,
+		Math.floor(GB_HOUR_PURCHASE_AMOUNT.max / pack.price),
+	);
+	const units = Math.min(maxUnits, Math.max(1, Math.ceil(amount / pack.price)));
 	return { gbMinutes: units * pack.gbMinutes, price: units * pack.price };
 }
 

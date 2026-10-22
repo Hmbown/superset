@@ -262,6 +262,10 @@ describe("planCatalogFromAutumn", () => {
 			price: 25,
 		});
 		expect(gbHourPackPricePerGbHour({ gbMinutes: 1000, price: 1 })).toBe(0.06);
+		expect(gbHourPackPurchase({ gbMinutes: 60000, price: 60 }, 2000)).toEqual({
+			gbMinutes: 1980000,
+			price: 1980,
+		});
 		expect(gbHourPackPurchase({ gbMinutes: 60000, price: 60 }, 25)).toEqual({
 			gbMinutes: 60000,
 			price: 60,
