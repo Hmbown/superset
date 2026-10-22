@@ -36,7 +36,14 @@ sudo npm install -g vercel wrangler eas-cli agent-device >/dev/null 2>&1 && log 
 sudo npm install -g ntn >/dev/null 2>&1 && log "ntn $(ntn --version 2>/dev/null) installed" || { log "ntn install failed"; exit 1; }
 curl -fsSL https://packages.stripe.dev/api/security/keypair/stripe-cli-gpg/public | gpg --dearmor | sudo tee /usr/share/keyrings/stripe.gpg >/dev/null
 echo "deb [signed-by=/usr/share/keyrings/stripe.gpg] https://packages.stripe.dev/stripe-cli-debian-local stable main" | sudo tee /etc/apt/sources.list.d/stripe.list >/dev/null
-sudo -E apt-get update -qq && sudo -E apt-get install -y -qq stripe >/dev/null && log "stripe $(stripe --version 2>/dev/null) installed" || { log "stripe install failed"; exit 1; }
+if apt_output="$(sudo -E apt-get update -qq 2>&1 && sudo -E apt-get install -y -qq stripe 2>&1)"; then
+	log "stripe $(stripe --version 2>/dev/null) installed"
+else
+	log "stripe install failed:"
+	# The release log keeps only this script's tagged lines.
+	tail -n 20 <<<"$apt_output" | while IFS= read -r line; do log "  $line"; done
+	exit 1
+fi
 
 # The dev stack and the workspace's database are the repository's own
 # .superset/setup.cloud.sh and .superset/dev-stack.cloud.sh, run by the start
