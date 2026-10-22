@@ -36,7 +36,7 @@ export function PricingCard({
 		isYearly,
 		set,
 	);
-	const overagePrice = set?.overage;
+	const overagePrice = set?.gbHours ? set.overage : null;
 	const name = typeof tier.name === "string" ? tier.name : t(tier.name);
 	const ctaLabel = i18n._({ ...tier.cta.label, values: { plan: name } });
 

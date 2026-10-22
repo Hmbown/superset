@@ -21,7 +21,16 @@ export function CloudUsageCard({
 	const { formatNumber, formatDate } = useFormat();
 	const { data: usage } = useQuery(trpc.billing.cloudUsage.queryOptions());
 
-	if (!usage) return null;
+	if (
+		!usage ||
+		(usage.includedGbMinutes === 0 &&
+			usage.usedGbMinutes === 0 &&
+			usage.overageGbMinutes === 0 &&
+			usage.prepaidGbMinutes === 0 &&
+			!usage.pack)
+	) {
+		return null;
+	}
 
 	const gbHours = (gbMinutes: number) => {
 		const hours = gbMinutes / 60;
