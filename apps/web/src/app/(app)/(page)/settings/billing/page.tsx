@@ -47,7 +47,13 @@ export default async function BillingPage({
 		<BillingSettings
 			organizationId={organization}
 			selectedPlan={isSelfServePlanId(plan) ? plan : undefined}
-			yearly={interval !== "monthly"}
+			yearly={
+				interval === "yearly"
+					? true
+					: interval === "monthly"
+						? false
+						: undefined
+			}
 		/>
 	);
 }

@@ -42,13 +42,13 @@ interface BillingSettingsProps {
 export function BillingSettings({
 	organizationId,
 	selectedPlan,
-	yearly = true,
+	yearly,
 }: BillingSettingsProps) {
 	const { t } = useLingui();
 	const trpc = useTRPC();
 	const queryClient = useQueryClient();
 	const { data: session, isPending: sessionPending } = authClient.useSession();
-	const [isYearly, setIsYearly] = useState(yearly);
+	const [manualYearly, setIsYearly] = useState(yearly);
 
 	const activeOrganizationId = session?.session?.activeOrganizationId;
 	const switchingOrganization =
@@ -78,6 +78,7 @@ export function BillingSettings({
 		trpc.organization.listMembers.queryOptions({ includeDeactivated: false }),
 	);
 	const { data: activePlan } = useQuery(trpc.billing.activePlan.queryOptions());
+	const isYearly = manualYearly ?? activePlan?.billingInterval !== "month";
 
 	const organization = organizations?.find(
 		(candidate) => candidate.id === activeOrganizationId,
@@ -292,7 +293,9 @@ export function BillingSettings({
 							const gbHours = formatNumber(
 								catalog[offeredPlan].gbMinutesPerSeat / 60,
 							);
-							const isCurrent = offeredPlan === selfServePlan;
+							const isCurrent =
+								offeredPlan === selfServePlan &&
+								isYearly === (activePlan?.billingInterval === "year");
 							return (
 								<div
 									key={offeredPlan}

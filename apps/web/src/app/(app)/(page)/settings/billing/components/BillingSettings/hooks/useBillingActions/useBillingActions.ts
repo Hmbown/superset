@@ -91,6 +91,7 @@ export function useBillingActions({
 						body: {
 							organizationId: activeOrganizationId,
 							planId: autumnPlanIdFor(targetPlan, { annual }),
+							currentPlanId: activePlan?.autumnPlanId ?? null,
 							successUrl,
 							cancelUrl: billingUrl,
 						},

@@ -1,5 +1,6 @@
 import { db } from "@superset/db/client";
 import { members, subscriptions } from "@superset/db/schema";
+import { selfServePlanFromAutumnPlanId } from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 import type { BetterAuthPlugin } from "better-auth";
 import {
@@ -106,6 +107,7 @@ export const autumnBillingRoutes = {
 				body: z.object({
 					...organizationBody,
 					planId: z.string().min(1),
+					currentPlanId: z.string().nullable().optional(),
 					successUrl: z.string().min(1),
 					cancelUrl: z.string().optional(),
 				}),
@@ -137,6 +139,16 @@ export const autumnBillingRoutes = {
 					throw new APIError("BAD_REQUEST", {
 						message:
 							"This organization already has a subscription. Change it from the billing portal.",
+					});
+				}
+				const currentPlan = selfServePlanFromAutumnPlanId(autumnPlanId);
+				if (
+					currentPlan &&
+					currentPlan !== "pro" &&
+					ctx.body.currentPlanId !== autumnPlanId
+				) {
+					throw new APIError("BAD_REQUEST", {
+						message: "Update the app to change this plan.",
 					});
 				}
 				await ensureAutumnCustomer(caller.organizationId);

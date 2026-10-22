@@ -77,6 +77,7 @@ export function useBillingActions() {
 						body: {
 							organizationId: activeOrgId,
 							planId: autumnPlanIdFor(targetPlan, { annual }),
+							currentPlanId: activePlan?.autumnPlanId ?? null,
 							successUrl,
 							cancelUrl: env.NEXT_PUBLIC_WEB_URL,
 						},

@@ -59,7 +59,9 @@ function lastKnownKey(organizationId: string): string {
 
 async function readShared(key: string): Promise<OrganizationBilling | null> {
 	try {
-		return await redis.get<OrganizationBilling>(key);
+		const value = await redis.get<OrganizationBilling>(key);
+		if (!value || value.environmentLimit !== undefined) return value;
+		return { ...value, environmentLimit: value.tier === "free" ? 0 : null };
 	} catch (error) {
 		console.error("[billing/plan-state] cache read failed", error);
 		return null;

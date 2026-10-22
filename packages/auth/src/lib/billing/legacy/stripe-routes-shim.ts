@@ -1,3 +1,4 @@
+import { selfServePlanFromAutumnPlanId } from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 import type { Autumn } from "autumn-js";
 import { APIError, createAuthEndpoint } from "better-auth/api";
@@ -102,8 +103,10 @@ export async function upgradeWithAutumn(
 		});
 	}
 	if (body.plan !== "pro") throw billingError("SUBSCRIPTION_PLAN_NOT_FOUND");
-	const currentPlanId = await deps.currentPlanId(referenceId).catch(() => null);
-	if (currentPlanId && /^(team|ultra)(_annual)?$/.test(currentPlanId)) {
+	const currentPlan = selfServePlanFromAutumnPlanId(
+		await deps.currentPlanId(referenceId),
+	);
+	if (currentPlan && currentPlan !== "pro") {
 		throw new APIError("BAD_REQUEST", {
 			message: "Update the app to change this plan.",
 		});
