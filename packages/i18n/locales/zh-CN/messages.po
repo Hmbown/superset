@@ -4428,6 +4428,9 @@ msgstr "连接外部服务以同步数据。"
 msgid "Connect GitHub in Integrations to add {repositoryFullName}."
 msgstr "在集成中连接 GitHub 以添加 {repositoryFullName}。"
 
+msgid "Connect GitHub in Settings to act on pull requests as yourself"
+msgstr "在设置中连接 GitHub，以你自己的身份处理拉取请求"
+
 msgid "Connect GitHub…"
 msgstr "连接 GitHub…"
 
@@ -17861,11 +17864,11 @@ msgstr "此个人主页当前繁忙"
 msgid "This project is no longer available on your devices."
 msgstr "这个项目在你的设备上已不可用。"
 
-msgid "This project isn't linked to a GitHub repository."
-msgstr "此项目未关联 GitHub 仓库。"
-
 msgid "This project's host is offline"
 msgstr "此项目的主机已离线"
+
+msgid "This pull request has no GitHub access to act through."
+msgstr "没有可用于处理此拉取请求的 GitHub 访问权限。"
 
 msgid "This pull request has no host to act through"
 msgstr "此拉取请求没有可用于操作的主机"
