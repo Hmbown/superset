@@ -46,3 +46,33 @@ export async function withRetry<T>(
 		}
 	}
 }
+
+/**
+ * When seats renew. Autumn reports the parent plan's monthly period, so a
+ * yearly seat license renews on the anniversary of the subscription start.
+ */
+export function seatRenewal({
+	startedAt,
+	currentPeriodEnd,
+	seatInterval,
+	now,
+}: {
+	startedAt: number | null | undefined;
+	currentPeriodEnd: number | null | undefined;
+	seatInterval: string | null | undefined;
+	now: number;
+}): number | null {
+	if (seatInterval !== "year" || !startedAt) return currentPeriodEnd ?? null;
+	const start = new Date(startedAt);
+	for (let year = new Date(now).getUTCFullYear(); ; year++) {
+		const renewal = Date.UTC(
+			year,
+			start.getUTCMonth(),
+			start.getUTCDate(),
+			start.getUTCHours(),
+			start.getUTCMinutes(),
+			start.getUTCSeconds(),
+		);
+		if (renewal > now) return renewal;
+	}
+}

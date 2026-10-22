@@ -11,6 +11,7 @@ import {
 	environmentLimitFromBalances,
 } from "./environment-limit";
 import { SEATS_FEATURE_ID } from "./features";
+import { seatRenewal } from "./seat-policy";
 
 export type PaymentState =
 	| { kind: "ok" }
@@ -45,22 +46,13 @@ function iso(ms: number | null | undefined): string | null {
 	return ms ? new Date(ms).toISOString() : null;
 }
 
-const DAY_MS = 24 * 60 * 60 * 1000;
-
-function intervalFromPeriod(
-	start: number | null | undefined,
-	end: number | null | undefined,
-): "month" | "year" | null {
-	if (!start || !end) return null;
-	return end - start > 100 * DAY_MS ? "year" : "month";
-}
-
 export function billingFromCustomer(
 	customer: Pick<
 		AutumnCustomer,
 		"flags" | "subscriptions" | "invoices" | "balances"
 	>,
 	now: number,
+	seatInterval: string | null = null,
 ): OrganizationBilling {
 	const tier = tierFromFlags(customer.flags);
 	const paidPlanId = paidPlanIdFromFlags(customer.flags);
@@ -103,12 +95,19 @@ export function billingFromCustomer(
 		status,
 		cancelAt: iso(paid?.expiresAt),
 		periodStart: iso(paid?.currentPeriodStart),
-		periodEnd: iso(paid?.currentPeriodEnd),
+		periodEnd: iso(
+			seatRenewal({
+				startedAt: paid?.startedAt,
+				currentPeriodEnd: paid?.currentPeriodEnd,
+				seatInterval,
+				now,
+			}),
+		),
 		billingInterval:
 			paid?.plan?.price?.interval ??
 			paid?.plan?.items.find((item) => item.featureId === SEATS_FEATURE_ID)
 				?.price?.interval ??
-			intervalFromPeriod(paid?.currentPeriodStart, paid?.currentPeriodEnd),
+			seatInterval,
 		lapsed,
 		paymentState,
 		cloudUsage: cloudUsageFromBalances(customer.balances),

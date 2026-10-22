@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { licenseSeatAction, withRetry } from "./seat-policy";
+import { licenseSeatAction, seatRenewal, withRetry } from "./seat-policy";
 
 const RENEWAL = 1_800_000_000_000;
 
@@ -71,5 +71,38 @@ describe("withRetry", () => {
 			),
 		).toBe("ok");
 		expect(calls).toBe(3);
+	});
+});
+
+describe("seatRenewal", () => {
+	const startedAt = Date.UTC(2026, 9, 22, 7, 30);
+	test("monthly seats renew with the plan's period", () => {
+		expect(
+			seatRenewal({
+				startedAt,
+				currentPeriodEnd: Date.UTC(2026, 10, 22, 7, 30),
+				seatInterval: "month",
+				now: Date.UTC(2026, 10, 1),
+			}),
+		).toBe(Date.UTC(2026, 10, 22, 7, 30));
+	});
+
+	test("yearly seats renew on the next anniversary of the start", () => {
+		expect(
+			seatRenewal({
+				startedAt,
+				currentPeriodEnd: Date.UTC(2026, 10, 22, 7, 30),
+				seatInterval: "year",
+				now: Date.UTC(2026, 10, 1),
+			}),
+		).toBe(Date.UTC(2027, 9, 22, 7, 30));
+		expect(
+			seatRenewal({
+				startedAt,
+				currentPeriodEnd: null,
+				seatInterval: "year",
+				now: Date.UTC(2027, 11, 1),
+			}),
+		).toBe(Date.UTC(2028, 9, 22, 7, 30));
 	});
 });

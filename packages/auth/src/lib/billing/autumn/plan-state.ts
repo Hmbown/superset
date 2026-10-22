@@ -1,7 +1,9 @@
 import type { MachineSize, PlanTier } from "@superset/shared/billing";
 import { AutumnError } from "autumn-js";
 import { billingFromCustomer, type OrganizationBilling } from "./billing-state";
+import { seatLicenseFor } from "./catalog";
 import { getAutumnCustomer } from "./customer";
+import { paidPlanIdFromFlags } from "./entitlements";
 import type { EnvironmentLimit } from "./environment-limit";
 import { billingRedis } from "./redis";
 
@@ -68,11 +70,20 @@ async function fetchBilling(
 	organizationId: string,
 ): Promise<OrganizationBilling> {
 	try {
+		const customer = await getAutumnCustomer(organizationId, {
+			timeoutMs: AUTUMN_READ_TIMEOUT_MS,
+		});
+		const planId = paidPlanIdFromFlags(customer.flags);
+		const license = planId
+			? await seatLicenseFor(planId).catch((error) => {
+					console.error("[billing/plan-state] catalog read failed", error);
+					return null;
+				})
+			: null;
 		return billingFromCustomer(
-			await getAutumnCustomer(organizationId, {
-				timeoutMs: AUTUMN_READ_TIMEOUT_MS,
-			}),
+			customer,
 			Date.now(),
+			license?.price?.interval ?? null,
 		);
 	} catch (error) {
 		if (error instanceof AutumnError && error.statusCode === 404) return FREE;

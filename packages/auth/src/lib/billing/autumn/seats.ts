@@ -5,7 +5,7 @@ import { seatLicenseFor } from "./catalog";
 import { getAutumnCustomer } from "./customer";
 import { paidPlanIdFromFlags } from "./entitlements";
 import { SEATS_FEATURE_ID } from "./features";
-import { licenseSeatAction, withRetry } from "./seat-policy";
+import { licenseSeatAction, seatRenewal, withRetry } from "./seat-policy";
 
 /** The seat quantity and interval to send when buying a plan. */
 export async function seatPurchase(planId: string, quantity: number) {
@@ -46,6 +46,7 @@ async function syncLicenseSeats(
 	organizationId: string,
 	planId: string,
 	licensePlanId: string,
+	seatInterval: string | null | undefined,
 	members: number,
 	subscriptions: Awaited<ReturnType<typeof getAutumnCustomer>>["subscriptions"],
 ): Promise<void> {
@@ -53,6 +54,12 @@ async function syncLicenseSeats(
 		(subscription) =>
 			subscription.planId === planId && subscription.status !== "scheduled",
 	);
+	const renewal = seatRenewal({
+		startedAt: active?.startedAt,
+		currentPeriodEnd: active?.currentPeriodEnd,
+		seatInterval,
+		now: Date.now(),
+	});
 	const action = licenseSeatAction({
 		paid: await paidLicenses(organizationId, licensePlanId),
 		members,
@@ -60,7 +67,7 @@ async function syncLicenseSeats(
 			(subscription) =>
 				subscription.planId === planId && subscription.status === "scheduled",
 		),
-		periodEnd: active?.currentPeriodEnd ?? null,
+		periodEnd: renewal,
 	});
 	const seats = (quantity: number) => ({
 		planId,
@@ -76,10 +83,10 @@ async function syncLicenseSeats(
 			customerId: organizationId,
 			phases: [
 				{ startsAt: "now", plans: [seats(action.now)] },
-				...(action.atRenewal !== null && active?.currentPeriodEnd
+				...(action.atRenewal !== null && renewal
 					? [
 							{
-								startsAt: active.currentPeriodEnd,
+								startsAt: renewal,
 								plans: [seats(action.atRenewal)],
 								prorationBehavior: "none" as const,
 							},
@@ -131,6 +138,7 @@ export async function setAutumnSeats(
 					organizationId,
 					planId,
 					license.id,
+					license.price?.interval,
 					members,
 					customer.subscriptions,
 				),

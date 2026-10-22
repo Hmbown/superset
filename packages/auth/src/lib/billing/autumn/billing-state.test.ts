@@ -96,20 +96,22 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 		expect(billing.billingInterval).toBe("year");
 	});
 
-	test("a plan that sells seats as licenses reads its interval from the billing period", () => {
-		const licensed = (end: number) =>
-			billingFromCustomer(
-				customer({
-					flags: pro,
-					subscription: {
-						plan: { price: null, items: [] } as never,
-						currentPeriodEnd: end,
-					},
-				}),
-				NOW,
-			).billingInterval;
-		expect(licensed(NOW + 355 * DAY)).toBe("year");
-		expect(licensed(NOW + 20 * DAY)).toBe("month");
+	test("a yearly seat license reads as yearly and renews on its anniversary", () => {
+		const billing = billingFromCustomer(
+			customer({
+				flags: pro,
+				subscription: {
+					plan: { price: null, items: [] } as never,
+					startedAt: NOW - 40 * DAY,
+				},
+			}),
+			NOW,
+			"year",
+		);
+		expect(billing.billingInterval).toBe("year");
+		expect(billing.periodEnd).toBe(
+			new Date(NOW - 40 * DAY + 365 * DAY).toISOString(),
+		);
 	});
 
 	test("a paid tier with no matching subscription still reads as active for released desktops", () => {
