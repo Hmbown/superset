@@ -31,4 +31,27 @@ describe("moveViewerPanesToRight", () => {
 				.tabs.map((tab) => Object.values(tab.panes).map((p) => p.id)),
 		).toEqual([["file"], ["web"]]);
 	});
+
+	it("drops a center Changes pane when the right area already has one", () => {
+		const center = createWorkspaceStore<PaneViewerData>();
+		const right = createWorkspaceStore<PaneViewerData>();
+		right.getState().addTab({ id: "r1", panes: [pane("rightDiff", "diff")] });
+		center.getState().addTab({
+			id: "c1",
+			panes: [pane("term", "terminal"), pane("centerDiff", "diff")],
+		});
+
+		moveViewerPanesToRight({ center, right });
+
+		expect(
+			center
+				.getState()
+				.tabs.map((tab) => Object.values(tab.panes).map((p) => p.id)),
+		).toEqual([["term"]]);
+		expect(
+			right
+				.getState()
+				.tabs.map((tab) => Object.values(tab.panes).map((p) => p.id)),
+		).toEqual([["rightDiff"]]);
+	});
 });

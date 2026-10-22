@@ -103,6 +103,10 @@ import type { V2WorkspaceUrlOpenTarget } from "./utils/openUrlInV2Workspace";
 
 const relayoutBrowserPanes = () => browserRuntimeRegistry.relayout();
 
+// A pane is at least 260px wide (PANE_MIN_SIZE_CLASS_NAME in @superset/panes),
+// plus the panel's 1px border; narrower clips the pane header.
+const MIN_RIGHT_PANE_AREA_WIDTH = 262;
+
 interface WorkspaceSearch {
 	sessionId?: string;
 	terminalId?: string;
@@ -591,7 +595,7 @@ function V2WorkspaceContent() {
 	// here and would render the ResizablePanel without a width (full-bleed).
 	const sidebarWidth = isRightPaneAreaEnabled
 		? Math.max(
-				240,
+				MIN_RIGHT_PANE_AREA_WIDTH,
 				Math.min(
 					v2UserPreferences.rightPaneAreaWidth ?? defaultRightPaneAreaWidth,
 					maxRightPaneAreaWidth,
@@ -837,7 +841,9 @@ function V2WorkspaceContent() {
 										width={sidebarWidth}
 										onWidthChange={setSidebarWidth}
 										onResizingChange={onSidebarResizeDragging}
-										minWidth={240}
+										minWidth={
+											isRightPaneAreaEnabled ? MIN_RIGHT_PANE_AREA_WIDTH : 240
+										}
 										maxWidth={
 											isRightPaneAreaEnabled ? maxRightPaneAreaWidth : 640
 										}
