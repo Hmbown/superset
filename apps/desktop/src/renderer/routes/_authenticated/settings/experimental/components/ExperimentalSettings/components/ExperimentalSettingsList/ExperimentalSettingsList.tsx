@@ -11,6 +11,10 @@ import {
 	usePortsDisplayMode,
 } from "renderer/stores/inline-workspace-ports";
 import { useNewDashboardSidebarStore } from "renderer/stores/new-dashboard-sidebar";
+import {
+	useRightPaneAreaEnabled,
+	useRightPaneAreaStore,
+} from "renderer/stores/right-pane-area";
 import { useSettingsSearchQuery } from "renderer/stores/settings-state";
 import { useOpenV1ImportModal } from "renderer/stores/v1-import-modal";
 import {
@@ -54,6 +58,15 @@ export function ExperimentalSettingsList({
 		isItemVisible(SETTING_ITEM_ID.EXPERIMENTAL_NEW_SIDEBAR, visibleItems);
 	const newSidebarEnabled = useNewDashboardSidebarEnabled();
 	const setNewSidebarEnabled = useNewDashboardSidebarStore(
+		(state) => state.setEnabled,
+	);
+	const rightPaneAreaFlag =
+		useFeatureFlagEnabled(FEATURE_FLAGS.RIGHT_PANE_AREA) === true;
+	const showRightPaneArea =
+		rightPaneAreaFlag &&
+		isItemVisible(SETTING_ITEM_ID.EXPERIMENTAL_RIGHT_PANE_AREA, visibleItems);
+	const rightPaneAreaEnabled = useRightPaneAreaEnabled() === true;
+	const setRightPaneAreaEnabled = useRightPaneAreaStore(
 		(state) => state.setEnabled,
 	);
 	const showWaitForSetupBeforeAgent = isItemVisible(
@@ -200,6 +213,34 @@ export function ExperimentalSettingsList({
 							id="new-sidebar"
 							checked={newSidebarEnabled}
 							onCheckedChange={setNewSidebarEnabled}
+						/>
+					</div>
+				)}
+				{showRightPaneArea && (
+					<div className="flex items-center justify-between gap-6">
+						<div className="min-w-0 flex-1 space-y-0.5">
+							<Label htmlFor="right-pane-area" className="text-sm font-medium">
+								<HighlightText
+									text={t({
+										message: "Right pane area",
+									})}
+									query={searchQuery}
+								/>
+							</Label>
+							<p className="text-xs text-muted-foreground">
+								<HighlightText
+									text={t({
+										message:
+											"Open files, diffs and browsers in tabs on the right, and keep the center for terminals and chats.",
+									})}
+									query={searchQuery}
+								/>
+							</p>
+						</div>
+						<Switch
+							id="right-pane-area"
+							checked={rightPaneAreaEnabled}
+							onCheckedChange={setRightPaneAreaEnabled}
 						/>
 					</div>
 				)}

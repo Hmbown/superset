@@ -1,10 +1,8 @@
 import { acpHarnessForPreset } from "@superset/chat/core";
 import { Workspace } from "@superset/panes";
-import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { cn } from "@superset/ui/utils";
 import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
 import { createFileRoute } from "@tanstack/react-router";
-import { useFeatureFlagEnabled } from "posthog-js/react";
 import {
 	useCallback,
 	useEffect,
@@ -32,6 +30,7 @@ import {
 } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import { CommandPalette } from "renderer/screens/main/components/CommandPalette";
 import { ResizablePanel } from "renderer/screens/main/components/ResizablePanel";
+import { useRightPaneAreaEnabled } from "renderer/stores/right-pane-area";
 import { getV2NotificationSourcesForTab } from "renderer/stores/v2-notifications";
 import { useStore } from "zustand";
 import { useWorkspace } from "../providers/WorkspaceProvider";
@@ -218,9 +217,7 @@ function V2WorkspaceContent() {
 	const { store, isLayoutReady, hasRow } = useV2WorkspacePaneLayout();
 	useClearActivePaneAttention({ store });
 	const isChatTabActive = useIsChatTabActive(store);
-	const rightPaneAreaFlag = useFeatureFlagEnabled(
-		FEATURE_FLAGS.RIGHT_PANE_AREA,
-	);
+	const rightPaneAreaFlag = useRightPaneAreaEnabled();
 	const isRightPaneAreaEnabled = rightPaneAreaFlag === true;
 	const isMobilePaneEnabled =
 		useFeatureFlagEnabled(FEATURE_FLAGS.MOBILE_PANE) === true;
