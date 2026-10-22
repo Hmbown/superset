@@ -406,6 +406,29 @@ test("removing the first of two queued prompts hands focus to the other", () => 
 	);
 });
 
+test("a focused collapsed queue header hands focus to the prompt left behind", () => {
+	const props = {
+		onAppendToComposer: () => {},
+		onExit: () => {},
+		onMoveToBackground: () => {},
+		onOpenSubagent: () => {},
+		onStop: () => {},
+		snapshot: snapshotOf([]),
+		tasks: [shell("task-1", "bun dev")],
+	};
+	const second = prompt("q2", "second");
+	const view = render(
+		<WorkDrawer {...props} queue={queueOf([prompt("q1", "first"), second])} />,
+	);
+	const header = view.getByRole("button", { name: /^Queued 2/ });
+	act(() => header.focus());
+	fireEvent.click(header);
+	view.rerender(<WorkDrawer {...props} queue={queueOf([second])} />);
+	expect((document.activeElement as HTMLElement).dataset.drawerStop).toBe(
+		"queued:q2",
+	);
+});
+
 test("a queue collapsed at two prompts opens again after it drops to one", () => {
 	const props = {
 		onAppendToComposer: () => {},

@@ -168,10 +168,15 @@ export function WorkDrawer({
 		const active = document.activeElement;
 		if (active && active !== document.body) return;
 		const at = previousKeys.indexOf(lost);
-		const neighbour = [
-			...previousKeys.slice(at + 1),
-			...previousKeys.slice(0, at).reverse(),
-		].find((key) => entries.has(key));
+		const sectionRow = lost.startsWith("header:")
+			? keys.find((key) => key.startsWith(`${lost.slice("header:".length)}:`))
+			: undefined;
+		const neighbour =
+			sectionRow ??
+			[
+				...previousKeys.slice(at + 1),
+				...previousKeys.slice(0, at).reverse(),
+			].find((key) => entries.has(key));
 		const stop = stopsIn(rootRef.current).find(
 			(candidate) => candidate.dataset.drawerStop === neighbour,
 		);
