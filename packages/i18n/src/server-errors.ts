@@ -894,6 +894,12 @@ export const serverErrorMessages: Record<
 				"Your organization installs {plugin} for you, so it cannot be uninstalled. You can disable it.",
 			values: params,
 		}),
+	"serverError.plugins.pluginSourceOutOfReach": (params) =>
+		i18n._({
+			id: "serverError.plugins.pluginSourceOutOfReach",
+			message: "Your GitHub account cannot read {repo}",
+			values: params,
+		}),
 	"serverError.plugins.pluginSourcePathOutside": () =>
 		i18n._({
 			id: "serverError.plugins.pluginSourcePathOutside",

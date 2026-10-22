@@ -15,6 +15,10 @@ import { z } from "zod";
 import { env } from "../../env";
 import { userError } from "../../i18n-error";
 import {
+	githubRepositoriesOutOfReach,
+	githubUserTokenFor,
+} from "../../lib/github-user";
+import {
 	accessibleTo,
 	memberRole,
 	organizationBundleKey,
@@ -74,6 +78,36 @@ async function requestSync(sourceId: string) {
 	});
 }
 
+/**
+ * An admin can add only a repository they can read themselves: through their
+ * connected GitHub account when they have one, as a cloud workspace checks,
+ * otherwise one the organization's GitHub App is installed on.
+ */
+async function reachableRepository(
+	userId: string,
+	organizationId: string,
+	repo: string,
+): Promise<string> {
+	const token = await githubUserTokenFor(userId);
+	if (!token) {
+		return (await findInstalledRepository(organizationId, repo)).repo.fullName;
+	}
+	const [owner = "", name = ""] = repo.split("/");
+	const outOfReach = await githubRepositoriesOutOfReach({
+		token,
+		repositories: [{ owner, name, fullName: repo }],
+	});
+	if (outOfReach.length) {
+		throw userError({
+			code: "FORBIDDEN",
+			message: `Your GitHub account cannot read ${repo}`,
+			i18nKey: "serverError.plugins.pluginSourceOutOfReach",
+			params: { repo },
+		});
+	}
+	return repo;
+}
+
 const policySchema = z.partialRecord(
 	z.enum(ROLE_HIERARCHY),
 	z.enum(ORGANIZATION_PLUGIN_ACCESS),
@@ -101,7 +135,8 @@ const sourcesRouter = {
 		)
 		.mutation(async ({ ctx, input }) => {
 			const organizationId = await requireAdmin(ctx);
-			const { repo } = await findInstalledRepository(
+			const repo = await reachableRepository(
+				ctx.session.user.id,
 				organizationId,
 				input.repo,
 			);
@@ -121,7 +156,7 @@ const sourcesRouter = {
 				.insert(organizationPluginSources)
 				.values({
 					organizationId,
-					repo: repo.fullName,
+					repo,
 					ref: input.ref ?? null,
 					path,
 					addedByUserId: ctx.session.user.id,
@@ -132,7 +167,7 @@ const sourcesRouter = {
 						organizationPluginSources.repo,
 						organizationPluginSources.path,
 					],
-					set: { ref: input.ref ?? null },
+					set: { ref: input.ref ?? null, addedByUserId: ctx.session.user.id },
 				})
 				.returning();
 			if (!source) throw unknownSource();

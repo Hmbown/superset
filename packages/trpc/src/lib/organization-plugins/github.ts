@@ -1,6 +1,7 @@
 import { installationOctokit } from "../sandbox/clone-token";
 
 const BLOB_CONCURRENCY = 8;
+const REQUEST_TIMEOUT_MS = 15_000;
 
 export interface RepositorySnapshot {
 	sha: string;
@@ -8,39 +9,54 @@ export interface RepositorySnapshot {
 	read(path: string): Promise<Buffer>;
 }
 
-/** One commit of a repository, read through the organization's GitHub App installation. */
+/** An installation token for the organization's GitHub App, scoped to the one repository. */
+export async function appInstallationToken(
+	installationId: string,
+	repo: string,
+): Promise<string> {
+	const octokit = await installationOctokit(installationId);
+	const { token } = (await octokit.auth({
+		type: "installation",
+		repositoryNames: [repo.split("/")[1] ?? repo],
+	})) as { token: string };
+	return token;
+}
+
+/** One commit of a repository, read with whichever token the caller chose. */
 export async function repositorySnapshot(args: {
-	installationId: string;
+	token: string;
 	repo: string;
 	ref: string | null;
 }): Promise<RepositorySnapshot> {
-	const [owner, name] = args.repo.split("/");
-	if (!owner || !name) throw new Error(`"${args.repo}" is not owner/name`);
-	const octokit = await installationOctokit(args.installationId);
+	const github = async <T>(path: string): Promise<T> => {
+		const response = await fetch(
+			`https://api.github.com/repos/${args.repo}${path}`,
+			{
+				headers: {
+					accept: "application/vnd.github+json",
+					authorization: `Bearer ${args.token}`,
+					"x-github-api-version": "2022-11-28",
+				},
+				signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+			},
+		);
+		if (!response.ok) {
+			throw new Error(
+				`GitHub answered ${response.status} for ${args.repo}${path}`,
+			);
+		}
+		return (await response.json()) as T;
+	};
 
 	const ref =
-		args.ref ??
-		(
-			await octokit.request("GET /repos/{owner}/{repo}", {
-				owner,
-				repo: name,
-			})
-		).data.default_branch;
-	const { sha } = (
-		await octokit.request("GET /repos/{owner}/{repo}/commits/{ref}", {
-			owner,
-			repo: name,
-			ref,
-		})
-	).data;
-	const tree = (
-		await octokit.request("GET /repos/{owner}/{repo}/git/trees/{tree_sha}", {
-			owner,
-			repo: name,
-			tree_sha: sha,
-			recursive: "true",
-		})
-	).data;
+		args.ref ?? (await github<{ default_branch: string }>("")).default_branch;
+	const { sha } = await github<{ sha: string }>(
+		`/commits/${encodeURIComponent(ref)}`,
+	);
+	const tree = await github<{
+		truncated: boolean;
+		tree: { path?: string; type?: string; sha?: string }[];
+	}>(`/git/trees/${sha}?recursive=1`);
 	if (tree.truncated) {
 		throw new Error(
 			"the repository is too large for GitHub to list in one tree",
@@ -60,11 +76,10 @@ export async function repositorySnapshot(args: {
 		async read(path) {
 			const blob = blobs.get(path);
 			if (!blob) throw new Error(`${path} is not in ${args.repo}@${sha}`);
-			const { data } = await octokit.request(
-				"GET /repos/{owner}/{repo}/git/blobs/{file_sha}",
-				{ owner, repo: name, file_sha: blob },
+			const { content } = await github<{ content: string }>(
+				`/git/blobs/${blob}`,
 			);
-			return Buffer.from(data.content, "base64");
+			return Buffer.from(content, "base64");
 		},
 	};
 }

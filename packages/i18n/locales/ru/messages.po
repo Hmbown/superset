@@ -19952,6 +19952,10 @@ msgstr "Ваш первый агент"
 msgid "Your GitHub account cannot reach a repository in this environment"
 msgstr "Ваша учётная запись GitHub не может получить доступ к репозиторию этого окружения"
 
+#. js-lingui-explicit-id
+msgid "serverError.plugins.pluginSourceOutOfReach"
+msgstr "Ваша учётная запись GitHub не может прочитать {repo}"
+
 msgid "Your GitHub link comes from the account you signed in with, so it shows as verified and cannot be edited here."
 msgstr "Ссылка на GitHub берётся из аккаунта, через который вы вошли, поэтому она отмечена как подтверждённая и не редактируется здесь."
 

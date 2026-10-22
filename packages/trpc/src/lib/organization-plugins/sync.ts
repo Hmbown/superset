@@ -1,8 +1,8 @@
 import { db } from "@superset/db/client";
 import {
-	githubInstallations,
 	organizationPluginSources,
 	organizationPlugins,
+	type SelectOrganizationPluginSource,
 } from "@superset/db/schema";
 import { DEFAULT_ORGANIZATION_PLUGIN_POLICY } from "@superset/shared/plugins";
 import {
@@ -11,6 +11,7 @@ import {
 } from "@superset/shared/plugins/bundle";
 import { and, eq, isNull, notInArray } from "drizzle-orm";
 import { putObject } from "../r2";
+import { sourceCredentials } from "./credentials";
 import { type RepositorySnapshot, readAll, repositorySnapshot } from "./github";
 import {
 	findManifestFile,
@@ -75,6 +76,38 @@ async function bundleFor(
  * plugin that fails keeps its last good version; one that left the
  * repository is marked, not deleted, so members keep what they installed.
  */
+const CREDENTIAL_LABEL = {
+	admin: "the GitHub account of the admin who added it",
+	app: "the organization's GitHub App",
+} as const;
+
+async function readWithFirstCredential(
+	source: SelectOrganizationPluginSource,
+	readSnapshot: typeof repositorySnapshot,
+): Promise<RepositorySnapshot> {
+	const credentials = await sourceCredentials(source);
+	if (!credentials.length) {
+		throw new Error(
+			"nothing can read the repository: the admin who added it has no connected GitHub account, and the organization's GitHub App is not installed",
+		);
+	}
+	const failures: string[] = [];
+	for (const credential of credentials) {
+		try {
+			return await readSnapshot({
+				token: await credential.token(),
+				repo: source.repo,
+				ref: source.ref,
+			});
+		} catch (error) {
+			failures.push(
+				`${CREDENTIAL_LABEL[credential.as]}: ${error instanceof Error ? error.message : String(error)}`,
+			);
+		}
+	}
+	throw new Error(`could not read the repository with ${failures.join("; ")}`);
+}
+
 export async function syncOrganizationPluginSource(
 	sourceId: string,
 	readSnapshot: typeof repositorySnapshot = repositorySnapshot,
@@ -93,17 +126,7 @@ export async function syncOrganizationPluginSource(
 	};
 
 	try {
-		const installation = await db.query.githubInstallations.findFirst({
-			where: eq(githubInstallations.organizationId, source.organizationId),
-		});
-		if (!installation || installation.suspended) {
-			throw new Error("the organization's GitHub App is not installed");
-		}
-		const snapshot = await readSnapshot({
-			installationId: installation.installationId,
-			repo: source.repo,
-			ref: source.ref,
-		});
+		const snapshot = await readWithFirstCredential(source, readSnapshot);
 		result.sha = snapshot.sha;
 
 		const file = findMarketplaceFile(snapshot.paths, source.path);

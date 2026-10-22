@@ -19952,6 +19952,10 @@ msgstr "最初のエージェント"
 msgid "Your GitHub account cannot reach a repository in this environment"
 msgstr "あなたの GitHub アカウントはこの環境のリポジトリにアクセスできません"
 
+#. js-lingui-explicit-id
+msgid "serverError.plugins.pluginSourceOutOfReach"
+msgstr "あなたの GitHub アカウントは {repo} を読み取れません"
+
 msgid "Your GitHub link comes from the account you signed in with, so it shows as verified and cannot be edited here."
 msgstr "GitHub のリンクはサインインしたアカウントから取得されるため、確認済みと表示され、ここでは編集できません。"
 

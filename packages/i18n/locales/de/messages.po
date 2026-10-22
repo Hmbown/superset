@@ -19952,6 +19952,10 @@ msgstr "Dein erster Agent"
 msgid "Your GitHub account cannot reach a repository in this environment"
 msgstr "Dein GitHub-Konto kann ein Repository dieser Umgebung nicht erreichen"
 
+#. js-lingui-explicit-id
+msgid "serverError.plugins.pluginSourceOutOfReach"
+msgstr "Ihr GitHub-Konto kann {repo} nicht lesen"
+
 msgid "Your GitHub link comes from the account you signed in with, so it shows as verified and cannot be edited here."
 msgstr "Dein GitHub-Link stammt aus dem Konto, mit dem du dich angemeldet hast. Er gilt daher als verifiziert und lässt sich hier nicht bearbeiten."
 
