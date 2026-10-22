@@ -2,10 +2,8 @@
 
 import { authClient } from "@superset/auth/client";
 import {
-	type AutumnPlanSummary,
-	SELF_SERVE_PLANS,
-	type SelfServePlanCatalog,
-	selfServePlansFromAutumn,
+	type AutumnCatalogPlan,
+	planCatalogFromAutumn,
 } from "@superset/shared/billing";
 import { useQuery } from "@tanstack/react-query";
 
@@ -17,14 +15,14 @@ export function usePlanCatalog({
 }: {
 	organizationId: string | null | undefined;
 	enabled: boolean;
-}): SelfServePlanCatalog {
-	const { data } = useQuery({
-		queryKey: ["billing", "autumnPlanCatalog", organizationId],
+}) {
+	return useQuery({
+		queryKey: ["billing", "planCatalog", organizationId],
 		enabled: enabled && Boolean(organizationId),
 		staleTime: CATALOG_STALE_MS,
 		queryFn: async () => {
 			const { data: plans, error } = await authClient.$fetch<{
-				list: AutumnPlanSummary[];
+				list: AutumnCatalogPlan[];
 			}>("/autumn/listPlans", {
 				method: "POST",
 				body: { organizationId },
@@ -32,8 +30,7 @@ export function usePlanCatalog({
 			if (error || !plans) {
 				throw new Error(`listPlans failed: ${error?.status ?? "no data"}`);
 			}
-			return selfServePlansFromAutumn(plans.list);
+			return planCatalogFromAutumn(plans.list);
 		},
 	});
-	return data ?? SELF_SERVE_PLANS;
 }

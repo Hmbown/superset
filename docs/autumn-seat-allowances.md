@@ -47,10 +47,11 @@ The import script does not copy the enterprise template's opt-in setting.
   billing-cycle anchor. Annual seat pricing still gets a monthly cloud grant.
 - Custom allowance changes are previewed before execution. A preview that resets
   usage is refused. Allowance-only changes also refuse any charge or credit.
-- A five-to-six-seat change gives the full 115,200 grant for the current monthly
-  cycle; already-consumed usage remains consumed. Removing a seat reduces the
-  grant immediately and can leave usage above the new allowance. It does not
-  erase consumption or issue refunds.
+- Adding a seat adds its full 19,200 GB-minutes to the current monthly grant
+  (five to six seats: 96,000 to 115,200). Usage so far carries over and the reset
+  date does not move. A removed seat stays billed and keeps its grant until
+  renewal; the grant drops at the next cycle. Consumption is never erased and
+  nothing is refunded.
 
 ## Sandbox verification gate
 

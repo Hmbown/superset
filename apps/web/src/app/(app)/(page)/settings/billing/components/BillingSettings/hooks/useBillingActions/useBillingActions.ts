@@ -3,11 +3,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { authClient } from "@superset/auth/client";
 import { rawErrorMessage } from "@superset/i18n/errors";
-import {
-	autumnPlanIdFor,
-	type PlanTier,
-	type SelfServePlanId,
-} from "@superset/shared/billing";
+import type { PlanTier } from "@superset/shared/billing";
 import { toast } from "@superset/ui/sonner";
 import { useMutation } from "@tanstack/react-query";
 import posthog from "posthog-js";
@@ -45,23 +41,21 @@ export function useBillingActions({
 
 	const usesAutumn = activePlan?.billingProvider === "autumn";
 	const billingUrl = `${env.NEXT_PUBLIC_WEB_URL}/settings/billing`;
-	const currentAutumnPlanId =
-		activePlan?.autumnPlanId ??
-		autumnPlanIdFor("pro", { annual: activePlan?.billingInterval === "year" });
+	const currentAutumnPlanId = activePlan?.autumnPlanId ?? "";
 
 	const upgrade = async ({
-		plan: targetPlan = "pro",
+		planId,
 		annual,
 		seats,
 	}: {
-		plan?: SelfServePlanId;
+		planId: string;
 		annual: boolean;
 		seats: number;
 	}) => {
 		if (!activeOrganizationId) return;
 
 		const checkoutProperties = {
-			plan: targetPlan,
+			plan: planId,
 			annual,
 			seats,
 			previous_plan: plan,
@@ -90,7 +84,7 @@ export function useBillingActions({
 						method: "POST",
 						body: {
 							organizationId: activeOrganizationId,
-							planId: autumnPlanIdFor(targetPlan, { annual }),
+							planId,
 							currentPlanId: activePlan?.autumnPlanId ?? null,
 							successUrl,
 							cancelUrl: billingUrl,

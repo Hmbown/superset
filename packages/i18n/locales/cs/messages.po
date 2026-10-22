@@ -487,10 +487,6 @@ msgstr "{0} z {totalCount}"
 msgid "{0} options"
 msgstr "Možnosti {0}"
 
-#. placeholder {0}: i18n._(planName)
-msgid "{0} plan"
-msgstr "Tarif {0}"
-
 #. placeholder {0}: normalizedProjectIds.length
 msgid "{0} projects"
 msgstr "{0} projektů"
@@ -889,6 +885,9 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "{gbHours} cloudových GB-hodin na místo měsíčně"
 
+msgid "{gbHours} on {name}"
+msgstr "{gbHours} v plánu {name}"
+
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {# skrytý řádek} few {# skryté řádky} many {# skrytého řádku} other {# skrytých řádků}}"
 
@@ -973,11 +972,14 @@ msgstr "{modKey}↵ pro vytvoření"
 msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
 msgstr "{monthlyPrice} na uživatele a měsíc při měsíční fakturaci, nebo {yearlyPrice} při roční fakturaci. Cloudové pracovní prostory, mobil, prioritní podpora."
 
+msgid "{monthlyPrice} per user/mo. Cloud workspaces, mobile, priority support."
+msgstr "{monthlyPrice} za uživatele/měs. Cloudové pracovní prostory, mobilní aplikace, prioritní podpora."
+
 msgid "{months}mo ago"
 msgstr "před {months} měs."
 
-msgid "{multiple}x the cloud GB-hours of Pro"
-msgstr "{multiple}× tolik cloudových GB-hodin co Pro"
+msgid "{multiple}x the cloud GB-hours of {basePlan}"
+msgstr "{multiple}× více cloudových GB-hodin než {basePlan}"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "Vaše automatizace s neúspěšným posledním během: {myFailedCount}"
@@ -1017,6 +1019,12 @@ msgstr "{name} začal pracovat"
 
 msgid "{name} stopped"
 msgstr "{name} byl zastaven"
+
+msgid "{name}: {monthly} per user/month"
+msgstr "{name}: {monthly} za uživatele/měsíc"
+
+msgid "{name}: {monthly} per user/month, or {yearly} billed yearly"
+msgstr "{name}: {monthly} za uživatele/měsíc, nebo {yearly} při roční fakturaci"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Zadejte alespoň jednu osobu, nebo zvolte {choice}.} sender {Zadejte alespoň jednoho odesílatele, nebo zvolte {choice}.} other {Zadejte alespoň jednu položku, nebo zvolte {choice}.}}"
@@ -1067,6 +1075,9 @@ msgstr "{planLabel} · Připojeno {joined}"
 msgid "{planLabel} plan"
 msgstr "Tarif {planLabel}"
 
+msgid "{planName} plan"
+msgstr "Plán {planName}"
+
 msgid "{plugin} has no OAuth client configured on this deployment yet."
 msgstr "{plugin} zatím nemá v tomto nasazení nakonfigurovaného klienta OAuth."
 
@@ -1079,6 +1090,9 @@ msgstr "{presetLabel} obnoveno na výchozí"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize} px · výška řádku {0}"
+
+msgid "{price} per user/month"
+msgstr "{price} za uživatele/měsíc"
 
 msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
 msgstr "{price} na uživatele/měsíc, {gbHours} cloudových GB-hodin na místo měsíčně"
@@ -3019,9 +3033,6 @@ msgstr "Za obzorem: F5 není tvrzení o blízké budoucnosti"
 msgid "Billed monthly"
 msgstr "Účtováno měsíčně"
 
-msgid "Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team."
-msgstr "Při měsíční platbě stojí Pro {monthlyPrice}, Team {teamPrice} a Ultra {ultraPrice} na uživatele/měsíc. Při roční platbě stojí Pro {yearlyPrice}, Team {teamYearlyPrice} a Ultra {ultraYearlyPrice} na uživatele/měsíc. Platíte za každé aktivní místo ve vašem týmu."
-
 msgid "Billed per token."
 msgstr "Účtováno za tokeny."
 
@@ -4126,8 +4137,8 @@ msgstr "Cloudový pracovní prostor"
 msgid "Cloud workspaces"
 msgstr "Cloudové pracovní prostory"
 
-msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour."
-msgstr "Cloudové pracovní prostory se účtují v GB-hodinách: paměť stroje krát počet hodin, kdy běží. Stroj s 8 GB spotřebuje 8 GB-hodin za hodinu. Každé místo přidá GB-hodiny ze svého tarifu do jednoho fondu, který sdílí celý tým: {proGbHours} v tarifu Pro, {teamGbHours} v Team, {ultraGbHours} v Ultra. Fond se každý měsíc obnoví a využití nad jeho rámec stojí {overagePrice} za GB-hodinu."
+msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan."
+msgstr "Cloudové pracovní prostory se měří v GB-hodinách: paměť stroje krát počet hodin, kdy běží. Stroj s 8 GB spotřebuje 8 GB-hodin za hodinu. Každé místo přidá GB-hodiny svého plánu do jednoho fondu, který tým sdílí: {allowances}. Fond se každý měsíc obnoví a využití nad jeho rámec se účtuje za GB-hodinu podle sazby uvedené u každého plánu."
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Cloudové pracovní prostory tuto proměnnou ignorují. Agenti se místo toho přihlašují v Nastavení › Agenti."
@@ -4997,6 +5008,9 @@ msgstr "Nepodařilo se načíst prostředí."
 
 msgid "Could not load image"
 msgstr "Obrázek se nepodařilo načíst"
+
+msgid "Could not load plans."
+msgstr "Plány se nepodařilo načíst."
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "Pluginy se nepodařilo načíst. Zkontrolujte připojení a zkuste to znovu."
@@ -6937,6 +6951,9 @@ msgstr "Všichni zůstanou na v{sharedVersion}, dokud to nezměníte"
 msgid "Everyone with access to this organization."
 msgstr "Všichni s přístupem do této organizace."
 
+msgid "Everything in {previousPlan}"
+msgstr "Vše z plánu {previousPlan}"
+
 msgid "Everything in Free"
 msgstr "Vše z tarifu Free"
 
@@ -6945,9 +6962,6 @@ msgstr "Vše z tarifu Pro"
 
 msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
 msgstr "Všechno z tarifu Pro a k tomu SSO a SAML, provisioning přes SCIM, omezení podle IP, auditní logy, SLA na míru, dedikovanou podporu a smlouvy na míru. Cena se odvíjí od vaší organizace. Ozvěte se a nachystáme něco, co bude sedět."
-
-msgid "Everything in Team"
-msgstr "Vše z tarifu Team"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "Všechno jde skriptovat. Vytvářejte pracovní prostory a agenty z CLI, zapojte Superset do CI přes SDK nebo ho nechte řídit svého agenta přes MCP."
@@ -7936,6 +7950,9 @@ msgstr "Pro týmy, které potřebují víc"
 msgid "For teams that run agents every day"
 msgstr "Pro týmy, které spouštějí agenty každý den"
 
+msgid "For teams that run more agents in the cloud"
+msgstr "Pro týmy, které v cloudu spouštějí více agentů"
+
 msgid "Force merge"
 msgstr "Vynutit sloučení"
 
@@ -8122,6 +8139,9 @@ msgstr "Generuji..."
 msgid "Generating…"
 msgstr "Generování…"
 
+msgid "Get {plan}"
+msgstr "Získat {plan}"
+
 msgid "Get an API key"
 msgstr "Získat API klíč"
 
@@ -8140,9 +8160,6 @@ msgstr "Využít Superset naplno"
 msgid "Get notified when Superset is available on Windows & Linux."
 msgstr "Dáme vám vědět, až bude Superset dostupný pro Windows a Linux."
 
-msgid "Get Pro"
-msgstr "Získat Pro"
-
 msgid "Get started"
 msgstr "Začít"
 
@@ -8152,17 +8169,11 @@ msgstr "Získejte Superset na svůj Mac"
 msgid "Get Superset Pro"
 msgstr "Pořídit Superset Pro"
 
-msgid "Get Team"
-msgstr "Získat Team"
-
 msgid "Get the best out of Pro"
 msgstr "Využijte Pro naplno"
 
 msgid "Get the iPhone and iPad app"
 msgstr "Stáhnout aplikaci pro iPhone a iPad"
-
-msgid "Get Ultra"
-msgstr "Získat Ultra"
 
 msgid "Gets an invite to join {organizationName}"
 msgstr "Dostane pozvánku do {organizationName}"
@@ -12583,6 +12594,9 @@ msgstr "stránkování"
 msgid "Pagination"
 msgstr "Stránkování"
 
+msgid "Paid plans are priced per user per month and billed for each active seat on your team. {planPrices}."
+msgstr "Placené plány se účtují za uživatele a měsíc, a to za každé aktivní místo v týmu. {planPrices}."
+
 msgid "Paid work trial"
 msgstr "Placená zkušební spolupráce"
 
@@ -15130,6 +15144,12 @@ msgstr "Hledám..."
 msgid "Searching…"
 msgstr "Hledání…"
 
+#. placeholder {0}: format(new Date(periodEnd), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(periodEnd)
+#. placeholder {0}: formatLocaleDate(new Date(seatPeriodEnd), { month: "long", day: "numeric", year: "numeric" })
+msgid "Seats removed mid-cycle stay active until {0}."
+msgstr "Místa odebraná v průběhu období zůstanou aktivní do {0}."
+
 msgid "Secondary"
 msgstr "Secondary"
 
@@ -15943,6 +15963,9 @@ msgstr "Jednoduchý ceník pro každý tým"
 
 msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
 msgstr "Jednoduché ceny pro každý tým. Zdarma pro jednotlivce, {yearlyPrice}/uživatele/měsíc pro týmy, na míru pro enterprise. Spusťte 100+ paralelních kódovacích agentů s {companyName}."
+
+msgid "Simple pricing for every team. Free for individuals, per-user plans for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "Jednoduché ceny pro každý tým. Zdarma pro jednotlivce, plány za uživatele pro týmy, na míru pro firmy. Spouštějte s {companyName} přes 100 programovacích agentů paralelně."
 
 msgid "Simulate update: downloading"
 msgstr "Simulovat aktualizaci: stahování"
@@ -17117,10 +17140,6 @@ msgstr "tým"
 
 msgid "Team"
 msgstr "Tým"
-
-msgctxt "plan name"
-msgid "Team"
-msgstr "Team"
 
 msgid "Team activity feed"
 msgstr "Přehled aktivity týmu"
@@ -18445,10 +18464,6 @@ msgstr "Typografie a chování kurzoru v terminálových panelech V2."
 msgid "Typography used in V2 editors and diff views."
 msgstr "Typografie použitá v editorech V2 a v zobrazení rozdílů."
 
-msgctxt "plan name"
-msgid "Ultra"
-msgstr "Ultra"
-
 msgid "Unable to check for updates. Please check your internet connection."
 msgstr "Aktualizace nelze zkontrolovat. Zkontrolujte prosím připojení k internetu."
 
@@ -18783,9 +18798,8 @@ msgstr "Aktualizuj závislost a oprav, co se rozbije…"
 msgid "Upgrade on {0}"
 msgstr "Přejít na Pro na {0}"
 
-#. placeholder {0}: i18n._(plan.name)
-msgid "Upgrade to {0}"
-msgstr "Přejít na {0}"
+msgid "Upgrade to {planName}"
+msgstr "Přejít na {planName}"
 
 msgid "Upgrade to Pro"
 msgstr "Přejít na Pro"
@@ -19931,6 +19945,12 @@ msgstr "Vaše organizace dosáhla limitu využití cloudu. Tento pracovní prost
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Vaše vlastní účty. Integrace vaší organizace umožňují Supersetu přístup k jejím nástrojům; když připojíte své účty, práce, kterou pro vás Superset udělá, se zobrazí pod vaším jménem."
 
+msgid "Your plan does not include cloud environments."
+msgstr "Váš plán nezahrnuje cloudová prostředí."
+
+msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
+msgstr "Váš plán nezahrnuje cloudová prostředí. Pro vytvoření přejděte na vyšší plán v Nastavení, Fakturace."
+
 msgid "Your rank"
 msgstr "Vaše pozice"
 
@@ -19950,8 +19970,8 @@ msgstr "Váš účet Slack byl propojen se Superset. Tuto kartu můžete zavří
 msgid "Your stats, settled in mortal combat"
 msgstr "Tvé statistiky rozhodnou v boji na život a na smrt"
 
-msgid "Your subscription has been activated. You can now access all Pro features."
-msgstr "Vaše předplatné bylo aktivováno. Teď máte přístup ke všem funkcím Pro."
+msgid "Your subscription is active. Your new plan's features are ready to use."
+msgstr "Vaše předplatné je aktivní. Funkce nového plánu jsou připravené k použití."
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "Vaše předplatné se odpovídajícím způsobem upraví."

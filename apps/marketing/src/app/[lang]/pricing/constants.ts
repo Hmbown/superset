@@ -1,9 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import type { SelfServePlanId } from "@superset/shared/billing";
+import type { PlanFamily } from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
-
-export type TierId = "free" | SelfServePlanId | "enterprise";
 
 export interface PricingFeature {
 	id: string;
@@ -11,21 +9,20 @@ export interface PricingFeature {
 }
 
 export interface PricingTier {
-	id: TierId;
-	name: MessageDescriptor;
+	id: string;
+	name: MessageDescriptor | string;
 	description: MessageDescriptor;
 	price:
 		| { kind: "fixed"; display: string; note: MessageDescriptor }
 		| {
 				kind: "seat";
-				plan: SelfServePlanId;
+				family: PlanFamily;
 				note: MessageDescriptor;
 				monthlyCadence: MessageDescriptor;
 				yearlyCadence: MessageDescriptor;
 		  }
 		| { kind: "custom"; display: MessageDescriptor; note: MessageDescriptor };
 	features: PricingFeature[];
-	featureLimits?: Partial<Record<string, string>>;
 	cta: {
 		label: MessageDescriptor;
 		href: string;
@@ -37,318 +34,239 @@ export interface PricingTier {
 	highlight?: boolean;
 }
 
-export const PRICING_TIERS: PricingTier[] = [
-	{
-		id: "free",
-		name: msg({ message: "Free" }),
-		description: msg({
-			message: "For individuals getting started",
+export const FREE_TIER: PricingTier = {
+	id: "free",
+	name: msg({ message: "Free" }),
+	description: msg({
+		message: "For individuals getting started",
+	}),
+	price: {
+		kind: "fixed",
+		display: "$0",
+		note: msg({
+			message: "Free for everyone",
 		}),
-		price: {
-			kind: "fixed",
-			display: "$0",
-			note: msg({
-				message: "Free for everyone",
-			}),
-		},
-		features: [
-			{
-				id: "users",
-				label: msg({
-					message: "1 user",
-				}),
-			},
-			{
-				id: "localWorkspaces",
-				label: msg({
-					message: "Local workspaces",
-				}),
-			},
-			{
-				id: "desktopApp",
-				label: msg({
-					message: "Desktop app",
-				}),
-			},
-			{
-				id: "cli",
-				label: msg({
-					message: "CLI",
-				}),
-			},
-		],
-		cta: {
+	},
+	features: [
+		{
+			id: "users",
 			label: msg({
-				message: "Download app",
+				message: "1 user",
 			}),
-			href: "/download",
-			event: "download_clicked",
-			variant: "outline",
 		},
-		ctaNote: {
+		{
+			id: "localWorkspaces",
 			label: msg({
-				message: "No credit card required.",
+				message: "Local workspaces",
 			}),
 		},
+		{
+			id: "desktopApp",
+			label: msg({
+				message: "Desktop app",
+			}),
+		},
+		{
+			id: "cli",
+			label: msg({
+				message: "CLI",
+			}),
+		},
+	],
+	cta: {
+		label: msg({
+			message: "Download app",
+		}),
+		href: "/download",
+		event: "download_clicked",
+		variant: "outline",
+	},
+	ctaNote: {
+		label: msg({
+			message: "No credit card required.",
+		}),
+	},
+};
+
+export const ENTERPRISE_TIER: PricingTier = {
+	id: "enterprise",
+	name: msg({
+		message: "Enterprise",
+	}),
+	description: msg({
+		message: "For organizations with advanced needs",
+	}),
+	price: {
+		kind: "custom",
+		display: msg({
+			message: "Custom pricing",
+		}),
+		note: msg({
+			message: "Annual billing only",
+		}),
+	},
+	features: [
+		{
+			id: "everythingInPro",
+			label: msg({
+				message: "Everything in Pro",
+			}),
+		},
+		{
+			id: "ssoScim",
+			label: msg({
+				message: "SAML SSO & SCIM provisioning",
+			}),
+		},
+		{
+			id: "auditLogs",
+			label: msg({
+				message: "Audit logs",
+			}),
+		},
+		{
+			id: "soc2",
+			label: msg({
+				message: "SOC 2 Type II report",
+			}),
+		},
+		{
+			id: "slaSupport",
+			label: msg({
+				message: "Uptime SLA & dedicated support",
+			}),
+		},
+		{
+			id: "customIntegrations",
+			label: msg({
+				message: "Custom integrations",
+			}),
+		},
+	],
+	cta: {
+		label: msg({
+			message: "Contact sales",
+		}),
+		href: "/enterprise",
+		event: "contact_sales_clicked",
+		variant: "outline",
+	},
+	ctaNote: {
+		label: msg({
+			message: "Review our security",
+		}),
+		href: COMPANY.TRUST_URL,
+	},
+};
+
+const FAMILY_DESCRIPTIONS: Record<string, MessageDescriptor> = {
+	pro: msg({ message: "For teams that need more power" }),
+	team: msg({ message: "For teams that run agents every day" }),
+	ultra: msg({ message: "For people who keep agents running all day" }),
+};
+
+const GENERIC_DESCRIPTION = msg({
+	message: "For teams that run more agents in the cloud",
+});
+
+const BASE_FEATURES: PricingFeature[] = [
+	{
+		id: "everythingInFree",
+		label: msg({
+			message: "Everything in Free",
+		}),
 	},
 	{
-		id: "pro",
-		name: msg({ message: "Pro" }),
-		description: msg({
-			message: "For teams that need more power",
+		id: "cloudHours",
+		label: msg({
+			message: "{gbHours} cloud GB-hours per seat each month",
 		}),
-		price: {
-			kind: "seat",
-			plan: "pro",
-			note: msg({
-				message: "per user/month",
-			}),
-			monthlyCadence: msg({
-				message: "Billed monthly",
-			}),
-			yearlyCadence: msg({
-				message: "{yearlyTotal} per user, billed yearly",
-			}),
-		},
-		features: [
-			{
-				id: "everythingInFree",
-				label: msg({
-					message: "Everything in Free",
-				}),
-			},
-			{
-				id: "cloudHours",
-				label: msg({
-					message: "{gbHours} cloud GB-hours per seat each month",
-				}),
-			},
-			{
-				id: "unlimitedUsers",
-				label: msg({
-					message: "Unlimited users",
-				}),
-			},
-			{
-				id: "remoteAccess",
-				label: msg({
-					message: "Remote access",
-				}),
-			},
-			{
-				id: "automations",
-				label: msg({
-					message: "Automations",
-				}),
-			},
-			{
-				id: "linearIntegration",
-				label: msg({
-					message: "Linear integration",
-				}),
-			},
-			{
-				id: "slackIntegration",
-				label: msg({
-					message: "Slack integration",
-				}),
-			},
-			{
-				id: "mobile",
-				label: msg({
-					message: "Mobile",
-				}),
-			},
-		],
-		cta: {
-			label: msg({
-				message: "Get Pro",
-			}),
-			href: "/settings/billing",
-			event: "checkout_clicked",
-			variant: "default",
-		},
-		highlight: true,
 	},
 	{
-		id: "team",
-		name: msg({ message: "Team", context: "plan name" }),
-		description: msg({
-			message: "For teams that run agents every day",
+		id: "unlimitedUsers",
+		label: msg({
+			message: "Unlimited users",
 		}),
-		price: {
-			kind: "seat",
-			plan: "team",
-			note: msg({
-				message: "per user/month",
-			}),
-			monthlyCadence: msg({
-				message: "Billed monthly",
-			}),
-			yearlyCadence: msg({
-				message: "{yearlyTotal} per user, billed yearly",
-			}),
-		},
-		features: [
-			{
-				id: "everythingInPro",
-				label: msg({
-					message: "Everything in Pro",
-				}),
-			},
-			{
-				id: "cloudHours",
-				label: msg({
-					message: "{gbHours} cloud GB-hours per seat each month",
-				}),
-			},
-			{
-				id: "cloudMultiple",
-				label: msg({
-					message: "{multiple}x the cloud GB-hours of Pro",
-				}),
-			},
-			{
-				id: "sharedCloudPool",
-				label: msg({
-					message: "One shared GB-hour pool for the team",
-				}),
-			},
-		],
-		cta: {
-			label: msg({
-				message: "Get Team",
-			}),
-			href: "/settings/billing",
-			event: "checkout_clicked",
-			variant: "outline",
-		},
 	},
 	{
-		id: "ultra",
-		name: msg({ message: "Ultra", context: "plan name" }),
-		description: msg({
-			message: "For people who keep agents running all day",
+		id: "remoteAccess",
+		label: msg({
+			message: "Remote access",
 		}),
-		price: {
-			kind: "seat",
-			plan: "ultra",
-			note: msg({
-				message: "per user/month",
-			}),
-			monthlyCadence: msg({
-				message: "Billed monthly",
-			}),
-			yearlyCadence: msg({
-				message: "{yearlyTotal} per user, billed yearly",
-			}),
-		},
-		features: [
-			{
-				id: "everythingInTeam",
-				label: msg({
-					message: "Everything in Team",
-				}),
-			},
-			{
-				id: "cloudHours",
-				label: msg({
-					message: "{gbHours} cloud GB-hours per seat each month",
-				}),
-			},
-			{
-				id: "cloudMultiple",
-				label: msg({
-					message: "{multiple}x the cloud GB-hours of Pro",
-				}),
-			},
-			{
-				id: "sharedCloudPool",
-				label: msg({
-					message: "One shared GB-hour pool for the team",
-				}),
-			},
-		],
-		cta: {
-			label: msg({
-				message: "Get Ultra",
-			}),
-			href: "/settings/billing",
-			event: "checkout_clicked",
-			variant: "outline",
-		},
 	},
 	{
-		id: "enterprise",
-		name: msg({
-			message: "Enterprise",
+		id: "automations",
+		label: msg({
+			message: "Automations",
 		}),
-		description: msg({
-			message: "For organizations with advanced needs",
+	},
+	{
+		id: "linearIntegration",
+		label: msg({
+			message: "Linear integration",
 		}),
-		price: {
-			kind: "custom",
-			display: msg({
-				message: "Custom pricing",
-			}),
-			note: msg({
-				message: "Annual billing only",
-			}),
-		},
-		features: [
-			{
-				id: "everythingInPro",
-				label: msg({
-					message: "Everything in Pro",
-				}),
-			},
-			{
-				id: "ssoScim",
-				label: msg({
-					message: "SAML SSO & SCIM provisioning",
-				}),
-			},
-			{
-				id: "auditLogs",
-				label: msg({
-					message: "Audit logs",
-				}),
-			},
-			{
-				id: "soc2",
-				label: msg({
-					message: "SOC 2 Type II report",
-				}),
-			},
-			{
-				id: "slaSupport",
-				label: msg({
-					message: "Uptime SLA & dedicated support",
-				}),
-			},
-			{
-				id: "customIntegrations",
-				label: msg({
-					message: "Custom integrations",
-				}),
-			},
-		],
-		cta: {
-			label: msg({
-				message: "Contact sales",
-			}),
-			href: "/enterprise",
-			event: "contact_sales_clicked",
-			variant: "outline",
-		},
-		ctaNote: {
-			label: msg({
-				message: "Review our security",
-			}),
-			href: COMPANY.TRUST_URL,
-		},
+	},
+	{
+		id: "slackIntegration",
+		label: msg({
+			message: "Slack integration",
+		}),
+	},
+	{
+		id: "mobile",
+		label: msg({
+			message: "Mobile",
+		}),
 	},
 ];
+
+const STEP_UP_FEATURES: PricingFeature[] = [
+	{
+		id: "everythingInPrevious",
+		label: msg({ message: "Everything in {previousPlan}" }),
+	},
+	{
+		id: "cloudHours",
+		label: msg({ message: "{gbHours} cloud GB-hours per seat each month" }),
+	},
+	{
+		id: "cloudMultiple",
+		label: msg({ message: "{multiple}x the cloud GB-hours of {basePlan}" }),
+	},
+	{
+		id: "sharedCloudPool",
+		label: msg({ message: "One shared GB-hour pool for the team" }),
+	},
+];
+
+const SEAT_PRICE = {
+	note: msg({ message: "per user/month" }),
+	monthlyCadence: msg({ message: "Billed monthly" }),
+	yearlyCadence: msg({ message: "{yearlyTotal} per user, billed yearly" }),
+};
+
+export function pricingTiers(catalog: PlanFamily[]): PricingTier[] {
+	return [
+		FREE_TIER,
+		...catalog.map(
+			(family, index): PricingTier => ({
+				id: family.family,
+				name: family.name,
+				description: FAMILY_DESCRIPTIONS[family.family] ?? GENERIC_DESCRIPTION,
+				price: { kind: "seat", family, ...SEAT_PRICE },
+				features: index === 0 ? BASE_FEATURES : STEP_UP_FEATURES,
+				cta: {
+					label: msg({ message: "Get {plan}" }),
+					href: "/settings/billing",
+					event: "checkout_clicked",
+					variant: index === 0 ? "default" : "outline",
+				},
+				highlight: index === 0,
+			}),
+		),
+		ENTERPRISE_TIER,
+	];
+}
 
 // Plain strings stay raw numerals ("1"); anything with words is a descriptor.
 export type ComparisonValue = string | boolean | MessageDescriptor;
@@ -578,7 +496,7 @@ export const PRICING_FAQ_ITEMS: PricingFAQItem[] = [
 		}),
 		answer: msg({
 			message:
-				"Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team.",
+				"Paid plans are priced per user per month and billed for each active seat on your team. {planPrices}.",
 		}),
 	},
 	{
@@ -588,7 +506,7 @@ export const PRICING_FAQ_ITEMS: PricingFAQItem[] = [
 		}),
 		answer: msg({
 			message:
-				"Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour.",
+				"Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan.",
 		}),
 	},
 	{

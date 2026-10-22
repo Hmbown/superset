@@ -25,28 +25,15 @@ export const ADMIN_EXPAND = [
 	"balances.feature",
 ] as const;
 
-const SELF_SERVE_PLAN_IDS: ReadonlySet<string> = new Set([
-	"pro",
-	"pro_annual",
-	"team",
-	"team_annual",
-	"ultra",
-	"ultra_annual",
-]);
-
-export function selfServePlan(planId: string): boolean {
-	return SELF_SERVE_PLAN_IDS.has(planId);
-}
-
 export function checkoutSessionParams(args: {
-	planId: string;
+	yearly: boolean;
 	organizationId: string;
 	userId: string;
 	cancelUrl?: string;
 }): Record<string, unknown> {
 	return {
 		...(args.cancelUrl ? { cancel_url: args.cancelUrl } : {}),
-		allow_promotion_codes: !args.planId.endsWith("_annual"),
+		allow_promotion_codes: !args.yearly,
 		billing_address_collection: "required",
 		tax_id_collection: { enabled: true },
 		customer_update: { name: "auto", address: "auto" },

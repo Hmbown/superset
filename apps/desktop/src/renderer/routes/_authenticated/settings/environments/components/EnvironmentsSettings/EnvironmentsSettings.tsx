@@ -3,6 +3,7 @@ import { errorMessage } from "@superset/i18n/errors";
 import { Button } from "@superset/ui/button";
 import { Skeleton } from "@superset/ui/skeleton";
 import { toast } from "@superset/ui/sonner";
+import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
 	HiOutlineArchiveBox,
@@ -100,12 +101,24 @@ export function EnvironmentsSettings({
 					</p>
 				</div>
 				<div className="flex shrink-0 items-center gap-3">
-					{usage?.limit != null && (
+					{usage?.limit === 0 ? (
 						<span className="text-xs text-muted-foreground">
-							<Trans>
-								{used} of {limit} environments
-							</Trans>
+							<Trans>Your plan does not include cloud environments.</Trans>{" "}
+							<Link
+								to="/settings/billing/plans"
+								className="font-medium text-foreground underline underline-offset-4"
+							>
+								<Trans>Upgrade</Trans>
+							</Link>
 						</span>
+					) : (
+						usage?.limit != null && (
+							<span className="text-xs text-muted-foreground">
+								<Trans>
+									{used} of {limit} environments
+								</Trans>
+							</span>
+						)
 					)}
 					<Button
 						onClick={() => setEditor({ mode: "create" })}

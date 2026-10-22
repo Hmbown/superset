@@ -4,19 +4,20 @@ async function main(): Promise<void> {
 	const { values } = parseArgs({
 		options: {
 			organization: { type: "string", multiple: true },
+			all: { type: "boolean", default: false },
 			apply: { type: "boolean", default: false },
 			help: { type: "boolean", default: false },
 		},
 	});
 	if (values.help) {
 		console.log(
-			"Usage: bun packages/auth/scripts/sync-autumn-seat-allowances.ts --organization ORG_ID [--organization ORG_ID ...] [--apply]",
+			"Usage: bun packages/auth/scripts/sync-autumn-seat-allowances.ts (--all | --organization ORG_ID [--organization ORG_ID ...]) [--apply]",
 		);
 		return;
 	}
-	if (!values.organization?.length) {
+	if (!values.all && !values.organization?.length) {
 		throw new Error(
-			"Pass at least one --organization; previews are the default",
+			"Pass --all or at least one --organization; previews are the default",
 		);
 	}
 	const [autumn, customers, billing, allowances, features] = await Promise.all([
@@ -26,17 +27,22 @@ async function main(): Promise<void> {
 		import("../src/lib/billing/autumn/seat-allowance"),
 		import("../src/lib/billing/autumn/features"),
 	]);
-	for (const organizationId of new Set(values.organization)) {
+	const organizationIds = values.all
+		? await paidOrganizationIds()
+		: values.organization;
+	for (const organizationId of new Set(organizationIds)) {
 		try {
 			const seats = Math.max(
 				1,
 				await billing.countBillableSeats(organizationId),
 			);
-			const request = await customers.buildAutumnSeatUpdate(
+			const update = await customers.buildAutumnSeatUpdate(
 				organizationId,
 				seats,
-				{ allowanceOnly: true },
+				{ allowanceOnly: true, grantDecrease: "when-unused" },
 			);
+			if (update?.allowanceError) throw update.allowanceError;
+			const request = update?.request;
 			if (!request) {
 				console.log(`${organizationId}: unchanged or not configured`);
 				continue;
@@ -79,6 +85,23 @@ async function main(): Promise<void> {
 			console.error(`${organizationId}: allowance sync failed`, error);
 		}
 	}
+}
+
+async function paidOrganizationIds(): Promise<string[]> {
+	const [{ db }, { subscriptions }, { ACTIVE_SUBSCRIPTION_STATUSES }, orm] =
+		await Promise.all([
+			import("@superset/db/client"),
+			import("@superset/db/schema"),
+			import("@superset/shared/billing"),
+			import("drizzle-orm"),
+		]);
+	const rows = await db
+		.selectDistinct({ organizationId: subscriptions.referenceId })
+		.from(subscriptions)
+		.where(orm.inArray(subscriptions.status, ACTIVE_SUBSCRIPTION_STATUSES));
+	return rows.flatMap((row) =>
+		row.organizationId ? [row.organizationId] : [],
+	);
 }
 
 await main();

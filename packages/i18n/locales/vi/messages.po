@@ -487,10 +487,6 @@ msgstr "{0} trong {totalCount}"
 msgid "{0} options"
 msgstr "Tùy chọn {0}"
 
-#. placeholder {0}: i18n._(planName)
-msgid "{0} plan"
-msgstr "Gói {0}"
-
 #. placeholder {0}: normalizedProjectIds.length
 msgid "{0} projects"
 msgstr "{0} dự án"
@@ -889,6 +885,9 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "{gbHours} GB-giờ đám mây cho mỗi người dùng mỗi tháng"
 
+msgid "{gbHours} on {name}"
+msgstr "{gbHours} với {name}"
+
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {# dòng ẩn} other {# dòng ẩn}}"
 
@@ -973,11 +972,14 @@ msgstr "{modKey}↵ để tạo"
 msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
 msgstr "{monthlyPrice} mỗi người/tháng khi thanh toán theo tháng, hoặc {yearlyPrice} khi thanh toán theo năm. Workspace trên cloud, ứng dụng di động, hỗ trợ ưu tiên."
 
+msgid "{monthlyPrice} per user/mo. Cloud workspaces, mobile, priority support."
+msgstr "{monthlyPrice} mỗi người dùng/tháng. Không gian làm việc đám mây, di động, hỗ trợ ưu tiên."
+
 msgid "{months}mo ago"
 msgstr "{months} tháng trước"
 
-msgid "{multiple}x the cloud GB-hours of Pro"
-msgstr "Gấp {multiple} lần số GB-giờ đám mây của Pro"
+msgid "{multiple}x the cloud GB-hours of {basePlan}"
+msgstr "Gấp {multiple} lần GB-giờ đám mây của {basePlan}"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "{myFailedCount} tự động hóa của bạn thất bại ở lần chạy gần nhất"
@@ -1017,6 +1019,12 @@ msgstr "{name} đã bắt đầu làm việc"
 
 msgid "{name} stopped"
 msgstr "{name} đã dừng"
+
+msgid "{name}: {monthly} per user/month"
+msgstr "{name}: {monthly} mỗi người dùng/tháng"
+
+msgid "{name}: {monthly} per user/month, or {yearly} billed yearly"
+msgstr "{name}: {monthly} mỗi người dùng/tháng, hoặc {yearly} khi thanh toán theo năm"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Hãy chỉ định ít nhất một người, hoặc chọn {choice}.} sender {Hãy chỉ định ít nhất một người gửi, hoặc chọn {choice}.} other {Hãy chỉ định ít nhất một mục, hoặc chọn {choice}.}}"
@@ -1067,6 +1075,9 @@ msgstr "{planLabel} · Tham gia {joined}"
 msgid "{planLabel} plan"
 msgstr "Gói {planLabel}"
 
+msgid "{planName} plan"
+msgstr "Gói {planName}"
+
 msgid "{plugin} has no OAuth client configured on this deployment yet."
 msgstr "{plugin} chưa được cấu hình ứng dụng khách OAuth trên bản triển khai này."
 
@@ -1079,6 +1090,9 @@ msgstr "Đã đặt lại {presetLabel} về mặc định"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · chiều cao dòng {0}"
+
+msgid "{price} per user/month"
+msgstr "{price} mỗi người dùng/tháng"
 
 msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
 msgstr "{price} mỗi người/tháng, {gbHours} GB-giờ đám mây cho mỗi người dùng mỗi tháng"
@@ -3019,9 +3033,6 @@ msgstr "Xa hơn: F5 không phải tuyên bố cho tương lai gần"
 msgid "Billed monthly"
 msgstr "Thanh toán theo tháng"
 
-msgid "Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team."
-msgstr "Khi thanh toán hằng tháng, Pro có giá {monthlyPrice}, Team {teamPrice} và Ultra {ultraPrice} mỗi người/tháng. Khi thanh toán hằng năm, Pro có giá {yearlyPrice}, Team {teamYearlyPrice} và Ultra {ultraYearlyPrice} mỗi người/tháng. Bạn trả tiền cho mỗi người dùng đang hoạt động trong nhóm."
-
 msgid "Billed per token."
 msgstr "Tính phí theo token."
 
@@ -4126,8 +4137,8 @@ msgstr "Workspace cloud"
 msgid "Cloud workspaces"
 msgstr "Không gian làm việc đám mây"
 
-msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour."
-msgstr "Không gian làm việc đám mây được tính bằng GB-giờ: bộ nhớ của máy nhân với số giờ máy chạy. Một máy 8 GB dùng 8 GB-giờ mỗi giờ. Mỗi người dùng cộng số GB-giờ của gói vào một quỹ chung cho cả nhóm: {proGbHours} với Pro, {teamGbHours} với Team, {ultraGbHours} với Ultra. Quỹ được đặt lại mỗi tháng, và phần dùng vượt quỹ có giá {overagePrice} cho mỗi GB-giờ."
+msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan."
+msgstr "Không gian làm việc đám mây được tính theo GB-giờ: bộ nhớ của máy nhân với số giờ máy chạy. Máy 8 GB dùng 8 GB-giờ mỗi giờ. Mỗi chỗ ngồi thêm GB-giờ của gói vào một quỹ chung mà nhóm bạn dùng: {allowances}. Quỹ được đặt lại mỗi tháng, phần dùng vượt quá được tính theo GB-giờ với mức giá của từng gói."
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Workspace đám mây bỏ qua biến này. Thay vào đó, các agent đăng nhập trong Cài đặt › Agent."
@@ -4997,6 +5008,9 @@ msgstr "Không thể tải environments."
 
 msgid "Could not load image"
 msgstr "Không thể tải ảnh"
+
+msgid "Could not load plans."
+msgstr "Không thể tải các gói."
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "Không tải được plugin. Hãy kiểm tra kết nối và thử lại."
@@ -6937,6 +6951,9 @@ msgstr "Mọi người vẫn ở v{sharedVersion} cho đến khi bạn đổi"
 msgid "Everyone with access to this organization."
 msgstr "Tất cả những người có quyền truy cập tổ chức này."
 
+msgid "Everything in {previousPlan}"
+msgstr "Mọi thứ trong {previousPlan}"
+
 msgid "Everything in Free"
 msgstr "Mọi thứ trong gói Free"
 
@@ -6945,9 +6962,6 @@ msgstr "Mọi thứ trong gói Pro"
 
 msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
 msgstr "Mọi thứ trong gói Pro cộng thêm SSO & SAML, cấp phát SCIM, giới hạn IP, nhật ký kiểm toán, SLA riêng, hỗ trợ chuyên trách và hợp đồng tùy chỉnh. Giá được điều chỉnh theo tổ chức của bạn. Hãy liên hệ và chúng tôi sẽ xây phương án phù hợp."
-
-msgid "Everything in Team"
-msgstr "Mọi thứ trong gói Team"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "Mọi thứ đều viết script được. Tạo workspace và agent từ CLI, nối Superset vào CI bằng SDK, hoặc để agent của bạn điều khiển qua MCP."
@@ -7936,6 +7950,9 @@ msgstr "Dành cho đội cần nhiều sức mạnh hơn"
 msgid "For teams that run agents every day"
 msgstr "Dành cho các nhóm chạy agent mỗi ngày"
 
+msgid "For teams that run more agents in the cloud"
+msgstr "Dành cho các nhóm chạy nhiều agent hơn trên đám mây"
+
 msgid "Force merge"
 msgstr "Merge cưỡng bức"
 
@@ -8122,6 +8139,9 @@ msgstr "Đang tạo..."
 msgid "Generating…"
 msgstr "Đang tạo…"
 
+msgid "Get {plan}"
+msgstr "Chọn {plan}"
+
 msgid "Get an API key"
 msgstr "Lấy khóa API"
 
@@ -8140,9 +8160,6 @@ msgstr "Khai thác Superset nhiều hơn"
 msgid "Get notified when Superset is available on Windows & Linux."
 msgstr "Nhận thông báo khi Superset có trên Windows & Linux."
 
-msgid "Get Pro"
-msgstr "Dùng gói Pro"
-
 msgid "Get started"
 msgstr "Bắt đầu"
 
@@ -8152,17 +8169,11 @@ msgstr "Cài Superset trên máy Mac"
 msgid "Get Superset Pro"
 msgstr "Mua Superset Pro"
 
-msgid "Get Team"
-msgstr "Dùng gói Team"
-
 msgid "Get the best out of Pro"
 msgstr "Tận dụng tối đa Pro"
 
 msgid "Get the iPhone and iPad app"
 msgstr "Tải ứng dụng cho iPhone và iPad"
-
-msgid "Get Ultra"
-msgstr "Dùng gói Ultra"
 
 msgid "Gets an invite to join {organizationName}"
 msgstr "Sẽ nhận lời mời tham gia {organizationName}"
@@ -12583,6 +12594,9 @@ msgstr "phân trang"
 msgid "Pagination"
 msgstr "Pagination"
 
+msgid "Paid plans are priced per user per month and billed for each active seat on your team. {planPrices}."
+msgstr "Các gói trả phí được tính theo người dùng mỗi tháng và tính phí cho mỗi chỗ ngồi đang hoạt động trong nhóm bạn. {planPrices}."
+
 msgid "Paid work trial"
 msgstr "Làm thử có trả lương"
 
@@ -15130,6 +15144,12 @@ msgstr "Đang tìm..."
 msgid "Searching…"
 msgstr "Đang tìm…"
 
+#. placeholder {0}: format(new Date(periodEnd), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(periodEnd)
+#. placeholder {0}: formatLocaleDate(new Date(seatPeriodEnd), { month: "long", day: "numeric", year: "numeric" })
+msgid "Seats removed mid-cycle stay active until {0}."
+msgstr "Chỗ ngồi bị gỡ giữa chu kỳ vẫn hoạt động đến {0}."
+
 msgid "Secondary"
 msgstr "Secondary"
 
@@ -15943,6 +15963,9 @@ msgstr "Giá đơn giản cho mọi đội ngũ"
 
 msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
 msgstr "Giá đơn giản cho mọi đội nhóm. Miễn phí cho cá nhân, {yearlyPrice}/người/tháng cho đội nhóm, tùy chỉnh cho enterprise. Chạy 100+ agent lập trình song song với {companyName}."
+
+msgid "Simple pricing for every team. Free for individuals, per-user plans for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "Giá đơn giản cho mọi nhóm. Miễn phí cho cá nhân, gói theo người dùng cho nhóm, tùy chỉnh cho doanh nghiệp. Chạy hơn 100 agent lập trình song song với {companyName}."
 
 msgid "Simulate update: downloading"
 msgstr "Mô phỏng cập nhật: đang tải xuống"
@@ -17117,10 +17140,6 @@ msgstr "nhóm"
 
 msgid "Team"
 msgstr "Nhóm"
-
-msgctxt "plan name"
-msgid "Team"
-msgstr "Team"
 
 msgid "Team activity feed"
 msgstr "Bảng tin hoạt động nhóm"
@@ -18445,10 +18464,6 @@ msgstr "Kiểu chữ và hành vi con trỏ dùng trong khung terminal V2."
 msgid "Typography used in V2 editors and diff views."
 msgstr "Kiểu chữ dùng trong trình soạn thảo và khung diff V2."
 
-msgctxt "plan name"
-msgid "Ultra"
-msgstr "Ultra"
-
 msgid "Unable to check for updates. Please check your internet connection."
 msgstr "Không thể kiểm tra cập nhật. Vui lòng kiểm tra kết nối internet."
 
@@ -18783,9 +18798,8 @@ msgstr "Nâng cấp một dependency và sửa những gì hỏng…"
 msgid "Upgrade on {0}"
 msgstr "Nâng cấp trên {0}"
 
-#. placeholder {0}: i18n._(plan.name)
-msgid "Upgrade to {0}"
-msgstr "Nâng cấp lên {0}"
+msgid "Upgrade to {planName}"
+msgstr "Nâng cấp lên {planName}"
 
 msgid "Upgrade to Pro"
 msgstr "Nâng cấp lên Pro"
@@ -19931,6 +19945,12 @@ msgstr "Tổ chức của bạn đã đạt giới hạn sử dụng cloud. Work
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Tài khoản của riêng bạn. Các tích hợp của tổ chức giúp Superset truy cập công cụ của tổ chức; kết nối tài khoản của bạn giúp công việc Superset làm cho bạn hiển thị dưới tên bạn."
 
+msgid "Your plan does not include cloud environments."
+msgstr "Gói của bạn không bao gồm môi trường đám mây."
+
+msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
+msgstr "Gói của bạn không bao gồm môi trường đám mây. Nâng cấp trong Cài đặt, Thanh toán để tạo môi trường."
+
 msgid "Your rank"
 msgstr "Thứ hạng của bạn"
 
@@ -19950,8 +19970,8 @@ msgstr "Tài khoản Slack của bạn đã được liên kết với Superset.
 msgid "Your stats, settled in mortal combat"
 msgstr "Chỉ số của bạn phân thắng bại trong trận tử chiến"
 
-msgid "Your subscription has been activated. You can now access all Pro features."
-msgstr "Gói đăng ký của bạn đã được kích hoạt. Bây giờ bạn có thể dùng mọi tính năng Pro."
+msgid "Your subscription is active. Your new plan's features are ready to use."
+msgstr "Gói đăng ký của bạn đang hoạt động. Các tính năng của gói mới đã sẵn sàng."
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "Gói đăng ký của bạn sẽ được điều chỉnh tương ứng."

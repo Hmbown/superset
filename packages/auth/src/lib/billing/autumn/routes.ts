@@ -1,6 +1,6 @@
 import { db } from "@superset/db/client";
 import { members, subscriptions } from "@superset/db/schema";
-import { selfServePlanFromAutumnPlanId } from "@superset/shared/billing";
+import { isSelfServeAutumnPlan } from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 import { AutumnError } from "autumn-js";
 import type { BetterAuthPlugin } from "better-auth";
@@ -14,6 +14,8 @@ import { and, eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 import { autumnClient, billingUsesAutumn } from "../../../autumn";
 import { countBillableSeats } from "../../../utils/billing";
+import { LEGACY_CLIENT_PLAN_IDS } from "../legacy/plan-ids";
+import { isSelfServePlan, selfServeAutumnPlans } from "./catalog";
 import { ensureAutumnCustomer, paidAutumnPlanId } from "./customer";
 import {
 	ACTIVE_CPU_MINUTES_FEATURE_ID,
@@ -28,7 +30,6 @@ import {
 	checkoutSessionParams,
 	OWNER_EXPAND,
 	ROUTE_ROLES,
-	selfServePlan,
 } from "./routes-policy";
 import {
 	assertAllowancePreview,
@@ -78,8 +79,8 @@ async function billingCaller(
 	return { organizationId, userId: session.user.id, role };
 }
 
-function refuseEnterprise(planId: string): void {
-	if (!selfServePlan(planId)) {
+async function refuseEnterprise(planId: string): Promise<void> {
+	if (!(await isSelfServePlan(planId))) {
 		throw new APIError("FORBIDDEN", {
 			message: `Enterprise subscriptions are managed by admins. Contact ${COMPANY.SUPPORT_EMAIL}.`,
 		});
@@ -119,7 +120,7 @@ export const autumnBillingRoutes = {
 			},
 			async (ctx) => {
 				const caller = await billingCaller(ctx, "attach");
-				refuseEnterprise(ctx.body.planId);
+				await refuseEnterprise(ctx.body.planId);
 				const [stripeSubscription, autumnPlanId] = await Promise.all([
 					db.query.subscriptions.findFirst({
 						where: and(
@@ -137,9 +138,9 @@ export const autumnBillingRoutes = {
 				]);
 				if (
 					stripeSubscription?.plan === "enterprise" ||
-					(autumnPlanId && !selfServePlan(autumnPlanId))
+					(autumnPlanId && !(await isSelfServePlan(autumnPlanId)))
 				) {
-					refuseEnterprise("enterprise");
+					await refuseEnterprise("enterprise");
 				}
 				if (stripeSubscription && !autumnPlanId) {
 					throw new APIError("BAD_REQUEST", {
@@ -147,14 +148,16 @@ export const autumnBillingRoutes = {
 							"This organization already has a subscription. Change it from the billing portal.",
 					});
 				}
-				const currentPlan = selfServePlanFromAutumnPlanId(autumnPlanId);
 				if (
-					currentPlan &&
-					currentPlan !== "pro" &&
-					ctx.body.currentPlanId !== autumnPlanId
+					ctx.body.currentPlanId === undefined
+						? autumnPlanId && !LEGACY_CLIENT_PLAN_IDS.includes(autumnPlanId)
+						: ctx.body.currentPlanId !== autumnPlanId
 				) {
 					throw new APIError("BAD_REQUEST", {
-						message: "Update the app to change this plan.",
+						message:
+							ctx.body.currentPlanId === undefined
+								? "Update the app to change this plan."
+								: "This organization's plan changed. Reload billing and try again.",
 					});
 				}
 				await ensureAutumnCustomer(caller.organizationId);
@@ -172,7 +175,9 @@ export const autumnBillingRoutes = {
 					successUrl: ctx.body.successUrl,
 					redirectMode: "always" as const,
 					checkoutSessionParams: checkoutSessionParams({
-						planId: ctx.body.planId,
+						yearly:
+							plan.items.find((item) => item.featureId === SEATS_FEATURE_ID)
+								?.price?.interval === "year",
 						organizationId: caller.organizationId,
 						userId: caller.userId,
 						cancelUrl: ctx.body.cancelUrl,
@@ -197,7 +202,7 @@ export const autumnBillingRoutes = {
 			},
 			async (ctx) => {
 				const caller = await billingCaller(ctx, "previewAttach");
-				refuseEnterprise(ctx.body.planId);
+				await refuseEnterprise(ctx.body.planId);
 				const seats = Math.max(
 					1,
 					await countBillableSeats(caller.organizationId),
@@ -228,7 +233,7 @@ export const autumnBillingRoutes = {
 			},
 			async (ctx) => {
 				const caller = await billingCaller(ctx, "updateSubscription");
-				refuseEnterprise(ctx.body.planId);
+				await refuseEnterprise(ctx.body.planId);
 				const result = await autumnClient.billing.update({
 					customerId: caller.organizationId,
 					planId: ctx.body.planId,
@@ -251,7 +256,7 @@ export const autumnBillingRoutes = {
 			},
 			async (ctx) => {
 				const caller = await billingCaller(ctx, "previewUpdateSubscription");
-				refuseEnterprise(ctx.body.planId);
+				await refuseEnterprise(ctx.body.planId);
 				return ctx.json(
 					await autumnClient.billing.previewUpdate({
 						customerId: caller.organizationId,
@@ -308,13 +313,20 @@ export const autumnBillingRoutes = {
 			},
 			async (ctx) => {
 				const caller = await billingCaller(ctx, "listPlans");
-				const plans = await autumnClient.plans.list({
-					customerId: caller.organizationId,
-				});
-				return ctx.json({
-					...plans,
-					list: plans.list.filter((plan) => selfServePlan(plan.id)),
-				});
+				const plans = await autumnClient.plans
+					.list({ customerId: caller.organizationId })
+					.then((result) => ({
+						...result,
+						list: result.list.filter(isSelfServeAutumnPlan),
+					}))
+					.catch(async (error: unknown) => {
+						console.error(
+							"[billing/routes] listPlans fell back to the catalog",
+							error,
+						);
+						return { list: await selfServeAutumnPlans() };
+					});
+				return ctx.json(plans);
 			},
 		),
 		autumnAggregateEvents: createAuthEndpoint(

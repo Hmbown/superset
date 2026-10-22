@@ -1,10 +1,9 @@
 import type { MachineSize, PlanTier } from "@superset/shared/billing";
-import { Redis } from "@upstash/redis";
 import { AutumnError } from "autumn-js";
-import { env } from "../../../env";
 import { billingFromCustomer, type OrganizationBilling } from "./billing-state";
 import { getAutumnCustomer } from "./customer";
 import type { EnvironmentLimit } from "./environment-limit";
+import { billingRedis } from "./redis";
 
 const MEMORY_TTL_MS = 10_000;
 const SHARED_TTL_SECONDS = 60;
@@ -41,10 +40,6 @@ const FAIL_OPEN: OrganizationBilling = {
 	environmentLimit: null,
 };
 
-const redis = new Redis({
-	url: env.KV_REST_API_URL,
-	token: env.KV_REST_API_TOKEN,
-});
 const memory = new Map<
 	string,
 	{ value: OrganizationBilling; expiresAt: number }
@@ -60,7 +55,7 @@ function lastKnownKey(organizationId: string): string {
 
 async function readShared(key: string): Promise<OrganizationBilling | null> {
 	try {
-		const value = await redis.get<OrganizationBilling>(key);
+		const value = await billingRedis.get<OrganizationBilling>(key);
 		if (!value || value.environmentLimit !== undefined) return value;
 		return { ...value, environmentLimit: value.tier === "free" ? 0 : null };
 	} catch (error) {
@@ -104,7 +99,7 @@ export async function organizationBilling(
 			value,
 			expiresAt: Date.now() + MEMORY_TTL_MS,
 		});
-		await redis
+		await billingRedis
 			.pipeline()
 			.set(sharedKey(organizationId), value, { ex: SHARED_TTL_SECONDS })
 			.set(lastKnownKey(organizationId), value, { ex: LAST_KNOWN_TTL_SECONDS })
@@ -152,7 +147,7 @@ export async function invalidateOrganizationBilling(
 	organizationId: string,
 ): Promise<void> {
 	memory.delete(organizationId);
-	await redis
+	await billingRedis
 		.del(sharedKey(organizationId))
 		.catch((error) =>
 			console.error("[billing/plan-state] cache invalidate failed", error),

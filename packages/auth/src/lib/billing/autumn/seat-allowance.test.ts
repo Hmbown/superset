@@ -3,8 +3,10 @@ import {
 	applySeatUpdate,
 	assertAllowancePreview,
 	checkoutSeatAllowanceUpdate,
+	SeatAllowanceError,
 	seatAllowanceUpdate,
 	seatUpdateForCustomer,
+	withRetry,
 } from "./seat-allowance";
 
 type Plan = Parameters<typeof seatAllowanceUpdate>[0];
@@ -178,14 +180,15 @@ describe("seatUpdateForCustomer", () => {
 		const source = plan();
 		source.items[1].price.amount = 0.5;
 		const update = seatUpdateForCustomer(customer(source), "org_1", 6);
-		expect(update).toMatchObject({
+		expect(update?.request).toMatchObject({
 			customerId: "org_1",
 			planId: "pro_annual",
 			version: 7,
 			featureQuantities: [{ featureId: "seats", quantity: 6 }],
 			customize: { addItems: [{ included: 60_000, price: { amount: 0.5 } }] },
 		});
-		expect(update).not.toHaveProperty("billingCycleAnchor");
+		expect(update?.seatsOnly).not.toHaveProperty("customize");
+		expect(update?.request).not.toHaveProperty("billingCycleAnchor");
 	});
 
 	test("enterprise allowance changes do not change seat billing or create prorations", () => {
@@ -195,12 +198,12 @@ describe("seatUpdateForCustomer", () => {
 			6,
 			{ allowanceOnly: true },
 		);
-		expect(update).toMatchObject({
+		expect(update?.request).toMatchObject({
 			planId: "enterprise_custom",
 			prorationBehavior: "none",
 			customize: { addItems: [{ included: 60_000 }] },
 		});
-		expect(update).not.toHaveProperty("featureQuantities");
+		expect(update?.request).not.toHaveProperty("featureQuantities");
 	});
 
 	test("an unconfigured enterprise contract is not updated", () => {
@@ -209,7 +212,7 @@ describe("seatUpdateForCustomer", () => {
 		expect(
 			seatUpdateForCustomer(customer(source), "org_1", 6, {
 				allowanceOnly: true,
-			}),
+			})?.request,
 		).toBeNull();
 	});
 
@@ -219,20 +222,65 @@ describe("seatUpdateForCustomer", () => {
 		const update = seatUpdateForCustomer(customer(source), "org_1", 6, {
 			metadata: { box_gb_minutes_per_seat: 10_000 },
 		});
-		expect(update).toMatchObject({
+		expect(update?.request).toMatchObject({
 			version: 7,
 			customize: { addItems: [{ included: 60_000 }] },
 		});
 	});
 
-	test("stale expanded grant data is rejected before it can add a duplicate grant", () => {
+	test("a stale grant skips the allowance but still bills the seat", () => {
 		const source = customer(plan());
 		const grant = source.balances.box_gb_minutes?.breakdown?.[0];
 		if (!grant) throw new Error("Missing fixture grant");
 		grant.includedGrant = 60_000;
-		expect(() => seatUpdateForCustomer(source, "org_1", 5)).toThrow(
+		const update = seatUpdateForCustomer(source, "org_1", 6);
+		expect(update?.allowanceError?.message).toContain(
 			"does not match its balance",
 		);
+		expect(update?.request).toEqual(update?.seatsOnly ?? null);
+		expect(update?.request?.featureQuantities).toEqual([
+			{ featureId: "seats", quantity: 6 },
+		]);
+	});
+
+	test("a seat removal is not credited and keeps the grant until renewal", () => {
+		const attached = plan();
+		attached.items[1].included = 60_000;
+		const source = customer(attached);
+		source.balances.seats = { granted: 6 } as never;
+		const update = seatUpdateForCustomer(source, "org_1", 5);
+		expect(update?.request).toEqual({
+			customerId: "org_1",
+			planId: "pro_annual",
+			version: 7,
+			featureQuantities: [{ featureId: "seats", quantity: 5 }],
+			prorationBehavior: "none",
+		});
+	});
+
+	test("the daily pass lowers a grant only when usage fits the smaller grant", () => {
+		const attached = plan();
+		attached.items[1].included = 60_000;
+		const source = customer(attached);
+		const balance = source.balances.box_gb_minutes;
+		if (!balance) throw new Error("Missing fixture balance");
+		const sync = () =>
+			seatUpdateForCustomer(source, "org_1", 5, {
+				allowanceOnly: true,
+				grantDecrease: "when-unused",
+			})?.request;
+		balance.usage = 55_000;
+		expect(sync()).toBeNull();
+		balance.usage = 1_000;
+		expect(sync()?.customize?.addItems?.[0]?.included).toBe(50_000);
+	});
+
+	test("a past-due subscription still has its seats synchronized", () => {
+		const source = customer(plan());
+		const active = source.subscriptions[0];
+		if (!active) throw new Error("Missing fixture subscription");
+		source.subscriptions[0] = { ...active, status: "past_due" as never };
+		expect(seatUpdateForCustomer(source, "org_1", 6)?.request?.version).toBe(7);
 	});
 
 	test("a scheduled subscription does not hide the active subscribed version", () => {
@@ -244,7 +292,7 @@ describe("seatUpdateForCustomer", () => {
 			status: "scheduled",
 			plan: { ...active.plan, version: 8 },
 		});
-		expect(seatUpdateForCustomer(source, "org_1", 6)?.version).toBe(7);
+		expect(seatUpdateForCustomer(source, "org_1", 6)?.request?.version).toBe(7);
 	});
 
 	test("multiple active copies of the same plan are not updated ambiguously", () => {
@@ -263,6 +311,33 @@ describe("seatUpdateForCustomer", () => {
 				6,
 			),
 		).toBeNull();
+	});
+});
+
+describe("withRetry", () => {
+	test("a transient failure is retried and a policy rejection is not", async () => {
+		let calls = 0;
+		expect(
+			await withRetry(
+				async () => {
+					calls++;
+					if (calls < 3) throw new Error("timeout");
+					return "ok";
+				},
+				{ delayMs: 0 },
+			),
+		).toBe("ok");
+		calls = 0;
+		await expect(
+			withRetry(
+				async () => {
+					calls++;
+					throw new SeatAllowanceError("unsafe");
+				},
+				{ delayMs: 0 },
+			),
+		).rejects.toThrow("unsafe");
+		expect(calls).toBe(1);
 	});
 });
 

@@ -1,7 +1,6 @@
 import { autumnClient, billingUsesAutumn } from "@superset/auth/autumn";
 import {
 	paidAutumnPlanId,
-	SeatAllowanceError,
 	seatItem,
 	setAutumnSeats,
 } from "@superset/auth/billing";
@@ -27,26 +26,6 @@ import { and, count, eq, ne } from "drizzle-orm";
 import { settleOrganizationNow } from "../../router/cloud-workspace/meter";
 import { purgePageStorageForUser } from "../page-store";
 import { deletePostHogPerson } from "../posthog-persons";
-
-export async function syncSeatsForPurge(
-	organizationId: string,
-	quantity: number,
-	options?: { allowanceOnly?: boolean },
-	sync: typeof setAutumnSeats = setAutumnSeats,
-): Promise<"updated" | "fallback" | "rejected"> {
-	try {
-		return (await sync(organizationId, quantity, options))
-			? "updated"
-			: "fallback";
-	} catch (error) {
-		if (!(error instanceof SeatAllowanceError)) throw error;
-		console.error(
-			`[account-purge] ${organizationId} allowance sync rejected`,
-			error,
-		);
-		return "rejected";
-	}
-}
 
 async function deleteCustomerIfNeverCharged(customerId: string) {
 	for await (const charge of stripeClient.charges.list({
@@ -110,7 +89,7 @@ export async function purgeAccount(userId: string): Promise<void> {
 				subscription?.stripeSubscriptionId &&
 				subscription.plan === "enterprise"
 			) {
-				await syncSeatsForPurge(membership.organizationId, remainingSeats, {
+				await setAutumnSeats(membership.organizationId, remainingSeats, {
 					allowanceOnly: true,
 				});
 			}
@@ -118,10 +97,10 @@ export async function purgeAccount(userId: string): Promise<void> {
 				subscription?.stripeSubscriptionId &&
 				subscription.plan !== "enterprise"
 			) {
-				const seatSync = billingUsesAutumn
-					? await syncSeatsForPurge(membership.organizationId, remainingSeats)
-					: "fallback";
-				if (seatSync === "fallback") {
+				const seatsOwnedByAutumn =
+					billingUsesAutumn &&
+					(await setAutumnSeats(membership.organizationId, remainingSeats));
+				if (!seatsOwnedByAutumn) {
 					const stripeSub = await stripeClient.subscriptions.retrieve(
 						subscription.stripeSubscriptionId,
 					);

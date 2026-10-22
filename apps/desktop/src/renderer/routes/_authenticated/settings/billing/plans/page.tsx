@@ -4,11 +4,12 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { i18n } from "@superset/i18n";
 import { useFormat } from "@superset/i18n/react";
 import {
-	isSelfServePlanId,
+	familyForPlan,
+	offersYearlyDiscount,
 	PLAN_PRICE_CURRENCY,
-	type SelfServePlanId,
+	type PlanFamily,
+	planForInterval,
 	seatPricePerMonth,
-	selfServePlanFromAutumnPlanId,
 } from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 import { Badge } from "@superset/ui/badge";
@@ -52,11 +53,10 @@ type PlanCardActionButton = {
 	align?: "center" | "start";
 };
 
-type PlanColumnId = "free" | SelfServePlanId | "enterprise";
-
 type PlanCardData = {
-	id: PlanColumnId;
-	name: MessageDescriptor;
+	id: string;
+	name: MessageDescriptor | string;
+	family?: PlanFamily;
 	price: PlanCardText | "seat";
 	priceNote?: PlanCardText;
 	billingText: PlanCardText;
@@ -79,43 +79,72 @@ type ComparisonSection = {
 	rows: ComparisonRow[];
 };
 
-const PLAN_CARDS: PlanCardData[] = [
-	{
-		id: "free",
-		name: msg({ message: "Free" }),
-		price: msg({ message: "$0" }),
-		priceNote: msg({
-			message: "per user/month",
-		}),
-		billingText: msg({
-			message: "Free for everyone",
-		}),
-		actions: [
-			{
-				label: msg({
-					message: "Current plan",
-				}),
-				action: "current",
-				variant: "secondary",
-			},
-		],
-	},
-	{
-		id: "pro",
-		name: msg({ message: "Pro" }),
+const FREE_CARD: PlanCardData = {
+	id: "free",
+	name: msg({ message: "Free" }),
+	price: msg({ message: "$0" }),
+	priceNote: msg({
+		message: "per user/month",
+	}),
+	billingText: msg({
+		message: "Free for everyone",
+	}),
+	actions: [
+		{
+			label: msg({
+				message: "Current plan",
+			}),
+			action: "current",
+			variant: "secondary",
+		},
+	],
+};
+
+const ENTERPRISE_CARD: PlanCardData = {
+	id: "enterprise",
+	name: msg({
+		message: "Enterprise",
+	}),
+	price: msg({
+		message: "Custom pricing",
+	}),
+	billingText: msg({
+		message: "Billed yearly",
+	}),
+	actions: [
+		{
+			label: msg({
+				message: "Request a trial",
+			}),
+			action: "contact",
+			variant: "outline",
+		},
+	],
+};
+
+function paidCard(family: PlanFamily): PlanCardData {
+	const yearly = offersYearlyDiscount(family);
+	return {
+		id: family.family,
+		name: family.name,
+		family,
 		price: "seat",
 		priceNote: msg({
 			message: "per user/month",
 		}),
-		billingText: {
-			monthly: msg({
-				message: "Billed monthly",
-			}),
-			yearly: msg({
-				message: "Billed yearly",
-			}),
-		},
-		showBillingToggle: true,
+		billingText: yearly
+			? {
+					monthly: msg({
+						message: "Billed monthly",
+					}),
+					yearly: msg({
+						message: "Billed yearly",
+					}),
+				}
+			: msg({
+					message: "Billed monthly",
+				}),
+		showBillingToggle: yearly,
 		actions: [
 			{
 				label: msg({
@@ -125,81 +154,8 @@ const PLAN_CARDS: PlanCardData[] = [
 				variant: "default",
 			},
 		],
-	},
-	{
-		id: "team",
-		name: msg({ message: "Team", context: "plan name" }),
-		price: "seat",
-		priceNote: msg({
-			message: "per user/month",
-		}),
-		billingText: {
-			monthly: msg({
-				message: "Billed monthly",
-			}),
-			yearly: msg({
-				message: "Billed yearly",
-			}),
-		},
-		showBillingToggle: true,
-		actions: [
-			{
-				label: msg({
-					message: "Upgrade",
-				}),
-				action: "upgrade",
-				variant: "default",
-			},
-		],
-	},
-	{
-		id: "ultra",
-		name: msg({ message: "Ultra", context: "plan name" }),
-		price: "seat",
-		priceNote: msg({
-			message: "per user/month",
-		}),
-		billingText: {
-			monthly: msg({
-				message: "Billed monthly",
-			}),
-			yearly: msg({
-				message: "Billed yearly",
-			}),
-		},
-		showBillingToggle: true,
-		actions: [
-			{
-				label: msg({
-					message: "Upgrade",
-				}),
-				action: "upgrade",
-				variant: "default",
-			},
-		],
-	},
-	{
-		id: "enterprise",
-		name: msg({
-			message: "Enterprise",
-		}),
-		price: msg({
-			message: "Custom pricing",
-		}),
-		billingText: msg({
-			message: "Billed yearly",
-		}),
-		actions: [
-			{
-				label: msg({
-					message: "Request a trial",
-				}),
-				action: "contact",
-				variant: "outline",
-			},
-		],
-	},
-];
+	};
+}
 
 const VALUE_ONE = msg({
 	message: "1",
@@ -393,7 +349,8 @@ function PlansPage() {
 	// no interval to read.
 	const { t } = useLingui();
 	const { formatCurrency, formatNumber } = useFormat();
-	const catalog = usePlanCatalog();
+	const catalogQuery = usePlanCatalog();
+	const catalog = catalogQuery.data ?? [];
 	const [manualIsYearly, setManualIsYearly] = useState<boolean | null>(null);
 	const { upgrade, cancel, restore, isUpgrading, isCanceling, isRestoring } =
 		useBillingActions();
@@ -401,15 +358,12 @@ function PlansPage() {
 
 	const { plan: currentPlan, isReady: planResolved, activePlan } = useCurrentPlan();
 	const cancelAt = activePlan?.cancelAt;
-	const currentColumn: PlanColumnId =
+	const currentColumn =
 		currentPlan === "pro"
-			? (selfServePlanFromAutumnPlanId(activePlan?.autumnPlanId) ?? "pro")
+			? (familyForPlan(catalog, activePlan?.autumnPlanId)?.family.family ??
+				"pro")
 			: currentPlan;
-	const planCards = PLAN_CARDS.filter(
-		(card) =>
-			activePlan?.billingProvider === "autumn" ||
-			(card.id !== "team" && card.id !== "ultra"),
-	);
+	const planCards = [FREE_CARD, ...catalog.map(paidCard), ENTERPRISE_CARD];
 
 	const subscriptionIsYearly = activePlan
 		? resolveSubscriptionIsYearly(activePlan)
@@ -426,9 +380,10 @@ function PlansPage() {
 	const memberCount =
 		membersData && membersData.length > 0 ? membersData.length : undefined;
 
-	const currentPlanCard =
-		PLAN_CARDS.find((card) => card.id === currentColumn) ?? PLAN_CARDS[0];
-	const currentPlanLabel = currentPlanCard ? i18n._(currentPlanCard.name) : "";
+	const cardName = (card: PlanCardData) =>
+		typeof card.name === "string" ? card.name : i18n._(card.name);
+	const currentPlanCard = planCards.find((card) => card.id === currentColumn);
+	const currentPlanLabel = currentPlanCard ? cardName(currentPlanCard) : "";
 
 	const getValue = <T,>(value: T | { monthly: T; yearly: T }): T => {
 		if (typeof value === "object" && value !== null && "monthly" in value) {
@@ -437,11 +392,14 @@ function PlansPage() {
 		return value as T;
 	};
 
+	const yearlyFor = (card: PlanCardData) =>
+		card.family ? isYearly && offersYearlyDiscount(card.family) : isYearly;
+	
 	const getPriceLabel = (plan: PlanCardData): string => {
 		if (plan.price !== "seat") return i18n._(getValue(plan.price));
-		if (!isSelfServePlanId(plan.id)) return "";
+		if (!plan.family) return "";
 		return formatCurrency(
-			seatPricePerMonth(plan.id, { annual: isYearly }, catalog),
+			seatPricePerMonth(plan.family, isYearly),
 			PLAN_PRICE_CURRENCY,
 			{ minimumFractionDigits: 0 },
 		);
@@ -449,19 +407,20 @@ function PlansPage() {
 
 	const comparisonValueFor = (
 		row: ComparisonRow,
-		column: PlanColumnId,
+		plan: PlanCardData,
 	): ComparisonValue | string => {
-		if (row.cloudGbHours && isSelfServePlanId(column)) {
-			return formatNumber(catalog[column].gbMinutesPerSeat / 60);
+		if (row.cloudGbHours && plan.family) {
+			const gbMinutes = plan.family.gbMinutesPerSeat;
+			return gbMinutes ? formatNumber(gbMinutes / 60) : null;
 		}
-		if (column === "free") return row.values[0];
-		if (column === "enterprise") return row.values[2];
+		if (plan.id === FREE_CARD.id) return row.values[0];
+		if (plan.id === ENTERPRISE_CARD.id) return row.values[2];
 		return row.values[1];
 	};
 
 	const handlePlanAction = async (
 		action: PlanCardAction,
-		column: PlanColumnId,
+		plan: PlanCardData,
 	) => {
 		if (action === "current") {
 			return;
@@ -485,10 +444,11 @@ function PlansPage() {
 
 		if (memberCount === undefined) return;
 
-		const targetPlan = isSelfServePlanId(column) ? column : "pro";
+		const target = plan.family ? planForInterval(plan.family, isYearly) : null;
+		if (!target) return;
 		await upgrade({
-			plan: targetPlan,
-			annual: isYearly,
+			planId: target.id,
+			annual: target.interval === "year",
 			seats: memberCount,
 			source: "billing_plans",
 			returnUrl: env.NEXT_PUBLIC_WEB_URL,
@@ -518,7 +478,10 @@ function PlansPage() {
 		);
 	};
 
-	const highlightColumnIndex = 1;
+	const highlightColumnIndex = Math.max(
+		1,
+		planCards.findIndex((card) => card.id === currentColumn),
+	);
 	const highlightColumnStart = highlightColumnIndex + 2;
 	const gridStyle = {
 		gridTemplateColumns: `240px repeat(${planCards.length}, minmax(0, 1fr))`,
@@ -564,6 +527,18 @@ function PlansPage() {
 				</div>
 			</div>
 
+			{catalogQuery.isError && (
+				<div className="mb-4 flex items-center gap-3 text-sm text-muted-foreground">
+					<Trans>Could not load plans.</Trans>
+					<Button
+						size="sm"
+						variant="outline"
+						onClick={() => catalogQuery.refetch()}
+					>
+						<Trans>Retry</Trans>
+					</Button>
+				</div>
+			)}
 			<div className="overflow-x-auto">
 				<div
 					className="relative"
@@ -624,13 +599,13 @@ function PlansPage() {
 												variant: "default" as const,
 											},
 										];
-									} else if (isCurrent && isSelfServePlanId(plan.id)) {
+									} else if (isCurrent && plan.family) {
 										// Before the plan resolves the billing interval is unknown,
 										// so an interval-change action here would be a guess the
 										// user can act on. Hold at "Current plan" until it lands — and
 										// equally when the row carries no readable interval.
 										const intervalMatches =
-											subscriptionIsYearly === null || isYearly === subscriptionIsYearly;
+											subscriptionIsYearly === null || yearlyFor(plan) === subscriptionIsYearly;
 										if (!planResolved || intervalMatches) {
 											planActions = [
 												{
@@ -648,7 +623,7 @@ function PlansPage() {
 														? t({
 																message: "Changing...",
 															})
-														: isYearly
+														: yearlyFor(plan)
 															? t({
 																	message: "Change to Annual",
 																})
@@ -694,10 +669,7 @@ function PlansPage() {
 												variant: "outline" as const,
 											},
 										];
-									} else if (
-										currentPlan === "pro" &&
-										isSelfServePlanId(plan.id)
-									) {
+									} else if (currentPlan === "pro" && plan.family) {
 										planActions = [
 											{
 												label: isUpgrading
@@ -723,7 +695,7 @@ function PlansPage() {
 											<div key={plan.id} className="px-4 py-2.5">
 												<div className="space-y-0.5">
 													<div className="text-base font-medium">
-														{i18n._(plan.name)}
+														{cardName(plan)}
 													</div>
 													<div
 														className={cn(
@@ -782,7 +754,7 @@ function PlansPage() {
 															(action.action === "upgrade" && isUpgrading)
 														}
 														onClick={() =>
-															handlePlanAction(action.action, plan.id)
+															handlePlanAction(action.action, plan)
 														}
 													>
 														{action.label}
@@ -851,7 +823,7 @@ function PlansPage() {
 													key={`${row.label.id}-${plan.id}`}
 													className="flex items-center justify-start gap-2 px-4 py-2.5"
 												>
-													{renderComparisonValue(comparisonValueFor(row, plan.id))}
+													{renderComparisonValue(comparisonValueFor(row, plan))}
 												</div>
 											))}
 											{!isLastRow && (

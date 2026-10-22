@@ -1,18 +1,22 @@
 "use client";
 
 import { Trans, useLingui } from "@lingui/react/macro";
+import type { PlanFamily } from "@superset/shared/billing";
 import { FAQDisclosure } from "../../../components/FAQDisclosure";
 import { PRICING_FAQ_ITEMS } from "../../constants";
-import type { PlanPrices } from "../../utils/planPricesFromAutumn";
 import { planPriceValues } from "../../utils/planPriceValues";
 
 interface PricingFAQProps {
-	prices: PlanPrices;
+	catalog: PlanFamily[];
 }
 
-export function PricingFAQ({ prices }: PricingFAQProps) {
+export function PricingFAQ({ catalog }: PricingFAQProps) {
 	const { t, i18n } = useLingui();
-	const values = planPriceValues(prices, i18n.locale);
+	const { planPrices, allowances, overagePrice } = planPriceValues(
+		catalog,
+		i18n,
+	);
+	const values = { planPrices, allowances, overagePrice };
 
 	return (
 		<div>

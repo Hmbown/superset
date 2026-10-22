@@ -156,88 +156,168 @@ export function isCloudUsageRefusal(error: unknown): boolean {
 	);
 }
 
-export const SELF_SERVE_PLAN_IDS = ["pro", "team", "ultra"] as const;
-export type SelfServePlanId = (typeof SELF_SERVE_PLAN_IDS)[number];
-
-export function isSelfServePlanId(value: unknown): value is SelfServePlanId {
-	return (SELF_SERVE_PLAN_IDS as readonly unknown[]).includes(value);
-}
-
-// Display copy of the Autumn `pro`, `team` and `ultra` plans and their
-// `_annual` versions; checkout bills from Autumn, so change both together.
 export const PLAN_PRICE_CURRENCY = "USD";
-export const SELF_SERVE_PLANS: Record<
-	SelfServePlanId,
-	{ monthlyCents: number; yearlyCents: number; gbMinutesPerSeat: number }
-> = {
-	pro: { monthlyCents: 2000, yearlyCents: 19200, gbMinutesPerSeat: 19200 },
-	team: { monthlyCents: 6000, yearlyCents: 64800, gbMinutesPerSeat: 72000 },
-	ultra: { monthlyCents: 20000, yearlyCents: 240000, gbMinutesPerSeat: 240000 },
-};
 
-export type SelfServePlanCatalog = typeof SELF_SERVE_PLANS;
+/** Autumn plan metadata keys that make a plan purchasable and place it in the lineup. */
+export const PLAN_METADATA = {
+	selfServe: "self_serve",
+	family: "family",
+	displayOrder: "display_order",
+	gbMinutesPerSeat: "box_gb_minutes_per_seat",
+} as const;
 
-export interface AutumnPlanSummary {
+export interface AutumnCatalogPlan {
 	id: string;
+	name: string;
 	metadata?: Record<string, unknown> | null;
 	items: Array<{
 		featureId: string;
-		price?: { amount?: number | null } | null;
+		price?: {
+			amount?: number | null;
+			interval?: string | null;
+			billingUnits?: number | null;
+		} | null;
 	}>;
 }
 
-export function selfServePlansFromAutumn(
-	plans: AutumnPlanSummary[],
-): SelfServePlanCatalog {
-	const byId = new Map(plans.map((plan) => [plan.id, plan]));
-	const seatCents = (planId: string) => {
-		const amount = byId
-			.get(planId)
-			?.items.find((item) => item.featureId === "seats")?.price?.amount;
-		return amount == null ? null : Math.round(amount * 100);
-	};
-	return Object.fromEntries(
-		SELF_SERVE_PLAN_IDS.map((id) => {
-			const builtIn = SELF_SERVE_PLANS[id];
-			const perSeat = byId.get(id)?.metadata?.box_gb_minutes_per_seat;
-			return [
-				id,
-				{
-					monthlyCents: seatCents(id) ?? builtIn.monthlyCents,
-					yearlyCents: seatCents(`${id}_annual`) ?? builtIn.yearlyCents,
-					gbMinutesPerSeat:
-						typeof perSeat === "number" &&
-						Number.isFinite(perSeat) &&
-						perSeat > 0
-							? perSeat
-							: builtIn.gbMinutesPerSeat,
-				},
-			];
-		}),
-	) as SelfServePlanCatalog;
+export type PlanInterval = "month" | "year";
+
+export interface CatalogPlan {
+	id: string;
+	name: string;
+	interval: PlanInterval;
+	seatPrice: number;
 }
 
-export function seatPricePerMonth(
-	plan: SelfServePlanId,
-	{ annual }: { annual: boolean },
-	catalog: SelfServePlanCatalog = SELF_SERVE_PLANS,
-): number {
-	const { monthlyCents, yearlyCents } = catalog[plan];
-	return (annual ? yearlyCents / 12 : monthlyCents) / 100;
+export interface PlanFamily {
+	family: string;
+	name: string;
+	displayOrder: number;
+	monthly: CatalogPlan | null;
+	yearly: CatalogPlan | null;
+	gbMinutesPerSeat: number | null;
+	overagePerGbHour: number | null;
 }
 
-export function autumnPlanIdFor(
-	plan: SelfServePlanId,
-	{ annual }: { annual: boolean },
-): string {
-	return annual ? `${plan}_annual` : plan;
+export function isSelfServeAutumnPlan(plan: AutumnCatalogPlan): boolean {
+	return (
+		plan.metadata?.[PLAN_METADATA.selfServe] === true &&
+		typeof plan.metadata?.[PLAN_METADATA.family] === "string"
+	);
 }
 
-export function selfServePlanFromAutumnPlanId(
+function positiveNumber(value: unknown): number | null {
+	return typeof value === "number" && Number.isFinite(value) && value > 0
+		? value
+		: null;
+}
+
+function catalogPlan(plan: AutumnCatalogPlan): CatalogPlan | null {
+	const price = plan.items.find((item) => item.featureId === "seats")?.price;
+	const interval = price?.interval;
+	if (price?.amount == null || (interval !== "month" && interval !== "year")) {
+		return null;
+	}
+	return { id: plan.id, name: plan.name, interval, seatPrice: price.amount };
+}
+
+function overagePerGbHour(plan: AutumnCatalogPlan): number | null {
+	const price = plan.items.find(
+		(item) => item.featureId === "box_gb_minutes",
+	)?.price;
+	if (price?.amount == null) return null;
+	return (price.amount * 60) / (price.billingUnits ?? 1);
+}
+
+/** The purchasable lineup, one entry per family, ordered for display. */
+export function planCatalogFromAutumn(
+	plans: AutumnCatalogPlan[],
+): PlanFamily[] {
+	const families = new Map<string, PlanFamily>();
+	for (const plan of plans.filter(isSelfServeAutumnPlan)) {
+		const priced = catalogPlan(plan);
+		if (!priced) continue;
+		const key = plan.metadata?.[PLAN_METADATA.family] as string;
+		const family = families.get(key) ?? {
+			family: key,
+			name: plan.name,
+			displayOrder: Number.POSITIVE_INFINITY,
+			monthly: null,
+			yearly: null,
+			gbMinutesPerSeat: null,
+			overagePerGbHour: null,
+		};
+		if (priced.interval === "month") {
+			family.monthly = priced;
+			family.name = plan.name;
+		} else {
+			family.yearly = priced;
+		}
+		family.displayOrder = Math.min(
+			family.displayOrder,
+			positiveNumber(plan.metadata?.[PLAN_METADATA.displayOrder]) ??
+				Number.POSITIVE_INFINITY,
+		);
+		family.gbMinutesPerSeat ??= positiveNumber(
+			plan.metadata?.[PLAN_METADATA.gbMinutesPerSeat],
+		);
+		family.overagePerGbHour ??= overagePerGbHour(plan);
+		families.set(key, family);
+	}
+	return [...families.values()].sort(
+		(a, b) =>
+			a.displayOrder - b.displayOrder || a.family.localeCompare(b.family),
+	);
+}
+
+/** Yearly only counts as an option when it costs less than twelve months. */
+export function offersYearlyDiscount(family: PlanFamily): boolean {
+	return Boolean(
+		family.monthly &&
+			family.yearly &&
+			family.yearly.seatPrice < family.monthly.seatPrice * 12,
+	);
+}
+
+export function planForInterval(
+	family: PlanFamily,
+	yearly: boolean,
+): CatalogPlan | null {
+	if (yearly && offersYearlyDiscount(family)) return family.yearly;
+	return family.monthly ?? family.yearly;
+}
+
+/** The per-seat monthly price a family's card shows for the chosen interval. */
+export function seatPricePerMonth(family: PlanFamily, yearly: boolean): number {
+	const plan = planForInterval(family, yearly);
+	if (!plan) return 0;
+	return plan.interval === "year" ? plan.seatPrice / 12 : plan.seatPrice;
+}
+
+export function familyForPlan(
+	catalog: PlanFamily[],
 	autumnPlanId: string | null | undefined,
-): SelfServePlanId | null {
-	const plan = autumnPlanId?.replace(/_annual$/, "");
-	return isSelfServePlanId(plan) ? plan : null;
+): { family: PlanFamily; interval: PlanInterval } | null {
+	for (const family of catalog) {
+		if (family.monthly?.id === autumnPlanId) {
+			return { family, interval: "month" };
+		}
+		if (family.yearly?.id === autumnPlanId) return { family, interval: "year" };
+	}
+	return null;
+}
+
+export function maxYearlyDiscount(catalog: PlanFamily[]): number {
+	return Math.max(
+		0,
+		...catalog
+			.filter(offersYearlyDiscount)
+			.map((family) =>
+				family.monthly && family.yearly
+					? 1 - family.yearly.seatPrice / (family.monthly.seatPrice * 12)
+					: 0,
+			),
+	);
 }
 
 export const MEMORY_GB_PER_VCPU = 2;

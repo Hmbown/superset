@@ -1,8 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useFormat } from "@superset/i18n/react";
 import {
+	familyForPlan,
 	isPaymentFailingStatus,
-	selfServePlanFromAutumnPlanId,
+	planForInterval,
 } from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 import { Button } from "@superset/ui/button";
@@ -20,6 +21,7 @@ import {
 	type SettingItemId,
 } from "../../../utils/settings-search";
 import { useBillingActions } from "../../hooks/useBillingActions";
+import { usePlanCatalog } from "../../hooks/usePlanCatalog";
 import { BillingDetails } from "./components/BillingDetails";
 import { CloudUsageCard } from "./components/CloudUsageCard";
 import { CurrentPlanCard } from "./components/CurrentPlanCard";
@@ -82,9 +84,18 @@ export function BillingOverview({ visibleItems }: BillingOverviewProps) {
 		visibleItems,
 	);
 
+	const catalog = usePlanCatalog().data ?? [];
+	const upsellFamily = catalog[0];
+
 	const handleUpgrade = async (annual = false) => {
 		if (memberCount === undefined) return;
-		await upgrade({ annual, seats: memberCount, source: "billing_overview" });
+		const target = upsellFamily ? planForInterval(upsellFamily, annual) : null;
+		await upgrade({
+			planId: target?.id ?? "",
+			annual: target ? target.interval === "year" : annual,
+			seats: memberCount,
+			source: "billing_overview",
+		});
 	};
 
 	return (
@@ -137,9 +148,9 @@ export function BillingOverview({ visibleItems }: BillingOverviewProps) {
 						<div className="divide-y divide-border">
 							<CurrentPlanCard
 								currentPlan={plan}
-								selfServePlan={selfServePlanFromAutumnPlanId(
-									activePlan?.autumnPlanId,
-								)}
+								planName={
+									familyForPlan(catalog, activePlan?.autumnPlanId)?.family.name
+								}
 								onCancel={handleCancel}
 								isCanceling={isCanceling}
 								onRestore={handleRestore}
@@ -148,8 +159,9 @@ export function BillingOverview({ visibleItems }: BillingOverviewProps) {
 								periodEnd={activePlan?.periodEnd}
 								status={activePlan?.status}
 							/>
-							{plan === "free" && (
+							{plan === "free" && upsellFamily && (
 								<UpgradeCard
+									family={upsellFamily}
 									onUpgrade={() => handleUpgrade(false)}
 									isUpgrading={isUpgrading || memberCount === undefined}
 								/>

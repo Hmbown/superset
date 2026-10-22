@@ -1,5 +1,4 @@
 import { msg } from "@lingui/core/macro";
-import { isSelfServePlanId } from "@superset/shared/billing";
 import { Button } from "@superset/ui/button";
 import Link from "next/link";
 import { HiCheckCircle } from "react-icons/hi2";
@@ -30,7 +29,7 @@ export default async function BillingPage({
 					{i18n._(
 						msg({
 							message:
-								"Your subscription has been activated. You can now access all Pro features.",
+								"Your subscription is active. Your new plan's features are ready to use.",
 						}),
 					)}
 				</p>
@@ -46,7 +45,7 @@ export default async function BillingPage({
 	return (
 		<BillingSettings
 			organizationId={organization}
-			selectedPlan={isSelfServePlanId(plan) ? plan : undefined}
+			selectedPlan={plan}
 			yearly={
 				interval === "yearly"
 					? true

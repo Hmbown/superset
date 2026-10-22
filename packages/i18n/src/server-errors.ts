@@ -313,6 +313,13 @@ export const serverErrorMessages: Record<
 				message: `Your organization has reached its limit of ${params?.limit} environments. Archive one, or upgrade in Settings, Billing to add more.`,
 			}),
 		),
+	"serverError.environment.notIncluded": () =>
+		i18n._(
+			msg({
+				message:
+					"Your plan does not include cloud environments. Upgrade in Settings, Billing to create one.",
+			}),
+		),
 	"serverError.githubUser.notConfigured": () =>
 		i18n._(
 			msg({

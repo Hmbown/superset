@@ -1,44 +1,55 @@
-import { formatCurrency, formatNumber } from "@superset/i18n/format";
+import type { I18n } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
 import {
+	formatCurrency,
+	formatList,
+	formatNumber,
+} from "@superset/i18n/format";
+import {
+	maxYearlyDiscount,
+	offersYearlyDiscount,
 	PLAN_PRICE_CURRENCY,
-	SELF_SERVE_PLAN_IDS,
-	type SelfServePlanId,
+	type PlanFamily,
+	seatPricePerMonth,
 } from "@superset/shared/billing";
-import type { PlanPrices } from "../planPricesFromAutumn";
 
-export interface PlanPriceSet {
+export interface FamilyPriceSet {
+	family: string;
+	name: string;
 	monthly: string;
 	yearly: string;
-	yearlyTotal: string;
-	gbHours: string;
-	multiple: string;
-	overage: string;
+	yearlyTotal: string | null;
 	hasYearlyDiscount: boolean;
+	gbHours: string | null;
+	multiple: string | null;
+	overage: string | null;
+	previousName: string | null;
+	baseName: string;
 }
 
-export function cloudHourValues({ gbHours, multiple }: PlanPriceSet) {
-	return { gbHours, multiple };
+export interface PlanPriceValues {
+	families: FamilyPriceSet[];
+	byFamily: Record<string, FamilyPriceSet>;
+	maxDiscount: string | null;
+	fromPrice: string | null;
+	planPrices: string;
+	allowances: string;
+	overagePrice: string | null;
 }
 
-export type PlanPriceValues = {
-	plans: Record<SelfServePlanId, PlanPriceSet>;
-	monthlyPrice: string;
-	yearlyPrice: string;
-	teamPrice: string;
-	teamYearlyPrice: string;
-	ultraPrice: string;
-	ultraYearlyPrice: string;
-	proGbHours: string;
-	teamGbHours: string;
-	ultraGbHours: string;
-	overagePrice: string;
-	maxDiscount: string;
-};
+const YEARLY_PRICE_ITEM = msg({
+	message: "{name}: {monthly} per user/month, or {yearly} billed yearly",
+});
+const MONTHLY_PRICE_ITEM = msg({
+	message: "{name}: {monthly} per user/month",
+});
+const ALLOWANCE_ITEM = msg({ message: "{gbHours} on {name}" });
 
 export function planPriceValues(
-	prices: PlanPrices,
-	locale: string,
+	catalog: PlanFamily[],
+	i18n: I18n,
 ): PlanPriceValues {
+	const locale = i18n.locale;
 	const currency = (value: number) =>
 		formatCurrency(
 			value,
@@ -48,45 +59,81 @@ export function planPriceValues(
 		);
 	const number = (value: number, digits: number) =>
 		formatNumber(value, { maximumFractionDigits: digits }, locale);
-	const plans = Object.fromEntries(
-		SELF_SERVE_PLAN_IDS.map((id) => {
-			const { monthly, yearly, gbMinutesPerSeat, overagePerGbHour } =
-				prices[id];
-			return [
-				id,
-				{
-					monthly: currency(monthly),
-					yearly: currency(yearly / 12),
-					yearlyTotal: currency(yearly),
-					gbHours: number(gbMinutesPerSeat / 60, 0),
-					multiple: number(gbMinutesPerSeat / prices.pro.gbMinutesPerSeat, 1),
-					overage: currency(overagePerGbHour),
-					hasYearlyDiscount: yearly < monthly * 12,
-				},
-			];
-		}),
-	) as Record<SelfServePlanId, PlanPriceSet>;
-	const maxDiscount = Math.max(
-		...SELF_SERVE_PLAN_IDS.map(
-			(id) => 1 - prices[id].yearly / (prices[id].monthly * 12),
-		),
+	const base = catalog[0];
+	const families = catalog.map((family, index): FamilyPriceSet => {
+		const hasYearlyDiscount = offersYearlyDiscount(family);
+		return {
+			family: family.family,
+			name: family.name,
+			monthly: currency(seatPricePerMonth(family, false)),
+			yearly: currency(seatPricePerMonth(family, true)),
+			yearlyTotal:
+				hasYearlyDiscount && family.yearly
+					? currency(family.yearly.seatPrice)
+					: null,
+			hasYearlyDiscount,
+			gbHours: family.gbMinutesPerSeat
+				? number(family.gbMinutesPerSeat / 60, 0)
+				: null,
+			multiple:
+				family.gbMinutesPerSeat && base?.gbMinutesPerSeat
+					? number(family.gbMinutesPerSeat / base.gbMinutesPerSeat, 1)
+					: null,
+			overage:
+				family.overagePerGbHour == null
+					? null
+					: currency(family.overagePerGbHour),
+			previousName: catalog[index - 1]?.name ?? null,
+			baseName: base?.name ?? family.name,
+		};
+	});
+	const discount = maxYearlyDiscount(catalog);
+	const cheapest = Math.min(
+		...catalog.map((family) => seatPricePerMonth(family, true)),
 	);
 	return {
-		plans,
-		monthlyPrice: plans.pro.monthly,
-		yearlyPrice: plans.pro.yearly,
-		teamPrice: plans.team.monthly,
-		teamYearlyPrice: plans.team.yearly,
-		ultraPrice: plans.ultra.monthly,
-		ultraYearlyPrice: plans.ultra.yearly,
-		proGbHours: plans.pro.gbHours,
-		teamGbHours: plans.team.gbHours,
-		ultraGbHours: plans.ultra.gbHours,
-		overagePrice: currency(prices.pro.overagePerGbHour),
-		maxDiscount: formatNumber(
-			maxDiscount,
-			{ style: "percent", maximumFractionDigits: 0 },
+		families,
+		byFamily: Object.fromEntries(families.map((set) => [set.family, set])),
+		maxDiscount:
+			discount > 0
+				? formatNumber(
+						discount,
+						{ style: "percent", maximumFractionDigits: 0 },
+						locale,
+					)
+				: null,
+		fromPrice: Number.isFinite(cheapest) ? currency(cheapest) : null,
+		planPrices: formatList(
+			families.map((set) =>
+				i18n._({
+					...(set.hasYearlyDiscount ? YEARLY_PRICE_ITEM : MONTHLY_PRICE_ITEM),
+					values: { name: set.name, monthly: set.monthly, yearly: set.yearly },
+				}),
+			),
+			{ type: "conjunction" },
 			locale,
 		),
+		allowances: formatList(
+			families
+				.filter((set) => set.gbHours)
+				.map((set) =>
+					i18n._({
+						...ALLOWANCE_ITEM,
+						values: { gbHours: set.gbHours, name: set.name },
+					}),
+				),
+			{ type: "conjunction" },
+			locale,
+		),
+		overagePrice: families[0]?.overage ?? null,
+	};
+}
+
+export function featureValues(set: FamilyPriceSet | undefined) {
+	return {
+		gbHours: set?.gbHours ?? "",
+		multiple: set?.multiple ?? "",
+		previousPlan: set?.previousName ?? "",
+		basePlan: set?.baseName ?? "",
 	};
 }

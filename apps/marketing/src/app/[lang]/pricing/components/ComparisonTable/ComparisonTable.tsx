@@ -1,29 +1,35 @@
 "use client";
 
 import { Trans, useLingui } from "@lingui/react/macro";
+import type { PlanFamily } from "@superset/shared/billing";
 import { cn } from "@superset/ui/utils";
 import { Check, Minus } from "lucide-react";
 import { useState } from "react";
 import {
 	COMPARISON_SECTIONS,
 	type ComparisonRow,
-	PRICING_TIERS,
 	type PricingTier,
+	pricingTiers,
 } from "../../constants";
 import { comparisonValue, seatPrice } from "../../utils/planDisplay";
-import type { PlanPrices } from "../../utils/planPricesFromAutumn";
 import {
 	type PlanPriceValues,
 	planPriceValues,
 } from "../../utils/planPriceValues";
 
 interface ComparisonTableProps {
-	prices: PlanPrices;
+	catalog: PlanFamily[];
 }
 
-export function ComparisonTable({ prices }: ComparisonTableProps) {
+interface TableProps {
+	tiers: PricingTier[];
+	values: PlanPriceValues;
+}
+
+export function ComparisonTable({ catalog }: ComparisonTableProps) {
 	const { i18n } = useLingui();
-	const values = planPriceValues(prices, i18n.locale);
+	const values = planPriceValues(catalog, i18n);
+	const tiers = pricingTiers(catalog);
 
 	return (
 		<div className="flex flex-col gap-8">
@@ -36,13 +42,13 @@ export function ComparisonTable({ prices }: ComparisonTableProps) {
 				</h2>
 			</div>
 
-			<DesktopTable values={values} />
-			<MobileTable values={values} />
+			<DesktopTable tiers={tiers} values={values} />
+			<MobileTable tiers={tiers} values={values} />
 		</div>
 	);
 }
 
-function DesktopTable({ values }: { values: PlanPriceValues }) {
+function DesktopTable({ tiers, values }: TableProps) {
 	const { t } = useLingui();
 
 	return (
@@ -53,12 +59,12 @@ function DesktopTable({ values }: { values: PlanPriceValues }) {
 						<th className="sticky top-16 z-10 w-1/4 border-b border-border bg-background py-4 pr-4 text-left text-sm font-medium text-muted-foreground">
 							<Trans>Features</Trans>
 						</th>
-						{PRICING_TIERS.map((tier) => (
+						{tiers.map((tier) => (
 							<th
 								key={tier.id}
 								className="sticky top-16 z-10 border-b border-border bg-background py-4 px-4 text-left text-sm font-medium text-foreground"
 							>
-								{t(tier.name)}
+								{typeof tier.name === "string" ? tier.name : t(tier.name)}
 								<span className="block font-normal text-xs text-muted-foreground">
 									<TierPriceLabel tier={tier} values={values} />
 								</span>
@@ -68,9 +74,18 @@ function DesktopTable({ values }: { values: PlanPriceValues }) {
 				</thead>
 				<tbody>
 					{COMPARISON_SECTIONS.map((section) => (
-						<DesktopSectionGroup key={section.id} title={t(section.title)}>
+						<DesktopSectionGroup
+							key={section.id}
+							title={t(section.title)}
+							columns={tiers.length + 1}
+						>
 							{section.rows.map((row) => (
-								<DesktopRow key={row.id} row={row} values={values} />
+								<DesktopRow
+									key={row.id}
+									row={row}
+									tiers={tiers}
+									values={values}
+								/>
 							))}
 						</DesktopSectionGroup>
 					))}
@@ -91,8 +106,10 @@ function TierPriceLabel({
 		return <>{tier.price.display}</>;
 	}
 	if (tier.price.kind === "seat") {
-		const price = seatPrice(tier.price.plan, values, true).display;
-		return values.plans[tier.price.plan].hasYearlyDiscount ? (
+		const set = values.byFamily[tier.id];
+		if (!set) return null;
+		const price = seatPrice(set, true).display;
+		return set.hasYearlyDiscount ? (
 			<Trans>from {price}/user/mo</Trans>
 		) : (
 			<Trans>{price}/user/mo</Trans>
@@ -103,16 +120,18 @@ function TierPriceLabel({
 
 function DesktopSectionGroup({
 	title,
+	columns,
 	children,
 }: {
 	title: string;
+	columns: number;
 	children: React.ReactNode;
 }) {
 	return (
 		<>
 			<tr>
 				<td
-					colSpan={PRICING_TIERS.length + 1}
+					colSpan={columns}
 					className="border-b border-border bg-accent/20 px-4 py-3 text-xs font-medium uppercase tracking-wide text-muted-foreground"
 				>
 					{title}
@@ -125,11 +144,9 @@ function DesktopSectionGroup({
 
 function DesktopRow({
 	row,
+	tiers,
 	values,
-}: {
-	row: ComparisonRow;
-	values: PlanPriceValues;
-}) {
+}: TableProps & { row: ComparisonRow }) {
 	const { t } = useLingui();
 
 	return (
@@ -140,28 +157,28 @@ function DesktopRow({
 					{row.badge && <RowBadge badge={row.badge} />}
 				</div>
 			</td>
-			{PRICING_TIERS.map((tier) => (
+			{tiers.map((tier) => (
 				<td
 					key={`${row.id}-${tier.id}`}
 					className="border-b border-border/60 px-4 py-4 text-sm text-foreground"
 				>
-					<Cell value={comparisonValue(row, tier.id, values)} />
+					<Cell value={comparisonValue(row, tier, values)} />
 				</td>
 			))}
 		</tr>
 	);
 }
 
-function MobileTable({ values }: { values: PlanPriceValues }) {
+function MobileTable({ tiers, values }: TableProps) {
 	const { t } = useLingui();
 	const [selectedIndex, setSelectedIndex] = useState(1);
-	const selectedTier = PRICING_TIERS[selectedIndex];
+	const selectedTier = tiers[selectedIndex];
 	if (!selectedTier) return null;
 
 	return (
 		<div className="flex flex-col gap-6 md:hidden">
 			<div className="flex overflow-x-auto rounded-md border border-border bg-card p-1">
-				{PRICING_TIERS.map((tier, index) => (
+				{tiers.map((tier, index) => (
 					<button
 						key={tier.id}
 						type="button"
@@ -174,7 +191,7 @@ function MobileTable({ values }: { values: PlanPriceValues }) {
 								: "text-muted-foreground hover:text-foreground",
 						)}
 					>
-						{t(tier.name)}
+						{typeof tier.name === "string" ? tier.name : t(tier.name)}
 					</button>
 				))}
 			</div>
@@ -196,9 +213,7 @@ function MobileTable({ values }: { values: PlanPriceValues }) {
 										{row.badge && <RowBadge badge={row.badge} />}
 									</div>
 									<div className="shrink-0 text-sm text-foreground">
-										<Cell
-											value={comparisonValue(row, selectedTier.id, values)}
-										/>
+										<Cell value={comparisonValue(row, selectedTier, values)} />
 									</div>
 								</li>
 							))}

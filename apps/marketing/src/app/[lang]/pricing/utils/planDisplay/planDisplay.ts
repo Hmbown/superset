@@ -1,26 +1,26 @@
-import type { SelfServePlanId } from "@superset/shared/billing";
-import type { ComparisonRow, ComparisonValue, TierId } from "../../constants";
-import type { PlanPriceValues } from "../planPriceValues";
+import type {
+	ComparisonRow,
+	ComparisonValue,
+	PricingTier,
+} from "../../constants";
+import type { FamilyPriceSet, PlanPriceValues } from "../planPriceValues";
 
 export function seatPrice(
-	plan: SelfServePlanId,
-	values: PlanPriceValues,
+	set: FamilyPriceSet,
 	yearly: boolean,
 ): { display: string; strikethrough: string | null } {
-	const prices = values.plans[plan];
-	if (!yearly) return { display: prices.monthly, strikethrough: null };
-	return {
-		display: prices.yearly,
-		strikethrough: prices.hasYearlyDiscount ? prices.monthly : null,
-	};
+	return yearly && set.hasYearlyDiscount
+		? { display: set.yearly, strikethrough: set.monthly }
+		: { display: set.monthly, strikethrough: null };
 }
 
 export function comparisonValue(
 	row: ComparisonRow,
-	tier: TierId,
+	tier: PricingTier,
 	values: PlanPriceValues,
 ): ComparisonValue | null {
-	if (tier === "free") return row.values[0];
-	if (tier === "enterprise") return row.values[2];
-	return row.cloudGbHours ? values.plans[tier].gbHours : row.values[1];
+	if (tier.price.kind === "fixed") return row.values[0];
+	if (tier.price.kind === "custom") return row.values[2];
+	if (!row.cloudGbHours) return row.values[1];
+	return values.byFamily[tier.id]?.gbHours ?? null;
 }

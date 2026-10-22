@@ -23,6 +23,14 @@ export async function countEnvironments(
 }
 
 export function environmentLimitError(limit: number) {
+	if (limit === 0) {
+		return userError({
+			code: "FORBIDDEN",
+			message:
+				"Your plan does not include cloud environments. Upgrade in Settings, Billing to create one.",
+			i18nKey: "serverError.environment.notIncluded",
+		});
+	}
 	return userError({
 		code: "FORBIDDEN",
 		message: `Your organization has reached its limit of ${limit} environments. Archive one, or upgrade in Settings, Billing to add more.`,

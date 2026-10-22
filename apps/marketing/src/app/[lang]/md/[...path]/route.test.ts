@@ -1,13 +1,12 @@
 import { expect, mock, test } from "bun:test";
-import { BUILT_IN_PLAN_PRICES } from "@/app/[lang]/pricing/utils/planPricesFromAutumn";
 import { getBlogPosts } from "@/lib/blog";
 
 mock.module("server-only", () => ({}));
 mock.module("@/app/[lang]/utils/leaderboardClient", () => ({
 	leaderboardClient: {},
 }));
-mock.module("@/app/[lang]/pricing/utils/fetchPlanPrices", () => ({
-	fetchPlanPrices: async () => BUILT_IN_PLAN_PRICES,
+mock.module("@/app/[lang]/pricing/utils/fetchPlanCatalog", () => ({
+	fetchPlanCatalog: async () => [],
 }));
 const { GET } = await import("./route");
 

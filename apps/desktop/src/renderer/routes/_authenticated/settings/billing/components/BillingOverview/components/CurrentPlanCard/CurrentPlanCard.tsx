@@ -1,20 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { i18n } from "@superset/i18n";
-import {
-	isPaymentFailingStatus,
-	type SelfServePlanId,
-} from "@superset/shared/billing";
+import { isPaymentFailingStatus } from "@superset/shared/billing";
 import { Button } from "@superset/ui/button";
 import { format } from "date-fns";
-import {
-	PLANS,
-	type PlanTier,
-	SELF_SERVE_PLAN_NAMES,
-} from "../../../../constants";
+import { PLANS, type PlanTier } from "../../../../constants";
 
 interface CurrentPlanCardProps {
 	currentPlan: PlanTier;
-	selfServePlan?: SelfServePlanId | null;
+	planName?: string | null;
 	onCancel?: () => void;
 	isCanceling?: boolean;
 	onRestore?: () => void;
@@ -26,7 +19,7 @@ interface CurrentPlanCardProps {
 
 export function CurrentPlanCard({
 	currentPlan,
-	selfServePlan,
+	planName: catalogPlanName,
 	onCancel,
 	isCanceling,
 	onRestore,
@@ -38,9 +31,9 @@ export function CurrentPlanCard({
 	const { t } = useLingui();
 	const plan = PLANS[currentPlan];
 	const planName =
-		currentPlan === "pro" && selfServePlan
-			? SELF_SERVE_PLAN_NAMES[selfServePlan]
-			: plan.name;
+		currentPlan === "pro" && catalogPlanName
+			? catalogPlanName
+			: i18n._(plan.name);
 	const isPaidPlan = currentPlan !== "free";
 	const isEnterprise = currentPlan === "enterprise";
 	const isCancelingAtPeriodEnd = isPaidPlan && !isEnterprise && !!cancelAt;
@@ -66,22 +59,35 @@ export function CurrentPlanCard({
 								message: `Renews ${format(new Date(periodEnd), "MMMM d, yyyy")}.`,
 							})
 						: `${i18n._(plan.description)}.`;
+	const seatHint =
+		isPaidPlan &&
+		!isEnterprise &&
+		!isCancelingAtPeriodEnd &&
+		!isPaymentFailing &&
+		periodEnd
+			? t({
+					message: `Seats removed mid-cycle stay active until ${format(new Date(periodEnd), "MMMM d, yyyy")}.`,
+				})
+			: null;
 
 	return (
 		<div className="flex items-center justify-between gap-8 py-3">
 			<div className="min-w-0 flex-1">
 				<div className="flex items-center gap-2">
 					<span className="text-sm font-medium">
-						<Trans>{i18n._(planName)} plan</Trans>
+						<Trans>{planName} plan</Trans>
 					</span>
 					{isPaidPlan && (
 						<span className="inline-flex items-center rounded-md bg-foreground px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-background">
-							{i18n._(planName)}
+							{planName}
 						</span>
 					)}
 				</div>
 				{hint && (
 					<div className="text-xs mt-0.5 text-muted-foreground">{hint}</div>
+				)}
+				{seatHint && (
+					<div className="text-xs mt-0.5 text-muted-foreground">{seatHint}</div>
 				)}
 			</div>
 			{isPaidPlan && !isEnterprise && (

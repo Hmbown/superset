@@ -1,24 +1,25 @@
 import type { I18n, MessageDescriptor } from "@lingui/core";
 import { isSupportedLocale } from "@superset/i18n";
 import { getI18nInstance, preloadServerLocale } from "@superset/i18n/server";
+import type { PlanFamily } from "@superset/shared/billing";
 import { BRAND } from "@superset/shared/brand";
 import { CANONICAL_URLS, COMPANY } from "@superset/shared/constants";
 import { MCP_CAPABILITIES } from "@/app/[lang]/mcp-install/components/McpCapabilities/constants";
 import {
 	COMPARISON_SECTIONS,
 	type ComparisonValue,
+	ENTERPRISE_TIER,
 	PRICING_FAQ_ITEMS,
-	PRICING_TIERS,
+	pricingTiers,
 } from "@/app/[lang]/pricing/constants";
 import { checkoutHref } from "@/app/[lang]/pricing/utils/checkoutHref";
-import { fetchPlanPrices } from "@/app/[lang]/pricing/utils/fetchPlanPrices";
+import { fetchPlanCatalog } from "@/app/[lang]/pricing/utils/fetchPlanCatalog";
 import {
 	comparisonValue,
 	seatPrice,
 } from "@/app/[lang]/pricing/utils/planDisplay";
-import type { PlanPrices } from "@/app/[lang]/pricing/utils/planPricesFromAutumn";
 import {
-	cloudHourValues,
+	featureValues,
 	planPriceValues,
 } from "@/app/[lang]/pricing/utils/planPriceValues";
 import { fetchParticipant } from "@/app/[lang]/utils/fetchLeaderboard";
@@ -58,40 +59,48 @@ function cell(i18n: I18n, value: ComparisonValue | null): string {
 	return text(i18n, value);
 }
 
-function pricingPage(i18n: I18n, planPrices: PlanPrices): MarkdownPage {
+function pricingPage(i18n: I18n, catalog: PlanFamily[]): MarkdownPage {
 	const baseUrl = COMPANY.MARKETING_URL;
-	const prices = planPriceValues(planPrices, i18n.locale);
-	const tiers = PRICING_TIERS.map((tier) => {
+	const prices = planPriceValues(catalog, i18n);
+	const allTiers = pricingTiers(catalog);
+	const tierName = (tier: (typeof allTiers)[number]) =>
+		typeof tier.name === "string" ? tier.name : text(i18n, tier.name);
+	const tiers = allTiers.map((tier) => {
 		const { price: tierPrice } = tier;
+		const set = prices.byFamily[tier.id];
 		const price =
-			tierPrice.kind === "seat"
+			tierPrice.kind === "seat" && set
 				? [
-						`${seatPrice(tierPrice.plan, prices, false).display} ${text(i18n, tierPrice.note)} (${text(i18n, tierPrice.monthlyCadence)})`,
-						`or ${seatPrice(tierPrice.plan, prices, true).display} ${text(i18n, tierPrice.note)} (${i18n._({ ...tierPrice.yearlyCadence, values: { yearlyTotal: prices.plans[tierPrice.plan].yearlyTotal } })})`,
-						`${prices.plans[tierPrice.plan].gbHours} cloud GB-hours per seat each month, then ${prices.plans[tierPrice.plan].overage} per GB-hour`,
+						`${seatPrice(set, false).display} ${text(i18n, tierPrice.note)} (${text(i18n, tierPrice.monthlyCadence)})`,
+						...(set.hasYearlyDiscount
+							? [
+									`or ${seatPrice(set, true).display} ${text(i18n, tierPrice.note)} (${i18n._({ ...tierPrice.yearlyCadence, values: { yearlyTotal: set.yearlyTotal } })})`,
+								]
+							: []),
+						...(set.gbHours && set.overage
+							? [
+									`${set.gbHours} cloud GB-hours per seat each month, then ${set.overage} per GB-hour`,
+								]
+							: []),
 					].join("; ")
-				: `${text(i18n, tierPrice.display)} (${text(i18n, tierPrice.note)})`;
+				: tierPrice.kind === "seat"
+					? ""
+					: `${text(i18n, tierPrice.display)} (${text(i18n, tierPrice.note)})`;
 		return [
-			`### ${text(i18n, tier.name)}`,
+			`### ${tierName(tier)}`,
 			"",
 			text(i18n, tier.description),
 			"",
 			`- **Price**: ${price}`,
 			...tier.features.map(
 				(feature) =>
-					`- ${i18n._({
-						...feature.label,
-						values:
-							tier.price.kind === "seat"
-								? cloudHourValues(prices.plans[tier.price.plan])
-								: undefined,
-					})}`,
+					`- ${i18n._({ ...feature.label, values: featureValues(set) })}`,
 			),
-			`- [${text(i18n, tier.cta.label)}](${tier.price.kind === "seat" ? checkoutHref(CANONICAL_URLS.APP, tier.price.plan, true) : tier.cta.href.startsWith("/") ? baseUrl + tier.cta.href : tier.cta.href})`,
+			`- [${i18n._({ ...tier.cta.label, values: { plan: tierName(tier) } })}](${tier.price.kind === "seat" ? checkoutHref(CANONICAL_URLS.APP, tier.id, Boolean(set?.hasYearlyDiscount)) : tier.cta.href.startsWith("/") ? baseUrl + tier.cta.href : tier.cta.href})`,
 			"",
 		];
 	});
-	const tierNames = PRICING_TIERS.map((tier) => text(i18n, tier.name));
+	const tierNames = allTiers.map(tierName);
 	const comparison = COMPARISON_SECTIONS.flatMap((section) => [
 		`### ${text(i18n, section.title)}`,
 		"",
@@ -99,20 +108,27 @@ function pricingPage(i18n: I18n, planPrices: PlanPrices): MarkdownPage {
 		`|---|${tierNames.map(() => "---").join("|")}|`,
 		...section.rows.map(
 			(row) =>
-				`| ${text(i18n, row.label)}${row.badge ? ` (${text(i18n, row.badge.label)})` : ""} | ${PRICING_TIERS.map((tier) => cell(i18n, comparisonValue(row, tier.id, prices))).join(" | ")} |`,
+				`| ${text(i18n, row.label)}${row.badge ? ` (${text(i18n, row.badge.label)})` : ""} | ${allTiers.map((tier) => cell(i18n, comparisonValue(row, tier, prices))).join(" | ")} |`,
 		),
 		"",
 	]);
 	const faq = PRICING_FAQ_ITEMS.flatMap((item) => [
 		`### ${text(i18n, item.question)}`,
 		"",
-		i18n._({ ...item.answer, values: prices }),
+		i18n._({
+			...item.answer,
+			values: {
+				planPrices: prices.planPrices,
+				allowances: prices.allowances,
+				overagePrice: prices.overagePrice,
+			},
+		}),
 		"",
 	]);
 	return {
 		title: `${BRAND.NAME} pricing`,
 		url: `${baseUrl}/pricing`,
-		description: `Free for individuals. Pro is ${prices.monthlyPrice}, Team ${prices.teamPrice} and Ultra ${prices.ultraPrice} per user/month (${prices.yearlyPrice}, ${prices.teamYearlyPrice} and ${prices.ultraYearlyPrice} billed yearly). Enterprise adds SSO, SCIM, audit logs, and an SLA.`,
+		description: `Free for individuals. ${prices.planPrices}. Enterprise adds SSO, SCIM, audit logs, and an SLA.`,
 		content: [
 			"## Plans",
 			"",
@@ -200,7 +216,7 @@ function teamPage(): MarkdownPage {
 
 function enterprisePage(i18n: I18n): MarkdownPage {
 	const baseUrl = COMPANY.MARKETING_URL;
-	const enterprise = PRICING_TIERS.find((tier) => tier.id === "enterprise");
+
 	return {
 		title: `${BRAND.NAME} for enterprise`,
 		url: `${baseUrl}/enterprise`,
@@ -208,7 +224,7 @@ function enterprisePage(i18n: I18n): MarkdownPage {
 		content: [
 			"## What Enterprise includes",
 			"",
-			...(enterprise?.features ?? []).map(
+			...ENTERPRISE_TIER.features.map(
 				(feature) => `- ${text(i18n, feature.label)}`,
 			),
 			"",
@@ -229,7 +245,7 @@ const STATIC_PAGES: Record<
 	string,
 	(i18n: I18n) => MarkdownPage | Promise<MarkdownPage>
 > = {
-	pricing: async (i18n) => pricingPage(i18n, await fetchPlanPrices()),
+	pricing: async (i18n) => pricingPage(i18n, await fetchPlanCatalog()),
 	"mcp-install": mcpInstallPage,
 	team: teamPage,
 	enterprise: enterprisePage,

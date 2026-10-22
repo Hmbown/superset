@@ -487,10 +487,6 @@ msgstr "총 {totalCount}개 중 {0}개"
 msgid "{0} options"
 msgstr "{0} 옵션"
 
-#. placeholder {0}: i18n._(planName)
-msgid "{0} plan"
-msgstr "{0} 플랜"
-
 #. placeholder {0}: normalizedProjectIds.length
 msgid "{0} projects"
 msgstr "프로젝트 {0}개"
@@ -889,6 +885,9 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "좌석당 매월 클라우드 {gbHours} GB 시간"
 
+msgid "{gbHours} on {name}"
+msgstr "{name}에서 {gbHours}"
+
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {숨겨진 #줄} other {숨겨진 #줄}}"
 
@@ -973,11 +972,14 @@ msgstr "{modKey}↵로 만들기"
 msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
 msgstr "월간 결제 시 사용자당 월 {monthlyPrice}, 연간 결제 시 {yearlyPrice}. 클라우드 워크스페이스, 모바일, 우선 지원이 포함됩니다."
 
+msgid "{monthlyPrice} per user/mo. Cloud workspaces, mobile, priority support."
+msgstr "사용자당 월 {monthlyPrice}. 클라우드 워크스페이스, 모바일, 우선 지원."
+
 msgid "{months}mo ago"
 msgstr "{months}개월 전"
 
-msgid "{multiple}x the cloud GB-hours of Pro"
-msgstr "Pro의 {multiple}배 클라우드 GB 시간"
+msgid "{multiple}x the cloud GB-hours of {basePlan}"
+msgstr "{basePlan}의 {multiple}배 클라우드 GB 시간"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "내 자동화 {myFailedCount}개가 마지막 실행에 실패했습니다"
@@ -1017,6 +1019,12 @@ msgstr "{name} 작업 시작"
 
 msgid "{name} stopped"
 msgstr "{name} 중지됨"
+
+msgid "{name}: {monthly} per user/month"
+msgstr "{name}: 사용자당 월 {monthly}"
+
+msgid "{name}: {monthly} per user/month, or {yearly} billed yearly"
+msgstr "{name}: 사용자당 월 {monthly}, 또는 연간 결제 시 {yearly}"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {사람을 한 명 이상 지정하거나 {choice} 옵션을 선택하세요.} sender {발신자를 한 명 이상 지정하거나 {choice} 옵션을 선택하세요.} other {항목을 하나 이상 지정하거나 {choice} 옵션을 선택하세요.}}"
@@ -1067,6 +1075,9 @@ msgstr "{planLabel} · {joined} 가입"
 msgid "{planLabel} plan"
 msgstr "{planLabel} 플랜"
 
+msgid "{planName} plan"
+msgstr "{planName} 플랜"
+
 msgid "{plugin} has no OAuth client configured on this deployment yet."
 msgstr "이 배포에는 {plugin}의 OAuth 클라이언트가 아직 구성되지 않았습니다."
 
@@ -1079,6 +1090,9 @@ msgstr "{presetLabel}이(가) 기본값으로 초기화되었습니다"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · 줄 높이 {0}"
+
+msgid "{price} per user/month"
+msgstr "사용자당 월 {price}"
 
 msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
 msgstr "사용자당 월 {price}, 좌석당 매월 클라우드 {gbHours} GB 시간"
@@ -3019,9 +3033,6 @@ msgstr "그 너머: F5는 단기 전망이 아닙니다"
 msgid "Billed monthly"
 msgstr "월간 결제"
 
-msgid "Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team."
-msgstr "월간 결제 시 사용자당 월 Pro는 {monthlyPrice}, Team은 {teamPrice}, Ultra는 {ultraPrice}입니다. 연간 결제 시 사용자당 월 Pro는 {yearlyPrice}, Team은 {teamYearlyPrice}, Ultra는 {ultraYearlyPrice}입니다. 팀의 활성 좌석마다 요금이 청구됩니다."
-
 msgid "Billed per token."
 msgstr "토큰 단위 과금."
 
@@ -4126,8 +4137,8 @@ msgstr "클라우드 워크스페이스"
 msgid "Cloud workspaces"
 msgstr "클라우드 워크스페이스"
 
-msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour."
-msgstr "클라우드 워크스페이스는 GB 시간 단위로 측정됩니다. 머신의 메모리에 실행한 시간을 곱한 값입니다. 8GB 머신은 1시간에 8 GB 시간을 사용합니다. 각 좌석은 플랜의 GB 시간을 팀이 함께 쓰는 하나의 풀에 더합니다. Pro는 {proGbHours}, Team은 {teamGbHours}, Ultra는 {ultraGbHours}입니다. 풀은 매월 초기화되며, 풀을 넘는 사용량은 GB 시간당 {overagePrice}입니다."
+msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan."
+msgstr "클라우드 워크스페이스는 GB 시간으로 측정됩니다. 머신의 메모리에 실행 시간을 곱한 값입니다. 8 GB 머신은 시간당 8 GB 시간을 사용합니다. 각 좌석은 플랜의 GB 시간을 팀이 공유하는 하나의 풀에 더합니다: {allowances}. 풀은 매달 초기화되며, 초과 사용량은 각 플랜에 표시된 요금으로 GB 시간당 청구됩니다."
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "클라우드 워크스페이스는 이 변수를 무시합니다. 에이전트는 대신 설정 › 에이전트에서 로그인합니다."
@@ -4997,6 +5008,9 @@ msgstr "환경을 불러오지 못했습니다."
 
 msgid "Could not load image"
 msgstr "이미지를 불러올 수 없음"
+
+msgid "Could not load plans."
+msgstr "플랜을 불러올 수 없습니다."
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "플러그인을 불러오지 못했습니다. 연결을 확인하고 다시 시도하세요."
@@ -6937,6 +6951,9 @@ msgstr "변경하기 전까지 모두 v{sharedVersion}을(를) 봅니다"
 msgid "Everyone with access to this organization."
 msgstr "이 조직에 접근할 수 있는 모든 사람입니다."
 
+msgid "Everything in {previousPlan}"
+msgstr "{previousPlan}의 모든 기능"
+
 msgid "Everything in Free"
 msgstr "무료 플랜의 모든 기능"
 
@@ -6945,9 +6962,6 @@ msgstr "Pro의 모든 기능"
 
 msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
 msgstr "Pro의 모든 기능에 더해 SSO 및 SAML, SCIM 프로비저닝, IP 제한, 감사 로그, 맞춤 SLA, 전담 지원, 맞춤 계약이 포함됩니다. 가격은 조직에 맞춰 책정합니다. 문의해 주시면 적합한 범위를 잡아 드립니다."
-
-msgid "Everything in Team"
-msgstr "Team의 모든 기능"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "모든 것이 스크립트로 가능합니다. CLI에서 워크스페이스와 에이전트를 띄우고, SDK로 Superset을 CI에 연결하고, MCP로 에이전트가 직접 조작하게 하세요."
@@ -7936,6 +7950,9 @@ msgstr "더 큰 성능이 필요한 팀용"
 msgid "For teams that run agents every day"
 msgstr "매일 에이전트를 실행하는 팀을 위한 플랜"
 
+msgid "For teams that run more agents in the cloud"
+msgstr "클라우드에서 더 많은 에이전트를 실행하는 팀을 위한 플랜"
+
 msgid "Force merge"
 msgstr "강제 머지"
 
@@ -8122,6 +8139,9 @@ msgstr "생성 중..."
 msgid "Generating…"
 msgstr "생성 중…"
 
+msgid "Get {plan}"
+msgstr "{plan} 시작하기"
+
 msgid "Get an API key"
 msgstr "API 키 받기"
 
@@ -8140,9 +8160,6 @@ msgstr "Superset 더 잘 활용하기"
 msgid "Get notified when Superset is available on Windows & Linux."
 msgstr "Superset을 Windows와 Linux에서 쓸 수 있게 되면 알려 드립니다."
 
-msgid "Get Pro"
-msgstr "Pro 시작하기"
-
 msgid "Get started"
 msgstr "시작하기"
 
@@ -8152,17 +8169,11 @@ msgstr "Mac에서 Superset 사용하기"
 msgid "Get Superset Pro"
 msgstr "Superset Pro 시작하기"
 
-msgid "Get Team"
-msgstr "Team 시작하기"
-
 msgid "Get the best out of Pro"
 msgstr "Pro를 최대한 활용하기"
 
 msgid "Get the iPhone and iPad app"
 msgstr "iPhone 및 iPad 앱 받기"
-
-msgid "Get Ultra"
-msgstr "Ultra 시작하기"
 
 msgid "Gets an invite to join {organizationName}"
 msgstr "{organizationName} 가입 초대를 받습니다"
@@ -12583,6 +12594,9 @@ msgstr "페이지 매김"
 msgid "Pagination"
 msgstr "페이지네이션"
 
+msgid "Paid plans are priced per user per month and billed for each active seat on your team. {planPrices}."
+msgstr "유료 플랜은 사용자당 월 요금이며, 팀의 활성 좌석마다 청구됩니다. {planPrices}."
+
 msgid "Paid work trial"
 msgstr "유급 업무 체험"
 
@@ -15130,6 +15144,12 @@ msgstr "검색 중..."
 msgid "Searching…"
 msgstr "검색 중…"
 
+#. placeholder {0}: format(new Date(periodEnd), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(periodEnd)
+#. placeholder {0}: formatLocaleDate(new Date(seatPeriodEnd), { month: "long", day: "numeric", year: "numeric" })
+msgid "Seats removed mid-cycle stay active until {0}."
+msgstr "주기 중간에 제거한 좌석은 {0}까지 활성 상태로 유지됩니다."
+
 msgid "Secondary"
 msgstr "보조"
 
@@ -15943,6 +15963,9 @@ msgstr "모든 팀을 위한 간단한 가격"
 
 msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
 msgstr "모든 팀을 위한 간단한 요금제. 개인은 무료, 팀은 사용자당 월 {yearlyPrice}, 엔터프라이즈는 맞춤 견적입니다. {companyName}으로 100개 이상의 병렬 코딩 에이전트를 실행하세요."
+
+msgid "Simple pricing for every team. Free for individuals, per-user plans for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "모든 팀을 위한 간단한 요금제. 개인은 무료, 팀은 사용자당 플랜, 엔터프라이즈는 맞춤형. {companyName}으로 100개 이상의 코딩 에이전트를 병렬로 실행하세요."
 
 msgid "Simulate update: downloading"
 msgstr "업데이트 시뮬레이션: 다운로드 중"
@@ -17117,10 +17140,6 @@ msgstr "팀"
 
 msgid "Team"
 msgstr "팀"
-
-msgctxt "plan name"
-msgid "Team"
-msgstr "Team"
 
 msgid "Team activity feed"
 msgstr "팀 활동 피드"
@@ -18445,10 +18464,6 @@ msgstr "V2 터미널 패널에 사용하는 타이포그래피와 커서 동작�
 msgid "Typography used in V2 editors and diff views."
 msgstr "V2 편집기와 차이 보기에 사용하는 타이포그래피입니다."
 
-msgctxt "plan name"
-msgid "Ultra"
-msgstr "Ultra"
-
 msgid "Unable to check for updates. Please check your internet connection."
 msgstr "업데이트를 확인할 수 없습니다. 인터넷 연결을 확인해 주세요."
 
@@ -18783,9 +18798,8 @@ msgstr "의존성을 업그레이드하고 깨진 부분 고치기…"
 msgid "Upgrade on {0}"
 msgstr "{0}에서 업그레이드"
 
-#. placeholder {0}: i18n._(plan.name)
-msgid "Upgrade to {0}"
-msgstr "{0}(으)로 업그레이드"
+msgid "Upgrade to {planName}"
+msgstr "{planName}(으)로 업그레이드"
 
 msgid "Upgrade to Pro"
 msgstr "Pro로 업그레이드"
@@ -19931,6 +19945,12 @@ msgstr "조직이 클라우드 사용 한도에 도달했습니다. 한도를 �
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "본인의 계정입니다. 조직의 통합은 Superset이 해당 도구에 접근하게 하며, 본인 계정을 연결하면 Superset이 대신 한 작업이 본인 이름으로 표시됩니다."
 
+msgid "Your plan does not include cloud environments."
+msgstr "현재 플랜에는 클라우드 환경이 포함되어 있지 않습니다."
+
+msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
+msgstr "현재 플랜에는 클라우드 환경이 포함되어 있지 않습니다. 환경을 만들려면 설정, 결제에서 업그레이드하세요."
+
 msgid "Your rank"
 msgstr "내 순위"
 
@@ -19950,8 +19970,8 @@ msgstr "Slack 계정이 Superset에 연결되었습니다. 이 탭을 닫고 Sla
 msgid "Your stats, settled in mortal combat"
 msgstr "당신의 기록, 목숨을 건 대결로 결판내세요"
 
-msgid "Your subscription has been activated. You can now access all Pro features."
-msgstr "구독이 활성화되었습니다. 이제 모든 Pro 기능을 사용할 수 있습니다."
+msgid "Your subscription is active. Your new plan's features are ready to use."
+msgstr "구독이 활성화되었습니다. 새 플랜의 기능을 바로 사용할 수 있습니다."
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "구독 요금이 그에 맞게 조정됩니다."

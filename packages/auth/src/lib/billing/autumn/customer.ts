@@ -3,11 +3,14 @@ import * as authSchema from "@superset/db/schema/auth";
 import { and, eq, inArray, isNull } from "drizzle-orm";
 import { autumnClient } from "../../../autumn";
 import { stripeClient } from "../../../stripe";
+import { alertBilling } from "./alert";
 import { paidPlanIdFromFlags } from "./entitlements";
 import {
 	applySeatUpdate,
+	type GrantDecrease,
 	SeatAllowanceError,
 	seatUpdateForCustomer,
+	withRetry,
 } from "./seat-allowance";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -72,43 +75,74 @@ export async function paidAutumnPlanId(
 	return paidPlanIdFromFlags(customer.flags);
 }
 
+interface SeatSyncOptions {
+	allowanceOnly?: boolean;
+	grantDecrease?: GrantDecrease;
+}
+
 export async function buildAutumnSeatUpdate(
 	organizationId: string,
 	quantity: number,
-	{ allowanceOnly = false }: { allowanceOnly?: boolean } = {},
+	options: SeatSyncOptions = {},
 ) {
 	const customer = await getAutumnCustomer(organizationId);
 	const planId = paidPlanIdFromFlags(customer.flags);
 	if (!planId) return null;
 	const catalog = await autumnClient.plans.get({ planId });
 	return seatUpdateForCustomer(customer, organizationId, quantity, {
-		allowanceOnly,
+		...options,
 		metadata: catalog.metadata,
 	});
 }
 
+/** Returns true when Autumn owns the organization's seats, so Stripe must not be written directly. */
 export async function setAutumnSeats(
 	organizationId: string,
 	quantity: number,
-	options?: { allowanceOnly?: boolean },
+	options: SeatSyncOptions = {},
 ): Promise<boolean> {
+	const label = `${organizationId} (${quantity} seats)`;
+	let update: Awaited<ReturnType<typeof buildAutumnSeatUpdate>>;
 	try {
-		const update = await buildAutumnSeatUpdate(
-			organizationId,
-			quantity,
-			options,
+		update = await withRetry(() =>
+			buildAutumnSeatUpdate(organizationId, quantity, options),
 		);
-		if (!update) return options?.allowanceOnly === true;
-		await applySeatUpdate(update, autumnClient.billing, options);
-		return true;
 	} catch (error) {
-		console.error(
-			`[billing/seats] ${organizationId} seats or cloud allowance not set through Autumn`,
+		await alertBilling(`Seat sync for ${label} could not read Autumn`, error);
+		return true;
+	}
+	if (!update) return options.allowanceOnly === true;
+	if (update.allowanceError) {
+		await alertBilling(
+			`Cloud allowance for ${label} was not changed`,
+			update.allowanceError,
+		);
+	}
+	const { request, seatsOnly } = update;
+	if (!request) return true;
+	try {
+		await withRetry(() =>
+			applySeatUpdate(request, autumnClient.billing, options),
+		);
+	} catch (error) {
+		if (!(error instanceof SeatAllowanceError) || !seatsOnly) {
+			await alertBilling(`Seats for ${label} were not set in Autumn`, error);
+			return true;
+		}
+		await alertBilling(
+			`Cloud allowance preview for ${label} was unsafe; seats set without it`,
 			error,
 		);
-		if (error instanceof SeatAllowanceError) throw error;
-		return false;
+		try {
+			await withRetry(() => autumnClient.billing.update(seatsOnly));
+		} catch (seatError) {
+			await alertBilling(
+				`Seats for ${label} were not set in Autumn`,
+				seatError,
+			);
+		}
 	}
+	return true;
 }
 
 export async function organizationForStripeCustomer(

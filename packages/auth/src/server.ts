@@ -41,7 +41,6 @@ import {
 	autumnBillingRoutes,
 	handleStripeBillingEvent,
 	organizationPlanFromAutumn,
-	SeatAllowanceError,
 	seatItem,
 	setAutumnSeats,
 	withAutumnBilling,
@@ -111,17 +110,6 @@ const desktopDevOrigins =
 				`http://127.0.0.1:${desktopDevPort}`,
 			]
 		: [];
-
-async function syncMemberSeats(
-	...args: Parameters<typeof setAutumnSeats>
-): Promise<boolean> {
-	try {
-		return await setAutumnSeats(...args);
-	} catch (error) {
-		if (error instanceof SeatAllowanceError) return true;
-		throw error;
-	}
-}
 
 export const auth = betterAuth({
 	baseURL: env.NEXT_PUBLIC_API_URL,
@@ -815,7 +803,7 @@ export const auth = betterAuth({
 					const subscription = await db.query.subscriptions.findFirst({
 						where: and(
 							eq(subscriptions.referenceId, organization.id),
-							eq(subscriptions.status, "active"),
+							inArray(subscriptions.status, ACTIVE_SUBSCRIPTION_STATUSES),
 						),
 					});
 
@@ -852,7 +840,7 @@ export const auth = betterAuth({
 					);
 					if (subscription.plan === "enterprise") {
 						if (billingUsesAutumn) {
-							await syncMemberSeats(organization.id, quantity, {
+							await setAutumnSeats(organization.id, quantity, {
 								allowanceOnly: true,
 							});
 						}
@@ -865,10 +853,11 @@ export const auth = betterAuth({
 					const seat = seatItem(stripeSub);
 					const itemId = seat?.id;
 
-					const seatsSetInAutumn =
+					const seatsOwnedByAutumn =
 						billingUsesAutumn &&
-						(await syncMemberSeats(organization.id, quantity));
-					if (!seatsSetInAutumn && itemId) {
+						(await setAutumnSeats(organization.id, quantity));
+					// TODO(2027-01-31): drop the direct Stripe write once every paid org is imported into Autumn.
+					if (!seatsOwnedByAutumn && itemId) {
 						await stripeClient.subscriptions.update(
 							subscription.stripeSubscriptionId,
 							{
@@ -976,7 +965,7 @@ export const auth = betterAuth({
 					const subscription = await db.query.subscriptions.findFirst({
 						where: and(
 							eq(subscriptions.referenceId, organization.id),
-							eq(subscriptions.status, "active"),
+							inArray(subscriptions.status, ACTIVE_SUBSCRIPTION_STATUSES),
 						),
 					});
 
@@ -987,7 +976,7 @@ export const auth = betterAuth({
 					);
 					if (subscription.plan === "enterprise") {
 						if (billingUsesAutumn) {
-							await syncMemberSeats(organization.id, quantity, {
+							await setAutumnSeats(organization.id, quantity, {
 								allowanceOnly: true,
 							});
 						}
@@ -1000,10 +989,11 @@ export const auth = betterAuth({
 					const seat = seatItem(stripeSub);
 					const itemId = seat?.id;
 
-					const seatsSetInAutumn =
+					const seatsOwnedByAutumn =
 						billingUsesAutumn &&
-						(await syncMemberSeats(organization.id, quantity));
-					if (!seatsSetInAutumn && itemId) {
+						(await setAutumnSeats(organization.id, quantity));
+					// TODO(2027-01-31): drop the direct Stripe write once every paid org is imported into Autumn.
+					if (!seatsOwnedByAutumn && itemId) {
 						await stripeClient.subscriptions.update(
 							subscription.stripeSubscriptionId,
 							{

@@ -487,10 +487,6 @@ msgstr "{0}/{totalCount}"
 msgid "{0} options"
 msgstr "{0}選項"
 
-#. placeholder {0}: i18n._(planName)
-msgid "{0} plan"
-msgstr "{0}方案"
-
 #. placeholder {0}: normalizedProjectIds.length
 msgid "{0} projects"
 msgstr "{0}個專案"
@@ -889,6 +885,9 @@ msgstr "{gate}：{statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "每席位每月 {gbHours} 雲端 GB 小時"
 
+msgid "{gbHours} on {name}"
+msgstr "{name} 含 {gbHours}"
+
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {#行已隱藏} other {#行已隱藏}}"
 
@@ -973,11 +972,14 @@ msgstr "{modKey}↵建立"
 msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
 msgstr "按月計費每使用者每月 {monthlyPrice}，按年計費為 {yearlyPrice}。包含雲端工作區、行動版和優先支援。"
 
+msgid "{monthlyPrice} per user/mo. Cloud workspaces, mobile, priority support."
+msgstr "每位使用者每月 {monthlyPrice}。雲端工作區、行動裝置、優先支援。"
+
 msgid "{months}mo ago"
 msgstr "{months}個月前"
 
-msgid "{multiple}x the cloud GB-hours of Pro"
-msgstr "Pro 的 {multiple} 倍雲端 GB 小時"
+msgid "{multiple}x the cloud GB-hours of {basePlan}"
+msgstr "{basePlan} 的 {multiple} 倍雲端 GB 小時"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "你有{myFailedCount}個自動化上次執行失敗"
@@ -1017,6 +1019,12 @@ msgstr "{name} 開始工作"
 
 msgid "{name} stopped"
 msgstr "{name} 已停止"
+
+msgid "{name}: {monthly} per user/month"
+msgstr "{name}：每位使用者每月 {monthly}"
+
+msgid "{name}: {monthly} per user/month, or {yearly} billed yearly"
+msgstr "{name}：每位使用者每月 {monthly}，或按年計費 {yearly}"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {請至少指定一個人員，或選擇{choice}。} sender {請至少指定一個寄件者，或選擇{choice}。} other {請至少指定一個項目，或選擇{choice}。}}"
@@ -1067,6 +1075,9 @@ msgstr "{planLabel} · 加入於{joined}"
 msgid "{planLabel} plan"
 msgstr "{planLabel}方案"
 
+msgid "{planName} plan"
+msgstr "{planName} 方案"
+
 msgid "{plugin} has no OAuth client configured on this deployment yet."
 msgstr "此部署尚未為 {plugin} 設定 OAuth 用戶端。"
 
@@ -1079,6 +1090,9 @@ msgstr "{presetLabel}已重置為預設值"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · 行高{0}"
+
+msgid "{price} per user/month"
+msgstr "每位使用者每月 {price}"
 
 msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
 msgstr "每使用者每月 {price},每席位每月 {gbHours} 雲端 GB 小時"
@@ -3019,9 +3033,6 @@ msgstr "再往後：F5不是近期的主張"
 msgid "Billed monthly"
 msgstr "按月計費"
 
-msgid "Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team."
-msgstr "按月付費時,Pro 為每使用者每月 {monthlyPrice},Team 為 {teamPrice},Ultra 為 {ultraPrice}。按年付費時,Pro 為每使用者每月 {yearlyPrice},Team 為 {teamYearlyPrice},Ultra 為 {ultraYearlyPrice}。依團隊中每個活躍席位收費。"
-
 msgid "Billed per token."
 msgstr "按 token 計費。"
 
@@ -4126,8 +4137,8 @@ msgstr "雲端工作區"
 msgid "Cloud workspaces"
 msgstr "雲端工作區"
 
-msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour."
-msgstr "雲端工作區以 GB 小時計量:機器記憶體乘以執行小時數。8 GB 的機器每小時使用 8 GB 小時。每個席位會將所屬方案的 GB 小時加入團隊共用的同一個額度池:Pro 為 {proGbHours},Team 為 {teamGbHours},Ultra 為 {ultraGbHours}。額度池每月重置,超出部分以每 GB 小時 {overagePrice} 計費。"
+msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan."
+msgstr "雲端工作區以 GB 小時計量：機器記憶體乘以執行時數。8 GB 的機器每小時使用 8 GB 小時。每個席位都會將其方案的 GB 小時加入團隊共用的同一個額度池：{allowances}。額度池每月重設，超出部分依各方案標示的價格以每 GB 小時計費。"
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "雲端工作區會忽略此變數。代理程式改為在「設定 › 代理程式」中登入。"
@@ -4997,6 +5008,9 @@ msgstr "無法載入環境。"
 
 msgid "Could not load image"
 msgstr "無法載入圖片"
+
+msgid "Could not load plans."
+msgstr "無法載入方案。"
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "無法載入外掛。請檢查連線後再試一次。"
@@ -6937,6 +6951,9 @@ msgstr "在你更改之前，所有人都停留在v{sharedVersion}"
 msgid "Everyone with access to this organization."
 msgstr "有權存取此組織的所有人。"
 
+msgid "Everything in {previousPlan}"
+msgstr "包含 {previousPlan} 的所有功能"
+
 msgid "Everything in Free"
 msgstr "免費版的全部內容"
 
@@ -6945,9 +6962,6 @@ msgstr "Pro的全部內容"
 
 msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
 msgstr "包含Pro的全部內容，另加SSO與SAML、SCIM帳號開通、IP限制、審計日誌、定製SLA、專屬支援和定製合約。價格按你的組織量身定製。聯絡我們，一起把範圍定下來。"
-
-msgid "Everything in Team"
-msgstr "Team 的全部內容"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "一切都能指令碼化。用CLI建立工作區和代理程式，用SDK把Superset接進CI，或者讓你的代理程式通過MCP來驅動它。"
@@ -7936,6 +7950,9 @@ msgstr "面向需要更多能力的團隊"
 msgid "For teams that run agents every day"
 msgstr "適合每天執行代理程式的團隊"
 
+msgid "For teams that run more agents in the cloud"
+msgstr "適合在雲端執行更多代理程式的團隊"
+
 msgid "Force merge"
 msgstr "強制合併"
 
@@ -8122,6 +8139,9 @@ msgstr "正在生成..."
 msgid "Generating…"
 msgstr "正在產生…"
 
+msgid "Get {plan}"
+msgstr "取得 {plan}"
+
 msgid "Get an API key"
 msgstr "取得API金鑰"
 
@@ -8140,9 +8160,6 @@ msgstr "把Superset用得更好"
 msgid "Get notified when Superset is available on Windows & Linux."
 msgstr "Superset支援Windows和Linux時通知我。"
 
-msgid "Get Pro"
-msgstr "取得 Pro"
-
 msgid "Get started"
 msgstr "開始使用"
 
@@ -8152,17 +8169,11 @@ msgstr "在Mac上獲取Superset"
 msgid "Get Superset Pro"
 msgstr "獲取Superset Pro"
 
-msgid "Get Team"
-msgstr "取得 Team"
-
 msgid "Get the best out of Pro"
 msgstr "充分運用 Pro"
 
 msgid "Get the iPhone and iPad app"
 msgstr "取得 iPhone 和 iPad 應用程式"
-
-msgid "Get Ultra"
-msgstr "取得 Ultra"
 
 msgid "Gets an invite to join {organizationName}"
 msgstr "將收到加入 {organizationName} 的邀請"
@@ -12583,6 +12594,9 @@ msgstr "分頁"
 msgid "Pagination"
 msgstr "分頁"
 
+msgid "Paid plans are priced per user per month and billed for each active seat on your team. {planPrices}."
+msgstr "付費方案依每位使用者每月計價，並依團隊中的每個使用中席位計費。{planPrices}。"
+
 msgid "Paid work trial"
 msgstr "有薪工作試用"
 
@@ -15130,6 +15144,12 @@ msgstr "正在搜尋..."
 msgid "Searching…"
 msgstr "搜尋中…"
 
+#. placeholder {0}: format(new Date(periodEnd), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(periodEnd)
+#. placeholder {0}: formatLocaleDate(new Date(seatPeriodEnd), { month: "long", day: "numeric", year: "numeric" })
+msgid "Seats removed mid-cycle stay active until {0}."
+msgstr "週期中途移除的席位在 {0} 前仍然有效。"
+
 msgid "Secondary"
 msgstr "次要"
 
@@ -15943,6 +15963,9 @@ msgstr "適合每支團隊的簡單定價"
 
 msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
 msgstr "適合各種團隊的簡單定價。個人免費，團隊每位使用者每月 {yearlyPrice}，企業可客製。使用 {companyName} 執行 100+ 個平行編碼代理。"
+
+msgid "Simple pricing for every team. Free for individuals, per-user plans for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "適合每個團隊的簡單定價。個人免費，團隊依使用者計費，企業客製化。使用 {companyName} 平行執行 100 多個程式設計代理程式。"
 
 msgid "Simulate update: downloading"
 msgstr "模擬更新：下載中"
@@ -17117,10 +17140,6 @@ msgstr "團隊"
 
 msgid "Team"
 msgstr "團隊"
-
-msgctxt "plan name"
-msgid "Team"
-msgstr "Team"
 
 msgid "Team activity feed"
 msgstr "團隊動態"
@@ -18445,10 +18464,6 @@ msgstr "V2終端面板中使用的排版和游標行為。"
 msgid "Typography used in V2 editors and diff views."
 msgstr "V2編輯器和差異檢視中使用的排版。"
 
-msgctxt "plan name"
-msgid "Ultra"
-msgstr "Ultra"
-
 msgid "Unable to check for updates. Please check your internet connection."
 msgstr "無法檢查更新。請檢查你的網路連線。"
 
@@ -18783,9 +18798,8 @@ msgstr "升級一個相依性，並修好被它弄壞的地方…"
 msgid "Upgrade on {0}"
 msgstr "在 {0} 升級"
 
-#. placeholder {0}: i18n._(plan.name)
-msgid "Upgrade to {0}"
-msgstr "升級到{0}"
+msgid "Upgrade to {planName}"
+msgstr "升級至 {planName}"
 
 msgid "Upgrade to Pro"
 msgstr "升級至 Pro"
@@ -19931,6 +19945,12 @@ msgstr "你的組織已達到雲端用量上限。除非提高上限，此工作
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "你自己的帳戶。組織的整合讓 Superset 存取其工具；連結你自己的帳戶後，Superset 為你完成的工作會以你的名義顯示。"
 
+msgid "Your plan does not include cloud environments."
+msgstr "你的方案不包含雲端環境。"
+
+msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
+msgstr "你的方案不包含雲端環境。請在設定的帳單中升級後再建立。"
+
 msgid "Your rank"
 msgstr "你的排名"
 
@@ -19950,8 +19970,8 @@ msgstr "你的Slack帳戶已關聯到Superset。你可以關閉這個分頁並�
 msgid "Your stats, settled in mortal combat"
 msgstr "用你的數據，在生死對決中一決高下"
 
-msgid "Your subscription has been activated. You can now access all Pro features."
-msgstr "你的訂閱已啟用。現在可以使用全部Pro功能。"
+msgid "Your subscription is active. Your new plan's features are ready to use."
+msgstr "你的訂閱已生效。新方案的功能現在可以使用。"
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "你的訂閱將相應調整。"

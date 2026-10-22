@@ -8,13 +8,14 @@ import {
 	formatNumber,
 } from "@superset/i18n/format";
 import {
+	familyForPlan,
 	isPaymentFailingStatus,
+	offersYearlyDiscount,
 	PLAN_PRICE_CURRENCY,
+	type PlanFamily,
+	planForInterval,
 	resolveCurrentPlan,
-	SELF_SERVE_PLAN_IDS,
-	type SelfServePlanId,
 	seatPricePerMonth,
-	selfServePlanFromAutumnPlanId,
 } from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 import { Button } from "@superset/ui/button";
@@ -35,7 +36,7 @@ interface BillingSettingsProps {
 	 * organization, and the two sessions do not share that choice.
 	 */
 	organizationId?: string;
-	selectedPlan?: SelfServePlanId;
+	selectedPlan?: string;
 	yearly?: boolean;
 }
 
@@ -98,17 +99,20 @@ export function BillingSettings({
 	});
 	const cancelAt = activePlan?.cancelAt;
 	const usesAutumn = activePlan?.billingProvider === "autumn";
-	const selfServePlan =
-		plan === "pro"
-			? (selfServePlanFromAutumnPlanId(activePlan?.autumnPlanId) ?? "pro")
-			: null;
-	const catalog = usePlanCatalog({
+	const catalogQuery = usePlanCatalog({
 		organizationId: activeOrganizationId,
 		enabled: usesAutumn,
 	});
-	const offeredPlans: readonly SelfServePlanId[] = usesAutumn
-		? SELF_SERVE_PLAN_IDS
-		: ["pro"];
+	const catalog = catalogQuery.data ?? [];
+	const currentFamily =
+		plan === "pro"
+			? (familyForPlan(catalog, activePlan?.autumnPlanId)?.family ?? null)
+			: null;
+	const subscriptionInterval =
+		activePlan?.billingInterval === "year" ||
+		activePlan?.billingInterval === "month"
+			? activePlan.billingInterval
+			: null;
 	const periodEnd = activePlan?.periodEnd;
 	const isPaymentFailing = isPaymentFailingStatus(activePlan?.status);
 
@@ -133,11 +137,12 @@ export function BillingSettings({
 		invalidatePlan,
 	});
 
-	const handleUpgrade = async (target: SelfServePlanId) => {
-		if (memberCount === undefined) return;
+	const handleUpgrade = async (family: PlanFamily) => {
+		const target = planForInterval(family, isYearly);
+		if (memberCount === undefined || !target) return;
 		await upgrade({
-			plan: target,
-			annual: isYearly,
+			planId: target.id,
+			annual: target.interval === "year",
 			seats: memberCount,
 		});
 	};
@@ -150,13 +155,8 @@ export function BillingSettings({
 		);
 	}
 
-	const planNames: Record<SelfServePlanId, string> = {
-		pro: t({ message: "Pro" }),
-		team: t({ message: "Team", context: "plan name" }),
-		ultra: t({ message: "Ultra", context: "plan name" }),
-	};
-	const planLabel = selfServePlan
-		? planNames[selfServePlan]
+	const planLabel = currentFamily
+		? currentFamily.name
 		: {
 				free: t({ message: "Free" }),
 				pro: t({ message: "Pro" }),
@@ -173,6 +173,12 @@ export function BillingSettings({
 				: plan === "pro" && periodEnd
 					? t({ message: `Renews ${formatDate(periodEnd)}.` })
 					: null;
+	const seatHint =
+		plan === "pro" && !cancelAt && !isPaymentFailing && periodEnd
+			? t({
+					message: `Seats removed mid-cycle stay active until ${formatDate(periodEnd)}.`,
+				})
+			: null;
 
 	return (
 		<div className="mx-auto max-w-2xl space-y-8">
@@ -216,6 +222,9 @@ export function BillingSettings({
 					{planHint && (
 						<div className="mt-1 text-sm text-muted-foreground">{planHint}</div>
 					)}
+					{seatHint && (
+						<div className="mt-1 text-sm text-muted-foreground">{seatHint}</div>
+					)}
 				</div>
 				{plan === "pro" && isOwner && (
 					<div className="shrink-0">
@@ -253,103 +262,122 @@ export function BillingSettings({
 
 			<CloudUsageCard />
 
-			{(plan === "free" || (selfServePlan && usesAutumn && !cancelAt)) && (
-				<div className="space-y-4 border-t pt-6">
-					<div>
-						<div className="text-sm font-medium">
-							{plan === "free" ? (
-								<Trans>Upgrade your plan</Trans>
-							) : (
-								<Trans>Change plan</Trans>
-							)}
+			{(plan === "free" || (plan === "pro" && usesAutumn && !cancelAt)) &&
+				(catalog.length > 0 || catalogQuery.isError) && (
+					<div className="space-y-4 border-t pt-6">
+						<div>
+							<div className="text-sm font-medium">
+								{plan === "free" ? (
+									<Trans>Upgrade your plan</Trans>
+								) : (
+									<Trans>Change plan</Trans>
+								)}
+							</div>
+							<div className="mt-1 text-sm text-muted-foreground">
+								<Trans>
+									Every paid plan includes Superset Mobile, cloud workspaces,
+									automations, and priority support. Your team shares one pool
+									of cloud GB-hours.
+								</Trans>
+							</div>
 						</div>
-						<div className="mt-1 text-sm text-muted-foreground">
-							<Trans>
-								Every paid plan includes Superset Mobile, cloud workspaces,
-								automations, and priority support. Your team shares one pool of
-								cloud GB-hours.
-							</Trans>
+						{catalogQuery.isError && (
+							<div className="flex items-center gap-3 text-sm text-muted-foreground">
+								<Trans>Could not load plans.</Trans>
+								<Button
+									size="sm"
+									variant="outline"
+									onClick={() => catalogQuery.refetch()}
+								>
+									<Trans>Retry</Trans>
+								</Button>
+							</div>
+						)}
+						{catalog.some(offersYearlyDiscount) && (
+							<div className="flex items-center gap-2 text-sm text-muted-foreground">
+								<Switch
+									checked={isYearly}
+									onCheckedChange={setIsYearly}
+									aria-label={t({ message: "Billed yearly" })}
+								/>
+								{isYearly ? (
+									<Trans>Billed yearly</Trans>
+								) : (
+									<Trans>Billed monthly</Trans>
+								)}
+							</div>
+						)}
+						<div className="divide-y rounded-md border">
+							{catalog.map((family) => {
+								const price = formatCurrency(
+									seatPricePerMonth(family, isYearly),
+									PLAN_PRICE_CURRENCY,
+									{ minimumFractionDigits: 0 },
+								);
+								const gbHours = family.gbMinutesPerSeat
+									? formatNumber(family.gbMinutesPerSeat / 60)
+									: null;
+								const isCurrent =
+									family.family === currentFamily?.family &&
+									(subscriptionInterval === null ||
+										planForInterval(family, isYearly)?.interval ===
+											subscriptionInterval);
+								return (
+									<div
+										key={family.family}
+										className={cn(
+											"flex items-center justify-between gap-4 p-4",
+											family.family === selectedPlan &&
+												!isCurrent &&
+												"bg-accent/60 ring-2 ring-inset ring-primary",
+										)}
+									>
+										<div className="min-w-0">
+											<div className="text-sm font-medium">{family.name}</div>
+											<div className="mt-1 text-sm text-muted-foreground">
+												{gbHours ? (
+													<Trans>
+														{price} per user/month, {gbHours} cloud GB-hours per
+														seat each month
+													</Trans>
+												) : (
+													<Trans>{price} per user/month</Trans>
+												)}
+											</div>
+										</div>
+										{isOwner && (
+											<Button
+												size="sm"
+												className="shrink-0"
+												variant={isCurrent ? "secondary" : "default"}
+												disabled={
+													isCurrent || isUpgrading || memberCount === undefined
+												}
+												onClick={() => handleUpgrade(family)}
+											>
+												{isCurrent ? (
+													<Trans>Current plan</Trans>
+												) : plan === "free" ? (
+													<Trans>Upgrade</Trans>
+												) : (
+													<Trans>Switch plan</Trans>
+												)}
+											</Button>
+										)}
+									</div>
+								);
+							})}
 						</div>
-					</div>
-					<div className="flex items-center gap-2 text-sm text-muted-foreground">
-						<Switch
-							checked={isYearly}
-							onCheckedChange={setIsYearly}
-							aria-label={t({ message: "Billed yearly" })}
-						/>
-						{isYearly ? (
-							<Trans>Billed yearly</Trans>
-						) : (
-							<Trans>Billed monthly</Trans>
+						{!isOwner && (
+							<p className="text-sm text-muted-foreground">
+								<Trans>
+									Only an organization owner can change the plan. Ask yours to
+									upgrade.
+								</Trans>
+							</p>
 						)}
 					</div>
-					<div className="divide-y rounded-md border">
-						{offeredPlans.map((offeredPlan) => {
-							const price = formatCurrency(
-								seatPricePerMonth(offeredPlan, { annual: isYearly }, catalog),
-								PLAN_PRICE_CURRENCY,
-								{ minimumFractionDigits: 0 },
-							);
-							const gbHours = formatNumber(
-								catalog[offeredPlan].gbMinutesPerSeat / 60,
-							);
-							const isCurrent =
-								offeredPlan === selfServePlan &&
-								isYearly === (activePlan?.billingInterval === "year");
-							return (
-								<div
-									key={offeredPlan}
-									className={cn(
-										"flex items-center justify-between gap-4 p-4",
-										offeredPlan === selectedPlan &&
-											!isCurrent &&
-											"bg-accent/40",
-									)}
-								>
-									<div className="min-w-0">
-										<div className="text-sm font-medium">
-											{planNames[offeredPlan]}
-										</div>
-										<div className="mt-1 text-sm text-muted-foreground">
-											<Trans>
-												{price} per user/month, {gbHours} cloud GB-hours per
-												seat each month
-											</Trans>
-										</div>
-									</div>
-									{isOwner && (
-										<Button
-											size="sm"
-											className="shrink-0"
-											variant={isCurrent ? "secondary" : "default"}
-											disabled={
-												isCurrent || isUpgrading || memberCount === undefined
-											}
-											onClick={() => handleUpgrade(offeredPlan)}
-										>
-											{isCurrent ? (
-												<Trans>Current plan</Trans>
-											) : plan === "free" ? (
-												<Trans>Upgrade</Trans>
-											) : (
-												<Trans>Switch plan</Trans>
-											)}
-										</Button>
-									)}
-								</div>
-							);
-						})}
-					</div>
-					{!isOwner && (
-						<p className="text-sm text-muted-foreground">
-							<Trans>
-								Only an organization owner can change the plan. Ask yours to
-								upgrade.
-							</Trans>
-						</p>
-					)}
-				</div>
-			)}
+				)}
 
 			{plan === "pro" && isOwner && (
 				<div className="flex items-center justify-between gap-8 border-t pt-6">
