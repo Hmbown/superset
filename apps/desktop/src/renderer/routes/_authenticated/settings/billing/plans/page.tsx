@@ -71,6 +71,7 @@ type ComparisonRow = {
 	href?: string;
 	values: [free: ComparisonValue, paid: ComparisonValue, enterprise: ComparisonValue];
 	cloudGbHours?: boolean;
+	cloudPack?: boolean;
 	badge?: { label: MessageDescriptor; variant: "default" | "secondary" };
 };
 
@@ -192,6 +193,13 @@ const COMPARISON_SECTIONS: ComparisonSection[] = [
 				}),
 				values: [null, null, msg({ message: "Custom" })],
 				cloudGbHours: true,
+			},
+			{
+				label: msg({
+					message: "Extra GB-hours, bought as needed",
+				}),
+				values: [null, null, msg({ message: "Custom" })],
+				cloudPack: true,
 			},
 		],
 	},
@@ -412,6 +420,14 @@ function PlansPage() {
 		if (row.cloudGbHours && plan.family) {
 			const gbMinutes = plan.family.gbMinutesPerSeat;
 			return gbMinutes ? formatNumber(gbMinutes / 60) : null;
+		}
+		if (row.cloudPack && plan.family) {
+			const pack = plan.family.pack;
+			return pack
+				? t({
+						message: `${formatNumber(pack.gbMinutes / 60)} GB-hours for ${formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })}`,
+					})
+				: null;
 		}
 		if (plan.id === FREE_CARD.id) return row.values[0];
 		if (plan.id === ENTERPRISE_CARD.id) return row.values[2];

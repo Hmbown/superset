@@ -80,6 +80,7 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 			lapsed: false,
 			paymentState: { kind: "ok" },
 			cloudUsage: null,
+			cloudAccess: false,
 			gatedMachineSizes: [],
 			environmentLimit: null,
 		});
@@ -94,6 +95,21 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 			NOW,
 		);
 		expect(billing.billingInterval).toBe("year");
+	});
+
+	test("a plan labelled for cloud turns on cloud access", () => {
+		const billing = (metadata: Record<string, unknown>) =>
+			billingFromCustomer(
+				customer({
+					flags: pro,
+					subscription: {
+						plan: { ...seatPricedPlan("month"), metadata } as never,
+					},
+				}),
+				NOW,
+			).cloudAccess;
+		expect(billing({ cloud_access: true })).toBe(true);
+		expect(billing({})).toBe(false);
 	});
 
 	test("a yearly seat license reads as yearly and renews on its anniversary", () => {

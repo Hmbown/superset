@@ -1,5 +1,6 @@
 import { db } from "@superset/db/client";
 import { members, subscriptions } from "@superset/db/schema";
+import { gbHourPack } from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 import { AutumnError } from "autumn-js";
 import type { BetterAuthPlugin } from "better-auth";
@@ -14,8 +15,13 @@ import { z } from "zod";
 import { autumnClient, billingUsesAutumn } from "../../../autumn";
 import { countBillableSeats } from "../../../utils/billing";
 import { LEGACY_CLIENT_PLAN_IDS } from "../legacy/plan-ids";
-import { catalogAutumnPlans, isSelfServePlan } from "./catalog";
-import { ensureAutumnCustomer, paidAutumnPlanId } from "./customer";
+import { catalogAutumnPlans, gbHourPackFor, isSelfServePlan } from "./catalog";
+import {
+	ensureAutumnCustomer,
+	getAutumnCustomer,
+	paidAutumnPlanId,
+} from "./customer";
+import { paidPlanIdFromFlags } from "./entitlements";
 import {
 	ACTIVE_CPU_MINUTES_FEATURE_ID,
 	BOX_GB_MINUTES_FEATURE_ID,
@@ -24,6 +30,7 @@ import { invalidateOrganizationBilling } from "./plan-state";
 import { syncOrganizationSubscription } from "./projection";
 import {
 	ADMIN_EXPAND,
+	AUTO_TOPUP_MONTHLY_LIMIT,
 	type BillingRole,
 	checkoutSessionParams,
 	OWNER_EXPAND,
@@ -80,6 +87,22 @@ async function refuseEnterprise(planId: string): Promise<void> {
 			message: `Enterprise subscriptions are managed by admins. Contact ${COMPANY.SUPPORT_EMAIL}.`,
 		});
 	}
+}
+
+async function currentPack(organizationId: string) {
+	const customer = await getAutumnCustomer(organizationId);
+	const planId = paidPlanIdFromFlags(customer.flags);
+	const subscribed = customer.subscriptions.find(
+		(subscription) =>
+			subscription.planId === planId && subscription.status !== "scheduled",
+	)?.plan;
+	const pack = subscribed ? gbHourPack(subscribed) : null;
+	if (!planId || !pack) {
+		throw new APIError("BAD_REQUEST", {
+			message: "This plan does not sell extra cloud GB-hours.",
+		});
+	}
+	return { planId, pack };
 }
 
 async function afterPlanChange(organizationId: string): Promise<void> {
@@ -177,6 +200,68 @@ export const autumnBillingRoutes = {
 				});
 				if (!result.paymentUrl) await afterPlanChange(caller.organizationId);
 				return ctx.json(result);
+			},
+		),
+		autumnBuyGbHours: createAuthEndpoint(
+			"/autumn/buyGbHours",
+			{
+				method: "POST",
+				body: z.object({
+					...organizationBody,
+					packs: z.number().int().min(1).max(20),
+				}),
+				use: [sessionMiddleware],
+			},
+			async (ctx) => {
+				const caller = await billingCaller(ctx, "buyGbHours");
+				const { planId, pack } = await currentPack(caller.organizationId);
+				const result = await autumnClient.billing.update({
+					customerId: caller.organizationId,
+					planId,
+					featureQuantities: [
+						{
+							featureId: BOX_GB_MINUTES_FEATURE_ID,
+							quantity: ctx.body.packs * pack.gbMinutes,
+						},
+					],
+				});
+				await invalidateOrganizationBilling(caller.organizationId);
+				return ctx.json(result);
+			},
+		),
+		autumnSetAutoTopup: createAuthEndpoint(
+			"/autumn/setAutoTopup",
+			{
+				method: "POST",
+				body: z.object({
+					...organizationBody,
+					enabled: z.boolean(),
+					thresholdGbHours: z.number().int().min(0).max(100_000),
+				}),
+				use: [sessionMiddleware],
+			},
+			async (ctx) => {
+				const caller = await billingCaller(ctx, "setAutoTopup");
+				const { pack } = await currentPack(caller.organizationId);
+				const result = await autumnClient.customers.update({
+					customerId: caller.organizationId,
+					billingControls: {
+						autoTopups: [
+							{
+								featureId: BOX_GB_MINUTES_FEATURE_ID,
+								enabled: ctx.body.enabled,
+								threshold: ctx.body.thresholdGbHours * 60,
+								quantity: pack.gbMinutes,
+								purchaseLimit: {
+									interval: "month",
+									limit: AUTO_TOPUP_MONTHLY_LIMIT,
+								},
+							},
+						],
+					},
+				});
+				await invalidateOrganizationBilling(caller.organizationId);
+				return ctx.json({ autoTopups: result.billingControls.autoTopups });
 			},
 		),
 		autumnPreviewAttach: createAuthEndpoint(

@@ -19,6 +19,9 @@ import {
 	seatPrice,
 } from "@/app/[lang]/pricing/utils/planDisplay";
 import {
+	faqShown,
+	faqValues,
+	featureShown,
 	featureValues,
 	planPriceValues,
 } from "@/app/[lang]/pricing/utils/planPriceValues";
@@ -92,10 +95,12 @@ function pricingPage(i18n: I18n, catalog: PlanFamily[]): MarkdownPage {
 			text(i18n, tier.description),
 			"",
 			`- **Price**: ${price}`,
-			...tier.features.map(
-				(feature) =>
-					`- ${i18n._({ ...feature.label, values: featureValues(set) })}`,
-			),
+			...tier.features
+				.filter((feature) => featureShown(feature, set))
+				.map(
+					(feature) =>
+						`- ${i18n._({ ...feature.label, values: featureValues(set) })}`,
+				),
 			`- [${i18n._({ ...tier.cta.label, values: { plan: tierName(tier) } })}](${tier.price.kind === "seat" ? checkoutHref(CANONICAL_URLS.APP, tier.id, Boolean(set?.hasYearlyDiscount)) : tier.cta.href.startsWith("/") ? baseUrl + tier.cta.href : tier.cta.href})`,
 			"",
 		];
@@ -112,17 +117,12 @@ function pricingPage(i18n: I18n, catalog: PlanFamily[]): MarkdownPage {
 		),
 		"",
 	]);
-	const faq = PRICING_FAQ_ITEMS.flatMap((item) => [
+	const faq = PRICING_FAQ_ITEMS.filter((item) =>
+		faqShown(item, prices),
+	).flatMap((item) => [
 		`### ${text(i18n, item.question)}`,
 		"",
-		i18n._({
-			...item.answer,
-			values: {
-				planPrices: prices.planPrices,
-				allowances: prices.allowances,
-				overagePrice: prices.overagePrice,
-			},
-		}),
+		i18n._({ ...item.answer, values: faqValues(prices) }),
 		"",
 	]);
 	return {

@@ -1,4 +1,8 @@
-import type { MachineSize, PlanTier } from "@superset/shared/billing";
+import {
+	gbHourPack,
+	type MachineSize,
+	type PlanTier,
+} from "@superset/shared/billing";
 import { type CloudUsage, cloudUsageFromBalances } from "./cloud-usage";
 import type { getAutumnCustomer } from "./customer";
 import {
@@ -34,6 +38,7 @@ export interface OrganizationBilling {
 	lapsed: boolean;
 	paymentState: PaymentState;
 	cloudUsage: CloudUsage | null;
+	cloudAccess: boolean;
 	gatedMachineSizes: MachineSize[];
 	environmentLimit: EnvironmentLimit;
 }
@@ -42,6 +47,9 @@ type AutumnCustomer = Awaited<ReturnType<typeof getAutumnCustomer>>;
 
 const UNPAID_INVOICE = new Set(["open", "uncollectible"]);
 
+/** Autumn plan metadata that turns on cloud workspaces for an organization on the plan. */
+export const CLOUD_ACCESS_METADATA_KEY = "cloud_access";
+
 function iso(ms: number | null | undefined): string | null {
 	return ms ? new Date(ms).toISOString() : null;
 }
@@ -49,7 +57,7 @@ function iso(ms: number | null | undefined): string | null {
 export function billingFromCustomer(
 	customer: Pick<
 		AutumnCustomer,
-		"flags" | "subscriptions" | "invoices" | "balances"
+		"flags" | "subscriptions" | "invoices" | "balances" | "billingControls"
 	>,
 	now: number,
 	seatInterval: string | null = null,
@@ -110,7 +118,12 @@ export function billingFromCustomer(
 			seatInterval,
 		lapsed,
 		paymentState,
-		cloudUsage: cloudUsageFromBalances(customer.balances),
+		cloudUsage: cloudUsageFromBalances(
+			customer.balances,
+			customer.billingControls,
+			paid?.plan ? gbHourPack(paid.plan) : null,
+		),
+		cloudAccess: paid?.plan?.metadata?.[CLOUD_ACCESS_METADATA_KEY] === true,
 		gatedMachineSizes: gatedMachineSizesFromFlags(customer.flags),
 		environmentLimit:
 			environmentLimitFromBalances(customer.balances) ??

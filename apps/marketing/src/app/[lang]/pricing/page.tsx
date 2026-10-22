@@ -12,7 +12,7 @@ import { PricingTiers } from "./components/PricingTiers";
 import { TrustStrip } from "./components/TrustStrip";
 import { PRICING_FAQ_ITEMS } from "./constants";
 import { fetchPlanCatalog } from "./utils/fetchPlanCatalog";
-import { planPriceValues } from "./utils/planPriceValues";
+import { faqShown, faqValues, planPriceValues } from "./utils/planPriceValues";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const lang = await initServerI18n();
@@ -50,16 +50,12 @@ export default async function PricingPage() {
 	// JSON-LD is machine-facing, so it gets rendered strings rather than the
 	// message descriptors the UI components resolve through Lingui.
 	const catalog = await fetchPlanCatalog();
-	const { planPrices, allowances, overagePrice } = planPriceValues(
-		catalog,
-		i18n,
-	);
-	const faqJsonLdItems = PRICING_FAQ_ITEMS.map((item) => ({
+	const priceValues = planPriceValues(catalog, i18n);
+	const faqJsonLdItems = PRICING_FAQ_ITEMS.filter((item) =>
+		faqShown(item, priceValues),
+	).map((item) => ({
 		question: i18n._(item.question),
-		answer: i18n._({
-			...item.answer,
-			values: { planPrices, allowances, overagePrice },
-		}),
+		answer: i18n._({ ...item.answer, values: faqValues(priceValues) }),
 	}));
 
 	return (

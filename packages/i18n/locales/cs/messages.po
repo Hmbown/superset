@@ -409,6 +409,11 @@ msgstr "{0} končící na {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "V {where} už existuje {0} souborů. Chcete je nahradit?"
 
+#. placeholder {0}: formatNumber(pack.gbMinutes / 60)
+#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY)
+msgid "{0} GB-hours for {1}"
+msgstr "{0} GB-hodin za {1}"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} nainstalováno"
@@ -885,6 +890,9 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "{gbHours} cloudových GB-hodin na místo měsíčně"
 
+msgid "{gbHours} GB-hours for {price}"
+msgstr "{gbHours} GB-hodin za {price}"
+
 msgid "{gbHours} on {name}"
 msgstr "{gbHours} v plánu {name}"
 
@@ -969,11 +977,11 @@ msgstr "před {minutes} m"
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵ pro vytvoření"
 
-msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
-msgstr "{monthlyPrice} na uživatele a měsíc při měsíční fakturaci, nebo {yearlyPrice} při roční fakturaci. Cloudové pracovní prostory, mobil, prioritní podpora."
+msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Mobile, automations, priority support."
+msgstr "{monthlyPrice} za uživatele/měs. při měsíční fakturaci, nebo {yearlyPrice} při roční fakturaci. Mobilní aplikace, automatizace, prioritní podpora."
 
-msgid "{monthlyPrice} per user/mo. Cloud workspaces, mobile, priority support."
-msgstr "{monthlyPrice} za uživatele/měs. Cloudové pracovní prostory, mobilní aplikace, prioritní podpora."
+msgid "{monthlyPrice} per user/mo. Mobile, automations, priority support."
+msgstr "{monthlyPrice} za uživatele/měs. Mobilní aplikace, automatizace, prioritní podpora."
 
 msgid "{months}mo ago"
 msgstr "před {months} měs."
@@ -1034,6 +1042,9 @@ msgstr "{noun, select, repository {Zadejte alespoň jeden repozitář.} channel 
 
 msgid "{openCount} open"
 msgstr "{openCount} otevřených"
+
+msgid "{packGbHours} GB-hours for {packPrice}. Used after the monthly pool, and never expire."
+msgstr "{packGbHours} GB-hodin za {packPrice}. Čerpají se po měsíčním fondu a nikdy nevyprší."
 
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} může vaším jménem číst a měnit data ve vašem účtu {pluginLabel}, a to i v budoucích verzích této stránky. Co načte, může odeslat na jiné weby. Povolte jen stránky, kterým důvěřujete."
@@ -1879,6 +1890,9 @@ msgstr "Přidejte na toto zařízení vlastního terminálového agenta."
 
 msgid "Added {added} files to {where}"
 msgstr "Přidáno {added} souborů do {where}"
+
+msgid "Added {buyGbHours} GB-hours."
+msgstr "Přidáno {buyGbHours} GB-hodin."
 
 msgid "Added 1 file to {where}"
 msgstr "Přidán 1 soubor do {where}"
@@ -2814,6 +2828,9 @@ msgstr "Automatický režim se řídí jazykem systému. Později to můžete zm
 msgid "Auto Save"
 msgstr "Automatické ukládání"
 
+msgid "Auto top-up"
+msgstr "Automatické dobití"
+
 msgid "auto-generated"
 msgstr "automaticky"
 
@@ -3115,6 +3132,9 @@ msgstr "Vypůjčeno z toho, jak se známkují samořídící auta, a použito na
 msgid "Bottom drawer, swipe-friendly on touch devices."
 msgstr "Spodní drawer, na dotykových zařízeních ovladatelný přejetím prstem."
 
+msgid "Bought GB-hours left: {prepaid}"
+msgstr "Zbývající zakoupené GB-hodiny: {prepaid}"
+
 msgid "Box"
 msgstr "Box"
 
@@ -3317,6 +3337,15 @@ msgstr "Mačkač tlačítek"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "Tlačítka, přepínače a klávesové prvky"
 
+msgid "Buy extra GB-hours"
+msgstr "Koupit další GB-hodiny"
+
+msgid "Buy for {buyPrice}"
+msgstr "Koupit za {buyPrice}"
+
+msgid "Buys {packGbHours} GB-hours for {packPrice} when fewer than this many GB-hours remain."
+msgstr "Koupí {packGbHours} GB-hodin za {packPrice}, když zbývá méně než tento počet GB-hodin."
+
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "od {0}"
@@ -3382,6 +3411,9 @@ msgstr "Fotoaparát není dostupný"
 
 msgid "Can comment"
 msgstr "Může komentovat"
+
+msgid "Can I buy more cloud GB-hours?"
+msgstr "Mohu si koupit další cloudové GB-hodiny?"
 
 msgid "Can I create automations from a script?"
 msgstr "Můžu vytvářet automatizace ze skriptu?"
@@ -6918,8 +6950,8 @@ msgstr "Každou minutu"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Všechny cíle táhnou k dalšímu stupni. Měřeno za posledních 30 dní."
 
-msgid "Every paid plan includes Superset Mobile, cloud workspaces, automations, and priority support. Your team shares one pool of cloud GB-hours."
-msgstr "Každý placený tarif zahrnuje Superset Mobile, cloudové pracovní prostory, automatizace a prioritní podporu. Váš tým sdílí jeden fond cloudových GB-hodin."
+msgid "Every paid plan includes Superset Mobile, automations, and priority support. Plans with cloud workspaces give your team one shared pool of GB-hours."
+msgstr "Každý placený plán zahrnuje Superset Mobile, automatizace a prioritní podporu. Plány s cloudovými pracovními prostory dávají týmu jeden sdílený fond GB-hodin."
 
 msgid "Every publish is a version"
 msgstr "Každé zveřejnění je verze"
@@ -7082,6 +7114,12 @@ msgstr "Externí editor"
 
 msgid "extra ${used} of ${limit}"
 msgstr "navíc {used} $ z {limit} $"
+
+msgid "Extra GB-hours, bought as needed"
+msgstr "Další GB-hodiny, kupované podle potřeby"
+
+msgid "Extra GB-hours: {pack}, never expire"
+msgstr "Další GB-hodiny: {pack}, nikdy nevyprší"
 
 msgid "Extra high"
 msgstr "Velmi vysoké"
@@ -12539,6 +12577,9 @@ msgstr "packages/ui · registr komponent"
 
 msgid "packages/ui/src/components/ui/kbd.tsx"
 msgstr "packages/ui/src/components/ui/kbd.tsx"
+
+msgid "Packs"
+msgstr "Balíčky"
 
 msgid "Page"
 msgstr "Stránka"
@@ -18095,6 +18136,9 @@ msgstr "Vlákno nenalezeno"
 msgid "Three steps · touches packages/ui and apps/desktop"
 msgstr "Tři kroky · dotýká se packages/ui a apps/desktop"
 
+msgid "Threshold"
+msgstr "Práh"
+
 msgid "Ticket to production under one day, median"
 msgstr "Od ticketu do produkce pod jeden den, medián"
 
@@ -19735,6 +19779,9 @@ msgstr "Ano. Přihlaste se na pozici, která vám nejlépe sedí, a napište ná
 
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "Ano. Free pokrývá jednotlivce s 1 uživatelem, lokální pracovní prostory, desktopovou aplikaci a CLI. Bez platební karty."
+
+msgid "Yes. On plans with cloud workspaces, owners can buy {packGbHours} GB-hours for {packPrice} in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "Ano. V plánech s cloudovými pracovními prostory mohou vlastníci koupit {packGbHours} GB-hodin za {packPrice} v Nastavení, Fakturace. Zakoupené GB-hodiny se čerpají po měsíčním fondu a nikdy nevyprší, a automatické dobití může dokoupit další, když docházejí."
 
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "Ano. Superset prošel auditem SOC 2 Type II u nezávislého auditora, který pokrývá naše bezpečnostní kontroly v provozu v čase. Vyžádejte si zprávu a projděte si dokumentaci k bezpečnosti na trust.superset.sh."

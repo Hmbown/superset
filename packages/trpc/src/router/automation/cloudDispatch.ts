@@ -233,6 +233,7 @@ async function assertOwnerMayUseCloud(
 	const { enabled } = await cloudAccess({
 		userId: automation.ownerUserId,
 		session: null,
+		activeOrganizationId: automation.organizationId,
 	});
 	if (enabled === undefined) {
 		throw new RunFailure("could not check the owner's cloud access", null);

@@ -409,6 +409,11 @@ msgstr "{0} kết thúc bằng {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{0} tệp đã tồn tại trong {where}. Bạn có muốn thay thế chúng không?"
 
+#. placeholder {0}: formatNumber(pack.gbMinutes / 60)
+#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY)
+msgid "{0} GB-hours for {1}"
+msgstr "{0} GB-giờ với giá {1}"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "Đã cài {0}"
@@ -885,6 +890,9 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "{gbHours} GB-giờ đám mây cho mỗi người dùng mỗi tháng"
 
+msgid "{gbHours} GB-hours for {price}"
+msgstr "{gbHours} GB-giờ với giá {price}"
+
 msgid "{gbHours} on {name}"
 msgstr "{gbHours} với {name}"
 
@@ -969,11 +977,11 @@ msgstr "{minutes} phút trước"
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵ để tạo"
 
-msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
-msgstr "{monthlyPrice} mỗi người/tháng khi thanh toán theo tháng, hoặc {yearlyPrice} khi thanh toán theo năm. Workspace trên cloud, ứng dụng di động, hỗ trợ ưu tiên."
+msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Mobile, automations, priority support."
+msgstr "{monthlyPrice} mỗi người dùng/tháng khi thanh toán theo tháng, hoặc {yearlyPrice} khi thanh toán theo năm. Di động, tự động hóa, hỗ trợ ưu tiên."
 
-msgid "{monthlyPrice} per user/mo. Cloud workspaces, mobile, priority support."
-msgstr "{monthlyPrice} mỗi người dùng/tháng. Không gian làm việc đám mây, di động, hỗ trợ ưu tiên."
+msgid "{monthlyPrice} per user/mo. Mobile, automations, priority support."
+msgstr "{monthlyPrice} mỗi người dùng/tháng. Di động, tự động hóa, hỗ trợ ưu tiên."
 
 msgid "{months}mo ago"
 msgstr "{months} tháng trước"
@@ -1034,6 +1042,9 @@ msgstr "{noun, select, repository {Hãy chỉ định ít nhất một repo.} ch
 
 msgid "{openCount} open"
 msgstr "{openCount} còn mở"
+
+msgid "{packGbHours} GB-hours for {packPrice}. Used after the monthly pool, and never expire."
+msgstr "{packGbHours} GB-giờ với giá {packPrice}. Được dùng sau quỹ hằng tháng và không bao giờ hết hạn."
 
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} có thể thay bạn đọc và thay đổi dữ liệu trong tài khoản {pluginLabel} của bạn, kể cả trong các phiên bản sau của trang này. Trang có thể gửi những gì nó đọc được đến các trang web khác. Chỉ cho phép những trang bạn tin tưởng."
@@ -1879,6 +1890,9 @@ msgstr "Thêm agent terminal của riêng bạn vào thiết bị này."
 
 msgid "Added {added} files to {where}"
 msgstr "Đã thêm {added} tệp vào {where}"
+
+msgid "Added {buyGbHours} GB-hours."
+msgstr "Đã thêm {buyGbHours} GB-giờ."
 
 msgid "Added 1 file to {where}"
 msgstr "Đã thêm 1 tệp vào {where}"
@@ -2814,6 +2828,9 @@ msgstr "Tự động sẽ theo ngôn ngữ hệ thống. Bạn có thể đổi 
 msgid "Auto Save"
 msgstr "Tự động lưu"
 
+msgid "Auto top-up"
+msgstr "Tự động nạp thêm"
+
 msgid "auto-generated"
 msgstr "tự động tạo"
 
@@ -3115,6 +3132,9 @@ msgstr "Mượn từ cách chấm mức tự lái của ô tô, áp vào cách p
 msgid "Bottom drawer, swipe-friendly on touch devices."
 msgstr "Ngăn kéo dưới đáy, vuốt tiện trên thiết bị cảm ứng."
 
+msgid "Bought GB-hours left: {prepaid}"
+msgstr "GB-giờ đã mua còn lại: {prepaid}"
+
 msgid "Box"
 msgstr "Box"
 
@@ -3317,6 +3337,15 @@ msgstr "Người bấm nút"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "Nút, công tắc và gợi ý phím"
 
+msgid "Buy extra GB-hours"
+msgstr "Mua thêm GB-giờ"
+
+msgid "Buy for {buyPrice}"
+msgstr "Mua với giá {buyPrice}"
+
+msgid "Buys {packGbHours} GB-hours for {packPrice} when fewer than this many GB-hours remain."
+msgstr "Mua {packGbHours} GB-giờ với giá {packPrice} khi số GB-giờ còn lại ít hơn mức này."
+
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "bởi {0}"
@@ -3382,6 +3411,9 @@ msgstr "Camera không khả dụng"
 
 msgid "Can comment"
 msgstr "Có thể bình luận"
+
+msgid "Can I buy more cloud GB-hours?"
+msgstr "Tôi có thể mua thêm GB-giờ đám mây không?"
 
 msgid "Can I create automations from a script?"
 msgstr "Tôi có thể tạo automation từ script không?"
@@ -6918,8 +6950,8 @@ msgstr "Mỗi phút"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Mọi mục tiêu đều đang đóng góp cho bậc kế tiếp. Đo trong 30 ngày gần nhất."
 
-msgid "Every paid plan includes Superset Mobile, cloud workspaces, automations, and priority support. Your team shares one pool of cloud GB-hours."
-msgstr "Mọi gói trả phí đều có Superset Mobile, không gian làm việc đám mây, tự động hóa và hỗ trợ ưu tiên. Nhóm của bạn dùng chung một quỹ GB-giờ đám mây."
+msgid "Every paid plan includes Superset Mobile, automations, and priority support. Plans with cloud workspaces give your team one shared pool of GB-hours."
+msgstr "Mọi gói trả phí đều có Superset Mobile, tự động hóa và hỗ trợ ưu tiên. Các gói có không gian làm việc đám mây cho nhóm bạn một quỹ GB-giờ dùng chung."
 
 msgid "Every publish is a version"
 msgstr "Mỗi lần xuất bản là một phiên bản"
@@ -7082,6 +7114,12 @@ msgstr "Trình soạn thảo ngoài"
 
 msgid "extra ${used} of ${limit}"
 msgstr "dùng thêm ${used} trên ${limit}"
+
+msgid "Extra GB-hours, bought as needed"
+msgstr "GB-giờ bổ sung, mua khi cần"
+
+msgid "Extra GB-hours: {pack}, never expire"
+msgstr "GB-giờ bổ sung: {pack}, không bao giờ hết hạn"
 
 msgid "Extra high"
 msgstr "Rất cao"
@@ -12539,6 +12577,9 @@ msgstr "packages/ui · component registry"
 
 msgid "packages/ui/src/components/ui/kbd.tsx"
 msgstr "packages/ui/src/components/ui/kbd.tsx"
+
+msgid "Packs"
+msgstr "Gói"
 
 msgid "Page"
 msgstr "Trang"
@@ -18095,6 +18136,9 @@ msgstr "Không tìm thấy luồng"
 msgid "Three steps · touches packages/ui and apps/desktop"
 msgstr "Ba bước · động tới packages/ui và apps/desktop"
 
+msgid "Threshold"
+msgstr "Ngưỡng"
+
 msgid "Ticket to production under one day, median"
 msgstr "Từ ticket đến production dưới một ngày, tính trung vị"
 
@@ -19735,6 +19779,9 @@ msgstr "Có. Hãy ứng tuyển vào vị trí phù hợp nhất và cho chúng 
 
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "Có. Gói Free dành cho cá nhân với 1 người dùng, workspace cục bộ, ứng dụng máy tính và CLI. Không cần thẻ tín dụng."
+
+msgid "Yes. On plans with cloud workspaces, owners can buy {packGbHours} GB-hours for {packPrice} in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "Có. Với các gói có không gian làm việc đám mây, chủ sở hữu có thể mua {packGbHours} GB-giờ với giá {packPrice} trong Cài đặt, Thanh toán. GB-giờ đã mua được dùng sau quỹ hằng tháng và không bao giờ hết hạn, và tính năng tự động nạp thêm có thể mua thêm khi sắp hết."
 
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "Có. Superset đã hoàn tất kiểm toán SOC 2 Type II với một đơn vị kiểm toán độc lập, bao quát các biện pháp bảo mật vận hành theo thời gian. Hãy yêu cầu báo cáo và xem tài liệu bảo mật tại trust.superset.sh."

@@ -192,6 +192,10 @@ function parentPlan(
 		items: [
 			{
 				featureId: "box_gb_minutes",
+				price: { amount: 60, interval: "one_off", billingUnits: 60000 },
+			},
+			{
+				featureId: "box_gb_minutes",
 				included: 0,
 				price: { amount: 1, interval: "month", billingUnits: 1000 },
 			},
@@ -247,6 +251,28 @@ describe("planCatalogFromAutumn", () => {
 		expect(pro?.yearly?.id).toBe("pro_v2_annual");
 		expect(pro?.gbMinutesPerSeat).toBe(19200);
 		expect(pro?.overagePerGbHour).toBe(0.06);
+		expect(pro?.pack).toEqual({ gbMinutes: 60000, price: 60 });
+	});
+
+	test("a seat license without cloud minutes leaves the family without included hours", () => {
+		const [pro] = planCatalogFromAutumn([
+			{
+				id: "pro_seat",
+				name: "Pro seat",
+				price: { amount: 20, interval: "month" },
+				items: [],
+			},
+			{
+				id: "pro_v2",
+				name: "Pro",
+				metadata: { self_serve: true, family: "pro" },
+				licenses: [{ licensePlanId: "pro_seat" }],
+				items: [],
+			},
+		]);
+		expect(pro?.monthly?.seatPrice).toBe(20);
+		expect(pro?.gbMinutesPerSeat).toBeNull();
+		expect(pro?.pack).toBeNull();
 	});
 
 	test("a yearly plan without a discount is not offered; checkout stays monthly", () => {

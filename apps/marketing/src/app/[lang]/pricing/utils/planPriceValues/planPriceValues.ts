@@ -23,6 +23,7 @@ export interface FamilyPriceSet {
 	gbHours: string | null;
 	multiple: string | null;
 	overage: string | null;
+	pack: string | null;
 	previousName: string | null;
 	baseName: string;
 }
@@ -35,6 +36,8 @@ export interface PlanPriceValues {
 	planPrices: string;
 	allowances: string;
 	overagePrice: string | null;
+	packGbHours: string | null;
+	packPrice: string | null;
 }
 
 const YEARLY_PRICE_ITEM = msg({
@@ -44,6 +47,7 @@ const MONTHLY_PRICE_ITEM = msg({
 	message: "{name}: {monthly} per user/month",
 });
 const ALLOWANCE_ITEM = msg({ message: "{gbHours} on {name}" });
+const PACK_ITEM = msg({ message: "{gbHours} GB-hours for {price}" });
 
 export function planPriceValues(
 	catalog: PlanFamily[],
@@ -59,7 +63,8 @@ export function planPriceValues(
 		);
 	const number = (value: number, digits: number) =>
 		formatNumber(value, { maximumFractionDigits: digits }, locale);
-	const base = catalog[0];
+	const base = catalog.find((family) => family.gbMinutesPerSeat);
+	const firstPack = catalog.find((family) => family.pack)?.pack;
 	const families = catalog.map((family, index): FamilyPriceSet => {
 		const hasYearlyDiscount = offersYearlyDiscount(family);
 		return {
@@ -76,13 +81,22 @@ export function planPriceValues(
 				? number(family.gbMinutesPerSeat / 60, 0)
 				: null,
 			multiple:
-				family.gbMinutesPerSeat && base?.gbMinutesPerSeat
+				family !== base && family.gbMinutesPerSeat && base?.gbMinutesPerSeat
 					? number(family.gbMinutesPerSeat / base.gbMinutesPerSeat, 1)
 					: null,
 			overage:
 				family.overagePerGbHour == null
 					? null
 					: currency(family.overagePerGbHour),
+			pack: family.pack
+				? i18n._({
+						...PACK_ITEM,
+						values: {
+							gbHours: number(family.pack.gbMinutes / 60, 0),
+							price: currency(family.pack.price),
+						},
+					})
+				: null,
 			previousName: catalog[index - 1]?.name ?? null,
 			baseName: base?.name ?? family.name,
 		};
@@ -125,7 +139,12 @@ export function planPriceValues(
 			{ type: "conjunction" },
 			locale,
 		),
-		overagePrice: families[0]?.overage ?? null,
+		overagePrice:
+			families.find((set) => set.gbHours)?.overage ??
+			families[0]?.overage ??
+			null,
+		packGbHours: firstPack ? number(firstPack.gbMinutes / 60, 0) : null,
+		packPrice: firstPack ? currency(firstPack.price) : null,
 	};
 }
 
@@ -133,7 +152,33 @@ export function featureValues(set: FamilyPriceSet | undefined) {
 	return {
 		gbHours: set?.gbHours ?? "",
 		multiple: set?.multiple ?? "",
+		pack: set?.pack ?? "",
 		previousPlan: set?.previousName ?? "",
 		basePlan: set?.baseName ?? "",
 	};
+}
+
+/** A feature that depends on cloud values shows only when the plan has them. */
+export function featureShown(
+	feature: { needs?: "gbHours" | "multiple" | "pack" },
+	set: FamilyPriceSet | undefined,
+): boolean {
+	return !feature.needs || Boolean(featureValues(set)[feature.needs]);
+}
+
+export function faqValues(values: PlanPriceValues) {
+	return {
+		planPrices: values.planPrices,
+		allowances: values.allowances,
+		overagePrice: values.overagePrice,
+		packGbHours: values.packGbHours,
+		packPrice: values.packPrice,
+	};
+}
+
+export function faqShown(
+	item: { needs?: "pack" },
+	values: PlanPriceValues,
+): boolean {
+	return !item.needs || Boolean(values.packPrice);
 }

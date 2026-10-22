@@ -43,12 +43,11 @@ export function UpgradeCard({
 					{offersYearlyDiscount(family) ? (
 						<Trans>
 							{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed
-							yearly. Cloud workspaces, mobile, priority support.
+							yearly. Mobile, automations, priority support.
 						</Trans>
 					) : (
 						<Trans>
-							{monthlyPrice} per user/mo. Cloud workspaces, mobile, priority
-							support.
+							{monthlyPrice} per user/mo. Mobile, automations, priority support.
 						</Trans>
 					)}
 				</div>

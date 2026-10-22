@@ -5,8 +5,17 @@ import { useFormat } from "@superset/i18n/react";
 import { Progress } from "@superset/ui/progress";
 import { useQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/react";
+import { GbHourPurchase } from "./components/GbHourPurchase";
 
-export function CloudUsageCard() {
+interface CloudUsageCardProps {
+	organizationId: string | null;
+	canBuy: boolean;
+}
+
+export function CloudUsageCard({
+	organizationId,
+	canBuy,
+}: CloudUsageCardProps) {
 	const trpc = useTRPC();
 	const { formatNumber, formatDate } = useFormat();
 	const { data: usage } = useQuery(trpc.billing.cloudUsage.queryOptions());
@@ -23,6 +32,8 @@ export function CloudUsageCard() {
 		usage.includedGbMinutes === null ? null : gbHours(usage.includedGbMinutes);
 	const overage =
 		usage.overageGbMinutes > 0 ? gbHours(usage.overageGbMinutes) : null;
+	const prepaid =
+		usage.prepaidGbMinutes > 0 ? gbHours(usage.prepaidGbMinutes) : null;
 	const resetDate = usage.resetsAt
 		? formatDate(new Date(usage.resetsAt))
 		: null;
@@ -55,10 +66,22 @@ export function CloudUsageCard() {
 			{usage.includedGbMinutes !== null && usage.includedGbMinutes > 0 && (
 				<Progress value={percentUsed} />
 			)}
+			{prepaid && (
+				<div className="text-sm text-muted-foreground tabular-nums">
+					<Trans>Bought GB-hours left: {prepaid}</Trans>
+				</div>
+			)}
 			{overage && (
 				<div className="text-sm text-warning tabular-nums">
 					<Trans>GB-hours over the plan: {overage}</Trans>
 				</div>
+			)}
+			{canBuy && usage.pack && organizationId && (
+				<GbHourPurchase
+					organizationId={organizationId}
+					pack={usage.pack}
+					autoTopup={usage.autoTopup}
+				/>
 			)}
 		</div>
 	);

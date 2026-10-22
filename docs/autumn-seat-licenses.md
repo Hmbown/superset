@@ -46,6 +46,30 @@ plan, so every change made then goes through `createSchedule`.
 Retired Pro plans keep the old path: the `seats` feature quantity, with no
 credit on a decrease.
 
+## Cloud access
+
+A plan turns on cloud workspaces with the metadata `cloud_access: true` (Team and
+Ultra today; Pro's seat license has no GB-minutes). Billing state exposes it as
+`cloudAccess`. The `cloud-workspaces` PostHog flag is still the gate: the server
+passes `plan_cloud_access` as a person property for the active organization, and
+the desktop sets it with `setPersonPropertiesForFlags`. The flag needs a release
+condition `plan_cloud_access = true` for this to admit paying organizations.
+
+## Extra GB-hours
+
+A plan sells extra GB-minutes through a one-off prepaid `box_gb_minutes` item:
+`interval: one_off`, `billing_method: prepaid`, `billing_units: 60000` (1,000
+GB-hours), `amount: 60`. They never expire and are used after the monthly pool.
+
+- Buying: `POST /autumn/buyGbHours` (owners) sends `billing.update` with
+  `featureQuantities` of packs x 60,000. The quantity is the amount to buy, not a
+  new total, so purchases stack.
+- Auto top-up: `POST /autumn/setAutoTopup` (owners) writes the customer's
+  `billingControls.autoTopups` (threshold in GB-minutes, one pack per top-up, at
+  most 10 a month). Autumn fires it when a tracked event takes the balance below
+  the threshold; one large event that jumps straight into overage does not.
+- Past the monthly pool and the bought hours, usage is overage at the plan's rate.
+
 ## Known Autumn behavior
 
 - Switching plans (retired Pro to Pro, Pro to Team) resets the pool's usage

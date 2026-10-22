@@ -409,6 +409,11 @@ msgstr "{0} 끝자리 {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{where}에 파일 {0}개가 이미 있습니다. 바꿀까요?"
 
+#. placeholder {0}: formatNumber(pack.gbMinutes / 60)
+#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY)
+msgid "{0} GB-hours for {1}"
+msgstr "{0} GB 시간 {1}"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} 설치됨"
@@ -885,6 +890,9 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "좌석당 매월 클라우드 {gbHours} GB 시간"
 
+msgid "{gbHours} GB-hours for {price}"
+msgstr "{gbHours} GB 시간 {price}"
+
 msgid "{gbHours} on {name}"
 msgstr "{name}에서 {gbHours}"
 
@@ -969,11 +977,11 @@ msgstr "{minutes}분 전"
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵로 만들기"
 
-msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
-msgstr "월간 결제 시 사용자당 월 {monthlyPrice}, 연간 결제 시 {yearlyPrice}. 클라우드 워크스페이스, 모바일, 우선 지원이 포함됩니다."
+msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Mobile, automations, priority support."
+msgstr "월간 결제 시 사용자당 월 {monthlyPrice}, 연간 결제 시 {yearlyPrice}. 모바일, 자동화, 우선 지원."
 
-msgid "{monthlyPrice} per user/mo. Cloud workspaces, mobile, priority support."
-msgstr "사용자당 월 {monthlyPrice}. 클라우드 워크스페이스, 모바일, 우선 지원."
+msgid "{monthlyPrice} per user/mo. Mobile, automations, priority support."
+msgstr "사용자당 월 {monthlyPrice}. 모바일, 자동화, 우선 지원."
 
 msgid "{months}mo ago"
 msgstr "{months}개월 전"
@@ -1034,6 +1042,9 @@ msgstr "{noun, select, repository {리포지토리를 하나 이상 지정하세
 
 msgid "{openCount} open"
 msgstr "{openCount}개 열림"
+
+msgid "{packGbHours} GB-hours for {packPrice}. Used after the monthly pool, and never expire."
+msgstr "{packGbHours} GB 시간에 {packPrice}. 월간 풀 다음에 사용되며 만료되지 않습니다."
 
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle}은(는) 사용자 본인으로서 {pluginLabel} 계정의 데이터를 읽고 변경할 수 있으며, 이 페이지의 향후 버전에도 적용됩니다. 읽은 내용을 다른 웹사이트로 보낼 수 있습니다. 신뢰하는 페이지만 허용하세요."
@@ -1879,6 +1890,9 @@ msgstr "이 기기에 직접 만든 터미널 에이전트를 추가합니다."
 
 msgid "Added {added} files to {where}"
 msgstr "{where}에 파일 {added}개를 추가했습니다"
+
+msgid "Added {buyGbHours} GB-hours."
+msgstr "{buyGbHours} GB 시간을 추가했습니다."
 
 msgid "Added 1 file to {where}"
 msgstr "{where}에 파일 1개를 추가했습니다"
@@ -2814,6 +2828,9 @@ msgstr "자동은 시스템 언어를 따릅니다. 나중에 설정에서 변�
 msgid "Auto Save"
 msgstr "자동 저장"
 
+msgid "Auto top-up"
+msgstr "자동 충전"
+
 msgid "auto-generated"
 msgstr "자동 생성"
 
@@ -3115,6 +3132,9 @@ msgstr "자율 주행차를 등급으로 나누는 방식을 빌려 소프트웨
 msgid "Bottom drawer, swipe-friendly on touch devices."
 msgstr "하단 드로어로, 터치 기기에서 스와이프하기 좋습니다."
 
+msgid "Bought GB-hours left: {prepaid}"
+msgstr "구매한 GB 시간 잔여: {prepaid}"
+
 msgid "Box"
 msgstr "박스"
 
@@ -3317,6 +3337,15 @@ msgstr "버튼 누르는 사람"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "버튼, 토글, 키보드 어포던스"
 
+msgid "Buy extra GB-hours"
+msgstr "추가 GB 시간 구매"
+
+msgid "Buy for {buyPrice}"
+msgstr "{buyPrice}에 구매"
+
+msgid "Buys {packGbHours} GB-hours for {packPrice} when fewer than this many GB-hours remain."
+msgstr "남은 GB 시간이 이보다 적어지면 {packGbHours} GB 시간을 {packPrice}에 구매합니다."
+
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "작성자: {0}"
@@ -3382,6 +3411,9 @@ msgstr "카메라를 사용할 수 없습니다"
 
 msgid "Can comment"
 msgstr "댓글 가능"
+
+msgid "Can I buy more cloud GB-hours?"
+msgstr "클라우드 GB 시간을 더 구매할 수 있나요?"
 
 msgid "Can I create automations from a script?"
 msgstr "스크립트로 자동화를 만들 수 있나요?"
@@ -6918,8 +6950,8 @@ msgstr "1분마다"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "모든 목표가 다음 단계를 향해 제 몫을 하고 있습니다. 최근 30일 기준입니다."
 
-msgid "Every paid plan includes Superset Mobile, cloud workspaces, automations, and priority support. Your team shares one pool of cloud GB-hours."
-msgstr "모든 유료 플랜에는 Superset Mobile, 클라우드 워크스페이스, 자동화, 우선 지원이 포함됩니다. 팀은 하나의 클라우드 GB 시간 풀을 함께 사용합니다."
+msgid "Every paid plan includes Superset Mobile, automations, and priority support. Plans with cloud workspaces give your team one shared pool of GB-hours."
+msgstr "모든 유료 플랜에는 Superset Mobile, 자동화, 우선 지원이 포함됩니다. 클라우드 워크스페이스가 있는 플랜은 팀이 함께 쓰는 GB 시간 풀을 제공합니다."
 
 msgid "Every publish is a version"
 msgstr "게시할 때마다 버전이 됩니다"
@@ -7082,6 +7114,12 @@ msgstr "외부 편집기"
 
 msgid "extra ${used} of ${limit}"
 msgstr "${limit} 중 추가 ${used}"
+
+msgid "Extra GB-hours, bought as needed"
+msgstr "필요할 때 구매하는 추가 GB 시간"
+
+msgid "Extra GB-hours: {pack}, never expire"
+msgstr "추가 GB 시간: {pack}, 만료 없음"
 
 msgid "Extra high"
 msgstr "매우 높음"
@@ -12539,6 +12577,9 @@ msgstr "packages/ui · 컴포넌트 레지스트리"
 
 msgid "packages/ui/src/components/ui/kbd.tsx"
 msgstr "packages/ui/src/components/ui/kbd.tsx"
+
+msgid "Packs"
+msgstr "팩 수"
 
 msgid "Page"
 msgstr "페이지"
@@ -18095,6 +18136,9 @@ msgstr "스레드를 찾을 수 없습니다"
 msgid "Three steps · touches packages/ui and apps/desktop"
 msgstr "3단계 · packages/ui와 apps/desktop을 수정"
 
+msgid "Threshold"
+msgstr "기준값"
+
 msgid "Ticket to production under one day, median"
 msgstr "티켓부터 프로덕션까지 중앙값 하루 미만"
 
@@ -19735,6 +19779,9 @@ msgstr "네. 가장 잘 맞는 포지션에 지원하고 무엇을 만들고 싶
 
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "네. 무료 플랜은 사용자 1명, 로컬 워크스페이스, 데스크톱 앱, CLI를 제공합니다. 신용카드는 필요 없습니다."
+
+msgid "Yes. On plans with cloud workspaces, owners can buy {packGbHours} GB-hours for {packPrice} in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "네. 클라우드 워크스페이스가 있는 플랜에서는 소유자가 설정, 결제에서 {packGbHours} GB 시간을 {packPrice}에 구매할 수 있습니다. 구매한 GB 시간은 월간 풀 다음에 사용되며 만료되지 않고, 자동 충전으로 부족해질 때 더 구매할 수도 있습니다."
 
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "네. Superset은 독립 감사인과 함께 SOC 2 Type II 감사를 완료했으며, 이는 일정 기간 운영된 보안 통제를 다룹니다. trust.superset.sh에서 보고서를 요청하고 보안 문서를 확인하세요."

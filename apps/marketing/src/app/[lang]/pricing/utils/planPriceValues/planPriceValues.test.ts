@@ -4,7 +4,7 @@ import {
 	type AutumnCatalogPlan,
 	planCatalogFromAutumn,
 } from "@superset/shared/billing";
-import { planPriceValues } from "./planPriceValues";
+import { featureShown, planPriceValues } from "./planPriceValues";
 
 function plan(
 	id: string,
@@ -71,5 +71,45 @@ describe("planPriceValues", () => {
 		});
 		expect(values.maxDiscount).toBe("20%");
 		expect(values.fromPrice).toBe("$16");
+	});
+
+	test("a plan without cloud hours drops cloud values; packs show where sold", () => {
+		const withPack = (plans: AutumnCatalogPlan[]) =>
+			plans.map((candidate) =>
+				candidate.licenses
+					? {
+							...candidate,
+							items: [
+								...candidate.items,
+								{
+									featureId: "box_gb_minutes",
+									price: {
+										amount: 60,
+										interval: "one_off",
+										billingUnits: 60000,
+									},
+								},
+							],
+						}
+					: candidate,
+			);
+		const catalog = planCatalogFromAutumn([
+			...plan("pro", 20, "month", pro),
+			...withPack(plan("team", 60, "month", team, 72000)),
+			...withPack(plan("ultra", 200, "month", ultra, 240000)),
+		]);
+		const values = planPriceValues(catalog, setupI18n({ locale: "en" }));
+		expect(values.byFamily.pro).toMatchObject({ gbHours: null, pack: null });
+		expect(values.byFamily.team).toMatchObject({
+			multiple: null,
+			pack: "1,000 GB-hours for $60",
+		});
+		expect(values.byFamily.ultra).toMatchObject({
+			multiple: "3.3",
+			baseName: "Team",
+		});
+		expect(values.packPrice).toBe("$60");
+		expect(featureShown({ needs: "gbHours" }, values.byFamily.pro)).toBe(false);
+		expect(featureShown({ needs: "pack" }, values.byFamily.team)).toBe(true);
 	});
 });

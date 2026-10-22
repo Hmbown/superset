@@ -244,6 +244,13 @@ export interface PlanFamily {
 	legacy: CatalogPlan[];
 	gbMinutesPerSeat: number | null;
 	overagePerGbHour: number | null;
+	pack: GbHourPack | null;
+}
+
+/** A one-off purchase of cloud GB-minutes that never expires. */
+export interface GbHourPack {
+	gbMinutes: number;
+	price: number;
 }
 
 export function isSelfServeAutumnPlan(plan: AutumnCatalogPlan): boolean {
@@ -315,10 +322,22 @@ function gbMinutesPerSeat(
 
 function overagePerGbHour(plan: AutumnCatalogPlan): number | null {
 	const price = plan.items.find(
-		(item) => item.featureId === "box_gb_minutes" && item.price,
+		(item) =>
+			item.featureId === "box_gb_minutes" && item.price?.interval === "month",
 	)?.price;
 	if (price?.amount == null) return null;
 	return (price.amount * 60) / (price.billingUnits ?? 1);
+}
+
+/** The plan's one-off GB-minute purchase, when it sells one. */
+export function gbHourPack(plan: AutumnCatalogPlan): GbHourPack | null {
+	const price = plan.items.find(
+		(item) =>
+			item.featureId === "box_gb_minutes" && item.price?.interval === "one_off",
+	)?.price;
+	const gbMinutes = positiveNumber(price?.billingUnits);
+	const amount = positiveNumber(price?.amount);
+	return gbMinutes && amount ? { gbMinutes, price: amount } : null;
 }
 
 /** The purchasable lineup, one entry per family, ordered for display. */
@@ -339,6 +358,7 @@ export function planCatalogFromAutumn(
 			legacy: [],
 			gbMinutesPerSeat: null,
 			overagePerGbHour: null,
+			pack: null,
 		};
 		if (priced.interval === "month") {
 			family.monthly = priced;
@@ -353,6 +373,7 @@ export function planCatalogFromAutumn(
 		);
 		family.gbMinutesPerSeat ??= gbMinutesPerSeat(plan, plans);
 		family.overagePerGbHour ??= overagePerGbHour(plan);
+		family.pack ??= gbHourPack(plan);
 		families.set(key, family);
 	}
 	for (const plan of plans) {

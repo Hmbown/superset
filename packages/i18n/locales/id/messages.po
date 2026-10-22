@@ -409,6 +409,11 @@ msgstr "{0} berakhiran {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{0} file sudah ada di {where}. Ingin menggantinya?"
 
+#. placeholder {0}: formatNumber(pack.gbMinutes / 60)
+#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY)
+msgid "{0} GB-hours for {1}"
+msgstr "{0} GB-jam seharga {1}"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} terpasang"
@@ -885,6 +890,9 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "{gbHours} GB-jam cloud per kursi setiap bulan"
 
+msgid "{gbHours} GB-hours for {price}"
+msgstr "{gbHours} GB-jam seharga {price}"
+
 msgid "{gbHours} on {name}"
 msgstr "{gbHours} di {name}"
 
@@ -969,11 +977,11 @@ msgstr "{minutes}m lalu"
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵ untuk membuat"
 
-msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
-msgstr "{monthlyPrice} per pengguna/bln jika ditagih bulanan, atau {yearlyPrice} jika ditagih tahunan. Workspace cloud, mobile, dukungan prioritas."
+msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Mobile, automations, priority support."
+msgstr "{monthlyPrice} per pengguna/bulan ditagih bulanan, atau {yearlyPrice} ditagih tahunan. Seluler, otomatisasi, dukungan prioritas."
 
-msgid "{monthlyPrice} per user/mo. Cloud workspaces, mobile, priority support."
-msgstr "{monthlyPrice} per pengguna/bulan. Ruang kerja cloud, seluler, dukungan prioritas."
+msgid "{monthlyPrice} per user/mo. Mobile, automations, priority support."
+msgstr "{monthlyPrice} per pengguna/bulan. Seluler, otomatisasi, dukungan prioritas."
 
 msgid "{months}mo ago"
 msgstr "{months}bln lalu"
@@ -1034,6 +1042,9 @@ msgstr "{noun, select, repository {Tentukan minimal satu repositori.} channel {T
 
 msgid "{openCount} open"
 msgstr "{openCount} terbuka"
+
+msgid "{packGbHours} GB-hours for {packPrice}. Used after the monthly pool, and never expire."
+msgstr "{packGbHours} GB-jam seharga {packPrice}. Dipakai setelah kumpulan bulanan, dan tidak pernah kedaluwarsa."
 
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} dapat membaca dan mengubah data di akun {pluginLabel} Anda atas nama Anda, termasuk di versi halaman ini yang akan datang. Halaman ini dapat mengirim apa yang dibacanya ke situs web lain. Izinkan hanya halaman yang Anda percayai."
@@ -1879,6 +1890,9 @@ msgstr "Tambahkan agen terminal Anda sendiri ke perangkat ini."
 
 msgid "Added {added} files to {where}"
 msgstr "Menambahkan {added} file ke {where}"
+
+msgid "Added {buyGbHours} GB-hours."
+msgstr "{buyGbHours} GB-jam ditambahkan."
 
 msgid "Added 1 file to {where}"
 msgstr "Menambahkan 1 file ke {where}"
@@ -2814,6 +2828,9 @@ msgstr "Otomatis mengikuti bahasa sistem Anda. Anda bisa mengubahnya nanti di Pe
 msgid "Auto Save"
 msgstr "Simpan Otomatis"
 
+msgid "Auto top-up"
+msgstr "Isi ulang otomatis"
+
 msgid "auto-generated"
 msgstr "dibuat otomatis"
 
@@ -3115,6 +3132,9 @@ msgstr "Dipinjam dari cara mobil swakemudi dinilai, diterapkan pada cara perangk
 msgid "Bottom drawer, swipe-friendly on touch devices."
 msgstr "Laci bawah, ramah geser di perangkat sentuh."
 
+msgid "Bought GB-hours left: {prepaid}"
+msgstr "Sisa GB-jam yang dibeli: {prepaid}"
+
 msgid "Box"
 msgstr "Box"
 
@@ -3317,6 +3337,15 @@ msgstr "Penekan tombol"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "Tombol, toggle, dan afordansi keyboard"
 
+msgid "Buy extra GB-hours"
+msgstr "Beli GB-jam tambahan"
+
+msgid "Buy for {buyPrice}"
+msgstr "Beli seharga {buyPrice}"
+
+msgid "Buys {packGbHours} GB-hours for {packPrice} when fewer than this many GB-hours remain."
+msgstr "Membeli {packGbHours} GB-jam seharga {packPrice} saat sisa GB-jam kurang dari jumlah ini."
+
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "oleh {0}"
@@ -3382,6 +3411,9 @@ msgstr "Kamera tidak tersedia"
 
 msgid "Can comment"
 msgstr "Dapat berkomentar"
+
+msgid "Can I buy more cloud GB-hours?"
+msgstr "Bisakah saya membeli GB-jam cloud tambahan?"
 
 msgid "Can I create automations from a script?"
 msgstr "Bisakah saya membuat otomatisasi dari skrip?"
@@ -6918,8 +6950,8 @@ msgstr "Tiap menit"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Semua sasaran sudah berkontribusi sesuai bobotnya untuk tingkat berikutnya. Diukur selama 30 hari terakhir."
 
-msgid "Every paid plan includes Superset Mobile, cloud workspaces, automations, and priority support. Your team shares one pool of cloud GB-hours."
-msgstr "Setiap paket berbayar mencakup Superset Mobile, workspace cloud, otomatisasi, dan dukungan prioritas. Tim Anda berbagi satu kumpulan GB-jam cloud."
+msgid "Every paid plan includes Superset Mobile, automations, and priority support. Plans with cloud workspaces give your team one shared pool of GB-hours."
+msgstr "Setiap paket berbayar mencakup Superset Mobile, otomatisasi, dan dukungan prioritas. Paket dengan ruang kerja cloud memberi tim Anda satu kumpulan GB-jam bersama."
 
 msgid "Every publish is a version"
 msgstr "Setiap publikasi adalah satu versi"
@@ -7082,6 +7114,12 @@ msgstr "Editor eksternal"
 
 msgid "extra ${used} of ${limit}"
 msgstr "tambahan ${used} dari ${limit}"
+
+msgid "Extra GB-hours, bought as needed"
+msgstr "GB-jam tambahan, dibeli sesuai kebutuhan"
+
+msgid "Extra GB-hours: {pack}, never expire"
+msgstr "GB-jam tambahan: {pack}, tidak pernah kedaluwarsa"
 
 msgid "Extra high"
 msgstr "Sangat tinggi"
@@ -12539,6 +12577,9 @@ msgstr "packages/ui · registri komponen"
 
 msgid "packages/ui/src/components/ui/kbd.tsx"
 msgstr "packages/ui/src/components/ui/kbd.tsx"
+
+msgid "Packs"
+msgstr "Paket"
 
 msgid "Page"
 msgstr "Halaman"
@@ -18095,6 +18136,9 @@ msgstr "Thread tidak ditemukan"
 msgid "Three steps · touches packages/ui and apps/desktop"
 msgstr "Tiga langkah · menyentuh packages/ui dan apps/desktop"
 
+msgid "Threshold"
+msgstr "Ambang batas"
+
 msgid "Ticket to production under one day, median"
 msgstr "Tiket ke produksi di bawah satu hari, median"
 
@@ -19735,6 +19779,9 @@ msgstr "Ya. Lamar posisi yang paling sesuai dan ceritakan apa yang ingin Anda ba
 
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "Ya. Paket gratis mencakup perorangan dengan 1 pengguna, workspace lokal, aplikasi desktop, dan CLI. Tanpa kartu kredit."
+
+msgid "Yes. On plans with cloud workspaces, owners can buy {packGbHours} GB-hours for {packPrice} in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "Ya. Pada paket dengan ruang kerja cloud, pemilik dapat membeli {packGbHours} GB-jam seharga {packPrice} di Pengaturan, Penagihan. GB-jam yang dibeli dipakai setelah kumpulan bulanan dan tidak pernah kedaluwarsa, dan isi ulang otomatis dapat membeli lagi saat hampir habis."
 
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "Ya. Superset telah menyelesaikan audit SOC 2 Type II dengan auditor independen, yang mencakup kontrol keamanan kami saat beroperasi dari waktu ke waktu. Minta laporannya dan tinjau dokumentasi keamanan kami di trust.superset.sh."

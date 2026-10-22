@@ -11,6 +11,7 @@ import { checkoutHref } from "../../../../utils/checkoutHref";
 import { seatPrice } from "../../../../utils/planDisplay";
 import {
 	type FamilyPriceSet,
+	featureShown,
 	featureValues,
 	type PlanPriceValues,
 } from "../../../../utils/planPriceValues";
@@ -128,17 +129,19 @@ export function PricingCard({
 					wide && "md:grid md:grid-cols-2 lg:grid-cols-3",
 				)}
 			>
-				{tier.features.map((feature) => (
-					<li
-						key={feature.id}
-						className="flex items-start gap-2.5 text-sm text-foreground"
-					>
-						<Check className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
-						<span>
-							{i18n._({ ...feature.label, values: featureValues(set) })}
-						</span>
-					</li>
-				))}
+				{tier.features
+					.filter((feature) => featureShown(feature, set))
+					.map((feature) => (
+						<li
+							key={feature.id}
+							className="flex items-start gap-2.5 text-sm text-foreground"
+						>
+							<Check className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
+							<span>
+								{i18n._({ ...feature.label, values: featureValues(set) })}
+							</span>
+						</li>
+					))}
 			</ul>
 		</div>
 	);

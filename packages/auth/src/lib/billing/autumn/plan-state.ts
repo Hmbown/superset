@@ -23,6 +23,7 @@ const FREE: OrganizationBilling = {
 	lapsed: false,
 	paymentState: { kind: "ok" },
 	cloudUsage: null,
+	cloudAccess: false,
 	gatedMachineSizes: [],
 	environmentLimit: 0,
 };
@@ -38,6 +39,7 @@ const FAIL_OPEN: OrganizationBilling = {
 	lapsed: false,
 	paymentState: { kind: "ok" },
 	cloudUsage: null,
+	cloudAccess: false,
 	gatedMachineSizes: [],
 	environmentLimit: null,
 };

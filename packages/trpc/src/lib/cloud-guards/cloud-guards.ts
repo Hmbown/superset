@@ -1,3 +1,4 @@
+import { organizationBilling } from "@superset/auth/billing";
 import { db } from "@superset/db/client";
 import { users } from "@superset/db/schema";
 import { FEATURE_FLAGS } from "@superset/shared/constants";
@@ -19,6 +20,7 @@ import { posthog } from "../analytics";
 export async function assertCloudAccess(ctx: {
 	userId: string;
 	session: { user: { id: string; email: string } } | null;
+	activeOrganizationId?: string | null;
 }): Promise<void> {
 	const { enabled, account } = await cloudAccess(ctx);
 	if (enabled) return;
@@ -35,8 +37,17 @@ export async function assertCloudAccess(ctx: {
 export async function cloudAccess(ctx: {
 	userId: string;
 	session: { user: { id: string; email: string } } | null;
+	activeOrganizationId?: string | null;
 }): Promise<{ enabled: boolean | undefined; account: string }> {
-	const account = (await currentEmail(ctx))?.trim().toLowerCase() ?? "";
+	const [email, planCloudAccess] = await Promise.all([
+		currentEmail(ctx),
+		ctx.activeOrganizationId
+			? organizationBilling(ctx.activeOrganizationId)
+					.then((billing) => billing.cloudAccess)
+					.catch(() => false)
+			: false,
+	]);
+	const account = email?.trim().toLowerCase() ?? "";
 	const enabled = await posthog.isFeatureEnabled(
 		FEATURE_FLAGS.CLOUD_WORKSPACES,
 		ctx.userId,
@@ -44,7 +55,10 @@ export async function cloudAccess(ctx: {
 			// Sent explicitly: the conditions are email-based, and a person
 			// PostHog has not seen yet would otherwise be refused for the wrong
 			// reason. No exposure events — this is authorization, not an experiment.
-			personProperties: { email: account },
+			personProperties: {
+				email: account,
+				plan_cloud_access: String(planCloudAccess),
+			},
 			sendFeatureFlagEvents: false,
 		},
 	);

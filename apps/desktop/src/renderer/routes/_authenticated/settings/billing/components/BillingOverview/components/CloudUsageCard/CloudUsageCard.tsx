@@ -2,8 +2,17 @@ import { Trans } from "@lingui/react/macro";
 import { useFormat } from "@superset/i18n/react";
 import { Progress } from "@superset/ui/progress";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
+import { GbHourPurchase } from "./components/GbHourPurchase";
 
-export function CloudUsageCard() {
+interface CloudUsageCardProps {
+	organizationId: string | null;
+	canBuy: boolean;
+}
+
+export function CloudUsageCard({
+	organizationId,
+	canBuy,
+}: CloudUsageCardProps) {
 	const { formatNumber, formatDate } = useFormat();
 	const { data: usage } = cloudTrpc.billing.cloudUsage.useQuery(undefined);
 
@@ -19,6 +28,8 @@ export function CloudUsageCard() {
 		usage.includedGbMinutes === null ? null : gbHours(usage.includedGbMinutes);
 	const overage =
 		usage.overageGbMinutes > 0 ? gbHours(usage.overageGbMinutes) : null;
+	const prepaid =
+		usage.prepaidGbMinutes > 0 ? gbHours(usage.prepaidGbMinutes) : null;
 	const resetDate = usage.resetsAt
 		? formatDate(new Date(usage.resetsAt))
 		: null;
@@ -52,12 +63,24 @@ export function CloudUsageCard() {
 				{usage.includedGbMinutes !== null && usage.includedGbMinutes > 0 && (
 					<Progress value={percentUsed} />
 				)}
+				{prepaid && (
+					<div className="text-xs text-muted-foreground tabular-nums">
+						<Trans>Bought GB-hours left: {prepaid}</Trans>
+					</div>
+				)}
 				{overage && (
 					<div className="text-xs text-warning tabular-nums">
 						<Trans>GB-hours over the plan: {overage}</Trans>
 					</div>
 				)}
 			</div>
+			{canBuy && usage.pack && organizationId && (
+				<GbHourPurchase
+					organizationId={organizationId}
+					pack={usage.pack}
+					autoTopup={usage.autoTopup}
+				/>
+			)}
 		</div>
 	);
 }

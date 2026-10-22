@@ -2,6 +2,8 @@ export type BillingRole = "owner" | "admin" | "member";
 
 export const ROUTE_ROLES = {
 	attach: ["owner"],
+	buyGbHours: ["owner"],
+	setAutoTopup: ["owner"],
 	updateSubscription: ["owner"],
 	openCustomerPortal: ["owner"],
 	previewAttach: ["owner", "admin"],
@@ -46,3 +48,6 @@ export function checkoutSessionParams(args: {
 		},
 	};
 }
+
+/** Auto top-ups allowed per month, so a runaway workload cannot buy without bound. */
+export const AUTO_TOPUP_MONTHLY_LIMIT = 10;

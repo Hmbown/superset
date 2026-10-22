@@ -260,7 +260,10 @@ export function BillingSettings({
 				)}
 			</div>
 
-			<CloudUsageCard />
+			<CloudUsageCard
+				organizationId={activeOrganizationId ?? null}
+				canBuy={isOwner}
+			/>
 
 			{(plan === "free" || (plan === "pro" && usesAutumn && !cancelAt)) &&
 				(catalog.length > 0 || catalogQuery.isError) && (
@@ -275,9 +278,9 @@ export function BillingSettings({
 							</div>
 							<div className="mt-1 text-sm text-muted-foreground">
 								<Trans>
-									Every paid plan includes Superset Mobile, cloud workspaces,
-									automations, and priority support. Your team shares one pool
-									of cloud GB-hours.
+									Every paid plan includes Superset Mobile, automations, and
+									priority support. Plans with cloud workspaces give your team
+									one shared pool of GB-hours.
 								</Trans>
 							</div>
 						</div>

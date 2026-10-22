@@ -409,6 +409,11 @@ msgstr "{1} ile biten {0}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{where} konumunda {0} dosya zaten var. Bunları değiştirmek istiyor musunuz?"
 
+#. placeholder {0}: formatNumber(pack.gbMinutes / 60)
+#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY)
+msgid "{0} GB-hours for {1}"
+msgstr "{1} karşılığında {0} GB-saat"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} kuruldu"
@@ -885,6 +890,9 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "Koltuk başına aylık {gbHours} bulut GB-saat"
 
+msgid "{gbHours} GB-hours for {price}"
+msgstr "{price} karşılığında {gbHours} GB-saat"
+
 msgid "{gbHours} on {name}"
 msgstr "{name} ile {gbHours}"
 
@@ -969,11 +977,11 @@ msgstr "{minutes}dk önce"
 msgid "{modKey}↵ to create"
 msgstr "Oluşturmak için {modKey}↵"
 
-msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
-msgstr "Aylık faturalandırmada kullanıcı başına ayda {monthlyPrice}, yıllık faturalandırmada {yearlyPrice}. Bulut çalışma alanları, mobil, öncelikli destek."
+msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Mobile, automations, priority support."
+msgstr "Aylık faturalandırmada kullanıcı başına aylık {monthlyPrice} veya yıllık faturalandırmada {yearlyPrice}. Mobil, otomasyonlar, öncelikli destek."
 
-msgid "{monthlyPrice} per user/mo. Cloud workspaces, mobile, priority support."
-msgstr "Kullanıcı başına aylık {monthlyPrice}. Bulut çalışma alanları, mobil, öncelikli destek."
+msgid "{monthlyPrice} per user/mo. Mobile, automations, priority support."
+msgstr "Kullanıcı başına aylık {monthlyPrice}. Mobil, otomasyonlar, öncelikli destek."
 
 msgid "{months}mo ago"
 msgstr "{months}ay önce"
@@ -1034,6 +1042,9 @@ msgstr "{noun, select, repository {En az bir depo belirtin.} channel {En az bir 
 
 msgid "{openCount} open"
 msgstr "{openCount} açık"
+
+msgid "{packGbHours} GB-hours for {packPrice}. Used after the monthly pool, and never expire."
+msgstr "{packPrice} karşılığında {packGbHours} GB-saat. Aylık havuzdan sonra kullanılır ve süresi dolmaz."
 
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle}, sizin adınıza {pluginLabel} hesabınızdaki verileri okuyabilir ve değiştirebilir; bu, sayfanın gelecek sürümlerini de kapsar. Okuduklarını başka web sitelerine gönderebilir. Yalnızca güvendiğiniz sayfalara izin verin."
@@ -1879,6 +1890,9 @@ msgstr "Bu cihaza kendi terminal ajanınızı ekleyin."
 
 msgid "Added {added} files to {where}"
 msgstr "{where} konumuna {added} dosya eklendi"
+
+msgid "Added {buyGbHours} GB-hours."
+msgstr "{buyGbHours} GB-saat eklendi."
 
 msgid "Added 1 file to {where}"
 msgstr "{where} konumuna 1 dosya eklendi"
@@ -2814,6 +2828,9 @@ msgstr "Otomatik, sistem dilinizi izler. Daha sonra Ayarlar'dan değiştirebilir
 msgid "Auto Save"
 msgstr "Otomatik Kaydetme"
 
+msgid "Auto top-up"
+msgstr "Otomatik yükleme"
+
 msgid "auto-generated"
 msgstr "otomatik oluşturulur"
 
@@ -3115,6 +3132,9 @@ msgstr "Otonom araçların notlandırılma biçiminden ödünç alındı, yazıl
 msgid "Bottom drawer, swipe-friendly on touch devices."
 msgstr "Alt çekmece, dokunmatik cihazlarda kaydırmaya uygun."
 
+msgid "Bought GB-hours left: {prepaid}"
+msgstr "Kalan satın alınmış GB-saat: {prepaid}"
+
 msgid "Box"
 msgstr "Kutu"
 
@@ -3317,6 +3337,15 @@ msgstr "Düğmeye basan"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "Düğmeler, anahtarlar ve klavye ipuçları"
 
+msgid "Buy extra GB-hours"
+msgstr "Ek GB-saat satın al"
+
+msgid "Buy for {buyPrice}"
+msgstr "{buyPrice} karşılığında satın al"
+
+msgid "Buys {packGbHours} GB-hours for {packPrice} when fewer than this many GB-hours remain."
+msgstr "Kalan GB-saat bu sayının altına düştüğünde {packPrice} karşılığında {packGbHours} GB-saat satın alır."
+
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "{0} tarafından"
@@ -3382,6 +3411,9 @@ msgstr "Kamera kullanılamıyor"
 
 msgid "Can comment"
 msgstr "Yorum yapabilir"
+
+msgid "Can I buy more cloud GB-hours?"
+msgstr "Daha fazla bulut GB-saati satın alabilir miyim?"
 
 msgid "Can I create automations from a script?"
 msgstr "Otomasyonları bir betikten oluşturabilir miyim?"
@@ -6918,8 +6950,8 @@ msgstr "Her dakika"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Tüm hedefler bir sonraki basamak için üzerine düşeni yapıyor. Son 30 gün üzerinden ölçülür."
 
-msgid "Every paid plan includes Superset Mobile, cloud workspaces, automations, and priority support. Your team shares one pool of cloud GB-hours."
-msgstr "Her ücretli plan Superset Mobile, bulut çalışma alanları, otomasyonlar ve öncelikli destek içerir. Ekibiniz tek bir bulut GB-saat havuzunu paylaşır."
+msgid "Every paid plan includes Superset Mobile, automations, and priority support. Plans with cloud workspaces give your team one shared pool of GB-hours."
+msgstr "Her ücretli plan Superset Mobile, otomasyonlar ve öncelikli destek içerir. Bulut çalışma alanlı planlar ekibinize ortak bir GB-saat havuzu verir."
 
 msgid "Every publish is a version"
 msgstr "Her yayın bir sürümdür"
@@ -7082,6 +7114,12 @@ msgstr "Harici düzenleyici"
 
 msgid "extra ${used} of ${limit}"
 msgstr "ek ${used}/${limit}"
+
+msgid "Extra GB-hours, bought as needed"
+msgstr "İhtiyaç duyuldukça satın alınan ek GB-saat"
+
+msgid "Extra GB-hours: {pack}, never expire"
+msgstr "Ek GB-saat: {pack}, süresi dolmaz"
 
 msgid "Extra high"
 msgstr "Çok yüksek"
@@ -12539,6 +12577,9 @@ msgstr "packages/ui · bileşen kaydı"
 
 msgid "packages/ui/src/components/ui/kbd.tsx"
 msgstr "packages/ui/src/components/ui/kbd.tsx"
+
+msgid "Packs"
+msgstr "Paketler"
 
 msgid "Page"
 msgstr "Sayfa"
@@ -18095,6 +18136,9 @@ msgstr "Konu bulunamadı"
 msgid "Three steps · touches packages/ui and apps/desktop"
 msgstr "Üç adım · packages/ui ve apps/desktop dizinlerine dokunur"
 
+msgid "Threshold"
+msgstr "Eşik"
+
 msgid "Ticket to production under one day, median"
 msgstr "Biletten üretime bir günün altında, medyan"
 
@@ -19735,6 +19779,9 @@ msgstr "Evet. Size en uygun pozisyona başvurun ve ne geliştirmek istediğinizi
 
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "Evet. Ücretsiz plan; 1 kullanıcı, yerel çalışma alanları, masaüstü uygulaması ve CLI ile bireyleri kapsar. Kredi kartı gerekmez."
+
+msgid "Yes. On plans with cloud workspaces, owners can buy {packGbHours} GB-hours for {packPrice} in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "Evet. Bulut çalışma alanlı planlarda sahipler Ayarlar, Faturalandırma bölümünden {packPrice} karşılığında {packGbHours} GB-saat satın alabilir. Satın alınan GB-saatler aylık havuzdan sonra kullanılır ve süresi dolmaz; otomatik yükleme azaldıklarında daha fazlasını satın alabilir."
 
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "Evet. Superset, güvenlik kontrollerinin zaman içindeki işleyişini kapsayan SOC 2 Type II denetimini bağımsız bir denetçiyle tamamlamıştır. Raporu talep edin ve güvenlik belgelerimizi trust.superset.sh adresinde inceleyin."

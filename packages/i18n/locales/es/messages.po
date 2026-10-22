@@ -409,6 +409,11 @@ msgstr "{0} terminada en {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "Ya hay {0} archivos en {where}. ¿Quieres reemplazarlos?"
 
+#. placeholder {0}: formatNumber(pack.gbMinutes / 60)
+#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY)
+msgid "{0} GB-hours for {1}"
+msgstr "{0} GB-horas por {1}"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} instalado"
@@ -885,6 +890,9 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "{gbHours} GB-horas en la nube por puesto al mes"
 
+msgid "{gbHours} GB-hours for {price}"
+msgstr "{gbHours} GB-horas por {price}"
+
 msgid "{gbHours} on {name}"
 msgstr "{gbHours} en {name}"
 
@@ -969,11 +977,11 @@ msgstr "hace {minutes} min"
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵ para crear"
 
-msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
-msgstr "{monthlyPrice} por usuario/mes con facturación mensual, o {yearlyPrice} con facturación anual. Espacios de trabajo en la nube, móvil y soporte prioritario."
+msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Mobile, automations, priority support."
+msgstr "{monthlyPrice} por usuario/mes con facturación mensual, o {yearlyPrice} con facturación anual. Móvil, automatizaciones y soporte prioritario."
 
-msgid "{monthlyPrice} per user/mo. Cloud workspaces, mobile, priority support."
-msgstr "{monthlyPrice} por usuario/mes. Espacios de trabajo en la nube, móvil y soporte prioritario."
+msgid "{monthlyPrice} per user/mo. Mobile, automations, priority support."
+msgstr "{monthlyPrice} por usuario/mes. Móvil, automatizaciones y soporte prioritario."
 
 msgid "{months}mo ago"
 msgstr "hace {months} m"
@@ -1034,6 +1042,9 @@ msgstr "{noun, select, repository {Especifica al menos un repositorio.} channel 
 
 msgid "{openCount} open"
 msgstr "{openCount} abiertas"
+
+msgid "{packGbHours} GB-hours for {packPrice}. Used after the monthly pool, and never expire."
+msgstr "{packGbHours} GB-horas por {packPrice}. Se usan después del fondo mensual y nunca caducan."
 
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} puede leer y cambiar datos de tu cuenta de {pluginLabel} en tu nombre, también en futuras versiones de esta página. Puede enviar lo que lea a otros sitios web. Permite solo páginas en las que confíes."
@@ -1879,6 +1890,9 @@ msgstr "Añade tu propio agente de terminal a este dispositivo."
 
 msgid "Added {added} files to {where}"
 msgstr "Se añadieron {added} archivos a {where}"
+
+msgid "Added {buyGbHours} GB-hours."
+msgstr "Se añadieron {buyGbHours} GB-horas."
 
 msgid "Added 1 file to {where}"
 msgstr "Se añadió 1 archivo a {where}"
@@ -2814,6 +2828,9 @@ msgstr "Automático sigue el idioma del sistema. Puedes cambiarlo más adelante 
 msgid "Auto Save"
 msgstr "Guardado automático"
 
+msgid "Auto top-up"
+msgstr "Recarga automática"
+
 msgid "auto-generated"
 msgstr "generado automáticamente"
 
@@ -3115,6 +3132,9 @@ msgstr "Tomada de cómo se califican los coches autónomos y aplicada a cómo se
 msgid "Bottom drawer, swipe-friendly on touch devices."
 msgstr "Panel inferior, cómodo de deslizar en dispositivos táctiles."
 
+msgid "Bought GB-hours left: {prepaid}"
+msgstr "GB-horas compradas restantes: {prepaid}"
+
 msgid "Box"
 msgstr "Caja"
 
@@ -3317,6 +3337,15 @@ msgstr "Pulsabotones"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "Botones, alternadores y elementos de teclado"
 
+msgid "Buy extra GB-hours"
+msgstr "Comprar GB-horas adicionales"
+
+msgid "Buy for {buyPrice}"
+msgstr "Comprar por {buyPrice}"
+
+msgid "Buys {packGbHours} GB-hours for {packPrice} when fewer than this many GB-hours remain."
+msgstr "Compra {packGbHours} GB-horas por {packPrice} cuando quedan menos de estas GB-horas."
+
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "por {0}"
@@ -3382,6 +3411,9 @@ msgstr "La cámara no está disponible"
 
 msgid "Can comment"
 msgstr "Puede comentar"
+
+msgid "Can I buy more cloud GB-hours?"
+msgstr "¿Puedo comprar más GB-horas en la nube?"
 
 msgid "Can I create automations from a script?"
 msgstr "¿Puedo crear automatizaciones desde un script?"
@@ -6918,8 +6950,8 @@ msgstr "Cada minuto"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Todos los objetivos aportan lo suyo para el siguiente escalón. Medido en los últimos 30 días."
 
-msgid "Every paid plan includes Superset Mobile, cloud workspaces, automations, and priority support. Your team shares one pool of cloud GB-hours."
-msgstr "Todos los planes de pago incluyen Superset Mobile, espacios de trabajo en la nube, automatizaciones y soporte prioritario. Tu equipo comparte un único fondo de GB-horas en la nube."
+msgid "Every paid plan includes Superset Mobile, automations, and priority support. Plans with cloud workspaces give your team one shared pool of GB-hours."
+msgstr "Todos los planes de pago incluyen Superset Mobile, automatizaciones y soporte prioritario. Los planes con espacios de trabajo en la nube dan a tu equipo un fondo compartido de GB-horas."
 
 msgid "Every publish is a version"
 msgstr "Cada publicación es una versión"
@@ -7082,6 +7114,12 @@ msgstr "Editor externo"
 
 msgid "extra ${used} of ${limit}"
 msgstr "extra: ${used} de ${limit}"
+
+msgid "Extra GB-hours, bought as needed"
+msgstr "GB-horas adicionales, compradas según se necesiten"
+
+msgid "Extra GB-hours: {pack}, never expire"
+msgstr "GB-horas adicionales: {pack}, nunca caducan"
 
 msgid "Extra high"
 msgstr "Muy alto"
@@ -12539,6 +12577,9 @@ msgstr "packages/ui · registro de componentes"
 
 msgid "packages/ui/src/components/ui/kbd.tsx"
 msgstr "packages/ui/src/components/ui/kbd.tsx"
+
+msgid "Packs"
+msgstr "Paquetes"
 
 msgid "Page"
 msgstr "Página"
@@ -18095,6 +18136,9 @@ msgstr "Hilo no encontrado"
 msgid "Three steps · touches packages/ui and apps/desktop"
 msgstr "Tres pasos · toca packages/ui y apps/desktop"
 
+msgid "Threshold"
+msgstr "Umbral"
+
 msgid "Ticket to production under one day, median"
 msgstr "Del ticket a producción en menos de un día, en la mediana"
 
@@ -19735,6 +19779,9 @@ msgstr "Sí. Postula al puesto que mejor encaje contigo y cuéntanos qué constr
 
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "Sí. El plan Gratis cubre a personas individuales con 1 usuario, espacios de trabajo locales, la app de escritorio y la CLI. No hace falta tarjeta de crédito."
+
+msgid "Yes. On plans with cloud workspaces, owners can buy {packGbHours} GB-hours for {packPrice} in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "Sí. En los planes con espacios de trabajo en la nube, los propietarios pueden comprar {packGbHours} GB-horas por {packPrice} en Configuración, Facturación. Las GB-horas compradas se usan después del fondo mensual y nunca caducan, y la recarga automática puede comprar más cuando se agotan."
 
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "Sí. Superset ha superado una auditoría SOC 2 Type II con un auditor independiente, que cubre nuestros controles de seguridad en funcionamiento a lo largo del tiempo. Solicita el informe y consulta nuestra documentación de seguridad en trust.superset.sh."

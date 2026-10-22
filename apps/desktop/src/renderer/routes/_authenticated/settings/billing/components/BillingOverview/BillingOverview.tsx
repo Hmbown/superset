@@ -9,6 +9,7 @@ import { COMPANY } from "@superset/shared/constants";
 import { Button } from "@superset/ui/button";
 import { Link } from "@tanstack/react-router";
 import { HiArrowRight } from "react-icons/hi2";
+import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { useCurrentPlan } from "renderer/hooks/useCurrentPlan";
 import { authClient } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
@@ -61,6 +62,7 @@ export function BillingOverview({ visibleItems }: BillingOverviewProps) {
 	const isOwner = currentMember?.role === "owner";
 
 	const { plan, activePlan } = useCurrentPlan();
+	const activeOrgId = useActiveOrganizationId();
 
 	// Seats are billed from this — never derive it from an unresolved query.
 	// undefined (not 0) keeps the upgrade action disabled until it loads. It is
@@ -169,7 +171,9 @@ export function BillingOverview({ visibleItems }: BillingOverviewProps) {
 						</div>
 					</div>
 				)}
-				{showOverview && <CloudUsageCard />}
+				{showOverview && (
+					<CloudUsageCard organizationId={activeOrgId} canBuy={isOwner} />
+				)}
 				{showOverview && isOwner && plan !== "free" && <BillingDetails />}
 				<RecentInvoices />
 			</div>

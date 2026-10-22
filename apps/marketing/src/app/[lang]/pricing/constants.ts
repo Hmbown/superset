@@ -6,6 +6,7 @@ import { COMPANY } from "@superset/shared/constants";
 export interface PricingFeature {
 	id: string;
 	label: MessageDescriptor;
+	needs?: "gbHours" | "multiple" | "pack";
 }
 
 export interface PricingTier {
@@ -181,6 +182,12 @@ const BASE_FEATURES: PricingFeature[] = [
 		label: msg({
 			message: "{gbHours} cloud GB-hours per seat each month",
 		}),
+		needs: "gbHours",
+	},
+	{
+		id: "gbHourPacks",
+		label: msg({ message: "Extra GB-hours: {pack}, never expire" }),
+		needs: "pack",
 	},
 	{
 		id: "unlimitedUsers",
@@ -228,14 +235,22 @@ const STEP_UP_FEATURES: PricingFeature[] = [
 	{
 		id: "cloudHours",
 		label: msg({ message: "{gbHours} cloud GB-hours per seat each month" }),
+		needs: "gbHours",
 	},
 	{
 		id: "cloudMultiple",
 		label: msg({ message: "{multiple}x the cloud GB-hours of {basePlan}" }),
+		needs: "multiple",
 	},
 	{
 		id: "sharedCloudPool",
 		label: msg({ message: "One shared GB-hour pool for the team" }),
+		needs: "gbHours",
+	},
+	{
+		id: "gbHourPacks",
+		label: msg({ message: "Extra GB-hours: {pack}, never expire" }),
+		needs: "pack",
 	},
 ];
 
@@ -280,6 +295,7 @@ export interface ComparisonRow {
 		enterprise: ComparisonValue | null,
 	];
 	cloudGbHours?: boolean;
+	cloudPack?: boolean;
 	badge?: {
 		label: MessageDescriptor;
 		variant: "default" | "secondary";
@@ -331,6 +347,14 @@ export const COMPARISON_SECTIONS: ComparisonSection[] = [
 				}),
 				values: [null, null, msg({ message: "Custom" })],
 				cloudGbHours: true,
+			},
+			{
+				id: "gbHourPacks",
+				label: msg({
+					message: "Extra GB-hours, bought as needed",
+				}),
+				values: [null, null, msg({ message: "Custom" })],
+				cloudPack: true,
 			},
 		],
 	},
@@ -476,6 +500,7 @@ export interface PricingFAQItem {
 	id: string;
 	question: MessageDescriptor;
 	answer: MessageDescriptor;
+	needs?: "pack";
 }
 
 export const PRICING_FAQ_ITEMS: PricingFAQItem[] = [
@@ -508,6 +533,17 @@ export const PRICING_FAQ_ITEMS: PricingFAQItem[] = [
 			message:
 				"Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan.",
 		}),
+	},
+	{
+		id: "buyGbHours",
+		question: msg({
+			message: "Can I buy more cloud GB-hours?",
+		}),
+		answer: msg({
+			message:
+				"Yes. On plans with cloud workspaces, owners can buy {packGbHours} GB-hours for {packPrice} in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low.",
+		}),
+		needs: "pack",
 	},
 	{
 		id: "switchPlans",
