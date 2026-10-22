@@ -36,6 +36,19 @@ describe("superset-boot", () => {
 		);
 	});
 
+	test("turns on a swapfile sized to half the box, fail-open", () => {
+		expect(boot).toMatch(/swap_mb=\$\(\( mem_bytes \/ 1048576 \/ 2 \)\)/);
+		expect(boot).toMatch(/swapon \/swapfile/);
+		expect(boot).toMatch(/vm\.swappiness=10/);
+		expect(boot).toMatch(/swap\.failed continuing without/);
+		expect(boot.indexOf("swapon /swapfile")).toBeGreaterThan(
+			boot.indexOf("memguard.start"),
+		);
+		expect(boot).toMatch(
+			/kill -0 "\$\(cat "\$\{SUPERSET_RUN_DIR\}\/memguard\.pid"/,
+		);
+	});
+
 	test("writes the cgroup's memory ceiling and CPU count for login shells", () => {
 		expect(boot).toMatch(/SUPERSET_SANDBOX_MEMORY_MB/);
 		expect(boot).toMatch(/SUPERSET_SANDBOX_VCPUS/);
