@@ -944,6 +944,8 @@ export const cloudWorkspaces = pgTable(
 		deletedAt: timestamp("deleted_at", { withTimezone: true }),
 		/** When the box stops because its organization reached its usage limit; null otherwise. */
 		usageStopAt: timestamp("usage_stop_at", { withTimezone: true }),
+		/** Null on workspaces made before sizes existed; they run large. */
+		machineSize: text("machine_size"),
 		createdByUserId: uuid("created_by_user_id").references(() => users.id, {
 			onDelete: "set null",
 		}),
@@ -1113,6 +1115,31 @@ export const cloudWorkspaceBoots = pgTable(
 			.where(
 				sql`${table.stoppedAt} is null or ${table.finalizedThrough} is null or ${table.finalizedThrough} < ${table.stoppedAt}`,
 			),
+	],
+);
+
+export const cloudWorkspacePullRequests = pgTable(
+	"cloud_workspace_pull_requests",
+	{
+		cloudWorkspaceId: uuid("cloud_workspace_id")
+			.notNull()
+			.references(() => cloudWorkspaces.id, { onDelete: "cascade" }),
+		repositoryId: uuid("repository_id")
+			.notNull()
+			.references(() => githubRepositories.id, { onDelete: "cascade" }),
+		prNumber: integer("pr_number").notNull(),
+		linkedAt: timestamp("linked_at", { withTimezone: true })
+			.notNull()
+			.defaultNow(),
+	},
+	(table) => [
+		primaryKey({
+			name: "cloud_workspace_pull_requests_pk",
+			columns: [table.cloudWorkspaceId, table.repositoryId, table.prNumber],
+		}),
+		index("cloud_workspace_pull_requests_repository_id_idx").on(
+			table.repositoryId,
+		),
 	],
 );
 
@@ -1675,6 +1702,7 @@ export const automations = pgTable(
 		continueAgentSession: boolean("continue_agent_session")
 			.notNull()
 			.default(false),
+		machineSize: text("machine_size"),
 
 		// The schedule lives in the automation's `schedule` trigger.
 		enabled: boolean().notNull().default(true),

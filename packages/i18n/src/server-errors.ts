@@ -279,6 +279,13 @@ export const serverErrorMessages: Record<
 					"Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace.",
 			}),
 		),
+	"serverError.cloudWorkspace.machineSizeNotAvailable": () =>
+		i18n._(
+			msg({
+				message:
+					"This machine size is not available for your organization. Pick another size",
+			}),
+		),
 	"serverError.cloudWorkspace.environmentHasNoRepositories": () =>
 		i18n._(
 			msg({
@@ -298,6 +305,12 @@ export const serverErrorMessages: Record<
 			msg({
 				message:
 					"The config repository must be one of the environment's repositories",
+			}),
+		),
+	"serverError.environment.limitReached": (params) =>
+		i18n._(
+			msg({
+				message: `Your organization has reached its limit of ${params?.limit} environments. Archive one, or upgrade in Settings, Billing to add more.`,
 			}),
 		),
 	"serverError.githubUser.notConfigured": () =>

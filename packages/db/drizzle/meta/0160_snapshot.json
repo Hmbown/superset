@@ -1,5 +1,5 @@
 {
-  "id": "63829858-51ed-4720-b12a-83022ddd6572",
+  "id": "32a0defd-4e86-4b5a-baa8-255254c8eeb0",
   "prevId": "3f4ef9cc-8e59-4420-999b-404c80571372",
   "version": "7",
   "dialect": "postgresql",
@@ -6022,6 +6022,12 @@
           "notNull": true,
           "default": false
         },
+        "machine_size": {
+          "name": "machine_size",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
         "enabled": {
           "name": "enabled",
           "type": "boolean",
@@ -7272,81 +7278,6 @@
       },
       "isRLSEnabled": false
     },
-    "public.cloud_workspace_tags": {
-      "name": "cloud_workspace_tags",
-      "schema": "",
-      "columns": {
-        "cloud_workspace_id": {
-          "name": "cloud_workspace_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "tag": {
-          "name": "tag",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_by_user_id": {
-          "name": "created_by_user_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "cloud_workspace_tags_cloud_workspace_id_cloud_workspaces_id_fk": {
-          "name": "cloud_workspace_tags_cloud_workspace_id_cloud_workspaces_id_fk",
-          "tableFrom": "cloud_workspace_tags",
-          "tableTo": "cloud_workspaces",
-          "columnsFrom": [
-            "cloud_workspace_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "cloud_workspace_tags_created_by_user_id_users_id_fk": {
-          "name": "cloud_workspace_tags_created_by_user_id_users_id_fk",
-          "tableFrom": "cloud_workspace_tags",
-          "tableTo": "users",
-          "schemaTo": "auth",
-          "columnsFrom": [
-            "created_by_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "cloud_workspace_tags_cloud_workspace_id_tag_created_by_user_id_pk": {
-          "name": "cloud_workspace_tags_cloud_workspace_id_tag_created_by_user_id_pk",
-          "columns": [
-            "cloud_workspace_id",
-            "tag",
-            "created_by_user_id"
-          ]
-        }
-      },
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.cloud_workspace_tasks": {
       "name": "cloud_workspace_tasks",
       "schema": "",
@@ -7584,6 +7515,12 @@
         "usage_stop_at": {
           "name": "usage_stop_at",
           "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "machine_size": {
+          "name": "machine_size",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         },

@@ -1,4 +1,5 @@
 export type { OrganizationBilling, PaymentState } from "./autumn/billing-state";
+export type { CloudUsage } from "./autumn/cloud-usage";
 export {
 	ensureAutumnCustomer,
 	organizationForStripeCustomer,
@@ -8,11 +9,14 @@ export {
 export {
 	ACTIVE_CPU_MINUTES_FEATURE_ID,
 	BOX_GB_MINUTES_FEATURE_ID,
+	ENVIRONMENTS_FEATURE_ID,
 	SEATS_FEATURE_ID,
 } from "./autumn/features";
 export {
 	invalidateOrganizationBilling,
 	organizationBilling,
+	organizationEnvironmentLimitFromAutumn,
+	organizationGatedMachineSizesFromAutumn,
 	organizationPlanFromAutumn,
 } from "./autumn/plan-state";
 export {

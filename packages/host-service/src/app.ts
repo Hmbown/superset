@@ -57,7 +57,10 @@ import {
 import { matchesAgentBinding } from "./terminal-agents/matches-agent-binding";
 import { appRouter } from "./trpc/router";
 import { gitStatusStore } from "./trpc/router/git/utils/git-status-store";
-import { stopLocalMobileServer } from "./trpc/router/mobile";
+import {
+	disposeLocalMobileDevices,
+	startLocalMobileDeviceCleanup,
+} from "./trpc/router/mobile";
 import {
 	resumeCrashedAgentSessions,
 	resumeSessionDepsFor,
@@ -123,6 +126,10 @@ export interface CreateAppResult {
 	 */
 	launchSandboxAgent: () => Promise<void>;
 	resumeCrashedAgents: () => Promise<void>;
+	readLinkedPullRequests: () => Promise<
+		{ repository: string; number: number; linkedAt: number }[]
+	>;
+	onPullRequestLinked: (listener: () => void) => () => void;
 	terminalAgentStore: TerminalAgentStore;
 	dispose: () => Promise<void>;
 }
@@ -372,6 +379,9 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 			? null
 			: setInterval(() => void runProjectPurge(), PROJECT_PURGE_INTERVAL_MS);
 	projectPurgeTimer?.unref?.();
+	if (process.env.SUPERSET_HOST_RUN_MODE !== "sandbox") {
+		startLocalMobileDeviceCleanup(db);
+	}
 
 	void (async () => {
 		if (process.env.SUPERSET_HOST_RUN_MODE === "sandbox") return;
@@ -545,9 +555,9 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 			console.warn("[host-service] pageWatch.stop failed:", err);
 		}
 		try {
-			stopLocalMobileServer();
+			await disposeLocalMobileDevices();
 		} catch (err) {
-			console.warn("[host-service] stopLocalMobileServer failed:", err);
+			console.warn("[host-service] disposeLocalMobileDevices failed:", err);
 		}
 		try {
 			await chatV3.dispose();
@@ -631,6 +641,9 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		eventBus,
 		launchSandboxAgent,
 		resumeCrashedAgents,
+		readLinkedPullRequests: () => pullRequestRuntime.listLinkedPullRequests(),
+		onPullRequestLinked: (listener) =>
+			pullRequestRuntime.onPullRequestLinked(listener),
 		terminalAgentStore,
 		dispose,
 	};
