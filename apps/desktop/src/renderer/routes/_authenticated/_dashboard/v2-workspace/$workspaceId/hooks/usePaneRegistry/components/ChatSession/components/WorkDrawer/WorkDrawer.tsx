@@ -89,7 +89,8 @@ export function WorkDrawer({
 	const rootRef = useRef<HTMLDivElement>(null);
 	const [collapsed, setCollapsed] = useState({ queued: false, running: false });
 	const [activeKey, setActiveKey] = useState<string | null>(null);
-	const lastFocusRef = useRef<{ key: string; index: number } | null>(null);
+	const lastFocusRef = useRef<string | null>(null);
+	const previousKeysRef = useRef<string[]>([]);
 	const queueActions = useQueueActions(queue, onAppendToComposer);
 	const asking = useMemo(
 		() => new Set(approvals.flatMap((approval) => approval.parentItemId ?? [])),
@@ -112,6 +113,8 @@ export function WorkDrawer({
 	const paneThird = usePaneThird(paneRef);
 
 	const showQueuedHeader = prompts.length > 1;
+	if (!showQueuedHeader && collapsed.queued)
+		setCollapsed((current) => ({ ...current, queued: false }));
 	const entries = new Map<string, Entry>();
 	if (prompts.length > 0) {
 		if (showQueuedHeader)
@@ -158,13 +161,21 @@ export function WorkDrawer({
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: re-check focus whenever the stops change
 	useLayoutEffect(() => {
+		const previousKeys = previousKeysRef.current;
+		previousKeysRef.current = keys;
 		const lost = lastFocusRef.current;
-		if (!lost || entries.has(lost.key)) return;
+		if (!lost || entries.has(lost)) return;
 		const active = document.activeElement;
 		if (active && active !== document.body) return;
-		const remaining = stopsIn(rootRef.current);
-		if (focusStop(remaining[Math.min(lost.index, remaining.length - 1)]))
-			return;
+		const at = previousKeys.indexOf(lost);
+		const neighbour = [
+			...previousKeys.slice(at + 1),
+			...previousKeys.slice(0, at).reverse(),
+		].find((key) => entries.has(key));
+		const stop = stopsIn(rootRef.current).find(
+			(candidate) => candidate.dataset.drawerStop === neighbour,
+		);
+		if (focusStop(stop)) return;
 		exit("composer");
 	}, [keySignature]);
 
@@ -273,10 +284,7 @@ export function WorkDrawer({
 				: undefined;
 		if (!key) return;
 		setActiveKey(key);
-		lastFocusRef.current = {
-			key,
-			index: stopsIn(rootRef.current).indexOf(event.target as HTMLElement),
-		};
+		lastFocusRef.current = key;
 	};
 
 	const onBlur = (event: FocusEvent<HTMLDivElement>) => {

@@ -384,6 +384,59 @@ test("a row removed while focused hands focus to its neighbour", () => {
 	expect(document.activeElement).toBe(view.getByRole("option"));
 });
 
+test("removing the first of two queued prompts hands focus to the other", () => {
+	const props = {
+		onAppendToComposer: () => {},
+		onExit: () => {},
+		onMoveToBackground: () => {},
+		onOpenSubagent: () => {},
+		onStop: () => {},
+		snapshot: snapshotOf([]),
+		tasks: [shell("task-1", "bun dev")],
+	};
+	const second = prompt("q2", "second");
+	const view = render(
+		<WorkDrawer {...props} queue={queueOf([prompt("q1", "first"), second])} />,
+	);
+	const [first] = view.getAllByRole("option");
+	act(() => first?.focus());
+	view.rerender(<WorkDrawer {...props} queue={queueOf([second])} />);
+	expect((document.activeElement as HTMLElement).dataset.drawerStop).toBe(
+		"queued:q2",
+	);
+});
+
+test("a queue collapsed at two prompts opens again after it drops to one", () => {
+	const props = {
+		onAppendToComposer: () => {},
+		onExit: () => {},
+		onMoveToBackground: () => {},
+		onOpenSubagent: () => {},
+		onStop: () => {},
+		snapshot: snapshotOf([]),
+		tasks: [],
+	};
+	const first = prompt("q1", "first");
+	const view = render(
+		<WorkDrawer {...props} queue={queueOf([first, prompt("q2", "second")])} />,
+	);
+	fireEvent.click(view.getByRole("button", { name: /^Queued 2/ }));
+	view.rerender(<WorkDrawer {...props} queue={queueOf([first])} />);
+	expect(view.queryByRole("button", { name: /^Queued \d/ })).toBeNull();
+	expect(stops(view).map((stop) => stop.dataset.drawerStop)).toEqual([
+		"queued:q1",
+	]);
+	view.rerender(
+		<WorkDrawer {...props} queue={queueOf([first, prompt("q3", "third")])} />,
+	);
+	expect(
+		view
+			.getByRole("button", { name: /^Queued 2/ })
+			.getAttribute("aria-expanded"),
+	).toBe("true");
+	expect(rowNames(view)).toEqual(["first", "third"]);
+});
+
 test("a running row's accessible name carries its step, approval and time", () => {
 	jest.useFakeTimers();
 	const approval: ApprovalRequest = {
