@@ -1,5 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { licenseSeatAction, seatRenewal, withRetry } from "./seat-policy";
+import {
+	licenseSeatAction,
+	seatRenewal,
+	withRetry,
+	yearlyChangeStart,
+} from "./seat-policy";
 
 const RENEWAL = 1_800_000_000_000;
 
@@ -104,5 +109,37 @@ describe("seatRenewal", () => {
 				now: Date.UTC(2027, 11, 1),
 			}),
 		).toBe(Date.UTC(2028, 9, 22, 7, 30));
+	});
+});
+
+describe("yearlyChangeStart", () => {
+	const now = Date.UTC(2026, 9, 23);
+	const startedAt = Date.UTC(2026, 9, 22, 22, 23, 39);
+	const monthlyPeriodEnd = Date.UTC(2026, 10, 22, 22, 22, 1);
+
+	test("a downgrade from a yearly plan starts at the yearly renewal", () => {
+		expect(
+			yearlyChangeStart({
+				scheduledAt: monthlyPeriodEnd,
+				seatInterval: "year",
+				startedAt,
+				currentPeriodEnd: monthlyPeriodEnd,
+				now,
+			}),
+		).toBe(Date.UTC(2027, 9, 22, 22, 23, 39));
+	});
+
+	test("monthly plans and immediate changes keep Autumn's timing", () => {
+		const base = { startedAt, currentPeriodEnd: monthlyPeriodEnd, now };
+		expect(
+			yearlyChangeStart({
+				...base,
+				scheduledAt: monthlyPeriodEnd,
+				seatInterval: "month",
+			}),
+		).toBeNull();
+		expect(
+			yearlyChangeStart({ ...base, scheduledAt: null, seatInterval: "year" }),
+		).toBeNull();
 	});
 });

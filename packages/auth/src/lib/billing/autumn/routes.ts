@@ -19,7 +19,7 @@ import { z } from "zod";
 import { autumnClient, billingUsesAutumn } from "../../../autumn";
 import { countBillableSeats } from "../../../utils/billing";
 import { LEGACY_CLIENT_PLAN_IDS } from "../legacy/plan-ids";
-import { catalogAutumnPlans, isSelfServePlan } from "./catalog";
+import { catalogAutumnPlans, isSelfServePlan, seatLicenseFor } from "./catalog";
 import {
 	ensureAutumnCustomer,
 	getAutumnCustomer,
@@ -40,6 +40,7 @@ import {
 	OWNER_EXPAND,
 	ROUTE_ROLES,
 } from "./routes-policy";
+import { yearlyChangeStart } from "./seat-policy";
 import { seatPurchase } from "./seats";
 
 interface SessionContext {
@@ -107,6 +108,37 @@ async function currentPack(organizationId: string) {
 		});
 	}
 	return { planId, pack };
+}
+
+async function yearlyRenewalStart(
+	organizationId: string,
+	planId: string,
+	preview: () => Promise<{
+		incoming: { planId: string; effectiveAt: number | null }[];
+	}>,
+): Promise<number | undefined> {
+	const customer = await getAutumnCustomer(organizationId);
+	const currentPlanId = paidPlanIdFromFlags(customer.flags);
+	if (!currentPlanId || currentPlanId === planId) return undefined;
+	const license = await seatLicenseFor(currentPlanId);
+	if (license?.price?.interval !== "year") return undefined;
+	const active = customer.subscriptions.find(
+		(subscription) =>
+			subscription.planId === currentPlanId &&
+			subscription.status !== "scheduled",
+	);
+	const scheduledAt = (await preview()).incoming.find(
+		(item) => item.planId === planId,
+	)?.effectiveAt;
+	return (
+		yearlyChangeStart({
+			scheduledAt,
+			seatInterval: "year",
+			startedAt: active?.startedAt,
+			currentPeriodEnd: active?.currentPeriodEnd,
+			now: Date.now(),
+		}) ?? undefined
+	);
 }
 
 async function afterPlanChange(organizationId: string): Promise<void> {
@@ -190,10 +222,21 @@ export const autumnBillingRoutes = {
 					await countBillableSeats(caller.organizationId),
 				);
 				const purchase = await seatPurchase(ctx.body.planId, seats);
+				const startsAt = await yearlyRenewalStart(
+					caller.organizationId,
+					ctx.body.planId,
+					() =>
+						autumnClient.billing.previewAttach({
+							customerId: caller.organizationId,
+							planId: ctx.body.planId,
+							...purchase.quantities,
+						}),
+				);
 				const result = await autumnClient.billing.attach({
 					customerId: caller.organizationId,
 					planId: ctx.body.planId,
 					...purchase.quantities,
+					...(startsAt && { startsAt }),
 					successUrl: ctx.body.successUrl,
 					redirectMode: ctx.body.confirmed ? "if_required" : "always",
 					checkoutSessionParams: checkoutSessionParams({
@@ -294,12 +337,21 @@ export const autumnBillingRoutes = {
 					await countBillableSeats(caller.organizationId),
 				);
 				const { quantities } = await seatPurchase(ctx.body.planId, seats);
+				const params = {
+					customerId: caller.organizationId,
+					planId: ctx.body.planId,
+					...quantities,
+				};
+				const preview = await autumnClient.billing.previewAttach(params);
+				const startsAt = await yearlyRenewalStart(
+					caller.organizationId,
+					ctx.body.planId,
+					async () => preview,
+				);
 				return ctx.json(
-					await autumnClient.billing.previewAttach({
-						customerId: caller.organizationId,
-						planId: ctx.body.planId,
-						...quantities,
-					}),
+					startsAt
+						? await autumnClient.billing.previewAttach({ ...params, startsAt })
+						: preview,
 				);
 			},
 		),

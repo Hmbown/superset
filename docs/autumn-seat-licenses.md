@@ -84,6 +84,12 @@ between, and only a customer without a card goes to Stripe Checkout. Without
 `confirmed` (released clients) attach keeps `redirectMode: "always"`, so those
 clients still get Autumn's confirm page instead of being charged without one.
 
+A downgrade from a yearly plan would otherwise switch at the end of Autumn's
+monthly period, leaving the rest of the paid year unused. When the current
+plan's seats are yearly and Autumn schedules the change, preview and attach pass
+`startsAt` at the yearly renewal (`yearlyChangeStart`), so the old plan runs
+until its renewal. "Keep" (`cancel_action: uncancel`) removes the scheduled plan.
+
 ## Known Autumn behavior
 
 - Switching plans (retired Pro to Pro, Pro to Team) resets the pool's usage

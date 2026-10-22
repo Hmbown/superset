@@ -40,7 +40,9 @@ export function PlanChangeDialog({
 	const total = price(Math.max(0, preview.total));
 	const credit = preview.total < 0 ? price(-preview.total) : null;
 	const charges = preview.lineItems.filter((item) => item.total !== 0);
-	const nextTotal = preview.nextCycle ? price(preview.nextCycle.total) : null;
+	const nextTotal = preview.nextCycle?.total
+		? price(preview.nextCycle.total)
+		: null;
 	const nextDate = preview.nextCycle
 		? formatDate(new Date(preview.nextCycle.startsAt))
 		: null;

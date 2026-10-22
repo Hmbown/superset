@@ -76,3 +76,23 @@ export function seatRenewal({
 		if (renewal > now) return renewal;
 	}
 }
+
+/** When a scheduled plan change from a yearly plan should start: its yearly renewal, not Autumn's monthly period end. */
+export function yearlyChangeStart({
+	scheduledAt,
+	seatInterval,
+	startedAt,
+	currentPeriodEnd,
+	now,
+}: {
+	scheduledAt: number | null | undefined;
+	seatInterval: string | null | undefined;
+	startedAt: number | null | undefined;
+	currentPeriodEnd: number | null | undefined;
+	now: number;
+}): number | null {
+	if (seatInterval !== "year" || !scheduledAt || scheduledAt <= now) {
+		return null;
+	}
+	return seatRenewal({ startedAt, currentPeriodEnd, seatInterval, now });
+}
