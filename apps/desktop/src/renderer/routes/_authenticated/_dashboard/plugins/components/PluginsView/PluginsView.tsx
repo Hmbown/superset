@@ -10,6 +10,7 @@ import {
 	usePluginCatalog,
 } from "renderer/hooks/usePluginCatalog";
 import { usePluginMutations } from "renderer/routes/_authenticated/_dashboard/hooks/usePluginMutations";
+import { OrganizationPluginsSection } from "./components/OrganizationPluginsSection";
 import { PluginCard } from "./components/PluginCard";
 import { SkillsList } from "./components/SkillsList";
 import { groupPlugins } from "./utils/groupPlugins";
@@ -138,16 +139,11 @@ export function PluginsView() {
 
 					{isCatalogLoading && skeletonCards}
 
-					{organization.length > 0 && (
-						<section className="flex flex-col gap-3">
-							<h2 className="text-sm font-semibold text-foreground">
-								<Trans>Your organization</Trans>
-							</h2>
-							<div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-								{organization.map(renderCard)}
-							</div>
-						</section>
-					)}
+					<OrganizationPluginsSection
+						plugins={organization}
+						renderCard={renderCard}
+						showEmpty={!isCatalogLoading && !catalogError && query === ""}
+					/>
 
 					{categories.map(({ category, plugins }) => (
 						<section key={category} className="flex flex-col gap-3">

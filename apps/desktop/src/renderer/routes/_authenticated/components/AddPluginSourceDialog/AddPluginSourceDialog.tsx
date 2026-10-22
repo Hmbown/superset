@@ -24,12 +24,15 @@ import { useState } from "react";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 
-interface AddSourceDialogProps {
+interface AddPluginSourceDialogProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 }
 
-export function AddSourceDialog({ open, onOpenChange }: AddSourceDialogProps) {
+export function AddPluginSourceDialog({
+	open,
+	onOpenChange,
+}: AddPluginSourceDialogProps) {
 	const { t } = useLingui();
 	const utils = cloudTrpc.useUtils();
 	const organizationId = useActiveOrganizationId();

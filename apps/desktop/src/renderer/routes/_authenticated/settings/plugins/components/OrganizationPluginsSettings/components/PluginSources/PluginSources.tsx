@@ -9,7 +9,7 @@ import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { LuPlus, LuRefreshCw, LuTrash2 } from "react-icons/lu";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
-import { AddSourceDialog } from "./components/AddSourceDialog";
+import { AddPluginSourceDialog } from "renderer/routes/_authenticated/components/AddPluginSourceDialog";
 
 export function PluginSources() {
 	const { t } = useLingui();
@@ -184,7 +184,7 @@ export function PluginSources() {
 				</div>
 			)}
 
-			<AddSourceDialog open={isAddOpen} onOpenChange={setIsAddOpen} />
+			<AddPluginSourceDialog open={isAddOpen} onOpenChange={setIsAddOpen} />
 		</section>
 	);
 }
