@@ -67,7 +67,7 @@ export function PluginCard({
 					    painting over the ··· menu. */}
 					<span className="truncate">{plugin.interface.displayName}</span>
 					<PluginKindBadges plugin={plugin} />
-					{plugin.managed && <ManagedBadge />}
+					{plugin.managed && <ManagedBadge compact />}
 					{isInstalled && !isConnected ? (
 						<span className="shrink-0 text-[10px] font-medium tracking-wide text-muted-foreground uppercase">
 							<Trans>Not connected</Trans>
@@ -110,7 +110,10 @@ export function PluginCard({
 							<LuEllipsis className="size-4" />
 						</Button>
 					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end">
+					<DropdownMenuContent
+						align="end"
+						onClick={(event) => event.stopPropagation()}
+					>
 						{plugin.updateAvailable && (
 							<DropdownMenuItem
 								disabled={isBusy}

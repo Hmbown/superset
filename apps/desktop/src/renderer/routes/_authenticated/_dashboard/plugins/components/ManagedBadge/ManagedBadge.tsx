@@ -1,18 +1,28 @@
-import { Trans } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Badge } from "@superset/ui/badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { LuBuilding2 } from "react-icons/lu";
 
-export function ManagedBadge() {
+interface ManagedBadgeProps {
+	compact?: boolean;
+}
+
+export function ManagedBadge({ compact = false }: ManagedBadgeProps) {
+	const { t } = useLingui();
 	return (
 		<Tooltip delayDuration={300}>
 			<TooltipTrigger asChild>
 				<Badge
 					variant="secondary"
+					aria-label={
+						compact
+							? t({ message: "Installed by your organization" })
+							: undefined
+					}
 					className="h-4 shrink-0 gap-0.5 rounded px-1 text-[9px] font-medium tracking-wide uppercase"
 				>
 					<LuBuilding2 className="size-2.5" />
-					<Trans>Installed by your organization</Trans>
+					{!compact && <Trans>Installed by your organization</Trans>}
 				</Badge>
 			</TooltipTrigger>
 			<TooltipContent>
