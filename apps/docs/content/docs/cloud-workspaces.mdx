@@ -70,7 +70,7 @@ Each cloud workspace runs on a machine size you pick when you create it. Every s
 - **Medium is the default.** Pick a larger size for big builds, many test processes, or several agents in one workspace.
 - **Larger sizes use more of your usage limit.** Usage is metered by memory, so a Large workspace uses twice as much as a Medium one in the same time.
 - **The size is fixed** when the workspace is created. To use a different size, start a new workspace.
-- **X-Large and 2X-Large** appear only when they are turned on for your organization. Contact us to request them.
+- **X-Large and 2X-Large** appear only when they are turned on for your organization. To request them, email [support@superset.sh](mailto:support@superset.sh).
 - If your organization loses access to a size, its workspaces start on the default size the next time they wake.
 
 The new-workspace screen shows each size with its vCPU and memory. From the CLI, pass `--machine-size`:
@@ -117,4 +117,4 @@ The checkout lives at `/workspace`. An environment with more than one repository
 - **The project is missing from the Cloud picker**: link the project to a GitHub repository, and make sure the Superset GitHub App can access it.
 - **The environment editor says a repository "isn't shared with the Superset GitHub App yet"**: click **Configure GitHub App** and add the repository.
 - **"Your GitHub account cannot reach…"**: your connected GitHub account has no access to a repository in the environment. Ask for access, or pick another environment.
-- **"This machine size is not available for your organization"**: pick Small, Medium, or Large, or ask us to turn on the larger sizes.
+- **"This machine size is not available for your organization"**: pick Small, Medium, or Large, or email [support@superset.sh](mailto:support@superset.sh) to turn on the larger sizes.
