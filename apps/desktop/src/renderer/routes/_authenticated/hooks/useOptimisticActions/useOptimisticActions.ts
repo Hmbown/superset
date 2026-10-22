@@ -234,7 +234,9 @@ export function useOptimisticActions() {
 		/**
 		 * Patch the cloud list the way the host cache is patched for a local
 		 * write: the row reads from this query, so without it the old value
-		 * sits there for a round trip. Returns the rollback.
+		 * sits there for a round trip. Returns the rollback, which restores
+		 * only this row's patched fields: a group action writes every member
+		 * at once, and one failure must not undo the others' pending patches.
 		 */
 		const patchCloudWorkspaceRow = (
 			workspaceId: string,
@@ -244,9 +246,18 @@ export function useOptimisticActions() {
 			// An in-flight refetch would otherwise land after the patch and
 			// overwrite it with the pre-write row.
 			void queryClient.cancelQueries({ queryKey: listKey });
-			const previous = queryClient.getQueriesData<CloudWorkspaceRow[]>({
-				queryKey: listKey,
-			});
+			const patchedKeys = Object.keys(patch) as (keyof CloudWorkspaceRow)[];
+			const previous = queryClient
+				.getQueriesData<CloudWorkspaceRow[]>({ queryKey: listKey })
+				.flatMap(([queryKey, rows]) => {
+					const row = rows?.find((candidate) => candidate.id === workspaceId);
+					if (!row) return [];
+					const fields: Partial<CloudWorkspaceRow> = {};
+					for (const key of patchedKeys) {
+						(fields as Record<string, unknown>)[key] = row[key];
+					}
+					return [[queryKey, fields] as const];
+				});
 			queryClient.setQueriesData<CloudWorkspaceRow[]>(
 				{ queryKey: listKey },
 				(rows) =>
@@ -255,8 +266,12 @@ export function useOptimisticActions() {
 					),
 			);
 			return () => {
-				for (const [queryKey, rows] of previous) {
-					queryClient.setQueryData(queryKey, rows);
+				for (const [queryKey, fields] of previous) {
+					queryClient.setQueryData<CloudWorkspaceRow[]>(queryKey, (rows) =>
+						rows?.map((row) =>
+							row.id === workspaceId ? { ...row, ...fields } : row,
+						),
+					);
 				}
 			};
 		};
