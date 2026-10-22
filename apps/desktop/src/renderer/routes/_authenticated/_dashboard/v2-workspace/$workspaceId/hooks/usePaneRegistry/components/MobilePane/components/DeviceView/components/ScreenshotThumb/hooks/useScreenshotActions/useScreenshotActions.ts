@@ -34,10 +34,23 @@ export function useScreenshotActions(workspaceId: string, id: string) {
 				() => toast.success(t({ message: "Screenshot copied" })),
 				() => toast.error(t({ message: "Couldn't copy the screenshot" })),
 			),
-		open: () => void electronTrpcClient.screenshots.openFile.mutate({ id }),
+		open: () =>
+			electronTrpcClient.screenshots.openFile
+				.mutate({ id })
+				.catch(() =>
+					toast.error(t({ message: "Couldn't open the screenshot" })),
+				),
 		showInFolder: () =>
-			void electronTrpcClient.screenshots.showInFolder.mutate({ id }),
+			electronTrpcClient.screenshots.showInFolder
+				.mutate({ id })
+				.catch(() =>
+					toast.error(t({ message: "Couldn't open the screenshot" })),
+				),
 		startDrag: () =>
-			void electronTrpcClient.screenshots.startDrag.mutate({ id }),
+			electronTrpcClient.screenshots.startDrag
+				.mutate({ id })
+				.catch(() =>
+					toast.error(t({ message: "Couldn't open the screenshot" })),
+				),
 	};
 }

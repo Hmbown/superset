@@ -7,8 +7,10 @@ export interface ChatComposerTarget {
 interface MountedComposer {
 	workspaceId: string;
 	target: ChatComposerTarget;
-	lastActiveAt: number;
+	focusOrder: number;
 }
+
+let focusCount = 0;
 
 interface ChatComposerStore {
 	composers: Record<string, MountedComposer>;
@@ -27,7 +29,7 @@ export const useChatComposerStore = create<ChatComposerStore>()((set) => ({
 		set((state) => ({
 			composers: {
 				...state.composers,
-				[id]: { workspaceId, target, lastActiveAt: Date.now() },
+				[id]: { workspaceId, target, focusOrder: 0 },
 			},
 		})),
 	markActive: (id) =>
@@ -37,7 +39,7 @@ export const useChatComposerStore = create<ChatComposerStore>()((set) => ({
 			return {
 				composers: {
 					...state.composers,
-					[id]: { ...composer, lastActiveAt: Date.now() },
+					[id]: { ...composer, focusOrder: ++focusCount },
 				},
 			};
 		}),
@@ -55,7 +57,7 @@ export function lastActiveChatComposer(
 	let latest: MountedComposer | null = null;
 	for (const composer of Object.values(composers)) {
 		if (composer.workspaceId !== workspaceId) continue;
-		if (!latest || composer.lastActiveAt >= latest.lastActiveAt) {
+		if (!latest || composer.focusOrder > latest.focusOrder) {
 			latest = composer;
 		}
 	}

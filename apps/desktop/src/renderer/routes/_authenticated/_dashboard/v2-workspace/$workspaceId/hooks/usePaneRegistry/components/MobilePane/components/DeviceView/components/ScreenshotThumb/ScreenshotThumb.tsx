@@ -53,7 +53,7 @@ export function ScreenshotThumb({
 							className="block size-full object-cover"
 						/>
 					</button>
-					<div className="pointer-events-none absolute inset-0 flex items-end justify-center gap-0.5 bg-linear-to-t from-black/85 via-black/30 to-transparent pb-1.5 opacity-0 transition-opacity group-hover/thumb:opacity-100 [&_button]:pointer-events-auto [&_button]:text-white/80 [&_button:hover]:text-white">
+					<div className="pointer-events-none absolute inset-0 flex items-end justify-center gap-0.5 bg-linear-to-t from-black/85 via-black/30 to-transparent pb-1.5 opacity-0 transition-opacity group-hover/thumb:opacity-100 group-hover/thumb:[&_button]:pointer-events-auto [&_button]:text-white/80 [&_button:hover]:text-white">
 						{attachToChat && (
 							<DeviceControlButton
 								compact

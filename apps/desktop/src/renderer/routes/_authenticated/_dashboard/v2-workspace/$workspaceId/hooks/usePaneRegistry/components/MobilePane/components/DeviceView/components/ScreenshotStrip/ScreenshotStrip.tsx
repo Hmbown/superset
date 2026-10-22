@@ -34,7 +34,7 @@ export function ScreenshotStrip({
 		<div
 			className={cn(
 				"absolute right-3 bottom-3 z-10 flex gap-1.5 rounded-lg border bg-popover/90 p-1.5 shadow-md backdrop-blur transition-opacity duration-500",
-				shown ? "opacity-100" : "opacity-0 hover:opacity-100",
+				shown ? "opacity-100" : "pointer-events-none opacity-0",
 			)}
 		>
 			{shots.slice(0, VISIBLE_SHOTS).map((shot) => (

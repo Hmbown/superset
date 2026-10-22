@@ -8,7 +8,7 @@ import { Button } from "@superset/ui/button";
 import { toast } from "@superset/ui/sonner";
 import { Spinner } from "@superset/ui/spinner";
 import { cn } from "@superset/ui/utils";
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { fileToBase64 } from "renderer/lib/file-to-base64";
 import { electronTrpcClient } from "renderer/lib/trpc-client";
 import { DeviceActions } from "./components/DeviceActions";
@@ -34,6 +34,8 @@ interface DeviceViewProps {
 
 const FALLBACK_ASPECT_RATIO = 9 / 19.5;
 const STALLED_AFTER_MS = 10_000;
+/** Below this the strip would cover the centered control bar. */
+const STRIP_MIN_PANE_WIDTH = 680;
 
 export function DeviceView({
 	client,
@@ -75,6 +77,19 @@ export function DeviceView({
 
 	const { t } = useLingui();
 	const shots = useDeviceScreenshots(deviceKey);
+	const rootRef = useRef<HTMLDivElement>(null);
+	const [roomForStrip, setRoomForStrip] = useState(false);
+	useEffect(() => {
+		const root = rootRef.current;
+		if (!root) return;
+		const observer = new ResizeObserver(([entry]) => {
+			if (entry) {
+				setRoomForStrip(entry.contentRect.width >= STRIP_MIN_PANE_WIDTH);
+			}
+		});
+		observer.observe(root);
+		return () => observer.disconnect();
+	}, []);
 	const [lastCapturedAt, setLastCapturedAt] = useState(0);
 	const takeScreenshot = async () => {
 		try {
@@ -86,6 +101,7 @@ export function DeviceView({
 				deviceName,
 			});
 			setLastCapturedAt(Date.now());
+			if (!roomForStrip) toast.success(t({ message: "Screenshot copied" }));
 		} catch {
 			toast.error(t({ message: "Couldn't take a screenshot" }));
 		}
@@ -104,7 +120,7 @@ export function DeviceView({
 	}, [expanded]);
 
 	return (
-		<div className="flex size-full flex-col bg-background">
+		<div ref={rootRef} className="flex size-full flex-col bg-background">
 			<div className="relative flex min-h-0 flex-1 flex-col">
 				{!expanded && picker}
 				<DeviceActions
@@ -120,7 +136,7 @@ export function DeviceView({
 						onScreenshot={() => void takeScreenshot()}
 					/>
 				)}
-				{!expanded && !toolsOpen && (
+				{!expanded && !toolsOpen && roomForStrip && (
 					<ScreenshotStrip
 						shots={shots}
 						workspaceId={workspaceId}

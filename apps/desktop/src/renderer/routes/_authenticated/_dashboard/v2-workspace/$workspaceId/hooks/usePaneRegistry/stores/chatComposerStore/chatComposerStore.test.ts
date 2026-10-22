@@ -5,36 +5,30 @@ import {
 } from "./chatComposerStore";
 
 const target = () => ({ addFiles: () => {} });
+const lastActive = (workspaceId: string) =>
+	lastActiveChatComposer(
+		useChatComposerStore.getState().composers,
+		workspaceId,
+	);
 
 describe("lastActiveChatComposer", () => {
 	beforeEach(() => useChatComposerStore.setState({ composers: {} }));
 
-	test("picks the composer used last in the workspace", () => {
+	test("picks the composer focused last; mounting does not count", () => {
 		const a = target();
 		const b = target();
-		const other = target();
 		const store = useChatComposerStore.getState();
 		store.register("a", "ws1", a);
 		store.register("b", "ws1", b);
-		store.register("other", "ws2", other);
-		useChatComposerStore.setState((state) => ({
-			composers: {
-				...state.composers,
-				a: { ...state.composers.a, lastActiveAt: 2 },
-				b: { ...state.composers.b, lastActiveAt: 1 },
-				other: { ...state.composers.other, lastActiveAt: 3 },
-			},
-		}));
-		expect(
-			lastActiveChatComposer(useChatComposerStore.getState().composers, "ws1"),
-		).toBe(a);
+		store.register("other", "ws2", target());
+		store.markActive("b");
+		store.markActive("a");
+		store.markActive("other");
+		store.register("late", "ws1", target());
+		expect(lastActive("ws1")).toBe(a);
 
 		store.unregister("a");
-		expect(
-			lastActiveChatComposer(useChatComposerStore.getState().composers, "ws1"),
-		).toBe(b);
-		expect(
-			lastActiveChatComposer(useChatComposerStore.getState().composers, "ws3"),
-		).toBeNull();
+		expect(lastActive("ws1")).toBe(b);
+		expect(lastActive("ws3")).toBeNull();
 	});
 });
