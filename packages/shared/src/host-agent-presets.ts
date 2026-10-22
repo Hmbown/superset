@@ -77,7 +77,7 @@ function clonePreset(preset: HostAgentPreset): HostAgentPreset {
 
 /**
  * Presets shown only to users with the flag on. Hosts cannot read flags, so
- * these are never seeded, and clients hide their rows while the flag is off.
+ * they seed these like any other, and clients hide their rows while the flag is off.
  */
 export const AGENT_PRESET_FEATURE_FLAGS: ReadonlyMap<string, string> = new Map([
 	["pdev", FEATURE_FLAGS.PDEV_AGENT],
@@ -92,9 +92,7 @@ export function isAgentPresetEnabled(
 }
 
 export function getDefaultSeedPresets(): HostAgentPreset[] {
-	return HOST_AGENT_PRESETS.filter(
-		(preset) => !AGENT_PRESET_FEATURE_FLAGS.has(preset.presetId),
-	).map(clonePreset);
+	return HOST_AGENT_PRESETS.map(clonePreset);
 }
 
 export function getPresetById(presetId: string): HostAgentPreset | undefined {

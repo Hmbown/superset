@@ -350,10 +350,10 @@ describe("pdev agent registration", () => {
 		expect(preset?.forkArgs).toEqual(["--fork", "{sessionId}"]);
 	});
 
-	it("is never a default terminal preset or a seeded host agent", () => {
+	it("is a seeded host agent but never a default terminal preset", () => {
 		expect(DEFAULT_TERMINAL_PRESET_AGENT_TYPES).not.toContain("pdev");
 		const seeded = getDefaultSeedPresets().map((preset) => preset.presetId);
-		expect(seeded).not.toContain("pdev");
+		expect(seeded).toContain("pdev");
 		expect(seeded).toContain("pi");
 	});
 

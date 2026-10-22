@@ -68,10 +68,12 @@ describe("agentConfigsRouter", () => {
 			expect(result.find((row) => row.presetId === "superset")).toBeUndefined();
 		});
 
-		it("does not seed pdev, which a feature flag gates", async () => {
+		it("seeds pdev, which clients hide while its feature flag is off", async () => {
 			const caller = createCaller();
 			const result = await caller.list();
-			expect(result.find((row) => row.presetId === "pdev")).toBeUndefined();
+			expect(result.find((row) => row.presetId === "pdev")?.command).toBe(
+				"pdev",
+			);
 		});
 
 		it("seeds Claude with its most permissive flag", async () => {
