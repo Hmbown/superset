@@ -1,6 +1,7 @@
 import { emptySnapshot } from "@superset/chat/core";
 import type { UserContent } from "@superset/chat/protocol";
 import { ComposerDropZone } from "@superset/chat-ui/ComposerDropZone";
+import { draftFromText } from "@superset/chat-ui/PromptInput";
 import type { ReactNode } from "react";
 import { useCallback, useMemo, useRef } from "react";
 import {
@@ -52,7 +53,9 @@ export function DraftChat({
 			<div className="min-h-0 flex-1" />
 			<ConnectionNotice>{notice}</ConnectionNotice>
 			<WorkDrawer
-				onAppendToComposer={(text) => composerRef.current?.appendText(text)}
+				onAppendToComposer={(text) =>
+					composerRef.current?.restoreDraft(draftFromText(text))
+				}
 				onExit={(exit) => composerRef.current?.returnFocus(exit === "history")}
 				onMoveToBackground={IGNORE}
 				onOpenSubagent={IGNORE}

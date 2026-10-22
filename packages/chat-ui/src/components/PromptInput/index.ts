@@ -2,6 +2,7 @@ export {
 	type ComposerActionContext,
 	type ComposerChip,
 	type ComposerChipMatch,
+	type ComposerDraft,
 	type ComposerMentionEntry,
 	type ComposerMentionProvider,
 	type ComposerMentionSource,
@@ -16,4 +17,11 @@ export {
 	type PromptInputProps,
 	type PromptInputSubmitPayload,
 } from "./PromptInput";
+export {
+	draftFromText,
+	EMPTY_DRAFT,
+	isDraftEmpty,
+	mergeDrafts,
+	placeChips,
+} from "./utils/composerDraft";
 export { DictationError } from "./utils/dictationError";

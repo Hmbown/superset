@@ -1,6 +1,7 @@
 import type {
 	ComposerChip,
 	ComposerChipMatch,
+	ComposerDraft,
 	ComposerMentionProvider,
 	PromptInputAttachment,
 	PromptInputCommand,
@@ -20,10 +21,11 @@ const NO_PROVIDERS: ComposerMentionProvider[] = [];
 
 export type AgentComposerProps = Omit<
 	PromptInputProps,
-	"mentionProviders" | "commands" | "findChips"
+	"mentionProviders" | "commands"
 > & {
 	mentionProviders?: ComposerMentionProvider[];
 	commands?: PromptInputCommand[];
+	// Names chips in a draft stored as text, which carries none of its own.
 	findChips?: (text: string) => ComposerChipMatch[];
 	onChipInsert?: (chip: ComposerChip) => void;
 };
@@ -36,11 +38,28 @@ function sourcePathOf(file: File): string | null {
 	}
 }
 
+function withFoundChips(
+	draft: ComposerDraft,
+	findChips: (text: string) => ComposerChipMatch[],
+): ComposerDraft {
+	const matches = [...draft.chips, ...findChips(draft.text)].sort(
+		(a, b) => a.start - b.start,
+	);
+	let end = 0;
+	const chips = matches.filter((match) => {
+		if (match.start < end) return false;
+		end = match.end;
+		return true;
+	});
+	return chips.length === draft.chips.length ? draft : { ...draft, chips };
+}
+
 export function AgentComposer({
 	commands = NO_COMMANDS,
 	mentionProviders = NO_PROVIDERS,
 	dictation,
 	findChips: findMoreChips,
+	draft,
 	onChipInsert,
 	onAttachmentClick: onAttachmentClickOverride,
 	...props
@@ -62,21 +81,13 @@ export function AgentComposer({
 	);
 	const { provider: pluginProvider, findChips: findPluginChips } =
 		usePluginMentionProvider();
-	const findChips = useCallback(
-		(text: string) => {
-			const matches = [
-				...findPluginChips(text),
-				...(findMoreChips?.(text) ?? []),
-			].sort((a, b) => a.start - b.start);
-			let end = 0;
-			return matches.filter((match) => {
-				if (match.start < end) return false;
-				end = match.end;
-				return true;
-			});
-		},
-		[findPluginChips, findMoreChips],
-	);
+	const chippedDraft = useMemo(() => {
+		if (!draft) return draft;
+		const withPluginChips = withFoundChips(draft, findPluginChips);
+		return findMoreChips
+			? withFoundChips(withPluginChips, findMoreChips)
+			: withPluginChips;
+	}, [draft, findPluginChips, findMoreChips]);
 	const composerDictation = useComposerDictation();
 	const trackerProvider = useTrackerMentionProvider();
 	const onChipInsertRef = useRef(onChipInsert);
@@ -101,7 +112,7 @@ export function AgentComposer({
 				onAttachmentClick={onAttachmentClickOverride ?? onAttachmentClick}
 				commands={commands}
 				dictation={dictation ?? composerDictation}
-				findChips={findChips}
+				draft={chippedDraft}
 				mentionProviders={providers}
 			/>
 			{attachmentPreview.overlay}

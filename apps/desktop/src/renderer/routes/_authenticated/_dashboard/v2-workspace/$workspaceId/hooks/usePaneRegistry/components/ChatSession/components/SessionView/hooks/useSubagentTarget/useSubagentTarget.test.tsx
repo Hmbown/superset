@@ -7,6 +7,7 @@ import type {
 	UserContent,
 	UserMessage,
 } from "@superset/chat/protocol";
+import { draftFromText } from "@superset/chat-ui/PromptInput";
 import { act, cleanup, renderHook } from "@testing-library/react";
 import { useComposerDraft } from "../../../Composer/hooks/useComposerDraft";
 import { useSubagentTarget } from "./useSubagentTarget";
@@ -165,17 +166,19 @@ test("drafts are kept per target", () => {
 		},
 		{ initialProps: { focusedId: null as string | null } },
 	);
-	act(() => hook.result.current.onChange("for the main agent"));
+	act(() =>
+		hook.result.current.onDraftChange(draftFromText("for the main agent")),
+	);
 
 	hook.rerender({ focusedId: "subagent:c1" });
 	expect(hook.result.current.storedDraft).toBeUndefined();
-	act(() => hook.result.current.onChange("for Explore"));
+	act(() => hook.result.current.onDraftChange(draftFromText("for Explore")));
 
 	hook.rerender({ focusedId: null });
-	expect(hook.result.current.storedDraft).toBe("for the main agent");
+	expect(hook.result.current.storedDraft?.text).toBe("for the main agent");
 
 	hook.rerender({ focusedId: "subagent:c1" });
-	expect(hook.result.current.storedDraft).toBe("for Explore");
+	expect(hook.result.current.storedDraft?.text).toBe("for Explore");
 	expect(
 		Object.keys(window.localStorage).filter((key) => key.includes("subagent")),
 	).toEqual([]);

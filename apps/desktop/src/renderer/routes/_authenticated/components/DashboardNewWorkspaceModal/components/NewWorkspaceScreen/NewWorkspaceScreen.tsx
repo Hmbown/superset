@@ -1,8 +1,10 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ComposerDropZone } from "@superset/chat-ui/ComposerDropZone";
-import type {
-	ComposerChip,
-	PromptInputAttachment,
+import {
+	type ComposerChip,
+	type ComposerDraft,
+	draftFromText,
+	type PromptInputAttachment,
 } from "@superset/chat-ui/PromptInput";
 import {
 	getAgentEffortSupport,
@@ -367,6 +369,23 @@ export function NewWorkspaceScreen({
 			if (context) linkedContext.remember(context);
 		},
 		[linkedContext.remember],
+	);
+	const composerKey = `${resetKey}-${promptSeed}-${placeholderRoll}`;
+	// biome-ignore lint/correctness/useExhaustiveDependencies: read once per composer mount
+	const seedDraft = useMemo(
+		() =>
+			draftFromText(useNewWorkspaceDraftStore.getState().prompt, {
+				splitPastes: false,
+			}),
+		[composerKey],
+	);
+	const changePrompt = useCallback(
+		({ text, chips }: ComposerDraft) => {
+			for (const { chip } of chips) rememberChip(chip);
+			updateDraft({ prompt: text });
+			linkedContext.sync(text);
+		},
+		[rememberChip, updateDraft, linkedContext.sync],
 	);
 	const selectSessionDraft = useCallback(() => {
 		const { linkedPR, prompt } = useNewWorkspaceDraftStore.getState();
@@ -938,17 +957,14 @@ export function NewWorkspaceScreen({
 						allowEmptySubmit
 						autoFocus
 						className="w-full"
-						defaultValue={draft.prompt}
+						draft={seedDraft}
 						disabled={isCreating}
 						attachments={composerAttachments}
-						key={`${resetKey}-${promptSeed}-${placeholderRoll}`}
+						key={composerKey}
 						onAttachmentsChange={changeAttachments}
 						findChips={linkedContext.findChips}
 						mentionProviders={gitHubMentionProviders}
-						onChange={(prompt) => {
-							updateDraft({ prompt });
-							linkedContext.sync(prompt);
-						}}
+						onDraftChange={changePrompt}
 						onChipInsert={rememberChip}
 						onSubmit={() => {
 							handleSubmit();

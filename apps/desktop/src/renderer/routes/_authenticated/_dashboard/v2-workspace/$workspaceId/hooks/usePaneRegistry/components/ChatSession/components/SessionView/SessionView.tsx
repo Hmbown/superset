@@ -21,6 +21,10 @@ import {
 } from "@superset/chat/react";
 import { ComposerDropZone } from "@superset/chat-ui/ComposerDropZone";
 import { MessageScroller } from "@superset/chat-ui/MessageScroller";
+import {
+	type ComposerDraft,
+	draftFromText,
+} from "@superset/chat-ui/PromptInput";
 import { ChatHistorySidebarScroller } from "@superset/ui/chat-history-sidebar";
 import { toast } from "@superset/ui/sonner";
 import type { ReactNode } from "react";
@@ -152,32 +156,46 @@ export function SessionView({
 	const paneRef = useRef<HTMLDivElement>(null);
 	const { outbox, discardPrompt } = session;
 	const openDraftKey = useRef(draftKey);
-	const restoreText = useCallback(
-		(text: string, originKey: string) => {
+	// What the composer held for each message it sent, so a message that
+	// fails comes back with its chips, pasted cards and attachments.
+	const [sentDrafts] = useState(
+		() => new WeakMap<UserContent[], ComposerDraft>(),
+	);
+	const draftOf = useCallback(
+		(content: UserContent[]): ComposerDraft | null => {
+			const sent = sentDrafts.get(content);
+			if (sent) return sent;
+			if (!content.every((part) => part.type === "text")) return null;
+			return draftFromText(contentText(content));
+		},
+		[sentDrafts],
+	);
+	const restoreContent = useCallback(
+		(content: UserContent[], originKey: string) => {
+			const draft = draftOf(content);
+			if (!draft) return;
 			if (originKey !== openDraftKey.current) {
-				prependToDraft(originKey, [text], originKey === draftKey);
+				prependToDraft(originKey, [draft], originKey === draftKey);
 				return;
 			}
-			composerRef.current?.appendText(text);
+			composerRef.current?.restoreDraft(draft);
 			composerRef.current?.focus();
 		},
-		[draftKey],
+		[draftKey, draftOf],
 	);
 	useEffect(() => {
 		const failed = outbox.filter(
-			(entry) =>
-				entry.state === "failed" &&
-				entry.content.every((part) => part.type === "text"),
+			(entry) => entry.state === "failed" && draftOf(entry.content) !== null,
 		);
 		if (failed.length === 0) return;
 		for (const entry of failed) {
 			discardPrompt(entry.clientId);
-			restoreText(contentText(entry.content), draftKey);
+			restoreContent(entry.content, draftKey);
 		}
 		toast.error(
 			t({ message: "Couldn't send your message. It's back in the composer." }),
 		);
-	}, [outbox, discardPrompt, restoreText, draftKey, t]);
+	}, [outbox, discardPrompt, draftOf, restoreContent, draftKey, t]);
 	const outboxRef = useRef(outbox);
 	outboxRef.current = outbox;
 	useEffect(
@@ -188,11 +206,10 @@ export function SessionView({
 						entry.state === "failed" ||
 						(entry.state === "queued" && entry.attempts === 0),
 				)
-				.map((entry) => contentText(entry.content))
-				.filter(Boolean);
+				.flatMap((entry) => draftOf(entry.content) ?? []);
 			if (unsent.length > 0) prependToDraft(draftKey, unsent);
 		},
-		[draftKey],
+		[draftKey, draftOf],
 	);
 	const timeline = useTimeline(session.snapshot, { nestChildItems: true });
 	const rail = useStableList(
@@ -275,7 +292,7 @@ export function SessionView({
 		[],
 	);
 	const appendToComposer = useCallback(
-		(text: string) => composerRef.current?.appendText(text),
+		(text: string) => composerRef.current?.restoreDraft(draftFromText(text)),
 		[],
 	);
 	const enterDrawer = useCallback(
@@ -377,14 +394,14 @@ export function SessionView({
 	const holdPrompt = held?.onQueue;
 	const onAnswerFailed = useCallback(
 		(content: UserContent[]) => {
-			restoreText(contentText(content), draftKey);
+			restoreContent(content, draftKey);
 			toast.error(
 				t({
 					message: "Couldn't send your message. It's back in the composer.",
 				}),
 			);
 		},
-		[restoreText, draftKey, t],
+		[restoreContent, draftKey, t],
 	);
 	const onSend = useMainSend({
 		approvals,
@@ -410,11 +427,6 @@ export function SessionView({
 		shownSubagentId.current = focusedSubagentId;
 		focusComposer();
 	}, [focusedSubagentId, focusComposer]);
-	const restoreUnsent = useCallback(
-		(content: UserContent[], originKey: string) =>
-			restoreText(contentText(content), originKey),
-		[restoreText],
-	);
 	const onStopTask = useCallback(
 		(taskId: string) =>
 			void stopBackgroundTask(taskId)
@@ -434,9 +446,20 @@ export function SessionView({
 		draftKey,
 		onSend,
 		onStop: onStopTask,
-		onUnsent: restoreUnsent,
+		onUnsent: restoreContent,
 	});
 	openDraftKey.current = subagent.draftKey;
+	const sendToTarget = subagent.onSend;
+	const sendFromComposer = useCallback(
+		(
+			content: UserContent[],
+			{ steer, draft }: { steer: boolean; draft: ComposerDraft },
+		) => {
+			sentDrafts.set(content, draft);
+			return sendToTarget(content, { steer });
+		},
+		[sentDrafts, sendToTarget],
+	);
 
 	const onBackgroundSubagent = useMoveToBackground(client);
 	const plugins = usePluginMentionOptions();
@@ -607,7 +630,7 @@ export function SessionView({
 					onCancelTurn={onCancelTurn}
 					escapeGoesBack={focusedSubagentId !== null}
 					onEnterDrawer={enterDrawer}
-					onSend={subagent.onSend}
+					onSend={sendFromComposer}
 					target={subagent.target}
 					canQueue={composerQueue !== undefined}
 					workspaceId={workspaceId}

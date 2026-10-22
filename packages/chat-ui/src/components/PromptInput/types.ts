@@ -93,6 +93,16 @@ export type PromptInputAttachment = {
 	upload?: { state: "pending" } | { state: "error"; message: string };
 };
 
+// Everything the composer holds. Chips sit in `text` as their serialized form;
+// `chips` says where, and keeps each one's identity.
+export type ComposerDraft = {
+	text: string;
+	chips: ComposerChipMatch[];
+	// Large pastes held as cards, in paste order.
+	pastedTexts: string[];
+	attachments: PromptInputAttachment[];
+};
+
 export type PromptInputSubmitPayload = {
 	text: string;
 	files: File[];
@@ -100,6 +110,8 @@ export type PromptInputSubmitPayload = {
 	// Large pastes held as cards, in paste order.
 	pastedTexts: string[];
 	steer: boolean;
+	// The whole draft as sent, for handing back with restoreDraft.
+	draft: ComposerDraft;
 };
 
 export type PromptInputDictationError = {
@@ -124,7 +136,9 @@ export type PromptInputDictation = {
 };
 
 export type PromptInputHandle = {
-	appendText(text: string): void;
+	// Adds a draft after what is in the composer: text, chips, pasted cards
+	// and attachments.
+	restoreDraft(draft: ComposerDraft): void;
 	insertChip(chip: ComposerChip): void;
 	openFileDialog(): void;
 	openPanel(panel: ComposerPanelContent): void;
@@ -143,18 +157,14 @@ export type PromptInputProps = {
 	dictation?: PromptInputDictation;
 	toolbar?: ReactNode;
 	toolbarEnd?: ReactNode;
-	// Text to open with, read once on mount. A host that persists drafts hands
-	// back what it stored; the composer owns the editor state from then on.
-	defaultValue?: string;
-	// Plain text of the composer as it is typed, for persisting a draft. With
-	// collapseLargePastes, pasted cards follow as trailing pasted_text blocks,
-	// and defaultValue and appendText turn such blocks back into cards.
-	onChange?: (text: string) => void;
+	// The draft to open with, read once on mount; the composer owns the editor
+	// from then on. While it is untouched, a new draft with more chips (a
+	// catalog that finished loading) turns those spans into chips.
+	draft?: ComposerDraft;
+	// Every change to the draft, for persisting it.
+	onDraftChange?: (draft: ComposerDraft) => void;
 	// A paste of 25+ lines or 4,000+ chars becomes a card instead of text.
 	collapseLargePastes?: boolean;
-	// Spans of a stored draft that were chips before it was serialized, so
-	// they come back as chips. Runs on the draft as read, never on typing.
-	findChips?: (text: string) => ComposerChipMatch[];
 	/** Returning `false` keeps the draft in the editor. */
 	onSubmit?: (
 		payload: PromptInputSubmitPayload,

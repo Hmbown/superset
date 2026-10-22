@@ -1,15 +1,40 @@
-import { appendPastedText, parsePastedText } from "@superset/chat/core";
+import {
+	type ComposerDraft,
+	draftFromText,
+	EMPTY_DRAFT,
+	mergeDrafts,
+} from "@superset/chat-ui/PromptInput";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const DRAFT_DEBOUNCE_MS = 300;
+const STORED_DRAFT_VERSION = 2;
 
-const unsavedDrafts = new Map<string, string>();
-const recoveredAfterRead = new Map<string, string[]>();
+type StoredDraft = Pick<ComposerDraft, "text" | "chips" | "pastedTexts"> & {
+	v: typeof STORED_DRAFT_VERSION;
+};
 
-function persistDraft(draftKey: string, text: string): boolean {
+// Attachments are files and stay in memory only, so a draft that holds any
+// stays here after it is saved.
+const unsavedDrafts = new Map<string, ComposerDraft>();
+const recoveredAfterRead = new Map<string, ComposerDraft[]>();
+
+function hasStoredContent(draft: ComposerDraft): boolean {
+	return draft.text !== "" || draft.pastedTexts.length > 0;
+}
+
+function persistDraft(draftKey: string, draft: ComposerDraft): boolean {
 	try {
-		if (text === "") window.localStorage.removeItem(draftKey);
-		else window.localStorage.setItem(draftKey, text);
+		if (!hasStoredContent(draft)) {
+			window.localStorage.removeItem(draftKey);
+			return true;
+		}
+		const stored: StoredDraft = {
+			v: STORED_DRAFT_VERSION,
+			text: draft.text,
+			chips: draft.chips,
+			pastedTexts: draft.pastedTexts,
+		};
+		window.localStorage.setItem(draftKey, JSON.stringify(stored));
 		return true;
 	} catch (error) {
 		console.warn("[chat] could not save the composer draft", error);
@@ -17,45 +42,53 @@ function persistDraft(draftKey: string, text: string): boolean {
 	}
 }
 
-function readDraft(draftKey: string): string | undefined {
+// Drafts saved before chips were kept are the composer's plain text.
+export function parseStoredDraft(raw: string): ComposerDraft {
+	if (raw.startsWith(`{"v":${STORED_DRAFT_VERSION},`)) {
+		try {
+			const stored = JSON.parse(raw) as StoredDraft;
+			return {
+				text: stored.text,
+				chips: stored.chips ?? [],
+				pastedTexts: stored.pastedTexts ?? [],
+				attachments: [],
+			};
+		} catch {}
+	}
+	return draftFromText(raw);
+}
+
+function readDraft(draftKey: string): ComposerDraft | undefined {
 	const unsaved = unsavedDrafts.get(draftKey);
 	if (unsaved !== undefined) return unsaved;
 	try {
-		return window.localStorage.getItem(draftKey) ?? undefined;
+		const raw = window.localStorage.getItem(draftKey);
+		return raw === null ? undefined : parseStoredDraft(raw);
 	} catch {
 		return undefined;
 	}
 }
 
-function joinDrafts(drafts: readonly string[]): string {
-	const parts = drafts.map(parsePastedText);
-	return appendPastedText(
-		parts
-			.map((part) => part.text)
-			.filter(Boolean)
-			.join("\n\n"),
-		parts.flatMap((part) => part.pastes),
-	);
-}
-
 export function prependToDraft(
 	draftKey: string,
-	texts: readonly string[],
+	drafts: readonly ComposerDraft[],
 	persisted = true,
 ) {
-	const merged = joinDrafts([...texts, readDraft(draftKey) ?? ""]);
+	const merged = mergeDrafts([...drafts, readDraft(draftKey) ?? EMPTY_DRAFT]);
 	unsavedDrafts.set(draftKey, merged);
-	if (persisted) persistDraft(draftKey, merged);
+	if (persisted && persistDraft(draftKey, merged)) {
+		if (merged.attachments.length === 0) unsavedDrafts.delete(draftKey);
+	}
 	recoveredAfterRead.set(draftKey, [
 		...(recoveredAfterRead.get(draftKey) ?? []),
-		...texts,
+		...drafts,
 	]);
 }
 
-export function takeRecoveredDraftText(draftKey: string): string | null {
+export function takeRecoveredDraft(draftKey: string): ComposerDraft | null {
 	const recovered = recoveredAfterRead.get(draftKey);
 	recoveredAfterRead.delete(draftKey);
-	return recovered?.length ? joinDrafts(recovered) : null;
+	return recovered?.length ? mergeDrafts(recovered) : null;
 }
 
 export function useComposerDraft(draftKey: string, persisted = true) {
@@ -67,20 +100,20 @@ export function useComposerDraft(draftKey: string, persisted = true) {
 		const key = pendingDraftKey.current;
 		pendingDraftKey.current = null;
 		if (key === null) return;
-		const text = unsavedDrafts.get(key);
-		if (text !== undefined && persistDraft(key, text)) {
-			unsavedDrafts.delete(key);
-		}
+		const draft = unsavedDrafts.get(key);
+		if (draft === undefined || !persistDraft(key, draft)) return;
+		if (draft.attachments.length === 0) unsavedDrafts.delete(key);
 	}, []);
-	const onChange = useCallback(
-		(text: string) => {
+	const onDraftChange = useCallback(
+		(draft: ComposerDraft) => {
+			const empty = !hasStoredContent(draft) && draft.attachments.length === 0;
 			if (!persisted) {
-				if (text === "") unsavedDrafts.delete(draftKey);
-				else unsavedDrafts.set(draftKey, text);
+				if (empty) unsavedDrafts.delete(draftKey);
+				else unsavedDrafts.set(draftKey, draft);
 				return;
 			}
 			if (draftTimer.current) clearTimeout(draftTimer.current);
-			unsavedDrafts.set(draftKey, text);
+			unsavedDrafts.set(draftKey, draft);
 			pendingDraftKey.current = draftKey;
 			draftTimer.current = setTimeout(flushDraft, DRAFT_DEBOUNCE_MS);
 		},
@@ -90,7 +123,7 @@ export function useComposerDraft(draftKey: string, persisted = true) {
 
 	const [seed, setSeed] = useState(() => {
 		recoveredAfterRead.delete(draftKey);
-		return { draftKey, text: readDraft(draftKey) };
+		return { draftKey, draft: readDraft(draftKey) };
 	});
 
 	const clearDraft = useCallback(() => {
@@ -99,19 +132,19 @@ export function useComposerDraft(draftKey: string, persisted = true) {
 			if (draftTimer.current) clearTimeout(draftTimer.current);
 			draftTimer.current = null;
 			pendingDraftKey.current = null;
-			persistDraft(draftKey, "");
+			persistDraft(draftKey, EMPTY_DRAFT);
 		}
-		setSeed({ draftKey, text: undefined });
+		setSeed({ draftKey, draft: undefined });
 	}, [draftKey, persisted]);
 
 	if (seed.draftKey !== draftKey) {
 		recoveredAfterRead.delete(draftKey);
-		setSeed({ draftKey, text: readDraft(draftKey) });
+		setSeed({ draftKey, draft: readDraft(draftKey) });
 	}
 
 	return {
-		storedDraft: seed.draftKey === draftKey ? seed.text : readDraft(draftKey),
-		onChange,
+		storedDraft: seed.draftKey === draftKey ? seed.draft : readDraft(draftKey),
+		onDraftChange,
 		clearDraft,
 	};
 }

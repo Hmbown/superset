@@ -1,9 +1,26 @@
 import { afterEach, beforeEach, expect, spyOn, test } from "bun:test";
-import { appendPastedText, parsePastedText } from "@superset/chat/core";
+import { appendPastedText } from "@superset/chat/core";
+import {
+	type ComposerDraft,
+	draftFromText,
+	EMPTY_DRAFT,
+} from "@superset/chat-ui/PromptInput";
 
 const { act, cleanup, renderHook } = await import("@testing-library/react");
-const { prependToDraft, takeRecoveredDraftText, useComposerDraft } =
-	await import("./useComposerDraft");
+const {
+	parseStoredDraft,
+	prependToDraft,
+	takeRecoveredDraft,
+	useComposerDraft,
+} = await import("./useComposerDraft");
+
+const draft = (text: string, pastedTexts: string[] = []): ComposerDraft => ({
+	...EMPTY_DRAFT,
+	text,
+	pastedTexts,
+});
+const stored = (key: string) =>
+	parseStoredDraft(window.localStorage.getItem(key) ?? "");
 
 beforeEach(() => window.localStorage.clear());
 afterEach(cleanup);
@@ -11,53 +28,107 @@ test("a composer mounted before the save delay reads text typed into the one it 
 	const connecting = renderHook(() =>
 		useComposerDraft("chat-v3-draft:handoff"),
 	);
-	act(() => connecting.result.current.onChange("typed while connecting"));
+	act(() =>
+		connecting.result.current.onDraftChange(draft("typed while connecting")),
+	);
 
 	const connected = renderHook(() => useComposerDraft("chat-v3-draft:handoff"));
 	connecting.unmount();
 
-	expect(connected.result.current.storedDraft).toBe("typed while connecting");
+	expect(connected.result.current.storedDraft?.text).toBe(
+		"typed while connecting",
+	);
 });
 
 test("recovered text survives the composer's own save on unmount", () => {
 	const recoveredFirst = renderHook(() =>
 		useComposerDraft("chat-v3-draft:recover-a"),
 	);
-	act(() => recoveredFirst.result.current.onChange("newer draft"));
-	prependToDraft("chat-v3-draft:recover-a", ["unsent message"]);
+	act(() => recoveredFirst.result.current.onDraftChange(draft("newer draft")));
+	prependToDraft("chat-v3-draft:recover-a", [draft("unsent message")]);
 	recoveredFirst.unmount();
-	expect(window.localStorage.getItem("chat-v3-draft:recover-a")).toBe(
+	expect(stored("chat-v3-draft:recover-a").text).toBe(
 		"unsent message\n\nnewer draft",
 	);
 
 	const flushedFirst = renderHook(() =>
 		useComposerDraft("chat-v3-draft:recover-b"),
 	);
-	act(() => flushedFirst.result.current.onChange("newer draft"));
+	act(() => flushedFirst.result.current.onDraftChange(draft("newer draft")));
 	flushedFirst.unmount();
-	prependToDraft("chat-v3-draft:recover-b", ["unsent message"]);
-	expect(window.localStorage.getItem("chat-v3-draft:recover-b")).toBe(
+	prependToDraft("chat-v3-draft:recover-b", [draft("unsent message")]);
+	expect(stored("chat-v3-draft:recover-b").text).toBe(
 		"unsent message\n\nnewer draft",
 	);
 });
 
 test("unsent prompts with pasted cards join a draft with its own card", () => {
-	const draft = renderHook(() => useComposerDraft("chat-v3-draft:pastes"));
-	act(() =>
-		draft.result.current.onChange(appendPastedText("draft", ["draft log"])),
-	);
-	draft.unmount();
+	const hook = renderHook(() => useComposerDraft("chat-v3-draft:pastes"));
+	act(() => hook.result.current.onDraftChange(draft("draft", ["draft log"])));
+	hook.unmount();
 	prependToDraft("chat-v3-draft:pastes", [
-		appendPastedText("first", ["first log"]),
-		appendPastedText("second", ["second log"]),
+		draft("first", ["first log"]),
+		draft("second", ["second log"]),
 	]);
 
-	expect(
-		parsePastedText(window.localStorage.getItem("chat-v3-draft:pastes") ?? ""),
-	).toEqual({
+	expect(stored("chat-v3-draft:pastes")).toMatchObject({
 		text: "first\n\nsecond\n\ndraft",
-		pastes: ["first log", "second log", "draft log"],
+		pastedTexts: ["first log", "second log", "draft log"],
 	});
+});
+
+test("chips keep their place and identity through a save and a merge", () => {
+	const chip = { label: "Fix the mic", serialized: "@SUP-12", data: { id: 1 } };
+	const hook = renderHook(() => useComposerDraft("chat-v3-draft:chips"));
+	act(() =>
+		hook.result.current.onDraftChange({
+			...EMPTY_DRAFT,
+			text: "see @SUP-12",
+			chips: [{ start: 4, end: 11, chip }],
+		}),
+	);
+	hook.unmount();
+	prependToDraft("chat-v3-draft:chips", [draft("unsent")]);
+
+	expect(stored("chat-v3-draft:chips")).toMatchObject({
+		text: "unsent\n\nsee @SUP-12",
+		chips: [{ start: 12, end: 19, chip }],
+	});
+});
+
+test("a draft saved as plain text before chips were kept still opens", () => {
+	window.localStorage.setItem(
+		"chat-v3-draft:legacy",
+		appendPastedText("old draft", ["old log"]),
+	);
+	const hook = renderHook(() => useComposerDraft("chat-v3-draft:legacy"));
+	expect(hook.result.current.storedDraft).toEqual(
+		draftFromText(appendPastedText("old draft", ["old log"])),
+	);
+	expect(hook.result.current.storedDraft).toMatchObject({
+		text: "old draft",
+		pastedTexts: ["old log"],
+	});
+});
+
+test("attachments stay in memory and are never saved", () => {
+	const file = new File(["x"], "shot.png", { type: "image/png" });
+	const first = renderHook(() => useComposerDraft("chat-v3-draft:files"));
+	act(() =>
+		first.result.current.onDraftChange({
+			...draft("look"),
+			attachments: [{ id: "a1", file }],
+		}),
+	);
+	first.unmount();
+
+	expect(window.localStorage.getItem("chat-v3-draft:files")).not.toContain(
+		"shot.png",
+	);
+	const next = renderHook(() => useComposerDraft("chat-v3-draft:files"));
+	expect(next.result.current.storedDraft?.attachments).toEqual([
+		{ id: "a1", file },
+	]);
 });
 
 test("a draft that fails to save is still read from memory", () => {
@@ -69,11 +140,11 @@ test("a draft that fails to save is still read from memory", () => {
 	const warn = spyOn(console, "warn").mockImplementation(() => {});
 	try {
 		const first = renderHook(() => useComposerDraft("chat-v3-draft:quota"));
-		act(() => first.result.current.onChange("kept in memory"));
+		act(() => first.result.current.onDraftChange(draft("kept in memory")));
 		first.unmount();
 
 		const next = renderHook(() => useComposerDraft("chat-v3-draft:quota"));
-		expect(next.result.current.storedDraft).toBe("kept in memory");
+		expect(next.result.current.storedDraft?.text).toBe("kept in memory");
 	} finally {
 		setItem.mockRestore();
 		warn.mockRestore();
@@ -82,14 +153,14 @@ test("a draft that fails to save is still read from memory", () => {
 
 test("text recovered after a composer read its draft is handed to it once", () => {
 	renderHook(() => useComposerDraft("chat-v3-draft:late"));
-	prependToDraft("chat-v3-draft:late", ["unsent message"]);
-	expect(takeRecoveredDraftText("chat-v3-draft:late")).toBe("unsent message");
-	expect(takeRecoveredDraftText("chat-v3-draft:late")).toBeNull();
+	prependToDraft("chat-v3-draft:late", [draft("unsent message")]);
+	expect(takeRecoveredDraft("chat-v3-draft:late")?.text).toBe("unsent message");
+	expect(takeRecoveredDraft("chat-v3-draft:late")).toBeNull();
 
-	prependToDraft("chat-v3-draft:early", ["unsent message"]);
+	prependToDraft("chat-v3-draft:early", [draft("unsent message")]);
 	const reader = renderHook(() => useComposerDraft("chat-v3-draft:early"));
-	expect(reader.result.current.storedDraft).toBe("unsent message");
-	expect(takeRecoveredDraftText("chat-v3-draft:early")).toBeNull();
+	expect(reader.result.current.storedDraft?.text).toBe("unsent message");
+	expect(takeRecoveredDraft("chat-v3-draft:early")).toBeNull();
 });
 
 test("text recovered while another target is open shows once on return", () => {
@@ -102,16 +173,20 @@ test("text recovered while another target is open shows once on return", () => {
 		draftKey: "chat-v3-draft:return:subagent:c1",
 		persisted: false,
 	});
-	prependToDraft("chat-v3-draft:return", ["unsent message"]);
+	prependToDraft("chat-v3-draft:return", [draft("unsent message")]);
 
 	hook.rerender({ draftKey: "chat-v3-draft:return", persisted: true });
 
-	expect(hook.result.current.storedDraft).toBe("unsent message");
-	expect(takeRecoveredDraftText("chat-v3-draft:return")).toBeNull();
+	expect(hook.result.current.storedDraft?.text).toBe("unsent message");
+	expect(takeRecoveredDraft("chat-v3-draft:return")).toBeNull();
 });
 
 test("text restored to a subagent's draft stays in memory and reaches its composer", () => {
-	prependToDraft("chat-v3-draft:t1:subagent:c1", ["for the subagent"], false);
+	prependToDraft(
+		"chat-v3-draft:t1:subagent:c1",
+		[draft("for the subagent")],
+		false,
+	);
 	expect(
 		window.localStorage.getItem("chat-v3-draft:t1:subagent:c1"),
 	).toBeNull();
@@ -119,5 +194,5 @@ test("text restored to a subagent's draft stays in memory and reaches its compos
 	const reopened = renderHook(() =>
 		useComposerDraft("chat-v3-draft:t1:subagent:c1", false),
 	);
-	expect(reopened.result.current.storedDraft).toBe("for the subagent");
+	expect(reopened.result.current.storedDraft?.text).toBe("for the subagent");
 });

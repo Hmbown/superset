@@ -6,7 +6,7 @@ import type {
 	UserContent,
 } from "@superset/chat/protocol";
 import type {
-	ComposerChip,
+	ComposerDraft,
 	ComposerMentionEntry,
 	ComposerMentionProvider,
 	PromptInputCommand,
@@ -45,10 +45,7 @@ import { CHAT_COLUMN_CLASSNAME, CHAT_GUTTER_CLASSNAME } from "../../constants";
 import { commandChip, LEADING_COMMAND } from "../../utils/commandChip";
 import { mcpContextLine } from "../../utils/mcpServerChips";
 import { elementsForChips } from "../../utils/messageElements";
-import {
-	takeRecoveredDraftText,
-	useComposerDraft,
-} from "./hooks/useComposerDraft";
+import { takeRecoveredDraft, useComposerDraft } from "./hooks/useComposerDraft";
 import { useDrawerEntry } from "./hooks/useDrawerEntry";
 import { useFooterTier } from "./hooks/useFooterTier";
 import { useMcpServerPicker } from "./hooks/useMcpServerPicker";
@@ -60,7 +57,10 @@ export type ComposerTarget = {
 	onStop?: () => void;
 };
 
-export type ComposerHandle = Pick<PromptInputHandle, "appendText" | "focus"> & {
+export type ComposerHandle = Pick<
+	PromptInputHandle,
+	"restoreDraft" | "focus"
+> & {
 	returnFocus: (recallHistory?: boolean) => void;
 };
 
@@ -77,7 +77,10 @@ export type ComposerProps = {
 	modes?: SessionMode[];
 	currentModeId?: string;
 	onSetMode?: (modeId: string) => void;
-	onSend: (content: UserContent[], options: { steer: boolean }) => unknown;
+	onSend: (
+		content: UserContent[],
+		options: { steer: boolean; draft: ComposerDraft },
+	) => unknown;
 	history?: string[];
 	isActive?: boolean;
 	placeholder?: string;
@@ -147,7 +150,7 @@ export const Composer = memo(function Composer({
 	const trpcUtils = workspaceTrpc.useUtils();
 	const cloudUtils = cloudTrpc.useUtils();
 	const uploadAttachments = useUploadAttachments(workspaceId);
-	const { storedDraft, onChange, clearDraft } = useComposerDraft(
+	const { storedDraft, onDraftChange, clearDraft } = useComposerDraft(
 		draftKey,
 		draftPersisted,
 	);
@@ -167,7 +170,8 @@ export const Composer = memo(function Composer({
 	useImperativeHandle(
 		inputRef,
 		() => ({
-			appendText: (text: string) => promptInputRef.current?.appendText(text),
+			restoreDraft: (draft: ComposerDraft) =>
+				promptInputRef.current?.restoreDraft(draft),
 			focus: focusInput,
 			returnFocus,
 		}),
@@ -176,8 +180,8 @@ export const Composer = memo(function Composer({
 	const rootRef = useRef<HTMLDivElement>(null);
 	const footerTier = useFooterTier(rootRef);
 	useEffect(() => {
-		const recovered = takeRecoveredDraftText(draftKey);
-		if (recovered) promptInputRef.current?.appendText(recovered);
+		const recovered = takeRecoveredDraft(draftKey);
+		if (recovered) promptInputRef.current?.restoreDraft(recovered);
 	}, [draftKey]);
 	useLayoutEffect(() => {
 		const handoff = focusHandoff;
@@ -322,16 +326,17 @@ export const Composer = memo(function Composer({
 	}, [availableCommands, mcpCommand, t]);
 
 	const send = useCallback(
-		async (
-			text: string,
-			files: File[],
-			mentions: ComposerChip[],
-			pastedTexts: string[],
-			steer: boolean,
-		) => {
+		async ({
+			text,
+			files,
+			mentions,
+			pastedTexts,
+			steer,
+			draft,
+		}: PromptInputSubmitPayload) => {
 			const tags = await uploadAttachments(files);
 			if (!tags) {
-				promptInputRef.current?.appendText(appendPastedText(text, pastedTexts));
+				promptInputRef.current?.restoreDraft(draft);
 				return;
 			}
 			const message = text.trim();
@@ -353,7 +358,7 @@ export const Composer = memo(function Composer({
 						? [{ type: "text" as const, text: mcpContext, hidden: true }]
 						: []),
 				],
-				{ steer },
+				{ steer, draft },
 			);
 			clearDraft();
 		},
@@ -361,13 +366,8 @@ export const Composer = memo(function Composer({
 	);
 
 	const handleSubmit = useCallback(
-		({
-			text,
-			files,
-			mentions,
-			pastedTexts,
-			steer,
-		}: PromptInputSubmitPayload) => {
+		(payload: PromptInputSubmitPayload) => {
+			const { text, files, pastedTexts } = payload;
 			if (text.trim() === "" && files.length === 0 && pastedTexts.length === 0)
 				return;
 			const name = LEADING_COMMAND.exec(text.trim())?.[1];
@@ -392,7 +392,7 @@ export const Composer = memo(function Composer({
 				toast.error(t({ message: `Unknown command /${name}` }));
 				return false;
 			}
-			return send(text, files, mentions, pastedTexts, steer);
+			return send(payload);
 		},
 		[availableCommands, send, t, target, mcpPicker],
 	);
@@ -407,13 +407,13 @@ export const Composer = memo(function Composer({
 				className={CHAT_COLUMN_CLASSNAME}
 				collapseLargePastes
 				commands={commands}
-				defaultValue={storedDraft}
+				draft={storedDraft}
 				disabled={blocked}
 				findChips={mcpPicker.findChips}
 				history={history}
 				key={draftKey}
 				mentionProviders={mentionProviders}
-				onChange={onChange}
+				onDraftChange={onDraftChange}
 				onStop={stop}
 				onSubmit={handleSubmit}
 				ref={promptInputRef}

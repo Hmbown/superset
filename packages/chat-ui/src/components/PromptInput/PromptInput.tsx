@@ -16,6 +16,7 @@ export type {
 	ComposerActionContext,
 	ComposerChip,
 	ComposerChipMatch,
+	ComposerDraft,
 	ComposerMentionEntry,
 	ComposerMentionProvider,
 	ComposerMentionSource,
@@ -44,9 +45,8 @@ export function PromptInput({
 	submitWhileStreaming = false,
 	toolbar,
 	toolbarEnd,
-	defaultValue,
-	findChips,
-	onChange,
+	draft,
+	onDraftChange,
 	collapseLargePastes = false,
 	onSubmit,
 	onStop,
@@ -82,9 +82,8 @@ export function PromptInput({
 					submitWhileStreaming={submitWhileStreaming}
 					toolbar={toolbar}
 					toolbarEnd={toolbarEnd}
-					defaultValue={defaultValue}
-					findChips={findChips}
-					onChange={onChange}
+					draft={draft}
+					onDraftChange={onDraftChange}
 					collapseLargePastes={collapseLargePastes}
 					onSubmit={onSubmit}
 					onStop={onStop}

@@ -7,7 +7,6 @@ import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
 import { LexicalTypeaheadMenuPlugin } from "@lexical/react/LexicalTypeaheadMenuPlugin";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { appendPastedText, parsePastedText } from "@superset/chat/core";
 import { getClipboardFiles } from "@superset/ui/lib/clipboard-files";
 import { cn } from "@superset/ui/utils";
 import {
@@ -61,13 +60,16 @@ import { MentionChipNode } from "../../nodes/mentionChipNode";
 import type {
 	ComposerActionContext,
 	ComposerChip,
+	ComposerDraft,
 	ComposerMentionEntry,
 	ComposerPanelContent,
 	PromptInputAttachment,
 	PromptInputProps,
 } from "../../types";
+import { chipFinder, placeChips } from "../../utils/composerDraft";
 import { registerDraftEdit } from "../../utils/draftEdit";
 import { registerHistoryNavigation } from "../../utils/historyNavigation";
+import { $insertDraftText } from "../../utils/insertDraftText";
 import { $insertTranscript } from "../../utils/insertTranscript";
 import { matchToken } from "../../utils/matchToken";
 import { rankCommands } from "../../utils/rankCommands";
@@ -122,9 +124,8 @@ export type ComposerBodyProps = Required<
 		| "dictation"
 		| "toolbar"
 		| "toolbarEnd"
-		| "defaultValue"
-		| "findChips"
-		| "onChange"
+		| "draft"
+		| "onDraftChange"
 		| "collapseLargePastes"
 		| "onSubmit"
 		| "onStop"
@@ -147,6 +148,19 @@ function $insertChipAtSelection(chip: ComposerChip) {
 	if (!$isRangeSelection(selection)) return;
 	const chipNode = MentionChipNode.fromChip(chip);
 	selection.insertNodes([chipNode, $createTextNode(" ")]);
+}
+
+function withFreshPreview(
+	attachment: PromptInputAttachment,
+): PromptInputAttachment {
+	const { file } = attachment;
+	return {
+		...attachment,
+		previewUrl:
+			file.type.startsWith("image/") || file.type.startsWith("video/")
+				? URL.createObjectURL(file)
+				: undefined,
+	};
 }
 
 function $collectChips(): ComposerChip[] {
@@ -178,9 +192,8 @@ export function ComposerBody({
 	pending,
 	toolbar,
 	toolbarEnd,
-	defaultValue,
-	findChips,
-	onChange,
+	draft,
+	onDraftChange,
 	collapseLargePastes,
 	onSubmit,
 	onStop,
@@ -195,84 +208,21 @@ export function ComposerBody({
 }: ComposerBodyProps) {
 	const { t } = useLingui();
 	const [editor] = useLexicalComposerContext();
-	const onChangeRef = useRef(onChange);
-	onChangeRef.current = onChange;
+	const onDraftChangeRef = useRef(onDraftChange);
+	onDraftChangeRef.current = onDraftChange;
+	const emitDraftRef = useRef(() => {});
 	const pasted = usePastedTexts(editor, {
 		enabled: Boolean(collapseLargePastes),
-		onCardsChange: (cards, editorText) =>
-			onChangeRef.current?.(
-				appendPastedText(
-					editorText,
-					cards.map((card) => card.text),
-				),
-			),
+		onCardsChange: () => emitDraftRef.current(),
 	});
 	const { cardsRef } = pasted;
-	const draftText = useCallback(
-		(editorText: string) =>
-			appendPastedText(
-				editorText,
-				cardsRef.current.map((card) => card.text),
-			),
-		[cardsRef],
-	);
-	const splitPastes = useCallback(
-		(text: string) =>
-			collapseLargePastes ? parsePastedText(text) : { text, pastes: [] },
-		[collapseLargePastes],
-	);
 	const focusAtEnd = useCallback(() => {
 		editor.update(() => $getRoot().selectEnd());
 		editor.focus();
 	}, [editor]);
-	useImperativeHandle(
-		ref,
-		() => ({
-			appendText(message: string) {
-				const { text, pastes } = splitPastes(message);
-				pasted.restore(pastes);
-				if (!text) {
-					onChangeRef.current?.(
-						draftText(
-							editor.getEditorState().read(() => $getRoot().getTextContent()),
-						),
-					);
-					editor.focus();
-					return;
-				}
-				editor.update(() => {
-					const root = $getRoot();
-					const separator = root.getTextContent().trim() === "" ? "" : "\n";
-					root.selectEnd();
-					const selection = $getSelection();
-					if ($isRangeSelection(selection)) {
-						selection.insertRawText(`${separator}${text}`);
-					}
-				});
-				editor.focus();
-			},
-			insertChip(chip: ComposerChip) {
-				editor.update(() => $insertChipAtSelection(chip));
-			},
-			openFileDialog() {
-				fileInputRef.current?.click();
-			},
-			openPanel(next: ComposerPanelContent) {
-				setPanel(next);
-			},
-			focus() {
-				focusAtEnd();
-			},
-			recallPreviousPrompt() {
-				editor.focus();
-				historyNavigationRef.current?.recallOlder();
-			},
-		}),
-		[draftText, editor, focusAtEnd, pasted.restore, splitPastes],
+	const [ownAttachments, setOwnAttachments] = useState<PromptInputAttachment[]>(
+		[],
 	);
-	const [ownAttachments, setOwnAttachments] = useState<
-		PromptInputAttachment[]
-	>([]);
 	const attachments = hostAttachments ?? ownAttachments;
 	const attachmentsRef = useRef(attachments);
 	attachmentsRef.current = attachments;
@@ -291,6 +241,25 @@ export function ComposerBody({
 		},
 		[isHostOwned],
 	);
+	const readDraft = useCallback((): ComposerDraft => {
+		const { text, chips } = editor.getEditorState().read(() => ({
+			text: $getRoot().getTextContent(),
+			chips: $collectChips(),
+		}));
+		return {
+			text,
+			chips: placeChips(text, chips),
+			pastedTexts: cardsRef.current.map((card) => card.text),
+			attachments: attachmentsRef.current,
+		};
+	}, [cardsRef, editor]);
+	emitDraftRef.current = () => onDraftChangeRef.current?.(readDraft());
+	const emittedAttachments = useRef(attachments);
+	useEffect(() => {
+		if (emittedAttachments.current === attachments) return;
+		emittedAttachments.current = attachments;
+		emitDraftRef.current();
+	}, [attachments]);
 	const [isEmpty, setIsEmpty] = useState(true);
 	const [dragging, setDragging] = useState(false);
 	const [mentionQuery, setMentionQuery] = useState<string | null>(null);
@@ -331,51 +300,104 @@ export function ComposerBody({
 		reset: () => void;
 	} | null>(null);
 
-	// A draft the host had stored. Read once: after mount the editor is the
-	// only writer, and re-applying would fight what is being typed.
-	const seededValue = useRef<string | null>(null);
+	// Read once: after mount the editor is the only writer, and re-applying
+	// would fight what is being typed.
+	const seededText = useRef<string | null>(null);
 	useEffect(() => {
-		if (seededValue.current !== null) return;
-		const { text, pastes } = splitPastes(defaultValue ?? "");
-		seededValue.current = text;
-		pasted.restore(pastes);
-		if (!text) return;
-		editor.update(() => {
-			const root = $getRoot();
-			if (root.getTextContent() !== "") return;
-			root.selectEnd();
-			const selection = $getSelection();
-			if ($isRangeSelection(selection)) selection.insertText(text);
-		});
-	}, [defaultValue, editor, pasted.restore, splitPastes]);
+		if (seededText.current !== null) return;
+		seededText.current = draft?.text ?? "";
+		if (!draft) return;
+		pasted.restore(draft.pastedTexts);
+		if (!isHostOwned && draft.attachments.length > 0) {
+			setOwnAttachments(draft.attachments.map(withFreshPreview));
+		}
+		editor.update(
+			() => {
+				const root = $getRoot();
+				if (root.getTextContent() !== "") return;
+				root.selectEnd();
+				$insertDraftText(draft.text, draft.chips);
+			},
+			{ onUpdate: () => emitDraftRef.current() },
+		);
+	}, [draft, editor, isHostOwned, pasted.restore]);
 
-	// Chips come back once the finder can name them, which may be after the
+	// Chips come back once the host can name them, which may be after the
 	// draft was read (a catalog still loading). Only the untouched draft is
 	// rewritten: once edited, even back to the same text, it is the user's.
 	const draftEdited = useRef(false);
 	useEffect(() => {
-		const seededText = seededValue.current;
-		if (!seededText) return;
-		return registerDraftEdit(editor, seededText, () => {
+		const text = seededText.current;
+		if (!text) return;
+		return registerDraftEdit(editor, text, () => {
 			draftEdited.current = true;
 		});
 	}, [editor]);
 	useEffect(() => {
-		const seededText = seededValue.current;
-		if (!findChips || !seededText || draftEdited.current) return;
+		const text = seededText.current;
+		if (!draft || !text || draft.text !== text || draftEdited.current) return;
+		const findChips = chipFinder(draft.chips.map(({ chip }) => chip));
 		editor.update(() => {
-			if ($getRoot().getTextContent() !== seededText) return;
+			if ($getRoot().getTextContent() !== text) return;
 			$restoreChips(findChips);
 		});
-	}, [editor, findChips]);
+	}, [draft, editor]);
 
 	useEffect(
-		() =>
-			editor.registerUpdateListener(({ editorState }) => {
-				const text = editorState.read(() => $getRoot().getTextContent());
-				onChangeRef.current?.(draftText(text));
-			}),
-		[draftText, editor],
+		() => editor.registerUpdateListener(() => emitDraftRef.current()),
+		[editor],
+	);
+
+	useImperativeHandle(
+		ref,
+		() => ({
+			restoreDraft(restored: ComposerDraft) {
+				pasted.restore(restored.pastedTexts);
+				if (restored.attachments.length > 0) {
+					setAttachments((previous) => [
+						...previous,
+						...restored.attachments.map(withFreshPreview),
+					]);
+				}
+				editor.update(
+					() => {
+						const root = $getRoot();
+						const separator =
+							root.getTextContent().trim() === "" || restored.text.trim() === ""
+								? ""
+								: "\n";
+						root.selectEnd();
+						$insertDraftText(
+							`${separator}${restored.text}`,
+							restored.chips.map((match) => ({
+								...match,
+								start: match.start + separator.length,
+								end: match.end + separator.length,
+							})),
+						);
+					},
+					{ onUpdate: () => emitDraftRef.current() },
+				);
+				editor.focus();
+			},
+			insertChip(chip: ComposerChip) {
+				editor.update(() => $insertChipAtSelection(chip));
+			},
+			openFileDialog() {
+				fileInputRef.current?.click();
+			},
+			openPanel(next: ComposerPanelContent) {
+				setPanel(next);
+			},
+			focus() {
+				focusAtEnd();
+			},
+			recallPreviousPrompt() {
+				editor.focus();
+				historyNavigationRef.current?.recallOlder();
+			},
+		}),
+		[editor, focusAtEnd, pasted.restore, setAttachments],
 	);
 
 	const addFiles = (files: FileList | File[]) => {
@@ -510,14 +532,11 @@ export function ComposerBody({
 			!stateRef.current.submitWhileStreaming
 		)
 			return;
-		const { text, mentions } = editor.getEditorState().read(() => ({
-			text: $getRoot().getTextContent().trim(),
-			mentions: $collectChips(),
-		}));
-		const files = stateRef.current.attachments.map(
-			(attachment) => attachment.file,
-		);
-		const pastedTexts = cardsRef.current.map((card) => card.text);
+		const draft = readDraft();
+		const text = draft.text.trim();
+		const mentions = draft.chips.map(({ chip }) => chip);
+		const files = draft.attachments.map((attachment) => attachment.file);
+		const { pastedTexts } = draft;
 		if (
 			!text &&
 			files.length === 0 &&
@@ -533,6 +552,7 @@ export function ComposerBody({
 				mentions,
 				pastedTexts,
 				steer,
+				draft,
 			}) === false
 		)
 			return;
