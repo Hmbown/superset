@@ -63,7 +63,12 @@ export async function runnableDeviceHubCli(
 async function signSimulatorHelpersAdHoc(helpersDir: string): Promise<void> {
 	for (const subdir of SIMULATOR_HELPER_SUBDIRS) {
 		const dir = join(helpersDir, subdir);
-		const entries = await readdir(dir, { withFileTypes: true }).catch(() => []);
+		const entries = await readdir(dir, { withFileTypes: true }).catch(
+			(error: NodeJS.ErrnoException) => {
+				if (error.code === "ENOENT") return [];
+				throw error;
+			},
+		);
 		for (const entry of entries) {
 			const path = join(dir, entry.name);
 			const isBundle = entry.isDirectory() && entry.name.endsWith(".app");
