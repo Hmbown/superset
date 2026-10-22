@@ -340,6 +340,17 @@ export function gbHourPack(plan: AutumnCatalogPlan): GbHourPack | null {
 	return gbMinutes && amount ? { gbMinutes, price: amount } : null;
 }
 
+export const GB_HOUR_PURCHASE_AMOUNT = { min: 5, max: 2000 };
+
+/** What a purchase of about `amount` buys, rounded up to whole pack units. */
+export function gbHourPackPurchase(
+	pack: GbHourPack,
+	amount: number,
+): GbHourPack {
+	const units = Math.max(1, Math.ceil(amount / pack.price));
+	return { gbMinutes: units * pack.gbMinutes, price: units * pack.price };
+}
+
 /** The purchasable lineup, one entry per family, ordered for display. */
 export function planCatalogFromAutumn(
 	plans: AutumnCatalogPlan[],

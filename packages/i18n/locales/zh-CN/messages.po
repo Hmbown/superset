@@ -409,11 +409,6 @@ msgstr "{0}，尾号{1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{where}中已存在{0}个文件。是否要替换它们？"
 
-#. placeholder {0}: formatNumber(pack.gbMinutes / 60)
-#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
-msgid "{0} GB-hours for {1}"
-msgstr "{0} GB 小时，{1}"
-
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0}已安装"
@@ -491,6 +486,11 @@ msgstr "{0}/{totalCount}"
 #. placeholder {0}: plugin.interface.displayName
 msgid "{0} options"
 msgstr "{0}选项"
+
+#. placeholder {0}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
+#. placeholder {1}: formatNumber(pack.gbMinutes)
+msgid "{0} per {1} GB-minutes"
+msgstr "每 {1} GB 分钟 {0}"
 
 #. placeholder {0}: normalizedProjectIds.length
 msgid "{0} projects"
@@ -890,9 +890,6 @@ msgstr "{gate}：{statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "每席位每月 {gbHours} 云端 GB 小时"
 
-msgid "{gbHours} GB-hours for {price}"
-msgstr "{gbHours} GB 小时，{price}"
-
 msgid "{gbHours} on {name}"
 msgstr "{name} 含 {gbHours}"
 
@@ -1043,8 +1040,8 @@ msgstr "{noun, select, repository {请至少指定一个仓库。} channel {请�
 msgid "{openCount} open"
 msgstr "{openCount}项已开启"
 
-msgid "{packGbHours} GB-hours for {packPrice}. Used after the monthly pool, and never expire."
-msgstr "{packGbHours} GB 小时，{packPrice}。在每月额度池之后使用，永不过期。"
+msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
+msgstr "{packPrice} 可购买 {packGbMinutes} GB 分钟（{packGbHours} GB 小时）。在每月额度池之后使用，永不过期。"
 
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} 可以以你的身份读取和更改你的 {pluginLabel} 账户中的数据，包括此页面的未来版本。它可以把读取的内容发送到其他网站。只允许你信任的页面。"
@@ -1101,6 +1098,9 @@ msgstr "{presetLabel}已重置为默认值"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · 行高{0}"
+
+msgid "{price} per {gbMinutes} GB-minutes"
+msgstr "每 {gbMinutes} GB 分钟 {price}"
 
 msgid "{price} per user/month"
 msgstr "每用户每月 {price}"
@@ -2312,6 +2312,9 @@ msgstr "另有：@superset/ui/spinner"
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "随时知道哪个智能体需要你，通知可直接跳转到被阻塞的智能体。"
 
+msgid "Amount to spend"
+msgstr "金额"
+
 msgid "An agent completes multi-file changes end to end."
 msgstr "智能体能端到端完成跨文件改动。"
 
@@ -2831,6 +2834,9 @@ msgstr "自动保存"
 msgid "Auto top-up"
 msgstr "自动充值"
 
+msgid "Auto top-up amount"
+msgstr "自动充值金额"
+
 msgid "auto-generated"
 msgstr "自动生成"
 
@@ -3340,14 +3346,17 @@ msgstr "按钮工"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "按钮、切换控件和键盘提示"
 
+msgid "Buy"
+msgstr "购买"
+
+msgid "Buy {buyGbHours} GB-hours"
+msgstr "购买 {buyGbHours} GB 小时"
+
 msgid "Buy extra GB-hours"
 msgstr "购买额外 GB 小时"
 
-msgid "Buy for {buyPrice}"
-msgstr "以 {buyPrice} 购买"
-
-msgid "Buys {packGbHours} GB-hours for {packPrice} when fewer than this many GB-hours remain."
-msgstr "当剩余 GB 小时少于此数时，以 {packPrice} 购买 {packGbHours} GB 小时。"
+msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
+msgstr "当剩余 GB 小时少于所选数量时，以 {topupPrice} 购买 {topupGbHours} GB 小时。"
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -6877,6 +6886,9 @@ msgstr "请输入有效的重复规则。"
 
 msgid "Enter a value."
 msgstr "请输入一个值。"
+
+msgid "Enter a whole amount from {minAmount} to {maxAmount}."
+msgstr "请输入 {minAmount} 到 {maxAmount} 之间的整数金额。"
 
 msgid "Enter a whole number"
 msgstr "输入整数"
@@ -12586,9 +12598,6 @@ msgstr "packages/ui · 组件清单"
 
 msgid "packages/ui/src/components/ui/kbd.tsx"
 msgstr "packages/ui/src/components/ui/kbd.tsx"
-
-msgid "Packs"
-msgstr "数量"
 
 msgid "Page"
 msgstr "页面"
@@ -19794,8 +19803,8 @@ msgstr "可以。申请最合适的职位，并告诉我们你想做什么。附
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "有。免费版面向个人，包含1个用户、本地工作区、桌面应用和CLI。无需信用卡。"
 
-msgid "Yes. On plans with cloud workspaces, owners can buy {packGbHours} GB-hours for {packPrice} in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
-msgstr "可以。在带云端工作区的套餐中，所有者可以在设置的账单中以 {packPrice} 购买 {packGbHours} GB 小时。购买的 GB 小时在每月额度池之后使用，永不过期；余量不足时，自动充值可以继续购买。"
+msgid "Yes. On plans with cloud workspaces, owners can buy any amount of extra GB-hours at {packPrice} per {packGbMinutes} GB-minutes in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "可以。在包含云工作区的方案中，所有者可以在设置的账单中按每 {packGbMinutes} GB 分钟 {packPrice} 的价格购买任意数量的额外 GB 小时。购买的 GB 小时在每月额度池之后使用，永不过期，余量不足时自动充值可以继续购买。"
 
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "是的。Superset已通过独立审计机构的SOC 2 Type II审计，覆盖我们的安全控制在一段时间内的实际运行情况。可在trust.superset.sh索取报告并查阅我们的安全文档。"

@@ -409,11 +409,6 @@ msgstr "{0} kończąca się na {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "W {where} istnieje już {0} plików. Czy chcesz je zastąpić?"
 
-#. placeholder {0}: formatNumber(pack.gbMinutes / 60)
-#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
-msgid "{0} GB-hours for {1}"
-msgstr "{0} GB-godzin za {1}"
-
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} zainstalowana"
@@ -491,6 +486,11 @@ msgstr "{0} z {totalCount}"
 #. placeholder {0}: plugin.interface.displayName
 msgid "{0} options"
 msgstr "Opcje {0}"
+
+#. placeholder {0}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
+#. placeholder {1}: formatNumber(pack.gbMinutes)
+msgid "{0} per {1} GB-minutes"
+msgstr "{0} za {1} GB-minut"
 
 #. placeholder {0}: normalizedProjectIds.length
 msgid "{0} projects"
@@ -890,9 +890,6 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "{gbHours} GB-godzin w chmurze na miejsce miesięcznie"
 
-msgid "{gbHours} GB-hours for {price}"
-msgstr "{gbHours} GB-godzin za {price}"
-
 msgid "{gbHours} on {name}"
 msgstr "{gbHours} w planie {name}"
 
@@ -1043,8 +1040,8 @@ msgstr "{noun, select, repository {Podaj co najmniej jedno repozytorium.} channe
 msgid "{openCount} open"
 msgstr "{openCount} otwartych"
 
-msgid "{packGbHours} GB-hours for {packPrice}. Used after the monthly pool, and never expire."
-msgstr "{packGbHours} GB-godzin za {packPrice}. Używane po miesięcznej puli, nigdy nie wygasają."
+msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
+msgstr "{packPrice} kupuje {packGbMinutes} GB-minut ({packGbHours} GB-godzin). Używane po miesięcznej puli, nigdy nie wygasają."
 
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} może w Twoim imieniu odczytywać i zmieniać dane na Twoim koncie {pluginLabel}, także w przyszłych wersjach tej strony. To, co odczyta, może wysłać do innych witryn. Zezwalaj tylko stronom, którym ufasz."
@@ -1101,6 +1098,9 @@ msgstr "{presetLabel} przywrócono do ustawień domyślnych"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize} px · interlinia {0}"
+
+msgid "{price} per {gbMinutes} GB-minutes"
+msgstr "{price} za {gbMinutes} GB-minut"
 
 msgid "{price} per user/month"
 msgstr "{price} za użytkownika/miesiąc"
@@ -2312,6 +2312,9 @@ msgstr "Także: @superset/ui/spinner"
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Zawsze wiedz, który agent Cię potrzebuje, dzięki powiadomieniom prowadzącym prosto do zablokowanego agenta."
 
+msgid "Amount to spend"
+msgstr "Kwota"
+
 msgid "An agent completes multi-file changes end to end."
 msgstr "Agent wykonuje zmiany w wielu plikach od początku do końca."
 
@@ -2831,6 +2834,9 @@ msgstr "Automatyczne zapisywanie"
 msgid "Auto top-up"
 msgstr "Automatyczne doładowanie"
 
+msgid "Auto top-up amount"
+msgstr "Kwota automatycznego doładowania"
+
 msgid "auto-generated"
 msgstr "generowana automatycznie"
 
@@ -3340,14 +3346,17 @@ msgstr "Naciskacz guzików"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "Przyciski, przełączniki i elementy obsługi klawiatury"
 
+msgid "Buy"
+msgstr "Kup"
+
+msgid "Buy {buyGbHours} GB-hours"
+msgstr "Kup {buyGbHours} GB-godzin"
+
 msgid "Buy extra GB-hours"
 msgstr "Kup dodatkowe GB-godziny"
 
-msgid "Buy for {buyPrice}"
-msgstr "Kup za {buyPrice}"
-
-msgid "Buys {packGbHours} GB-hours for {packPrice} when fewer than this many GB-hours remain."
-msgstr "Kupuje {packGbHours} GB-godzin za {packPrice}, gdy zostanie mniej niż tyle GB-godzin."
+msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
+msgstr "Kupuje {topupGbHours} GB-godzin za {topupPrice}, gdy zostanie mniej GB-godzin niż wybrana liczba."
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -6877,6 +6886,9 @@ msgstr "Podaj prawidłową regułę powtarzania."
 
 msgid "Enter a value."
 msgstr "Podaj wartość."
+
+msgid "Enter a whole amount from {minAmount} to {maxAmount}."
+msgstr "Wpisz pełną kwotę od {minAmount} do {maxAmount}."
 
 msgid "Enter a whole number"
 msgstr "Wpisz liczbę całkowitą"
@@ -12586,9 +12598,6 @@ msgstr "packages/ui · rejestr komponentów"
 
 msgid "packages/ui/src/components/ui/kbd.tsx"
 msgstr "packages/ui/src/components/ui/kbd.tsx"
-
-msgid "Packs"
-msgstr "Pakiety"
 
 msgid "Page"
 msgstr "Strona"
@@ -19794,8 +19803,8 @@ msgstr "Tak. Aplikuj na stanowisko, które najlepiej do Ciebie pasuje, i napisz 
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "Tak. Plan darmowy obejmuje pojedyncze osoby: 1 użytkownik, lokalne obszary robocze, aplikacja desktopowa i CLI. Bez karty kredytowej."
 
-msgid "Yes. On plans with cloud workspaces, owners can buy {packGbHours} GB-hours for {packPrice} in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
-msgstr "Tak. W planach z obszarami roboczymi w chmurze właściciele mogą kupić {packGbHours} GB-godzin za {packPrice} w Ustawienia, Rozliczenia. Kupione GB-godziny są używane po miesięcznej puli i nigdy nie wygasają, a automatyczne doładowanie może dokupić kolejne, gdy się kończą."
+msgid "Yes. On plans with cloud workspaces, owners can buy any amount of extra GB-hours at {packPrice} per {packGbMinutes} GB-minutes in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "Tak. W planach z chmurowymi przestrzeniami roboczymi właściciele mogą kupić dowolną liczbę dodatkowych GB-godzin w cenie {packPrice} za {packGbMinutes} GB-minut w Ustawieniach, Rozliczenia. Kupione GB-godziny są używane po miesięcznej puli i nigdy nie wygasają, a automatyczne doładowanie może kupić więcej, gdy się kończą."
 
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "Tak. Superset przeszedł audyt SOC 2 Type II u niezależnego audytora, obejmujący działanie naszych zabezpieczeń w czasie. Poproś o raport i zapoznaj się z dokumentacją bezpieczeństwa na trust.superset.sh."

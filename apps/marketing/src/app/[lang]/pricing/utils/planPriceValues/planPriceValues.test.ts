@@ -84,9 +84,9 @@ describe("planPriceValues", () => {
 								{
 									featureId: "box_gb_minutes",
 									price: {
-										amount: 60,
+										amount: 1,
 										interval: "one_off",
-										billingUnits: 60000,
+										billingUnits: 1000,
 									},
 								},
 							],
@@ -102,13 +102,13 @@ describe("planPriceValues", () => {
 		expect(values.byFamily.pro).toMatchObject({ gbHours: null, pack: null });
 		expect(values.byFamily.team).toMatchObject({
 			multiple: null,
-			pack: "1,000 GB-hours for $60",
+			pack: "$1 per 1,000 GB-minutes",
 		});
 		expect(values.byFamily.ultra).toMatchObject({
 			multiple: "3.3",
 			baseName: "Team",
 		});
-		expect(values.packPrice).toBe("$60");
+		expect(values.packPrice).toBe("$1");
 		expect(featureShown({ needs: "gbHours" }, values.byFamily.pro)).toBe(false);
 		expect(featureShown({ needs: "pack" }, values.byFamily.team)).toBe(true);
 	});

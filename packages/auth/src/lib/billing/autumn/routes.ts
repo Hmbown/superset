@@ -1,6 +1,10 @@
 import { db } from "@superset/db/client";
 import { members, subscriptions } from "@superset/db/schema";
-import { gbHourPack } from "@superset/shared/billing";
+import {
+	GB_HOUR_PURCHASE_AMOUNT,
+	gbHourPack,
+	gbHourPackPurchase,
+} from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
 import { AutumnError } from "autumn-js";
 import type { BetterAuthPlugin } from "better-auth";
@@ -208,7 +212,11 @@ export const autumnBillingRoutes = {
 				method: "POST",
 				body: z.object({
 					...organizationBody,
-					packs: z.number().int().min(1).max(20),
+					amount: z
+						.number()
+						.int()
+						.min(GB_HOUR_PURCHASE_AMOUNT.min)
+						.max(GB_HOUR_PURCHASE_AMOUNT.max),
 				}),
 				use: [sessionMiddleware],
 			},
@@ -221,7 +229,7 @@ export const autumnBillingRoutes = {
 					featureQuantities: [
 						{
 							featureId: BOX_GB_MINUTES_FEATURE_ID,
-							quantity: ctx.body.packs * pack.gbMinutes,
+							quantity: gbHourPackPurchase(pack, ctx.body.amount).gbMinutes,
 						},
 					],
 				});
@@ -237,6 +245,11 @@ export const autumnBillingRoutes = {
 					...organizationBody,
 					enabled: z.boolean(),
 					thresholdGbHours: z.number().int().min(0).max(100_000),
+					amount: z
+						.number()
+						.int()
+						.min(GB_HOUR_PURCHASE_AMOUNT.min)
+						.max(GB_HOUR_PURCHASE_AMOUNT.max),
 				}),
 				use: [sessionMiddleware],
 			},
@@ -251,7 +264,7 @@ export const autumnBillingRoutes = {
 								featureId: BOX_GB_MINUTES_FEATURE_ID,
 								enabled: ctx.body.enabled,
 								threshold: ctx.body.thresholdGbHours * 60,
-								quantity: pack.gbMinutes,
+								quantity: gbHourPackPurchase(pack, ctx.body.amount).gbMinutes,
 								purchaseLimit: {
 									interval: "month",
 									limit: AUTO_TOPUP_MONTHLY_LIMIT,

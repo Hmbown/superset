@@ -60,15 +60,18 @@ PostHog, not in code. Pro's seat license has no GB-minutes.
 ## Extra GB-hours
 
 A plan sells extra GB-minutes through a one-off prepaid `box_gb_minutes` item:
-`interval: one_off`, `billing_method: prepaid`, `billing_units: 60000` (1,000
-GB-hours), `amount: 60`. They never expire and are used after the monthly pool.
+`interval: one_off`, `billing_method: prepaid`, `billing_units: 1000`, `amount: 1`
+($1 per 1,000 GB-minutes, the overage rate). They never expire and are used
+after the monthly pool. Owners enter a whole amount from $5 to $2,000
+(`GB_HOUR_PURCHASE_AMOUNT`), and `gbHourPackPurchase` rounds it up to whole
+units of the subscribed plan version's item.
 
 - Buying: `POST /autumn/buyGbHours` (owners) sends `billing.update` with
-  `featureQuantities` of packs x 60,000. The quantity is the amount to buy, not a
-  new total, so purchases stack.
+  `featureQuantities` of the GB-minutes the amount buys. The quantity is the
+  amount to buy, not a new total, so purchases stack.
 - Auto top-up: `POST /autumn/setAutoTopup` (owners) writes the customer's
-  `billingControls.autoTopups` (threshold in GB-minutes, one pack per top-up, at
-  most 10 a month). Autumn fires it when a tracked event takes the balance below
+  `billingControls.autoTopups` (threshold in GB-minutes, the owner's amount per
+  top-up, at most 10 a month). Autumn fires it when a tracked event takes the balance below
   the threshold; one large event that jumps straight into overage does not.
 - Past the monthly pool and the bought hours, usage is overage at the plan's rate.
 

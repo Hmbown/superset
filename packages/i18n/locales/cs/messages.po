@@ -409,11 +409,6 @@ msgstr "{0} končící na {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "V {where} už existuje {0} souborů. Chcete je nahradit?"
 
-#. placeholder {0}: formatNumber(pack.gbMinutes / 60)
-#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
-msgid "{0} GB-hours for {1}"
-msgstr "{0} GB-hodin za {1}"
-
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} nainstalováno"
@@ -491,6 +486,11 @@ msgstr "{0} z {totalCount}"
 #. placeholder {0}: plugin.interface.displayName
 msgid "{0} options"
 msgstr "Možnosti {0}"
+
+#. placeholder {0}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
+#. placeholder {1}: formatNumber(pack.gbMinutes)
+msgid "{0} per {1} GB-minutes"
+msgstr "{0} za {1} GB-minut"
 
 #. placeholder {0}: normalizedProjectIds.length
 msgid "{0} projects"
@@ -890,9 +890,6 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "{gbHours} cloudových GB-hodin na místo měsíčně"
 
-msgid "{gbHours} GB-hours for {price}"
-msgstr "{gbHours} GB-hodin za {price}"
-
 msgid "{gbHours} on {name}"
 msgstr "{gbHours} v plánu {name}"
 
@@ -1043,8 +1040,8 @@ msgstr "{noun, select, repository {Zadejte alespoň jeden repozitář.} channel 
 msgid "{openCount} open"
 msgstr "{openCount} otevřených"
 
-msgid "{packGbHours} GB-hours for {packPrice}. Used after the monthly pool, and never expire."
-msgstr "{packGbHours} GB-hodin za {packPrice}. Čerpají se po měsíčním fondu a nikdy nevyprší."
+msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
+msgstr "{packPrice} koupí {packGbMinutes} GB-minut ({packGbHours} GB-hodin). Čerpají se po měsíčním fondu a nikdy nevyprší."
 
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} může vaším jménem číst a měnit data ve vašem účtu {pluginLabel}, a to i v budoucích verzích této stránky. Co načte, může odeslat na jiné weby. Povolte jen stránky, kterým důvěřujete."
@@ -1101,6 +1098,9 @@ msgstr "{presetLabel} obnoveno na výchozí"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize} px · výška řádku {0}"
+
+msgid "{price} per {gbMinutes} GB-minutes"
+msgstr "{price} za {gbMinutes} GB-minut"
 
 msgid "{price} per user/month"
 msgstr "{price} za uživatele/měsíc"
@@ -2312,6 +2312,9 @@ msgstr "Také: @superset/ui/spinner"
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Vždy víte, který agent vás potřebuje — oznámení vedou přímo na zablokovaného agenta."
 
+msgid "Amount to spend"
+msgstr "Částka"
+
 msgid "An agent completes multi-file changes end to end."
 msgstr "Agent dokončí změnu napříč více soubory od začátku do konce."
 
@@ -2831,6 +2834,9 @@ msgstr "Automatické ukládání"
 msgid "Auto top-up"
 msgstr "Automatické dobití"
 
+msgid "Auto top-up amount"
+msgstr "Částka automatického dobití"
+
 msgid "auto-generated"
 msgstr "automaticky"
 
@@ -3340,14 +3346,17 @@ msgstr "Mačkač tlačítek"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "Tlačítka, přepínače a klávesové prvky"
 
+msgid "Buy"
+msgstr "Koupit"
+
+msgid "Buy {buyGbHours} GB-hours"
+msgstr "Koupit {buyGbHours} GB-hodin"
+
 msgid "Buy extra GB-hours"
 msgstr "Koupit další GB-hodiny"
 
-msgid "Buy for {buyPrice}"
-msgstr "Koupit za {buyPrice}"
-
-msgid "Buys {packGbHours} GB-hours for {packPrice} when fewer than this many GB-hours remain."
-msgstr "Koupí {packGbHours} GB-hodin za {packPrice}, když zbývá méně než tento počet GB-hodin."
+msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
+msgstr "Koupí {topupGbHours} GB-hodin za {topupPrice}, když zbývá méně GB-hodin, než je zvolený počet."
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -6877,6 +6886,9 @@ msgstr "Zadejte platné pravidlo opakování."
 
 msgid "Enter a value."
 msgstr "Zadejte hodnotu."
+
+msgid "Enter a whole amount from {minAmount} to {maxAmount}."
+msgstr "Zadejte celou částku od {minAmount} do {maxAmount}."
 
 msgid "Enter a whole number"
 msgstr "Zadejte celé číslo"
@@ -12586,9 +12598,6 @@ msgstr "packages/ui · registr komponent"
 
 msgid "packages/ui/src/components/ui/kbd.tsx"
 msgstr "packages/ui/src/components/ui/kbd.tsx"
-
-msgid "Packs"
-msgstr "Balíčky"
 
 msgid "Page"
 msgstr "Stránka"
@@ -19794,8 +19803,8 @@ msgstr "Ano. Přihlaste se na pozici, která vám nejlépe sedí, a napište ná
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "Ano. Free pokrývá jednotlivce s 1 uživatelem, lokální pracovní prostory, desktopovou aplikaci a CLI. Bez platební karty."
 
-msgid "Yes. On plans with cloud workspaces, owners can buy {packGbHours} GB-hours for {packPrice} in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
-msgstr "Ano. V plánech s cloudovými pracovními prostory mohou vlastníci koupit {packGbHours} GB-hodin za {packPrice} v Nastavení, Fakturace. Zakoupené GB-hodiny se čerpají po měsíčním fondu a nikdy nevyprší, a automatické dobití může dokoupit další, když docházejí."
+msgid "Yes. On plans with cloud workspaces, owners can buy any amount of extra GB-hours at {packPrice} per {packGbMinutes} GB-minutes in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "Ano. U plánů s cloudovými pracovními prostory mohou vlastníci v Nastavení, Fakturace koupit libovolné množství dalších GB-hodin za {packPrice} za {packGbMinutes} GB-minut. Koupené GB-hodiny se čerpají po měsíčním fondu a nikdy nevyprší, a automatické dobití může koupit další, když docházejí."
 
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "Ano. Superset prošel auditem SOC 2 Type II u nezávislého auditora, který pokrývá naše bezpečnostní kontroly v provozu v čase. Vyžádejte si zprávu a projděte si dokumentaci k bezpečnosti na trust.superset.sh."

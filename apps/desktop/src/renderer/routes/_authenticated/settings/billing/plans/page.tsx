@@ -427,7 +427,7 @@ function PlansPage() {
 			const pack = plan.family.pack;
 			return pack
 				? t({
-						message: `${formatNumber(pack.gbMinutes / 60)} GB-hours for ${formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })}`,
+						message: `${formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })} per ${formatNumber(pack.gbMinutes)} GB-minutes`,
 					})
 				: null;
 		}

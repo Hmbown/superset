@@ -409,11 +409,6 @@ msgstr "{0} berakhiran {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{0} file sudah ada di {where}. Ingin menggantinya?"
 
-#. placeholder {0}: formatNumber(pack.gbMinutes / 60)
-#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
-msgid "{0} GB-hours for {1}"
-msgstr "{0} GB-jam seharga {1}"
-
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} terpasang"
@@ -491,6 +486,11 @@ msgstr "{0} dari {totalCount}"
 #. placeholder {0}: plugin.interface.displayName
 msgid "{0} options"
 msgstr "Opsi {0}"
+
+#. placeholder {0}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
+#. placeholder {1}: formatNumber(pack.gbMinutes)
+msgid "{0} per {1} GB-minutes"
+msgstr "{0} per {1} GB-menit"
 
 #. placeholder {0}: normalizedProjectIds.length
 msgid "{0} projects"
@@ -890,9 +890,6 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "{gbHours} GB-jam cloud per kursi setiap bulan"
 
-msgid "{gbHours} GB-hours for {price}"
-msgstr "{gbHours} GB-jam seharga {price}"
-
 msgid "{gbHours} on {name}"
 msgstr "{gbHours} di {name}"
 
@@ -1043,8 +1040,8 @@ msgstr "{noun, select, repository {Tentukan minimal satu repositori.} channel {T
 msgid "{openCount} open"
 msgstr "{openCount} terbuka"
 
-msgid "{packGbHours} GB-hours for {packPrice}. Used after the monthly pool, and never expire."
-msgstr "{packGbHours} GB-jam seharga {packPrice}. Dipakai setelah kumpulan bulanan, dan tidak pernah kedaluwarsa."
+msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
+msgstr "{packPrice} membeli {packGbMinutes} GB-menit ({packGbHours} GB-jam). Dipakai setelah kumpulan bulanan, dan tidak pernah kedaluwarsa."
 
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} dapat membaca dan mengubah data di akun {pluginLabel} Anda atas nama Anda, termasuk di versi halaman ini yang akan datang. Halaman ini dapat mengirim apa yang dibacanya ke situs web lain. Izinkan hanya halaman yang Anda percayai."
@@ -1101,6 +1098,9 @@ msgstr "{presetLabel} direset ke setelan bawaan"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · tinggi baris {0}"
+
+msgid "{price} per {gbMinutes} GB-minutes"
+msgstr "{price} per {gbMinutes} GB-menit"
 
 msgid "{price} per user/month"
 msgstr "{price} per pengguna/bulan"
@@ -2312,6 +2312,9 @@ msgstr "Juga: @superset/ui/spinner"
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Selalu tahu agen mana yang membutuhkan Anda, dengan notifikasi yang langsung menuju agen yang terhambat."
 
+msgid "Amount to spend"
+msgstr "Jumlah"
+
 msgid "An agent completes multi-file changes end to end."
 msgstr "Agen menyelesaikan perubahan lintas file dari awal sampai akhir."
 
@@ -2831,6 +2834,9 @@ msgstr "Simpan Otomatis"
 msgid "Auto top-up"
 msgstr "Isi ulang otomatis"
 
+msgid "Auto top-up amount"
+msgstr "Jumlah isi ulang otomatis"
+
 msgid "auto-generated"
 msgstr "dibuat otomatis"
 
@@ -3340,14 +3346,17 @@ msgstr "Penekan tombol"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "Tombol, toggle, dan afordansi keyboard"
 
+msgid "Buy"
+msgstr "Beli"
+
+msgid "Buy {buyGbHours} GB-hours"
+msgstr "Beli {buyGbHours} GB-jam"
+
 msgid "Buy extra GB-hours"
 msgstr "Beli GB-jam tambahan"
 
-msgid "Buy for {buyPrice}"
-msgstr "Beli seharga {buyPrice}"
-
-msgid "Buys {packGbHours} GB-hours for {packPrice} when fewer than this many GB-hours remain."
-msgstr "Membeli {packGbHours} GB-jam seharga {packPrice} saat sisa GB-jam kurang dari jumlah ini."
+msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
+msgstr "Membeli {topupGbHours} GB-jam seharga {topupPrice} saat sisa GB-jam kurang dari jumlah yang dipilih."
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -6877,6 +6886,9 @@ msgstr "Masukkan aturan pengulangan yang valid."
 
 msgid "Enter a value."
 msgstr "Masukkan sebuah nilai."
+
+msgid "Enter a whole amount from {minAmount} to {maxAmount}."
+msgstr "Masukkan jumlah bulat dari {minAmount} sampai {maxAmount}."
 
 msgid "Enter a whole number"
 msgstr "Masukkan bilangan bulat"
@@ -12586,9 +12598,6 @@ msgstr "packages/ui · registri komponen"
 
 msgid "packages/ui/src/components/ui/kbd.tsx"
 msgstr "packages/ui/src/components/ui/kbd.tsx"
-
-msgid "Packs"
-msgstr "Paket"
 
 msgid "Page"
 msgstr "Halaman"
@@ -19794,8 +19803,8 @@ msgstr "Ya. Lamar posisi yang paling sesuai dan ceritakan apa yang ingin Anda ba
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "Ya. Paket gratis mencakup perorangan dengan 1 pengguna, workspace lokal, aplikasi desktop, dan CLI. Tanpa kartu kredit."
 
-msgid "Yes. On plans with cloud workspaces, owners can buy {packGbHours} GB-hours for {packPrice} in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
-msgstr "Ya. Pada paket dengan ruang kerja cloud, pemilik dapat membeli {packGbHours} GB-jam seharga {packPrice} di Pengaturan, Penagihan. GB-jam yang dibeli dipakai setelah kumpulan bulanan dan tidak pernah kedaluwarsa, dan isi ulang otomatis dapat membeli lagi saat hampir habis."
+msgid "Yes. On plans with cloud workspaces, owners can buy any amount of extra GB-hours at {packPrice} per {packGbMinutes} GB-minutes in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "Ya. Pada paket dengan workspace cloud, pemilik dapat membeli GB-jam tambahan berapa pun seharga {packPrice} per {packGbMinutes} GB-menit di Pengaturan, Penagihan. GB-jam yang dibeli dipakai setelah kumpulan bulanan dan tidak pernah kedaluwarsa, dan isi ulang otomatis dapat membeli lagi saat hampir habis."
 
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "Ya. Superset telah menyelesaikan audit SOC 2 Type II dengan auditor independen, yang mencakup kontrol keamanan kami saat beroperasi dari waktu ke waktu. Minta laporannya dan tinjau dokumentasi keamanan kami di trust.superset.sh."

@@ -409,11 +409,6 @@ msgstr "{0} kết thúc bằng {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{0} tệp đã tồn tại trong {where}. Bạn có muốn thay thế chúng không?"
 
-#. placeholder {0}: formatNumber(pack.gbMinutes / 60)
-#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
-msgid "{0} GB-hours for {1}"
-msgstr "{0} GB-giờ với giá {1}"
-
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "Đã cài {0}"
@@ -491,6 +486,11 @@ msgstr "{0} trong {totalCount}"
 #. placeholder {0}: plugin.interface.displayName
 msgid "{0} options"
 msgstr "Tùy chọn {0}"
+
+#. placeholder {0}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
+#. placeholder {1}: formatNumber(pack.gbMinutes)
+msgid "{0} per {1} GB-minutes"
+msgstr "{0} cho {1} GB-phút"
 
 #. placeholder {0}: normalizedProjectIds.length
 msgid "{0} projects"
@@ -890,9 +890,6 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "{gbHours} GB-giờ đám mây cho mỗi người dùng mỗi tháng"
 
-msgid "{gbHours} GB-hours for {price}"
-msgstr "{gbHours} GB-giờ với giá {price}"
-
 msgid "{gbHours} on {name}"
 msgstr "{gbHours} với {name}"
 
@@ -1043,8 +1040,8 @@ msgstr "{noun, select, repository {Hãy chỉ định ít nhất một repo.} ch
 msgid "{openCount} open"
 msgstr "{openCount} còn mở"
 
-msgid "{packGbHours} GB-hours for {packPrice}. Used after the monthly pool, and never expire."
-msgstr "{packGbHours} GB-giờ với giá {packPrice}. Được dùng sau quỹ hằng tháng và không bao giờ hết hạn."
+msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
+msgstr "{packPrice} mua được {packGbMinutes} GB-phút ({packGbHours} GB-giờ). Được dùng sau quỹ hằng tháng và không bao giờ hết hạn."
 
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} có thể thay bạn đọc và thay đổi dữ liệu trong tài khoản {pluginLabel} của bạn, kể cả trong các phiên bản sau của trang này. Trang có thể gửi những gì nó đọc được đến các trang web khác. Chỉ cho phép những trang bạn tin tưởng."
@@ -1101,6 +1098,9 @@ msgstr "Đã đặt lại {presetLabel} về mặc định"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · chiều cao dòng {0}"
+
+msgid "{price} per {gbMinutes} GB-minutes"
+msgstr "{price} cho {gbMinutes} GB-phút"
 
 msgid "{price} per user/month"
 msgstr "{price} mỗi người dùng/tháng"
@@ -2312,6 +2312,9 @@ msgstr "Ngoài ra: @superset/ui/spinner"
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Luôn biết agent nào cần bạn, với thông báo dẫn thẳng tới agent đang bị chặn."
 
+msgid "Amount to spend"
+msgstr "Số tiền"
+
 msgid "An agent completes multi-file changes end to end."
 msgstr "Agent hoàn thành trọn vẹn các thay đổi trên nhiều tệp."
 
@@ -2831,6 +2834,9 @@ msgstr "Tự động lưu"
 msgid "Auto top-up"
 msgstr "Tự động nạp thêm"
 
+msgid "Auto top-up amount"
+msgstr "Số tiền tự động nạp thêm"
+
 msgid "auto-generated"
 msgstr "tự động tạo"
 
@@ -3340,14 +3346,17 @@ msgstr "Người bấm nút"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "Nút, công tắc và gợi ý phím"
 
+msgid "Buy"
+msgstr "Mua"
+
+msgid "Buy {buyGbHours} GB-hours"
+msgstr "Mua {buyGbHours} GB-giờ"
+
 msgid "Buy extra GB-hours"
 msgstr "Mua thêm GB-giờ"
 
-msgid "Buy for {buyPrice}"
-msgstr "Mua với giá {buyPrice}"
-
-msgid "Buys {packGbHours} GB-hours for {packPrice} when fewer than this many GB-hours remain."
-msgstr "Mua {packGbHours} GB-giờ với giá {packPrice} khi số GB-giờ còn lại ít hơn mức này."
+msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
+msgstr "Mua {topupGbHours} GB-giờ với giá {topupPrice} khi số GB-giờ còn lại ít hơn mức đã chọn."
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -6877,6 +6886,9 @@ msgstr "Hãy nhập một quy tắc lặp hợp lệ."
 
 msgid "Enter a value."
 msgstr "Hãy nhập một giá trị."
+
+msgid "Enter a whole amount from {minAmount} to {maxAmount}."
+msgstr "Nhập số tiền nguyên từ {minAmount} đến {maxAmount}."
 
 msgid "Enter a whole number"
 msgstr "Nhập một số nguyên"
@@ -12586,9 +12598,6 @@ msgstr "packages/ui · component registry"
 
 msgid "packages/ui/src/components/ui/kbd.tsx"
 msgstr "packages/ui/src/components/ui/kbd.tsx"
-
-msgid "Packs"
-msgstr "Gói"
 
 msgid "Page"
 msgstr "Trang"
@@ -19794,8 +19803,8 @@ msgstr "Có. Hãy ứng tuyển vào vị trí phù hợp nhất và cho chúng 
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "Có. Gói Free dành cho cá nhân với 1 người dùng, workspace cục bộ, ứng dụng máy tính và CLI. Không cần thẻ tín dụng."
 
-msgid "Yes. On plans with cloud workspaces, owners can buy {packGbHours} GB-hours for {packPrice} in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
-msgstr "Có. Với các gói có không gian làm việc đám mây, chủ sở hữu có thể mua {packGbHours} GB-giờ với giá {packPrice} trong Cài đặt, Thanh toán. GB-giờ đã mua được dùng sau quỹ hằng tháng và không bao giờ hết hạn, và tính năng tự động nạp thêm có thể mua thêm khi sắp hết."
+msgid "Yes. On plans with cloud workspaces, owners can buy any amount of extra GB-hours at {packPrice} per {packGbMinutes} GB-minutes in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "Có. Với các gói có không gian làm việc trên đám mây, chủ sở hữu có thể mua thêm GB-giờ với số lượng bất kỳ, giá {packPrice} cho {packGbMinutes} GB-phút, trong Cài đặt, Thanh toán. GB-giờ đã mua được dùng sau quỹ hằng tháng và không bao giờ hết hạn, và tự động nạp thêm có thể mua thêm khi sắp hết."
 
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "Có. Superset đã hoàn tất kiểm toán SOC 2 Type II với một đơn vị kiểm toán độc lập, bao quát các biện pháp bảo mật vận hành theo thời gian. Hãy yêu cầu báo cáo và xem tài liệu bảo mật tại trust.superset.sh."

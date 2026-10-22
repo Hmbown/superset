@@ -36,7 +36,7 @@ export interface PlanPriceValues {
 	planPrices: string;
 	allowances: string;
 	overagePrice: string | null;
-	packGbHours: string | null;
+	packGbMinutes: string | null;
 	packPrice: string | null;
 }
 
@@ -47,7 +47,7 @@ const MONTHLY_PRICE_ITEM = msg({
 	message: "{name}: {monthly} per user/month",
 });
 const ALLOWANCE_ITEM = msg({ message: "{gbHours} on {name}" });
-const PACK_ITEM = msg({ message: "{gbHours} GB-hours for {price}" });
+const PACK_ITEM = msg({ message: "{price} per {gbMinutes} GB-minutes" });
 
 export function planPriceValues(
 	catalog: PlanFamily[],
@@ -92,7 +92,7 @@ export function planPriceValues(
 				? i18n._({
 						...PACK_ITEM,
 						values: {
-							gbHours: number(family.pack.gbMinutes / 60, 0),
+							gbMinutes: number(family.pack.gbMinutes, 0),
 							price: currency(family.pack.price),
 						},
 					})
@@ -143,7 +143,7 @@ export function planPriceValues(
 			families.find((set) => set.gbHours)?.overage ??
 			families[0]?.overage ??
 			null,
-		packGbHours: firstPack ? number(firstPack.gbMinutes / 60, 0) : null,
+		packGbMinutes: firstPack ? number(firstPack.gbMinutes, 0) : null,
 		packPrice: firstPack ? currency(firstPack.price) : null,
 	};
 }
@@ -171,7 +171,7 @@ export function faqValues(values: PlanPriceValues) {
 		planPrices: values.planPrices,
 		allowances: values.allowances,
 		overagePrice: values.overagePrice,
-		packGbHours: values.packGbHours,
+		packGbMinutes: values.packGbMinutes,
 		packPrice: values.packPrice,
 	};
 }

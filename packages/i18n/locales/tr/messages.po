@@ -409,11 +409,6 @@ msgstr "{1} ile biten {0}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{where} konumunda {0} dosya zaten var. Bunları değiştirmek istiyor musunuz?"
 
-#. placeholder {0}: formatNumber(pack.gbMinutes / 60)
-#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
-msgid "{0} GB-hours for {1}"
-msgstr "{1} karşılığında {0} GB-saat"
-
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} kuruldu"
@@ -491,6 +486,11 @@ msgstr "{totalCount} içinden {0}"
 #. placeholder {0}: plugin.interface.displayName
 msgid "{0} options"
 msgstr "{0} seçenekleri"
+
+#. placeholder {0}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
+#. placeholder {1}: formatNumber(pack.gbMinutes)
+msgid "{0} per {1} GB-minutes"
+msgstr "{1} GB-dakika için {0}"
 
 #. placeholder {0}: normalizedProjectIds.length
 msgid "{0} projects"
@@ -890,9 +890,6 @@ msgstr "{gate}: {statusLabel}"
 msgid "{gbHours} cloud GB-hours per seat each month"
 msgstr "Koltuk başına aylık {gbHours} bulut GB-saat"
 
-msgid "{gbHours} GB-hours for {price}"
-msgstr "{price} karşılığında {gbHours} GB-saat"
-
 msgid "{gbHours} on {name}"
 msgstr "{name} ile {gbHours}"
 
@@ -1043,8 +1040,8 @@ msgstr "{noun, select, repository {En az bir depo belirtin.} channel {En az bir 
 msgid "{openCount} open"
 msgstr "{openCount} açık"
 
-msgid "{packGbHours} GB-hours for {packPrice}. Used after the monthly pool, and never expire."
-msgstr "{packPrice} karşılığında {packGbHours} GB-saat. Aylık havuzdan sonra kullanılır ve süresi dolmaz."
+msgid "{packPrice} buys {packGbMinutes} GB-minutes ({packGbHours} GB-hours). Used after the monthly pool, and never expire."
+msgstr "{packPrice} ile {packGbMinutes} GB-dakika ({packGbHours} GB-saat) alınır. Aylık havuzdan sonra kullanılır ve süresi dolmaz."
 
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle}, sizin adınıza {pluginLabel} hesabınızdaki verileri okuyabilir ve değiştirebilir; bu, sayfanın gelecek sürümlerini de kapsar. Okuduklarını başka web sitelerine gönderebilir. Yalnızca güvendiğiniz sayfalara izin verin."
@@ -1101,6 +1098,9 @@ msgstr "{presetLabel} varsayılanlara sıfırlandı"
 #. placeholder {0}: Number(previewLineHeight.toFixed(2))
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · {0} satır yüksekliği"
+
+msgid "{price} per {gbMinutes} GB-minutes"
+msgstr "{gbMinutes} GB-dakika için {price}"
 
 msgid "{price} per user/month"
 msgstr "Kullanıcı başına aylık {price}"
@@ -2312,6 +2312,9 @@ msgstr "Ayrıca: @superset/ui/spinner"
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Doğrudan engellenen ajana bağlanan bildirimlerle, hangi ajanın size ihtiyacı olduğunu her zaman bilin."
 
+msgid "Amount to spend"
+msgstr "Tutar"
+
 msgid "An agent completes multi-file changes end to end."
 msgstr "Bir ajan, çok dosyalı değişiklikleri baştan sona tamamlar."
 
@@ -2831,6 +2834,9 @@ msgstr "Otomatik Kaydetme"
 msgid "Auto top-up"
 msgstr "Otomatik yükleme"
 
+msgid "Auto top-up amount"
+msgstr "Otomatik yükleme tutarı"
+
 msgid "auto-generated"
 msgstr "otomatik oluşturulur"
 
@@ -3340,14 +3346,17 @@ msgstr "Düğmeye basan"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "Düğmeler, anahtarlar ve klavye ipuçları"
 
+msgid "Buy"
+msgstr "Satın al"
+
+msgid "Buy {buyGbHours} GB-hours"
+msgstr "{buyGbHours} GB-saat satın al"
+
 msgid "Buy extra GB-hours"
 msgstr "Ek GB-saat satın al"
 
-msgid "Buy for {buyPrice}"
-msgstr "{buyPrice} karşılığında satın al"
-
-msgid "Buys {packGbHours} GB-hours for {packPrice} when fewer than this many GB-hours remain."
-msgstr "Kalan GB-saat bu sayının altına düştüğünde {packPrice} karşılığında {packGbHours} GB-saat satın alır."
+msgid "Buys {topupGbHours} GB-hours for {topupPrice} when fewer than the chosen number of GB-hours remain."
+msgstr "Kalan GB-saat seçilen sayının altına düştüğünde {topupPrice} karşılığında {topupGbHours} GB-saat satın alır."
 
 #. placeholder {0}: data.author
 msgid "by {0}"
@@ -6877,6 +6886,9 @@ msgstr "Geçerli bir yineleme kuralı girin."
 
 msgid "Enter a value."
 msgstr "Bir değer girin."
+
+msgid "Enter a whole amount from {minAmount} to {maxAmount}."
+msgstr "{minAmount} ile {maxAmount} arasında tam bir tutar girin."
 
 msgid "Enter a whole number"
 msgstr "Bir tam sayı girin"
@@ -12586,9 +12598,6 @@ msgstr "packages/ui · bileşen kaydı"
 
 msgid "packages/ui/src/components/ui/kbd.tsx"
 msgstr "packages/ui/src/components/ui/kbd.tsx"
-
-msgid "Packs"
-msgstr "Paketler"
 
 msgid "Page"
 msgstr "Sayfa"
@@ -19794,8 +19803,8 @@ msgstr "Evet. Size en uygun pozisyona başvurun ve ne geliştirmek istediğinizi
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "Evet. Ücretsiz plan; 1 kullanıcı, yerel çalışma alanları, masaüstü uygulaması ve CLI ile bireyleri kapsar. Kredi kartı gerekmez."
 
-msgid "Yes. On plans with cloud workspaces, owners can buy {packGbHours} GB-hours for {packPrice} in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
-msgstr "Evet. Bulut çalışma alanlı planlarda sahipler Ayarlar, Faturalandırma bölümünden {packPrice} karşılığında {packGbHours} GB-saat satın alabilir. Satın alınan GB-saatler aylık havuzdan sonra kullanılır ve süresi dolmaz; otomatik yükleme azaldıklarında daha fazlasını satın alabilir."
+msgid "Yes. On plans with cloud workspaces, owners can buy any amount of extra GB-hours at {packPrice} per {packGbMinutes} GB-minutes in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "Evet. Bulut çalışma alanı olan planlarda sahipler, Ayarlar, Faturalandırma bölümünden {packGbMinutes} GB-dakika için {packPrice} fiyatla istedikleri kadar ek GB-saat satın alabilir. Satın alınan GB-saatler aylık havuzdan sonra kullanılır ve süresi dolmaz; otomatik yükleme azaldıklarında daha fazlasını satın alabilir."
 
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "Evet. Superset, güvenlik kontrollerinin zaman içindeki işleyişini kapsayan SOC 2 Type II denetimini bağımsız bir denetçiyle tamamlamıştır. Raporu talep edin ve güvenlik belgelerimizi trust.superset.sh adresinde inceleyin."

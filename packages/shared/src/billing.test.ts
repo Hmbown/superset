@@ -5,6 +5,7 @@ import {
 	defaultMachineSize,
 	familyForPlan,
 	fromAutumnRest,
+	gbHourPackPurchase,
 	isCloudUsageRefusal,
 	machineSpec,
 	maxYearlyDiscount,
@@ -192,7 +193,7 @@ function parentPlan(
 		items: [
 			{
 				featureId: "box_gb_minutes",
-				price: { amount: 60, interval: "one_off", billingUnits: 60000 },
+				price: { amount: 1, interval: "one_off", billingUnits: 1000 },
 			},
 			{
 				featureId: "box_gb_minutes",
@@ -251,7 +252,18 @@ describe("planCatalogFromAutumn", () => {
 		expect(pro?.yearly?.id).toBe("pro_v2_annual");
 		expect(pro?.gbMinutesPerSeat).toBe(19200);
 		expect(pro?.overagePerGbHour).toBe(0.06);
-		expect(pro?.pack).toEqual({ gbMinutes: 60000, price: 60 });
+		expect(pro?.pack).toEqual({ gbMinutes: 1000, price: 1 });
+	});
+
+	test("a GB-hour purchase rounds up to whole pack units", () => {
+		expect(gbHourPackPurchase({ gbMinutes: 1000, price: 1 }, 25)).toEqual({
+			gbMinutes: 25000,
+			price: 25,
+		});
+		expect(gbHourPackPurchase({ gbMinutes: 60000, price: 60 }, 25)).toEqual({
+			gbMinutes: 60000,
+			price: 60,
+		});
 	});
 
 	test("a seat license without cloud minutes leaves the family without included hours", () => {
