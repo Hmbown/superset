@@ -2,6 +2,7 @@ import { db } from "@superset/db/client";
 import { members, subscriptions } from "@superset/db/schema";
 import { selfServePlanFromAutumnPlanId } from "@superset/shared/billing";
 import { COMPANY } from "@superset/shared/constants";
+import { AutumnError } from "autumn-js";
 import type { BetterAuthPlugin } from "better-auth";
 import {
 	APIError,
@@ -127,7 +128,12 @@ export const autumnBillingRoutes = {
 						),
 						columns: { plan: true },
 					}),
-					paidAutumnPlanId(caller.organizationId).catch(() => null),
+					paidAutumnPlanId(caller.organizationId).catch((error: unknown) => {
+						if (error instanceof AutumnError && error.statusCode === 404) {
+							return null;
+						}
+						throw error;
+					}),
 				]);
 				if (
 					stripeSubscription?.plan === "enterprise" ||
