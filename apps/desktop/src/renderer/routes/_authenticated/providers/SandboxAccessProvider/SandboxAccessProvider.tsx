@@ -5,10 +5,8 @@ import { createContext, type ReactNode, useContext, useMemo } from "react";
 import { useCloudWorkspaces } from "renderer/hooks/useCloudWorkspaces";
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { setHostServiceSecret } from "renderer/lib/host-service-auth";
+import { accessRefetchInterval } from "./utils/accessRefetchInterval";
 
-/** Re-mint with time to spare; a ticket lasts hours, so this is rare. */
-const REFRESH_AT = 0.8;
-const RETRY_MS = 30_000;
 /**
  * The open workspace's wake is also what extends its sandbox session, which
  * stops after hours of not being asked; and if the session stops anyway, the
@@ -107,11 +105,13 @@ export function SandboxAccessProvider({ children }: { children: ReactNode }) {
 			// pause with navigator.onLine the way the default mode would.
 			networkMode: "always" as const,
 			queryFn: () => requestAccess(workspace.id, false),
-			refetchInterval: (query: { state: { data?: SandboxAccess } }): number => {
-				const expiresAt = query.state.data?.expiresAt;
-				if (!expiresAt) return RETRY_MS;
-				return Math.max(RETRY_MS, (expiresAt - Date.now()) * REFRESH_AT);
-			},
+			refetchInterval: (query: {
+				state: {
+					data?: SandboxAccess;
+					error: unknown;
+					errorUpdateCount: number;
+				};
+			}): number => accessRefetchInterval(query.state),
 			refetchIntervalInBackground: true,
 		})),
 	});

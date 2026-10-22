@@ -37,6 +37,7 @@ const PORT_VARS: Record<string, number> = {
 	API_PORT: 3961,
 	DESKTOP_VITE_PORT: 3965,
 	DESKTOP_NOTIFICATIONS_PORT: 3966,
+	RELAY_PORT: 3973,
 };
 
 function readEnvPorts(): { name: string; port: number }[] {
