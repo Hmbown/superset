@@ -18,6 +18,7 @@ import {
 } from "../../../utils/settings-search";
 import { useBillingActions } from "../../hooks/useBillingActions";
 import { BillingDetails } from "./components/BillingDetails";
+import { CloudUsageCard } from "./components/CloudUsageCard";
 import { CurrentPlanCard } from "./components/CurrentPlanCard";
 import { PaymentFailedBanner } from "./components/PaymentFailedBanner";
 import { RecentInvoices } from "./components/RecentInvoices";
@@ -150,6 +151,7 @@ export function BillingOverview({ visibleItems }: BillingOverviewProps) {
 						</div>
 					</div>
 				)}
+				{showOverview && <CloudUsageCard />}
 				{showOverview && isOwner && plan !== "free" && <BillingDetails />}
 				<RecentInvoices />
 			</div>

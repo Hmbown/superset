@@ -419,13 +419,8 @@ jobs:
       - name: Install Vercel CLI
         run: bun add --global vercel@$VERCEL_CLI_VERSION
 
-      - name: Cache Next.js build cache
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
-        with:
-          path: apps/marketing/.next/cache
-          key: next-marketing-${{ github.sha }}
-          restore-keys: next-marketing-
-
+      # No .next/cache step here: a Turbopack cache from another commit
+      # shipped a stale globals.css to production (#8697)
       - name: Build and Deploy Marketing
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}

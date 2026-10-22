@@ -1,7 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import {
 	autumnProPlanId,
+	defaultMachineSize,
 	isCloudUsageRefusal,
+	machineSpec,
+	offeredMachineSizes,
 	planAllowsAutomations,
 	planAllowsTriggerKind,
 	planTierFromSubscription,
@@ -166,5 +169,27 @@ describe("proSeatPricePerMonth", () => {
 	test("yearly is the annual price spread over twelve months", () => {
 		expect(proSeatPricePerMonth({ annual: false })).toBe(20);
 		expect(proSeatPricePerMonth({ annual: true })).toBe(15);
+	});
+});
+
+describe("machine sizes", () => {
+	test("small, medium and large are open to all; bigger sizes only when their feature is on", () => {
+		expect(offeredMachineSizes([])).toEqual(["small", "medium", "large"]);
+		expect(offeredMachineSizes(["2xlarge"])).toEqual([
+			"small",
+			"medium",
+			"large",
+			"2xlarge",
+		]);
+	});
+
+	test("the default is medium when offered, else the smallest offered size", () => {
+		expect(defaultMachineSize(["small", "medium", "large"])).toBe("medium");
+		expect(defaultMachineSize(["large", "xlarge"])).toBe("large");
+	});
+
+	test("memory scales with vCPUs", () => {
+		expect(machineSpec("small")).toEqual({ vcpus: 2, memoryGb: 4 });
+		expect(machineSpec("2xlarge")).toEqual({ vcpus: 32, memoryGb: 64 });
 	});
 });

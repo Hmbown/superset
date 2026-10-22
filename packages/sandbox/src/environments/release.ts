@@ -36,6 +36,7 @@
 import { randomUUID } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { GOLDEN_BOX_VCPUS } from "@superset/shared/billing";
 import { SANDBOX_IMAGE_NAME } from "@superset/shared/constants";
 import {
 	SANDBOX_CONTRACT_VERSION,
@@ -160,15 +161,21 @@ if (SKIP_IMAGE) {
 }
 
 // 3. golden
+// The modules, not the `lib/sandbox` barrel: it also builds the billing and
+// email clients, whose secrets this job does not have.
 const {
 	deleteSandbox,
-	deriveSandboxCredentials,
 	provisionSandbox,
-	sandboxHostSecretFor,
 	stopAndSnapshot,
 	stripWorkspaceIdentity,
 	wakeSandbox,
-} = await import("@superset/trpc/lib/sandbox");
+} = await import("@superset/trpc/lib/sandbox/vercel");
+const { deriveSandboxCredentials } = await import(
+	"@superset/trpc/lib/sandbox/credentials"
+);
+const { sandboxHostSecretFor } = await import(
+	"@superset/trpc/lib/sandbox/access"
+);
 const { probeBox, checkWakeLog } = await import("./probe");
 
 const setupScript = readFileSync(
@@ -214,6 +221,7 @@ for (;;) {
 				hostSecret: goldenSecret,
 				managedEnv: {},
 				networkPolicy: "allow-all",
+				vcpus: GOLDEN_BOX_VCPUS,
 			},
 		});
 		break;
@@ -236,6 +244,7 @@ await wakeSandbox({
 		hostSecret: goldenSecret,
 		managedEnv: {},
 		networkPolicy: "allow-all",
+		vcpus: GOLDEN_BOX_VCPUS,
 	},
 });
 log("golden: host-service up; waiting for the checkout");
@@ -396,6 +405,7 @@ const probeClaim = {
 	hostSecret: probeSecret,
 	managedEnv,
 	networkPolicy,
+	vcpus: GOLDEN_BOX_VCPUS,
 };
 log(`probe: provisioning ${probe} as a fork of ${golden}`);
 await provisionSandbox({

@@ -92,6 +92,7 @@ import { GitHubIssueLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup
 import { LinearIssueLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinearIssueLinkCommand";
 import { LinkedGitHubIssuePill } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinkedGitHubIssuePill";
 import { LinkedPRPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinkedPRPill";
+import { MachineSizePickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/MachineSizePickerPill";
 import { PRLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/PRLinkCommand";
 import { ProjectPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/ProjectPickerPill";
 import { PromptHistoryCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/PromptHistoryCommand";
@@ -1180,6 +1181,14 @@ export function NewWorkspaceScreen({
 									onCreateEnvironment={() => setIsCreatingEnvironment(true)}
 									isLoading={environmentsQuery.isLoading}
 									isSessionUnavailable={draft.isSession}
+								/>
+							)}
+							{isCloudHost && (
+								<MachineSizePickerPill
+									machineSize={draft.machineSize}
+									onSelectMachineSize={(machineSize) =>
+										updateDraft({ machineSize })
+									}
 								/>
 							)}
 							{isCreatingEnvironment && activeOrganizationId && (

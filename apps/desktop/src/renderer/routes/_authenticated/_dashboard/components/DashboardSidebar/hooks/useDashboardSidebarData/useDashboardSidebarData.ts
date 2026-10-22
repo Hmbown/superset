@@ -10,10 +10,7 @@ import { useCloudWorkspaces } from "renderer/hooks/useCloudWorkspaces";
 import { useRelayUrl } from "renderer/hooks/useRelayUrl";
 import { authClient } from "renderer/lib/auth-client";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
-import {
-	type CloudPullRequestRef,
-	useCloudPullRequests,
-} from "renderer/routes/_authenticated/_dashboard/hooks/useCloudPullRequests";
+import { useCloudPullRequests } from "renderer/routes/_authenticated/_dashboard/hooks/useCloudPullRequests";
 import { useCloudWorkspaceRepositories } from "renderer/routes/_authenticated/_dashboard/hooks/useCloudWorkspaceRepositories";
 import {
 	EMPTY_CLOUD_SIDEBAR,
@@ -477,23 +474,10 @@ export function useDashboardSidebarData({
 			),
 		[allHostWorkspaces],
 	);
-	const cloudPullRequestRefs = useMemo<CloudPullRequestRef[]>(
-		() =>
-			shownCloudRows.flatMap((row) => {
-				const repoFullName = cloudRepoFullNameById.get(row.id);
-				return repoFullName
-					? [
-							{
-								repoFullName,
-								headBranch: cloudBranchById.get(row.id) ?? row.branch,
-							},
-						]
-					: [];
-			}),
-		[shownCloudRows, cloudRepoFullNameById, cloudBranchById],
-	);
-	const { byRef: cloudPullRequestsByRef } =
-		useCloudPullRequests(cloudPullRequestRefs);
+	const { byWorkspace: cloudPullRequestsById } = useCloudPullRequests({
+		active: inlineCloudWorkspaces && shownCloudRows.length > 0,
+		archived: false,
+	});
 	const cloudLayout = useMemo(
 		() =>
 			inlineCloudWorkspaces
@@ -503,7 +487,7 @@ export function useDashboardSidebarData({
 						projects: cloudProjectTargets,
 						repoFullNameById: cloudRepoFullNameById,
 						branchById: cloudBranchById,
-						pullRequestsByRef: cloudPullRequestsByRef,
+						pullRequestsById: cloudPullRequestsById,
 						unknownRepoProjectName: t({ message: "Cloud" }),
 					})
 				: null,
@@ -514,7 +498,7 @@ export function useDashboardSidebarData({
 			cloudProjectTargets,
 			cloudRepoFullNameById,
 			cloudBranchById,
-			cloudPullRequestsByRef,
+			cloudPullRequestsById,
 			t,
 		],
 	);

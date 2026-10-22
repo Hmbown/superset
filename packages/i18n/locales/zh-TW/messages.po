@@ -431,6 +431,10 @@ msgstr "{0} 已在此組織的任務中使用。"
 msgid "{0} is not a repository the GitHub App is installed on"
 msgstr "{0} 不是已安裝 GitHub App 的存放庫"
 
+#. placeholder {0}: selected.name
+msgid "{0} is not running."
+msgstr "{0} 未執行。"
+
 #. placeholder {0}: host.name
 msgid "{0} is offline"
 msgstr "{0}已離線"
@@ -697,6 +701,9 @@ msgstr "目前{actual} · 預計約{projected}"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "開啟對應工作區時，{agents} 工作階段會恢復。"
 
+msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
+msgstr "{approvalCount, plural, other {# 個需要核准}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {落後main #個提交，需要變基} other {落後main #個提交，需要變基}}"
 
@@ -805,6 +812,9 @@ msgstr "{count, plural, one {使用了#個來源} other {使用了#個來源}}"
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {使用了 # 個工具} other {使用了 # 個工具}}"
+
+msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
+msgstr "{count, plural, other {正在等待 # 個子代理程式}}"
 
 msgid "{count} GitHub stars"
 msgstr "{count}個GitHub星標"
@@ -948,6 +958,9 @@ msgstr "{minimumContrast}:1對比度"
 msgid "{minutes}m"
 msgstr "{minutes}分"
 
+msgid "{minutes}m {rest}s"
+msgstr "{minutes} 分 {rest} 秒"
+
 msgid "{minutes}m ago"
 msgstr "{minutes}分鐘前"
 
@@ -966,6 +979,18 @@ msgstr "你有{myFailedCount}個自動化上次執行失敗"
 msgid "{name} accounts"
 msgstr "{name} 帳號"
 
+msgid "{name} asks"
+msgstr "{name} 請求確認"
+
+msgid "{name} can't be messaged"
+msgstr "無法傳送訊息給 {name}"
+
+msgid "{name} failed"
+msgstr "{name} 失敗"
+
+msgid "{name} finished"
+msgstr "{name} 已完成"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} 是內建的，無法移除"
@@ -977,6 +1002,15 @@ msgstr "{name} 是內建的，無法取代"
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} 尚未新增"
+
+msgid "{name} plugin"
+msgstr "{name} 外掛程式"
+
+msgid "{name} started working"
+msgstr "{name} 開始工作"
+
+msgid "{name} stopped"
+msgstr "{name} 已停止"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {請至少指定一個人員，或選擇{choice}。} sender {請至少指定一個寄件者，或選擇{choice}。} other {請至少指定一個項目，或選擇{choice}。}}"
@@ -1069,6 +1103,9 @@ msgstr "{repositoryFullName} 不在 {installedAccountLogin} 上，而本組織�
 msgid "{repositoryFullName} isn't shared with the Superset GitHub App yet."
 msgstr "{repositoryFullName} 尚未與 Superset GitHub App 共用。"
 
+msgid "{seconds}s"
+msgstr "{seconds} 秒"
+
 msgid "{seconds}s ago"
 msgstr "{seconds}秒前"
 
@@ -1077,6 +1114,9 @@ msgstr "已選擇{selectedCount}項"
 
 msgid "{share}% human"
 msgstr "人類{share}%"
+
+msgid "{shellCount, plural, one {# shell} other {# shells}}"
+msgstr "{shellCount, plural, other {# 個 shell}}"
 
 msgid "{shown} of {total}"
 msgstr "{shown}/{total}"
@@ -1097,6 +1137,9 @@ msgstr "{started, plural, one {已啟動 # 個自動化} other {已啟動 # 個�
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, other {# 個子代理程式執行中}}"
+
+msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
+msgstr "{subagentCount, plural, other {# 個子代理程式}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {已建立#個工作區，{failCount}個失敗} other {已建立#個工作區，{failCount}個失敗}}"
@@ -1151,6 +1194,9 @@ msgstr "{uploading, plural, other {正在上傳 # 個檔案…}}"
 
 msgid "{used} used"
 msgstr "已使用 {used}"
+
+msgid "{vcpuCount} vCPU · {memory} GB"
+msgstr "{vcpuCount} vCPU · {memory} GB"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting}人等待"
@@ -1336,6 +1382,10 @@ msgstr "2027"
 msgid "2h ago"
 msgstr "2小時前"
 
+msgctxt "machine size"
+msgid "2X-Large"
+msgstr "2X-大型"
+
 msgid "3 archived workspaces"
 msgstr "3個已歸檔的工作區"
 
@@ -1387,8 +1437,8 @@ msgstr "每個窗格一個 CDP 端點"
 msgid "A changelog goes out every week. Most new hires ship to users in their first few days."
 msgstr "我們每週發布一次更新日誌。大多數新進同仁到職頭幾天就會向使用者發布功能。"
 
-msgid "A chat can't switch to another provider partway through. Fork this conversation into a new {label} chat instead. This {currentLabel} chat stays open."
-msgstr "聊天進行中無法切換到其他提供者。請將此對話分支到新的 {label} 聊天。目前的 {currentLabel} 聊天會保持開啟。"
+msgid "A chat can't switch to another provider partway through. Start a fresh {label} chat, or fork this conversation into one. This {currentLabel} chat stays open."
+msgstr "聊天進行中無法切換到其他提供者。請開始新的 {label} 聊天，或將此對話分岔到新聊天中。此 {currentLabel} 聊天會保持開啟。"
 
 msgid "A chat takes its name from the agent."
 msgstr "聊天的名稱來自代理程式。"
@@ -2884,14 +2934,8 @@ msgstr "背景"
 msgid "Background processes"
 msgstr "背景處理程序"
 
-msgid "Background task"
-msgstr "背景工作"
-
 msgid "Background terminal memory"
 msgstr "背景終端記憶體"
-
-msgid "Background work and pages"
-msgstr "背景工作與頁面"
 
 msgid "Backlog"
 msgstr "待規劃"
@@ -3022,6 +3066,9 @@ msgstr "粗體"
 
 msgid "Bold Text"
 msgstr "粗體文字"
+
+msgid "Boot"
+msgstr "啟動"
 
 #. placeholder {0}: selected.name
 msgid "Booting {0}…"
@@ -3528,6 +3575,9 @@ msgstr "聊天"
 msgid "Chat closed"
 msgstr "聊天已關閉"
 
+msgid "Chat history"
+msgstr "聊天記錄"
+
 msgid "Chat is being reworked"
 msgstr "聊天功能正在重做"
 
@@ -3593,6 +3643,9 @@ msgstr "正在檢查環境…"
 
 msgid "Checking host…"
 msgstr "正在檢查主機…"
+
+msgid "Checking MCP servers…"
+msgstr "正在檢查MCP伺服器…"
 
 msgid "Checking out a PR requires a project"
 msgstr "檢出PR需要一個專案"
@@ -3663,6 +3716,9 @@ msgstr "選擇代理程式"
 msgid "Choose an existing repo folder"
 msgstr "選擇已有的儲存庫資料夾"
 
+msgid "Choose an MCP server"
+msgstr "選擇一個MCP伺服器"
+
 msgid "Choose app"
 msgstr "選擇應用"
 
@@ -3674,6 +3730,9 @@ msgstr "選擇從頂欄開啟變更檢視的方式"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "選擇在終端中Cmd+點選檔案路徑時的開啟方式"
+
+msgid "Choose MCP servers for this message"
+msgstr "為這則訊息選擇MCP伺服器"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "選擇要從應用程式內瀏覽器清除的內容。"
@@ -4034,6 +4093,9 @@ msgstr "雲端沙箱"
 msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
 msgstr "{account} 尚未啟用雲端沙箱。請向 Superset 團隊申請存取權限。"
 
+msgid "Cloud usage"
+msgstr "雲端用量"
+
 msgid "Cloud workspace"
 msgstr "雲端工作區"
 
@@ -4311,6 +4373,9 @@ msgstr "配置哪些代理程式出現在啟動器中，以及它們的啟動方
 msgid "Configure workspace run command"
 msgstr "配置工作區執行命令"
 
+msgid "Configured for {agent}"
+msgstr "已為 {agent} 設定"
+
 msgid "Confirm before quitting"
 msgstr "退出前確認"
 
@@ -4471,6 +4536,9 @@ msgstr "此伺服器未設定 GitHub 連結"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "連線後，你的代理可代表你在 {name} 中讀取和操作。繼續前請檢查你授予的權限。"
 
+msgid "Connecting to {deviceName}…"
+msgstr "正在連線至 {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "正在連線至桌面…"
 
@@ -4558,9 +4626,6 @@ msgstr "右鍵選單"
 
 msgid "Continue"
 msgstr "繼續"
-
-msgid "Continue in a new {label} chat?"
-msgstr "在新的 {label} 聊天中繼續？"
 
 msgid "Continue or fork session"
 msgstr "繼續或分支會話"
@@ -4764,6 +4829,9 @@ msgstr "複製相對路徑"
 msgid "Copy Relative Path"
 msgstr "複製相對路徑"
 
+msgid "Copy screenshot"
+msgstr "複製螢幕截圖"
+
 msgid "Copy Selection"
 msgstr "複製所選內容"
 
@@ -4939,6 +5007,9 @@ msgstr "無法開啟「照片」"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "無法連線至 {0} 以尋找分支「{1}」。請檢查網路連線與 {2} 的存取權限，然後再試一次。"
 
+msgid "Could not reach {deviceName}."
+msgstr "無法連線至 {deviceName}。"
+
 msgid "Could not reach a mobile simulator."
 msgstr "無法連線至行動模擬器。"
 
@@ -4965,6 +5036,9 @@ msgstr "無法連線到這個工作區所在的機器"
 
 msgid "Could not reactivate"
 msgstr "無法重新啟用"
+
+msgid "Could not read MCP servers."
+msgstr "無法讀取MCP伺服器。"
 
 msgid "Could not read selected file"
 msgstr "無法讀取所選檔案"
@@ -5108,6 +5182,9 @@ msgstr "無法複製路徑"
 msgid "Couldn't copy the image"
 msgstr "無法複製圖片"
 
+msgid "Couldn't copy the screenshot"
+msgstr "無法複製螢幕截圖"
+
 msgid "Couldn't create workspace"
 msgstr "無法建立工作區"
 
@@ -5119,6 +5196,9 @@ msgstr "無法放棄已暫存的更改"
 
 msgid "Couldn't discard unstaged changes"
 msgstr "無法放棄未暫存的更改"
+
+msgid "Couldn't edit the message"
+msgstr "無法編輯該訊息"
 
 msgid "Couldn’t finish deleting workspaces"
 msgstr "沒能完成工作區的刪除"
@@ -5173,6 +5253,9 @@ msgstr "無法標記為可供審查"
 msgid "Couldn't merge pull request"
 msgstr "無法合併拉取請求"
 
+msgid "Couldn't move the subagent to the background"
+msgstr "無法將子代理程式移到背景"
+
 msgid "Couldn't name \"{name}\" automatically"
 msgstr "無法自動命名「{name}」"
 
@@ -5207,9 +5290,6 @@ msgstr "無法從此主機讀取用量歷史。"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "無法移除本地登入"
-
-msgid "Couldn't reopen the agent in a terminal"
-msgstr "無法在終端機中重新開啟此代理"
 
 msgid "Couldn't restart terminals"
 msgstr "無法重啟終端"
@@ -5281,14 +5361,14 @@ msgstr "無法啟動語音模式"
 msgid "Couldn't start workspace"
 msgstr "無法啟動工作區"
 
-msgid "Couldn't stop the agent's terminal"
-msgstr "無法停止該代理的終端機"
-
 msgid "Couldn't stop the background task"
 msgstr "無法停止背景工作"
 
 msgid "Couldn't stop the chat"
 msgstr "無法停止聊天"
+
+msgid "Couldn't take a screenshot"
+msgstr "無法擷取螢幕畫面"
 
 msgid "Couldn't unstage changes"
 msgstr "無法取消暫存更改"
@@ -6161,6 +6241,9 @@ msgstr "停用技能"
 msgid "Disabled"
 msgstr "已停用"
 
+msgid "Disabled in agent config"
+msgstr "已在代理程式設定中停用"
+
 msgid "Disabled toggle"
 msgstr "停用的切換控制項"
 
@@ -6552,6 +6635,9 @@ msgstr "編輯環境"
 
 msgid "Edit files without asking; ask before commands"
 msgstr "無需詢問即可編輯檔案；執行指令前詢問"
+
+msgid "Edit message"
+msgstr "編輯訊息"
 
 msgid "Edit name"
 msgstr "編輯名稱"
@@ -7865,14 +7951,14 @@ msgstr "忘記{domain}"
 msgid "Fork args"
 msgstr "分支參數"
 
+msgid "Fork conversation"
+msgstr "分岔對話"
+
 msgid "Fork session"
 msgstr "分支會話"
 
 msgid "Fork session…"
 msgstr "分支會話…"
-
-msgid "Fork to new chat"
-msgstr "分支到新聊天"
 
 msgid "Form controls and field composition"
 msgstr "表單控制項與欄位組合"
@@ -7904,6 +7990,9 @@ msgstr "基於"
 msgid "From"
 msgstr "從"
 
+msgid "from {parentName}"
+msgstr "來自 {parentName}"
+
 msgid "from {price}/user/mo"
 msgstr "{price}/使用者/月起"
 
@@ -7912,6 +8001,9 @@ msgstr "從一個黑客松專案，到平行程式設計代理的工作空間。
 
 msgid "From GitHub"
 msgstr "來自 GitHub"
+
+msgid "from main agent"
+msgstr "來自主代理程式"
 
 msgid "Front matter hidden — switch to Markdown to edit it"
 msgstr "已隱藏front matter，切換到Markdown可編輯"
@@ -7948,6 +8040,15 @@ msgstr "關卡"
 
 msgid "Gates open"
 msgstr "已開啟關卡"
+
+msgid "GB-hours over the plan: {overage}"
+msgstr "超出方案的 GB 小時：{overage}"
+
+msgid "GB-hours used: {used}"
+msgstr "已用 GB 小時：{used}"
+
+msgid "GB-hours used: {used} of {included}"
+msgstr "已用 GB 小時：{used} / {included}"
 
 msgid "General"
 msgstr "通用"
@@ -8735,6 +8836,9 @@ msgstr "在Superset桌面應用程式中開啟「設定 → 遠端存取」，�
 msgid "In under a year, more than 145,000 developers across 180 countries have run Superset and created over 1.85 million agent workspaces."
 msgstr "不到一年，來自 180 個國家、超過 145,000 名開發者執行過 Superset，並建立了超過 185 萬個 agent 工作區。"
 
+msgid "In your next chat"
+msgstr "下一次聊天中"
+
 msgid "In your terminal"
 msgstr "在終端中"
 
@@ -9285,6 +9389,10 @@ msgstr "語言已在此裝置上儲存，但同步到你的帳戶失敗。"
 msgid "Large"
 msgstr "大"
 
+msgctxt "machine size"
+msgid "Large"
+msgstr "大型"
+
 msgid "Large numbers of persistent terminals can increase CPU/memory usage. Consider killing old sessions if you notice slowdowns."
 msgstr "大量持久化終端會增加CPU/記憶體佔用。如果發現變慢，可以考慮終止舊會話。"
 
@@ -9348,6 +9456,9 @@ msgstr "延遲"
 
 msgid "Later"
 msgstr "稍後"
+
+msgid "Later messages are removed."
+msgstr "之後的訊息將被移除。"
 
 msgid "Latest"
 msgstr "最新"
@@ -9757,6 +9868,10 @@ msgstr "載入中..."
 msgid "Loading…"
 msgstr "正在載入…"
 
+msgctxt "MCP server scope"
+msgid "local"
+msgstr "本機"
+
 msgid "Local"
 msgstr "本地"
 
@@ -9857,6 +9972,9 @@ msgstr "低嚴重性"
 msgid "Machine resources"
 msgstr "機器資源"
 
+msgid "Machine size: {label}"
+msgstr "機器規格：{label}"
+
 msgid "Machine-unbound cloud workspaces that spin up in seconds and can be shared with teammates."
 msgstr "不繫結機器的雲端工作區，幾秒即可啟動，還能分享給隊友。"
 
@@ -9926,6 +10044,9 @@ msgstr "管理方案"
 
 msgid "Manage plan on the web"
 msgstr "在網頁端管理方案"
+
+msgid "Manage plugins…"
+msgstr "管理外掛程式…"
 
 msgid "Manage sessions"
 msgstr "管理會話"
@@ -10026,6 +10147,9 @@ msgstr "MCP伺服器"
 msgid "MCP Server Commands"
 msgstr "MCP伺服器命令"
 
+msgid "MCP servers"
+msgstr "MCP伺服器"
+
 msgid "Measured over the trailing 30 days"
 msgstr "以最近 30 天計算"
 
@@ -10047,6 +10171,10 @@ msgstr "免費的醫療與牙科保險、401(k)、無限休假、$5K 辦公設�
 
 msgid "Medium"
 msgstr "中"
+
+msgctxt "machine size"
+msgid "Medium"
+msgstr "中型"
 
 msgid "Medium severity"
 msgstr "中嚴重性"
@@ -10107,9 +10235,6 @@ msgstr "合併提交"
 msgid "Merge failed: {0}"
 msgstr "合併失敗：{0}"
 
-msgid "Merge into center"
-msgstr "合併到中間"
-
 msgid "Merge pull request"
 msgstr "合併拉取請求"
 
@@ -10147,6 +10272,9 @@ msgstr "正在合併…"
 
 msgid "Mesh Gradient"
 msgstr "網格漸變"
+
+msgid "Message {name}…"
+msgstr "傳訊息給 {name}…"
 
 msgid "Message in channel"
 msgstr "頻道中的訊息"
@@ -10354,8 +10482,11 @@ msgstr "軟體史的大部分時間"
 msgid "Move {count} to Group"
 msgstr "將{count}個移動到群組"
 
-msgid "Move to Center"
-msgstr "移到中間"
+msgid "Move {name} to background"
+msgstr "將 {name} 移到背景"
+
+msgid "Move to background"
+msgstr "移到背景"
 
 msgid "Move to group"
 msgstr "移動到群組"
@@ -10458,6 +10589,9 @@ msgstr "需要重試"
 msgid "Needs Action"
 msgstr "需要處理"
 
+msgid "needs approval"
+msgstr "需要核准"
+
 msgid "Needs attention"
 msgstr "需要處理"
 
@@ -10528,6 +10662,9 @@ msgstr "新建瀏覽器"
 
 msgid "new challengers"
 msgstr "換對手"
+
+msgid "New Chat"
+msgstr "新建聊天"
 
 msgid "New cloud workspace"
 msgstr "新建雲端工作區"
@@ -10778,6 +10915,9 @@ msgstr "此分支上還沒有改動。"
 msgid "No changes to display."
 msgstr "沒有可顯示的改動。"
 
+msgid "No chats found"
+msgstr "找不到聊天"
+
 msgid "No checks"
 msgstr "無檢查"
 
@@ -10937,6 +11077,9 @@ msgstr "無圖示"
 msgid "No icons match."
 msgstr "沒有符合的圖示。"
 
+msgid "No installed agent can be opened as a chat"
+msgstr "沒有已安裝的代理程式可以聊天形式開啟"
+
 msgid "No Internet Connection"
 msgstr "無網路連線"
 
@@ -10985,6 +11128,9 @@ msgstr "沒有匹配項"
 msgid "No matching files"
 msgstr "沒有符合的檔案"
 
+msgid "No matching MCP servers"
+msgstr "沒有符合的MCP伺服器"
+
 msgid "No matching models"
 msgstr "沒有符合的模型"
 
@@ -10996,6 +11142,9 @@ msgstr "沒有符合的頁面"
 
 msgid "No matching repositories."
 msgstr "沒有相符的儲存庫。"
+
+msgid "No MCP servers found"
+msgstr "找不到MCP伺服器"
 
 msgid "No members yet"
 msgstr "暫無成員"
@@ -11732,6 +11881,9 @@ msgstr "在檔案面板中開啟{path}"
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "為目前終端開啟多行提示詞編輯器"
+
+msgid "Open a new {label} chat?"
+msgstr "要開啟新的 {label} 聊天嗎？"
 
 msgid "Open a pane, or drag one here from the center."
 msgstr "開啟一個窗格，或從中間拖一個到這裡。"
@@ -13037,6 +13189,10 @@ msgstr "進度"
 msgid "Progress · Spinner"
 msgstr "進度條 · 載入指示器"
 
+msgctxt "MCP server scope"
+msgid "project"
+msgstr "專案"
+
 msgid "Project"
 msgstr "專案"
 
@@ -13069,6 +13225,9 @@ msgstr "找不到該專案。"
 
 msgid "Project not set up on this host"
 msgstr "專案未在此主機上設定"
+
+msgid "Project not trusted in Codex"
+msgstr "專案在Codex中未受信任"
 
 msgid "Project ready — open it from the sidebar."
 msgstr "專案已就緒，可從側邊欄開啟。"
@@ -13402,6 +13561,9 @@ msgstr "查看部署和建置日誌"
 
 msgid "Read it on your phone"
 msgstr "在手機上閱讀"
+
+msgid "Read MCP servers again"
+msgstr "重新讀取MCP伺服器"
 
 msgid "Read the changelog"
 msgstr "檢視更新日誌"
@@ -14025,6 +14187,9 @@ msgstr "重置縮放"
 
 msgid "Reset Zoom"
 msgstr "重置縮放"
+
+msgid "Resets {resetDate}"
+msgstr "{resetDate} 重設"
 
 msgid "Resets at {until}"
 msgstr "將於 {until} 重設"
@@ -14688,8 +14853,8 @@ msgstr "範圍"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "當看板看到 {0} 天的使用資料後，才會開始計分。"
 
-msgid "Screenshot"
-msgstr "截圖"
+msgid "Screenshot copied"
+msgstr "已複製螢幕截圖"
 
 msgid "Screenshot copied to clipboard"
 msgstr "截圖已複製到剪貼簿"
@@ -14761,6 +14926,9 @@ msgstr "依鍵名搜尋..."
 msgid "Search changed files"
 msgstr "搜尋更改的檔案"
 
+msgid "Search chats..."
+msgstr "搜尋聊天..."
+
 msgid "Search developers"
 msgstr "搜尋開發者"
 
@@ -14811,6 +14979,9 @@ msgstr "搜尋Linear"
 
 msgid "Search Linear…"
 msgstr "搜尋Linear…"
+
+msgid "Search MCP servers…"
+msgstr "搜尋MCP伺服器…"
 
 msgid "Search models"
 msgstr "搜尋模型"
@@ -15821,6 +15992,10 @@ msgstr "Slug"
 msgid "Small"
 msgstr "小"
 
+msgctxt "machine size"
+msgid "Small"
+msgstr "小型"
+
 msgid "Smoother onboarding"
 msgstr "更順暢的上手流程"
 
@@ -15844,6 +16019,9 @@ msgstr "已通過SOC 2 Type II合規。可索取報告。"
 
 msgid "SOC 2 Type II report"
 msgstr "SOC 2 Type II報告"
+
+msgid "Some chat history could not be loaded."
+msgstr "無法載入部分聊天記錄。"
 
 msgid "Some files are not an accepted type and were not added."
 msgstr "部分檔案的型別不被允許，未新增。"
@@ -16160,6 +16338,9 @@ msgstr "開始免費試用"
 msgid "Start free. Upgrade when your team outgrows it. Enterprise plans for organizations with advanced security and compliance needs."
 msgstr "免費開始。團隊用不夠時再升級。企業方案面向有進階安全與合規需求的組織。"
 
+msgid "Start fresh"
+msgstr "重新開始"
+
 msgid "Start from a template"
 msgstr "從模板開始"
 
@@ -16280,8 +16461,8 @@ msgstr "停止{0}"
 msgid "Stop {label}"
 msgstr "停止 {label}"
 
-msgid "Stop all agent background processes"
-msgstr "停止所有代理程式背景處理程序"
+msgid "Stop {name}"
+msgstr "停止 {name}"
 
 msgid "Stop dictation"
 msgstr "停止語音輸入"
@@ -16298,6 +16479,9 @@ msgstr "在此停止Superset，然後從其他裝置刪除。"
 
 msgid "Stop the agent and send this now"
 msgstr "停止代理並立即傳送"
+
+msgid "Stop the agent before you edit a message"
+msgstr "編輯訊息前請先停止代理程式"
 
 msgid "Stop watching"
 msgstr "停止關注"
@@ -17090,8 +17274,8 @@ msgstr "無法存取該地址"
 msgid "The agent clicks and types in the same pane to test the change. You watch it happen."
 msgstr "代理程式在同一個窗格中點擊和輸入來測試修改。你可以看著它完成。"
 
-msgid "The agent copies the conversation; the branch opens here"
-msgstr "代理複製該對話，分支在此開啟"
+msgid "The agent copies the conversation; the branch opens in a new tab"
+msgstr "代理複製該對話，分支在新分頁中開啟"
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "代理程式從工單一路負責到差異。人類審查結果，而不是擊鍵過程。注意力從寫程式碼轉向定義工作和判斷成果。一名工程師在隔離工作區裡同時跑好幾個代理程式。"
@@ -17475,6 +17659,9 @@ msgstr "此代理程式無法在雲端工作區中執行"
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "所選裝置上已不存在這個代理程式（它的代理程式可能被重置過）。在你選擇新的代理程式之前，執行都會失敗。"
 
+msgid "This agent only shows chats saved in Superset."
+msgstr "此代理僅顯示儲存在 Superset 中的聊天。"
+
 msgid "This also:"
 msgstr "同時還會："
 
@@ -17608,6 +17795,9 @@ msgstr "這台Mac"
 msgid "This machine"
 msgstr "本機"
 
+msgid "This machine size is not available for your organization. Pick another size"
+msgstr "你的組織不提供此機器規格。請選擇其他規格"
+
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "這個Microsoft租戶已被{detail}連線。請讓對方先斷開連線。"
 
@@ -17721,6 +17911,9 @@ msgstr "此slug已被佔用"
 
 msgid "This stops every Teams trigger in your organization and removes the notification subscriptions from your tenant. You can reconnect at any time."
 msgstr "這會停止你組織中所有的Teams觸發器，並從你的租戶中移除通知訂閱。你可以隨時重新連線。"
+
+msgid "This subagent can't move to the background now"
+msgstr "此子代理程式目前無法移到背景"
 
 msgid "This subagent is no longer tracked by the host. Its transcript stays on disk under the agent's session directory."
 msgstr "主機已不再追蹤此子代理程式。其逐字稿仍保留在磁碟上的代理程式工作階段目錄中。"
@@ -17848,6 +18041,9 @@ msgstr "標題"
 
 msgid "To"
 msgstr "到"
+
+msgid "to {name}"
+msgstr "傳給 {name}"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "若要恢復與代理的對話，請在其資料夾中執行："
@@ -18409,6 +18605,9 @@ msgstr "不支援的專案「{0}」"
 msgid "Untitled"
 msgstr "未命名"
 
+msgid "Untitled chat"
+msgstr "未命名聊天"
+
 msgid "Untitled Page"
 msgstr "未命名頁面"
 
@@ -18481,6 +18680,12 @@ msgstr "請在這臺機器上更新Superset以附加檔案"
 
 msgid "update the branch prefix"
 msgstr "更新分支字首"
+
+msgid "Update this host to message subagents"
+msgstr "請更新此主機以傳送訊息給子代理程式"
+
+msgid "Update this host to move subagents to the background"
+msgstr "請更新此主機以將子代理程式移到背景"
 
 msgid "Updated"
 msgstr "已更新"
@@ -18646,6 +18851,10 @@ msgstr "在系統處於深色模式時使用。"
 
 msgid "Used when your system is in light mode."
 msgstr "在系統處於淺色模式時使用。"
+
+msgctxt "MCP server scope"
+msgid "user"
+msgstr "使用者"
 
 msgid "User already has access to this host"
 msgstr "該使用者已擁有此主機的存取權限"
@@ -19423,6 +19632,10 @@ msgstr "已寫入"
 msgid "X handle"
 msgstr "X 帳號名稱"
 
+msgctxt "machine size"
+msgid "X-Large"
+msgstr "X-大型"
+
 msgid "xs · sm · default · lg · icon-xs → icon-lg"
 msgstr "xs · sm · default · lg · icon-xs → icon-lg"
 
@@ -19642,6 +19855,10 @@ msgstr "你的名字 <0>（若我們採用你的提示詞，會在更新日誌�
 
 msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
 msgstr "你的組織已達到雲端用量上限。請在「設定」中的「帳單」提高上限或升級，以啟動此工作區。"
+
+#. placeholder {0}: params?.limit
+msgid "Your organization has reached its limit of {0} environments. Archive one, or upgrade in Settings, Billing to add more."
+msgstr "你的組織已達到 {0} 個環境的上限。請封存一個，或在「設定」中的「帳單」升級以新增更多。"
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "你的組織已達到雲端用量上限。除非提高上限，此工作區將在幾分鐘後停止。"
