@@ -26,6 +26,12 @@ export const serverErrorMessages: Record<
 				message: "Anthropic rejected this token.",
 			}),
 		),
+	"serverError.agentCredential.chatgptSignInFailed": () =>
+		i18n._(
+			msg({
+				message: "OpenAI did not complete the sign-in. Start again.",
+			}),
+		),
 	"serverError.agentCredential.empty": () =>
 		i18n._(
 			msg({
@@ -305,6 +311,12 @@ export const serverErrorMessages: Record<
 			msg({
 				message:
 					"The config repository must be one of the environment's repositories",
+			}),
+		),
+	"serverError.environment.limitReached": (params) =>
+		i18n._(
+			msg({
+				message: `Your organization has reached its limit of ${params?.limit} environments. Archive one, or upgrade in Settings, Billing to add more.`,
 			}),
 		),
 	"serverError.githubUser.notConfigured": () =>

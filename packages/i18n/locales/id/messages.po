@@ -431,6 +431,10 @@ msgstr "{0} sudah digunakan untuk tugas di organisasi ini."
 msgid "{0} is not a repository the GitHub App is installed on"
 msgstr "{0} bukan repositori tempat GitHub App terpasang"
 
+#. placeholder {0}: selected.name
+msgid "{0} is not running."
+msgstr "{0} tidak berjalan."
+
 #. placeholder {0}: host.name
 msgid "{0} is offline"
 msgstr "{0} sedang offline"
@@ -924,9 +928,6 @@ msgstr "{kind} · oleh {author}"
 msgid "{kindLabel} theme"
 msgstr "Tema {kindLabel}"
 
-msgid "{label} in cloud workspaces"
-msgstr "{label} di workspace cloud"
-
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
 
@@ -1259,6 +1260,9 @@ msgstr "+{0} −{1} · {2, plural, one {# file} other {# file}}"
 
 msgid "+{hidden} more"
 msgstr "+{hidden} lagi"
+
+msgid "+{hiddenCount}"
+msgstr "+{hiddenCount}"
 
 msgid "+{hiddenCount} earlier"
 msgstr "+{hiddenCount} sebelumnya"
@@ -2670,6 +2674,9 @@ msgstr "Lampirkan file"
 msgid "Attach image"
 msgstr "Lampirkan gambar"
 
+msgid "Attach to chat"
+msgstr "Lampirkan ke obrolan"
+
 msgid "Attached"
 msgstr "Terhubung"
 
@@ -3063,6 +3070,9 @@ msgstr "Tebal"
 msgid "Bold Text"
 msgstr "Teks Tebal"
 
+msgid "Boot"
+msgstr "Boot"
+
 #. placeholder {0}: selected.name
 msgid "Booting {0}…"
 msgstr "Mem-boot {0}…"
@@ -3259,6 +3269,9 @@ msgstr "Disertakan bersama aplikasi Superset di perangkat ini."
 
 msgid "Bundled with the Superset app on this device. Updates with the app."
 msgstr "Disertakan bersama aplikasi Superset di perangkat ini. Diperbarui bersama aplikasi."
+
+msgid "Business plan"
+msgstr "Paket Business"
 
 msgid "Button — sizes"
 msgstr "Tombol — ukuran"
@@ -4529,6 +4542,9 @@ msgstr "Koneksi GitHub belum dikonfigurasi di server ini"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Menghubungkan memungkinkan agen Anda membaca dan bertindak di {name} atas nama Anda. Tinjau apa yang Anda berikan sebelum melanjutkan."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Menghubungkan ke {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Menghubungkan ke desktop…"
 
@@ -4994,6 +5010,9 @@ msgstr "Tidak bisa membuka Photos"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Tidak dapat menjangkau {0} untuk mencari branch \"{1}\". Periksa koneksi dan akses Anda ke {2}, lalu coba lagi."
 
+msgid "Could not reach {deviceName}."
+msgstr "Tidak dapat menjangkau {deviceName}."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Tidak dapat menjangkau simulator seluler."
 
@@ -5136,6 +5155,9 @@ msgstr "Tidak dapat meminta deskripsi dari workspace"
 msgid "Couldn't attach files"
 msgstr "Tidak dapat melampirkan file"
 
+msgid "Couldn't attach the screenshot"
+msgstr "Tidak dapat melampirkan tangkapan layar"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "Tidak dapat mencabangkan ke worktree baru"
 
@@ -5165,6 +5187,9 @@ msgstr "Tidak bisa menyalin path"
 
 msgid "Couldn't copy the image"
 msgstr "Gagal menyalin gambar"
+
+msgid "Couldn't copy the screenshot"
+msgstr "Gagal menyalin tangkapan layar"
 
 msgid "Couldn't create workspace"
 msgstr "Tidak bisa membuat workspace"
@@ -5239,6 +5264,9 @@ msgstr "Tidak dapat memindahkan subagen ke latar belakang"
 
 msgid "Couldn't name \"{name}\" automatically"
 msgstr "Tidak dapat menamai \"{name}\" secara otomatis"
+
+msgid "Couldn't open the screenshot"
+msgstr "Tidak dapat membuka tangkapan layar"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Tidak bisa mengurai diff ini: {patchParseError}"
@@ -5347,6 +5375,9 @@ msgstr "Tidak dapat menghentikan tugas latar belakang"
 
 msgid "Couldn't stop the chat"
 msgstr "Tidak dapat menghentikan obrolan"
+
+msgid "Couldn't take a screenshot"
+msgstr "Gagal mengambil tangkapan layar"
 
 msgid "Couldn't unstage changes"
 msgstr "Tidak bisa meng-unstage perubahan"
@@ -6783,6 +6814,9 @@ msgstr "Masukkan sebuah nilai."
 msgid "Enter a whole number"
 msgstr "Masukkan bilangan bulat"
 
+msgid "Enter this code when OpenAI asks for it:"
+msgstr "Masukkan kode ini saat OpenAI memintanya:"
+
 msgid "Enter URL or search..."
 msgstr "Masukkan URL atau cari..."
 
@@ -7511,6 +7545,9 @@ msgstr "Gagal memperbarui tim. Silakan coba lagi."
 
 msgid "Failed to update URL"
 msgstr "Gagal memperbarui URL"
+
+msgid "Failed to update workspace"
+msgstr "Gagal memperbarui workspace"
 
 msgid "Failed to upload avatar"
 msgstr "Gagal mengunggah avatar"
@@ -8514,6 +8551,9 @@ msgstr "Tiap jam"
 
 msgid "Hover Card"
 msgstr "Hover Card"
+
+msgid "How {label} signs in when Superset runs it for you."
+msgstr "Cara {label} masuk saat Superset menjalankannya untuk Anda."
 
 msgid "How 2026 plays out"
 msgstr "Bagaimana 2026 berjalan"
@@ -10034,6 +10074,9 @@ msgstr "Kelola tugas dari percakapan Slack."
 
 msgid "Manage Terminal Scripts"
 msgstr "Kelola Skrip Terminal"
+
+msgid "Manage usage"
+msgstr "Kelola penggunaan"
 
 msgid "Manage your account settings"
 msgstr "Kelola pengaturan akun Anda"
@@ -11902,6 +11945,12 @@ msgstr "Buka perubahan"
 msgid "Open Changes"
 msgstr "Buka Perubahan"
 
+msgid "Open ChatGPT admin settings"
+msgstr "Buka pengaturan admin ChatGPT"
+
+msgid "Open ChatGPT settings"
+msgstr "Buka pengaturan ChatGPT"
+
 msgid "Open Command Palette"
 msgstr "Buka Command Palette"
 
@@ -11910,6 +11959,9 @@ msgstr "Buka komentar di GitHub"
 
 msgid "Open details"
 msgstr "Buka detail"
+
+msgid "Open device sign-in"
+msgstr "Buka masuk perangkat"
 
 msgid "Open DevTools"
 msgstr "Buka DevTools"
@@ -12106,6 +12158,9 @@ msgstr "Buka navigasi"
 msgid "Open on GitHub"
 msgstr "Buka di GitHub"
 
+msgid "Open OpenAI's device sign-in page."
+msgstr "Buka halaman masuk perangkat OpenAI."
+
 msgid "Open Page in Default Browser"
 msgstr "Buka Halaman di Browser Bawaan"
 
@@ -12243,6 +12298,9 @@ msgstr "Buka workspace"
 
 msgid "Open your app."
 msgstr "Buka aplikasi Anda."
+
+msgid "OpenAI did not complete the sign-in. Start again."
+msgstr "OpenAI tidak menyelesaikan proses masuk. Mulai lagi."
 
 msgid "OpenAI rejected this API key."
 msgstr "OpenAI menolak kunci API ini."
@@ -12696,6 +12754,9 @@ msgstr "Orang"
 msgid "Personal"
 msgstr "Pribadi"
 
+msgid "Personal plan"
+msgstr "Paket pribadi"
+
 msgid "Phantom Forklift"
 msgstr "Forklift Hantu"
 
@@ -12749,9 +12810,6 @@ msgstr "Pilih workspace yang agennya menunggu input Anda, sudah selesai sejak te
 
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "Pilih ikon dan warna, atau unggah gambar kustom. Bawaannya memakai avatar pemilik GitHub yang ditautkan."
-
-msgid "Pick how {label} signs in inside a sandbox. The credential is handed to the agent process when it launches and is not stored in the sandbox."
-msgstr "Pilih cara {label} masuk di dalam sandbox. Kredensial diserahkan ke proses agen saat diluncurkan dan tidak disimpan di sandbox."
 
 msgid "Pick one in the Superset app. It's saved to your account."
 msgstr "Pilih satu di aplikasi Superset. Tersimpan di akun Anda."
@@ -14831,8 +14889,8 @@ msgstr "Cakupan"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "Penilaian dimulai setelah papan melihat {0} hari penggunaan."
 
-msgid "Screenshot"
-msgstr "Tangkapan layar"
+msgid "Screenshot copied"
+msgstr "Tangkapan layar disalin"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Tangkapan layar disalin ke clipboard"
@@ -15855,6 +15913,12 @@ msgstr "Gagal masuk ({reason}). Silakan coba lagi."
 
 msgid "Signed in as <0>{userName}</0>"
 msgstr "Masuk sebagai <0>{userName}</0>"
+
+msgid "Signed in to ChatGPT"
+msgstr "Masuk ke ChatGPT"
+
+msgid "Signed in to ChatGPT as {connectedAs}"
+msgstr "Masuk ke ChatGPT sebagai {connectedAs}"
 
 msgid "Signed out"
 msgstr "Sudah keluar"
@@ -16960,6 +17024,9 @@ msgstr "Ambil kendali"
 msgid "Take me home"
 msgstr "Bawa saya ke beranda"
 
+msgid "Take screenshot"
+msgstr "Ambil tangkapan layar"
+
 msgid "Taken"
 msgstr "Sudah dipakai"
 
@@ -17290,6 +17357,9 @@ msgstr "Tombolnya kini menonjol. Saya sudah memeriksanya di panel Anda."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Workspace cloud seharusnya sudah berjalan, tetapi tidak merespons tepat waktu. Run berikutnya akan mencoba lagi."
+
+msgid "The code expired. Start again."
+msgstr "Kode kedaluwarsa. Mulai lagi."
 
 msgid "The config repository must be one of the environment's repositories"
 msgstr "Repositori konfigurasi harus salah satu repositori environment"
@@ -18317,6 +18387,9 @@ msgstr "Aktifkan “Izinkan akses jarak jauh ke perangkat ini melalui relay”"
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "Aktifkan Desain dan klik bagian halaman yang ingin Anda ubah."
 
+msgid "Turn on device code sign-in for Codex."
+msgstr "Aktifkan masuk dengan kode perangkat untuk Codex."
+
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Ubah percakapan Slack menjadi tugas, jalankan agen dari workspace Anda, dan libatkan rekan tim di tempat pekerjaan dimulai."
 
@@ -19037,6 +19110,9 @@ msgstr "menunggu {0} dan {1}…"
 
 msgid "Waiting for activity data"
 msgstr "Menunggu data aktivitas"
+
+msgid "Waiting for approval. Keep this dialog open."
+msgstr "Menunggu persetujuan. Biarkan dialog ini tetap terbuka."
 
 msgid "Waiting for Checks"
 msgstr "Menunggu Check"
@@ -19834,6 +19910,10 @@ msgstr "Nama Anda <0>(kalau prompt Anda kami pakai, kami akan mencantumkan Anda 
 msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
 msgstr "Organisasi Anda telah mencapai batas penggunaan cloud. Naikkan batas atau upgrade di Pengaturan, Penagihan untuk memulai workspace ini."
 
+#. placeholder {0}: params?.limit
+msgid "Your organization has reached its limit of {0} environments. Archive one, or upgrade in Settings, Billing to add more."
+msgstr "Organisasi Anda telah mencapai batas {0} environment. Arsipkan salah satu, atau upgrade di Pengaturan, Penagihan untuk menambah lagi."
+
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Organisasi Anda telah mencapai batas penggunaan cloud. Workspace ini akan berhenti dalam beberapa menit kecuali batasnya dinaikkan."
 
@@ -19889,6 +19969,9 @@ msgstr "Proyek dan workspace v1 Anda sedang dipindahkan ke Superset yang baru. S
 
 msgid "Your version: {currentVersion}"
 msgstr "Versi Anda: {currentVersion}"
+
+msgid "Your workspace admin turns on device code sign-in for Codex."
+msgstr "Admin workspace Anda mengaktifkan masuk dengan kode perangkat untuk Codex."
 
 msgid "Zap"
 msgstr "Petir"

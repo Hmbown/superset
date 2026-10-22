@@ -431,6 +431,10 @@ msgstr "{0} wordt al gebruikt voor taken in deze organisatie."
 msgid "{0} is not a repository the GitHub App is installed on"
 msgstr "{0} is geen repository waarop de GitHub App is geïnstalleerd"
 
+#. placeholder {0}: selected.name
+msgid "{0} is not running."
+msgstr "{0} is niet gestart."
+
 #. placeholder {0}: host.name
 msgid "{0} is offline"
 msgstr "{0} is offline"
@@ -924,9 +928,6 @@ msgstr "{kind} · door {author}"
 msgid "{kindLabel} theme"
 msgstr "{kindLabel} thema"
 
-msgid "{label} in cloud workspaces"
-msgstr "{label} in cloudwerkruimtes"
-
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
 
@@ -1259,6 +1260,9 @@ msgstr "+{0} −{1} · {2, plural, one {# bestand} other {# bestanden}}"
 
 msgid "+{hidden} more"
 msgstr "+{hidden} meer"
+
+msgid "+{hiddenCount}"
+msgstr "+{hiddenCount}"
 
 msgid "+{hiddenCount} earlier"
 msgstr "+{hiddenCount} eerder"
@@ -2670,6 +2674,9 @@ msgstr "Bestanden bijvoegen"
 msgid "Attach image"
 msgstr "Afbeelding toevoegen"
 
+msgid "Attach to chat"
+msgstr "Aan chat toevoegen"
+
 msgid "Attached"
 msgstr "Gekoppeld"
 
@@ -3063,6 +3070,9 @@ msgstr "Vet"
 msgid "Bold Text"
 msgstr "Vette tekst"
 
+msgid "Boot"
+msgstr "Opstarten"
+
 #. placeholder {0}: selected.name
 msgid "Booting {0}…"
 msgstr "{0} wordt opgestart…"
@@ -3259,6 +3269,9 @@ msgstr "Meegeleverd met de Superset-app op dit apparaat."
 
 msgid "Bundled with the Superset app on this device. Updates with the app."
 msgstr "Meegeleverd met de Superset-app op dit apparaat. Wordt samen met de app bijgewerkt."
+
+msgid "Business plan"
+msgstr "Business-abonnement"
 
 msgid "Button — sizes"
 msgstr "Knop — formaten"
@@ -4529,6 +4542,9 @@ msgstr "GitHub koppelen is niet ingesteld op deze server"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Verbinden laat je agents in {name} lezen en handelen namens jou. Controleer wat je verleent voordat je doorgaat."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Verbinden met {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Verbinden met het bureaublad…"
 
@@ -4994,6 +5010,9 @@ msgstr "Kan Foto's niet openen"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Kon {0} niet bereiken om branch \"{1}\" te zoeken. Controleer je verbinding en je toegang tot {2} en probeer het opnieuw."
 
+msgid "Could not reach {deviceName}."
+msgstr "{deviceName} is niet bereikbaar."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Kan geen mobiele simulator bereiken."
 
@@ -5136,6 +5155,9 @@ msgstr "Kon de workspace niet om een beschrijving vragen"
 msgid "Couldn't attach files"
 msgstr "Kan bestanden niet bijvoegen"
 
+msgid "Couldn't attach the screenshot"
+msgstr "Kan de screenshot niet toevoegen"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "Kon niet afsplitsen naar een nieuwe worktree"
 
@@ -5165,6 +5187,9 @@ msgstr "Kan het pad niet kopiëren"
 
 msgid "Couldn't copy the image"
 msgstr "Afbeelding kopiëren mislukt"
+
+msgid "Couldn't copy the screenshot"
+msgstr "Screenshot kopiëren mislukt"
 
 msgid "Couldn't create workspace"
 msgstr "Kan werkruimte niet aanmaken"
@@ -5239,6 +5264,9 @@ msgstr "Kan de subagent niet naar de achtergrond verplaatsen"
 
 msgid "Couldn't name \"{name}\" automatically"
 msgstr "Kon \"{name}\" niet automatisch een naam geven"
+
+msgid "Couldn't open the screenshot"
+msgstr "Kan de screenshot niet openen"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Kan deze diff niet parsen: {patchParseError}"
@@ -5347,6 +5375,9 @@ msgstr "Kan de achtergrondtaak niet stoppen"
 
 msgid "Couldn't stop the chat"
 msgstr "Kon de chat niet stoppen"
+
+msgid "Couldn't take a screenshot"
+msgstr "Screenshot maken mislukt"
 
 msgid "Couldn't unstage changes"
 msgstr "Kan wijzigingen niet unstagen"
@@ -6783,6 +6814,9 @@ msgstr "Voer een waarde in."
 msgid "Enter a whole number"
 msgstr "Voer een geheel getal in"
 
+msgid "Enter this code when OpenAI asks for it:"
+msgstr "Voer deze code in wanneer OpenAI erom vraagt:"
+
 msgid "Enter URL or search..."
 msgstr "Voer URL of zoekterm in..."
 
@@ -7511,6 +7545,9 @@ msgstr "Bijwerken van team mislukt. Probeer het opnieuw."
 
 msgid "Failed to update URL"
 msgstr "Bijwerken van URL mislukt"
+
+msgid "Failed to update workspace"
+msgstr "Workspace bijwerken mislukt"
 
 msgid "Failed to upload avatar"
 msgstr "Uploaden van avatar mislukt"
@@ -8514,6 +8551,9 @@ msgstr "Elk uur"
 
 msgid "Hover Card"
 msgstr "Hover Card"
+
+msgid "How {label} signs in when Superset runs it for you."
+msgstr "Hoe {label} zich aanmeldt wanneer Superset het voor je uitvoert."
 
 msgid "How 2026 plays out"
 msgstr "Hoe 2026 verloopt"
@@ -10034,6 +10074,9 @@ msgstr "Beheer taken vanuit Slack-gesprekken."
 
 msgid "Manage Terminal Scripts"
 msgstr "Terminalscripts beheren"
+
+msgid "Manage usage"
+msgstr "Gebruik beheren"
 
 msgid "Manage your account settings"
 msgstr "Beheer je accountinstellingen"
@@ -11902,6 +11945,12 @@ msgstr "Wijzigingen openen"
 msgid "Open Changes"
 msgstr "Wijzigingen openen"
 
+msgid "Open ChatGPT admin settings"
+msgstr "ChatGPT-beheerdersinstellingen openen"
+
+msgid "Open ChatGPT settings"
+msgstr "ChatGPT-instellingen openen"
+
 msgid "Open Command Palette"
 msgstr "Opdrachtenpalet openen"
 
@@ -11910,6 +11959,9 @@ msgstr "Opmerking openen op GitHub"
 
 msgid "Open details"
 msgstr "Details openen"
+
+msgid "Open device sign-in"
+msgstr "Apparaataanmelding openen"
 
 msgid "Open DevTools"
 msgstr "DevTools openen"
@@ -12106,6 +12158,9 @@ msgstr "Navigatie openen"
 msgid "Open on GitHub"
 msgstr "Openen op GitHub"
 
+msgid "Open OpenAI's device sign-in page."
+msgstr "Open de apparaataanmeldingspagina van OpenAI."
+
 msgid "Open Page in Default Browser"
 msgstr "Pagina openen in standaardbrowser"
 
@@ -12243,6 +12298,9 @@ msgstr "Werkruimte openen"
 
 msgid "Open your app."
 msgstr "Open je app."
+
+msgid "OpenAI did not complete the sign-in. Start again."
+msgstr "OpenAI heeft de aanmelding niet voltooid. Begin opnieuw."
 
 msgid "OpenAI rejected this API key."
 msgstr "OpenAI heeft deze API-sleutel geweigerd."
@@ -12696,6 +12754,9 @@ msgstr "Persoon"
 msgid "Personal"
 msgstr "Persoonlijk"
 
+msgid "Personal plan"
+msgstr "Persoonlijk abonnement"
+
 msgid "Phantom Forklift"
 msgstr "Fantoomheftruck"
 
@@ -12749,9 +12810,6 @@ msgstr "Kies een werkruimte waarvan de agent op je invoer wacht, klaar is sinds 
 
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "Kies een icoon en een kleur, of upload een eigen afbeelding. Standaard is de avatar van de gekoppelde GitHub-eigenaar."
-
-msgid "Pick how {label} signs in inside a sandbox. The credential is handed to the agent process when it launches and is not stored in the sandbox."
-msgstr "Kies hoe {label} inlogt binnen een sandbox. De inloggegevens gaan bij het starten naar het agentproces en worden niet in de sandbox opgeslagen."
 
 msgid "Pick one in the Superset app. It's saved to your account."
 msgstr "Kies er een in de Superset-app. Hij wordt in je account opgeslagen."
@@ -14831,8 +14889,8 @@ msgstr "Bereik"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "De score start zodra het bord {0} dagen gebruik ziet."
 
-msgid "Screenshot"
-msgstr "Schermafbeelding"
+msgid "Screenshot copied"
+msgstr "Screenshot gekopieerd"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Screenshot naar klembord gekopieerd"
@@ -15855,6 +15913,12 @@ msgstr "Inloggen mislukt ({reason}). Probeer het opnieuw."
 
 msgid "Signed in as <0>{userName}</0>"
 msgstr "Ingelogd als <0>{userName}</0>"
+
+msgid "Signed in to ChatGPT"
+msgstr "Aangemeld bij ChatGPT"
+
+msgid "Signed in to ChatGPT as {connectedAs}"
+msgstr "Aangemeld bij ChatGPT als {connectedAs}"
 
 msgid "Signed out"
 msgstr "Uitgelogd"
@@ -16960,6 +17024,9 @@ msgstr "Besturing overnemen"
 msgid "Take me home"
 msgstr "Naar de homepage"
 
+msgid "Take screenshot"
+msgstr "Screenshot maken"
+
 msgid "Taken"
 msgstr "Bezet"
 
@@ -17290,6 +17357,9 @@ msgstr "De knop valt nu op. Ik heb het gecontroleerd in je paneel."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "De cloudwerkruimte had gestart moeten zijn, maar reageerde niet op tijd. De volgende run probeert het opnieuw."
+
+msgid "The code expired. Start again."
+msgstr "De code is verlopen. Begin opnieuw."
 
 msgid "The config repository must be one of the environment's repositories"
 msgstr "De configuratierepository moet een van de repositories van de omgeving zijn"
@@ -18317,6 +18387,9 @@ msgstr "Zet “Externe toegang tot dit apparaat via de relay toestaan” aan"
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "Zet Design aan en klik op het deel van de pagina dat je wilt wijzigen."
 
+msgid "Turn on device code sign-in for Codex."
+msgstr "Zet aanmelden met apparaatcode aan voor Codex."
+
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Zet Slack-gesprekken om in taken, laat agents draaien vanuit je werkruimte en houd teamgenoten op de hoogte waar het werk begint."
 
@@ -19037,6 +19110,9 @@ msgstr "wachten op {0} en {1}…"
 
 msgid "Waiting for activity data"
 msgstr "Wachten op activiteitsgegevens"
+
+msgid "Waiting for approval. Keep this dialog open."
+msgstr "Wachten op goedkeuring. Houd dit venster open."
 
 msgid "Waiting for Checks"
 msgstr "Wachten op checks"
@@ -19834,6 +19910,10 @@ msgstr "Je naam <0>(als we je prompt gebruiken, vermelden we je in de changelog)
 msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
 msgstr "Je organisatie heeft haar limiet voor cloudgebruik bereikt. Verhoog de limiet of upgrade in Instellingen, Facturering om deze werkruimte te starten."
 
+#. placeholder {0}: params?.limit
+msgid "Your organization has reached its limit of {0} environments. Archive one, or upgrade in Settings, Billing to add more."
+msgstr "Je organisatie heeft haar limiet van {0} omgevingen bereikt. Archiveer er een of upgrade in Instellingen, Facturering om er meer toe te voegen."
+
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Je organisatie heeft haar limiet voor cloudgebruik bereikt. Deze werkruimte stopt over een paar minuten, tenzij de limiet wordt verhoogd."
 
@@ -19889,6 +19969,9 @@ msgstr "Je v1-projecten en -workspaces worden overgezet naar het nieuwe Superset
 
 msgid "Your version: {currentVersion}"
 msgstr "Jouw versie: {currentVersion}"
+
+msgid "Your workspace admin turns on device code sign-in for Codex."
+msgstr "De beheerder van je workspace zet aanmelden met apparaatcode voor Codex aan."
 
 msgid "Zap"
 msgstr "Bliksem"

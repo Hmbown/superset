@@ -431,6 +431,10 @@ msgstr "{0} jest już używany dla zadań w tej organizacji."
 msgid "{0} is not a repository the GitHub App is installed on"
 msgstr "{0} nie jest repozytorium, w którym zainstalowano aplikację GitHub App"
 
+#. placeholder {0}: selected.name
+msgid "{0} is not running."
+msgstr "{0} nie jest uruchomione."
+
 #. placeholder {0}: host.name
 msgid "{0} is offline"
 msgstr "{0} jest offline"
@@ -924,9 +928,6 @@ msgstr "{kind} · autor: {author}"
 msgid "{kindLabel} theme"
 msgstr "Motyw {kindLabel}"
 
-msgid "{label} in cloud workspaces"
-msgstr "{label} w obszarach roboczych w chmurze"
-
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
 
@@ -1259,6 +1260,9 @@ msgstr "+{0} −{1} · {2, plural, one {# plik} few {# pliki} many {# plików} o
 
 msgid "+{hidden} more"
 msgstr "+{hidden} więcej"
+
+msgid "+{hiddenCount}"
+msgstr "+{hiddenCount}"
 
 msgid "+{hiddenCount} earlier"
 msgstr "+{hiddenCount} wcześniej"
@@ -2670,6 +2674,9 @@ msgstr "Załącz pliki"
 msgid "Attach image"
 msgstr "Załącz obraz"
 
+msgid "Attach to chat"
+msgstr "Załącz do czatu"
+
 msgid "Attached"
 msgstr "Podłączona"
 
@@ -3063,6 +3070,9 @@ msgstr "Pogrubienie"
 msgid "Bold Text"
 msgstr "Pogrubiony tekst"
 
+msgid "Boot"
+msgstr "Uruchom"
+
 #. placeholder {0}: selected.name
 msgid "Booting {0}…"
 msgstr "Uruchamianie {0}…"
@@ -3259,6 +3269,9 @@ msgstr "Dołączony do aplikacji Superset na tym urządzeniu."
 
 msgid "Bundled with the Superset app on this device. Updates with the app."
 msgstr "Dołączony do aplikacji Superset na tym urządzeniu. Aktualizuje się razem z aplikacją."
+
+msgid "Business plan"
+msgstr "Plan Business"
 
 msgid "Button — sizes"
 msgstr "Przycisk — rozmiary"
@@ -4529,6 +4542,9 @@ msgstr "Połączenie z GitHubem nie jest skonfigurowane na tym serwerze"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Połączenie pozwoli Twoim agentom czytać i działać w {name} w Twoim imieniu. Sprawdź, co przyznajesz, zanim przejdziesz dalej."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Łączenie z {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Łączenie z pulpitem…"
 
@@ -4994,6 +5010,9 @@ msgstr "Nie udało się otworzyć Zdjęć"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Nie udało się połączyć z {0}, aby wyszukać gałąź „{1}”. Sprawdź połączenie i dostęp do {2}, a następnie spróbuj ponownie."
 
+msgid "Could not reach {deviceName}."
+msgstr "Nie można połączyć się z {deviceName}."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Nie można połączyć się z symulatorem mobilnym."
 
@@ -5136,6 +5155,9 @@ msgstr "Nie udało się poprosić obszaru roboczego o opis"
 msgid "Couldn't attach files"
 msgstr "Nie można załączyć plików"
 
+msgid "Couldn't attach the screenshot"
+msgstr "Nie udało się załączyć zrzutu ekranu"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "Nie udało się rozgałęzić do nowego worktree"
 
@@ -5165,6 +5187,9 @@ msgstr "Nie udało się skopiować ścieżki"
 
 msgid "Couldn't copy the image"
 msgstr "Nie udało się skopiować obrazu"
+
+msgid "Couldn't copy the screenshot"
+msgstr "Nie udało się skopiować zrzutu ekranu"
 
 msgid "Couldn't create workspace"
 msgstr "Nie udało się utworzyć obszaru roboczego"
@@ -5239,6 +5264,9 @@ msgstr "Nie udało się przenieść subagenta w tło"
 
 msgid "Couldn't name \"{name}\" automatically"
 msgstr "Nie udało się automatycznie nazwać „{name}”"
+
+msgid "Couldn't open the screenshot"
+msgstr "Nie udało się otworzyć zrzutu ekranu"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Nie udało się przetworzyć tych różnic: {patchParseError}"
@@ -5347,6 +5375,9 @@ msgstr "Nie udało się zatrzymać zadania w tle"
 
 msgid "Couldn't stop the chat"
 msgstr "Nie udało się zatrzymać czatu"
+
+msgid "Couldn't take a screenshot"
+msgstr "Nie udało się zrobić zrzutu ekranu"
 
 msgid "Couldn't unstage changes"
 msgstr "Nie udało się usunąć zmian z indeksu"
@@ -6783,6 +6814,9 @@ msgstr "Podaj wartość."
 msgid "Enter a whole number"
 msgstr "Wpisz liczbę całkowitą"
 
+msgid "Enter this code when OpenAI asks for it:"
+msgstr "Wpisz ten kod, gdy OpenAI o niego poprosi:"
+
 msgid "Enter URL or search..."
 msgstr "Wpisz URL lub szukaj..."
 
@@ -7511,6 +7545,9 @@ msgstr "Nie udało się zaktualizować zespołu. Spróbuj ponownie."
 
 msgid "Failed to update URL"
 msgstr "Nie udało się zaktualizować adresu URL"
+
+msgid "Failed to update workspace"
+msgstr "Nie udało się zaktualizować obszaru roboczego"
 
 msgid "Failed to upload avatar"
 msgstr "Nie udało się przesłać awatara"
@@ -8514,6 +8551,9 @@ msgstr "Co godzinę"
 
 msgid "Hover Card"
 msgstr "Hover Card"
+
+msgid "How {label} signs in when Superset runs it for you."
+msgstr "Jak {label} się loguje, gdy Superset uruchamia go za Ciebie."
 
 msgid "How 2026 plays out"
 msgstr "Jak potoczy się 2026"
@@ -10034,6 +10074,9 @@ msgstr "Zarządzaj zadaniami z rozmów na Slacku."
 
 msgid "Manage Terminal Scripts"
 msgstr "Zarządzaj skryptami terminala"
+
+msgid "Manage usage"
+msgstr "Zarządzaj użyciem"
 
 msgid "Manage your account settings"
 msgstr "Zarządzaj ustawieniami konta"
@@ -11902,6 +11945,12 @@ msgstr "Otwórz zmiany"
 msgid "Open Changes"
 msgstr "Otwórz zmiany"
 
+msgid "Open ChatGPT admin settings"
+msgstr "Otwórz ustawienia administratora ChatGPT"
+
+msgid "Open ChatGPT settings"
+msgstr "Otwórz ustawienia ChatGPT"
+
 msgid "Open Command Palette"
 msgstr "Otwórz paletę poleceń"
 
@@ -11910,6 +11959,9 @@ msgstr "Otwórz komentarz na GitHub"
 
 msgid "Open details"
 msgstr "Otwórz szczegóły"
+
+msgid "Open device sign-in"
+msgstr "Otwórz logowanie urządzenia"
 
 msgid "Open DevTools"
 msgstr "Otwórz DevTools"
@@ -12106,6 +12158,9 @@ msgstr "Otwórz nawigację"
 msgid "Open on GitHub"
 msgstr "Otwórz na GitHub"
 
+msgid "Open OpenAI's device sign-in page."
+msgstr "Otwórz stronę logowania urządzeń OpenAI."
+
 msgid "Open Page in Default Browser"
 msgstr "Otwórz stronę w domyślnej przeglądarce"
 
@@ -12243,6 +12298,9 @@ msgstr "Otwórz obszar roboczy"
 
 msgid "Open your app."
 msgstr "Otwórz swoją aplikację."
+
+msgid "OpenAI did not complete the sign-in. Start again."
+msgstr "OpenAI nie ukończyło logowania. Zacznij od nowa."
 
 msgid "OpenAI rejected this API key."
 msgstr "OpenAI odrzucił ten klucz API."
@@ -12696,6 +12754,9 @@ msgstr "Osoba"
 msgid "Personal"
 msgstr "Osobiste"
 
+msgid "Personal plan"
+msgstr "Plan osobisty"
+
 msgid "Phantom Forklift"
 msgstr "Widmowy Wózek Widłowy"
 
@@ -12749,9 +12810,6 @@ msgstr "Wybierz obszar roboczy, którego agent czeka na Twoje dane, skończył p
 
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "Wybierz ikonę i kolor albo prześlij własny obraz. Domyślnie używany jest awatar powiązanego właściciela repozytorium GitHub."
-
-msgid "Pick how {label} signs in inside a sandbox. The credential is handed to the agent process when it launches and is not stored in the sandbox."
-msgstr "Wybierz, jak {label} loguje się wewnątrz piaskownicy. Poświadczenie trafia do procesu agenta przy starcie i nie jest przechowywane w piaskownicy."
 
 msgid "Pick one in the Superset app. It's saved to your account."
 msgstr "Wybierz jedną w aplikacji Superset. Zapisuje się na twoim koncie."
@@ -14831,8 +14889,8 @@ msgstr "Zakres"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "Punktacja rusza, gdy tablica zobaczy dni z aktywnością: {0}."
 
-msgid "Screenshot"
-msgstr "Zrzut ekranu"
+msgid "Screenshot copied"
+msgstr "Skopiowano zrzut ekranu"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Zrzut ekranu skopiowany do schowka"
@@ -15855,6 +15913,12 @@ msgstr "Logowanie nie powiodło się ({reason}). Spróbuj ponownie."
 
 msgid "Signed in as <0>{userName}</0>"
 msgstr "Zalogowano jako <0>{userName}</0>"
+
+msgid "Signed in to ChatGPT"
+msgstr "Zalogowano do ChatGPT"
+
+msgid "Signed in to ChatGPT as {connectedAs}"
+msgstr "Zalogowano do ChatGPT jako {connectedAs}"
 
 msgid "Signed out"
 msgstr "Wylogowano"
@@ -16960,6 +17024,9 @@ msgstr "Przejmij kontrolę"
 msgid "Take me home"
 msgstr "Zabierz mnie na stronę główną"
 
+msgid "Take screenshot"
+msgstr "Zrób zrzut ekranu"
+
 msgid "Taken"
 msgstr "Zajęty"
 
@@ -17290,6 +17357,9 @@ msgstr "Przycisk teraz się wyróżnia. Sprawdziłem to w Twoim panelu."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Obszar roboczy w chmurze powinien był się uruchomić, ale nie odpowiedział na czas. Następne uruchomienie spróbuje ponownie."
+
+msgid "The code expired. Start again."
+msgstr "Kod wygasł. Zacznij od nowa."
 
 msgid "The config repository must be one of the environment's repositories"
 msgstr "Repozytorium konfiguracji musi być jednym z repozytoriów środowiska"
@@ -18317,6 +18387,9 @@ msgstr "Włącz „Zezwól na zdalny dostęp do tego urządzenia przez przekaźn
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "Włącz Design i kliknij fragment strony, który chcesz zmienić."
 
+msgid "Turn on device code sign-in for Codex."
+msgstr "Włącz logowanie kodem urządzenia dla Codex."
+
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Zamieniaj rozmowy na Slacku w zadania, uruchamiaj agentów ze swojego obszaru roboczego i informuj zespół tam, gdzie zaczyna się praca."
 
@@ -19037,6 +19110,9 @@ msgstr "czekamy na {0} i {1}…"
 
 msgid "Waiting for activity data"
 msgstr "Oczekiwanie na dane aktywności"
+
+msgid "Waiting for approval. Keep this dialog open."
+msgstr "Oczekiwanie na zatwierdzenie. Nie zamykaj tego okna."
 
 msgid "Waiting for Checks"
 msgstr "Oczekiwanie na kontrole"
@@ -19834,6 +19910,10 @@ msgstr "Twoje imię <0>(jeśli użyjemy Twojego promptu, wymienimy Cię w change
 msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
 msgstr "Twoja organizacja osiągnęła limit użycia chmury. Zwiększ limit lub podnieś plan w Ustawienia, Rozliczenia, aby uruchomić ten obszar roboczy."
 
+#. placeholder {0}: params?.limit
+msgid "Your organization has reached its limit of {0} environments. Archive one, or upgrade in Settings, Billing to add more."
+msgstr "Twoja organizacja osiągnęła limit {0} środowisk. Zarchiwizuj jedno lub podnieś plan w Ustawienia, Rozliczenia, aby dodać kolejne."
+
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Twoja organizacja osiągnęła limit użycia chmury. Ten obszar roboczy zatrzyma się za kilka minut, jeśli limit nie zostanie zwiększony."
 
@@ -19889,6 +19969,9 @@ msgstr "Twoje projekty i obszary robocze z v1 są przenoszone do nowego Superset
 
 msgid "Your version: {currentVersion}"
 msgstr "Twoja wersja: {currentVersion}"
+
+msgid "Your workspace admin turns on device code sign-in for Codex."
+msgstr "Logowanie kodem urządzenia dla Codex włącza administrator Twojego obszaru roboczego."
 
 msgid "Zap"
 msgstr "Błyskawica"

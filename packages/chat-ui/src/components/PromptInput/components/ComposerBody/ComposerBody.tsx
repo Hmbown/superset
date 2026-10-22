@@ -257,6 +257,10 @@ export function ComposerBody({
 				});
 				editor.focus();
 			},
+			addFiles(files: File[]) {
+				addFilesRef.current(files);
+				focusAtEnd();
+			},
 			insertChip(chip: ComposerChip) {
 				editor.update(() => $insertChipAtSelection(chip));
 			},
