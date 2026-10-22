@@ -194,22 +194,8 @@ if [ -x /usr/local/bin/superset-memguard ]; then
 	stamp "memguard.start pid=$!"
 fi
 
-swap_mb=$(( mem_bytes / 1048576 / 2 )); [ "$swap_mb" -gt 8192 ] && swap_mb=8192
-# Never without memguard: a tool that outgrows swap stalls the whole box for
-# minutes before the kernel kills it, where memguard reaps it in seconds.
-if kill -0 "$(cat "${SUPERSET_RUN_DIR}/memguard.pid" 2>/dev/null)" 2>/dev/null &&
-	! grep -q "^/swapfile " /proc/swaps 2>/dev/null; then
-	if [ "$(stat -c %s /swapfile 2>/dev/null)" != "$(( swap_mb * 1048576 ))" ]; then
-		rm -f /swapfile
-		fallocate -l "${swap_mb}M" /swapfile && chmod 600 /swapfile && mkswap -q /swapfile >/dev/null
-	fi
-	if swapon /swapfile 2>/dev/null; then
-		sysctl -q -w vm.swappiness=10
-		stamp "swap.on ${swap_mb}MB"
-	else
-		stamp "swap.failed continuing without"
-	fi
-fi
+# The fixed swapfile of an earlier bundle; memguard adds swap on demand now.
+[ -f /swapfile ] && ! grep -q "^/swapfile " /proc/swaps && rm -f /swapfile
 
 # --- the desktop and the checkout: side effects of being up.
 as_user env "DISPLAY=${SUPERSET_DISPLAY}" "HOME=${SUPERSET_USER_HOME}" "USER=${SUPERSET_USER}" \
