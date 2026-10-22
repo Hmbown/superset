@@ -73,9 +73,15 @@ export function billingFromCustomer(
 	const paidPlanId = paidPlanIdFromFlags(customer.flags);
 	const paid = paidPlanId
 		? customer.subscriptions.find(
-				(subscription) => subscription.planId === paidPlanId,
+				(subscription) =>
+					subscription.planId === paidPlanId &&
+					subscription.status !== "scheduled",
 			)
 		: undefined;
+	const continues = customer.subscriptions.some(
+		(subscription) =>
+			subscription.planId === paidPlanId && subscription.status === "scheduled",
+	);
 	const unpaidInvoice = (customer.invoices ?? [])
 		.filter((invoice) => UNPAID_INVOICE.has(invoice.status))
 		.sort((a, b) => b.createdAt - a.createdAt)[0];
@@ -108,7 +114,7 @@ export function billingFromCustomer(
 		tier,
 		autumnPlanId: paidPlanId,
 		status,
-		cancelAt: iso(paid?.expiresAt),
+		cancelAt: continues ? null : iso(paid?.expiresAt),
 		periodStart: iso(paid?.currentPeriodStart),
 		periodEnd: iso(
 			seatRenewal({

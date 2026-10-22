@@ -97,6 +97,28 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 		expect(billing.billingInterval).toBe("year");
 	});
 
+	test("a seat change scheduled for renewal is not a cancellation", () => {
+		const source = customer({
+			flags: pro,
+			subscription: { expiresAt: NOW + 20 * DAY },
+		});
+		const active = source.subscriptions[0];
+		if (!active) throw new Error("Missing fixture subscription");
+		source.subscriptions.unshift({
+			...active,
+			status: "scheduled",
+			expiresAt: null,
+			startedAt: NOW + 20 * DAY,
+		} as never);
+		const billing = billingFromCustomer(source, NOW);
+		expect(billing.cancelAt).toBeNull();
+		expect(billing.periodEnd).toBe(new Date(NOW + 20 * DAY).toISOString());
+		source.subscriptions.shift();
+		expect(billingFromCustomer(source, NOW).cancelAt).toBe(
+			new Date(NOW + 20 * DAY).toISOString(),
+		);
+	});
+
 	test("the plan tier is the plan's family, else the entitlement tier", () => {
 		const tierFor = (metadata: Record<string, unknown>) =>
 			billingFromCustomer(
