@@ -1,6 +1,7 @@
 import {
 	gbHourPack,
 	type MachineSize,
+	PLAN_METADATA,
 	type PlanTier,
 } from "@superset/shared/billing";
 import { type CloudUsage, cloudUsageFromBalances } from "./cloud-usage";
@@ -38,7 +39,7 @@ export interface OrganizationBilling {
 	lapsed: boolean;
 	paymentState: PaymentState;
 	cloudUsage: CloudUsage | null;
-	cloudAccess: boolean;
+	planTier: string;
 	gatedMachineSizes: MachineSize[];
 	environmentLimit: EnvironmentLimit;
 }
@@ -47,8 +48,14 @@ type AutumnCustomer = Awaited<ReturnType<typeof getAutumnCustomer>>;
 
 const UNPAID_INVOICE = new Set(["open", "uncollectible"]);
 
-/** Autumn plan metadata that turns on cloud workspaces for an organization on the plan. */
-export const CLOUD_ACCESS_METADATA_KEY = "cloud_access";
+/** The plan's family in Autumn (pro, team, ultra), else the entitlement tier. */
+function planTierOf(
+	metadata: Record<string, unknown> | undefined,
+	tier: PlanTier,
+): string {
+	const family = metadata?.[PLAN_METADATA.family];
+	return typeof family === "string" && family ? family : tier;
+}
 
 function iso(ms: number | null | undefined): string | null {
 	return ms ? new Date(ms).toISOString() : null;
@@ -123,7 +130,7 @@ export function billingFromCustomer(
 			customer.billingControls,
 			paid?.plan ? gbHourPack(paid.plan) : null,
 		),
-		cloudAccess: paid?.plan?.metadata?.[CLOUD_ACCESS_METADATA_KEY] === true,
+		planTier: planTierOf(paid?.plan?.metadata, tier),
 		gatedMachineSizes: gatedMachineSizesFromFlags(customer.flags),
 		environmentLimit:
 			environmentLimitFromBalances(customer.balances) ??

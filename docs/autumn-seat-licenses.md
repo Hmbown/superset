@@ -48,12 +48,14 @@ credit on a decrease.
 
 ## Cloud access
 
-A plan turns on cloud workspaces with the metadata `cloud_access: true` (Team and
-Ultra today; Pro's seat license has no GB-minutes). Billing state exposes it as
-`cloudAccess`. The `cloud-workspaces` PostHog flag is still the gate: the server
-passes `plan_cloud_access` as a person property for the active organization, and
-the desktop sets it with `setPersonPropertiesForFlags`. The flag needs a release
-condition `plan_cloud_access = true` for this to admit paying organizations.
+Billing state exposes `planTier`: the plan's `family` in Autumn (pro, team,
+ultra; the retired Pro plans read as pro), else the entitlement tier (free,
+enterprise). The `cloud-workspaces` PostHog flag is the gate. The server passes
+`plan_tier` for the active organization as a person property when it evaluates
+the flag, and the desktop sets it with `setPersonPropertiesForFlags` and stores
+it on the person for analytics. The flag's release condition `plan_tier` in
+`team, ultra` is what turns cloud on for those plans; the tier names live in
+PostHog, not in code. Pro's seat license has no GB-minutes.
 
 ## Extra GB-hours
 

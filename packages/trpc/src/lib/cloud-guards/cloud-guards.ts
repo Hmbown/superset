@@ -39,13 +39,13 @@ export async function cloudAccess(ctx: {
 	session: { user: { id: string; email: string } } | null;
 	activeOrganizationId?: string | null;
 }): Promise<{ enabled: boolean | undefined; account: string }> {
-	const [email, planCloudAccess] = await Promise.all([
+	const [email, planTier] = await Promise.all([
 		currentEmail(ctx),
 		ctx.activeOrganizationId
 			? organizationBilling(ctx.activeOrganizationId)
-					.then((billing) => billing.cloudAccess)
-					.catch(() => false)
-			: false,
+					.then((billing) => billing.planTier)
+					.catch(() => "unknown")
+			: "none",
 	]);
 	const account = email?.trim().toLowerCase() ?? "";
 	const enabled = await posthog.isFeatureEnabled(
@@ -57,7 +57,7 @@ export async function cloudAccess(ctx: {
 			// reason. No exposure events — this is authorization, not an experiment.
 			personProperties: {
 				email: account,
-				plan_cloud_access: String(planCloudAccess),
+				plan_tier: planTier,
 			},
 			sendFeatureFlagEvents: false,
 		},

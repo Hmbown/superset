@@ -59,7 +59,7 @@ describe("assertCloudAccess", () => {
 		expect(calls[0]?.distinctId).toBe("user-1");
 		expect(calls[0]?.options?.personProperties).toEqual({
 			email: "someone@superset.sh",
-			plan_cloud_access: "false",
+			plan_tier: "none",
 		});
 	});
 
@@ -78,7 +78,7 @@ describe("assertCloudAccess", () => {
 		expect(lookups).toBe(1);
 		expect(calls[0]?.options?.personProperties).toEqual({
 			email: "stored@superset.sh",
-			plan_cloud_access: "false",
+			plan_tier: "none",
 		});
 	});
 

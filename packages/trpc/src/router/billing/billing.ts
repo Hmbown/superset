@@ -71,7 +71,7 @@ async function requireOwnerWithCustomer(ctx: {
 const EMPTY_ACTIVE_PLAN = {
 	plan: "free" as const,
 	autumnPlanId: null,
-	cloudAccess: false,
+	planTier: "free",
 	/** @deprecated TODO(2027-01-31): Stripe vocabulary; read `paymentState`. */
 	status: null,
 	cancelAt: null,
@@ -149,7 +149,7 @@ export const billingRouter = {
 				organizationId: activeOrgId,
 				plan: billing.tier,
 				autumnPlanId: billing.autumnPlanId ?? null,
-				cloudAccess: billing.cloudAccess ?? false,
+				planTier: billing.planTier ?? billing.tier,
 				status: billing.status,
 				cancelAt: date(billing.cancelAt),
 				periodStart: date(billing.periodStart),
@@ -193,7 +193,7 @@ export const billingRouter = {
 			organizationId: activeOrgId,
 			plan: subscription.plan,
 			autumnPlanId: null,
-			cloudAccess: false,
+			planTier: subscription.plan ?? "free",
 			status: subscription.status,
 			cancelAt: subscription.cancelAt,
 			periodStart: subscription.periodStart,

@@ -23,7 +23,7 @@ const FREE: OrganizationBilling = {
 	lapsed: false,
 	paymentState: { kind: "ok" },
 	cloudUsage: null,
-	cloudAccess: false,
+	planTier: "free",
 	gatedMachineSizes: [],
 	environmentLimit: 0,
 };
@@ -39,7 +39,7 @@ const FAIL_OPEN: OrganizationBilling = {
 	lapsed: false,
 	paymentState: { kind: "ok" },
 	cloudUsage: null,
-	cloudAccess: false,
+	planTier: "pro",
 	gatedMachineSizes: [],
 	environmentLimit: null,
 };
@@ -60,8 +60,17 @@ function lastKnownKey(organizationId: string): string {
 async function readShared(key: string): Promise<OrganizationBilling | null> {
 	try {
 		const value = await billingRedis.get<OrganizationBilling>(key);
-		if (!value || value.environmentLimit !== undefined) return value;
-		return { ...value, environmentLimit: value.tier === "free" ? 0 : null };
+		if (!value) return value;
+		return {
+			...value,
+			planTier: value.planTier ?? value.tier,
+			environmentLimit:
+				value.environmentLimit !== undefined
+					? value.environmentLimit
+					: value.tier === "free"
+						? 0
+						: null,
+		};
 	} catch (error) {
 		console.error("[billing/plan-state] cache read failed", error);
 		return null;

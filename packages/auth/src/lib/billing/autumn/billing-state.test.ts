@@ -80,7 +80,7 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 			lapsed: false,
 			paymentState: { kind: "ok" },
 			cloudUsage: null,
-			cloudAccess: false,
+			planTier: "pro",
 			gatedMachineSizes: [],
 			environmentLimit: null,
 		});
@@ -97,8 +97,8 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 		expect(billing.billingInterval).toBe("year");
 	});
 
-	test("a plan labelled for cloud turns on cloud access", () => {
-		const billing = (metadata: Record<string, unknown>) =>
+	test("the plan tier is the plan's family, else the entitlement tier", () => {
+		const tierFor = (metadata: Record<string, unknown>) =>
 			billingFromCustomer(
 				customer({
 					flags: pro,
@@ -107,9 +107,10 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 					},
 				}),
 				NOW,
-			).cloudAccess;
-		expect(billing({ cloud_access: true })).toBe(true);
-		expect(billing({})).toBe(false);
+			).planTier;
+		expect(tierFor({ family: "team" })).toBe("team");
+		expect(tierFor({})).toBe("pro");
+		expect(billingFromCustomer(customer({}), NOW).planTier).toBe("free");
 	});
 
 	test("a yearly seat license reads as yearly and renews on its anniversary", () => {

@@ -4,14 +4,13 @@ import { posthog } from "renderer/lib/posthog";
 
 export function PostHogPlanFlags() {
 	const { activePlan } = useCurrentPlan();
-	const cloudAccess = activePlan?.cloudAccess;
+	const planTier = activePlan?.planTier;
 
 	useEffect(() => {
-		if (cloudAccess === undefined) return;
-		posthog.setPersonPropertiesForFlags({
-			plan_cloud_access: String(cloudAccess),
-		});
-	}, [cloudAccess]);
+		if (!planTier) return;
+		posthog.setPersonProperties({ plan_tier: planTier });
+		posthog.setPersonPropertiesForFlags({ plan_tier: planTier });
+	}, [planTier]);
 
 	return null;
 }
