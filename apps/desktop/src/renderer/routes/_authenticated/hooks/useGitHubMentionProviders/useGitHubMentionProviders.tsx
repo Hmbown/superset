@@ -1,6 +1,8 @@
 import { useLingui } from "@lingui/react/macro";
 import type { ComposerMentionProvider } from "@superset/chat-ui/PromptInput";
 import { useMemo } from "react";
+import { GoIssueOpened } from "react-icons/go";
+import { LuGitPullRequest } from "react-icons/lu";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { linkedContextChip } from "renderer/routes/_authenticated/utils/linkedContextChips";
 
@@ -38,6 +40,7 @@ export function useGitHubMentionProviders({
 							});
 						return result.issues.map((issue) => ({
 							id: `github-issue:${issue.issueNumber}`,
+							icon: <GoIssueOpened className="size-4" />,
 							label: `#${issue.issueNumber}`,
 							description: issue.title,
 							keywords: [issue.title],
@@ -80,6 +83,7 @@ export function useGitHubMentionProviders({
 							});
 						return result.pullRequests.map((pr) => ({
 							id: `pull-request:${pr.prNumber}`,
+							icon: <LuGitPullRequest className="size-4" />,
 							label: `PR #${pr.prNumber}`,
 							description: pr.title,
 							keywords: [pr.title],

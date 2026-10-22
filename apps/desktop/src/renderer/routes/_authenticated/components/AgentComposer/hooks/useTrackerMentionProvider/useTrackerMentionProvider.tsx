@@ -3,7 +3,9 @@ import type {
 	ComposerMentionEntry,
 	ComposerMentionProvider,
 } from "@superset/chat-ui/PromptInput";
-import { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
+import { HiOutlineCheckCircle } from "react-icons/hi2";
+import { SiLinear } from "react-icons/si";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { useTaskTracker } from "renderer/hooks/useTaskTracker";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
@@ -15,9 +17,14 @@ import { rankTasks } from "./rankTasks";
 
 const MAX_RESULTS = 20;
 
-function issueEntry(id: string, issue: LinkedIssue): ComposerMentionEntry {
+function issueEntry(
+	id: string,
+	issue: LinkedIssue,
+	icon: ReactNode,
+): ComposerMentionEntry {
 	return {
 		id,
+		icon,
 		label: issue.slug,
 		description: issue.title,
 		keywords: [issue.title],
@@ -62,7 +69,11 @@ export function useTrackerMentionProvider(): ComposerMentionProvider | null {
 						return issues
 							.slice(0, MAX_RESULTS)
 							.map((issue) =>
-								issueEntry(`linear:${issue.id}`, linkedIssueFromLinear(issue)),
+								issueEntry(
+									`linear:${issue.id}`,
+									linkedIssueFromLinear(issue),
+									<SiLinear className="size-3.5" />,
+								),
 							);
 					},
 				},
@@ -88,13 +99,17 @@ export function useTrackerMentionProvider(): ComposerMentionProvider | null {
 						query,
 						MAX_RESULTS,
 					).map((task) =>
-						issueEntry(`task:${task.id}`, {
-							slug: task.slug,
-							title: task.title,
-							source: "internal",
-							taskId: task.id,
-							branch: task.branch ?? undefined,
-						}),
+						issueEntry(
+							`task:${task.id}`,
+							{
+								slug: task.slug,
+								title: task.title,
+								source: "internal",
+								taskId: task.id,
+								branch: task.branch ?? undefined,
+							},
+							<HiOutlineCheckCircle className="size-4" />,
+						),
 					);
 				},
 			},
