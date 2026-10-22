@@ -148,6 +148,7 @@ export const autumnBillingRoutes = {
 						? autumnPlanId && !LEGACY_CLIENT_PLAN_IDS.includes(autumnPlanId)
 						: ctx.body.currentPlanId !== autumnPlanId
 				) {
+					await invalidateOrganizationBilling(caller.organizationId);
 					throw new APIError("BAD_REQUEST", {
 						message:
 							ctx.body.currentPlanId === undefined
