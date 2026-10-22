@@ -72,6 +72,7 @@ export function CloudWorkspaceRow({
 	const prStatus = pullRequest
 		? PULL_REQUEST_STATUS[pullRequestStatus(pullRequest)]
 		: null;
+	const [prOwner, prRepo] = pullRequest?.repoFullName.split("/") ?? [];
 
 	const body = (
 		<Pressable
@@ -117,7 +118,7 @@ export function CloudWorkspaceRow({
 					hitSlop={8}
 					onPress={() =>
 						router.push(
-							`/(authenticated)/workspace/${row.id}/pull-request/${pullRequest.number}?owner=${encodeURIComponent(repoOwner ?? "")}&repo=${encodeURIComponent(repoName ?? "")}`,
+							`/(authenticated)/workspace/${row.id}/pull-request/${pullRequest.number}?owner=${encodeURIComponent(prOwner ?? "")}&repo=${encodeURIComponent(prRepo ?? "")}`,
 						)
 					}
 				>
