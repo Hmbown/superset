@@ -735,9 +735,6 @@ msgstr "Аккаунт {connectorName}"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookies — забыть этот сайт"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {# активный порт — показать детали} few {# активных порта — показать детали} many {# активных портов — показать детали} other {# активных портов — показать детали}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {# проверка не пройдена} few {# проверки не пройдено} many {# проверок не пройдено} other {# проверки не пройдено}}"
 
@@ -3501,9 +3498,6 @@ msgstr "Изменить расположение"
 msgid "Change or add labels…"
 msgstr "Изменить или добавить метки…"
 
-msgid "Change or add tasks…"
-msgstr "Изменить или добавить задачи…"
-
 msgid "Change organization logo"
 msgstr "Сменить логотип организации"
 
@@ -4105,9 +4099,6 @@ msgstr "Использование облака"
 msgid "Cloud workspace"
 msgstr "Облачная рабочая область"
 
-msgid "Cloud workspaces"
-msgstr "Облачные рабочие области"
-
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Облачные рабочие пространства игнорируют эту переменную. Вместо этого агенты входят в систему в разделе «Настройки › Агенты»."
 
@@ -4116,9 +4107,6 @@ msgstr "Для облачных рабочих областей нужен пл�
 
 msgid "Cloud workspaces need a project for now"
 msgstr "Пока облачным рабочим пространствам нужен проект"
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "Облачные рабочие пространства внутри проектов, фильтр «локальные / облачные» и обновлённая строка рабочего пространства."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Облачные рабочие пространства перестанут запускать {agentLabel} с этими данными."
@@ -5574,9 +5562,6 @@ msgstr "Создан {0} · использован {1}"
 
 msgid "Created {ago}"
 msgstr "Создано {ago}"
-
-msgid "created {createdAgo}"
-msgstr "создано {createdAgo}"
 
 msgid "Created {createdAgo}"
 msgstr "Создано {createdAgo}"
@@ -8534,9 +8519,6 @@ msgstr "Хост недоступен"
 msgid "Host unavailable: {hostName}"
 msgstr "Хост недоступен: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "Размещена в облаке"
-
 msgid "Hosts"
 msgstr "Хосты"
 
@@ -10687,9 +10669,6 @@ msgstr "другие соперники"
 msgid "New Chat"
 msgstr "Новый чат"
 
-msgid "New cloud workspace"
-msgstr "Новая облачная рабочая область"
-
 msgid "New environment"
 msgstr "Новое окружение"
 
@@ -10731,9 +10710,6 @@ msgstr "Новая сессия"
 
 msgid "New shell"
 msgstr "Новая оболочка"
-
-msgid "New sidebar"
-msgstr "Новая боковая панель"
 
 msgid "New stars"
 msgstr "Новые звёзды"
@@ -11381,9 +11357,6 @@ msgstr "Задачи не найдены."
 msgid "No tasks in this project yet."
 msgstr "В этом проекте пока нет задач."
 
-msgid "No tasks or pull requests yet"
-msgstr "Задач и пул-реквестов пока нет"
-
 msgid "No tasks yet"
 msgstr "Задач пока нет"
 
@@ -11957,9 +11930,6 @@ msgstr "Открыть палитру команд"
 msgid "Open comment on GitHub"
 msgstr "Открыть комментарий на GitHub"
 
-msgid "Open details"
-msgstr "Открыть подробности"
-
 msgid "Open device sign-in"
 msgstr "Открыть вход устройства"
 
@@ -12196,9 +12166,6 @@ msgstr "Открыть пул-реквест"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "Открыть пул-реквест #{0}"
-
-msgid "Open pull request #{number}"
-msgstr "Открыть пул-реквест #{number}"
 
 msgid "Open pull request options"
 msgstr "Открыть параметры пул-реквеста"
@@ -12992,10 +12959,6 @@ msgstr "PR #{0} ({1})"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "PR #{0} создан"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PR закрыт"
@@ -14740,12 +14703,6 @@ msgstr "Выполняется bun test…"
 msgid "Running now"
 msgstr "Запускается"
 
-msgid "Running on a paired device"
-msgstr "Работает на сопряжённом устройстве"
-
-msgid "Running on this device"
-msgstr "Работает на этом устройстве"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Работающие процессы терминала продолжат работу, но более старый вывод может стать недоступен после перезапуска приложения."
 
@@ -15612,9 +15569,6 @@ msgstr "Доступна всем"
 
 msgid "Shared with me"
 msgstr "Доступные мне"
-
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "Использует checkout проекта — файлы, индекс git и ветку — совместно с другими локальными рабочими областями"
 
 msgid "Sheet"
 msgstr "Панель"
@@ -17342,9 +17296,6 @@ msgstr "Приложение можно скачать бесплатно. Тр�
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "Приложение версии {appVersion}, но подключено к службе хоста, запущенной чем-то другим, вероятно старой CLI или другой сборкой Superset. Перезапуск заменит её копией из этого приложения."
-
-msgid "The associated device isn't reachable right now"
-msgstr "Связанное устройство сейчас недоступно"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "Владелец автоматизации больше не может использовать облачные рабочие области в этой организации. Попросите его проверить доступ или запустите автоматизацию на устройстве."
@@ -19545,9 +19496,6 @@ msgstr "Рабочая область создана из PR"
 msgid "Workspace details"
 msgstr "Сведения о рабочей области"
 
-msgid "Workspace ID"
-msgstr "ID рабочей области"
-
 msgid "Workspace ID copied"
 msgstr "ID рабочей области скопирован"
 
@@ -19625,9 +19573,6 @@ msgstr "Расположение worktree обновлено"
 
 msgid "Worktree missing"
 msgstr "Worktree отсутствует"
-
-msgid "Worktree on this device"
-msgstr "Worktree на этом устройстве"
 
 msgid "Worktree opened"
 msgstr "Worktree открыт"

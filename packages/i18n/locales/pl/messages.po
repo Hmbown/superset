@@ -735,9 +735,6 @@ msgstr "Konto {connectorName}"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookies — zapomnij tę witrynę"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {# aktywny port — pokaż szczegóły} few {# aktywne porty — pokaż szczegóły} many {# aktywnych portów — pokaż szczegóły} other {# aktywnego portu — pokaż szczegóły}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {# kontrola nie przeszła} few {# kontrole nie przeszły} many {# kontroli nie przeszło} other {# kontroli nie przeszło}}"
 
@@ -3501,9 +3498,6 @@ msgstr "Zmień lokalizację"
 msgid "Change or add labels…"
 msgstr "Zmień lub dodaj etykiety…"
 
-msgid "Change or add tasks…"
-msgstr "Zmień lub dodaj zadania…"
-
 msgid "Change organization logo"
 msgstr "Zmień logo organizacji"
 
@@ -4105,9 +4099,6 @@ msgstr "Użycie chmury"
 msgid "Cloud workspace"
 msgstr "Obszar roboczy w chmurze"
 
-msgid "Cloud workspaces"
-msgstr "Chmurowe obszary robocze"
-
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Chmurowe przestrzenie robocze ignorują tę zmienną. Agenci logują się zamiast tego w Ustawienia › Agenci."
 
@@ -4116,9 +4107,6 @@ msgstr "Obszary robocze w chmurze wymagają płatnego planu. Podnieś plan w Ust
 
 msgid "Cloud workspaces need a project for now"
 msgstr "Chmurowe obszary robocze na razie wymagają projektu"
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "Chmurowe obszary robocze pod ich projektami, filtr lokalnych i chmurowych obszarów roboczych oraz przeprojektowany wiersz obszaru roboczego."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Workspace'y w chmurze przestaną uruchamiać {agentLabel} z tymi danymi."
@@ -5574,9 +5562,6 @@ msgstr "Utworzono {0} · Ostatnio użyty {1}"
 
 msgid "Created {ago}"
 msgstr "Utworzono {ago}"
-
-msgid "created {createdAgo}"
-msgstr "utworzono {createdAgo}"
 
 msgid "Created {createdAgo}"
 msgstr "Utworzono {createdAgo}"
@@ -8534,9 +8519,6 @@ msgstr "Host niedostępny"
 msgid "Host unavailable: {hostName}"
 msgstr "Host niedostępny: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "Hostowany w chmurze"
-
 msgid "Hosts"
 msgstr "Hosty"
 
@@ -10687,9 +10669,6 @@ msgstr "nowi przeciwnicy"
 msgid "New Chat"
 msgstr "Nowy czat"
 
-msgid "New cloud workspace"
-msgstr "Nowy obszar roboczy w chmurze"
-
 msgid "New environment"
 msgstr "Nowe środowisko"
 
@@ -10731,9 +10710,6 @@ msgstr "Nowa sesja"
 
 msgid "New shell"
 msgstr "Nowa powłoka"
-
-msgid "New sidebar"
-msgstr "Nowy pasek boczny"
 
 msgid "New stars"
 msgstr "Nowe gwiazdki"
@@ -11381,9 +11357,6 @@ msgstr "Nie znaleziono zadań."
 msgid "No tasks in this project yet."
 msgstr "Ten projekt nie ma jeszcze zadań."
 
-msgid "No tasks or pull requests yet"
-msgstr "Brak zadań i pull requestów"
-
 msgid "No tasks yet"
 msgstr "Brak zadań"
 
@@ -11957,9 +11930,6 @@ msgstr "Otwórz paletę poleceń"
 msgid "Open comment on GitHub"
 msgstr "Otwórz komentarz na GitHub"
 
-msgid "Open details"
-msgstr "Otwórz szczegóły"
-
 msgid "Open device sign-in"
 msgstr "Otwórz logowanie urządzenia"
 
@@ -12196,9 +12166,6 @@ msgstr "Otwórz pull request"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "Otwórz pull request #{0}"
-
-msgid "Open pull request #{number}"
-msgstr "Otwórz pull request #{number}"
 
 msgid "Open pull request options"
 msgstr "Otwórz opcje pull requesta"
@@ -12992,10 +12959,6 @@ msgstr "PR #{0} ({1})"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "Utworzono PR #{0}"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PR zamknięty"
@@ -14740,12 +14703,6 @@ msgstr "Uruchamianie bun test…"
 msgid "Running now"
 msgstr "Uruchamianie teraz"
 
-msgid "Running on a paired device"
-msgstr "Działa na sparowanym urządzeniu"
-
-msgid "Running on this device"
-msgstr "Działa na tym urządzeniu"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Działające procesy terminala nie zostaną przerwane, ale starsze wyjście może być niedostępne po ponownym uruchomieniu aplikacji."
 
@@ -15612,9 +15569,6 @@ msgstr "Udostępniona wszystkim"
 
 msgid "Shared with me"
 msgstr "Udostępnione mi"
-
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "Współdzieli checkout projektu — pliki, indeks git i gałąź — z pozostałymi lokalnymi obszarami roboczymi"
 
 msgid "Sheet"
 msgstr "Arkusz"
@@ -17342,9 +17296,6 @@ msgstr "Aplikację można pobrać bezpłatnie. Wymaga iOS 26 lub nowszego oraz S
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "Aplikacja jest w wersji {appVersion}, ale podłączona do usługi hosta uruchomionej przez coś innego, prawdopodobnie starszą CLI lub inną kompilację Superset. Ponowne uruchomienie zastąpi ją kopią z tej aplikacji."
-
-msgid "The associated device isn't reachable right now"
-msgstr "Powiązane urządzenie jest teraz nieosiągalne"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "Właściciel automatyzacji nie może już używać obszarów roboczych w chmurze w tej organizacji. Poproś go o sprawdzenie dostępu albo uruchom automatyzację na urządzeniu."
@@ -19545,9 +19496,6 @@ msgstr "Obszar roboczy utworzony z PR"
 msgid "Workspace details"
 msgstr "Szczegóły obszaru roboczego"
 
-msgid "Workspace ID"
-msgstr "ID obszaru roboczego"
-
 msgid "Workspace ID copied"
 msgstr "Skopiowano ID obszaru roboczego"
 
@@ -19625,9 +19573,6 @@ msgstr "Zaktualizowano lokalizację worktree"
 
 msgid "Worktree missing"
 msgstr "Brak worktree"
-
-msgid "Worktree on this device"
-msgstr "Worktree na tym urządzeniu"
 
 msgid "Worktree opened"
 msgstr "Worktree otwarty"

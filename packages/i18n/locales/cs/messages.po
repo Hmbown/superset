@@ -735,9 +735,6 @@ msgstr "Účet {connectorName}"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookies — zapomenout tento web"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {# aktivní port — zobrazit podrobnosti} few {# aktivní porty — zobrazit podrobnosti} many {# aktivního portu — zobrazit podrobnosti} other {# aktivních portů — zobrazit podrobnosti}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {# kontrola selhala} few {# kontroly selhaly} many {# kontroly selhalo} other {# kontrol selhalo}}"
 
@@ -3501,9 +3498,6 @@ msgstr "Změnit umístění"
 msgid "Change or add labels…"
 msgstr "Změnit nebo přidat štítky…"
 
-msgid "Change or add tasks…"
-msgstr "Změnit nebo přidat úkoly…"
-
 msgid "Change organization logo"
 msgstr "Změnit logo organizace"
 
@@ -4105,9 +4099,6 @@ msgstr "Využití cloudu"
 msgid "Cloud workspace"
 msgstr "Cloudový pracovní prostor"
 
-msgid "Cloud workspaces"
-msgstr "Cloudové pracovní prostory"
-
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Cloudové pracovní prostory tuto proměnnou ignorují. Agenti se místo toho přihlašují v Nastavení › Agenti."
 
@@ -4116,9 +4107,6 @@ msgstr "Cloudové pracovní prostory vyžadují placený tarif. Pro spuštění 
 
 msgid "Cloud workspaces need a project for now"
 msgstr "Cloudové pracovní prostory zatím potřebují projekt"
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "Cloudové pracovní prostory pod jejich projekty, filtr místní a cloud a přepracovaný řádek pracovního prostoru."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Cloudové workspacy s tím přestanou spouštět {agentLabel}."
@@ -5574,9 +5562,6 @@ msgstr "Vytvořeno {0} · Naposledy použito {1}"
 
 msgid "Created {ago}"
 msgstr "Vytvořeno {ago}"
-
-msgid "created {createdAgo}"
-msgstr "vytvořeno {createdAgo}"
 
 msgid "Created {createdAgo}"
 msgstr "Vytvořeno {createdAgo}"
@@ -8534,9 +8519,6 @@ msgstr "Host není dostupný"
 msgid "Host unavailable: {hostName}"
 msgstr "Host není dostupný: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "Hostováno v cloudu"
-
 msgid "Hosts"
 msgstr "Hosty"
 
@@ -10687,9 +10669,6 @@ msgstr "noví vyzyvatelé"
 msgid "New Chat"
 msgstr "Nový chat"
 
-msgid "New cloud workspace"
-msgstr "Nový cloudový pracovní prostor"
-
 msgid "New environment"
 msgstr "Nové prostředí"
 
@@ -10731,9 +10710,6 @@ msgstr "Nová relace"
 
 msgid "New shell"
 msgstr "Nový shell"
-
-msgid "New sidebar"
-msgstr "Nový postranní panel"
 
 msgid "New stars"
 msgstr "Nové hvězdy"
@@ -11381,9 +11357,6 @@ msgstr "Nenalezeny žádné úkoly."
 msgid "No tasks in this project yet."
 msgstr "V tomto projektu zatím nejsou žádné úkoly."
 
-msgid "No tasks or pull requests yet"
-msgstr "Zatím žádné úkoly ani pull requesty"
-
 msgid "No tasks yet"
 msgstr "Zatím žádné úkoly"
 
@@ -11957,9 +11930,6 @@ msgstr "Otevřít paletu příkazů"
 msgid "Open comment on GitHub"
 msgstr "Otevřít komentář na GitHubu"
 
-msgid "Open details"
-msgstr "Otevřít podrobnosti"
-
 msgid "Open device sign-in"
 msgstr "Otevřít přihlášení zařízení"
 
@@ -12196,9 +12166,6 @@ msgstr "Otevřít pull request"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "Otevřít pull request #{0}"
-
-msgid "Open pull request #{number}"
-msgstr "Otevřít pull request #{number}"
 
 msgid "Open pull request options"
 msgstr "Otevřít možnosti pull requestu"
@@ -12992,10 +12959,6 @@ msgstr "PR #{0} ({1})"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "PR #{0} vytvořen"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PR uzavřen"
@@ -14740,12 +14703,6 @@ msgstr "Spouštím bun test…"
 msgid "Running now"
 msgstr "Spouštím"
 
-msgid "Running on a paired device"
-msgstr "Běží na spárovaném zařízení"
-
-msgid "Running on this device"
-msgstr "Běží na tomto zařízení"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Běžící procesy v terminálu poběží dál, ale starší výstup po restartu aplikace už nemusí být k dispozici."
 
@@ -15612,9 +15569,6 @@ msgstr "Sdíleno se všemi"
 
 msgid "Shared with me"
 msgstr "Sdíleno se mnou"
-
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "Sdílí checkout projektu — soubory, git index a větev — s ostatními lokálními pracovními prostory"
 
 msgid "Sheet"
 msgstr "Sheet"
@@ -17342,9 +17296,6 @@ msgstr "Aplikaci lze stáhnout zdarma. Vyžaduje iOS 26 nebo novější a Supers
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "Aplikace je ve verzi {appVersion}, ale připojená ke službě hostitele spuštěné něčím jiným, pravděpodobně starší CLI nebo jiným sestavením Superset. Restart ji nahradí kopií této aplikace."
-
-msgid "The associated device isn't reachable right now"
-msgstr "Přidružené zařízení teď není dostupné"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "Vlastník automatizace už v této organizaci nemůže používat cloudové pracovní prostory. Požádejte ho, aby si zkontroloval přístup, nebo automatizaci spusťte na zařízení."
@@ -19545,9 +19496,6 @@ msgstr "Pracovní prostor vytvořen z PR"
 msgid "Workspace details"
 msgstr "Podrobnosti pracovního prostoru"
 
-msgid "Workspace ID"
-msgstr "ID pracovního prostoru"
-
 msgid "Workspace ID copied"
 msgstr "ID pracovního prostoru zkopírováno"
 
@@ -19625,9 +19573,6 @@ msgstr "Umístění worktree změněno"
 
 msgid "Worktree missing"
 msgstr "Chybí worktree"
-
-msgid "Worktree on this device"
-msgstr "Worktree na tomto zařízení"
 
 msgid "Worktree opened"
 msgstr "Worktree otevřen"

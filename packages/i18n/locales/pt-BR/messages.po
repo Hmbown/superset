@@ -735,9 +735,6 @@ msgstr "Conta do {connectorName}"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookies — esquecer este site"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {# porta ativa — mostrar detalhes} other {# portas ativas — mostrar detalhes}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {# verificação falhou} other {# verificações falharam}}"
 
@@ -3501,9 +3498,6 @@ msgstr "Alterar local"
 msgid "Change or add labels…"
 msgstr "Alterar ou adicionar rótulos…"
 
-msgid "Change or add tasks…"
-msgstr "Alterar ou adicionar tarefas…"
-
 msgid "Change organization logo"
 msgstr "Trocar o logo da organização"
 
@@ -4105,9 +4099,6 @@ msgstr "Uso da nuvem"
 msgid "Cloud workspace"
 msgstr "Área de trabalho na nuvem"
 
-msgid "Cloud workspaces"
-msgstr "Áreas de trabalho na nuvem"
-
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Workspaces na nuvem ignoram esta variável. Em vez disso, os agentes entram em Configurações › Agentes."
 
@@ -4116,9 +4107,6 @@ msgstr "Áreas de trabalho na nuvem precisam de um plano pago. Faça upgrade em 
 
 msgid "Cloud workspaces need a project for now"
 msgstr "Workspaces na nuvem precisam de um projeto por enquanto"
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "Workspaces na nuvem sob seus projetos, um filtro para alternar entre workspaces locais e na nuvem e a linha de workspace redesenhada."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Os workspaces na nuvem deixarão de executar o {agentLabel} com ela."
@@ -5574,9 +5562,6 @@ msgstr "Criada em {0} · Último uso {1}"
 
 msgid "Created {ago}"
 msgstr "Criado {ago}"
-
-msgid "created {createdAgo}"
-msgstr "criado {createdAgo}"
 
 msgid "Created {createdAgo}"
 msgstr "Criado {createdAgo}"
@@ -8534,9 +8519,6 @@ msgstr "Host indisponível"
 msgid "Host unavailable: {hostName}"
 msgstr "Host indisponível: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "Hospedada na nuvem"
-
 msgid "Hosts"
 msgstr "Hosts"
 
@@ -10687,9 +10669,6 @@ msgstr "novos desafiantes"
 msgid "New Chat"
 msgstr "Novo chat"
 
-msgid "New cloud workspace"
-msgstr "Nova área de trabalho na nuvem"
-
 msgid "New environment"
 msgstr "Novo ambiente"
 
@@ -10731,9 +10710,6 @@ msgstr "Nova sessão"
 
 msgid "New shell"
 msgstr "Novo shell"
-
-msgid "New sidebar"
-msgstr "Nova barra lateral"
 
 msgid "New stars"
 msgstr "Novas estrelas"
@@ -11381,9 +11357,6 @@ msgstr "Nenhuma tarefa encontrada."
 msgid "No tasks in this project yet."
 msgstr "Este projeto ainda não tem tarefas."
 
-msgid "No tasks or pull requests yet"
-msgstr "Nenhuma tarefa ou pull request ainda"
-
 msgid "No tasks yet"
 msgstr "Nenhuma tarefa ainda"
 
@@ -11957,9 +11930,6 @@ msgstr "Abrir a paleta de comandos"
 msgid "Open comment on GitHub"
 msgstr "Abrir o comentário no GitHub"
 
-msgid "Open details"
-msgstr "Abrir detalhes"
-
 msgid "Open device sign-in"
 msgstr "Abrir login do dispositivo"
 
@@ -12196,9 +12166,6 @@ msgstr "Abrir pull request"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "Abrir o pull request #{0}"
-
-msgid "Open pull request #{number}"
-msgstr "Abrir o pull request #{number}"
 
 msgid "Open pull request options"
 msgstr "Abrir opções do pull request"
@@ -12992,10 +12959,6 @@ msgstr "PR #{0} ({1})"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "PR #{0} criado"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PR fechado"
@@ -14740,12 +14703,6 @@ msgstr "Executando bun test…"
 msgid "Running now"
 msgstr "Executando agora"
 
-msgid "Running on a paired device"
-msgstr "Rodando em um dispositivo pareado"
-
-msgid "Running on this device"
-msgstr "Rodando neste dispositivo"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Os processos de terminal em execução continuam, mas a saída mais antiga pode não estar mais disponível depois de reiniciar o app."
 
@@ -15612,9 +15569,6 @@ msgstr "Compartilhada com todos"
 
 msgid "Shared with me"
 msgstr "Compartilhado comigo"
-
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "Compartilha o checkout do projeto (arquivos, índice do git e branch) com suas outras áreas de trabalho locais"
 
 msgid "Sheet"
 msgstr "Sheet"
@@ -17342,9 +17296,6 @@ msgstr "O app é gratuito para baixar. Requer iOS 26 ou posterior e Superset Pro
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "O app está na {appVersion}, mas conectado a um serviço de host iniciado por outra coisa, provavelmente uma CLI antiga ou outro build do Superset. Reiniciar o substitui pela cópia deste app."
-
-msgid "The associated device isn't reachable right now"
-msgstr "O dispositivo associado não está acessível agora"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "O proprietário da automação não pode mais usar áreas de trabalho na nuvem nesta organização. Peça para ele verificar o acesso ou execute a automação em um dispositivo."
@@ -19545,9 +19496,6 @@ msgstr "Área de trabalho criada a partir do PR"
 msgid "Workspace details"
 msgstr "Detalhes da área de trabalho"
 
-msgid "Workspace ID"
-msgstr "ID da área de trabalho"
-
 msgid "Workspace ID copied"
 msgstr "ID da área de trabalho copiado"
 
@@ -19625,9 +19573,6 @@ msgstr "Local das worktrees atualizado"
 
 msgid "Worktree missing"
 msgstr "Worktree ausente"
-
-msgid "Worktree on this device"
-msgstr "Worktree neste dispositivo"
 
 msgid "Worktree opened"
 msgstr "Worktree aberta"

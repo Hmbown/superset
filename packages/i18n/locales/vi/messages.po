@@ -735,9 +735,6 @@ msgstr "Tài khoản {connectorName}"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookie — quên trang này"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {# cổng đang hoạt động — hiện chi tiết} other {# cổng đang hoạt động — hiện chi tiết}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {# check thất bại} other {# check thất bại}}"
 
@@ -3501,9 +3498,6 @@ msgstr "Đổi vị trí"
 msgid "Change or add labels…"
 msgstr "Đổi hoặc thêm nhãn…"
 
-msgid "Change or add tasks…"
-msgstr "Đổi hoặc thêm tác vụ…"
-
 msgid "Change organization logo"
 msgstr "Đổi logo tổ chức"
 
@@ -4105,9 +4099,6 @@ msgstr "Mức sử dụng đám mây"
 msgid "Cloud workspace"
 msgstr "Workspace cloud"
 
-msgid "Cloud workspaces"
-msgstr "Không gian làm việc đám mây"
-
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Workspace đám mây bỏ qua biến này. Thay vào đó, các agent đăng nhập trong Cài đặt › Agent."
 
@@ -4116,9 +4107,6 @@ msgstr "Workspace cloud cần gói trả phí. Hãy nâng cấp trong Cài đặ
 
 msgid "Cloud workspaces need a project for now"
 msgstr "Hiện tại workspace đám mây cần có dự án"
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "Workspace đám mây nằm dưới dự án của chúng, bộ lọc cục bộ và đám mây, cùng hàng workspace được thiết kế lại."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Workspace đám mây sẽ ngừng chạy {agentLabel} với thông tin này."
@@ -5574,9 +5562,6 @@ msgstr "Tạo {0} · Dùng lần cuối {1}"
 
 msgid "Created {ago}"
 msgstr "Đã tạo {ago}"
-
-msgid "created {createdAgo}"
-msgstr "đã tạo {createdAgo}"
 
 msgid "Created {createdAgo}"
 msgstr "Đã tạo {createdAgo}"
@@ -8534,9 +8519,6 @@ msgstr "Host không khả dụng"
 msgid "Host unavailable: {hostName}"
 msgstr "Host không khả dụng: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "Chạy trên cloud"
-
 msgid "Hosts"
 msgstr "Host"
 
@@ -10687,9 +10669,6 @@ msgstr "đối thủ mới"
 msgid "New Chat"
 msgstr "Chat mới"
 
-msgid "New cloud workspace"
-msgstr "Workspace cloud mới"
-
 msgid "New environment"
 msgstr "Environment mới"
 
@@ -10731,9 +10710,6 @@ msgstr "Phiên mới"
 
 msgid "New shell"
 msgstr "Shell mới"
-
-msgid "New sidebar"
-msgstr "Thanh bên mới"
 
 msgid "New stars"
 msgstr "Star mới"
@@ -11381,9 +11357,6 @@ msgstr "Không tìm thấy tác vụ nào."
 msgid "No tasks in this project yet."
 msgstr "Dự án này chưa có tác vụ nào."
 
-msgid "No tasks or pull requests yet"
-msgstr "Chưa có tác vụ hay pull request nào"
-
 msgid "No tasks yet"
 msgstr "Chưa có tác vụ nào"
 
@@ -11957,9 +11930,6 @@ msgstr "Mở bảng lệnh"
 msgid "Open comment on GitHub"
 msgstr "Mở bình luận trên GitHub"
 
-msgid "Open details"
-msgstr "Mở chi tiết"
-
 msgid "Open device sign-in"
 msgstr "Mở đăng nhập thiết bị"
 
@@ -12196,9 +12166,6 @@ msgstr "Mở pull request"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "Mở pull request #{0}"
-
-msgid "Open pull request #{number}"
-msgstr "Mở pull request #{number}"
 
 msgid "Open pull request options"
 msgstr "Mở tùy chọn pull request"
@@ -12992,10 +12959,6 @@ msgstr "PR #{0} ({1})"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "Đã tạo PR #{0}"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PR đã đóng"
@@ -14740,12 +14703,6 @@ msgstr "Đang chạy bun test…"
 msgid "Running now"
 msgstr "Đang chạy ngay"
 
-msgid "Running on a paired device"
-msgstr "Đang chạy trên thiết bị đã ghép nối"
-
-msgid "Running on this device"
-msgstr "Đang chạy trên thiết bị này"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Các tiến trình terminal đang chạy vẫn tiếp tục, nhưng kết quả cũ có thể không còn sau khi khởi động lại ứng dụng."
 
@@ -15612,9 +15569,6 @@ msgstr "Đã chia sẻ với mọi người"
 
 msgid "Shared with me"
 msgstr "Được chia sẻ với tôi"
-
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "Dùng chung checkout của dự án — tệp, chỉ mục git và nhánh — với các workspace cục bộ khác"
 
 msgid "Sheet"
 msgstr "Sheet"
@@ -17342,9 +17296,6 @@ msgstr "Ứng dụng được tải miễn phí. Yêu cầu iOS 26 trở lên v�
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "Ứng dụng đang ở {appVersion} nhưng kết nối với dịch vụ máy chủ do thứ khác khởi động, có thể là CLI cũ hoặc bản dựng Superset khác. Khởi động lại sẽ thay thế nó bằng bản của ứng dụng này."
-
-msgid "The associated device isn't reachable right now"
-msgstr "Hiện không kết nối được tới thiết bị liên quan"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "Chủ sở hữu của tự động hóa không còn dùng được workspace cloud trong tổ chức này. Hãy nhờ họ kiểm tra quyền truy cập, hoặc chạy tự động hóa trên một thiết bị."
@@ -19545,9 +19496,6 @@ msgstr "Đã tạo workspace từ PR"
 msgid "Workspace details"
 msgstr "Chi tiết workspace"
 
-msgid "Workspace ID"
-msgstr "ID workspace"
-
 msgid "Workspace ID copied"
 msgstr "Đã sao chép ID workspace"
 
@@ -19625,9 +19573,6 @@ msgstr "Đã cập nhật vị trí worktree"
 
 msgid "Worktree missing"
 msgstr "Thiếu worktree"
-
-msgid "Worktree on this device"
-msgstr "Worktree trên thiết bị này"
 
 msgid "Worktree opened"
 msgstr "Đã mở worktree"

@@ -735,9 +735,6 @@ msgstr "{connectorName} 账号"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount}个cookie——忘记此站点"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {#个活动端口 — 显示详情} other {#个活动端口 — 显示详情}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {#项检查失败} other {#项检查失败}}"
 
@@ -3501,9 +3498,6 @@ msgstr "更改位置"
 msgid "Change or add labels…"
 msgstr "更改或添加标签…"
 
-msgid "Change or add tasks…"
-msgstr "更改或添加任务…"
-
 msgid "Change organization logo"
 msgstr "更改组织logo"
 
@@ -4105,9 +4099,6 @@ msgstr "云端用量"
 msgid "Cloud workspace"
 msgstr "云端工作区"
 
-msgid "Cloud workspaces"
-msgstr "云工作区"
-
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "云工作区会忽略此变量。智能体改为在「设置 › 智能体」中登录。"
 
@@ -4116,9 +4107,6 @@ msgstr "云端工作区需要付费方案。请在“设置”中的“账单”
 
 msgid "Cloud workspaces need a project for now"
 msgstr "云工作区目前需要一个项目"
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "云工作区显示在所属项目下，提供本地与云端筛选，以及重新设计的工作区行。"
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "云工作区将不再用它运行{agentLabel}。"
@@ -5574,9 +5562,6 @@ msgstr "创建于{0} · 最后使用{1}"
 
 msgid "Created {ago}"
 msgstr "创建于{ago}"
-
-msgid "created {createdAgo}"
-msgstr "创建于{createdAgo}"
 
 msgid "Created {createdAgo}"
 msgstr "创建于{createdAgo}"
@@ -8534,9 +8519,6 @@ msgstr "主机不可用"
 msgid "Host unavailable: {hostName}"
 msgstr "主机不可用：{hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "托管在云端"
-
 msgid "Hosts"
 msgstr "主机"
 
@@ -10687,9 +10669,6 @@ msgstr "换对手"
 msgid "New Chat"
 msgstr "新建聊天"
 
-msgid "New cloud workspace"
-msgstr "新建云端工作区"
-
 msgid "New environment"
 msgstr "新建环境"
 
@@ -10731,9 +10710,6 @@ msgstr "新建会话"
 
 msgid "New shell"
 msgstr "新建 Shell"
-
-msgid "New sidebar"
-msgstr "新侧边栏"
 
 msgid "New stars"
 msgstr "新增星标"
@@ -11381,9 +11357,6 @@ msgstr "未找到任务。"
 msgid "No tasks in this project yet."
 msgstr "此项目还没有任务。"
 
-msgid "No tasks or pull requests yet"
-msgstr "还没有任务或拉取请求"
-
 msgid "No tasks yet"
 msgstr "还没有任务"
 
@@ -11957,9 +11930,6 @@ msgstr "打开命令面板"
 msgid "Open comment on GitHub"
 msgstr "在GitHub上打开评论"
 
-msgid "Open details"
-msgstr "打开详情"
-
 msgid "Open device sign-in"
 msgstr "打开设备登录"
 
@@ -12196,9 +12166,6 @@ msgstr "打开拉取请求"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "打开拉取请求#{0}"
-
-msgid "Open pull request #{number}"
-msgstr "打开拉取请求#{number}"
 
 msgid "Open pull request options"
 msgstr "打开拉取请求选项"
@@ -12992,10 +12959,6 @@ msgstr "PR #{0}（{1}）"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "已创建PR #{0}"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PR已关闭"
@@ -14740,12 +14703,6 @@ msgstr "正在运行bun test…"
 msgid "Running now"
 msgstr "正在运行"
 
-msgid "Running on a paired device"
-msgstr "在已配对的设备上运行"
-
-msgid "Running on this device"
-msgstr "在此设备上运行"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "运行中的终端进程会继续，但重启应用后可能无法再看到较早的输出。"
 
@@ -15612,9 +15569,6 @@ msgstr "已与所有人共享"
 
 msgid "Shared with me"
 msgstr "与我共享"
-
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "与该项目的其他本地工作区共享项目的检出（文件、git 索引和分支）"
 
 msgid "Sheet"
 msgstr "侧边面板"
@@ -17342,9 +17296,6 @@ msgstr "该应用可免费下载。需要 iOS 26 或更高版本以及 Superset 
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "应用版本为 {appVersion}，但连接的是由其他程序（可能是旧版 CLI 或另一个 Superset 版本）启动的主机服务。重启会将其替换为此应用自带的副本。"
-
-msgid "The associated device isn't reachable right now"
-msgstr "关联的设备现在连不上"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "该自动化的所有者已无法在此组织中使用云端工作区。请让其检查访问权限，或在设备上运行该自动化。"
@@ -19545,9 +19496,6 @@ msgstr "已从PR创建工作区"
 msgid "Workspace details"
 msgstr "工作区详情"
 
-msgid "Workspace ID"
-msgstr "工作区ID"
-
 msgid "Workspace ID copied"
 msgstr "已复制工作区ID"
 
@@ -19625,9 +19573,6 @@ msgstr "已更新worktree位置"
 
 msgid "Worktree missing"
 msgstr "worktree缺失"
-
-msgid "Worktree on this device"
-msgstr "此设备上的 worktree"
 
 msgid "Worktree opened"
 msgstr "worktree已打开"

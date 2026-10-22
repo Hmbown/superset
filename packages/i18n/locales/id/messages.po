@@ -735,9 +735,6 @@ msgstr "Akun {connectorName}"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookie — lupakan situs ini"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {# port aktif — tampilkan detail} other {# port aktif — tampilkan detail}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {# Check Gagal} other {# Check Gagal}}"
 
@@ -3501,9 +3498,6 @@ msgstr "Ubah lokasi"
 msgid "Change or add labels…"
 msgstr "Ubah atau tambah label…"
 
-msgid "Change or add tasks…"
-msgstr "Ubah atau tambah tugas…"
-
 msgid "Change organization logo"
 msgstr "Ganti logo organisasi"
 
@@ -4105,9 +4099,6 @@ msgstr "Penggunaan cloud"
 msgid "Cloud workspace"
 msgstr "Workspace cloud"
 
-msgid "Cloud workspaces"
-msgstr "Workspace cloud"
-
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Workspace cloud mengabaikan variabel ini. Agen masuk melalui Pengaturan › Agen sebagai gantinya."
 
@@ -4116,9 +4107,6 @@ msgstr "Workspace cloud memerlukan paket berbayar. Upgrade di Pengaturan, Penagi
 
 msgid "Cloud workspaces need a project for now"
 msgstr "Workspace cloud perlu proyek untuk saat ini"
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "Workspace cloud di bawah proyeknya, filter lokal dan cloud, dan baris workspace yang didesain ulang."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Workspace cloud tidak lagi menjalankan {agentLabel} dengannya."
@@ -5574,9 +5562,6 @@ msgstr "Dibuat {0} · Terakhir dipakai {1}"
 
 msgid "Created {ago}"
 msgstr "Dibuat {ago}"
-
-msgid "created {createdAgo}"
-msgstr "dibuat {createdAgo}"
 
 msgid "Created {createdAgo}"
 msgstr "Dibuat {createdAgo}"
@@ -8534,9 +8519,6 @@ msgstr "Host tidak tersedia"
 msgid "Host unavailable: {hostName}"
 msgstr "Host tidak tersedia: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "Dihosting di cloud"
-
 msgid "Hosts"
 msgstr "Host"
 
@@ -10687,9 +10669,6 @@ msgstr "penantang baru"
 msgid "New Chat"
 msgstr "Chat Baru"
 
-msgid "New cloud workspace"
-msgstr "Workspace cloud baru"
-
 msgid "New environment"
 msgstr "Environment baru"
 
@@ -10731,9 +10710,6 @@ msgstr "Sesi baru"
 
 msgid "New shell"
 msgstr "Shell baru"
-
-msgid "New sidebar"
-msgstr "Sidebar baru"
 
 msgid "New stars"
 msgstr "Star baru"
@@ -11381,9 +11357,6 @@ msgstr "Tidak ada tugas ditemukan."
 msgid "No tasks in this project yet."
 msgstr "Belum ada tugas di proyek ini."
 
-msgid "No tasks or pull requests yet"
-msgstr "Belum ada tugas atau pull request"
-
 msgid "No tasks yet"
 msgstr "Belum ada tugas"
 
@@ -11957,9 +11930,6 @@ msgstr "Buka Command Palette"
 msgid "Open comment on GitHub"
 msgstr "Buka komentar di GitHub"
 
-msgid "Open details"
-msgstr "Buka detail"
-
 msgid "Open device sign-in"
 msgstr "Buka masuk perangkat"
 
@@ -12196,9 +12166,6 @@ msgstr "Buka Pull Request"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "Buka pull request #{0}"
-
-msgid "Open pull request #{number}"
-msgstr "Buka pull request #{number}"
 
 msgid "Open pull request options"
 msgstr "Buka opsi pull request"
@@ -12992,10 +12959,6 @@ msgstr "PR #{0} ({1})"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "PR #{0} dibuat"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PR Ditutup"
@@ -14740,12 +14703,6 @@ msgstr "Menjalankan bun test…"
 msgid "Running now"
 msgstr "Berjalan sekarang"
 
-msgid "Running on a paired device"
-msgstr "Berjalan di perangkat yang dipasangkan"
-
-msgid "Running on this device"
-msgstr "Berjalan di perangkat ini"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Proses terminal yang berjalan tetap lanjut, tapi output lama mungkin tidak tersedia lagi setelah aplikasi dimulai ulang."
 
@@ -15612,9 +15569,6 @@ msgstr "Dibagikan ke semua orang"
 
 msgid "Shared with me"
 msgstr "Dibagikan dengan saya"
-
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "Berbagi checkout proyek — file, indeks git, dan branch — dengan workspace lokal lainnya"
 
 msgid "Sheet"
 msgstr "Sheet"
@@ -17342,9 +17296,6 @@ msgstr "Aplikasi ini gratis untuk diunduh. Memerlukan iOS 26 atau lebih baru dan
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "Aplikasi berada di {appVersion} tetapi terhubung ke layanan host yang dimulai oleh hal lain, kemungkinan CLI lama atau build Superset lain. Memulai ulang akan menggantinya dengan salinan dari aplikasi ini."
-
-msgid "The associated device isn't reachable right now"
-msgstr "Perangkat terkait tidak bisa dijangkau saat ini"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "Pemilik otomatisasi ini tidak bisa lagi menggunakan workspace cloud di organisasi ini. Minta mereka memeriksa aksesnya, atau jalankan otomatisasi di perangkat."
@@ -19545,9 +19496,6 @@ msgstr "Workspace dibuat dari PR"
 msgid "Workspace details"
 msgstr "Detail workspace"
 
-msgid "Workspace ID"
-msgstr "ID Workspace"
-
 msgid "Workspace ID copied"
 msgstr "ID workspace disalin"
 
@@ -19625,9 +19573,6 @@ msgstr "Lokasi worktree diperbarui"
 
 msgid "Worktree missing"
 msgstr "Worktree hilang"
-
-msgid "Worktree on this device"
-msgstr "Worktree di perangkat ini"
 
 msgid "Worktree opened"
 msgstr "Worktree dibuka"

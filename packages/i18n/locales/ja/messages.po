@@ -735,9 +735,6 @@ msgstr "{connectorName} アカウント"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount}件のCookie — このサイトを削除"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {#個のアクティブなポート — 詳細を表示} other {#個のアクティブなポート — 詳細を表示}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {#件のチェックが失敗} other {#件のチェックが失敗}}"
 
@@ -3501,9 +3498,6 @@ msgstr "場所を変更"
 msgid "Change or add labels…"
 msgstr "ラベルを変更または追加…"
 
-msgid "Change or add tasks…"
-msgstr "タスクを変更または追加…"
-
 msgid "Change organization logo"
 msgstr "組織のロゴを変更"
 
@@ -4105,9 +4099,6 @@ msgstr "クラウド使用量"
 msgid "Cloud workspace"
 msgstr "クラウドワークスペース"
 
-msgid "Cloud workspaces"
-msgstr "クラウドワークスペース"
-
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "クラウドワークスペースはこの変数を無視します。エージェントは代わりに「設定 › エージェント」でサインインします。"
 
@@ -4116,9 +4107,6 @@ msgstr "クラウドワークスペースには有料プランが必要です。
 
 msgid "Cloud workspaces need a project for now"
 msgstr "現在、クラウドワークスペースにはプロジェクトが必要です"
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "クラウドワークスペースをプロジェクトの下に表示し、ローカル/クラウドの絞り込みと新しいワークスペース行を追加します。"
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "クラウドワークスペースはこれを使って{agentLabel}を実行しなくなります。"
@@ -5574,9 +5562,6 @@ msgstr "作成 {0} · 最終使用 {1}"
 
 msgid "Created {ago}"
 msgstr "{ago}に作成"
-
-msgid "created {createdAgo}"
-msgstr "{createdAgo}に作成"
 
 msgid "Created {createdAgo}"
 msgstr "{createdAgo}に作成"
@@ -8534,9 +8519,6 @@ msgstr "ホストが利用できません"
 msgid "Host unavailable: {hostName}"
 msgstr "ホストが利用できません: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "クラウドでホスト"
-
 msgid "Hosts"
 msgstr "ホスト"
 
@@ -10687,9 +10669,6 @@ msgstr "別の対戦相手"
 msgid "New Chat"
 msgstr "新規チャット"
 
-msgid "New cloud workspace"
-msgstr "新規クラウドワークスペース"
-
 msgid "New environment"
 msgstr "新しい環境"
 
@@ -10731,9 +10710,6 @@ msgstr "新規セッション"
 
 msgid "New shell"
 msgstr "新しいシェル"
-
-msgid "New sidebar"
-msgstr "新しいサイドバー"
 
 msgid "New stars"
 msgstr "新規スター"
@@ -11381,9 +11357,6 @@ msgstr "タスクが見つかりません。"
 msgid "No tasks in this project yet."
 msgstr "このプロジェクトにはまだタスクがありません。"
 
-msgid "No tasks or pull requests yet"
-msgstr "タスクやプルリクエストはまだありません"
-
 msgid "No tasks yet"
 msgstr "タスクはまだありません"
 
@@ -11957,9 +11930,6 @@ msgstr "コマンドパレットを開く"
 msgid "Open comment on GitHub"
 msgstr "GitHubでコメントを開く"
 
-msgid "Open details"
-msgstr "詳細を開く"
-
 msgid "Open device sign-in"
 msgstr "デバイスのサインインを開く"
 
@@ -12196,9 +12166,6 @@ msgstr "プルリクエストを開く"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "プルリクエスト#{0}を開く"
-
-msgid "Open pull request #{number}"
-msgstr "プルリクエスト#{number}を開く"
 
 msgid "Open pull request options"
 msgstr "プルリクエストのオプションを開く"
@@ -12992,10 +12959,6 @@ msgstr "PR #{0} ({1})"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "PR #{0} を作成しました"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PRはクローズ済み"
@@ -14740,12 +14703,6 @@ msgstr "bun testを実行中…"
 msgid "Running now"
 msgstr "実行中"
 
-msgid "Running on a paired device"
-msgstr "ペアリング済みデバイスで実行中"
-
-msgid "Running on this device"
-msgstr "このデバイスで実行中"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "実行中のターミナルプロセスは継続しますが、アプリ再起動後に古い出力が利用できなくなる場合があります。"
 
@@ -15612,9 +15569,6 @@ msgstr "全員と共有中"
 
 msgid "Shared with me"
 msgstr "共有アイテム"
-
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "プロジェクトのチェックアウト（ファイル、git インデックス、ブランチ）を他のローカルワークスペースと共有します"
 
 msgid "Sheet"
 msgstr "Sheet"
@@ -17342,9 +17296,6 @@ msgstr "アプリは無料でダウンロードできます。iOS 26 以降と S
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "アプリは{appVersion}ですが、別のもの（古いCLIや別のSupersetビルドの可能性）が起動したホストサービスに接続しています。再起動するとこのアプリのコピーに置き換わります。"
-
-msgid "The associated device isn't reachable right now"
-msgstr "関連デバイスに現在接続できません"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "このオートメーションの所有者は、この組織でクラウドワークスペースを使用できなくなりました。所有者にアクセス権の確認を依頼するか、デバイス上でオートメーションを実行してください。"
@@ -19545,9 +19496,6 @@ msgstr "PRからワークスペースを作成しました"
 msgid "Workspace details"
 msgstr "ワークスペースの詳細"
 
-msgid "Workspace ID"
-msgstr "ワークスペースID"
-
 msgid "Workspace ID copied"
 msgstr "ワークスペースIDをコピーしました"
 
@@ -19625,9 +19573,6 @@ msgstr "ワークツリーの場所を更新しました"
 
 msgid "Worktree missing"
 msgstr "ワークツリーが見つかりません"
-
-msgid "Worktree on this device"
-msgstr "このデバイス上のワークツリー"
 
 msgid "Worktree opened"
 msgstr "ワークツリーを開きました"

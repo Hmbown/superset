@@ -735,9 +735,6 @@ msgstr "{connectorName} account"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookies — forget this site"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 
@@ -3501,9 +3498,6 @@ msgstr "Change location"
 msgid "Change or add labels…"
 msgstr "Change or add labels…"
 
-msgid "Change or add tasks…"
-msgstr "Change or add tasks…"
-
 msgid "Change organization logo"
 msgstr "Change organization logo"
 
@@ -4105,9 +4099,6 @@ msgstr "Cloud usage"
 msgid "Cloud workspace"
 msgstr "Cloud workspace"
 
-msgid "Cloud workspaces"
-msgstr "Cloud workspaces"
-
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 
@@ -4116,9 +4107,6 @@ msgstr "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start
 
 msgid "Cloud workspaces need a project for now"
 msgstr "Cloud workspaces need a project for now"
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Cloud workspaces will stop running {agentLabel} with it."
@@ -5574,9 +5562,6 @@ msgstr "Created {0} · Last used {1}"
 
 msgid "Created {ago}"
 msgstr "Created {ago}"
-
-msgid "created {createdAgo}"
-msgstr "created {createdAgo}"
 
 msgid "Created {createdAgo}"
 msgstr "Created {createdAgo}"
@@ -8534,9 +8519,6 @@ msgstr "Host unavailable"
 msgid "Host unavailable: {hostName}"
 msgstr "Host unavailable: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "Hosted in the cloud"
-
 msgid "Hosts"
 msgstr "Hosts"
 
@@ -10687,9 +10669,6 @@ msgstr "new challengers"
 msgid "New Chat"
 msgstr "New Chat"
 
-msgid "New cloud workspace"
-msgstr "New cloud workspace"
-
 msgid "New environment"
 msgstr "New environment"
 
@@ -10731,9 +10710,6 @@ msgstr "New session"
 
 msgid "New shell"
 msgstr "New shell"
-
-msgid "New sidebar"
-msgstr "New sidebar"
 
 msgid "New stars"
 msgstr "New stars"
@@ -11381,9 +11357,6 @@ msgstr "No tasks found."
 msgid "No tasks in this project yet."
 msgstr "No tasks in this project yet."
 
-msgid "No tasks or pull requests yet"
-msgstr "No tasks or pull requests yet"
-
 msgid "No tasks yet"
 msgstr "No tasks yet"
 
@@ -11957,9 +11930,6 @@ msgstr "Open Command Palette"
 msgid "Open comment on GitHub"
 msgstr "Open comment on GitHub"
 
-msgid "Open details"
-msgstr "Open details"
-
 msgid "Open device sign-in"
 msgstr "Open device sign-in"
 
@@ -12196,9 +12166,6 @@ msgstr "Open Pull Request"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "Open pull request #{0}"
-
-msgid "Open pull request #{number}"
-msgstr "Open pull request #{number}"
 
 msgid "Open pull request options"
 msgstr "Open pull request options"
@@ -12992,10 +12959,6 @@ msgstr "PR #{0} ({1})"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "PR #{0} created"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PR Closed"
@@ -14740,12 +14703,6 @@ msgstr "Running bun test…"
 msgid "Running now"
 msgstr "Running now"
 
-msgid "Running on a paired device"
-msgstr "Running on a paired device"
-
-msgid "Running on this device"
-msgstr "Running on this device"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Running terminal processes continue, but older output may no longer be available after restarting the app."
 
@@ -15612,9 +15569,6 @@ msgstr "Shared with everyone"
 
 msgid "Shared with me"
 msgstr "Shared with me"
-
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "Shares the project's checkout — files, git index and branch — with its other local workspaces"
 
 msgid "Sheet"
 msgstr "Sheet"
@@ -17342,9 +17296,6 @@ msgstr "The app is free to download. It requires iOS 26 or later and Superset Pr
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
-
-msgid "The associated device isn't reachable right now"
-msgstr "The associated device isn't reachable right now"
 
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
@@ -19545,9 +19496,6 @@ msgstr "Workspace created from PR"
 msgid "Workspace details"
 msgstr "Workspace details"
 
-msgid "Workspace ID"
-msgstr "Workspace ID"
-
 msgid "Workspace ID copied"
 msgstr "Workspace ID copied"
 
@@ -19625,9 +19573,6 @@ msgstr "Worktree location updated"
 
 msgid "Worktree missing"
 msgstr "Worktree missing"
-
-msgid "Worktree on this device"
-msgstr "Worktree on this device"
 
 msgid "Worktree opened"
 msgstr "Worktree opened"

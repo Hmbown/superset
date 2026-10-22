@@ -12,7 +12,6 @@ const SURFACES = [
 	`${V2_WORKSPACE}/components/ChangesControl/components/PRStatusGroup/PRStatusGroup.tsx`,
 	`${V2_WORKSPACE}/components/WorkspaceSidebar/hooks/useReviewTab/components/PRHeader/PRHeader.tsx`,
 	`${SIDEBAR_ROWS}/DashboardSidebarExpandedWorkspaceRow/DashboardSidebarExpandedWorkspaceRow.tsx`,
-	`${SIDEBAR_ROWS}/DashboardSidebarLegacyExpandedWorkspaceRow/DashboardSidebarLegacyExpandedWorkspaceRow.tsx`,
 ];
 
 // The ↗ "View on GitHub" button is browser-only by design.
