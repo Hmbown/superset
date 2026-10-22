@@ -11,6 +11,7 @@ describe("planPriceValues", () => {
 			yearlyTotal: "$648",
 			gbHours: "1,200",
 			multiple: "3.8",
+			overage: "$0.06",
 			hasYearlyDiscount: true,
 		});
 		expect(values.plans.ultra.hasYearlyDiscount).toBe(false);

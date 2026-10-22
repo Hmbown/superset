@@ -877,7 +877,7 @@ msgid "{gate}: {statusLabel}"
 msgstr "{gate}: {statusLabel}"
 
 msgid "{gbHours} cloud GB-hours per seat each month"
-msgstr "{gbHours} GB-giờ đám mây cho mỗi chỗ mỗi tháng"
+msgstr "{gbHours} GB-giờ đám mây cho mỗi người dùng mỗi tháng"
 
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {# dòng ẩn} other {# dòng ẩn}}"
@@ -1053,7 +1053,7 @@ msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · chiều cao dòng {0}"
 
 msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
-msgstr "{price} mỗi người/tháng, {gbHours} GB-giờ đám mây cho mỗi chỗ mỗi tháng"
+msgstr "{price} mỗi người/tháng, {gbHours} GB-giờ đám mây cho mỗi người dùng mỗi tháng"
 
 msgid "{price}/user/mo"
 msgstr "{price}/người/tháng"
@@ -2992,7 +2992,7 @@ msgid "Billed monthly"
 msgstr "Thanh toán theo tháng"
 
 msgid "Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team."
-msgstr "Khi thanh toán hằng tháng, Pro có giá {monthlyPrice}, Team {teamPrice} và Ultra {ultraPrice} mỗi người/tháng. Khi thanh toán hằng năm, Pro có giá {yearlyPrice}, Team {teamYearlyPrice} và Ultra {ultraYearlyPrice} mỗi người/tháng. Bạn trả tiền cho mỗi chỗ đang hoạt động trong nhóm."
+msgstr "Khi thanh toán hằng tháng, Pro có giá {monthlyPrice}, Team {teamPrice} và Ultra {ultraPrice} mỗi người/tháng. Khi thanh toán hằng năm, Pro có giá {yearlyPrice}, Team {teamYearlyPrice} và Ultra {ultraYearlyPrice} mỗi người/tháng. Bạn trả tiền cho mỗi người dùng đang hoạt động trong nhóm."
 
 msgid "Billed per token."
 msgstr "Tính phí theo token."
@@ -4074,7 +4074,7 @@ msgid "Cloud"
 msgstr "Cloud"
 
 msgid "Cloud GB-hours per seat each month"
-msgstr "GB-giờ đám mây cho mỗi chỗ mỗi tháng"
+msgstr "GB-giờ đám mây cho mỗi người dùng mỗi tháng"
 
 msgid "Cloud is coming. Become a design partner"
 msgstr "Phiên bản đám mây sắp ra mắt. Trở thành đối tác đồng phát triển"
@@ -4096,7 +4096,7 @@ msgid "Cloud workspaces"
 msgstr "Không gian làm việc đám mây"
 
 msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour."
-msgstr "Không gian làm việc đám mây được tính bằng GB-giờ: bộ nhớ của máy nhân với số giờ máy chạy. Một máy 8 GB dùng 8 GB-giờ mỗi giờ. Mỗi chỗ cộng số GB-giờ của gói vào một quỹ chung cho cả nhóm: {proGbHours} với Pro, {teamGbHours} với Team, {ultraGbHours} với Ultra. Quỹ được đặt lại mỗi tháng, và phần dùng vượt quỹ có giá {overagePrice} cho mỗi GB-giờ."
+msgstr "Không gian làm việc đám mây được tính bằng GB-giờ: bộ nhớ của máy nhân với số giờ máy chạy. Một máy 8 GB dùng 8 GB-giờ mỗi giờ. Mỗi người dùng cộng số GB-giờ của gói vào một quỹ chung cho cả nhóm: {proGbHours} với Pro, {teamGbHours} với Team, {ultraGbHours} với Ultra. Quỹ được đặt lại mỗi tháng, và phần dùng vượt quỹ có giá {overagePrice} cho mỗi GB-giờ."
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Workspace đám mây bỏ qua biến này. Thay vào đó, các agent đăng nhập trong Cài đặt › Agent."

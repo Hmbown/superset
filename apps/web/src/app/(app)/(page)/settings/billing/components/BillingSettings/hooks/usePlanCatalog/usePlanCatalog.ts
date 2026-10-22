@@ -23,13 +23,16 @@ export function usePlanCatalog({
 		enabled: enabled && Boolean(organizationId),
 		staleTime: CATALOG_STALE_MS,
 		queryFn: async () => {
-			const { data: plans } = await authClient.$fetch<{
+			const { data: plans, error } = await authClient.$fetch<{
 				list: AutumnPlanSummary[];
 			}>("/autumn/listPlans", {
 				method: "POST",
 				body: { organizationId },
 			});
-			return plans ? selfServePlansFromAutumn(plans.list) : SELF_SERVE_PLANS;
+			if (error || !plans) {
+				throw new Error(`listPlans failed: ${error?.status ?? "no data"}`);
+			}
+			return selfServePlansFromAutumn(plans.list);
 		},
 	});
 	return data ?? SELF_SERVE_PLANS;

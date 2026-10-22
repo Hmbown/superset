@@ -47,7 +47,7 @@ The import script does not copy the enterprise template's opt-in setting.
   billing-cycle anchor. Annual seat pricing still gets a monthly cloud grant.
 - Custom allowance changes are previewed before execution. A preview that resets
   usage is refused. Allowance-only changes also refuse any charge or credit.
-- A five-to-six-seat change gives the full 60,000 grant for the current monthly
+- A five-to-six-seat change gives the full 115,200 grant for the current monthly
   cycle; already-consumed usage remains consumed. Removing a seat reduces the
   grant immediately and can leave usage above the new allowance. It does not
   erase consumption or issue refunds.
@@ -57,12 +57,12 @@ The import script does not copy the enterprise template's opt-in setting.
 Before enabling this rule on live plans, verify it with Autumn sandbox
 credentials and the existing Stripe test subscription:
 
-1. Use a five-seat plan with 50,000 included GB-minutes and nonzero usage.
-2. Preview six seats. Confirm the grant becomes 60,000, usage is carried forward,
+1. Use a five-seat plan with 96,000 included GB-minutes and nonzero usage.
+2. Preview six seats. Confirm the grant becomes 115,200, usage is carried forward,
    and the reset date and overage price are unchanged. Seat-price proration must
    match the existing seat policy.
 3. Apply the test update, then decrease to five seats. Confirm the grant becomes
-   50,000 without resetting usage or the monthly cycle.
+   96,000 without resetting usage or the monthly cycle.
 4. Repeat for annual seat billing, an existing customer switching between
    monthly and annual plans with usage in more than one feature, a negotiated
    overage price, and an opted-in enterprise allowance-only update. The

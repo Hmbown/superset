@@ -12,6 +12,7 @@ export interface PlanPriceSet {
 	yearlyTotal: string;
 	gbHours: string;
 	multiple: string;
+	overage: string;
 	hasYearlyDiscount: boolean;
 }
 
@@ -49,7 +50,8 @@ export function planPriceValues(
 		formatNumber(value, { maximumFractionDigits: digits }, locale);
 	const plans = Object.fromEntries(
 		SELF_SERVE_PLAN_IDS.map((id) => {
-			const { monthly, yearly, gbMinutesPerSeat } = prices[id];
+			const { monthly, yearly, gbMinutesPerSeat, overagePerGbHour } =
+				prices[id];
 			return [
 				id,
 				{
@@ -58,6 +60,7 @@ export function planPriceValues(
 					yearlyTotal: currency(yearly),
 					gbHours: number(gbMinutesPerSeat / 60, 0),
 					multiple: number(gbMinutesPerSeat / prices.pro.gbMinutesPerSeat, 1),
+					overage: currency(overagePerGbHour),
 					hasYearlyDiscount: yearly < monthly * 12,
 				},
 			];

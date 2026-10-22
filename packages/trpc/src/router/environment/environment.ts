@@ -285,12 +285,17 @@ export const environmentRouter = {
 					i18nKey: "serverError.environment.couldNotRecord",
 				});
 			}
-			await setEnvironmentRepositories({
-				environmentId: row.id,
-				organizationId: input.organizationId,
-				repositoryIds: input.repositoryIds,
-				hooksRepositoryId: input.hooksRepositoryId,
-			});
+			try {
+				await setEnvironmentRepositories({
+					environmentId: row.id,
+					organizationId: input.organizationId,
+					repositoryIds: input.repositoryIds,
+					hooksRepositoryId: input.hooksRepositoryId,
+				});
+			} catch (error) {
+				await db.delete(environments).where(eq(environments.id, row.id));
+				throw error;
+			}
 			return row;
 		}),
 

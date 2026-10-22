@@ -36,7 +36,10 @@ export function PricingCard({
 		isYearly,
 		values,
 	);
-	const overagePrice = values.overagePrice;
+	const overagePrice =
+		tier.price.kind === "seat"
+			? values.plans[tier.price.plan].overage
+			: values.overagePrice;
 	const featureValues =
 		tier.price.kind === "seat"
 			? cloudHourValues(values.plans[tier.price.plan])

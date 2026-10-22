@@ -198,7 +198,11 @@ export function selfServePlansFromAutumn(
 					monthlyCents: seatCents(id) ?? builtIn.monthlyCents,
 					yearlyCents: seatCents(`${id}_annual`) ?? builtIn.yearlyCents,
 					gbMinutesPerSeat:
-						typeof perSeat === "number" ? perSeat : builtIn.gbMinutesPerSeat,
+						typeof perSeat === "number" &&
+						Number.isFinite(perSeat) &&
+						perSeat > 0
+							? perSeat
+							: builtIn.gbMinutesPerSeat,
 				},
 			];
 		}),

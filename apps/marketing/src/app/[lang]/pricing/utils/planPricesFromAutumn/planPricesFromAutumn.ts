@@ -60,7 +60,11 @@ export function planPricesFromAutumn(plans: AutumnPlan[]): PlanPrices {
 						itemPrice(byId.get(`${id}_annual`), "seats")?.amount ??
 						builtIn.yearly,
 					gbMinutesPerSeat:
-						typeof perSeat === "number" ? perSeat : builtIn.gbMinutesPerSeat,
+						typeof perSeat === "number" &&
+						Number.isFinite(perSeat) &&
+						perSeat > 0
+							? perSeat
+							: builtIn.gbMinutesPerSeat,
 					overagePerGbHour:
 						overage?.amount != null
 							? (overage.amount * 60) / (overage.billing_units ?? 1)

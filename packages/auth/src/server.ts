@@ -41,6 +41,7 @@ import {
 	autumnBillingRoutes,
 	handleStripeBillingEvent,
 	organizationPlanFromAutumn,
+	SeatAllowanceError,
 	seatItem,
 	setAutumnSeats,
 	withAutumnBilling,
@@ -110,6 +111,17 @@ const desktopDevOrigins =
 				`http://127.0.0.1:${desktopDevPort}`,
 			]
 		: [];
+
+async function syncMemberSeats(
+	...args: Parameters<typeof setAutumnSeats>
+): Promise<boolean> {
+	try {
+		return await setAutumnSeats(...args);
+	} catch (error) {
+		if (error instanceof SeatAllowanceError) return true;
+		throw error;
+	}
+}
 
 export const auth = betterAuth({
 	baseURL: env.NEXT_PUBLIC_API_URL,
@@ -840,7 +852,7 @@ export const auth = betterAuth({
 					);
 					if (subscription.plan === "enterprise") {
 						if (billingUsesAutumn) {
-							await setAutumnSeats(organization.id, quantity, {
+							await syncMemberSeats(organization.id, quantity, {
 								allowanceOnly: true,
 							});
 						}
@@ -855,7 +867,7 @@ export const auth = betterAuth({
 
 					const seatsSetInAutumn =
 						billingUsesAutumn &&
-						(await setAutumnSeats(organization.id, quantity));
+						(await syncMemberSeats(organization.id, quantity));
 					if (!seatsSetInAutumn && itemId) {
 						await stripeClient.subscriptions.update(
 							subscription.stripeSubscriptionId,
@@ -975,7 +987,7 @@ export const auth = betterAuth({
 					);
 					if (subscription.plan === "enterprise") {
 						if (billingUsesAutumn) {
-							await setAutumnSeats(organization.id, quantity, {
+							await syncMemberSeats(organization.id, quantity, {
 								allowanceOnly: true,
 							});
 						}
@@ -990,7 +1002,7 @@ export const auth = betterAuth({
 
 					const seatsSetInAutumn =
 						billingUsesAutumn &&
-						(await setAutumnSeats(organization.id, quantity));
+						(await syncMemberSeats(organization.id, quantity));
 					if (!seatsSetInAutumn && itemId) {
 						await stripeClient.subscriptions.update(
 							subscription.stripeSubscriptionId,

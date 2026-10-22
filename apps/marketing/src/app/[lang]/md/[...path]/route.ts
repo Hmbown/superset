@@ -68,7 +68,7 @@ function pricingPage(i18n: I18n, planPrices: PlanPrices): MarkdownPage {
 				? [
 						`${seatPrice(tierPrice.plan, prices, false).display} ${text(i18n, tierPrice.note)} (${text(i18n, tierPrice.monthlyCadence)})`,
 						`or ${seatPrice(tierPrice.plan, prices, true).display} ${text(i18n, tierPrice.note)} (${i18n._({ ...tierPrice.yearlyCadence, values: { yearlyTotal: prices.plans[tierPrice.plan].yearlyTotal } })})`,
-						`${prices.plans[tierPrice.plan].gbHours} cloud GB-hours per seat each month, then ${prices.overagePrice} per GB-hour`,
+						`${prices.plans[tierPrice.plan].gbHours} cloud GB-hours per seat each month, then ${prices.plans[tierPrice.plan].overage} per GB-hour`,
 					].join("; ")
 				: `${text(i18n, tierPrice.display)} (${text(i18n, tierPrice.note)})`;
 		return [

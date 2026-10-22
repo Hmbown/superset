@@ -9,6 +9,7 @@ import {
 
 const AUTUMN_PLANS_URL = "https://api.useautumn.com/v1/plans.list";
 const AUTUMN_API_VERSION = "2.4.0";
+const AUTUMN_TIMEOUT_MS = 3000;
 
 export async function fetchPlanPrices(): Promise<PlanPrices> {
 	"use cache";
@@ -21,6 +22,7 @@ export async function fetchPlanPrices(): Promise<PlanPrices> {
 				"x-api-version": AUTUMN_API_VERSION,
 			},
 			body: "{}",
+			signal: AbortSignal.timeout(AUTUMN_TIMEOUT_MS),
 		});
 		if (!response.ok) {
 			throw new Error(`Autumn plans.list answered ${response.status}`);
@@ -30,7 +32,7 @@ export async function fetchPlanPrices(): Promise<PlanPrices> {
 		return planPricesFromAutumn(list);
 	} catch (error) {
 		console.error("[pricing] showing built-in prices", error);
-		cacheLife("seconds");
+		cacheLife("minutes");
 		return BUILT_IN_PLAN_PRICES;
 	}
 }

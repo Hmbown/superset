@@ -877,7 +877,7 @@ msgid "{gate}: {statusLabel}"
 msgstr "{gate}: {statusLabel}"
 
 msgid "{gbHours} cloud GB-hours per seat each month"
-msgstr "{gbHours} cloud-GB-uren per plek per maand"
+msgstr "{gbHours} cloud-GB-uren per gebruiker per maand"
 
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {# verborgen regel} other {# verborgen regels}}"
@@ -1053,7 +1053,7 @@ msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · regelhoogte {0}"
 
 msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
-msgstr "{price} per gebruiker/maand, {gbHours} cloud-GB-uren per plek per maand"
+msgstr "{price} per gebruiker/maand, {gbHours} cloud-GB-uren per gebruiker per maand"
 
 msgid "{price}/user/mo"
 msgstr "{price}/gebruiker/mnd"
@@ -2992,7 +2992,7 @@ msgid "Billed monthly"
 msgstr "Maandelijks gefactureerd"
 
 msgid "Billed monthly, Pro is {monthlyPrice}, Team is {teamPrice} and Ultra is {ultraPrice} per user/month. Billed yearly, Pro is {yearlyPrice}, Team is {teamYearlyPrice} and Ultra is {ultraYearlyPrice} per user/month. You're billed per active seat on your team."
-msgstr "Bij maandelijkse facturering kost Pro {monthlyPrice}, Team {teamPrice} en Ultra {ultraPrice} per gebruiker/maand. Bij jaarlijkse facturering kost Pro {yearlyPrice}, Team {teamYearlyPrice} en Ultra {ultraYearlyPrice} per gebruiker/maand. Je betaalt per actieve plek in je team."
+msgstr "Bij maandelijkse facturering kost Pro {monthlyPrice}, Team {teamPrice} en Ultra {ultraPrice} per gebruiker/maand. Bij jaarlijkse facturering kost Pro {yearlyPrice}, Team {teamYearlyPrice} en Ultra {ultraYearlyPrice} per gebruiker/maand. Je betaalt per actieve gebruiker in je team."
 
 msgid "Billed per token."
 msgstr "Afgerekend per token."
@@ -4074,7 +4074,7 @@ msgid "Cloud"
 msgstr "Cloud"
 
 msgid "Cloud GB-hours per seat each month"
-msgstr "Cloud-GB-uren per plek per maand"
+msgstr "Cloud-GB-uren per gebruiker per maand"
 
 msgid "Cloud is coming. Become a design partner"
 msgstr "De cloud komt eraan. Word ontwerppartner"
@@ -4096,7 +4096,7 @@ msgid "Cloud workspaces"
 msgstr "Cloudwerkruimtes"
 
 msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {proGbHours} on Pro, {teamGbHours} on Team, {ultraGbHours} on Ultra. The pool resets every month, and usage past it costs {overagePrice} per GB-hour."
-msgstr "Cloudwerkruimtes worden gemeten in GB-uren: het geheugen van de machine maal het aantal uren dat hij draait. Een machine met 8 GB gebruikt 8 GB-uren per uur. Elke plek voegt de GB-uren van zijn abonnement toe aan één pool die je team deelt: {proGbHours} bij Pro, {teamGbHours} bij Team, {ultraGbHours} bij Ultra. De pool wordt elke maand opnieuw gevuld, en gebruik daarboven kost {overagePrice} per GB-uur."
+msgstr "Cloudwerkruimtes worden gemeten in GB-uren: het geheugen van de machine maal het aantal uren dat hij draait. Een machine met 8 GB gebruikt 8 GB-uren per uur. Elke gebruiker voegt de GB-uren van zijn abonnement toe aan één pool die je team deelt: {proGbHours} bij Pro, {teamGbHours} bij Team, {ultraGbHours} bij Ultra. De pool wordt elke maand opnieuw gevuld, en gebruik daarboven kost {overagePrice} per GB-uur."
 
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Cloudworkspaces negeren deze variabele. Agents melden zich in plaats daarvan aan via Instellingen › Agents."
