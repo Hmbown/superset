@@ -80,11 +80,6 @@ function pricingPage(i18n: I18n, catalog: PlanFamily[]): MarkdownPage {
 									`or ${seatPrice(set, true).display} ${text(i18n, tierPrice.note)} (${i18n._({ ...tierPrice.yearlyCadence, values: { yearlyTotal: set.yearlyTotal } })})`,
 								]
 							: []),
-						...(set.gbHours && set.overage
-							? [
-									`${set.gbHours} cloud GB-hours per seat each month, then ${set.overage} per GB-hour`,
-								]
-							: []),
 					].join("; ")
 				: tierPrice.kind === "seat"
 					? ""

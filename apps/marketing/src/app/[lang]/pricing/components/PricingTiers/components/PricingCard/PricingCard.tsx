@@ -36,7 +36,7 @@ export function PricingCard({
 		isYearly,
 		set,
 	);
-	const overagePrice = set?.gbHours ? set.overage : null;
+
 	const name = typeof tier.name === "string" ? tier.name : t(tier.name);
 	const ctaLabel = i18n._({ ...tier.cta.label, values: { plan: name } });
 
@@ -80,11 +80,6 @@ export function PricingCard({
 				</div>
 				{cadence && (
 					<p className="text-xs text-muted-foreground">{i18n._(cadence)}</p>
-				)}
-				{overagePrice && (
-					<p className="mt-2 text-xs text-foreground">
-						<Trans>Then {overagePrice} per GB-hour past the plan</Trans>
-					</p>
 				)}
 			</div>
 

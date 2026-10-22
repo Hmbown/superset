@@ -6,7 +6,7 @@ import { COMPANY } from "@superset/shared/constants";
 export interface PricingFeature {
 	id: string;
 	label: MessageDescriptor;
-	needs?: "gbHours" | "multiple" | "pack";
+	needs?: "gbHours" | "overage" | "multiple" | "pack";
 	beta?: boolean;
 }
 
@@ -189,6 +189,11 @@ const BASE_FEATURES: PricingFeature[] = [
 		beta: true,
 	},
 	{
+		id: "overage",
+		label: msg({ message: "Then {overage} per GB-hour past the pool" }),
+		needs: "overage",
+	},
+	{
 		id: "gbHourPacks",
 		label: msg({ message: "Extra GB-hours: {pack}, never expire" }),
 		needs: "pack",
@@ -242,6 +247,11 @@ const STEP_UP_FEATURES: PricingFeature[] = [
 		label: msg({ message: "{gbHours} cloud GB-hours per seat each month" }),
 		needs: "gbHours",
 		beta: true,
+	},
+	{
+		id: "overage",
+		label: msg({ message: "Then {overage} per GB-hour past the pool" }),
+		needs: "overage",
 	},
 	{
 		id: "cloudMultiple",

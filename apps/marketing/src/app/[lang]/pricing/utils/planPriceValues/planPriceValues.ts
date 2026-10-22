@@ -149,6 +149,7 @@ export function planPriceValues(
 export function featureValues(set: FamilyPriceSet | undefined) {
 	return {
 		gbHours: set?.gbHours ?? "",
+		overage: set?.gbHours ? (set.overage ?? "") : "",
 		multiple: set?.multiple ?? "",
 		pack: set?.pack ?? "",
 		previousPlan: set?.previousName ?? "",
@@ -158,7 +159,7 @@ export function featureValues(set: FamilyPriceSet | undefined) {
 
 /** A feature that depends on cloud values shows only when the plan has them. */
 export function featureShown(
-	feature: { needs?: "gbHours" | "multiple" | "pack" },
+	feature: { needs?: "gbHours" | "overage" | "multiple" | "pack" },
 	set: FamilyPriceSet | undefined,
 ): boolean {
 	return !feature.needs || Boolean(featureValues(set)[feature.needs]);
