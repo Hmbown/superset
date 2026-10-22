@@ -36,6 +36,7 @@ export function useWorkspaceHotkeys({
 	launcher,
 	getCloseTarget,
 	isSandbox,
+	isMobilePaneEnabled,
 }: {
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
 	viewer: PaneTarget;
@@ -46,6 +47,7 @@ export function useWorkspaceHotkeys({
 	paneRegistry: PaneRegistry<PaneViewerData>;
 	launcher: TerminalLauncher;
 	isSandbox: boolean;
+	isMobilePaneEnabled: boolean;
 	getCloseTarget: () => {
 		store: StoreApi<WorkspaceStore<PaneViewerData>>;
 		onBeforeCloseTab?: WorkspaceProps<PaneViewerData>["onBeforeCloseTab"];
@@ -301,13 +303,14 @@ export function useWorkspaceHotkeys({
 		{ enabled: isSandbox },
 	);
 
-	// Not gated on isSandbox: a local machine with Xcode/Android SDK gets a
-	// mobile pane too, backed by a local simulator.
-	useHotkey("SPLIT_WITH_MOBILE", () =>
-		splitWithViewerPane({
-			kind: "mobile",
-			data: { kind: "mobile" } as MobilePaneData,
-		}),
+	useHotkey(
+		"SPLIT_WITH_MOBILE",
+		() =>
+			splitWithViewerPane({
+				kind: "mobile",
+				data: { kind: "mobile" } as MobilePaneData,
+			}),
+		{ enabled: isMobilePaneEnabled },
 	);
 
 	useHotkey("SPLIT_WITH_BROWSER", () =>

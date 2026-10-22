@@ -22,6 +22,7 @@ import { V2NotificationStatusIndicator } from "../V2NotificationStatusIndicator"
 import { RightPaneAddMenu } from "./components/RightPaneAddMenu";
 import { RightPaneEmptyState } from "./components/RightPaneEmptyState";
 import { RightPaneHeaderButton } from "./components/RightPaneHeaderButton";
+import type { RightPaneGates } from "./paneOptions";
 import type { RightPaneKind } from "./types";
 
 interface RightPaneAreaProps {
@@ -37,7 +38,7 @@ interface RightPaneAreaProps {
 	onToggleSidebar: () => void;
 	onActivate: () => void;
 	onAdd: (kind: RightPaneKind) => void;
-	canAddDesktop: boolean;
+	gates: RightPaneGates;
 	showWindowControls: boolean;
 }
 
@@ -54,7 +55,7 @@ export function RightPaneArea({
 	onToggleSidebar,
 	onActivate,
 	onAdd,
-	canAddDesktop,
+	gates,
 	showWindowControls,
 }: RightPaneAreaProps) {
 	const { t } = useLingui();
@@ -82,7 +83,7 @@ export function RightPaneArea({
 					<RightPaneAddMenu
 						onAdd={onAdd}
 						runAfterClose={runAfterClose}
-						canAddDesktop={canAddDesktop}
+						gates={gates}
 					/>
 				)}
 				renderTabBarTrailing={() => (
@@ -107,7 +108,7 @@ export function RightPaneArea({
 					</div>
 				)}
 				renderEmptyState={() => (
-					<RightPaneEmptyState onAdd={onAdd} canAddDesktop={canAddDesktop} />
+					<RightPaneEmptyState onAdd={onAdd} gates={gates} />
 				)}
 				onBeforeCloseTab={onBeforeCloseTab}
 				onInteractionStateChange={onInteractionStateChange}

@@ -244,6 +244,7 @@ export const FEATURE_FLAGS = {
 	 * release condition on the flag, so widening never needs a release.
 	 */
 	ACP_CHAT: "acp-chat",
+	MOBILE_PANE: "mobile-pane",
 	/**
 	 * Shows the `pdev` agent: in the agent catalog, agent pickers
 	 * and, with ACP_CHAT, as a chat harness (`pdev acp`). Off, unloaded or
