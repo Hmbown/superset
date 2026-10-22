@@ -1,13 +1,14 @@
 import { randomUUID } from "node:crypto";
 import { EventEmitter } from "node:events";
-import { mkdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { basename, join } from "node:path";
 import { screenshots } from "@superset/local-db";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, isNull } from "drizzle-orm";
 import { app, shell } from "electron";
 import { localDb } from "../local-db";
 
 const MAX_LISTED_SCREENSHOTS = 200;
+const MAX_LISTED_DEVICE_SCREENSHOTS = 20;
 const THUMBNAIL_WIDTH = 200;
 
 function screenshotsDir(): string {
@@ -17,23 +18,39 @@ function screenshotsDir(): string {
 }
 
 /** Chrome-style timestamped filename, e.g. "Screenshot 2026-08-26 at 14.05.32.png". */
-function timestampedFilename(): string {
+function timestampedName(prefix: string): string {
 	const now = new Date();
 	const pad = (n: number) => String(n).padStart(2, "0");
-	return `Screenshot ${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} at ${pad(
+	return `${prefix} ${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} at ${pad(
 		now.getHours(),
-	)}.${pad(now.getMinutes())}.${pad(now.getSeconds())}.png`;
+	)}.${pad(now.getMinutes())}.${pad(now.getSeconds())}`;
 }
 
+function uniquePngPath(dir: string, name: string): string {
+	let filename = `${name}.png`;
+	for (let n = 2; existsSync(join(dir, filename)); n++) {
+		filename = `${name} (${n}).png`;
+	}
+	return join(dir, filename);
+}
+
+export type ScreenshotSource =
+	| { url: string }
+	| { deviceKey: string; deviceName: string };
+
 /**
- * Persists page captures taken from the browser pane's overflow menu — the
- * capture itself (and its clipboard copy) stays in BrowserManager; this is
+ * Persists captures from the browser pane and from mobile devices. The
+ * capture itself (and its clipboard copy) stays with the caller; this is
  * just where a capture ends up once someone wants to see it again.
  */
 class ScreenshotManager extends EventEmitter {
-	save(image: Electron.NativeImage, url: string) {
-		const filename = timestampedFilename();
-		const savePath = join(screenshotsDir(), filename);
+	save(image: Electron.NativeImage, source: ScreenshotSource) {
+		const prefix =
+			"deviceKey" in source
+				? source.deviceName.replace(/[/\\:]/g, "-")
+				: "Screenshot";
+		const savePath = uniquePngPath(screenshotsDir(), timestampedName(prefix));
+		const filename = basename(savePath);
 		const pngBuffer = image.toPNG();
 		writeFileSync(savePath, pngBuffer);
 
@@ -47,7 +64,8 @@ class ScreenshotManager extends EventEmitter {
 			.insert(screenshots)
 			.values({
 				id,
-				url,
+				url: "url" in source ? source.url : null,
+				deviceKey: "deviceKey" in source ? source.deviceKey : null,
 				filename,
 				savePath,
 				width,
@@ -61,12 +79,24 @@ class ScreenshotManager extends EventEmitter {
 		return { id, savePath, base64: pngBuffer.toString("base64") };
 	}
 
+	/** Browser captures; device captures are listed per device. */
 	list() {
 		return localDb
 			.select()
 			.from(screenshots)
+			.where(isNull(screenshots.deviceKey))
 			.orderBy(desc(screenshots.capturedAt))
 			.limit(MAX_LISTED_SCREENSHOTS)
+			.all();
+	}
+
+	listForDevice(deviceKey: string) {
+		return localDb
+			.select()
+			.from(screenshots)
+			.where(eq(screenshots.deviceKey, deviceKey))
+			.orderBy(desc(screenshots.capturedAt))
+			.limit(MAX_LISTED_DEVICE_SCREENSHOTS)
 			.all();
 	}
 
@@ -78,9 +108,9 @@ class ScreenshotManager extends EventEmitter {
 			.get();
 	}
 
-	/** Clears tracked rows; the PNGs stay on disk, same as clearing a downloads list. */
+	/** Clears tracked browser rows; the PNGs stay on disk, same as clearing a downloads list. */
 	clear(): void {
-		localDb.delete(screenshots).run();
+		localDb.delete(screenshots).where(isNull(screenshots.deviceKey)).run();
 		this.emit("changed");
 	}
 

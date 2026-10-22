@@ -3,20 +3,27 @@ import {
 	DeviceScreen,
 	displayScreen,
 } from "@expo/hub-client";
-import { Trans } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Button } from "@superset/ui/button";
+import { toast } from "@superset/ui/sonner";
 import { Spinner } from "@superset/ui/spinner";
 import { cn } from "@superset/ui/utils";
 import { type ReactNode, useEffect, useState } from "react";
+import { fileToBase64 } from "renderer/lib/file-to-base64";
+import { electronTrpcClient } from "renderer/lib/trpc-client";
 import { DeviceActions } from "./components/DeviceActions";
 import { DeviceControls } from "./components/DeviceControls";
 import { type LogScope, LogsDrawer } from "./components/LogsDrawer";
+import { ScreenshotStrip } from "./components/ScreenshotStrip";
 import { ToolsPanel } from "./components/ToolsPanel";
+import { useDeviceScreenshots } from "./hooks/useDeviceScreenshots";
 
 export type RequestedOrientation = "portrait" | "landscape";
 
 interface DeviceViewProps {
 	client: DeviceClient;
+	workspaceId: string;
+	deviceKey: string;
 	deviceName: string;
 	picker: ReactNode;
 	logStreamUrl: (scope: LogScope) => string;
@@ -30,6 +37,8 @@ const STALLED_AFTER_MS = 10_000;
 
 export function DeviceView({
 	client,
+	workspaceId,
+	deviceKey,
 	deviceName,
 	picker,
 	logStreamUrl,
@@ -64,6 +73,23 @@ export function DeviceView({
 		return () => clearTimeout(timer);
 	}, [client.status]);
 
+	const { t } = useLingui();
+	const shots = useDeviceScreenshots(deviceKey);
+	const [lastCapturedAt, setLastCapturedAt] = useState(0);
+	const takeScreenshot = async () => {
+		try {
+			const capture = await client.screenshot();
+			if (!capture) throw new Error("No screenshot");
+			await electronTrpcClient.screenshots.saveDeviceCapture.mutate({
+				pngBase64: await fileToBase64(capture.blob),
+				deviceKey,
+				deviceName,
+			});
+			setLastCapturedAt(Date.now());
+		} catch {
+			toast.error(t({ message: "Couldn't take a screenshot" }));
+		}
+	};
 	const [expanded, setExpanded] = useState(false);
 	const [toolsOpen, setToolsOpen] = useState(false);
 	const [logsOpen, setLogsOpen] = useState(false);
@@ -87,9 +113,28 @@ export function DeviceView({
 					onToggleTools={() => setToolsOpen((value) => !value)}
 					onToggleLogs={() => setLogsOpen((value) => !value)}
 				/>
-				{!expanded && <DeviceControls client={client} onRotate={rotate} />}
+				{!expanded && (
+					<DeviceControls
+						client={client}
+						onRotate={rotate}
+						onScreenshot={() => void takeScreenshot()}
+					/>
+				)}
+				{!expanded && !toolsOpen && (
+					<ScreenshotStrip
+						shots={shots}
+						workspaceId={workspaceId}
+						lastCapturedAt={lastCapturedAt}
+						onShowAll={() => setToolsOpen(true)}
+					/>
+				)}
 				{!expanded && toolsOpen && (
-					<ToolsPanel client={client} onClose={() => setToolsOpen(false)} />
+					<ToolsPanel
+						client={client}
+						onClose={() => setToolsOpen(false)}
+						shots={shots}
+						workspaceId={workspaceId}
+					/>
 				)}
 				{!expanded && logsOpen && (
 					<LogsDrawer

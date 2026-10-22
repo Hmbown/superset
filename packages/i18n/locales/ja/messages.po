@@ -1264,6 +1264,9 @@ msgstr "+{0} −{1} · {2, plural, one {#ファイル} other {#ファイル}}"
 msgid "+{hidden} more"
 msgstr "他 {hidden} 件"
 
+msgid "+{hiddenCount}"
+msgstr "+{hiddenCount}"
+
 msgid "+{hiddenCount} earlier"
 msgstr "以前の{hiddenCount}件"
 
@@ -2673,6 +2676,9 @@ msgstr "ファイルを添付"
 
 msgid "Attach image"
 msgstr "画像を添付"
+
+msgid "Attach to chat"
+msgstr "チャットに添付"
 
 msgid "Attached"
 msgstr "接続中"
@@ -4829,9 +4835,6 @@ msgstr "相対パスをコピー"
 msgid "Copy Relative Path"
 msgstr "相対パスをコピー"
 
-msgid "Copy screenshot"
-msgstr "スクリーンショットをコピー"
-
 msgid "Copy Selection"
 msgstr "選択範囲をコピー"
 
@@ -5151,6 +5154,9 @@ msgstr "ワークスペースに説明を依頼できませんでした"
 
 msgid "Couldn't attach files"
 msgstr "ファイルを添付できませんでした"
+
+msgid "Couldn't attach the screenshot"
+msgstr "スクリーンショットを添付できませんでした"
 
 msgid "Couldn't branch into a new worktree"
 msgstr "新しい worktree へ分岐できませんでした"
@@ -16981,6 +16987,9 @@ msgstr "操作を開始"
 
 msgid "Take me home"
 msgstr "ホームに戻る"
+
+msgid "Take screenshot"
+msgstr "スクリーンショットを撮る"
 
 msgid "Taken"
 msgstr "使用済み"

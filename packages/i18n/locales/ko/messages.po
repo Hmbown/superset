@@ -1264,6 +1264,9 @@ msgstr "+{0} −{1} · {2, plural, one {파일 #개} other {파일 #개}}"
 msgid "+{hidden} more"
 msgstr "+{hidden}개 더"
 
+msgid "+{hiddenCount}"
+msgstr "+{hiddenCount}"
+
 msgid "+{hiddenCount} earlier"
 msgstr "이전 +{hiddenCount}개"
 
@@ -2673,6 +2676,9 @@ msgstr "파일 첨부"
 
 msgid "Attach image"
 msgstr "이미지 첨부"
+
+msgid "Attach to chat"
+msgstr "채팅에 첨부"
 
 msgid "Attached"
 msgstr "연결됨"
@@ -4829,9 +4835,6 @@ msgstr "상대 경로 복사"
 msgid "Copy Relative Path"
 msgstr "상대 경로 복사"
 
-msgid "Copy screenshot"
-msgstr "스크린샷 복사"
-
 msgid "Copy Selection"
 msgstr "선택 항목 복사"
 
@@ -5151,6 +5154,9 @@ msgstr "워크스페이스에 설명을 요청하지 못했습니다"
 
 msgid "Couldn't attach files"
 msgstr "파일을 첨부할 수 없습니다"
+
+msgid "Couldn't attach the screenshot"
+msgstr "스크린샷을 첨부할 수 없습니다"
 
 msgid "Couldn't branch into a new worktree"
 msgstr "새 worktree로 분기할 수 없습니다"
@@ -16981,6 +16987,9 @@ msgstr "제어 시작"
 
 msgid "Take me home"
 msgstr "홈으로 가기"
+
+msgid "Take screenshot"
+msgstr "스크린샷 찍기"
 
 msgid "Taken"
 msgstr "사용 중"
