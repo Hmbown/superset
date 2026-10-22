@@ -288,6 +288,7 @@ export const autumnBillingRoutes = {
 			async (ctx) => {
 				const caller = await billingCaller(ctx, "previewAttach");
 				await refuseEnterprise(ctx.body.planId);
+				await ensureAutumnCustomer(caller.organizationId);
 				const seats = Math.max(
 					1,
 					await countBillableSeats(caller.organizationId),
