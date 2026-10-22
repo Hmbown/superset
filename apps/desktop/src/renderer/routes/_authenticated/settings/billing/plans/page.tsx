@@ -6,7 +6,6 @@ import { useFormat } from "@superset/i18n/react";
 import {
 	isSelfServePlanId,
 	PLAN_PRICE_CURRENCY,
-	SELF_SERVE_PLANS,
 	type SelfServePlanId,
 	seatPricePerMonth,
 	selfServePlanFromAutumnPlanId,
@@ -26,6 +25,7 @@ import { track } from "renderer/lib/analytics";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { useBillingActions } from "../hooks/useBillingActions";
+import { usePlanCatalog } from "../hooks/usePlanCatalog";
 
 export const Route = createFileRoute("/_authenticated/settings/billing/plans/")(
 	{
@@ -393,6 +393,7 @@ function PlansPage() {
 	// no interval to read.
 	const { t } = useLingui();
 	const { formatCurrency, formatNumber } = useFormat();
+	const catalog = usePlanCatalog();
 	const [manualIsYearly, setManualIsYearly] = useState<boolean | null>(null);
 	const { upgrade, cancel, restore, isUpgrading, isCanceling, isRestoring } =
 		useBillingActions();
@@ -440,7 +441,7 @@ function PlansPage() {
 		if (plan.price !== "seat") return i18n._(getValue(plan.price));
 		if (!isSelfServePlanId(plan.id)) return "";
 		return formatCurrency(
-			seatPricePerMonth(plan.id, { annual: isYearly }),
+			seatPricePerMonth(plan.id, { annual: isYearly }, catalog),
 			PLAN_PRICE_CURRENCY,
 			{ minimumFractionDigits: 0 },
 		);
@@ -451,7 +452,7 @@ function PlansPage() {
 		column: PlanColumnId,
 	): ComparisonValue | string => {
 		if (row.cloudGbHours && isSelfServePlanId(column)) {
-			return formatNumber(SELF_SERVE_PLANS[column].gbMinutesPerSeat / 60);
+			return formatNumber(catalog[column].gbMinutesPerSeat / 60);
 		}
 		if (column === "free") return row.values[0];
 		if (column === "enterprise") return row.values[2];

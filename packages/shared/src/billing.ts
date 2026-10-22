@@ -167,11 +167,50 @@ export const SELF_SERVE_PLANS: Record<
 	ultra: { monthlyCents: 20000, yearlyCents: 240000, gbMinutesPerSeat: 240000 },
 };
 
+export type SelfServePlanCatalog = typeof SELF_SERVE_PLANS;
+
+export interface AutumnPlanSummary {
+	id: string;
+	metadata?: Record<string, unknown> | null;
+	items: Array<{
+		featureId: string;
+		price?: { amount?: number | null } | null;
+	}>;
+}
+
+export function selfServePlansFromAutumn(
+	plans: AutumnPlanSummary[],
+): SelfServePlanCatalog {
+	const byId = new Map(plans.map((plan) => [plan.id, plan]));
+	const seatCents = (planId: string) => {
+		const amount = byId
+			.get(planId)
+			?.items.find((item) => item.featureId === "seats")?.price?.amount;
+		return amount == null ? null : Math.round(amount * 100);
+	};
+	return Object.fromEntries(
+		SELF_SERVE_PLAN_IDS.map((id) => {
+			const builtIn = SELF_SERVE_PLANS[id];
+			const perSeat = byId.get(id)?.metadata?.box_gb_minutes_per_seat;
+			return [
+				id,
+				{
+					monthlyCents: seatCents(id) ?? builtIn.monthlyCents,
+					yearlyCents: seatCents(`${id}_annual`) ?? builtIn.yearlyCents,
+					gbMinutesPerSeat:
+						typeof perSeat === "number" ? perSeat : builtIn.gbMinutesPerSeat,
+				},
+			];
+		}),
+	) as SelfServePlanCatalog;
+}
+
 export function seatPricePerMonth(
 	plan: SelfServePlanId,
 	{ annual }: { annual: boolean },
+	catalog: SelfServePlanCatalog = SELF_SERVE_PLANS,
 ): number {
-	const { monthlyCents, yearlyCents } = SELF_SERVE_PLANS[plan];
+	const { monthlyCents, yearlyCents } = catalog[plan];
 	return (annual ? yearlyCents / 12 : monthlyCents) / 100;
 }
 

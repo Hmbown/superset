@@ -12,7 +12,6 @@ import {
 	PLAN_PRICE_CURRENCY,
 	resolveCurrentPlan,
 	SELF_SERVE_PLAN_IDS,
-	SELF_SERVE_PLANS,
 	type SelfServePlanId,
 	seatPricePerMonth,
 	selfServePlanFromAutumnPlanId,
@@ -27,6 +26,7 @@ import { useEffect, useState } from "react";
 import { useTRPC } from "@/trpc/react";
 import { CloudUsageCard } from "./components/CloudUsageCard";
 import { useBillingActions } from "./hooks/useBillingActions";
+import { usePlanCatalog } from "./hooks/usePlanCatalog";
 
 interface BillingSettingsProps {
 	/**
@@ -101,6 +101,10 @@ export function BillingSettings({
 		plan === "pro"
 			? (selfServePlanFromAutumnPlanId(activePlan?.autumnPlanId) ?? "pro")
 			: null;
+	const catalog = usePlanCatalog({
+		organizationId: activeOrganizationId,
+		enabled: usesAutumn,
+	});
 	const offeredPlans: readonly SelfServePlanId[] = usesAutumn
 		? SELF_SERVE_PLAN_IDS
 		: ["pro"];
@@ -281,12 +285,12 @@ export function BillingSettings({
 					<div className="divide-y rounded-md border">
 						{offeredPlans.map((offeredPlan) => {
 							const price = formatCurrency(
-								seatPricePerMonth(offeredPlan, { annual: isYearly }),
+								seatPricePerMonth(offeredPlan, { annual: isYearly }, catalog),
 								PLAN_PRICE_CURRENCY,
 								{ minimumFractionDigits: 0 },
 							);
 							const gbHours = formatNumber(
-								SELF_SERVE_PLANS[offeredPlan].gbMinutesPerSeat / 60,
+								catalog[offeredPlan].gbMinutesPerSeat / 60,
 							);
 							const isCurrent = offeredPlan === selfServePlan;
 							return (

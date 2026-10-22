@@ -7,6 +7,7 @@ import {
 } from "@superset/shared/billing";
 import { Button } from "@superset/ui/button";
 import { PLANS } from "../../../../constants";
+import { usePlanCatalog } from "../../../../hooks/usePlanCatalog";
 
 interface UpgradeCardProps {
 	onUpgrade: () => void;
@@ -16,10 +17,15 @@ interface UpgradeCardProps {
 export function UpgradeCard({ onUpgrade, isUpgrading }: UpgradeCardProps) {
 	const plan = PLANS.pro;
 	const { formatCurrency } = useFormat();
+	const catalog = usePlanCatalog();
 	const formatSeatPrice = (annual: boolean) =>
-		formatCurrency(seatPricePerMonth("pro", { annual }), PLAN_PRICE_CURRENCY, {
-			minimumFractionDigits: 0,
-		});
+		formatCurrency(
+			seatPricePerMonth("pro", { annual }, catalog),
+			PLAN_PRICE_CURRENCY,
+			{
+				minimumFractionDigits: 0,
+			},
+		);
 	const monthlyPrice = formatSeatPrice(false);
 	const yearlyPrice = formatSeatPrice(true);
 

@@ -10,8 +10,10 @@ import {
 	planTierFromSubscription,
 	requiredPlanForTriggerKind,
 	resolveCurrentPlan,
+	SELF_SERVE_PLANS,
 	seatPricePerMonth,
 	selfServePlanFromAutumnPlanId,
+	selfServePlansFromAutumn,
 } from "./billing";
 import { LAUNCHED_TRIGGER_KINDS } from "./constants";
 
@@ -182,6 +184,30 @@ describe("seatPricePerMonth", () => {
 		expect(seatPricePerMonth("pro", { annual: true })).toBe(16);
 		expect(seatPricePerMonth("team", { annual: true })).toBe(54);
 		expect(seatPricePerMonth("ultra", { annual: true })).toBe(200);
+	});
+});
+
+describe("selfServePlansFromAutumn", () => {
+	test("reads seat prices and per-seat minutes from Autumn, keeping built-in values for plans it lacks", () => {
+		const seats = (amount: number) => ({
+			featureId: "seats",
+			price: { amount },
+		});
+		const catalog = selfServePlansFromAutumn([
+			{
+				id: "pro",
+				metadata: { box_gb_minutes_per_seat: 20000 },
+				items: [seats(25)],
+			},
+			{ id: "pro_annual", items: [seats(240)] },
+		]);
+		expect(catalog.pro).toEqual({
+			monthlyCents: 2500,
+			yearlyCents: 24000,
+			gbMinutesPerSeat: 20000,
+		});
+		expect(catalog.team).toEqual(SELF_SERVE_PLANS.team);
+		expect(seatPricePerMonth("pro", { annual: true }, catalog)).toBe(20);
 	});
 });
 
