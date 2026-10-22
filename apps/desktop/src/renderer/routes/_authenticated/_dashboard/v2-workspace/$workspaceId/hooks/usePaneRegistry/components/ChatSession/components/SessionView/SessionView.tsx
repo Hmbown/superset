@@ -24,6 +24,7 @@ import { ChatHistorySidebarScroller } from "@superset/ui/chat-history-sidebar";
 import { toast } from "@superset/ui/sonner";
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useStableList } from "renderer/hooks/useStableList";
 import type { OpenFile } from "../../../../../../types";
 import {
 	ChatPaneActionsProvider,
@@ -44,7 +45,6 @@ import {
 import { ConnectionNotice } from "../ConnectionNotice";
 import { SessionHeader } from "../SessionHeader";
 import { Transcript } from "../Transcript";
-import { useStableList } from "./hooks/useStableList";
 import { composerAnswer } from "./utils/composerAnswer";
 
 const RESUME_FOLLOW_PX = 24;
