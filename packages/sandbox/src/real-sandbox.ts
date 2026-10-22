@@ -48,8 +48,12 @@ const { buildBundle, publishBundle } = await import("./build");
 const bundle = buildBundle();
 await publishBundle(bundle, { dry: false });
 
-const { deleteSandbox, provisionSandbox, sandboxHostSecretFor, wakeSandbox } =
-	await import("@superset/trpc/lib/sandbox");
+const { deleteSandbox, provisionSandbox, wakeSandbox } = await import(
+	"@superset/trpc/lib/sandbox/vercel"
+);
+const { sandboxHostSecretFor } = await import(
+	"@superset/trpc/lib/sandbox/access"
+);
 const { checkWakeLog, probeBox } = await import("./environments/probe");
 
 const name = `ws-real-check-${Date.now().toString(36)}`;

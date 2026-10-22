@@ -431,6 +431,10 @@ msgstr "{0} 已在此組織的任務中使用。"
 msgid "{0} is not a repository the GitHub App is installed on"
 msgstr "{0} 不是已安裝 GitHub App 的存放庫"
 
+#. placeholder {0}: selected.name
+msgid "{0} is not running."
+msgstr "{0} 未執行。"
+
 #. placeholder {0}: host.name
 msgid "{0} is offline"
 msgstr "{0}已離線"
@@ -697,6 +701,9 @@ msgstr "目前{actual} · 預計約{projected}"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "開啟對應工作區時，{agents} 工作階段會恢復。"
 
+msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
+msgstr "{approvalCount, plural, other {# 個需要核准}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {落後main #個提交，需要變基} other {落後main #個提交，需要變基}}"
 
@@ -805,6 +812,9 @@ msgstr "{count, plural, one {使用了#個來源} other {使用了#個來源}}"
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {使用了 # 個工具} other {使用了 # 個工具}}"
+
+msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
+msgstr "{count, plural, other {正在等待 # 個子代理程式}}"
 
 msgid "{count} GitHub stars"
 msgstr "{count}個GitHub星標"
@@ -975,6 +985,18 @@ msgstr "你有{myFailedCount}個自動化上次執行失敗"
 msgid "{name} accounts"
 msgstr "{name} 帳號"
 
+msgid "{name} asks"
+msgstr "{name} 請求確認"
+
+msgid "{name} can't be messaged"
+msgstr "無法傳送訊息給 {name}"
+
+msgid "{name} failed"
+msgstr "{name} 失敗"
+
+msgid "{name} finished"
+msgstr "{name} 已完成"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} 是內建的，無法移除"
@@ -989,6 +1011,12 @@ msgstr "{name} 尚未新增"
 
 msgid "{name} plugin"
 msgstr "{name} 外掛程式"
+
+msgid "{name} started working"
+msgstr "{name} 開始工作"
+
+msgid "{name} stopped"
+msgstr "{name} 已停止"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {請至少指定一個人員，或選擇{choice}。} sender {請至少指定一個寄件者，或選擇{choice}。} other {請至少指定一個項目，或選擇{choice}。}}"
@@ -1099,6 +1127,9 @@ msgstr "已選擇{selectedCount}項"
 msgid "{share}% human"
 msgstr "人類{share}%"
 
+msgid "{shellCount, plural, one {# shell} other {# shells}}"
+msgstr "{shellCount, plural, other {# 個 shell}}"
+
 msgid "{shown} of {total}"
 msgstr "{shown}/{total}"
 
@@ -1118,6 +1149,9 @@ msgstr "{started, plural, one {已啟動 # 個自動化} other {已啟動 # 個�
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, other {# 個子代理程式執行中}}"
+
+msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
+msgstr "{subagentCount, plural, other {# 個子代理程式}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {已建立#個工作區，{failCount}個失敗} other {已建立#個工作區，{failCount}個失敗}}"
@@ -2915,14 +2949,8 @@ msgstr "背景"
 msgid "Background processes"
 msgstr "背景處理程序"
 
-msgid "Background task"
-msgstr "背景工作"
-
 msgid "Background terminal memory"
 msgstr "背景終端記憶體"
-
-msgid "Background work and pages"
-msgstr "背景工作與頁面"
 
 msgid "Backlog"
 msgstr "待規劃"
@@ -3056,6 +3084,9 @@ msgstr "粗體"
 
 msgid "Bold Text"
 msgstr "粗體文字"
+
+msgid "Boot"
+msgstr "啟動"
 
 #. placeholder {0}: selected.name
 msgid "Booting {0}…"
@@ -4532,6 +4563,9 @@ msgstr "此伺服器未設定 GitHub 連結"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "連線後，你的代理可代表你在 {name} 中讀取和操作。繼續前請檢查你授予的權限。"
 
+msgid "Connecting to {deviceName}…"
+msgstr "正在連線至 {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "正在連線至桌面…"
 
@@ -4822,6 +4856,9 @@ msgstr "複製相對路徑"
 msgid "Copy Relative Path"
 msgstr "複製相對路徑"
 
+msgid "Copy screenshot"
+msgstr "複製螢幕截圖"
+
 msgid "Copy Selection"
 msgstr "複製所選內容"
 
@@ -4997,6 +5034,9 @@ msgstr "無法開啟「照片」"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "無法連線至 {0} 以尋找分支「{1}」。請檢查網路連線與 {2} 的存取權限，然後再試一次。"
 
+msgid "Could not reach {deviceName}."
+msgstr "無法連線至 {deviceName}。"
+
 msgid "Could not reach a mobile simulator."
 msgstr "無法連線至行動模擬器。"
 
@@ -5169,6 +5209,9 @@ msgstr "無法複製路徑"
 msgid "Couldn't copy the image"
 msgstr "無法複製圖片"
 
+msgid "Couldn't copy the screenshot"
+msgstr "無法複製螢幕截圖"
+
 msgid "Couldn't create workspace"
 msgstr "無法建立工作區"
 
@@ -5236,6 +5279,9 @@ msgstr "無法標記為可供審查"
 
 msgid "Couldn't merge pull request"
 msgstr "無法合併拉取請求"
+
+msgid "Couldn't move the subagent to the background"
+msgstr "無法將子代理程式移到背景"
 
 msgid "Couldn't name \"{name}\" automatically"
 msgstr "無法自動命名「{name}」"
@@ -5347,6 +5393,9 @@ msgstr "無法停止背景工作"
 
 msgid "Couldn't stop the chat"
 msgstr "無法停止聊天"
+
+msgid "Couldn't take a screenshot"
+msgstr "無法擷取螢幕畫面"
 
 msgid "Couldn't unstage changes"
 msgstr "無法取消暫存更改"
@@ -7980,6 +8029,9 @@ msgstr "基於"
 msgid "From"
 msgstr "從"
 
+msgid "from {parentName}"
+msgstr "來自 {parentName}"
+
 msgid "from {price}/user/mo"
 msgstr "{price}/使用者/月起"
 
@@ -7988,6 +8040,9 @@ msgstr "從一個黑客松專案，到平行程式設計代理的工作空間。
 
 msgid "From GitHub"
 msgstr "來自 GitHub"
+
+msgid "from main agent"
+msgstr "來自主代理程式"
 
 msgid "Front matter hidden — switch to Markdown to edit it"
 msgstr "已隱藏front matter，切換到Markdown可編輯"
@@ -10266,6 +10321,9 @@ msgstr "正在合併…"
 msgid "Mesh Gradient"
 msgstr "網格漸變"
 
+msgid "Message {name}…"
+msgstr "傳訊息給 {name}…"
+
 msgid "Message in channel"
 msgstr "頻道中的訊息"
 
@@ -10472,6 +10530,12 @@ msgstr "軟體史的大部分時間"
 msgid "Move {count} to Group"
 msgstr "將{count}個移動到群組"
 
+msgid "Move {name} to background"
+msgstr "將 {name} 移到背景"
+
+msgid "Move to background"
+msgstr "移到背景"
+
 msgid "Move to group"
 msgstr "移動到群組"
 
@@ -10572,6 +10636,9 @@ msgstr "需要重試"
 
 msgid "Needs Action"
 msgstr "需要處理"
+
+msgid "needs approval"
+msgstr "需要核准"
 
 msgid "Needs attention"
 msgstr "需要處理"
@@ -14834,8 +14901,8 @@ msgstr "範圍"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "當看板看到 {0} 天的使用資料後，才會開始計分。"
 
-msgid "Screenshot"
-msgstr "截圖"
+msgid "Screenshot copied"
+msgstr "已複製螢幕截圖"
 
 msgid "Screenshot copied to clipboard"
 msgstr "截圖已複製到剪貼簿"
@@ -16442,8 +16509,8 @@ msgstr "停止{0}"
 msgid "Stop {label}"
 msgstr "停止 {label}"
 
-msgid "Stop all agent background processes"
-msgstr "停止所有代理程式背景處理程序"
+msgid "Stop {name}"
+msgstr "停止 {name}"
 
 msgid "Stop dictation"
 msgstr "停止語音輸入"
@@ -17801,9 +17868,6 @@ msgstr "這只會更改顯示名稱，不會更改分支。"
 msgid "this organization"
 msgstr "此組織"
 
-msgid "This organization has used all {limit} of its environments. Archive one, or contact us to raise the limit"
-msgstr "此組織已用完全部 {limit} 個環境。請封存一個,或聯絡我們提高上限"
-
 msgid "This organization is on the Free plan. Superset Mobile is available for organizations on Pro."
 msgstr "此組織使用的是免費版。Superset Mobile面向使用專業版的組織開放。"
 
@@ -17902,6 +17966,9 @@ msgstr "此slug已被佔用"
 
 msgid "This stops every Teams trigger in your organization and removes the notification subscriptions from your tenant. You can reconnect at any time."
 msgstr "這會停止你組織中所有的Teams觸發器，並從你的租戶中移除通知訂閱。你可以隨時重新連線。"
+
+msgid "This subagent can't move to the background now"
+msgstr "此子代理程式目前無法移到背景"
 
 msgid "This subagent is no longer tracked by the host. Its transcript stays on disk under the agent's session directory."
 msgstr "主機已不再追蹤此子代理程式。其逐字稿仍保留在磁碟上的代理程式工作階段目錄中。"
@@ -18029,6 +18096,9 @@ msgstr "標題"
 
 msgid "To"
 msgstr "到"
+
+msgid "to {name}"
+msgstr "傳給 {name}"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "若要恢復與代理的對話，請在其資料夾中執行："
@@ -18669,6 +18739,12 @@ msgstr "請在這臺機器上更新Superset以附加檔案"
 
 msgid "update the branch prefix"
 msgstr "更新分支字首"
+
+msgid "Update this host to message subagents"
+msgstr "請更新此主機以傳送訊息給子代理程式"
+
+msgid "Update this host to move subagents to the background"
+msgstr "請更新此主機以將子代理程式移到背景"
 
 msgid "Updated"
 msgstr "已更新"
@@ -19844,6 +19920,10 @@ msgstr "你的名字 <0>（若我們採用你的提示詞，會在更新日誌�
 
 msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
 msgstr "你的組織已達到雲端用量上限。請在「設定」中的「帳單」提高上限或升級，以啟動此工作區。"
+
+#. placeholder {0}: params?.limit
+msgid "Your organization has reached its limit of {0} environments. Archive one, or upgrade in Settings, Billing to add more."
+msgstr "你的組織已達到 {0} 個環境的上限。請封存一個，或在「設定」中的「帳單」升級以新增更多。"
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "你的組織已達到雲端用量上限。除非提高上限，此工作區將在幾分鐘後停止。"

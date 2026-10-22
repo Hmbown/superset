@@ -431,6 +431,10 @@ msgstr "{0} se v této organizaci pro úkoly už používá."
 msgid "{0} is not a repository the GitHub App is installed on"
 msgstr "{0} není repozitář, ve kterém je nainstalována aplikace GitHub App"
 
+#. placeholder {0}: selected.name
+msgid "{0} is not running."
+msgstr "{0} neběží."
+
 #. placeholder {0}: host.name
 msgid "{0} is offline"
 msgstr "{0} je offline"
@@ -697,6 +701,9 @@ msgstr "zatím {actual} · odhad ~{projected}"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "Relace {agents} se obnoví, když otevřete jejich pracovní prostor."
 
+msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
+msgstr "{approvalCount, plural, one {# čeká na schválení} few {# čekají na schválení} many {# čeká na schválení} other {# čeká na schválení}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Zaostává za main o # commit, je potřeba rebase} few {Zaostává za main o # commity, je potřeba rebase} many {Zaostává za main o # commitu, je potřeba rebase} other {Zaostává za main o # commitů, je potřeba rebase}}"
 
@@ -805,6 +812,9 @@ msgstr "{count, plural, one {Použit # zdroj} few {Použity # zdroje} many {Pou�
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {použit # nástroj} few {použity # nástroje} many {použito # nástroje} other {použito # nástrojů}}"
+
+msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
+msgstr "{count, plural, one {čeká na # subagenta} few {čeká na # subagenty} many {čeká na # subagenta} other {čeká na # subagentů}}"
 
 msgid "{count} GitHub stars"
 msgstr "{count} hvězd na GitHubu"
@@ -975,6 +985,18 @@ msgstr "Vaše automatizace s neúspěšným posledním během: {myFailedCount}"
 msgid "{name} accounts"
 msgstr "Účty {name}"
 
+msgid "{name} asks"
+msgstr "{name} se ptá"
+
+msgid "{name} can't be messaged"
+msgstr "{name} nemůže přijímat zprávy"
+
+msgid "{name} failed"
+msgstr "{name} selhal"
+
+msgid "{name} finished"
+msgstr "{name} skončil"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} je vestavěný a nelze jej odebrat"
@@ -989,6 +1011,12 @@ msgstr "{name} není přidán"
 
 msgid "{name} plugin"
 msgstr "Plugin {name}"
+
+msgid "{name} started working"
+msgstr "{name} začal pracovat"
+
+msgid "{name} stopped"
+msgstr "{name} byl zastaven"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Zadejte alespoň jednu osobu, nebo zvolte {choice}.} sender {Zadejte alespoň jednoho odesílatele, nebo zvolte {choice}.} other {Zadejte alespoň jednu položku, nebo zvolte {choice}.}}"
@@ -1099,6 +1127,9 @@ msgstr "vybráno: {selectedCount}"
 msgid "{share}% human"
 msgstr "{share} % člověk"
 
+msgid "{shellCount, plural, one {# shell} other {# shells}}"
+msgstr "{shellCount, plural, one {# shell} few {# shelly} many {# shellu} other {# shellů}}"
+
 msgid "{shown} of {total}"
 msgstr "{shown} z {total}"
 
@@ -1118,6 +1149,9 @@ msgstr "{started, plural, one {Spuštěna # automatizace} few {Spuštěny # auto
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, one {# subagent běží} few {# subagenti běží} many {# subagenta běží} other {# subagentů běží}}"
+
+msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
+msgstr "{subagentCount, plural, one {# subagent} few {# subagenti} many {# subagenta} other {# subagentů}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {Vytvořen # pracovní prostor, {failCount} selhalo} few {Vytvořeny # pracovní prostory, {failCount} selhalo} many {Vytvořeno # pracovního prostoru, {failCount} selhalo} other {Vytvořeno # pracovních prostorů, {failCount} selhalo}}"
@@ -2915,14 +2949,8 @@ msgstr "Pozadí"
 msgid "Background processes"
 msgstr "Procesy na pozadí"
 
-msgid "Background task"
-msgstr "Úloha na pozadí"
-
 msgid "Background terminal memory"
 msgstr "Paměť terminálů na pozadí"
-
-msgid "Background work and pages"
-msgstr "Práce na pozadí a stránky"
 
 msgid "Backlog"
 msgstr "Backlog"
@@ -3056,6 +3084,9 @@ msgstr "Tučné"
 
 msgid "Bold Text"
 msgstr "Tučný text"
+
+msgid "Boot"
+msgstr "Spustit"
 
 #. placeholder {0}: selected.name
 msgid "Booting {0}…"
@@ -4532,6 +4563,9 @@ msgstr "Připojení ke GitHubu není na tomto serveru nastaveno"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Připojením umožníte svým agentům číst a jednat v {name} vaším jménem. Než budete pokračovat, zkontrolujte, co udělujete."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Připojování k {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Připojování k ploše…"
 
@@ -4822,6 +4856,9 @@ msgstr "Kopírovat relativní cestu"
 msgid "Copy Relative Path"
 msgstr "Kopírovat relativní cestu"
 
+msgid "Copy screenshot"
+msgstr "Kopírovat snímek obrazovky"
+
 msgid "Copy Selection"
 msgstr "Kopírovat výběr"
 
@@ -4997,6 +5034,9 @@ msgstr "Nepodařilo se otevřít Fotky"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Nepodařilo se spojit s {0} a vyhledat větev „{1}“. Zkontrolujte připojení a přístup k {2} a zkuste to znovu."
 
+msgid "Could not reach {deviceName}."
+msgstr "Nelze se připojit k {deviceName}."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Nepodařilo se připojit k mobilnímu simulátoru."
 
@@ -5169,6 +5209,9 @@ msgstr "Nepodařilo se zkopírovat cestu"
 msgid "Couldn't copy the image"
 msgstr "Obrázek se nepodařilo zkopírovat"
 
+msgid "Couldn't copy the screenshot"
+msgstr "Snímek obrazovky se nepodařilo zkopírovat"
+
 msgid "Couldn't create workspace"
 msgstr "Pracovní prostor se nepodařilo vytvořit"
 
@@ -5236,6 +5279,9 @@ msgstr "Nepodařilo se označit jako připravený k revizi"
 
 msgid "Couldn't merge pull request"
 msgstr "Pull request se nepodařilo sloučit"
+
+msgid "Couldn't move the subagent to the background"
+msgstr "Subagenta se nepodařilo přesunout na pozadí"
 
 msgid "Couldn't name \"{name}\" automatically"
 msgstr "Nepodařilo se automaticky pojmenovat „{name}“"
@@ -5347,6 +5393,9 @@ msgstr "Úlohu na pozadí se nepodařilo zastavit"
 
 msgid "Couldn't stop the chat"
 msgstr "Chat se nepodařilo zastavit"
+
+msgid "Couldn't take a screenshot"
+msgstr "Snímek obrazovky se nepodařilo pořídit"
 
 msgid "Couldn't unstage changes"
 msgstr "Nepodařilo se zrušit přípravu změn"
@@ -7980,6 +8029,9 @@ msgstr "z"
 msgid "From"
 msgstr "Z"
 
+msgid "from {parentName}"
+msgstr "od {parentName}"
+
 msgid "from {price}/user/mo"
 msgstr "od {price}/uživatele/měs."
 
@@ -7988,6 +8040,9 @@ msgstr "Od projektu z hackathonu k pracovnímu prostoru pro paralelní kódovac�
 
 msgid "From GitHub"
 msgstr "Z GitHubu"
+
+msgid "from main agent"
+msgstr "od hlavního agenta"
 
 msgid "Front matter hidden — switch to Markdown to edit it"
 msgstr "Front matter je skrytý — pro úpravy přepněte na Markdown"
@@ -10266,6 +10321,9 @@ msgstr "Slučování…"
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
+msgid "Message {name}…"
+msgstr "Zpráva pro {name}…"
+
 msgid "Message in channel"
 msgstr "Zpráva v kanálu"
 
@@ -10472,6 +10530,12 @@ msgstr "Většina historie softwaru"
 msgid "Move {count} to Group"
 msgstr "Přesunout {count} do skupiny"
 
+msgid "Move {name} to background"
+msgstr "Přesunout {name} na pozadí"
+
+msgid "Move to background"
+msgstr "Přesunout na pozadí"
+
 msgid "Move to group"
 msgstr "Přesunout do skupiny"
 
@@ -10572,6 +10636,9 @@ msgstr "Vyžaduje opakování"
 
 msgid "Needs Action"
 msgstr "Vyžaduje akci"
+
+msgid "needs approval"
+msgstr "čeká na schválení"
 
 msgid "Needs attention"
 msgstr "Vyžaduje pozornost"
@@ -14834,8 +14901,8 @@ msgstr "Rozsah"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "Bodování začne, jakmile žebříček uvidí dní s aktivitou: {0}."
 
-msgid "Screenshot"
-msgstr "Snímek obrazovky"
+msgid "Screenshot copied"
+msgstr "Snímek obrazovky zkopírován"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Snímek obrazovky zkopírován do schránky"
@@ -16442,8 +16509,8 @@ msgstr "Zastavit {0}"
 msgid "Stop {label}"
 msgstr "Zastavit {label}"
 
-msgid "Stop all agent background processes"
-msgstr "Zastavit všechny procesy agentů na pozadí"
+msgid "Stop {name}"
+msgstr "Zastavit {name}"
 
 msgid "Stop dictation"
 msgstr "Zastavit diktování"
@@ -17801,9 +17868,6 @@ msgstr "Změní se jen zobrazovaný název, ne větev."
 msgid "this organization"
 msgstr "této organizace"
 
-msgid "This organization has used all {limit} of its environments. Archive one, or contact us to raise the limit"
-msgstr "Tato organizace využila všech {limit} svých prostředí. Archivujte některé, nebo nás kontaktujte kvůli navýšení limitu"
-
 msgid "This organization is on the Free plan. Superset Mobile is available for organizations on Pro."
 msgstr "Tato organizace má tarif Free. Superset Mobile je dostupný pro organizace s tarifem Pro."
 
@@ -17902,6 +17966,9 @@ msgstr "Tento slug je již obsazený"
 
 msgid "This stops every Teams trigger in your organization and removes the notification subscriptions from your tenant. You can reconnect at any time."
 msgstr "Tím se zastaví všechny spouštěče Teams ve vaší organizaci a z tenantu se odeberou odběry oznámení. Kdykoli se můžete připojit znovu."
+
+msgid "This subagent can't move to the background now"
+msgstr "Tento subagent se teď nedá přesunout na pozadí"
 
 msgid "This subagent is no longer tracked by the host. Its transcript stays on disk under the agent's session directory."
 msgstr "Tento subagent už není hostitelem sledován. Jeho přepis zůstává na disku v adresáři relace agenta."
@@ -18029,6 +18096,9 @@ msgstr "Název"
 
 msgid "To"
 msgstr "Do"
+
+msgid "to {name}"
+msgstr "pro {name}"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Chcete-li obnovit konverzaci s agentem, spusťte toto v její složce:"
@@ -18669,6 +18739,12 @@ msgstr "Aktualizujte na tomto počítači Superset, abyste mohli přikládat sou
 
 msgid "update the branch prefix"
 msgstr "aktualizovat prefix větve"
+
+msgid "Update this host to message subagents"
+msgstr "Aktualizujte tohoto hostitele, abyste mohli psát subagentům"
+
+msgid "Update this host to move subagents to the background"
+msgstr "Aktualizujte tohoto hostitele, abyste mohli přesouvat subagenty na pozadí"
 
 msgid "Updated"
 msgstr "Aktualizováno"
@@ -19844,6 +19920,10 @@ msgstr "Vaše jméno <0>(pokud váš prompt použijeme, uvedeme vás v changelog
 
 msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
 msgstr "Vaše organizace dosáhla limitu využití cloudu. Pro spuštění tohoto pracovního prostoru zvyšte limit nebo přejděte na vyšší tarif v Nastavení, Fakturace."
+
+#. placeholder {0}: params?.limit
+msgid "Your organization has reached its limit of {0} environments. Archive one, or upgrade in Settings, Billing to add more."
+msgstr "Vaše organizace dosáhla limitu {0} prostředí. Archivujte jedno, nebo přejděte na vyšší tarif v Nastavení, Fakturace a přidejte další."
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Vaše organizace dosáhla limitu využití cloudu. Tento pracovní prostor se za několik minut zastaví, pokud limit nezvýšíte."

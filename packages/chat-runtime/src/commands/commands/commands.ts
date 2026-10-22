@@ -11,6 +11,7 @@ import {
 import type {
 	AgentMessage,
 	ApprovalRequest,
+	BackgroundSubagentInput,
 	CancelTurnInput,
 	CloseSessionInput,
 	Cursor,
@@ -24,9 +25,11 @@ import type {
 	ResumeQueueInput,
 	SetConfigOptionInput,
 	SetModeInput,
+	SteerSubagentInput,
 	StopBackgroundTaskInput,
 } from "@superset/chat/protocol";
 import {
+	backgroundSubagentInputSchema,
 	cancelTurnInputSchema,
 	closeSessionInputSchema,
 	createSessionInputSchema,
@@ -44,6 +47,7 @@ import {
 	rewindSessionInputSchema,
 	setConfigOptionInputSchema,
 	setModeInputSchema,
+	steerSubagentInputSchema,
 	stopBackgroundTaskInputSchema,
 } from "@superset/chat/protocol";
 import { z } from "zod";
@@ -57,6 +61,7 @@ import type {
 	PromptResult,
 	QueueState,
 } from "../../sessions";
+import { SubagentItems } from "../../stream";
 
 export const createSessionCommandSchema = createSessionInputSchema
 	.omit({ workspaceId: true })
@@ -89,7 +94,12 @@ export type RewindSessionCommandInput = z.input<
 function lastAgentMessageId(events: DurableEvent[]): string | null {
 	for (let i = events.length - 1; i >= 0; i--) {
 		const event = events[i];
-		if (event?.type !== "item" || event.item.kind !== "agent_message") continue;
+		if (
+			event?.type !== "item" ||
+			event.item.kind !== "agent_message" ||
+			event.item.parentItemId
+		)
+			continue;
 		const id = (event.item as AgentMessage).agentMessageId;
 		if (id) return id;
 	}
@@ -176,6 +186,8 @@ export type ChatCommands = {
 	resumeQueue(input: ResumeQueueInput): void;
 	cancelTurn(input: CancelTurnInput): void;
 	stopBackgroundTask(input: StopBackgroundTaskInput): Promise<boolean>;
+	steerSubagent(input: SteerSubagentInput): Promise<boolean>;
+	backgroundSubagent(input: BackgroundSubagentInput): Promise<boolean>;
 	respondToApproval(input: RespondToApprovalInput): void;
 	setMode(input: SetModeInput): void;
 	setConfigOption(input: SetConfigOptionInput): void;
@@ -213,12 +225,14 @@ export type CommandsOptions = {
 	live: LiveSessionRegistry;
 	dedupe: { run<T>(commandId: string, execute: () => T): T };
 	mintSessionId?: () => string;
+	subagentItems?: SubagentItems;
 };
 
 const MAX_CACHED_REPLAY_EVENTS = 20_000;
 
 export function createCommands(options: CommandsOptions): ChatCommands {
 	const mintSessionId = options.mintSessionId ?? randomUUID;
+	const subagentItems = options.subagentItems ?? new SubagentItems(options.db);
 
 	const replays = new Map<
 		string,
@@ -374,6 +388,25 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 			);
 		},
 
+		steerSubagent(input) {
+			const parsed: SteerSubagentInput = steerSubagentInputSchema.parse(input);
+			return options.dedupe.run(`steerSubagent:${parsed.commandId}`, () =>
+				options.live
+					.require(parsed.sessionId)
+					.steerSubagent(parsed.taskId, parsed.content),
+			);
+		},
+
+		backgroundSubagent(input) {
+			const parsed: BackgroundSubagentInput =
+				backgroundSubagentInputSchema.parse(input);
+			return options.dedupe.run(`backgroundSubagent:${parsed.commandId}`, () =>
+				options.live
+					.require(parsed.sessionId)
+					.backgroundSubagent(parsed.taskId),
+			);
+		},
+
 		cancelTurn(input) {
 			const parsed: CancelTurnInput = cancelTurnInputSchema.parse(input);
 			options.dedupe.run(`cancelTurn:${parsed.commandId}`, () => {
@@ -516,6 +549,7 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 			const parsed: CloseSessionInput = closeSessionInputSchema.parse(input);
 			const wasLive = options.live.get(parsed.sessionId) !== null;
 			replays.delete(parsed.sessionId);
+			subagentItems.forget(parsed.sessionId);
 			try {
 				await options.live.dispose(parsed.sessionId);
 			} finally {
@@ -527,6 +561,7 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 			const closed = await options.live.disposeScope(scopeId);
 			for (const sessionId of closed) {
 				replays.delete(sessionId);
+				subagentItems.forget(sessionId);
 				options.journal.announce(sessionId);
 			}
 		},
@@ -569,28 +604,51 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 
 		getItems(input) {
 			const parsed: GetItemsInput = getItemsInputSchema.parse(input);
-			return readPage(options.db, parsed.sessionId, {
+			const page = readPage(options.db, parsed.sessionId, {
 				before: parsed.before,
 				limit: parsed.limit,
 			});
+			if (!page.ok || parsed.nestedSubagents) return page;
+			return {
+				...page,
+				envelopes: page.envelopes.filter(
+					(envelope) => !subagentItems.hiddenFromFlatView(envelope),
+				),
+			};
 		},
 
 		getOutline(input) {
-			const { sessionId } = getOutlineInputSchema.parse(input);
+			const { sessionId, nestedSubagents } = getOutlineInputSchema.parse(input);
 			const replayed = replaySession(sessionId);
 			if (!replayed.ok) return replayed;
-			return { ok: true, outline: outlineSnapshot(replayed.snapshot) };
+			const outline = outlineSnapshot(replayed.snapshot);
+			if (nestedSubagents) return { ok: true, outline };
+			return {
+				ok: true,
+				outline: {
+					...outline,
+					items: outline.items.filter(
+						(stored) => !subagentItems.hides(sessionId, stored.item),
+					),
+				},
+			};
 		},
 
 		getItemBodies(input) {
-			const { sessionId, itemIds } = getItemBodiesInputSchema.parse(input);
+			const { sessionId, itemIds, nestedSubagents } =
+				getItemBodiesInputSchema.parse(input);
 			const replayed = replaySession(sessionId);
 			if (!replayed.ok) return replayed;
 			return {
 				ok: true,
 				items: itemIds.flatMap((id) => {
 					const stored = replayed.snapshot.items.get(id);
-					return stored ? [stored] : [];
+					if (
+						!stored ||
+						(!nestedSubagents && subagentItems.hides(sessionId, stored.item))
+					)
+						return [];
+					return [stored];
 				}),
 			};
 		},

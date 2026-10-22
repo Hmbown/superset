@@ -4,6 +4,7 @@ import { AutumnError } from "autumn-js";
 import { env } from "../../../env";
 import { billingFromCustomer, type OrganizationBilling } from "./billing-state";
 import { getAutumnCustomer } from "./customer";
+import type { EnvironmentLimit } from "./environment-limit";
 
 const MEMORY_TTL_MS = 10_000;
 const SHARED_TTL_SECONDS = 60;
@@ -139,6 +140,12 @@ export async function organizationGatedMachineSizesFromAutumn(
 	organizationId: string,
 ): Promise<MachineSize[]> {
 	return (await organizationBilling(organizationId)).gatedMachineSizes ?? [];
+}
+
+export async function organizationEnvironmentLimitFromAutumn(
+	organizationId: string,
+): Promise<EnvironmentLimit> {
+	return (await organizationBilling(organizationId)).environmentLimit ?? null;
 }
 
 export async function invalidateOrganizationBilling(

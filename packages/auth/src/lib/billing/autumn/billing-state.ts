@@ -6,7 +6,11 @@ import {
 	paidPlanIdFromFlags,
 	tierFromFlags,
 } from "./entitlements";
-import { ENVIRONMENTS_FEATURE_ID, SEATS_FEATURE_ID } from "./features";
+import {
+	type EnvironmentLimit,
+	environmentLimitFromBalances,
+} from "./environment-limit";
+import { SEATS_FEATURE_ID } from "./features";
 
 export type PaymentState =
 	| { kind: "ok" }
@@ -30,7 +34,7 @@ export interface OrganizationBilling {
 	paymentState: PaymentState;
 	cloudUsage: CloudUsage | null;
 	gatedMachineSizes: MachineSize[];
-	environmentLimit: number | null;
+	environmentLimit: EnvironmentLimit;
 }
 
 type AutumnCustomer = Awaited<ReturnType<typeof getAutumnCustomer>>;
@@ -99,15 +103,8 @@ export function billingFromCustomer(
 		paymentState,
 		cloudUsage: cloudUsageFromBalances(customer.balances),
 		gatedMachineSizes: gatedMachineSizesFromFlags(customer.flags),
-		environmentLimit: environmentLimitFromBalances(customer.balances, tier),
+		environmentLimit:
+			environmentLimitFromBalances(customer.balances) ??
+			(tier === "free" ? 0 : null),
 	};
-}
-
-export function environmentLimitFromBalances(
-	balances: AutumnCustomer["balances"],
-	tier: PlanTier,
-): number | null {
-	const balance = balances[ENVIRONMENTS_FEATURE_ID];
-	if (!balance) return tier === "free" ? 0 : null;
-	return balance.unlimited ? null : balance.granted;
 }

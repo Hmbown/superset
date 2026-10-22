@@ -431,6 +431,10 @@ msgstr "{0} wordt al gebruikt voor taken in deze organisatie."
 msgid "{0} is not a repository the GitHub App is installed on"
 msgstr "{0} is geen repository waarop de GitHub App is geïnstalleerd"
 
+#. placeholder {0}: selected.name
+msgid "{0} is not running."
+msgstr "{0} is niet gestart."
+
 #. placeholder {0}: host.name
 msgid "{0} is offline"
 msgstr "{0} is offline"
@@ -697,6 +701,9 @@ msgstr "{actual} tot nu toe · ~{projected} verwacht"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "{agents}-sessies worden hervat wanneer je hun workspace opent."
 
+msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
+msgstr "{approvalCount, plural, one {# wacht op goedkeuring} other {# wachten op goedkeuring}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {# commit achter op main, rebase nodig} other {# commits achter op main, rebase nodig}}"
 
@@ -805,6 +812,9 @@ msgstr "{count, plural, one {# bron gebruikt} other {# bronnen gebruikt}}"
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {# tool gebruikt} other {# tools gebruikt}}"
+
+msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
+msgstr "{count, plural, one {wacht op # subagent} other {wacht op # subagents}}"
 
 msgid "{count} GitHub stars"
 msgstr "{count} GitHub-sterren"
@@ -975,6 +985,18 @@ msgstr "Bij {myFailedCount} van je automatiseringen is de laatste run mislukt"
 msgid "{name} accounts"
 msgstr "{name}-accounts"
 
+msgid "{name} asks"
+msgstr "{name} vraagt"
+
+msgid "{name} can't be messaged"
+msgstr "{name} kan geen berichten ontvangen"
+
+msgid "{name} failed"
+msgstr "{name} is mislukt"
+
+msgid "{name} finished"
+msgstr "{name} is klaar"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} is ingebouwd en kan niet worden verwijderd"
@@ -989,6 +1011,12 @@ msgstr "{name} is niet toegevoegd"
 
 msgid "{name} plugin"
 msgstr "Plug-in {name}"
+
+msgid "{name} started working"
+msgstr "{name} is begonnen"
+
+msgid "{name} stopped"
+msgstr "{name} is gestopt"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Geef minstens één persoon op, of kies {choice}.} sender {Geef minstens één afzender op, of kies {choice}.} other {Geef minstens één item op, of kies {choice}.}}"
@@ -1099,6 +1127,9 @@ msgstr "{selectedCount} geselecteerd"
 msgid "{share}% human"
 msgstr "{share}% mens"
 
+msgid "{shellCount, plural, one {# shell} other {# shells}}"
+msgstr "{shellCount, plural, one {# shell} other {# shells}}"
+
 msgid "{shown} of {total}"
 msgstr "{shown} van {total}"
 
@@ -1118,6 +1149,9 @@ msgstr "{started, plural, one {# automatisering gestart} other {# automatisering
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, one {# subagent actief} other {# subagents actief}}"
+
+msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
+msgstr "{subagentCount, plural, one {# subagent} other {# subagents}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {# werkruimte aangemaakt, {failCount} mislukt} other {# werkruimtes aangemaakt, {failCount} mislukt}}"
@@ -2915,14 +2949,8 @@ msgstr "Achtergrond"
 msgid "Background processes"
 msgstr "Achtergrondprocessen"
 
-msgid "Background task"
-msgstr "Achtergrondtaak"
-
 msgid "Background terminal memory"
 msgstr "Geheugen voor terminals op de achtergrond"
-
-msgid "Background work and pages"
-msgstr "Achtergrondwerk en pagina's"
 
 msgid "Backlog"
 msgstr "Backlog"
@@ -3056,6 +3084,9 @@ msgstr "Vet"
 
 msgid "Bold Text"
 msgstr "Vette tekst"
+
+msgid "Boot"
+msgstr "Opstarten"
 
 #. placeholder {0}: selected.name
 msgid "Booting {0}…"
@@ -4532,6 +4563,9 @@ msgstr "GitHub koppelen is niet ingesteld op deze server"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Verbinden laat je agents in {name} lezen en handelen namens jou. Controleer wat je verleent voordat je doorgaat."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Verbinden met {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Verbinden met het bureaublad…"
 
@@ -4822,6 +4856,9 @@ msgstr "Relatief pad kopiëren"
 msgid "Copy Relative Path"
 msgstr "Relatief pad kopiëren"
 
+msgid "Copy screenshot"
+msgstr "Screenshot kopiëren"
+
 msgid "Copy Selection"
 msgstr "Selectie kopiëren"
 
@@ -4997,6 +5034,9 @@ msgstr "Kan Foto's niet openen"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Kon {0} niet bereiken om branch \"{1}\" te zoeken. Controleer je verbinding en je toegang tot {2} en probeer het opnieuw."
 
+msgid "Could not reach {deviceName}."
+msgstr "{deviceName} is niet bereikbaar."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Kan geen mobiele simulator bereiken."
 
@@ -5169,6 +5209,9 @@ msgstr "Kan het pad niet kopiëren"
 msgid "Couldn't copy the image"
 msgstr "Afbeelding kopiëren mislukt"
 
+msgid "Couldn't copy the screenshot"
+msgstr "Screenshot kopiëren mislukt"
+
 msgid "Couldn't create workspace"
 msgstr "Kan werkruimte niet aanmaken"
 
@@ -5236,6 +5279,9 @@ msgstr "Kon niet markeren als klaar voor review"
 
 msgid "Couldn't merge pull request"
 msgstr "Kan pull request niet mergen"
+
+msgid "Couldn't move the subagent to the background"
+msgstr "Kan de subagent niet naar de achtergrond verplaatsen"
 
 msgid "Couldn't name \"{name}\" automatically"
 msgstr "Kon \"{name}\" niet automatisch een naam geven"
@@ -5347,6 +5393,9 @@ msgstr "Kan de achtergrondtaak niet stoppen"
 
 msgid "Couldn't stop the chat"
 msgstr "Kon de chat niet stoppen"
+
+msgid "Couldn't take a screenshot"
+msgstr "Screenshot maken mislukt"
 
 msgid "Couldn't unstage changes"
 msgstr "Kan wijzigingen niet unstagen"
@@ -7980,6 +8029,9 @@ msgstr "vanaf"
 msgid "From"
 msgstr "Van"
 
+msgid "from {parentName}"
+msgstr "van {parentName}"
+
 msgid "from {price}/user/mo"
 msgstr "vanaf {price}/gebruiker/mnd"
 
@@ -7988,6 +8040,9 @@ msgstr "Van hackathonproject tot de werkplek voor parallelle coding agents."
 
 msgid "From GitHub"
 msgstr "Van GitHub"
+
+msgid "from main agent"
+msgstr "van de hoofdagent"
 
 msgid "Front matter hidden — switch to Markdown to edit it"
 msgstr "Front matter verborgen — schakel over naar Markdown om die te bewerken"
@@ -10266,6 +10321,9 @@ msgstr "Bezig met mergen…"
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
+msgid "Message {name}…"
+msgstr "Bericht aan {name}…"
+
 msgid "Message in channel"
 msgstr "Bericht in kanaal"
 
@@ -10472,6 +10530,12 @@ msgstr "Het grootste deel van de softwaregeschiedenis"
 msgid "Move {count} to Group"
 msgstr "{count} naar groep verplaatsen"
 
+msgid "Move {name} to background"
+msgstr "{name} naar de achtergrond verplaatsen"
+
+msgid "Move to background"
+msgstr "Naar de achtergrond"
+
 msgid "Move to group"
 msgstr "Naar groep verplaatsen"
 
@@ -10572,6 +10636,9 @@ msgstr "Moet opnieuw worden geprobeerd"
 
 msgid "Needs Action"
 msgstr "Actie nodig"
+
+msgid "needs approval"
+msgstr "wacht op goedkeuring"
 
 msgid "Needs attention"
 msgstr "Vraagt aandacht"
@@ -14834,8 +14901,8 @@ msgstr "Bereik"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "De score start zodra het bord {0} dagen gebruik ziet."
 
-msgid "Screenshot"
-msgstr "Schermafbeelding"
+msgid "Screenshot copied"
+msgstr "Screenshot gekopieerd"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Screenshot naar klembord gekopieerd"
@@ -16442,8 +16509,8 @@ msgstr "{0} stoppen"
 msgid "Stop {label}"
 msgstr "{label} stoppen"
 
-msgid "Stop all agent background processes"
-msgstr "Alle achtergrondprocessen van agents stoppen"
+msgid "Stop {name}"
+msgstr "{name} stoppen"
 
 msgid "Stop dictation"
 msgstr "Dicteren stoppen"
@@ -17801,9 +17868,6 @@ msgstr "Dit verandert alleen de weergavenaam, niet de branch."
 msgid "this organization"
 msgstr "deze organisatie"
 
-msgid "This organization has used all {limit} of its environments. Archive one, or contact us to raise the limit"
-msgstr "Deze organisatie gebruikt al haar {limit} omgevingen. Archiveer er een, of neem contact met ons op om de limiet te verhogen"
-
 msgid "This organization is on the Free plan. Superset Mobile is available for organizations on Pro."
 msgstr "Deze organisatie zit op het Free-plan. Superset Mobile is beschikbaar voor organisaties met Pro."
 
@@ -17902,6 +17966,9 @@ msgstr "Deze slug is al bezet"
 
 msgid "This stops every Teams trigger in your organization and removes the notification subscriptions from your tenant. You can reconnect at any time."
 msgstr "Hiermee stoppen alle Teams-triggers in je organisatie en worden de meldingsabonnementen uit je tenant verwijderd. Je kunt op elk moment opnieuw verbinden."
+
+msgid "This subagent can't move to the background now"
+msgstr "Deze subagent kan nu niet naar de achtergrond"
 
 msgid "This subagent is no longer tracked by the host. Its transcript stays on disk under the agent's session directory."
 msgstr "Deze subagent wordt niet meer gevolgd door de host. Het transcript blijft op schijf in de sessiemap van de agent."
@@ -18029,6 +18096,9 @@ msgstr "Titel"
 
 msgid "To"
 msgstr "Naar"
+
+msgid "to {name}"
+msgstr "aan {name}"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Voer dit uit in de map om een agentgesprek te hervatten:"
@@ -18669,6 +18739,12 @@ msgstr "Werk Superset op deze machine bij om bestanden toe te voegen"
 
 msgid "update the branch prefix"
 msgstr "de branchprefix bijwerken"
+
+msgid "Update this host to message subagents"
+msgstr "Werk deze host bij om subagents berichten te sturen"
+
+msgid "Update this host to move subagents to the background"
+msgstr "Werk deze host bij om subagents naar de achtergrond te verplaatsen"
 
 msgid "Updated"
 msgstr "Bijgewerkt"
@@ -19844,6 +19920,10 @@ msgstr "Je naam <0>(als we je prompt gebruiken, vermelden we je in de changelog)
 
 msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
 msgstr "Je organisatie heeft haar limiet voor cloudgebruik bereikt. Verhoog de limiet of upgrade in Instellingen, Facturering om deze werkruimte te starten."
+
+#. placeholder {0}: params?.limit
+msgid "Your organization has reached its limit of {0} environments. Archive one, or upgrade in Settings, Billing to add more."
+msgstr "Je organisatie heeft haar limiet van {0} omgevingen bereikt. Archiveer er een of upgrade in Instellingen, Facturering om er meer toe te voegen."
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Je organisatie heeft haar limiet voor cloudgebruik bereikt. Deze werkruimte stopt over een paar minuten, tenzij de limiet wordt verhoogd."

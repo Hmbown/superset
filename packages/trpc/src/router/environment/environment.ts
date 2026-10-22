@@ -25,7 +25,10 @@ import {
 import { jwtProcedure, userError } from "../../trpc";
 import { loadVisibleWorkspace } from "../cloud-workspace/access";
 import { currentBundleSha } from "./current-bundle";
-import { assertEnvironmentCapacity } from "./environment-capacity";
+import {
+	assertEnvironmentCapacity,
+	assertEnvironmentCapacityLocked,
+} from "./limit";
 import { regionForRequest } from "./region-for-request";
 import { secretsRouter } from "./secrets";
 import { decryptSecret, encryptSecret } from "./secrets/utils/crypto";
@@ -249,6 +252,7 @@ export const environmentRouter = {
 		.mutation(async ({ ctx, input }) => {
 			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, input.organizationId);
+			const limit = await assertEnvironmentCapacity(input.organizationId);
 			if (
 				input.hooksRepositoryId &&
 				!input.repositoryIds.includes(input.hooksRepositoryId)
@@ -261,7 +265,7 @@ export const environmentRouter = {
 				});
 			}
 			const [row] = await dbWs.transaction(async (tx) => {
-				await assertEnvironmentCapacity(tx, input.organizationId);
+				await assertEnvironmentCapacityLocked(tx, input.organizationId, limit);
 				const bundleSha = await currentBundleSha();
 				return tx
 					.insert(environments)
@@ -379,11 +383,9 @@ export const environmentRouter = {
 								),
 							);
 
-			if (!target) {
-				await dbWs.transaction((tx) =>
-					assertEnvironmentCapacity(tx, workspace.organizationId),
-				);
-			}
+			const limit = target
+				? null
+				: await assertEnvironmentCapacity(workspace.organizationId);
 			const { claim } = await buildSandboxClaim({ row: workspace });
 			const golden = await promoteSandboxToEnvironment({
 				sourceSandbox: workspace.providerSandboxId,
@@ -402,8 +404,12 @@ export const environmentRouter = {
 			};
 			const row = await dbWs
 				.transaction(async (tx) => {
-					if (!target) {
-						await assertEnvironmentCapacity(tx, workspace.organizationId);
+					if (limit !== null) {
+						await assertEnvironmentCapacityLocked(
+							tx,
+							workspace.organizationId,
+							limit,
+						);
 					}
 					const [saved] = target
 						? await tx

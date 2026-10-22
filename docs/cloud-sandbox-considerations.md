@@ -178,10 +178,21 @@ reach every tool an agent runs; and it reaps the largest least-protected
 process when `MemAvailable` drops under 8% of the box, so the agent sees an
 exit 137 from its tool instead of the box dying. Boot also writes
 `SUPERSET_SANDBOX_MEMORY_MB` and `SUPERSET_SANDBOX_VCPUS` into every login
-shell from the cgroup, so a hook or an agent can size its work. Still open:
-swap (a small file with low swappiness would let modest overshoots finish;
-with memguard in place it is safe to try), and automatic resume of an agent
-whose own process was reaped while its terminal survived.
+shell from the cgroup, so a hook or an agent can size its work. **Swap is on demand
+(2026-10-22):** memguard adds 2 GB swapfiles under `/var/swap` when free memory
+drops below twice its reap floor, up to 1.5x the box (at least 6 GB, at most
+16 GB), at `vm.swappiness=10`, and drops the newest one after ten quiet
+minutes if RAM can take its pages back; the cgroup permits it
+(`memory.swap.max` is unbounded). A box that never needs swap holds none on
+disk, so no snapshot carries it. Measured on a 2/4 box: the host-service
+typecheck the kernel had killed at 3 GB finished in 22 s with 855 MB swapped;
+the `apps/desktop` typecheck, which needs about 8 GB in all, grew swap
+0 → 6 GB and finished in 86 s with host-service's health check never above
+47 ms, then swap shrank back to nothing. A GC keeps its hot set in RAM, so a
+swapped heap is slow, not a stall. Swap is never on without memguard: with a
+fixed 2 GB swapfile and no memguard, the desktop typecheck stalled
+host-service past 5 s and was killed by the kernel after 233 s. Still open: automatic resume of an agent whose own process was
+reaped while its terminal survived.
 
 ## Untested behaviour
 

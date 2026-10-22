@@ -307,6 +307,12 @@ export const serverErrorMessages: Record<
 					"The config repository must be one of the environment's repositories",
 			}),
 		),
+	"serverError.environment.limitReached": (params) =>
+		i18n._(
+			msg({
+				message: `Your organization has reached its limit of ${params?.limit} environments. Archive one, or upgrade in Settings, Billing to add more.`,
+			}),
+		),
 	"serverError.githubUser.notConfigured": () =>
 		i18n._(
 			msg({
@@ -327,14 +333,6 @@ export const serverErrorMessages: Record<
 					"This environment's repositories are fixed; promote a workspace again to change them",
 			}),
 		),
-	"serverError.environment.limitReached": (params) => {
-		const limit = params?.limit;
-		return i18n._(
-			msg({
-				message: `This organization has used all ${limit} of its environments. Archive one, or contact us to raise the limit`,
-			}),
-		);
-	},
 	"serverError.environment.couldNotRecord": () =>
 		i18n._(
 			msg({

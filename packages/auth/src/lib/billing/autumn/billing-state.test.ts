@@ -1,8 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import {
-	billingFromCustomer,
-	environmentLimitFromBalances,
-} from "./billing-state";
+import { billingFromCustomer } from "./billing-state";
 
 const NOW = Date.UTC(2026, 9, 13);
 const DAY = 24 * 60 * 60 * 1000;
@@ -158,31 +155,15 @@ describe("activePlan read from Autumn keeps the shape released clients read", ()
 	});
 });
 
-describe("environmentLimitFromBalances", () => {
-	type Balances = Parameters<typeof environmentLimitFromBalances>[0];
-	const balances = (environments: object) =>
-		({ environments }) as unknown as Balances;
-
-	test("a paid plan without the feature has no limit; free allows none", () => {
-		expect(environmentLimitFromBalances({} as Balances, "pro")).toBeNull();
-		expect(environmentLimitFromBalances({} as Balances, "free")).toBe(0);
+describe("environment limit", () => {
+	test("a free organization without an environments grant gets none", () => {
+		expect(billingFromCustomer(customer({}), NOW).environmentLimit).toBe(0);
 	});
 
-	test("the granted amount is the limit, including support grants", () => {
+	test("a paid plan without the feature leaves the limit to the default", () => {
 		expect(
-			environmentLimitFromBalances(
-				balances({ granted: 5, unlimited: false, usage: 0 }),
-				"pro",
-			),
-		).toBe(5);
-	});
-
-	test("an unlimited balance has no limit", () => {
-		expect(
-			environmentLimitFromBalances(
-				balances({ granted: 0, unlimited: true, usage: 0 }),
-				"enterprise",
-			),
+			billingFromCustomer(customer({ flags: pro, subscription: {} }), NOW)
+				.environmentLimit,
 		).toBeNull();
 	});
 });

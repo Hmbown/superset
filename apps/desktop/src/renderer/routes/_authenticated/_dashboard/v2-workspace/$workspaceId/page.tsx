@@ -538,6 +538,7 @@ function V2WorkspaceContent() {
 				case "review":
 				case "pages-list":
 				case "desktop":
+				case "mobile":
 					rightStore.getState().addTab({ panes: [{ kind, data: { kind } }] });
 					return;
 				case "diff":
@@ -675,7 +676,6 @@ function V2WorkspaceContent() {
 			linkedStores={linkedPaneStores}
 			isLayoutReady={isLayoutReady && isRightLayoutReady}
 			onOpenPage={openPagePane}
-			onOpenSubagent={openSubagentPane}
 			onCreateNewAgentSession={createNewAgentSession}
 			onFocusAgentTerminal={focusAgentTerminal}
 			changes={

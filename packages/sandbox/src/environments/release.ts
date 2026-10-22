@@ -161,15 +161,21 @@ if (SKIP_IMAGE) {
 }
 
 // 3. golden
+// The modules, not the `lib/sandbox` barrel: it also builds the billing and
+// email clients, whose secrets this job does not have.
 const {
 	deleteSandbox,
-	deriveSandboxCredentials,
 	provisionSandbox,
-	sandboxHostSecretFor,
 	stopAndSnapshot,
 	stripWorkspaceIdentity,
 	wakeSandbox,
-} = await import("@superset/trpc/lib/sandbox");
+} = await import("@superset/trpc/lib/sandbox/vercel");
+const { deriveSandboxCredentials } = await import(
+	"@superset/trpc/lib/sandbox/credentials"
+);
+const { sandboxHostSecretFor } = await import(
+	"@superset/trpc/lib/sandbox/access"
+);
 const { probeBox, checkWakeLog } = await import("./probe");
 
 const setupScript = readFileSync(

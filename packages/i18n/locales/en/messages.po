@@ -431,6 +431,10 @@ msgstr "{0} is already used for tasks in this organization."
 msgid "{0} is not a repository the GitHub App is installed on"
 msgstr "{0} is not a repository the GitHub App is installed on"
 
+#. placeholder {0}: selected.name
+msgid "{0} is not running."
+msgstr "{0} is not running."
+
 #. placeholder {0}: host.name
 msgid "{0} is offline"
 msgstr "{0} is offline"
@@ -697,6 +701,9 @@ msgstr "{actual} so far · ~{projected} projected"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "{agents} sessions resume when you open their workspace."
 
+msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
+msgstr "{approvalCount, plural, one {# needs approval} other {# need approval}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 
@@ -805,6 +812,9 @@ msgstr "{count, plural, one {Used # source} other {Used # sources}}"
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {used # tool} other {used # tools}}"
+
+msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
+msgstr "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
 
 msgid "{count} GitHub stars"
 msgstr "{count} GitHub stars"
@@ -975,6 +985,18 @@ msgstr "{myFailedCount} of your automations failed their last run"
 msgid "{name} accounts"
 msgstr "{name} accounts"
 
+msgid "{name} asks"
+msgstr "{name} asks"
+
+msgid "{name} can't be messaged"
+msgstr "{name} can't be messaged"
+
+msgid "{name} failed"
+msgstr "{name} failed"
+
+msgid "{name} finished"
+msgstr "{name} finished"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} is built in and cannot be removed"
@@ -989,6 +1011,12 @@ msgstr "{name} is not added"
 
 msgid "{name} plugin"
 msgstr "{name} plugin"
+
+msgid "{name} started working"
+msgstr "{name} started working"
+
+msgid "{name} stopped"
+msgstr "{name} stopped"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
@@ -1099,6 +1127,9 @@ msgstr "{selectedCount} selected"
 msgid "{share}% human"
 msgstr "{share}% human"
 
+msgid "{shellCount, plural, one {# shell} other {# shells}}"
+msgstr "{shellCount, plural, one {# shell} other {# shells}}"
+
 msgid "{shown} of {total}"
 msgstr "{shown} of {total}"
 
@@ -1118,6 +1149,9 @@ msgstr "{started, plural, one {Started # automation} other {Started # automation
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
+
+msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
+msgstr "{subagentCount, plural, one {# subagent} other {# subagents}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
@@ -2915,14 +2949,8 @@ msgstr "Background"
 msgid "Background processes"
 msgstr "Background processes"
 
-msgid "Background task"
-msgstr "Background task"
-
 msgid "Background terminal memory"
 msgstr "Background terminal memory"
-
-msgid "Background work and pages"
-msgstr "Background work and pages"
 
 msgid "Backlog"
 msgstr "Backlog"
@@ -3056,6 +3084,9 @@ msgstr "Bold"
 
 msgid "Bold Text"
 msgstr "Bold Text"
+
+msgid "Boot"
+msgstr "Boot"
 
 #. placeholder {0}: selected.name
 msgid "Booting {0}…"
@@ -4532,6 +4563,9 @@ msgstr "Connecting GitHub is not configured on this server"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Connecting to {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Connecting to the desktop…"
 
@@ -4822,6 +4856,9 @@ msgstr "Copy relative path"
 msgid "Copy Relative Path"
 msgstr "Copy Relative Path"
 
+msgid "Copy screenshot"
+msgstr "Copy screenshot"
+
 msgid "Copy Selection"
 msgstr "Copy Selection"
 
@@ -4997,6 +5034,9 @@ msgstr "Could not open Photos"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 
+msgid "Could not reach {deviceName}."
+msgstr "Could not reach {deviceName}."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Could not reach a mobile simulator."
 
@@ -5169,6 +5209,9 @@ msgstr "Couldn't copy path"
 msgid "Couldn't copy the image"
 msgstr "Couldn't copy the image"
 
+msgid "Couldn't copy the screenshot"
+msgstr "Couldn't copy the screenshot"
+
 msgid "Couldn't create workspace"
 msgstr "Couldn't create workspace"
 
@@ -5236,6 +5279,9 @@ msgstr "Couldn't mark ready for review"
 
 msgid "Couldn't merge pull request"
 msgstr "Couldn't merge pull request"
+
+msgid "Couldn't move the subagent to the background"
+msgstr "Couldn't move the subagent to the background"
 
 msgid "Couldn't name \"{name}\" automatically"
 msgstr "Couldn't name \"{name}\" automatically"
@@ -5347,6 +5393,9 @@ msgstr "Couldn't stop the background task"
 
 msgid "Couldn't stop the chat"
 msgstr "Couldn't stop the chat"
+
+msgid "Couldn't take a screenshot"
+msgstr "Couldn't take a screenshot"
 
 msgid "Couldn't unstage changes"
 msgstr "Couldn't unstage changes"
@@ -7980,6 +8029,9 @@ msgstr "from"
 msgid "From"
 msgstr "From"
 
+msgid "from {parentName}"
+msgstr "from {parentName}"
+
 msgid "from {price}/user/mo"
 msgstr "from {price}/user/mo"
 
@@ -7988,6 +8040,9 @@ msgstr "From a hackathon project to the workspace for parallel coding agents."
 
 msgid "From GitHub"
 msgstr "From GitHub"
+
+msgid "from main agent"
+msgstr "from main agent"
 
 msgid "Front matter hidden — switch to Markdown to edit it"
 msgstr "Front matter hidden — switch to Markdown to edit it"
@@ -10266,6 +10321,9 @@ msgstr "Merging…"
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
+msgid "Message {name}…"
+msgstr "Message {name}…"
+
 msgid "Message in channel"
 msgstr "Message in channel"
 
@@ -10472,6 +10530,12 @@ msgstr "Most of software history"
 msgid "Move {count} to Group"
 msgstr "Move {count} to Group"
 
+msgid "Move {name} to background"
+msgstr "Move {name} to background"
+
+msgid "Move to background"
+msgstr "Move to background"
+
 msgid "Move to group"
 msgstr "Move to group"
 
@@ -10572,6 +10636,9 @@ msgstr "Needs a retry"
 
 msgid "Needs Action"
 msgstr "Needs Action"
+
+msgid "needs approval"
+msgstr "needs approval"
 
 msgid "Needs attention"
 msgstr "Needs attention"
@@ -14834,8 +14901,8 @@ msgstr "Scope"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "Scoring starts once the board can see {0} days of usage."
 
-msgid "Screenshot"
-msgstr "Screenshot"
+msgid "Screenshot copied"
+msgstr "Screenshot copied"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Screenshot copied to clipboard"
@@ -16442,8 +16509,8 @@ msgstr "Stop {0}"
 msgid "Stop {label}"
 msgstr "Stop {label}"
 
-msgid "Stop all agent background processes"
-msgstr "Stop all agent background processes"
+msgid "Stop {name}"
+msgstr "Stop {name}"
 
 msgid "Stop dictation"
 msgstr "Stop dictation"
@@ -17801,9 +17868,6 @@ msgstr "This only changes the display name, not the branch."
 msgid "this organization"
 msgstr "this organization"
 
-msgid "This organization has used all {limit} of its environments. Archive one, or contact us to raise the limit"
-msgstr "This organization has used all {limit} of its environments. Archive one, or contact us to raise the limit"
-
 msgid "This organization is on the Free plan. Superset Mobile is available for organizations on Pro."
 msgstr "This organization is on the Free plan. Superset Mobile is available for organizations on Pro."
 
@@ -17902,6 +17966,9 @@ msgstr "This slug is already taken"
 
 msgid "This stops every Teams trigger in your organization and removes the notification subscriptions from your tenant. You can reconnect at any time."
 msgstr "This stops every Teams trigger in your organization and removes the notification subscriptions from your tenant. You can reconnect at any time."
+
+msgid "This subagent can't move to the background now"
+msgstr "This subagent can't move to the background now"
 
 msgid "This subagent is no longer tracked by the host. Its transcript stays on disk under the agent's session directory."
 msgstr "This subagent is no longer tracked by the host. Its transcript stays on disk under the agent's session directory."
@@ -18029,6 +18096,9 @@ msgstr "Title"
 
 msgid "To"
 msgstr "To"
+
+msgid "to {name}"
+msgstr "to {name}"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "To resume an agent conversation, run this in its folder:"
@@ -18669,6 +18739,12 @@ msgstr "Update Superset on this machine to attach files"
 
 msgid "update the branch prefix"
 msgstr "update the branch prefix"
+
+msgid "Update this host to message subagents"
+msgstr "Update this host to message subagents"
+
+msgid "Update this host to move subagents to the background"
+msgstr "Update this host to move subagents to the background"
 
 msgid "Updated"
 msgstr "Updated"
@@ -19844,6 +19920,10 @@ msgstr "Your name <0>(if we use your prompt, we'll credit you in the changelog)<
 
 msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
 msgstr "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
+
+#. placeholder {0}: params?.limit
+msgid "Your organization has reached its limit of {0} environments. Archive one, or upgrade in Settings, Billing to add more."
+msgstr "Your organization has reached its limit of {0} environments. Archive one, or upgrade in Settings, Billing to add more."
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."

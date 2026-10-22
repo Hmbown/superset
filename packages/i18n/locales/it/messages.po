@@ -431,6 +431,10 @@ msgstr "{0} è già usato per le attività in questa organizzazione."
 msgid "{0} is not a repository the GitHub App is installed on"
 msgstr "{0} non è un repository in cui è installata la GitHub App"
 
+#. placeholder {0}: selected.name
+msgid "{0} is not running."
+msgstr "{0} non è in esecuzione."
+
 #. placeholder {0}: host.name
 msgid "{0} is offline"
 msgstr "{0} è offline"
@@ -697,6 +701,9 @@ msgstr "{actual} finora · ~{projected} previste"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "Le sessioni di {agents} riprendono quando apri il loro workspace."
 
+msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
+msgstr "{approvalCount, plural, one {# richiede approvazione} other {# richiedono approvazione}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Indietro di # commit rispetto a main, serve un rebase} other {Indietro di # commit rispetto a main, serve un rebase}}"
 
@@ -805,6 +812,9 @@ msgstr "{count, plural, one {Usata # fonte} other {Usate # fonti}}"
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {usato # strumento} other {usati # strumenti}}"
+
+msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
+msgstr "{count, plural, one {in attesa di # sottoagente} other {in attesa di # sottoagenti}}"
 
 msgid "{count} GitHub stars"
 msgstr "{count} star su GitHub"
@@ -975,6 +985,18 @@ msgstr "Tue automazioni con l'ultima esecuzione non riuscita: {myFailedCount}"
 msgid "{name} accounts"
 msgstr "Account {name}"
 
+msgid "{name} asks"
+msgstr "{name} chiede"
+
+msgid "{name} can't be messaged"
+msgstr "Impossibile inviare messaggi a {name}"
+
+msgid "{name} failed"
+msgstr "{name} non è riuscito"
+
+msgid "{name} finished"
+msgstr "{name} ha finito"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} è integrato e non può essere rimosso"
@@ -989,6 +1011,12 @@ msgstr "{name} non è aggiunto"
 
 msgid "{name} plugin"
 msgstr "Plugin {name}"
+
+msgid "{name} started working"
+msgstr "{name} ha iniziato a lavorare"
+
+msgid "{name} stopped"
+msgstr "{name} è stato interrotto"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Specifica almeno una persona, oppure scegli {choice}.} sender {Specifica almeno un mittente, oppure scegli {choice}.} other {Specifica almeno una voce, oppure scegli {choice}.}}"
@@ -1099,6 +1127,9 @@ msgstr "{selectedCount} selezionati"
 msgid "{share}% human"
 msgstr "{share}% umano"
 
+msgid "{shellCount, plural, one {# shell} other {# shells}}"
+msgstr "{shellCount, plural, one {# shell} other {# shell}}"
+
 msgid "{shown} of {total}"
 msgstr "{shown} di {total}"
 
@@ -1118,6 +1149,9 @@ msgstr "{started, plural, one {# automazione avviata} other {# automazioni avvia
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, one {# sottoagente in esecuzione} other {# sottoagenti in esecuzione}}"
+
+msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
+msgstr "{subagentCount, plural, one {# sottoagente} other {# sottoagenti}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {Creato # workspace, {failCount} non riusciti} other {Creati # workspace, {failCount} non riusciti}}"
@@ -2915,14 +2949,8 @@ msgstr "Sfondo"
 msgid "Background processes"
 msgstr "Processi in background"
 
-msgid "Background task"
-msgstr "Attività in background"
-
 msgid "Background terminal memory"
 msgstr "Memoria dei terminali in background"
-
-msgid "Background work and pages"
-msgstr "Attività in background e pagine"
 
 msgid "Backlog"
 msgstr "Backlog"
@@ -3056,6 +3084,9 @@ msgstr "Grassetto"
 
 msgid "Bold Text"
 msgstr "Testo in grassetto"
+
+msgid "Boot"
+msgstr "Avvia"
 
 #. placeholder {0}: selected.name
 msgid "Booting {0}…"
@@ -4532,6 +4563,9 @@ msgstr "La connessione a GitHub non è configurata su questo server"
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Collegandolo, i tuoi agenti potranno leggere e agire in {name} per tuo conto. Controlla cosa stai concedendo prima di continuare."
 
+msgid "Connecting to {deviceName}…"
+msgstr "Connessione a {deviceName}…"
+
 msgid "Connecting to the desktop…"
 msgstr "Connessione al desktop…"
 
@@ -4822,6 +4856,9 @@ msgstr "Copia il percorso relativo"
 msgid "Copy Relative Path"
 msgstr "Copia il percorso relativo"
 
+msgid "Copy screenshot"
+msgstr "Copia screenshot"
+
 msgid "Copy Selection"
 msgstr "Copia la selezione"
 
@@ -4997,6 +5034,9 @@ msgstr "Impossibile aprire Foto"
 msgid "Could not reach {0} to look for branch \"{1}\". Check your connection and access to {2}, then try again."
 msgstr "Impossibile raggiungere {0} per cercare il branch \"{1}\". Controlla la connessione e l'accesso a {2}, poi riprova."
 
+msgid "Could not reach {deviceName}."
+msgstr "Impossibile raggiungere {deviceName}."
+
 msgid "Could not reach a mobile simulator."
 msgstr "Impossibile raggiungere un simulatore mobile."
 
@@ -5169,6 +5209,9 @@ msgstr "Impossibile copiare il percorso"
 msgid "Couldn't copy the image"
 msgstr "Impossibile copiare l’immagine"
 
+msgid "Couldn't copy the screenshot"
+msgstr "Impossibile copiare lo screenshot"
+
 msgid "Couldn't create workspace"
 msgstr "Impossibile creare il workspace"
 
@@ -5236,6 +5279,9 @@ msgstr "Impossibile contrassegnare come pronta per la revisione"
 
 msgid "Couldn't merge pull request"
 msgstr "Impossibile unire la pull request"
+
+msgid "Couldn't move the subagent to the background"
+msgstr "Impossibile spostare il sottoagente in background"
 
 msgid "Couldn't name \"{name}\" automatically"
 msgstr "Impossibile assegnare automaticamente un nome a \"{name}\""
@@ -5347,6 +5393,9 @@ msgstr "Impossibile interrompere l'attività in background"
 
 msgid "Couldn't stop the chat"
 msgstr "Non è stato possibile arrestare la chat"
+
+msgid "Couldn't take a screenshot"
+msgstr "Impossibile acquisire lo screenshot"
 
 msgid "Couldn't unstage changes"
 msgstr "Impossibile togliere le modifiche dallo stage"
@@ -7980,6 +8029,9 @@ msgstr "da"
 msgid "From"
 msgstr "Da"
 
+msgid "from {parentName}"
+msgstr "da {parentName}"
+
 msgid "from {price}/user/mo"
 msgstr "da {price}/utente/mese"
 
@@ -7988,6 +8040,9 @@ msgstr "Da progetto di hackathon allo spazio di lavoro per agenti di codice in p
 
 msgid "From GitHub"
 msgstr "Da GitHub"
+
+msgid "from main agent"
+msgstr "dall'agente principale"
 
 msgid "Front matter hidden — switch to Markdown to edit it"
 msgstr "Front matter nascosto — passa a Markdown per modificarlo"
@@ -10266,6 +10321,9 @@ msgstr "Unione in corso…"
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
+msgid "Message {name}…"
+msgstr "Messaggio per {name}…"
+
 msgid "Message in channel"
 msgstr "Messaggio in un canale"
 
@@ -10472,6 +10530,12 @@ msgstr "Quasi tutta la storia del software"
 msgid "Move {count} to Group"
 msgstr "Sposta {count} in un gruppo"
 
+msgid "Move {name} to background"
+msgstr "Sposta {name} in background"
+
+msgid "Move to background"
+msgstr "Sposta in background"
+
 msgid "Move to group"
 msgstr "Sposta in un gruppo"
 
@@ -10572,6 +10636,9 @@ msgstr "Da riprovare"
 
 msgid "Needs Action"
 msgstr "Richiede un'azione"
+
+msgid "needs approval"
+msgstr "richiede approvazione"
 
 msgid "Needs attention"
 msgstr "Richiede attenzione"
@@ -14834,8 +14901,8 @@ msgstr "Ambito"
 msgid "Scoring starts once the board can see {0} days of usage."
 msgstr "Il punteggio parte quando la classifica dispone di {0} giorni di utilizzo."
 
-msgid "Screenshot"
-msgstr "Screenshot"
+msgid "Screenshot copied"
+msgstr "Screenshot copiato"
 
 msgid "Screenshot copied to clipboard"
 msgstr "Screenshot copiato negli appunti"
@@ -16442,8 +16509,8 @@ msgstr "Ferma {0}"
 msgid "Stop {label}"
 msgstr "Interrompi {label}"
 
-msgid "Stop all agent background processes"
-msgstr "Interrompi tutti i processi in background degli agenti"
+msgid "Stop {name}"
+msgstr "Interrompi {name}"
 
 msgid "Stop dictation"
 msgstr "Interrompi la dettatura"
@@ -17801,9 +17868,6 @@ msgstr "Questo cambia solo il nome visualizzato, non il branch."
 msgid "this organization"
 msgstr "questa organizzazione"
 
-msgid "This organization has used all {limit} of its environments. Archive one, or contact us to raise the limit"
-msgstr "Questa organizzazione usa già tutti i suoi {limit} ambienti. Archiviane uno o contattaci per aumentare il limite"
-
 msgid "This organization is on the Free plan. Superset Mobile is available for organizations on Pro."
 msgstr "Questa organizzazione è sul piano Free. Superset Mobile è disponibile per le organizzazioni con piano Pro."
 
@@ -17902,6 +17966,9 @@ msgstr "Questo slug è già in uso"
 
 msgid "This stops every Teams trigger in your organization and removes the notification subscriptions from your tenant. You can reconnect at any time."
 msgstr "Questo ferma tutti i trigger di Teams nella tua organizzazione e rimuove le sottoscrizioni alle notifiche dal tuo tenant. Puoi ricollegarti in qualsiasi momento."
+
+msgid "This subagent can't move to the background now"
+msgstr "Questo sottoagente non può essere spostato in background ora"
 
 msgid "This subagent is no longer tracked by the host. Its transcript stays on disk under the agent's session directory."
 msgstr "Questo sottoagente non è più tracciato dall'host. La sua trascrizione resta su disco nella directory di sessione dell'agente."
@@ -18029,6 +18096,9 @@ msgstr "Titolo"
 
 msgid "To"
 msgstr "A"
+
+msgid "to {name}"
+msgstr "a {name}"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Per riprendere una conversazione con un agente, esegui questo nella sua cartella:"
@@ -18669,6 +18739,12 @@ msgstr "Aggiorna Superset su questa macchina per allegare file"
 
 msgid "update the branch prefix"
 msgstr "aggiornare il prefisso dei branch"
+
+msgid "Update this host to message subagents"
+msgstr "Aggiorna questo host per inviare messaggi ai sottoagenti"
+
+msgid "Update this host to move subagents to the background"
+msgstr "Aggiorna questo host per spostare i sottoagenti in background"
 
 msgid "Updated"
 msgstr "Aggiornato"
@@ -19844,6 +19920,10 @@ msgstr "Il tuo nome <0>(se usiamo il tuo prompt, ti citeremo nel changelog)</0>"
 
 msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
 msgstr "La tua organizzazione ha raggiunto il limite di utilizzo del cloud. Aumenta il limite o passa a un piano superiore in Impostazioni, Fatturazione per avviare questo workspace."
+
+#. placeholder {0}: params?.limit
+msgid "Your organization has reached its limit of {0} environments. Archive one, or upgrade in Settings, Billing to add more."
+msgstr "La tua organizzazione ha raggiunto il limite di {0} ambienti. Archiviane uno o passa a un piano superiore in Impostazioni, Fatturazione per aggiungerne altri."
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "La tua organizzazione ha raggiunto il limite di utilizzo del cloud. Questo workspace si fermerà tra pochi minuti se il limite non viene aumentato."

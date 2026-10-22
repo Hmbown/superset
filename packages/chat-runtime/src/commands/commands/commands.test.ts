@@ -1,10 +1,11 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, spyOn, test } from "bun:test";
 import { randomUUID } from "node:crypto";
 import { deriveTimeline, emptySnapshot, reduceMany } from "@superset/chat/core";
 import { type UserMessage, wrapHiddenText } from "@superset/chat/protocol";
 import type { FakeHarnessScript } from "../../harness/fake";
 import { FakeHarness } from "../../harness/fake";
 import type { ChatRuntime } from "../../index";
+import { SubagentItems } from "../../stream";
 import { agentMessage, turn, userMessage } from "../../testing/fixtures";
 import { createTestRuntime } from "../../testing/testRuntime";
 import {
@@ -63,6 +64,19 @@ describe("chat commands", () => {
 
 		expect(scopes).toEqual(["workspace-2"]);
 		await runtime.dispose();
+	});
+
+	test("closing a session drops its cached subagent tree", async () => {
+		const forget = spyOn(SubagentItems.prototype, "forget");
+		try {
+			const { runtime } = newRuntime();
+			const created = createSession(runtime);
+			await runtime.commands.closeSession({ sessionId: created.sessionId });
+			expect(forget).toHaveBeenCalledWith(created.sessionId);
+			await runtime.dispose();
+		} finally {
+			forget.mockRestore();
+		}
 	});
 
 	test("createSession opens a journal and starts the harness", async () => {
@@ -592,6 +606,81 @@ describe("chat commands", () => {
 		});
 
 		expect(cuts).toEqual([]);
+		await runtime.dispose();
+	});
+
+	test("rewindSession forks at the main agent's message, not a subagent's", async () => {
+		const cuts: (string | undefined)[] = [];
+		class CuttingHarness extends FakeHarness {
+			async fork(cut?: { upToMessageId: string }) {
+				cuts.push(cut?.upToMessageId);
+				return "agent-forked";
+			}
+		}
+		const runtime = createTestRuntime({
+			harnesses: new Map([
+				[
+					FAKE_HARNESS,
+					() =>
+						new CuttingHarness({
+							turns: [
+								[
+									{ kind: "turn", turn: turn("t9") },
+									{
+										kind: "turn",
+										turn: turn("t9", { status: "completed" }),
+									},
+									{ kind: "session", session: { status: "idle" } },
+								],
+							],
+						}),
+				],
+			]),
+		});
+		const { sessionId } = createSession(runtime);
+		runtime.live.require(sessionId).seed([
+			{ type: "turn", turn: turn("t1") },
+			{ type: "item", item: userMessage("u1", "first"), turnId: "t1" },
+			{
+				type: "item",
+				item: { ...agentMessage("a1", "working"), agentMessageId: "msg_1" },
+				turnId: "t1",
+			},
+			{
+				type: "item",
+				item: {
+					...agentMessage("sub:child:a1", "child reply"),
+					parentItemId: "subagent:child",
+					agentMessageId: "child_msg_1",
+				},
+				turnId: "t1",
+			},
+			{
+				type: "turn",
+				turn: turn("t1", { status: "completed", completedAtMs: 2 }),
+			},
+			{ type: "turn", turn: turn("t2", { startedAtMs: 3 }) },
+			{ type: "item", item: userMessage("u2", "second"), turnId: "t2" },
+			{
+				type: "turn",
+				turn: turn("t2", {
+					status: "completed",
+					startedAtMs: 3,
+					completedAtMs: 4,
+				}),
+			},
+		]);
+
+		await runtime.commands.rewindSession({
+			commandId: randomUUID(),
+			sessionId,
+			itemId: "u2",
+			prompt: "second, edited",
+			handoffPrompt: "earlier conversation",
+			cwd: "/tmp/workspace",
+		});
+
+		expect(cuts).toEqual(["msg_1"]);
 		await runtime.dispose();
 	});
 

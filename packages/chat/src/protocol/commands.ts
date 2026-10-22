@@ -60,6 +60,21 @@ export type StopBackgroundTaskInput = z.infer<
 	typeof stopBackgroundTaskInputSchema
 >;
 
+export const steerSubagentInputSchema = z.object({
+	...commandBaseFields,
+	taskId: z.string().min(1),
+	content: z.array(userContentSchema).min(1),
+});
+export type SteerSubagentInput = z.infer<typeof steerSubagentInputSchema>;
+
+export const backgroundSubagentInputSchema = z.object({
+	...commandBaseFields,
+	taskId: z.string().min(1),
+});
+export type BackgroundSubagentInput = z.infer<
+	typeof backgroundSubagentInputSchema
+>;
+
 export const respondToApprovalInputSchema = z.object({
 	...commandBaseFields,
 	approvalId: z.string().min(1),
@@ -165,16 +180,19 @@ export const getItemsInputSchema = z.object({
 	sessionId: z.string().min(1),
 	before: cursorSchema.optional(),
 	limit: z.number().int().positive().max(500).default(200),
+	nestedSubagents: z.boolean().optional(),
 });
 export type GetItemsInput = z.infer<typeof getItemsInputSchema>;
 
 export const getOutlineInputSchema = z.object({
 	sessionId: z.string().min(1),
+	nestedSubagents: z.boolean().optional(),
 });
 export type GetOutlineInput = z.infer<typeof getOutlineInputSchema>;
 
 export const getItemBodiesInputSchema = z.object({
 	sessionId: z.string().min(1),
 	itemIds: z.array(z.string().min(1)).min(1).max(100),
+	nestedSubagents: z.boolean().optional(),
 });
 export type GetItemBodiesInput = z.infer<typeof getItemBodiesInputSchema>;

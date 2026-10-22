@@ -9,8 +9,9 @@ import { and, desc, eq, inArray } from "drizzle-orm";
 import type Stripe from "stripe";
 import { z } from "zod";
 import { env } from "../../env";
+import { organizationEnvironmentLimit } from "../../lib/billing/plan";
 import { protectedProcedure, userError } from "../../trpc";
-import { countActiveEnvironments } from "../environment/environment-capacity";
+import { countEnvironments } from "../environment/limit";
 
 function subtractMonthsClamped(date: Date, months: number) {
 	const result = new Date(date);
@@ -212,12 +213,15 @@ export const billingRouter = {
 	environmentUsage: protectedProcedure.query(
 		async ({ ctx }): Promise<{ used: number; limit: number | null } | null> => {
 			const activeOrgId = ctx.activeOrganizationId;
-			if (!billingUsesAutumn || !activeOrgId) return null;
-			const [billing, used] = await Promise.all([
-				organizationBilling(activeOrgId),
-				countActiveEnvironments(db, activeOrgId),
+			if (!activeOrgId) return null;
+			const [limit, used] = await Promise.all([
+				organizationEnvironmentLimit(activeOrgId),
+				countEnvironments(activeOrgId),
 			]);
-			return { used, limit: billing.environmentLimit ?? null };
+			return {
+				used,
+				limit: limit === Number.POSITIVE_INFINITY ? null : limit,
+			};
 		},
 	),
 
