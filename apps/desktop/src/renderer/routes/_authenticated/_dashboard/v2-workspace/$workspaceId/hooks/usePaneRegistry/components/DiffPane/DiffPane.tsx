@@ -31,6 +31,7 @@ import { DiffFileHeaderName } from "renderer/screens/main/components/DiffFileHea
 import { DiffViewToolbar } from "renderer/screens/main/components/DiffViewToolbar";
 import { MarkdownSearch } from "renderer/screens/main/components/WorkspaceView/ContentView/TabsContent/TabView/FileViewerPane/components/MarkdownSearch";
 import { toAbsoluteWorkspacePath } from "shared/absolute-paths";
+import { useRightPaneLinkTarget } from "../../../../providers/RightPaneLinkTargetProvider";
 import type { DiffPaneData, PaneViewerData } from "../../../../types";
 import {
 	type ChangesetFile,
@@ -45,6 +46,7 @@ import { BinaryDiffPreview } from "./components/BinaryDiffPreview";
 import { CommentThread } from "./components/CommentThread";
 import { DeferredDiffPlaceholder } from "./components/DeferredDiffPlaceholder";
 import { DiffHeaderMetadata } from "./components/DiffHeaderMetadata";
+import { DiffPaneFileList } from "./components/DiffPaneFileList";
 import { DiffSectionLabel } from "./components/DiffSectionLabel";
 import { useDiffActiveSection } from "./hooks/useDiffActiveSection";
 import {
@@ -100,6 +102,9 @@ export function DiffPane({
 	const data = context.pane.data as DiffPaneData;
 	const codeViewRef = useRef<CodeViewHandle<DiffAnnotationMetadata>>(null);
 	const searchContainerRef = useRef<HTMLDivElement>(null);
+
+	const showFileList = useRightPaneLinkTarget() !== null;
+	const [rowElement, setRowElement] = useState<HTMLDivElement | null>(null);
 
 	const ref = useSidebarDiffRef(workspaceId);
 	const scrollStateKey = useMemo(
@@ -777,69 +782,79 @@ export function DiffPane({
 	);
 
 	return (
-		<div className="flex h-full min-h-0 w-full min-w-0 flex-col">
-			<DiffViewToolbar
-				areAllFilesCollapsed={areAllFilesCollapsed}
-				onToggleCollapseAll={handleToggleCollapseAll}
-				commentNav={{
-					focusedIndex: commentNav.focusedThreadIndex,
-					total: commentNav.orderedThreads.length,
-					onPrev: commentNav.goToPrevComment,
-					onNext: commentNav.goToNextComment,
-				}}
-			>
-				{currentSection ? (
-					<DiffSectionLabel
-						kind={currentSection.kind}
-						count={currentSection.count}
-					/>
-				) : null}
-			</DiffViewToolbar>
-			{files.length === 0 ? (
-				// The toolbar stays up while the current filter yields nothing;
-				// the sidebar's Changes tab holds the filter/branch controls.
-				<div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">
-					{isLoading
-						? t({ message: "Loading…" })
-						: t({
-								message: "No changes",
-							})}
-				</div>
-			) : (
-				<div
-					ref={searchContainerRef}
-					className="relative min-h-0 w-full flex-1"
-					onKeyDownCapture={handleEditorKeyDownCapture}
-				>
-					<MarkdownSearch
-						isOpen={search.isSearchOpen}
-						query={search.query}
-						caseSensitive={search.caseSensitive}
-						matchCount={search.matchCount}
-						activeMatchIndex={search.activeMatchIndex}
-						onQueryChange={search.setQuery}
-						onCaseSensitiveChange={search.setCaseSensitive}
-						onFindNext={search.findNext}
-						onFindPrevious={search.findPrevious}
-						onClose={search.closeSearch}
-					/>
-					<EditProvider<DiffAnnotationMetadata> createEditor={createEditor}>
-						<CodeView<DiffAnnotationMetadata>
-							ref={codeViewRef}
-							className="h-full w-full overflow-y-auto overflow-x-clip overscroll-contain px-3 [overflow-anchor:none]"
-							style={style}
-							items={items}
-							options={codeViewOptions}
-							onScroll={handleScroll}
-							renderHeaderPrefix={renderHeaderPrefix}
-							renderHeaderFilenameSuffix={renderHeaderFilenameSuffix}
-							renderHeaderMetadata={renderHeaderMetadata}
-							renderAnnotation={renderAnnotation}
-							onItemEditChange={handleItemEditChange}
-						/>
-					</EditProvider>
-				</div>
+		<div ref={setRowElement} className="flex h-full min-h-0 w-full min-w-0">
+			{showFileList && (
+				<DiffPaneFileList
+					context={context}
+					container={rowElement}
+					workspaceId={workspaceId}
+					onOpenFile={onOpenFile}
+				/>
 			)}
+			<div className="flex h-full min-h-0 min-w-0 flex-1 flex-col">
+				<DiffViewToolbar
+					areAllFilesCollapsed={areAllFilesCollapsed}
+					onToggleCollapseAll={handleToggleCollapseAll}
+					commentNav={{
+						focusedIndex: commentNav.focusedThreadIndex,
+						total: commentNav.orderedThreads.length,
+						onPrev: commentNav.goToPrevComment,
+						onNext: commentNav.goToNextComment,
+					}}
+				>
+					{currentSection ? (
+						<DiffSectionLabel
+							kind={currentSection.kind}
+							count={currentSection.count}
+						/>
+					) : null}
+				</DiffViewToolbar>
+				{files.length === 0 ? (
+					// The toolbar stays up while the current filter yields nothing;
+					// the sidebar's Changes tab holds the filter/branch controls.
+					<div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">
+						{isLoading
+							? t({ message: "Loading…" })
+							: t({
+									message: "No changes",
+								})}
+					</div>
+				) : (
+					<div
+						ref={searchContainerRef}
+						className="relative min-h-0 w-full flex-1"
+						onKeyDownCapture={handleEditorKeyDownCapture}
+					>
+						<MarkdownSearch
+							isOpen={search.isSearchOpen}
+							query={search.query}
+							caseSensitive={search.caseSensitive}
+							matchCount={search.matchCount}
+							activeMatchIndex={search.activeMatchIndex}
+							onQueryChange={search.setQuery}
+							onCaseSensitiveChange={search.setCaseSensitive}
+							onFindNext={search.findNext}
+							onFindPrevious={search.findPrevious}
+							onClose={search.closeSearch}
+						/>
+						<EditProvider<DiffAnnotationMetadata> createEditor={createEditor}>
+							<CodeView<DiffAnnotationMetadata>
+								ref={codeViewRef}
+								className="h-full w-full overflow-y-auto overflow-x-clip overscroll-contain px-3 [overflow-anchor:none]"
+								style={style}
+								items={items}
+								options={codeViewOptions}
+								onScroll={handleScroll}
+								renderHeaderPrefix={renderHeaderPrefix}
+								renderHeaderFilenameSuffix={renderHeaderFilenameSuffix}
+								renderHeaderMetadata={renderHeaderMetadata}
+								renderAnnotation={renderAnnotation}
+								onItemEditChange={handleItemEditChange}
+							/>
+						</EditProvider>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }
