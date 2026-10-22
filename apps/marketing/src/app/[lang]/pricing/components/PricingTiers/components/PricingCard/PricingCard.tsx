@@ -6,7 +6,7 @@ import { Check } from "lucide-react";
 import { DownloadLink } from "@/app/[lang]/components/DownloadLink";
 import { TrackedLink } from "@/app/[lang]/components/TrackedLink";
 import { env } from "@/env";
-import type { PricingTier } from "../../../../constants";
+import { BETA, type PricingTier } from "../../../../constants";
 import { checkoutHref } from "../../../../utils/checkoutHref";
 import { seatPrice } from "../../../../utils/planDisplay";
 import {
@@ -139,6 +139,11 @@ export function PricingCard({
 							<Check className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
 							<span>
 								{i18n._({ ...feature.label, values: featureValues(set) })}
+								{feature.beta && (
+									<span className="ml-2 rounded-sm bg-accent/40 px-1.5 py-0.5 align-middle text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+										{t(BETA)}
+									</span>
+								)}
 							</span>
 						</li>
 					))}

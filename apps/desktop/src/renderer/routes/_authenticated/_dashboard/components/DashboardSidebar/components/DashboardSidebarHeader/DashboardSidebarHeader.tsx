@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { FEATURE_FLAGS } from "@superset/shared/constants";
+import { Badge } from "@superset/ui/badge";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -766,6 +767,12 @@ export function DashboardSidebarHeader({
 					<span className="flex-1 text-left">
 						<Trans>Cloud workspaces</Trans>
 					</span>
+					<Badge
+						variant="secondary"
+						className="px-1.5 py-0 text-[10px] font-medium"
+					>
+						<Trans>Beta</Trans>
+					</Badge>
 				</button>
 			)}
 

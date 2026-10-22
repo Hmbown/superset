@@ -193,6 +193,7 @@ const COMPARISON_SECTIONS: ComparisonSection[] = [
 				}),
 				values: [null, null, msg({ message: "Custom" })],
 				cloudGbHours: true,
+				badge: { label: msg({ message: "Beta" }), variant: "secondary" },
 			},
 			{
 				label: msg({
@@ -200,6 +201,7 @@ const COMPARISON_SECTIONS: ComparisonSection[] = [
 				}),
 				values: [null, null, msg({ message: "Custom" })],
 				cloudPack: true,
+				badge: { label: msg({ message: "Beta" }), variant: "secondary" },
 			},
 		],
 	},

@@ -7,7 +7,10 @@ export interface PricingFeature {
 	id: string;
 	label: MessageDescriptor;
 	needs?: "gbHours" | "multiple" | "pack";
+	beta?: boolean;
 }
+
+export const BETA = msg({ message: "Beta" });
 
 export interface PricingTier {
 	id: string;
@@ -183,11 +186,13 @@ const BASE_FEATURES: PricingFeature[] = [
 			message: "{gbHours} cloud GB-hours per seat each month",
 		}),
 		needs: "gbHours",
+		beta: true,
 	},
 	{
 		id: "gbHourPacks",
 		label: msg({ message: "Extra GB-hours: {pack}, never expire" }),
 		needs: "pack",
+		beta: true,
 	},
 	{
 		id: "unlimitedUsers",
@@ -236,6 +241,7 @@ const STEP_UP_FEATURES: PricingFeature[] = [
 		id: "cloudHours",
 		label: msg({ message: "{gbHours} cloud GB-hours per seat each month" }),
 		needs: "gbHours",
+		beta: true,
 	},
 	{
 		id: "cloudMultiple",
@@ -251,6 +257,7 @@ const STEP_UP_FEATURES: PricingFeature[] = [
 		id: "gbHourPacks",
 		label: msg({ message: "Extra GB-hours: {pack}, never expire" }),
 		needs: "pack",
+		beta: true,
 	},
 ];
 
@@ -347,6 +354,7 @@ export const COMPARISON_SECTIONS: ComparisonSection[] = [
 				}),
 				values: [null, null, msg({ message: "Custom" })],
 				cloudGbHours: true,
+				badge: { label: BETA, variant: "secondary" },
 			},
 			{
 				id: "gbHourPacks",
@@ -355,6 +363,7 @@ export const COMPARISON_SECTIONS: ComparisonSection[] = [
 				}),
 				values: [null, null, msg({ message: "Custom" })],
 				cloudPack: true,
+				badge: { label: BETA, variant: "secondary" },
 			},
 		],
 	},

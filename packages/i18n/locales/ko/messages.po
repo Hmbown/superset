@@ -410,7 +410,7 @@ msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{where}에 파일 {0}개가 이미 있습니다. 바꿀까요?"
 
 #. placeholder {0}: formatNumber(pack.gbMinutes / 60)
-#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY)
+#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
 msgid "{0} GB-hours for {1}"
 msgstr "{0} GB 시간 {1}"
 
@@ -3043,6 +3043,9 @@ msgstr "main보다 커밋 ?개 뒤처짐, 리베이스 필요"
 
 msgid "Being built right now."
 msgstr "지금 만들고 있습니다."
+
+msgid "Beta"
+msgstr "베타"
 
 msgid "Beyond: F5 is not a near-term claim"
 msgstr "그 너머: F5는 단기 전망이 아닙니다"

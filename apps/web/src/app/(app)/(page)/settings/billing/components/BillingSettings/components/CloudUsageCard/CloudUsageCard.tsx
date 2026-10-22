@@ -2,6 +2,7 @@
 
 import { Trans } from "@lingui/react/macro";
 import { useFormat } from "@superset/i18n/react";
+import { Badge } from "@superset/ui/badge";
 import { Progress } from "@superset/ui/progress";
 import { useQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/react";
@@ -45,8 +46,14 @@ export function CloudUsageCard({
 	return (
 		<div className="space-y-3 border-t pt-6">
 			<div className="flex items-baseline justify-between gap-4">
-				<div className="text-sm font-medium">
+				<div className="flex items-center gap-2 text-sm font-medium">
 					<Trans>Cloud usage</Trans>
+					<Badge
+						variant="secondary"
+						className="px-1.5 py-0 text-[10px] font-medium"
+					>
+						<Trans>Beta</Trans>
+					</Badge>
 				</div>
 				{resetDate && (
 					<div className="text-sm text-muted-foreground">

@@ -15,7 +15,7 @@ import { z } from "zod";
 import { autumnClient, billingUsesAutumn } from "../../../autumn";
 import { countBillableSeats } from "../../../utils/billing";
 import { LEGACY_CLIENT_PLAN_IDS } from "../legacy/plan-ids";
-import { catalogAutumnPlans, gbHourPackFor, isSelfServePlan } from "./catalog";
+import { catalogAutumnPlans, isSelfServePlan } from "./catalog";
 import {
 	ensureAutumnCustomer,
 	getAutumnCustomer,

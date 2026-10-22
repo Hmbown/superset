@@ -410,7 +410,7 @@ msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{0} Dateien existieren bereits in {where}. Willst du sie ersetzen?"
 
 #. placeholder {0}: formatNumber(pack.gbMinutes / 60)
-#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY)
+#. placeholder {1}: formatCurrency(pack.price, PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0 })
 msgid "{0} GB-hours for {1}"
 msgstr "{0} GB-Stunden für {1}"
 
@@ -3043,6 +3043,9 @@ msgstr "? Commits hinter main, Rebase nötig"
 
 msgid "Being built right now."
 msgstr "Wird gerade gebaut."
+
+msgid "Beta"
+msgstr "Beta"
 
 msgid "Beyond: F5 is not a near-term claim"
 msgstr "Ausblick: F5 ist keine kurzfristige Behauptung"
