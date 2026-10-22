@@ -260,9 +260,9 @@ export const environmentRouter = {
 					i18nKey: "serverError.environment.hooksRepositoryNotIncluded",
 				});
 			}
-			const bundleSha = await currentBundleSha();
 			const [row] = await dbWs.transaction(async (tx) => {
 				await assertEnvironmentCapacity(tx, input.organizationId);
+				const bundleSha = await currentBundleSha();
 				return tx
 					.insert(environments)
 					.values({
