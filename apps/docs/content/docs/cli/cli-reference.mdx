@@ -803,6 +803,8 @@ project id when the host doesn't know the project's name.
 		{ flag: "--skip-branch-prefix", description: "Use `--branch` exactly as given instead of namespacing it under the project branch prefix." },
 		{ flag: "--host <id>", description: "Target host machineId. Mutually exclusive with `--local`; one is required." },
 		{ flag: "--local", description: "Target this machine. Mutually exclusive with `--host`; one is required." },
+		{ flag: "--environment <id>", description: "Environment a cloud workspace starts from. Required when more than one environment has repositories." },
+		{ flag: "--machine-size <size>", description: "Machine size of a cloud workspace: `small`, `medium` (default), `large`, or `xlarge` and `2xlarge` where your organization has them. See [machine sizes](/cloud-workspaces#machine-sizes)." },
 		{ flag: "--agent <preset|uuid|superset>", description: "Agent to spawn after creation." },
 		{ flag: "--prompt <text>", description: "Initial prompt. Required when `--agent` is set." },
 		{ flag: "--model <id>", description: "Model for the spawned agent. Supported values depend on the agent; omit to use its default." },

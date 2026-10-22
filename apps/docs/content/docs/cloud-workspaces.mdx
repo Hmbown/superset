@@ -1,0 +1,117 @@
+---
+title: Cloud Workspaces
+description: Set up cloud workspaces, environments, and machine sizes
+pro: true
+---
+
+<Callout type="info" title="Early access">
+Cloud workspaces are in early access. They are not yet available to every account, so you might not see the **Cloud** option in the app yet.
+</Callout>
+
+## Overview
+
+A cloud workspace runs in a sandbox in the cloud instead of on your computer. Agents keep working when your laptop is closed, and you can open the workspace from desktop, iPhone, or iPad.
+
+Every cloud workspace starts from an **environment**: the repositories to clone, the variables to set, and the region to run in. You set up an environment once per repository, then start as many workspaces from it as you need.
+
+## Requirements
+
+- **A paid plan.** Cloud workspaces need a Pro or Enterprise plan. Usage counts against your organization's cloud usage limit (see [Usage and billing](#usage-and-billing)).
+- **GitHub.** Connect GitHub in **Integrations** and give the Superset GitHub App access to each repository you want to use. A cloud workspace clones its repositories through the app.
+- **Agent sign-in.** Sign in to your agents under **Settings → Agents**. Cloud workspaces use that sign-in; see [Credentials](#credentials).
+
+## Set Up
+
+### 1. Create an environment
+
+Open **Settings → Environments** and click **New environment**, or pick a cloud project in the new-workspace screen and click **Set up environment**.
+
+- **Name**: how the environment appears in pickers.
+- **Repositories**: one to 20 GitHub repositories. The first one is the primary.
+- **Opens on**: the repository whose `.superset/config.json` runs [setup scripts](/setup-teardown-scripts) and sets ports. Shown when there is more than one repository.
+- **Advanced → Region**: where the sandboxes run. The default is the region nearest to you. You can set it only when you create the environment.
+- **Advanced → Visible to**: **Organization** (default) or **Only you**.
+
+Click **Create environment**, or **Set up with an agent** to start a cloud workspace where Claude installs what the project needs and writes its `.superset/config.json`.
+
+### 2. Add variables
+
+Click the environment in **Settings → Environments** to add variables and secrets. Every sandbox started from the environment gets them.
+
+Cloud workspaces ignore `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`, `CLAUDE_CODE_OAUTH_TOKEN`, and `OPENAI_API_KEY`. Agents use your sign-in from **Settings → Agents** instead.
+
+### 3. Start a workspace
+
+1. Press **⌘N** and pick **Cloud** in the device picker.
+2. Pick a project. Only projects linked to a GitHub repository appear.
+3. Pick the base branch, the environment, and the [machine size](#machine-sizes).
+4. Write your prompt and start.
+
+If no environment includes the project's repository, the environment picker shows **Set up environment**. It opens the editor with that repository already selected.
+
+### 4. Save a set-up workspace as an environment
+
+A new environment starts from a clean base image, so each workspace runs its setup from the start. To skip that, set up one workspace fully (install dependencies, build, sign in to tools), then right-click it in the sidebar and choose **Save as environment**.
+
+This saves a snapshot of the workspace as it is now. New workspaces from that environment start from the snapshot. The workspace must be ready (fully started) first. A saved environment's repositories and region are fixed; to change them, save a workspace again.
+
+## Machine Sizes
+
+Each cloud workspace runs on a machine size you pick when you create it. Every size has 2 GB of memory per vCPU and a 64 GB disk.
+
+| Size | Name in CLI | vCPU | Memory | Available on |
+| --- | --- | --- | --- | --- |
+| Small | `small` | 2 | 4 GB | All paid plans |
+| Medium | `medium` | 4 | 8 GB | All paid plans (default) |
+| Large | `large` | 8 | 16 GB | All paid plans |
+| X-Large | `xlarge` | 16 | 32 GB | On request |
+| 2X-Large | `2xlarge` | 32 | 64 GB | On request |
+
+- **Medium is the default.** Pick a larger size for big builds, many test processes, or several agents in one workspace.
+- **Larger sizes use more of your usage limit.** Usage is metered by memory, so a Large workspace uses twice as much as a Medium one in the same time.
+- **The size is fixed** when the workspace is created. To use a different size, start a new workspace.
+- **X-Large and 2X-Large** appear only when they are turned on for your organization. Contact us to request them.
+- If your organization loses access to a size, its workspaces start on the default size the next time they wake.
+
+The new-workspace screen shows each size with its vCPU and memory. From the CLI, pass `--machine-size`:
+
+```bash
+superset workspaces create --branch fix-login --machine-size large \
+  --agent claude --prompt "Fix the login redirect"
+```
+
+If your organization has more than one environment with repositories, also pass `--environment <id>`.
+
+Automations that target **Cloud** have a machine size picker too. Each run creates a new workspace at that size. From the CLI, `superset automations create --machine-size <size>` implies a cloud target.
+
+## Usage and Billing
+
+Cloud usage is metered in **GB-hours**: the machine's memory multiplied by the time it runs. A sleeping workspace uses storage only.
+
+**Settings → Billing** shows the GB-hours used this period, when it resets, and any usage over the plan. Superset checks the limit each time a workspace starts or wakes:
+
+- Without a paid plan: "Cloud workspaces need a paid plan."
+- At the limit: "Your organization has reached its cloud usage limit." Raise the limit or upgrade in **Settings → Billing**.
+
+An organization can hold 10 environments by default. Archive one to make room, or upgrade.
+
+## Lifecycle
+
+- **Idle stop.** A workspace stops after about an hour with no one viewing it and no agent working. Its files are kept, and opening it again resumes it.
+- **Sleep.** `superset workspaces sleep <id>` stops a workspace now. An agent can run it as its last step. Opening the workspace wakes it.
+- **Archive.** An archived workspace stops within a minute. You can unarchive it within 7 days and keep its disk. After that, the sandbox is deleted.
+
+## Credentials
+
+No API key or token is copied into the sandbox. Agents and `git` see a placeholder, and Superset replaces it with your agent sign-in and the GitHub App token on outgoing requests.
+
+## Files
+
+The checkout lives at `/workspace`. An environment with more than one repository puts each one at `/workspace/<name>`, or `/workspace/<owner>-<name>` when two names are the same.
+
+## Troubleshooting
+
+- **No Cloud option**: your account does not have early access yet.
+- **The project is missing from the Cloud picker**: link the project to a GitHub repository, and make sure the Superset GitHub App can access it.
+- **"isn't shared with the Superset GitHub App yet"**: click **Configure GitHub App** and add the repository.
+- **"This machine size is not available for your organization"**: pick Small, Medium, or Large, or ask us to turn on the larger sizes.
