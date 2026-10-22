@@ -2,7 +2,6 @@ import { useLingui } from "@lingui/react/macro";
 import type { SessionConfigOption } from "@superset/chat/protocol";
 import { DropdownMenuItem } from "@superset/ui/dropdown-menu";
 import { cn } from "@superset/ui/utils";
-import { Settings2 } from "lucide-react";
 import {
 	type KeyboardEvent,
 	type RefObject,
@@ -15,7 +14,7 @@ import {
 	getPresetIcon,
 	useIsDarkTheme,
 } from "renderer/assets/app-icons/preset-icons";
-import { MENU_ROW_CLASS } from "../../../composerPickerStyles";
+import { MENU_ROW_CLASS } from "renderer/routes/_authenticated/utils/composerPickerStyles";
 import { useFavoriteModels } from "../../hooks/useFavoriteModels";
 import type { AgentSwitcher } from "../../types";
 
@@ -63,10 +62,17 @@ export function ModelPanel({
 	}, [searchRef]);
 
 	const rowKey = (row: Row) => `${row.presetId}:${row.id ?? ""}`;
+	const favoriteKeyOf = (presetId: string) => {
+		const agent = agentSwitcher?.agents.find(
+			(entry) => entry.presetId === presetId,
+		);
+		return agent?.launchPresetId ?? presetId;
+	};
 	const isFavorite = (row: Row) =>
 		favorites.some(
 			(favorite) =>
-				favorite.presetId === row.presetId && favorite.id === row.id,
+				favorite.presetId === favoriteKeyOf(row.presetId) &&
+				favorite.id === row.id,
 		);
 	const rowsFor = (presetId: string): Row[] => {
 		if (presetId === currentPresetId && model) {
@@ -84,10 +90,17 @@ export function ModelPanel({
 	const onFavoritesTab = tab === FAVORITES_TAB;
 	const rows: Row[] = onFavoritesTab
 		? favorites.flatMap((favorite) => {
-				const agent = agentSwitcher?.agents.find(
-					(entry) => entry.presetId === favorite.presetId,
-				);
-				return agent ? [{ ...favorite, agentLabel: agent.label }] : [];
+				const candidates =
+					agentSwitcher?.agents.filter(
+						(entry) =>
+							(entry.launchPresetId ?? entry.presetId) === favorite.presetId,
+					) ?? [];
+				const agent =
+					candidates.find((entry) => entry.presetId === currentPresetId) ??
+					candidates[0];
+				return agent
+					? [{ ...favorite, presetId: agent.presetId, agentLabel: agent.label }]
+					: [];
 			})
 		: rowsFor(tab);
 	const pickRow = (row: Row) => {
@@ -218,7 +231,7 @@ export function ModelPanel({
 						event.stopPropagation();
 						if (row.id) {
 							toggle({
-								presetId: row.presetId,
+								presetId: favoriteKeyOf(row.presetId),
 								id: row.id,
 								label: row.label,
 							});
@@ -337,17 +350,6 @@ export function ModelPanel({
 					))
 				)}
 			</div>
-			{agentSwitcher?.onConfigureAgents ? (
-				<div className="border-t p-1">
-					<DropdownMenuItem
-						className={MENU_ROW_CLASS}
-						onSelect={agentSwitcher.onConfigureAgents}
-					>
-						<Settings2 className="size-3.5 shrink-0 text-muted-foreground" />
-						<span>{t({ message: "Configure agents…" })}</span>
-					</DropdownMenuItem>
-				</div>
-			) : null}
 		</div>
 	);
 }

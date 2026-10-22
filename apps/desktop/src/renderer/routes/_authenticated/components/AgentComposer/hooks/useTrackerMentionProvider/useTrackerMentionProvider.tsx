@@ -12,6 +12,11 @@ import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { TASK_PICKER_INPUT } from "renderer/routes/_authenticated/_dashboard/tasks/components/TasksView/hooks/useTasksData";
 import { linkedContextChip } from "renderer/routes/_authenticated/utils/linkedContextChips";
 import { linkedIssueFromLinear } from "renderer/routes/_authenticated/utils/linkedIssueFromLinear";
+import {
+	clearNotice,
+	noticeOnce,
+	settledQuery,
+} from "renderer/routes/_authenticated/utils/mentionSearch";
 import type { LinkedIssue } from "renderer/stores/new-workspace-draft";
 import { rankTasks } from "./rankTasks";
 
@@ -54,19 +59,42 @@ export function useTrackerMentionProvider(): ComposerMentionProvider | null {
 				priority: 3,
 				source: {
 					...source,
-					search: async (query: string) => {
+					search: async (query: string, signal: AbortSignal) => {
 						if (!organizationId) return [];
+						if (!(await settledQuery(signal))) return [];
 						const connection = await utils.integration.linear.getConnection
 							.fetch({ organizationId })
 							.catch(() => null);
-						if (!connection || connection.needsReconnect) return [];
-						const { issues } = await utils.integration.linear.issues.fetch({
-							organizationId,
-							status: "open",
-							assignee: query ? null : "me",
-							search: query || null,
-						});
-						return issues
+						if (!connection || connection.needsReconnect) {
+							noticeOnce(
+								"linear",
+								t({
+									message:
+										"Connect your Linear account in Settings → Integrations to link Linear issues.",
+								}),
+								"info",
+							);
+							return [];
+						}
+						const result = await utils.integration.linear.issues
+							.fetch({
+								organizationId,
+								status: "open",
+								assignee: query ? null : "me",
+								search: query || null,
+							})
+							.catch((error: unknown) => {
+								const msg =
+									error instanceof Error ? error.message : String(error);
+								noticeOnce(
+									"linear",
+									t({ message: `Couldn't load issues: ${msg}` }),
+								);
+								return null;
+							});
+						if (!result) return [];
+						clearNotice("linear");
+						return result.issues
 							.slice(0, MAX_RESULTS)
 							.map((issue) =>
 								issueEntry(
@@ -85,11 +113,19 @@ export function useTrackerMentionProvider(): ComposerMentionProvider | null {
 			priority: 3,
 			source: {
 				...source,
-				search: async (query: string) => {
-					const [page, statuses] = await Promise.all([
+				search: async (query: string, signal: AbortSignal) => {
+					if (!(await settledQuery(signal))) return [];
+					const loaded = await Promise.all([
 						utils.task.listPage.fetch(TASK_PICKER_INPUT),
 						utils.task.statuses.list.fetch(),
-					]);
+					]).catch((error: unknown) => {
+						const msg = error instanceof Error ? error.message : String(error);
+						noticeOnce("tasks", t({ message: `Couldn't load issues: ${msg}` }));
+						return null;
+					});
+					if (!loaded) return [];
+					clearNotice("tasks");
+					const [page, statuses] = loaded;
 					const statusTypes = new Map(
 						statuses.map((status) => [status.id, status.type]),
 					);

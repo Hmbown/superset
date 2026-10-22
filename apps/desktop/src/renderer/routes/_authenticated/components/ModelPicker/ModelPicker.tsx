@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import type { SessionConfigOption } from "@superset/chat/protocol";
 import {
 	DropdownMenu,
@@ -23,7 +24,7 @@ import {
 	MENU_ROW_CLASS,
 	PILL_CHEVRON_CLASS,
 	PILL_TRIGGER_CLASS,
-} from "../composerPickerStyles";
+} from "renderer/routes/_authenticated/utils/composerPickerStyles";
 import { EffortSliderCard } from "./components/EffortSliderCard";
 import { ModelPanel } from "./components/ModelPanel";
 import type { AgentSwitcher } from "./types";
@@ -61,6 +62,7 @@ export function ModelPicker({
 	hideModelLabel,
 	onSelect,
 }: ModelPickerProps) {
+	const { t } = useLingui();
 	const [open, setOpen] = useState(false);
 	const searchRef = useRef<HTMLInputElement>(null);
 	const settingsRef = useRef<HTMLDivElement>(null);
@@ -113,7 +115,9 @@ export function ModelPicker({
 	const rows = settings.filter(
 		(option) => option !== effort && (effort ? option !== fast : true),
 	);
-	if (!model && settings.length === 0 && !canSwitchAgent) return null;
+	const onConfigureAgents = agentSwitcher?.onConfigureAgents;
+	if (!model && settings.length === 0 && !canSwitchAgent && !onConfigureAgents)
+		return null;
 	const showsModels = Boolean(model) || canSwitchAgent;
 	const currentAgentLabel = currentAgent?.label;
 	const pillLabel =
@@ -274,6 +278,22 @@ export function ModelPicker({
 								</DropdownMenuPortal>
 							</DropdownMenuSub>
 						))}
+					</div>
+				) : null}
+				{onConfigureAgents ? (
+					<div
+						className={cn(
+							"p-1",
+							(showsModels || settings.length > 0) && "border-t",
+						)}
+					>
+						<DropdownMenuItem
+							className={MENU_ROW_CLASS}
+							onSelect={onConfigureAgents}
+						>
+							<Settings2 className="size-3.5 shrink-0 text-muted-foreground" />
+							<span>{t({ message: "Configure agents…" })}</span>
+						</DropdownMenuItem>
 					</div>
 				) : null}
 			</DropdownMenuContent>

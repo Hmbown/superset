@@ -4439,6 +4439,9 @@ msgstr "连接你的GitHub仓库并同步拉取请求。跟踪整个团队的CI�
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "请先连接你的 Linear 账户，再在 Linear 中管理任务。"
 
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "请在 设置 → 集成 中连接你的Linear账号，以关联Linear议题。"
+
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "连接你的Linear账号后，即可在Superset中浏览、更新Linear议题并开始工作。"
 
@@ -5180,8 +5183,14 @@ msgstr "无法加载贡献者，请直接输入用户名。"
 msgid "Couldn't load earlier messages. Retry"
 msgstr "无法加载更早的消息。重试"
 
+msgid "Couldn't load issues: {msg}"
+msgstr "无法加载议题：{msg}"
+
 msgid "Couldn't load pages"
 msgstr "无法加载页面"
+
+msgid "Couldn't load pull requests: {msg}"
+msgstr "无法加载拉取请求：{msg}"
 
 msgid "Couldn't load review comments"
 msgstr "无法加载审查评论"

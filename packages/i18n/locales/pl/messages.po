@@ -4439,6 +4439,9 @@ msgstr "Podłącz swoje repozytoria GitHub i synchronizuj pull requesty. Śledź
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "Połącz swoje konto Linear, zanim zaczniesz śledzić zadania w Linear."
 
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Połącz swoje konto Linear w Ustawienia → Integracje, aby łączyć zgłoszenia Linear."
+
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Połącz swoje konto Linear, aby przeglądać, aktualizować i rozpoczynać pracę nad zgłoszeniami Linear w Superset."
 
@@ -5180,8 +5183,14 @@ msgstr "Nie udało się wczytać współtwórców — wpisz nazwę użytkownika.
 msgid "Couldn't load earlier messages. Retry"
 msgstr "Nie udało się wczytać wcześniejszych wiadomości. Ponów"
 
+msgid "Couldn't load issues: {msg}"
+msgstr "Nie udało się wczytać zgłoszeń: {msg}"
+
 msgid "Couldn't load pages"
 msgstr "Nie udało się wczytać stron"
+
+msgid "Couldn't load pull requests: {msg}"
+msgstr "Nie udało się wczytać pull requestów: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "Nie udało się wczytać komentarzy przeglądu"

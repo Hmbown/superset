@@ -4439,6 +4439,9 @@ msgstr "GitHub 리포지토리를 연결하고 풀 리퀘스트를 동기화하�
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "Linear에서 작업을 관리하려면 먼저 Linear 계정을 연결하세요."
 
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Linear 이슈를 연결하려면 설정 → 연동에서 Linear 계정을 연결하세요."
+
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Linear 계정을 연결하면 Superset에서 Linear 이슈를 탐색하고, 업데이트하고, 작업을 시작할 수 있습니다."
 
@@ -5180,8 +5183,14 @@ msgstr "기여자를 불러오지 못했습니다 — 대신 사용자 이름을
 msgid "Couldn't load earlier messages. Retry"
 msgstr "이전 메시지를 불러올 수 없습니다. 다시 시도"
 
+msgid "Couldn't load issues: {msg}"
+msgstr "이슈를 불러오지 못했습니다: {msg}"
+
 msgid "Couldn't load pages"
 msgstr "페이지를 불러올 수 없습니다"
+
+msgid "Couldn't load pull requests: {msg}"
+msgstr "풀 리퀘스트를 불러오지 못했습니다: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "리뷰 코멘트를 불러오지 못했습니다"

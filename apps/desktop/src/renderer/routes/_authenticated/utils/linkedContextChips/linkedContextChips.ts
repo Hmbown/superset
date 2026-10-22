@@ -64,24 +64,65 @@ export function hasToken(text: string, token: string): boolean {
 	return tokenIndex(text, token) !== -1;
 }
 
+function tokenOf(context: LinkedContext): string {
+	return context.kind === "pr"
+		? linkedPRToken(context.pr)
+		: linkedIssueToken(context.issue);
+}
+
+function placedContexts(
+	text: string,
+	contexts: readonly LinkedContext[],
+): { context: LinkedContext; token: string; start: number }[] {
+	const seen = new Set<string>();
+	return contexts
+		.map((context) => ({ context, token: tokenOf(context) }))
+		.filter(({ token }) => !seen.has(token) && seen.add(token))
+		.map((placed) => ({ ...placed, start: tokenIndex(text, placed.token) }))
+		.filter(({ start }) => start !== -1)
+		.sort((a, b) => a.start - b.start);
+}
+
 export function findLinkedContextChips(
 	text: string,
-	issues: readonly LinkedIssue[],
-	pr: LinkedPR | null,
+	contexts: readonly LinkedContext[],
 ): ComposerChipMatch[] {
-	const chips = [
-		...issues.map(linkedIssueChip),
-		...(pr ? [linkedPRChip(pr)] : []),
-	];
-	return chips
-		.map((chip) => ({ chip, start: tokenIndex(text, chip.serialized) }))
-		.filter(({ start }) => start !== -1)
-		.map(({ chip, start }) => ({
-			chip,
-			start,
-			end: start + chip.serialized.length,
-		}))
-		.sort((a, b) => a.start - b.start);
+	return placedContexts(text, contexts).map(({ context, token, start }) => ({
+		chip: linkedContextChip(context),
+		start,
+		end: start + token.length,
+	}));
+}
+
+/** What the prompt links: every issue whose chip is in it, and its last PR. */
+export function linkedContextFromText(
+	text: string,
+	contexts: readonly LinkedContext[],
+): { issues: LinkedIssue[]; pr: LinkedPR | null } {
+	const placed = placedContexts(text, contexts).map(({ context }) => context);
+	return {
+		issues: placed.flatMap((context) =>
+			context.kind === "issue" ? [context.issue] : [],
+		),
+		pr:
+			placed
+				.flatMap((context) => (context.kind === "pr" ? [context.pr] : []))
+				.at(-1) ?? null,
+	};
+}
+
+export function stripLinkedTokens(
+	text: string,
+	contexts: readonly LinkedContext[],
+): string {
+	let stripped = text;
+	for (const { token } of placedContexts(text, contexts).reverse()) {
+		const start = tokenIndex(stripped, token);
+		if (start !== -1)
+			stripped =
+				stripped.slice(0, start) + stripped.slice(start + token.length);
+	}
+	return stripped.replace(/[ \t]{2,}/g, " ").trim();
 }
 
 export function linkedContextPrompt(

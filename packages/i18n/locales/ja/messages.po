@@ -4439,6 +4439,9 @@ msgstr "GitHubリポジトリを接続してプルリクエストを同期しま
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "タスクを Linear で管理する前に、Linear アカウントを接続してください。"
 
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Linear issueをリンクするには、設定 → 連携でLinearアカウントを接続してください。"
+
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Linearアカウントを接続すると、SupersetからLinear issueの閲覧・更新・作業開始ができます。"
 
@@ -5180,8 +5183,14 @@ msgstr "コントリビューターを読み込めませんでした — ユー�
 msgid "Couldn't load earlier messages. Retry"
 msgstr "以前のメッセージを読み込めませんでした。再試行"
 
+msgid "Couldn't load issues: {msg}"
+msgstr "Issueを読み込めませんでした: {msg}"
+
 msgid "Couldn't load pages"
 msgstr "ページを読み込めませんでした"
+
+msgid "Couldn't load pull requests: {msg}"
+msgstr "プルリクエストを読み込めませんでした: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "レビューコメントを読み込めませんでした"

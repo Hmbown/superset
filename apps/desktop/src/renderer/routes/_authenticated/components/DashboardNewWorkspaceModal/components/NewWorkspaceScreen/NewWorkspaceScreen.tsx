@@ -13,7 +13,6 @@ import {
 import { startableCloudEnvironments } from "@superset/shared/cloud-environments";
 import { CLOUD_HOST_ID } from "@superset/shared/host-routing";
 import { Button } from "@superset/ui/button";
-import { applyAttachmentConstraints } from "@superset/ui/lib/attachment-constraints";
 import { isEnterSubmit } from "@superset/ui/lib/keyboard";
 import { toast } from "@superset/ui/sonner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
@@ -52,13 +51,15 @@ import { useGitHubMentionProviders } from "renderer/routes/_authenticated/hooks/
 import { useHostWorkspaces } from "renderer/routes/_authenticated/providers/HostWorkspacesProvider";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import {
-	findLinkedContextChips,
 	linkedContextOfChip,
+	linkedContextPrompt,
+	stripLinkedTokens,
 } from "renderer/routes/_authenticated/utils/linkedContextChips";
 import {
 	setNewWorkspaceAttachments,
 	useNewWorkspaceAttachments,
 } from "renderer/stores/new-workspace-attachments";
+import { useNewWorkspaceDraftStore } from "renderer/stores/new-workspace-draft";
 import { useNewWorkspacePromptContext } from "renderer/stores/new-workspace-prompt-context";
 import {
 	NEW_WORKSPACE_SCREEN_DEFAULT_WIDTH,
@@ -105,6 +106,7 @@ import { SupersetIcon } from "./components/SupersetIcon";
 import { useGitHubRepositoryProjects } from "./hooks/useGitHubRepositoryProjects";
 import { useProjectPreselection } from "./hooks/useProjectPreselection";
 import { useSamplePromptSelection } from "./hooks/useSamplePromptSelection";
+import { acceptAttachments } from "./utils/acceptAttachments";
 import {
 	catalogConfigOptions,
 	catalogLaunchModes,
@@ -163,26 +165,12 @@ export function NewWorkspaceScreen({
 		(state) => state.attachments,
 	);
 	const changeAttachments = useCallback(
-		(next: PromptInputAttachment[]) => {
-			const known = new Set(storedAttachments.map(({ id }) => id));
-			const added = next.filter(({ id }) => !known.has(id));
-			const accepted = new Set(
-				applyAttachmentConstraints({
-					files: added.map(({ file }) => file),
-					currentCount: next.length - added.length,
-					constraints: { maxFiles: 5, maxFileSize: 10 * 1024 * 1024 },
-					onError: (error) => toast.error(error.message),
-				}),
-			);
-			for (const { file, previewUrl } of added) {
-				if (previewUrl && !accepted.has(file)) URL.revokeObjectURL(previewUrl);
-			}
+		(next: PromptInputAttachment[]) =>
 			setNewWorkspaceAttachments(
-				next
-					.filter(({ id, file }) => known.has(id) || accepted.has(file))
-					.map(({ upload: _upload, ...attachment }) => attachment),
-			);
-		},
+				acceptAttachments(storedAttachments, next, (error) =>
+					toast.error(error.message),
+				),
+			),
 		[storedAttachments],
 	);
 	const hostService = useLocalHostService();
@@ -364,24 +352,31 @@ export function NewWorkspaceScreen({
 	// insertion bumps promptSeed to remount it with the new content.
 	const applyPrompt = useCallback(
 		(prompt: string) => {
-			updateDraft({ prompt });
+			const { linkedIssues, linkedPR } = useNewWorkspaceDraftStore.getState();
+			updateDraft({
+				prompt: `${linkedContextPrompt(linkedIssues, linkedPR)}${prompt}`,
+			});
 			setPromptSeed((seed) => seed + 1);
 		},
 		[updateDraft],
 	);
-	const { link, unlinkMissing } = useLinkedContext(updateDraft);
-	const findLinkedChips = useCallback(
-		(text: string) =>
-			findLinkedContextChips(text, draft.linkedIssues, draft.linkedPR),
-		[draft.linkedIssues, draft.linkedPR],
-	);
-	const linkChip = useCallback(
+	const linkedContext = useLinkedContext(updateDraft);
+	const rememberChip = useCallback(
 		(chip: ComposerChip) => {
 			const context = linkedContextOfChip(chip);
-			if (context) link(context);
+			if (context) linkedContext.remember(context);
 		},
-		[link],
+		[linkedContext.remember],
 	);
+	const selectSessionDraft = useCallback(() => {
+		const { linkedPR, prompt } = useNewWorkspaceDraftStore.getState();
+		selectSession();
+		if (!linkedPR) return;
+		updateDraft({
+			prompt: stripLinkedTokens(prompt, [{ kind: "pr", pr: linkedPR }]),
+		});
+		setPromptSeed((seed) => seed + 1);
+	}, [selectSession, updateDraft]);
 
 	// Restore the last-used launch host once per mount, like the modal does.
 	// A host named in the URL (the sidebar's Cloud "+") wins, and applies when
@@ -573,6 +568,10 @@ export function NewWorkspaceScreen({
 			t,
 		],
 	);
+	const configureAgents = useCallback(() => {
+		closeModal();
+		void navigate({ to: "/settings/agents" });
+	}, [closeModal, navigate]);
 	const agentSwitcher = useMemo<AgentSwitcher | undefined>(() => {
 		if (selectedAgent === "none") return undefined;
 		const launchPresetFor = (agentId: string) => {
@@ -585,6 +584,7 @@ export function NewWorkspaceScreen({
 				const presetId = launchPresetFor(agent.id);
 				return {
 					presetId: agent.id,
+					launchPresetId: presetId ?? undefined,
 					iconId: agent.iconId,
 					label: agent.label,
 					models: (presetId
@@ -595,16 +595,25 @@ export function NewWorkspaceScreen({
 			}),
 			onSwitch: (agentId, model) => {
 				const presetId = launchPresetFor(agentId);
-				if (presetId)
+				// The model preference is keyed by preset, so a config on the
+				// same preset never re-reads it: set the model directly.
+				if (presetId && presetId === selectedPresetId) {
+					setSelectedModel(model?.id ?? null);
+				} else if (presetId) {
 					storeAgentModel(MODEL_STORAGE_KEY, presetId, model?.id ?? null);
+				}
 				setSelectedAgent(agentId);
 			},
-			onConfigureAgents: () => {
-				closeModal();
-				void navigate({ to: "/settings/agents" });
-			},
+			onConfigureAgents: configureAgents,
 		};
-	}, [selectedAgent, v2Agents, setSelectedAgent, closeModal, navigate]);
+	}, [
+		selectedAgent,
+		selectedPresetId,
+		v2Agents,
+		setSelectedAgent,
+		setSelectedModel,
+		configureAgents,
+	]);
 	const lastAgentRef = useRef<WorkspaceCreateAgent | null>(null);
 	useEffect(() => {
 		if (selectedAgent !== "none") lastAgentRef.current = selectedAgent;
@@ -934,13 +943,13 @@ export function NewWorkspaceScreen({
 						attachments={composerAttachments}
 						key={`${resetKey}-${promptSeed}-${placeholderRoll}`}
 						onAttachmentsChange={changeAttachments}
-						findChips={findLinkedChips}
+						findChips={linkedContext.findChips}
 						mentionProviders={gitHubMentionProviders}
 						onChange={(prompt) => {
 							updateDraft({ prompt });
-							unlinkMissing(prompt);
+							linkedContext.sync(prompt);
 						}}
-						onChipInsert={linkChip}
+						onChipInsert={rememberChip}
 						onSubmit={() => {
 							handleSubmit();
 							return false;
@@ -977,6 +986,11 @@ export function NewWorkspaceScreen({
 						<div className="flex min-w-0 flex-1 items-center gap-2">
 							<NoAgentToggle
 								noAgent={selectedAgent === "none"}
+								onConfigureAgents={
+									v2AgentsFetched && v2Agents.length === 0
+										? configureAgents
+										: undefined
+								}
 								onToggle={toggleNoAgent}
 							/>
 							<DevicePicker
@@ -994,7 +1008,7 @@ export function NewWorkspaceScreen({
 								githubConnection={isCloudHost ? github.connection : null}
 								onSelectProject={(selectedProjectId) => {
 									if (selectedProjectId === null) {
-										selectSession();
+										selectSessionDraft();
 										return;
 									}
 									// A stand-in id means nothing to a device; keep the

@@ -1,7 +1,6 @@
 import type {
 	ComposerChip,
 	ComposerChipMatch,
-	ComposerMentionEntry,
 	ComposerMentionProvider,
 	PromptInputAttachment,
 	PromptInputCommand,
@@ -14,6 +13,7 @@ import { useAttachmentPreview } from "./hooks/useAttachmentPreview";
 import { useComposerDictation } from "./hooks/useComposerDictation";
 import { usePluginMentionProvider } from "./hooks/usePluginMentionProvider";
 import { useTrackerMentionProvider } from "./hooks/useTrackerMentionProvider";
+import { reportingInserts } from "./utils/reportingInserts";
 
 const NO_COMMANDS: PromptInputCommand[] = [];
 const NO_PROVIDERS: ComposerMentionProvider[] = [];
@@ -34,39 +34,6 @@ function sourcePathOf(file: File): string | null {
 	} catch {
 		return null;
 	}
-}
-
-function reportingInserts(
-	provider: ComposerMentionProvider,
-	onChipInsert: (chip: ComposerChip) => void,
-): ComposerMentionProvider {
-	const wrap = (entries: ComposerMentionEntry[]) =>
-		entries.map((entry) => ({
-			...entry,
-			select: (ctx: Parameters<ComposerMentionEntry["select"]>[0]) =>
-				entry.select({
-					...ctx,
-					insertChip: (chip) => {
-						onChipInsert(chip);
-						ctx.insertChip(chip);
-					},
-				}),
-		}));
-	const { source } = provider;
-	return {
-		...provider,
-		source:
-			source.kind === "static"
-				? {
-						...source,
-						load: async (signal) => wrap(await source.load(signal)),
-					}
-				: {
-						...source,
-						search: async (query, signal) =>
-							wrap(await source.search(query, signal)),
-					},
-	};
 }
 
 export function AgentComposer({

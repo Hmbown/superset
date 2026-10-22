@@ -11,6 +11,7 @@ import { useAwaitAcpChatEnabled } from "renderer/hooks/useAcpChatEnabled";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { cloudTrpc, cloudTrpcClient } from "renderer/lib/cloud-trpc";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
+import { stripLinkedTokens } from "renderer/routes/_authenticated/utils/linkedContextChips";
 import type { NewWorkspacePromptContextApi } from "renderer/stores/new-workspace-prompt-context";
 import { usePromptHistoryStore } from "renderer/stores/prompt-history";
 import { useWorkspaceCreates } from "renderer/stores/workspace-creates";
@@ -310,10 +311,19 @@ export function useSubmitWorkspace(
 			: undefined;
 
 		const trimmedPrompt = draft.prompt.trim();
+		// A name comes from what the prompt asks, not the chips' @tokens.
+		const linkedContexts = [
+			...draft.linkedIssues.map((issue) => ({ kind: "issue" as const, issue })),
+			...(draft.linkedPR ? [{ kind: "pr" as const, pr: draft.linkedPR }] : []),
+		];
+		const namingText = stripLinkedTokens(trimmedPrompt, linkedContexts);
 		const namingPrompt = openAsChat
-			? (finalPrompt ?? trimmedPrompt).trim().slice(0, 20_000) || undefined
-			: !wantAgent && trimmedPrompt
-				? trimmedPrompt
+			? stripLinkedTokens(finalPrompt ?? trimmedPrompt, linkedContexts).slice(
+					0,
+					20_000,
+				) || undefined
+			: !wantAgent && namingText
+				? namingText
 				: undefined;
 		const namingAgent = openAsChat ? selectedAgent : undefined;
 		const workspaceId = crypto.randomUUID();

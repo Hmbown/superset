@@ -4439,6 +4439,9 @@ msgstr "Подключите репозитории GitHub и синхрониз
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "Подключите свой аккаунт Linear, прежде чем вести задачи в Linear."
 
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Подключите свой аккаунт Linear в разделе Настройки → Интеграции, чтобы связывать задачи Linear."
+
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Подключите свой аккаунт Linear, чтобы просматривать, обновлять задачи Linear и начинать работу над ними в Superset."
 
@@ -5180,8 +5183,14 @@ msgstr "Не удалось загрузить контрибьюторов — 
 msgid "Couldn't load earlier messages. Retry"
 msgstr "Не удалось загрузить более ранние сообщения. Повторить"
 
+msgid "Couldn't load issues: {msg}"
+msgstr "Не удалось загрузить задачи: {msg}"
+
 msgid "Couldn't load pages"
 msgstr "Не удалось загрузить страницы"
+
+msgid "Couldn't load pull requests: {msg}"
+msgstr "Не удалось загрузить пул-реквесты: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "Не удалось загрузить комментарии ревью"

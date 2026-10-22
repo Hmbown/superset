@@ -4439,6 +4439,9 @@ msgstr "Kết nối các repository GitHub của bạn và đồng bộ pull req
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "Hãy kết nối tài khoản Linear của bạn trước khi theo dõi công việc trong Linear."
 
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Kết nối tài khoản Linear của bạn trong Cài đặt → Tích hợp để liên kết issue Linear."
+
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Kết nối tài khoản Linear của bạn để duyệt, cập nhật và bắt đầu làm việc trên issue Linear ngay trong Superset."
 
@@ -5180,8 +5183,14 @@ msgstr "Không thể tải danh sách người đóng góp — hãy nhập tên 
 msgid "Couldn't load earlier messages. Retry"
 msgstr "Không thể tải các tin nhắn trước đó. Thử lại"
 
+msgid "Couldn't load issues: {msg}"
+msgstr "Không thể tải issue: {msg}"
+
 msgid "Couldn't load pages"
 msgstr "Không thể tải các trang"
+
+msgid "Couldn't load pull requests: {msg}"
+msgstr "Không thể tải pull request: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "Không thể tải bình luận review"

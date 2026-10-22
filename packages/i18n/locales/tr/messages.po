@@ -4439,6 +4439,9 @@ msgstr "GitHub depolarınızı bağlayın ve pull request'leri eşitleyin. CI du
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "Görevleri Linear'da takip etmeden önce Linear hesabınızı bağlayın."
 
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Linear issue'larını bağlamak için Ayarlar → Entegrasyonlar'dan Linear hesabını bağla."
+
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Linear issue'larını Superset'ten görüntülemek, güncellemek ve üzerinde çalışmaya başlamak için Linear hesabını bağla."
 
@@ -5180,8 +5183,14 @@ msgstr "Katkıda bulunanlar yüklenemedi — bunun yerine bir kullanıcı adı y
 msgid "Couldn't load earlier messages. Retry"
 msgstr "Önceki mesajlar yüklenemedi. Yeniden dene"
 
+msgid "Couldn't load issues: {msg}"
+msgstr "Issue'lar yüklenemedi: {msg}"
+
 msgid "Couldn't load pages"
 msgstr "Sayfalar yüklenemedi"
+
+msgid "Couldn't load pull requests: {msg}"
+msgstr "Pull request'ler yüklenemedi: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "İnceleme yorumları yüklenemedi"

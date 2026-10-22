@@ -1,122 +1,153 @@
 import { useCallback } from "react";
 import { deriveBranchName } from "renderer/routes/_authenticated/utils/deriveBranchName";
 import {
-	hasToken,
+	findLinkedContextChips,
 	type LinkedContext,
+	linkedContextFromText,
 	linkedIssueToken,
-	linkedPRToken,
 } from "renderer/routes/_authenticated/utils/linkedContextChips";
-import { useNewWorkspaceDraftStore } from "renderer/stores/new-workspace-draft";
+import {
+	type NewWorkspaceDraft,
+	useNewWorkspaceDraftStore,
+} from "renderer/stores/new-workspace-draft";
 import type {
 	DashboardNewWorkspaceDraft,
 	LinkedIssue,
 } from "../../../../../DashboardNewWorkspaceDraftContext";
 
+// Every issue and PR chipped into this draft, so a chip brought back by undo
+// or a remount links again. Cleared with the draft.
+const rememberedContexts = new Map<string, LinkedContext>();
+useNewWorkspaceDraftStore.subscribe((state, prevState) => {
+	if (state.resetKey !== prevState.resetKey) rememberedContexts.clear();
+});
+
 function seedsWorkspaceNames(issue: LinkedIssue): boolean {
 	return issue.source === "internal" || issue.source === "linear";
 }
 
-function isSameIssue(a: LinkedIssue, b: LinkedIssue): boolean {
-	return a.source === "github" && b.source === "github"
-		? a.number === b.number
-		: a.slug === b.slug;
+function contextKey(context: LinkedContext): string {
+	return context.kind === "pr"
+		? `pr:${context.pr.prNumber}`
+		: linkedIssueToken(context.issue);
+}
+
+export function rememberLinkedContext(context: LinkedContext): void {
+	rememberedContexts.set(contextKey(context), context);
+}
+
+type LinkedContextDraft = Pick<
+	NewWorkspaceDraft,
+	| "linkedIssues"
+	| "linkedPR"
+	| "isSession"
+	| "branchName"
+	| "branchNameEdited"
+	| "branchNameFromProvider"
+	| "workspaceName"
+	| "workspaceNameEdited"
+>;
+
+export function knownLinkedContexts(
+	draft: Pick<NewWorkspaceDraft, "linkedIssues" | "linkedPR">,
+): LinkedContext[] {
+	return [
+		...draft.linkedIssues.map((issue) => ({ kind: "issue" as const, issue })),
+		...(draft.linkedPR ? [{ kind: "pr" as const, pr: draft.linkedPR }] : []),
+		...rememberedContexts.values(),
+	];
 }
 
 /**
- * Links and unlinks the draft's issues and PR. The composer's chips drive it:
- * inserting a chip links its item, and an item whose chip is gone from the
- * prompt is unlinked. Reads the store, not a render-time snapshot, so a link
- * and a prune in the same tick see each other.
+ * The draft change that makes its linked issues and PR match the chips in
+ * `prompt`, moving the seeded branch and workspace names with them. Null when
+ * nothing changes.
  */
+export function linkedContextPatch(
+	draft: LinkedContextDraft,
+	prompt: string,
+	known: readonly LinkedContext[],
+): Partial<DashboardNewWorkspaceDraft> | null {
+	const next = linkedContextFromText(prompt, known);
+	const pr = draft.isSession ? null : next.pr;
+	const nextTokens = next.issues.map(linkedIssueToken);
+	const currentTokens = draft.linkedIssues.map(linkedIssueToken);
+	const issuesChanged = nextTokens.join(" ") !== currentTokens.join(" ");
+	const prChanged = pr?.prNumber !== draft.linkedPR?.prNumber;
+	if (!issuesChanged && !prChanged) return null;
+
+	const patch: Partial<DashboardNewWorkspaceDraft> = {};
+	if (prChanged) patch.linkedPR = pr;
+	if (!issuesChanged) return patch;
+
+	patch.linkedIssues = next.issues;
+	const names = {
+		branchName: draft.branchName,
+		branchNameEdited: draft.branchNameEdited,
+		branchNameFromProvider: draft.branchNameFromProvider,
+		workspaceName: draft.workspaceName,
+		workspaceNameEdited: draft.workspaceNameEdited,
+	};
+	const seedFrom = (issue: LinkedIssue | undefined) => {
+		if (issue) {
+			names.branchName = deriveBranchName(issue);
+			names.branchNameEdited = true;
+			names.branchNameFromProvider = !!issue.branch?.trim();
+		} else {
+			names.branchName = "";
+			names.branchNameEdited = false;
+			names.branchNameFromProvider = false;
+		}
+	};
+	const nameFrom = (issue: LinkedIssue | undefined) => {
+		names.workspaceName = issue?.title ?? "";
+		names.workspaceNameEdited = issue !== undefined;
+	};
+	const remaining = next.issues.filter(seedsWorkspaceNames);
+	// A name an unlinked issue seeded moves to the next issue still linked, or
+	// clears; anything the user typed sticks.
+	for (const issue of draft.linkedIssues) {
+		if (!seedsWorkspaceNames(issue)) continue;
+		if (nextTokens.includes(linkedIssueToken(issue))) continue;
+		if (names.branchName === deriveBranchName(issue)) seedFrom(remaining[0]);
+		if (names.workspaceName === issue.title) nameFrom(remaining[0]);
+	}
+	// A newly linked issue seeds the names the user has not touched.
+	for (const issue of next.issues) {
+		if (!seedsWorkspaceNames(issue)) continue;
+		if (currentTokens.includes(linkedIssueToken(issue))) continue;
+		if (!names.branchNameEdited && !names.branchName.trim()) seedFrom(issue);
+		if (!names.workspaceNameEdited && !names.workspaceName.trim())
+			nameFrom(issue);
+	}
+	return { ...patch, ...names };
+}
+
+/** The draft's linked issues and PR, driven by the composer's chips. */
 export function useLinkedContext(
 	updateDraft: (patch: Partial<DashboardNewWorkspaceDraft>) => void,
 ) {
-	const linkIssue = useCallback(
-		(issue: LinkedIssue) => {
-			const draft = useNewWorkspaceDraftStore.getState();
-			if (draft.linkedIssues.some((linked) => isSameIssue(linked, issue)))
-				return;
-			const patch: Partial<DashboardNewWorkspaceDraft> = {
-				linkedIssues: [...draft.linkedIssues, issue],
-			};
-			// Seed the workspace/branch fields from the issue so the branch
-			// matches the provider's format (Linear autolinks it back to the
-			// issue). Never overwrite something the user already typed.
-			if (seedsWorkspaceNames(issue)) {
-				if (!draft.branchNameEdited && !draft.branchName.trim()) {
-					patch.branchName = deriveBranchName(issue);
-					patch.branchNameEdited = true;
-					patch.branchNameFromProvider = !!issue.branch?.trim();
-				}
-				if (!draft.workspaceNameEdited && !draft.workspaceName.trim()) {
-					patch.workspaceName = issue.title;
-					patch.workspaceNameEdited = true;
-				}
-			}
-			updateDraft(patch);
-		},
-		[updateDraft],
-	);
-
-	const unlinkIssue = useCallback(
-		(issue: LinkedIssue) => {
-			const draft = useNewWorkspaceDraftStore.getState();
-			const remaining = draft.linkedIssues.filter(
-				(linked) => !isSameIssue(linked, issue),
-			);
-			const patch: Partial<DashboardNewWorkspaceDraft> = {
-				linkedIssues: remaining,
-			};
-			// Clear the seeded names, but only when they still match what the
-			// issue seeded — a user edit sticks. When another internal issue is
-			// still linked, hand the seed to it instead of going blank.
-			if (seedsWorkspaceNames(issue)) {
-				const next = remaining.find(seedsWorkspaceNames);
-				if (draft.branchName === deriveBranchName(issue)) {
-					if (next) {
-						patch.branchName = deriveBranchName(next);
-						patch.branchNameEdited = true;
-						patch.branchNameFromProvider = !!next.branch?.trim();
-					} else {
-						patch.branchName = "";
-						patch.branchNameEdited = false;
-						patch.branchNameFromProvider = false;
-					}
-				}
-				if (draft.workspaceName === issue.title) {
-					if (next) {
-						patch.workspaceName = next.title;
-						patch.workspaceNameEdited = true;
-					} else {
-						patch.workspaceName = "";
-						patch.workspaceNameEdited = false;
-					}
-				}
-			}
-			updateDraft(patch);
-		},
-		[updateDraft],
-	);
-
-	const link = useCallback(
-		(context: LinkedContext) => {
-			if (context.kind === "pr") updateDraft({ linkedPR: context.pr });
-			else linkIssue(context.issue);
-		},
-		[linkIssue, updateDraft],
-	);
-
-	const unlinkMissing = useCallback(
+	const sync = useCallback(
 		(prompt: string) => {
 			const draft = useNewWorkspaceDraftStore.getState();
-			for (const issue of draft.linkedIssues) {
-				if (!hasToken(prompt, linkedIssueToken(issue))) unlinkIssue(issue);
-			}
-			if (draft.linkedPR && !hasToken(prompt, linkedPRToken(draft.linkedPR)))
-				updateDraft({ linkedPR: null });
+			const patch = linkedContextPatch(
+				draft,
+				prompt,
+				knownLinkedContexts(draft),
+			);
+			if (patch) updateDraft(patch);
 		},
-		[unlinkIssue, updateDraft],
+		[updateDraft],
 	);
 
-	return { link, unlinkMissing };
+	const findChips = useCallback(
+		(text: string) =>
+			findLinkedContextChips(
+				text,
+				knownLinkedContexts(useNewWorkspaceDraftStore.getState()),
+			),
+		[],
+	);
+
+	return { remember: rememberLinkedContext, sync, findChips };
 }

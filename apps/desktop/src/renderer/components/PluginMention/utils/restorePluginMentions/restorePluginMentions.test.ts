@@ -1,15 +1,29 @@
 const { describe, expect, it } = await import("bun:test");
-const { Editor } = await import("@tiptap/core");
+const { Editor, Node } = await import("@tiptap/core");
 const { default: Document } = await import("@tiptap/extension-document");
 const { default: Paragraph } = await import("@tiptap/extension-paragraph");
 const { default: Text } = await import("@tiptap/extension-text");
 const { default: Code } = await import("@tiptap/extension-code");
 const { default: CodeBlock } = await import("@tiptap/extension-code-block");
-const { FileMentionNode } = await import(
-	"renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/TerminalPane/components/TerminalRichInput/components/TiptapPromptEditor/FileMentionNode"
-);
 const { PluginMentionNode } = await import("../../PluginMentionNode");
 const { restorePluginMentions } = await import("./restorePluginMentions");
+
+// The prompt editor's file mention, reduced to the attributes restore reads.
+const FileMentionNode = Node.create({
+	name: "file-mention",
+	group: "inline",
+	inline: true,
+	atom: true,
+	addAttributes() {
+		return { path: { default: null }, fromText: { default: false } };
+	},
+	parseHTML() {
+		return [{ tag: 'span[data-type="file-mention"]' }];
+	},
+	renderHTML({ HTMLAttributes }) {
+		return ["span", { "data-type": "file-mention", ...HTMLAttributes }];
+	},
+});
 
 const linear = { name: "linear", displayName: "Linear", description: "" };
 const resolve = (name: string) => (name === "linear" ? linear : null);

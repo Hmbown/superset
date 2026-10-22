@@ -2,6 +2,9 @@ export type AgentChoice = {
 	presetId: string;
 	// Icon to show when presetId is not a preset, e.g. a custom agent config.
 	iconId?: string;
+	// The preset whose models these are, when presetId is not a preset.
+	// Favorites are keyed by it so every surface shares them.
+	launchPresetId?: string;
 	label: string;
 	models: { id: string; label: string }[];
 };

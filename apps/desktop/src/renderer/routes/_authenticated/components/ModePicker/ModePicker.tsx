@@ -17,13 +17,13 @@ import {
 } from "lucide-react";
 import { LuCheck, LuChevronDown } from "react-icons/lu";
 import { useOptimisticSelections } from "renderer/routes/_authenticated/hooks/useOptimisticSelections";
-import { isUnrestrictedMode } from "renderer/routes/_authenticated/utils/isUnrestrictedMode";
 import {
 	MENU_DESCRIPTION_CLASS,
 	MENU_PANEL_CLASS,
 	PILL_CHEVRON_CLASS,
 	PILL_TRIGGER_CLASS,
-} from "../composerPickerStyles";
+} from "renderer/routes/_authenticated/utils/composerPickerStyles";
+import { isUnrestrictedMode } from "renderer/routes/_authenticated/utils/isUnrestrictedMode";
 
 export type SessionMode = { id: string; label: string };
 

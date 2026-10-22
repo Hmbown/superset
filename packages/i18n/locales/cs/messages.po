@@ -4439,6 +4439,9 @@ msgstr "Připojte své GitHub repozitáře a synchronizujte pull requesty. Sledu
 msgid "Connect your Linear account before tracking tasks in Linear."
 msgstr "Než začnete sledovat úkoly v Linearu, připojte svůj účet Linear."
 
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Připojte svůj účet Linear v Nastavení → Integrace, abyste mohli propojovat Linear issues."
+
 msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
 msgstr "Připojte svůj účet Linear a procházejte, upravujte a začněte pracovat na Linear issues přímo ze Superset."
 
@@ -5180,8 +5183,14 @@ msgstr "Nepodařilo se načíst přispěvatele — zadejte uživatelské jméno.
 msgid "Couldn't load earlier messages. Retry"
 msgstr "Starší zprávy se nepodařilo načíst. Zkusit znovu"
 
+msgid "Couldn't load issues: {msg}"
+msgstr "Nepodařilo se načíst issues: {msg}"
+
 msgid "Couldn't load pages"
 msgstr "Stránky se nepodařilo načíst"
+
+msgid "Couldn't load pull requests: {msg}"
+msgstr "Nepodařilo se načíst pull requesty: {msg}"
 
 msgid "Couldn't load review comments"
 msgstr "Nepodařilo se načíst komentáře k revizi"

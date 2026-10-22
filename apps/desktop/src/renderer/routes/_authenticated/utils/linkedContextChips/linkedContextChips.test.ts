@@ -6,10 +6,12 @@ import type {
 import {
 	findLinkedContextChips,
 	hasToken,
+	linkedContextFromText,
 	linkedContextOfChip,
 	linkedContextPrompt,
 	linkedIssueChip,
 	linkedPRChip,
+	stripLinkedTokens,
 } from "./linkedContextChips";
 
 const linear: LinkedIssue = {
@@ -61,9 +63,11 @@ describe("linkedContextChips", () => {
 	test("finds linked tokens in a stored draft, and ignores longer ones", () => {
 		const text = "@LIN-123 fix @LIN-12 and @PR#7 for @#42";
 		expect(
-			findLinkedContextChips(text, [linear, github], pr).map(
-				({ chip, start, end }) => [chip.serialized, start, end],
-			),
+			findLinkedContextChips(text, [
+				{ kind: "issue", issue: linear },
+				{ kind: "issue", issue: github },
+				{ kind: "pr", pr },
+			]).map(({ chip, start, end }) => [chip.serialized, start, end]),
 		).toEqual([
 			["@LIN-12", 13, 20],
 			["@PR#7", 25, 30],
@@ -71,6 +75,39 @@ describe("linkedContextChips", () => {
 		]);
 		expect(hasToken("@LIN-123", "@LIN-12")).toBe(false);
 		expect(hasToken("see @LIN-12.", "@LIN-12")).toBe(true);
+	});
+
+	test("links what the text shows: issues in order, and the last PR", () => {
+		const other: LinkedPR = { ...pr, prNumber: 9, title: "Other" };
+		const known = [
+			{ kind: "pr" as const, pr },
+			{ kind: "issue" as const, issue: github },
+			{ kind: "pr" as const, pr: other },
+			{ kind: "issue" as const, issue: linear },
+		];
+		expect(
+			linkedContextFromText("@#42 then @LIN-12 @PR#7 @PR#9", known),
+		).toEqual({
+			issues: [github, linear],
+			pr: other,
+		});
+		expect(linkedContextFromText("@PR#7 only", known)).toEqual({
+			issues: [],
+			pr,
+		});
+		expect(linkedContextFromText("nothing linked", known)).toEqual({
+			issues: [],
+			pr: null,
+		});
+	});
+
+	test("strips linked tokens for text that should not carry them", () => {
+		expect(
+			stripLinkedTokens("@PR#7 fix the crash in @#42 please", [
+				{ kind: "pr", pr },
+				{ kind: "issue", issue: github },
+			]),
+		).toBe("fix the crash in please");
 	});
 
 	test("seeds a prompt with the PR first, then the issues", () => {
