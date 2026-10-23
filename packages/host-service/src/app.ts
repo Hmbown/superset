@@ -126,6 +126,7 @@ export interface CreateAppResult {
 	 */
 	launchSandboxAgent: () => Promise<void>;
 	resumeCrashedAgents: () => Promise<void>;
+	recordUnfinishedChats: () => void;
 	readLinkedPullRequests: () => Promise<
 		{ repository: string; number: number; linkedAt: number }[]
 	>;
@@ -353,6 +354,11 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 				occurredAt,
 			}),
 	});
+	try {
+		chatV3.resumeAfterUpdate();
+	} catch (error) {
+		console.warn("[host-service] chat resume after update failed:", error);
+	}
 
 	// Startup sweeps run in the background so they don't block server
 	// startup.
@@ -641,6 +647,16 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		eventBus,
 		launchSandboxAgent,
 		resumeCrashedAgents,
+		recordUnfinishedChats: () => {
+			try {
+				chatV3.recordUnfinished();
+			} catch (error) {
+				console.warn(
+					"[host-service] could not record unfinished chats:",
+					error,
+				);
+			}
+		},
 		readLinkedPullRequests: () => pullRequestRuntime.listLinkedPullRequests(),
 		onPullRequestLinked: (listener) =>
 			pullRequestRuntime.onPullRequestLinked(listener),

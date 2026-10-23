@@ -12,12 +12,17 @@ import {
 import { TbDeviceDesktop, TbDeviceMobile, TbWorld } from "react-icons/tb";
 import type { RightPaneKind } from "./types";
 
+export interface RightPaneGates {
+	sandbox: boolean;
+	mobilePane: boolean;
+}
+
 export interface RightPaneOption {
 	kind: RightPaneKind;
 	label: MessageDescriptor;
 	Icon: IconType;
 	group: "workspace" | "tool";
-	sandboxOnly?: boolean;
+	gate?: keyof RightPaneGates;
 }
 
 const RIGHT_PANE_OPTIONS: RightPaneOption[] = [
@@ -62,13 +67,14 @@ const RIGHT_PANE_OPTIONS: RightPaneOption[] = [
 		label: msg({ message: "Desktop" }),
 		Icon: TbDeviceDesktop,
 		group: "tool",
-		sandboxOnly: true,
+		gate: "sandbox",
 	},
 	{
 		kind: "mobile",
 		label: msg({ message: "Mobile" }),
 		Icon: TbDeviceMobile,
 		group: "tool",
+		gate: "mobilePane",
 	},
 	{
 		kind: "terminal",
@@ -78,8 +84,8 @@ const RIGHT_PANE_OPTIONS: RightPaneOption[] = [
 	},
 ];
 
-export function getRightPaneOptions(canAddDesktop: boolean): RightPaneOption[] {
+export function getRightPaneOptions(gates: RightPaneGates): RightPaneOption[] {
 	return RIGHT_PANE_OPTIONS.filter(
-		(option) => !option.sandboxOnly || canAddDesktop,
+		(option) => !option.gate || gates[option.gate],
 	);
 }

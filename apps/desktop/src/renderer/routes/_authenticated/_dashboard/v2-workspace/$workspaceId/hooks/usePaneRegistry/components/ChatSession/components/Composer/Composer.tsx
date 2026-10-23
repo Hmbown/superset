@@ -21,6 +21,7 @@ import {
 	type Ref,
 	useCallback,
 	useEffect,
+	useId,
 	useImperativeHandle,
 	useLayoutEffect,
 	useMemo,
@@ -31,6 +32,7 @@ import { useHotkey } from "renderer/hotkeys";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { pagesListInput } from "renderer/routes/_authenticated/_dashboard/utils/pagesListInput";
 import { AgentComposer } from "renderer/routes/_authenticated/components/AgentComposer";
+import { useChatComposerStore } from "../../../../stores/chatComposerStore";
 import { CHAT_COLUMN_CLASSNAME, CHAT_GUTTER_CLASSNAME } from "../../constants";
 import { commandChip, LEADING_COMMAND } from "../../utils/commandChip";
 import { mcpContextLine } from "../../utils/mcpServerChips";
@@ -53,7 +55,10 @@ export type ComposerTarget = {
 	onStop?: () => void;
 };
 
-export type ComposerHandle = Pick<PromptInputHandle, "appendText" | "focus"> & {
+export type ComposerHandle = Pick<
+	PromptInputHandle,
+	"appendText" | "addFiles" | "focus"
+> & {
 	returnFocus: (recallHistory?: boolean) => void;
 };
 
@@ -162,6 +167,7 @@ export const Composer = memo(function Composer({
 		inputRef,
 		() => ({
 			appendText: (text: string) => promptInputRef.current?.appendText(text),
+			addFiles: (files: File[]) => promptInputRef.current?.addFiles(files),
 			focus: focusInput,
 			returnFocus,
 		}),
@@ -169,6 +175,14 @@ export const Composer = memo(function Composer({
 	);
 	const rootRef = useRef<HTMLDivElement>(null);
 	const footerTier = useFooterTier(rootRef);
+	const composerId = useId();
+	useEffect(() => {
+		const { register, unregister } = useChatComposerStore.getState();
+		register(composerId, workspaceId, {
+			addFiles: (files) => promptInputRef.current?.addFiles(files),
+		});
+		return () => unregister(composerId);
+	}, [composerId, workspaceId]);
 	useEffect(() => {
 		const recovered = takeRecoveredDraftText(draftKey);
 		if (recovered) promptInputRef.current?.appendText(recovered);
@@ -392,6 +406,9 @@ export const Composer = memo(function Composer({
 			ref={rootRef}
 			className={cn(CHAT_GUTTER_CLASSNAME, "pt-1 pb-5")}
 			onKeyDownCapture={drawerEntry.onKeyDownCapture}
+			onFocusCapture={() =>
+				useChatComposerStore.getState().markActive(composerId)
+			}
 		>
 			<AgentComposer
 				className={CHAT_COLUMN_CLASSNAME}

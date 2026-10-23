@@ -4,22 +4,22 @@ import {
 	DropdownMenuSeparator,
 } from "@superset/ui/dropdown-menu";
 import { Fragment } from "react";
-import { getRightPaneOptions } from "../../paneOptions";
+import { getRightPaneOptions, type RightPaneGates } from "../../paneOptions";
 import type { RightPaneKind } from "../../types";
 
 interface RightPaneAddMenuProps {
 	onAdd: (kind: RightPaneKind) => void;
 	runAfterClose: (action: () => void) => void;
-	canAddDesktop: boolean;
+	gates: RightPaneGates;
 }
 
 export function RightPaneAddMenu({
 	onAdd,
 	runAfterClose,
-	canAddDesktop,
+	gates,
 }: RightPaneAddMenuProps) {
 	const { i18n } = useLingui();
-	const options = getRightPaneOptions(canAddDesktop);
+	const options = getRightPaneOptions(gates);
 
 	return (
 		<>

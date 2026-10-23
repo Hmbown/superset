@@ -222,6 +222,8 @@ function V2WorkspaceContent() {
 		FEATURE_FLAGS.RIGHT_PANE_AREA,
 	);
 	const isRightPaneAreaEnabled = rightPaneAreaFlag === true;
+	const isMobilePaneEnabled =
+		useFeatureFlagEnabled(FEATURE_FLAGS.MOBILE_PANE) === true;
 	const { store: rightStore, isLayoutReady: isRightLayoutReady } =
 		useV2WorkspacePaneLayout({ slot: "rightPaneLayout" });
 	useClearActivePaneAttention({ store: rightStore });
@@ -620,6 +622,7 @@ function V2WorkspaceContent() {
 		launcher,
 		getCloseTarget,
 		isSandbox,
+		isMobilePaneEnabled,
 	});
 	useHotkey("QUICK_OPEN", handleQuickOpen);
 	useHotkey("NEW_CHAT", addChatTab);
@@ -701,7 +704,7 @@ function V2WorkspaceContent() {
 			onToggleSidebar={toggleRightSidebar}
 			onActivate={activateRightArea}
 			onAdd={addRightPane}
-			canAddDesktop={isSandbox}
+			gates={{ sandbox: isSandbox, mobilePane: isMobilePaneEnabled }}
 			showWindowControls={!isMac}
 		/>
 	);
