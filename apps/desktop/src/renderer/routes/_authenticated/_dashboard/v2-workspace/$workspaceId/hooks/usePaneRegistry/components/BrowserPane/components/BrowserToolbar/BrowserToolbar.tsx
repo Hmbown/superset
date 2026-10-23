@@ -225,6 +225,9 @@ export function BrowserToolbar({
 							value={urlInputValue}
 							onChange={handleInputChange}
 							onBlur={exitEditMode}
+							onClick={() => {
+								if (!autocomplete.isOpen) autocomplete.open();
+							}}
 							onKeyDown={handleKeyDown}
 							placeholder={t({
 								message: "Enter URL or search...",
