@@ -460,6 +460,7 @@ export function V2WorkspacesHeader({
 
 					<ToolbarMenuButton
 						isActive={showArchived}
+						aria-label={t({ message: "Show archived" })}
 						aria-pressed={showArchived}
 						onClick={() => setShowArchived(!showArchived)}
 					>
@@ -479,6 +480,7 @@ export function V2WorkspacesHeader({
 					>
 						<button
 							type="button"
+							aria-label={t({ message: "List" })}
 							aria-pressed={viewMode === "list"}
 							className={cn(
 								"flex h-7 items-center gap-1.5 rounded-sm px-2 text-xs transition-colors",
@@ -495,6 +497,7 @@ export function V2WorkspacesHeader({
 						</button>
 						<button
 							type="button"
+							aria-label={t({ message: "Board" })}
 							aria-pressed={viewMode === "board"}
 							className={cn(
 								"flex h-7 items-center gap-1.5 rounded-sm px-2 text-xs transition-colors",

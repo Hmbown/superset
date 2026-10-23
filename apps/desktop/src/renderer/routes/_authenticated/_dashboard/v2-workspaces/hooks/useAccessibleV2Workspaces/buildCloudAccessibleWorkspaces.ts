@@ -8,7 +8,7 @@ import { buildCloudSidebarWorkspaces } from "renderer/routes/_authenticated/_das
 import type { CloudSidebarEntry } from "renderer/routes/_authenticated/_dashboard/stores/cloudSidebarStore";
 import { isInCloudSidebar } from "renderer/routes/_authenticated/_dashboard/utils/buildCloudSidebar";
 import { getV2WorkspaceDisplayName } from "renderer/utils/getV2WorkspaceDisplayName";
-import type { PaneStatus } from "shared/tabs-types";
+import { type PaneStatus, pickHigherStatus } from "shared/tabs-types";
 import type { AccessibleV2Workspace, V2WorkspacePrSummary } from "./types";
 
 export interface CloudAccessibleWorkspaceInput {
@@ -60,6 +60,8 @@ export interface BuildCloudAccessibleWorkspacesParams {
 	sidebarEntries: Record<string, CloudSidebarEntry>;
 	/** workspaceId → the reported status timestamp the user has seen. */
 	workspaceSeenAt: Record<string, number>;
+	/** Workspaces marked unread from the sidebar. */
+	manualUnread: Record<string, true>;
 	/** Name of the stand-in project for rows whose repo isn't known yet. */
 	unknownRepoProjectName: string;
 	/** What the Where column calls the cloud. */
@@ -92,19 +94,20 @@ function toPrSummary(
 
 /**
  * The cloud reports one status per workspace; `review` stays until the user
- * has looked, the same way a host terminal's Stop does.
+ * has looked, the same way a host terminal's Stop does. A manual unread mark
+ * reads as `review` too, as on host rows.
  */
 function cloudAgentStatus(
 	workspace: CloudAccessibleWorkspaceInput,
 	seenAt: number | undefined,
+	isMarkedUnread: boolean,
 ): PaneStatus {
-	if (workspace.agentStatus === "review") {
+	let reported: PaneStatus = workspace.agentStatus ?? "idle";
+	if (reported === "review") {
 		const reportedAt = workspace.agentStatusAt?.getTime() ?? null;
-		return reportedAt !== null && (seenAt ?? 0) >= reportedAt
-			? "idle"
-			: "review";
+		if (reportedAt !== null && (seenAt ?? 0) >= reportedAt) reported = "idle";
 	}
-	return workspace.agentStatus ?? "idle";
+	return pickHigherStatus(reported, isMarkedUnread ? "review" : "idle");
 }
 
 /**
@@ -121,6 +124,7 @@ export function buildCloudAccessibleWorkspaces({
 	pullRequestsById,
 	sidebarEntries,
 	workspaceSeenAt,
+	manualUnread,
 	unknownRepoProjectName,
 	cloudHostName,
 }: BuildCloudAccessibleWorkspacesParams): AccessibleV2Workspace[] {
@@ -181,7 +185,11 @@ export function buildCloudAccessibleWorkspaces({
 					userId,
 				),
 				pr,
-				agentStatus: cloudAgentStatus(workspace, workspaceSeenAt[workspace.id]),
+				agentStatus: cloudAgentStatus(
+					workspace,
+					workspaceSeenAt[workspace.id],
+					Boolean(manualUnread[workspace.id]),
+				),
 				lastAgentEventAt: reportedAt,
 				diffStats: null,
 				sandboxStatus:

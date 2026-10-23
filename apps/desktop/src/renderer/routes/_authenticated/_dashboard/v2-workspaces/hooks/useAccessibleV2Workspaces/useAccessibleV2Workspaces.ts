@@ -639,6 +639,7 @@ export function useAccessibleV2Workspaces(
 		archived:
 			whereFilter !== undefined &&
 			includesCloud &&
+			includeArchived &&
 			archivedCloudRows.length > 0,
 	});
 	const cloudSidebarEntries = useCloudSidebarStore((state) =>
@@ -671,6 +672,7 @@ export function useAccessibleV2Workspaces(
 				pullRequestsById: cloudPullRequestsById,
 				sidebarEntries: cloudSidebarEntries,
 				workspaceSeenAt,
+				manualUnread,
 				unknownRepoProjectName: t({ message: "Cloud" }),
 				cloudHostName: t({ message: "Cloud" }),
 			}),
@@ -682,6 +684,7 @@ export function useAccessibleV2Workspaces(
 			cloudPullRequestsById,
 			cloudSidebarEntries,
 			workspaceSeenAt,
+			manualUnread,
 			t,
 		],
 	);

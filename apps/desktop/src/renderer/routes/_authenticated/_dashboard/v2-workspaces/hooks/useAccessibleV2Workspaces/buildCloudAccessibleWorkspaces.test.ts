@@ -62,6 +62,7 @@ function build(overrides: Partial<BuildCloudAccessibleWorkspacesParams> = {}) {
 		pullRequestsById: new Map(),
 		sidebarEntries: {},
 		workspaceSeenAt: {},
+		manualUnread: {},
 		unknownRepoProjectName: "Cloud",
 		cloudHostName: "Cloud",
 		...overrides,
@@ -121,6 +122,17 @@ describe("buildCloudAccessibleWorkspaces", () => {
 			workspaceSeenAt: { "ws-1": reportedAt.getTime() },
 		});
 		expect(seen?.agentStatus).toBe("idle");
+	});
+
+	test("a manual unread mark reads as finished, but never hides live work", () => {
+		const [marked] = build({ manualUnread: { "ws-1": true } });
+		expect(marked?.agentStatus).toBe("review");
+
+		const [working] = build({
+			cloudWorkspaces: [workspace({ agentStatus: "working" })],
+			manualUnread: { "ws-1": true },
+		});
+		expect(working?.agentStatus).toBe("working");
 	});
 
 	test("sandbox state rides on the row; an archived box is a tombstone", () => {
