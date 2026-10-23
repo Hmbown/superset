@@ -19,15 +19,15 @@ describe("accessRefetchInterval", () => {
 		);
 	});
 
-	test.each(["FORBIDDEN", "INTERNAL_SERVER_ERROR"])(
-		"a %s retries soon, then backs off to the cap",
-		(code) => {
-			const error = { data: { code } };
-			const after = (errorUpdateCount: number) =>
-				accessRefetchInterval({ error, errorUpdateCount }, NOW);
-			expect(after(1)).toBe(ACCESS_RETRY_MS);
-			expect(after(3)).toBe(4 * ACCESS_RETRY_MS);
-			expect(after(50)).toBe(MAX_ERROR_RETRY_MS);
-		},
-	);
+	test.each([
+		"FORBIDDEN",
+		"INTERNAL_SERVER_ERROR",
+	])("a %s retries soon, then backs off to the cap", (code) => {
+		const error = { data: { code } };
+		const after = (errorUpdateCount: number) =>
+			accessRefetchInterval({ error, errorUpdateCount }, NOW);
+		expect(after(1)).toBe(ACCESS_RETRY_MS);
+		expect(after(3)).toBe(4 * ACCESS_RETRY_MS);
+		expect(after(50)).toBe(MAX_ERROR_RETRY_MS);
+	});
 });
