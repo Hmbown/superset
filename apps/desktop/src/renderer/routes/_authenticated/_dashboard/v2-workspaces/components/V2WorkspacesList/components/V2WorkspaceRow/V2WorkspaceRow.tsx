@@ -324,8 +324,11 @@ export const V2WorkspaceRow = memo(function V2WorkspaceRow({
 							onClick={(event) => {
 								event.stopPropagation();
 								if (!workspace.pr) return;
-								// Opens the PR pane inside the workspace instead of GitHub.
-								const ref = pullRequestRefFromUrl(workspace.pr.url);
+								// Opens the PR pane inside the workspace instead of GitHub;
+								// an archived workspace has no pane to open, so GitHub it is.
+								const ref = isArchived
+									? null
+									: pullRequestRefFromUrl(workspace.pr.url);
 								if (!ref) {
 									window.open(workspace.pr.url, "_blank");
 									return;

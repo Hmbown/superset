@@ -699,8 +699,11 @@ export function useAccessibleV2Workspaces(
 		);
 	}, [hostEnriched, cloudEnriched]);
 
+	// An unresolved flag holds the cloud list's query disabled, which reads as
+	// not loading; it must not let an empty cloud view settle.
 	const isReady =
-		(!includesHosts || hostSource.isReady) && (!includesCloud || !cloudLoading);
+		(!includesHosts || hostSource.isReady) &&
+		(!includesCloud || (cloudFlag !== undefined && !cloudLoading));
 
 	const searchFiltered = useMemo(
 		() =>
