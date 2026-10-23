@@ -1,7 +1,10 @@
 import { useMemo } from "react";
 import { useResolvedTheme } from "renderer/stores/theme";
 import { diffCardUnsafeCss } from "./diffCardUnsafeCss";
-import { diffFlushUnsafeCss } from "./diffFlushUnsafeCss";
+import {
+	diffFlushUnsafeCss,
+	FLUSH_DIFF_HEADER_HEIGHT,
+} from "./diffFlushUnsafeCss";
 import { useDiffCodeViewTheme } from "./useDiffCodeViewTheme";
 
 /**
@@ -41,6 +44,12 @@ export function useDiffCardCodeViewTheme({ flush = false } = {}) {
 				paddingBottom: options.layout?.paddingBottom ?? 0,
 				gap: flush ? 0 : 16,
 			},
+			...(flush && {
+				itemMetrics: {
+					...options.itemMetrics,
+					diffHeaderHeight: FLUSH_DIFF_HEADER_HEIGHT,
+				},
+			}),
 			unsafeCSS: `${options.unsafeCSS ?? ""}\n${diffCardUnsafeCss(additionsColor, deletionsColor)}${flush ? diffFlushUnsafeCss : ""}`,
 		}),
 		[options, additionsColor, deletionsColor, flush],
