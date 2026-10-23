@@ -739,9 +739,6 @@ msgstr "{connectorName} アカウント"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount}件のCookie — このサイトを削除"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {#個のアクティブなポート — 詳細を表示} other {#個のアクティブなポート — 詳細を表示}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {#件のチェックが失敗} other {#件のチェックが失敗}}"
 
@@ -943,9 +940,6 @@ msgstr "{kind} · 作者: {author}"
 
 msgid "{kindLabel} theme"
 msgstr "{kindLabel}テーマ"
-
-msgid "{label} in cloud workspaces"
-msgstr "クラウドワークスペースでの{label}"
 
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
@@ -1312,6 +1306,9 @@ msgstr "+{0} −{1} · {2, plural, one {#ファイル} other {#ファイル}}"
 
 msgid "+{hidden} more"
 msgstr "他 {hidden} 件"
+
+msgid "+{hiddenCount}"
+msgstr "+{hiddenCount}"
 
 msgid "+{hiddenCount} earlier"
 msgstr "以前の{hiddenCount}件"
@@ -2726,6 +2723,9 @@ msgstr "ファイルを添付"
 msgid "Attach image"
 msgstr "画像を添付"
 
+msgid "Attach to chat"
+msgstr "チャットに添付"
+
 msgid "Attached"
 msgstr "接続中"
 
@@ -3328,6 +3328,9 @@ msgstr "このデバイスのSupersetアプリに同梱されています。"
 msgid "Bundled with the Superset app on this device. Updates with the app."
 msgstr "このデバイスのSupersetアプリに同梱されています。アプリと一緒に更新されます。"
 
+msgid "Business plan"
+msgstr "Business プラン"
+
 msgid "Button — sizes"
 msgstr "Button — サイズ"
 
@@ -3573,9 +3576,6 @@ msgstr "場所を変更"
 
 msgid "Change or add labels…"
 msgstr "ラベルを変更または追加…"
-
-msgid "Change or add tasks…"
-msgstr "タスクを変更または追加…"
 
 msgid "Change organization logo"
 msgstr "組織のロゴを変更"
@@ -4201,9 +4201,6 @@ msgstr "現在、クラウドワークスペースにはプロジェクトが必
 
 msgid "Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one."
 msgstr "クラウドワークスペースには Team または Ultra プランが必要です。起動するには設定の請求からアップグレードしてください。"
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "クラウドワークスペースをプロジェクトの下に表示し、ローカル/クラウドの絞り込みと新しいワークスペース行を追加します。"
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "クラウドワークスペースはこれを使って{agentLabel}を実行しなくなります。"
@@ -4923,9 +4920,6 @@ msgstr "相対パスをコピー"
 msgid "Copy Relative Path"
 msgstr "相対パスをコピー"
 
-msgid "Copy screenshot"
-msgstr "スクリーンショットをコピー"
-
 msgid "Copy Selection"
 msgstr "選択範囲をコピー"
 
@@ -5249,6 +5243,9 @@ msgstr "ワークスペースに説明を依頼できませんでした"
 msgid "Couldn't attach files"
 msgstr "ファイルを添付できませんでした"
 
+msgid "Couldn't attach the screenshot"
+msgstr "スクリーンショットを添付できませんでした"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "新しい worktree へ分岐できませんでした"
 
@@ -5355,6 +5352,9 @@ msgstr "サブエージェントをバックグラウンドに移動できませ
 
 msgid "Couldn't name \"{name}\" automatically"
 msgstr "「{name}」に自動で名前を付けられませんでした"
+
+msgid "Couldn't open the screenshot"
+msgstr "スクリーンショットを開けませんでした"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "この差分を解析できませんでした: {patchParseError}"
@@ -5662,9 +5662,6 @@ msgstr "作成 {0} · 最終使用 {1}"
 
 msgid "Created {ago}"
 msgstr "{ago}に作成"
-
-msgid "created {createdAgo}"
-msgstr "{createdAgo}に作成"
 
 msgid "Created {createdAgo}"
 msgstr "{createdAgo}に作成"
@@ -6914,6 +6911,9 @@ msgstr "整数を入力"
 msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
 msgstr "{minHours} から {maxHours} GB 時間までの整数を入力してください。"
 
+msgid "Enter this code when OpenAI asks for it:"
+msgstr "OpenAI に求められたら、このコードを入力してください:"
+
 msgid "Enter URL or search..."
 msgstr "URLを入力または検索..."
 
@@ -7657,6 +7657,9 @@ msgstr "チームを更新できませんでした。もう一度お試しくだ
 
 msgid "Failed to update URL"
 msgstr "URLの更新に失敗しました"
+
+msgid "Failed to update workspace"
+msgstr "ワークスペースを更新できませんでした"
 
 msgid "Failed to upload avatar"
 msgstr "アバターのアップロードに失敗しました"
@@ -8661,9 +8664,6 @@ msgstr "ホストが利用できません"
 msgid "Host unavailable: {hostName}"
 msgstr "ホストが利用できません: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "クラウドでホスト"
-
 msgid "Hosts"
 msgstr "ホスト"
 
@@ -8678,6 +8678,9 @@ msgstr "毎時"
 
 msgid "Hover Card"
 msgstr "Hover Card"
+
+msgid "How {label} signs in when Superset runs it for you."
+msgstr "Superset が {label} を実行するときのサインイン方法。"
 
 msgid "How 2026 plays out"
 msgstr "2026年はこう進む"
@@ -9578,6 +9581,12 @@ msgstr "毎月末日 {time}"
 msgid "Last run"
 msgstr "最終実行"
 
+msgid "Last run (result)"
+msgstr "最終実行（結果）"
+
+msgid "Last run (time)"
+msgstr "最終実行（時刻）"
+
 msgid "Last seen"
 msgstr "最終確認"
 
@@ -10205,6 +10214,9 @@ msgstr "Slackの会話からタスクを管理します。"
 msgid "Manage Terminal Scripts"
 msgstr "ターミナルスクリプトを管理"
 
+msgid "Manage usage"
+msgstr "使用量を管理"
+
 msgid "Manage your account settings"
 msgstr "アカウント設定を管理"
 
@@ -10814,9 +10826,6 @@ msgstr "別の対戦相手"
 msgid "New Chat"
 msgstr "新規チャット"
 
-msgid "New cloud workspace"
-msgstr "新規クラウドワークスペース"
-
 msgid "New environment"
 msgstr "新しい環境"
 
@@ -10858,9 +10867,6 @@ msgstr "新規セッション"
 
 msgid "New shell"
 msgstr "新しいシェル"
-
-msgid "New sidebar"
-msgstr "新しいサイドバー"
 
 msgid "New stars"
 msgstr "新規スター"
@@ -11511,9 +11517,6 @@ msgstr "タスクが見つかりません。"
 msgid "No tasks in this project yet."
 msgstr "このプロジェクトにはまだタスクがありません。"
 
-msgid "No tasks or pull requests yet"
-msgstr "タスクやプルリクエストはまだありません"
-
 msgid "No tasks yet"
 msgstr "タスクはまだありません"
 
@@ -12081,14 +12084,20 @@ msgstr "変更を開く"
 msgid "Open Changes"
 msgstr "変更を開く"
 
+msgid "Open ChatGPT admin settings"
+msgstr "ChatGPT の管理者設定を開く"
+
+msgid "Open ChatGPT settings"
+msgstr "ChatGPT の設定を開く"
+
 msgid "Open Command Palette"
 msgstr "コマンドパレットを開く"
 
 msgid "Open comment on GitHub"
 msgstr "GitHubでコメントを開く"
 
-msgid "Open details"
-msgstr "詳細を開く"
+msgid "Open device sign-in"
+msgstr "デバイスのサインインを開く"
 
 msgid "Open DevTools"
 msgstr "DevToolsを開く"
@@ -12285,6 +12294,9 @@ msgstr "ナビゲーションを開く"
 msgid "Open on GitHub"
 msgstr "GitHubで開く"
 
+msgid "Open OpenAI's device sign-in page."
+msgstr "OpenAI のデバイスサインインページを開きます。"
+
 msgid "Open Page in Default Browser"
 msgstr "ページを既定のブラウザで開く"
 
@@ -12320,9 +12332,6 @@ msgstr "プルリクエストを開く"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "プルリクエスト#{0}を開く"
-
-msgid "Open pull request #{number}"
-msgstr "プルリクエスト#{number}を開く"
 
 msgid "Open pull request options"
 msgstr "プルリクエストのオプションを開く"
@@ -12422,6 +12431,9 @@ msgstr "ワークスペースを開く"
 
 msgid "Open your app."
 msgstr "アプリを開きます。"
+
+msgid "OpenAI did not complete the sign-in. Start again."
+msgstr "OpenAI がサインインを完了しませんでした。やり直してください。"
 
 msgid "OpenAI rejected this API key."
 msgstr "OpenAIがこのAPIキーを拒否しました。"
@@ -12881,6 +12893,9 @@ msgstr "人"
 msgid "Personal"
 msgstr "個人"
 
+msgid "Personal plan"
+msgstr "個人プラン"
+
 msgid "Phantom Forklift"
 msgstr "幻のフォークリフト"
 
@@ -12934,9 +12949,6 @@ msgstr "エージェントがあなたの入力を待っている、前回確認
 
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "アイコンと色を選ぶか、独自の画像をアップロードします。既定ではリンクされたGitHubオーナーのアバターになります。"
-
-msgid "Pick how {label} signs in inside a sandbox. The credential is handed to the agent process when it launches and is not stored in the sandbox."
-msgstr "サンドボックス内で{label}がどうサインインするかを選びます。認証情報は起動時にエージェントのプロセスへ渡され、サンドボックスには保存されません。"
 
 msgid "Pick one in the Superset app. It's saved to your account."
 msgstr "Supersetアプリで選ぶだけ。アカウントに保存されます。"
@@ -13119,10 +13131,6 @@ msgstr "PR #{0} ({1})"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "PR #{0} を作成しました"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PRはクローズ済み"
@@ -14864,12 +14872,6 @@ msgstr "bun testを実行中…"
 msgid "Running now"
 msgstr "実行中"
 
-msgid "Running on a paired device"
-msgstr "ペアリング済みデバイスで実行中"
-
-msgid "Running on this device"
-msgstr "このデバイスで実行中"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "実行中のターミナルプロセスは継続しますが、アプリ再起動後に古い出力が利用できなくなる場合があります。"
 
@@ -15743,9 +15745,6 @@ msgstr "全員と共有中"
 msgid "Shared with me"
 msgstr "共有アイテム"
 
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "プロジェクトのチェックアウト（ファイル、git インデックス、ブランチ）を他のローカルワークスペースと共有します"
-
 msgid "Sheet"
 msgstr "Sheet"
 
@@ -16043,6 +16042,12 @@ msgstr "サインインに失敗しました（{reason}）。もう一度お試�
 
 msgid "Signed in as <0>{userName}</0>"
 msgstr "<0>{userName}</0>としてサインイン中"
+
+msgid "Signed in to ChatGPT"
+msgstr "ChatGPT にサインインしました"
+
+msgid "Signed in to ChatGPT as {connectedAs}"
+msgstr "{connectedAs} として ChatGPT にサインインしました"
 
 msgid "Signed out"
 msgstr "サインアウトしました"
@@ -17159,6 +17164,9 @@ msgstr "操作を開始"
 msgid "Take me home"
 msgstr "ホームに戻る"
 
+msgid "Take screenshot"
+msgstr "スクリーンショットを撮る"
+
 msgid "Taken"
 msgstr "使用済み"
 
@@ -17475,9 +17483,6 @@ msgstr "アプリは無料でダウンロードできます。iOS 26 以降と S
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "アプリは{appVersion}ですが、別のもの（古いCLIや別のSupersetビルドの可能性）が起動したホストサービスに接続しています。再起動するとこのアプリのコピーに置き換わります。"
 
-msgid "The associated device isn't reachable right now"
-msgstr "関連デバイスに現在接続できません"
-
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "このオートメーションの所有者は、この組織でクラウドワークスペースを使用できなくなりました。所有者にアクセス権の確認を依頼するか、デバイス上でオートメーションを実行してください。"
 
@@ -17492,6 +17497,9 @@ msgstr "変更はすぐに適用されます。期間の残りについて差額
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "クラウドワークスペースは起動しているはずですが、時間内に応答がありませんでした。次回の実行で再試行します。"
+
+msgid "The code expired. Start again."
+msgstr "コードの有効期限が切れました。やり直してください。"
 
 msgid "The config repository must be one of the environment's repositories"
 msgstr "設定リポジトリは環境のリポジトリのいずれかである必要があります"
@@ -18528,6 +18536,9 @@ msgstr "「リレー経由でこのデバイスへのリモートアクセスを
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "デザインをオンにして、変更したいページの部分をクリックします。"
 
+msgid "Turn on device code sign-in for Codex."
+msgstr "Codex のデバイスコードによるサインインを有効にします。"
+
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Slackの会話をタスクに変え、ワークスペースからエージェントを実行し、仕事が始まる場所でチームと共有できます。"
 
@@ -19251,6 +19262,9 @@ msgstr "{0}と{1}を待っています…"
 msgid "Waiting for activity data"
 msgstr "アクティビティデータを待機中"
 
+msgid "Waiting for approval. Keep this dialog open."
+msgstr "承認を待っています。このダイアログは開いたままにしてください。"
+
 msgid "Waiting for Checks"
 msgstr "チェックを待機中"
 
@@ -19691,9 +19705,6 @@ msgstr "PRからワークスペースを作成しました"
 msgid "Workspace details"
 msgstr "ワークスペースの詳細"
 
-msgid "Workspace ID"
-msgstr "ワークスペースID"
-
 msgid "Workspace ID copied"
 msgstr "ワークスペースIDをコピーしました"
 
@@ -19771,9 +19782,6 @@ msgstr "ワークツリーの場所を更新しました"
 
 msgid "Worktree missing"
 msgstr "ワークツリーが見つかりません"
-
-msgid "Worktree on this device"
-msgstr "このデバイス上のワークツリー"
 
 msgid "Worktree opened"
 msgstr "ワークツリーを開きました"
@@ -20127,6 +20135,9 @@ msgstr "v1 のプロジェクトとワークスペースを新しい Superset �
 
 msgid "Your version: {currentVersion}"
 msgstr "現在のバージョン: {currentVersion}"
+
+msgid "Your workspace admin turns on device code sign-in for Codex."
+msgstr "Codex のデバイスコードによるサインインは、ワークスペースの管理者が有効にします。"
 
 msgid "Zap"
 msgstr "稲妻"

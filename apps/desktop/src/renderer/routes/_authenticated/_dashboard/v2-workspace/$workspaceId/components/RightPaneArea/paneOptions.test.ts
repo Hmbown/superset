@@ -2,11 +2,11 @@ import { describe, expect, test } from "bun:test";
 import { getRightPaneOptions } from "./paneOptions";
 
 describe("getRightPaneOptions", () => {
-	test("offers every right pane kind, with desktop only on a sandbox", () => {
-		const kinds = (canAddDesktop: boolean) =>
-			getRightPaneOptions(canAddDesktop).map((option) => option.kind);
+	test("offers desktop only on a sandbox and mobile only with its flag", () => {
+		const kinds = (sandbox: boolean, mobilePane: boolean) =>
+			getRightPaneOptions({ sandbox, mobilePane }).map((option) => option.kind);
 
-		expect(kinds(true)).toEqual([
+		expect(kinds(true, true)).toEqual([
 			"files",
 			"diff",
 			"changes-list",
@@ -17,8 +17,7 @@ describe("getRightPaneOptions", () => {
 			"mobile",
 			"terminal",
 		]);
-		expect(kinds(false)).toEqual(
-			kinds(true).filter((kind) => kind !== "desktop"),
-		);
+		expect(kinds(false, true)).not.toContain("desktop");
+		expect(kinds(true, false)).not.toContain("mobile");
 	});
 });

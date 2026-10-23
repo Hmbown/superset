@@ -739,9 +739,6 @@ msgstr "Účet {connectorName}"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookies — zapomenout tento web"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {# aktivní port — zobrazit podrobnosti} few {# aktivní porty — zobrazit podrobnosti} many {# aktivního portu — zobrazit podrobnosti} other {# aktivních portů — zobrazit podrobnosti}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {# kontrola selhala} few {# kontroly selhaly} many {# kontroly selhalo} other {# kontrol selhalo}}"
 
@@ -943,9 +940,6 @@ msgstr "{kind} · autor: {author}"
 
 msgid "{kindLabel} theme"
 msgstr "{kindLabel} motiv"
-
-msgid "{label} in cloud workspaces"
-msgstr "{label} v cloudových pracovních prostorech"
 
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
@@ -1312,6 +1306,9 @@ msgstr "+{0} −{1} · {2, plural, one {# soubor} few {# soubory} many {# soubor
 
 msgid "+{hidden} more"
 msgstr "+{hidden} dalších"
+
+msgid "+{hiddenCount}"
+msgstr "+{hiddenCount}"
 
 msgid "+{hiddenCount} earlier"
 msgstr "+{hiddenCount} dřívějších"
@@ -2726,6 +2723,9 @@ msgstr "Přiložit soubory"
 msgid "Attach image"
 msgstr "Připojit obrázek"
 
+msgid "Attach to chat"
+msgstr "Připojit k chatu"
+
 msgid "Attached"
 msgstr "Připojeno"
 
@@ -3328,6 +3328,9 @@ msgstr "Součást aplikace Superset na tomto zařízení."
 msgid "Bundled with the Superset app on this device. Updates with the app."
 msgstr "Součást aplikace Superset na tomto zařízení. Aktualizuje se spolu s aplikací."
 
+msgid "Business plan"
+msgstr "Firemní plán"
+
 msgid "Button — sizes"
 msgstr "Tlačítko — velikosti"
 
@@ -3573,9 +3576,6 @@ msgstr "Změnit umístění"
 
 msgid "Change or add labels…"
 msgstr "Změnit nebo přidat štítky…"
-
-msgid "Change or add tasks…"
-msgstr "Změnit nebo přidat úkoly…"
 
 msgid "Change organization logo"
 msgstr "Změnit logo organizace"
@@ -4201,9 +4201,6 @@ msgstr "Cloudové pracovní prostory zatím potřebují projekt"
 
 msgid "Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one."
 msgstr "Cloudové pracovní prostory vyžadují plán Team nebo Ultra. Přejděte na vyšší plán v Nastavení, Fakturace, abyste ho mohli spustit."
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "Cloudové pracovní prostory pod jejich projekty, filtr místní a cloud a přepracovaný řádek pracovního prostoru."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Cloudové workspacy s tím přestanou spouštět {agentLabel}."
@@ -4923,9 +4920,6 @@ msgstr "Kopírovat relativní cestu"
 msgid "Copy Relative Path"
 msgstr "Kopírovat relativní cestu"
 
-msgid "Copy screenshot"
-msgstr "Kopírovat snímek obrazovky"
-
 msgid "Copy Selection"
 msgstr "Kopírovat výběr"
 
@@ -5249,6 +5243,9 @@ msgstr "Nepodařilo se požádat pracovní prostor o popis"
 msgid "Couldn't attach files"
 msgstr "Soubory se nepodařilo připojit"
 
+msgid "Couldn't attach the screenshot"
+msgstr "Snímek obrazovky se nepodařilo připojit"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "Nepodařilo se rozvětvit do nového worktree"
 
@@ -5355,6 +5352,9 @@ msgstr "Subagenta se nepodařilo přesunout na pozadí"
 
 msgid "Couldn't name \"{name}\" automatically"
 msgstr "Nepodařilo se automaticky pojmenovat „{name}“"
+
+msgid "Couldn't open the screenshot"
+msgstr "Snímek obrazovky se nepodařilo otevřít"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Tento diff se nepodařilo zpracovat: {patchParseError}"
@@ -5662,9 +5662,6 @@ msgstr "Vytvořeno {0} · Naposledy použito {1}"
 
 msgid "Created {ago}"
 msgstr "Vytvořeno {ago}"
-
-msgid "created {createdAgo}"
-msgstr "vytvořeno {createdAgo}"
 
 msgid "Created {createdAgo}"
 msgstr "Vytvořeno {createdAgo}"
@@ -6914,6 +6911,9 @@ msgstr "Zadejte celé číslo"
 msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
 msgstr "Zadejte celé číslo od {minHours} do {maxHours} GB-hodin."
 
+msgid "Enter this code when OpenAI asks for it:"
+msgstr "Až o to OpenAI požádá, zadejte tento kód:"
+
 msgid "Enter URL or search..."
 msgstr "Zadejte URL nebo hledejte..."
 
@@ -7657,6 +7657,9 @@ msgstr "Nepodařilo se aktualizovat tým. Zkuste to prosím znovu."
 
 msgid "Failed to update URL"
 msgstr "Nepodařilo se změnit URL"
+
+msgid "Failed to update workspace"
+msgstr "Pracovní prostor se nepodařilo aktualizovat"
 
 msgid "Failed to upload avatar"
 msgstr "Nepodařilo se nahrát avatar"
@@ -8661,9 +8664,6 @@ msgstr "Host není dostupný"
 msgid "Host unavailable: {hostName}"
 msgstr "Host není dostupný: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "Hostováno v cloudu"
-
 msgid "Hosts"
 msgstr "Hosty"
 
@@ -8678,6 +8678,9 @@ msgstr "Každou hodinu"
 
 msgid "Hover Card"
 msgstr "Hover Card"
+
+msgid "How {label} signs in when Superset runs it for you."
+msgstr "Jak se {label} přihlašuje, když ho Superset spouští za vás."
 
 msgid "How 2026 plays out"
 msgstr "Jak dopadne rok 2026"
@@ -9578,6 +9581,12 @@ msgstr "Poslední den v měsíci v {time}"
 msgid "Last run"
 msgstr "Poslední běh"
 
+msgid "Last run (result)"
+msgstr "Poslední běh (výsledek)"
+
+msgid "Last run (time)"
+msgstr "Poslední běh (čas)"
+
 msgid "Last seen"
 msgstr "Naposledy viděn"
 
@@ -10205,6 +10214,9 @@ msgstr "Spravujte úkoly z konverzací ve Slacku."
 msgid "Manage Terminal Scripts"
 msgstr "Spravovat terminálové skripty"
 
+msgid "Manage usage"
+msgstr "Spravovat využití"
+
 msgid "Manage your account settings"
 msgstr "Spravujte nastavení svého účtu"
 
@@ -10814,9 +10826,6 @@ msgstr "noví vyzyvatelé"
 msgid "New Chat"
 msgstr "Nový chat"
 
-msgid "New cloud workspace"
-msgstr "Nový cloudový pracovní prostor"
-
 msgid "New environment"
 msgstr "Nové prostředí"
 
@@ -10858,9 +10867,6 @@ msgstr "Nová relace"
 
 msgid "New shell"
 msgstr "Nový shell"
-
-msgid "New sidebar"
-msgstr "Nový postranní panel"
 
 msgid "New stars"
 msgstr "Nové hvězdy"
@@ -11511,9 +11517,6 @@ msgstr "Nenalezeny žádné úkoly."
 msgid "No tasks in this project yet."
 msgstr "V tomto projektu zatím nejsou žádné úkoly."
 
-msgid "No tasks or pull requests yet"
-msgstr "Zatím žádné úkoly ani pull requesty"
-
 msgid "No tasks yet"
 msgstr "Zatím žádné úkoly"
 
@@ -12081,14 +12084,20 @@ msgstr "Otevřít změny"
 msgid "Open Changes"
 msgstr "Otevřít změny"
 
+msgid "Open ChatGPT admin settings"
+msgstr "Otevřít nastavení správce ChatGPT"
+
+msgid "Open ChatGPT settings"
+msgstr "Otevřít nastavení ChatGPT"
+
 msgid "Open Command Palette"
 msgstr "Otevřít paletu příkazů"
 
 msgid "Open comment on GitHub"
 msgstr "Otevřít komentář na GitHubu"
 
-msgid "Open details"
-msgstr "Otevřít podrobnosti"
+msgid "Open device sign-in"
+msgstr "Otevřít přihlášení zařízení"
 
 msgid "Open DevTools"
 msgstr "Otevřít DevTools"
@@ -12285,6 +12294,9 @@ msgstr "Otevřít navigaci"
 msgid "Open on GitHub"
 msgstr "Otevřít na GitHubu"
 
+msgid "Open OpenAI's device sign-in page."
+msgstr "Otevřete stránku OpenAI pro přihlášení zařízení."
+
 msgid "Open Page in Default Browser"
 msgstr "Otevřít stránku ve výchozím prohlížeči"
 
@@ -12320,9 +12332,6 @@ msgstr "Otevřít pull request"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "Otevřít pull request #{0}"
-
-msgid "Open pull request #{number}"
-msgstr "Otevřít pull request #{number}"
 
 msgid "Open pull request options"
 msgstr "Otevřít možnosti pull requestu"
@@ -12422,6 +12431,9 @@ msgstr "Otevřít pracovní prostor"
 
 msgid "Open your app."
 msgstr "Otevřete aplikaci."
+
+msgid "OpenAI did not complete the sign-in. Start again."
+msgstr "OpenAI přihlášení nedokončilo. Začněte znovu."
 
 msgid "OpenAI rejected this API key."
 msgstr "OpenAI tento API klíč odmítl."
@@ -12881,6 +12893,9 @@ msgstr "Osoba"
 msgid "Personal"
 msgstr "Osobní"
 
+msgid "Personal plan"
+msgstr "Osobní plán"
+
 msgid "Phantom Forklift"
 msgstr "Fantomový vysokozdvih"
 
@@ -12934,9 +12949,6 @@ msgstr "Vyberte pracovní prostor, jehož agent čeká na váš vstup, od vaší
 
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "Vyberte ikonu a barvu nebo nahrajte vlastní obrázek. Ve výchozím stavu se použije avatar propojeného vlastníka na GitHubu."
-
-msgid "Pick how {label} signs in inside a sandbox. The credential is handed to the agent process when it launches and is not stored in the sandbox."
-msgstr "Vyberte, jak se {label} přihlašuje uvnitř sandboxu. Přihlašovací údaj se předá procesu agenta při spuštění a v sandboxu se neukládá."
 
 msgid "Pick one in the Superset app. It's saved to your account."
 msgstr "Vyberte si jeden v aplikaci Superset. Uloží se k vašemu účtu."
@@ -13119,10 +13131,6 @@ msgstr "PR #{0} ({1})"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "PR #{0} vytvořen"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PR uzavřen"
@@ -14864,12 +14872,6 @@ msgstr "Spouštím bun test…"
 msgid "Running now"
 msgstr "Spouštím"
 
-msgid "Running on a paired device"
-msgstr "Běží na spárovaném zařízení"
-
-msgid "Running on this device"
-msgstr "Běží na tomto zařízení"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Běžící procesy v terminálu poběží dál, ale starší výstup po restartu aplikace už nemusí být k dispozici."
 
@@ -15743,9 +15745,6 @@ msgstr "Sdíleno se všemi"
 msgid "Shared with me"
 msgstr "Sdíleno se mnou"
 
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "Sdílí checkout projektu — soubory, git index a větev — s ostatními lokálními pracovními prostory"
-
 msgid "Sheet"
 msgstr "Sheet"
 
@@ -16043,6 +16042,12 @@ msgstr "Přihlášení se nezdařilo ({reason}). Zkuste to prosím znovu."
 
 msgid "Signed in as <0>{userName}</0>"
 msgstr "Přihlášeni jako <0>{userName}</0>"
+
+msgid "Signed in to ChatGPT"
+msgstr "Přihlášeno do ChatGPT"
+
+msgid "Signed in to ChatGPT as {connectedAs}"
+msgstr "Přihlášeno do ChatGPT jako {connectedAs}"
 
 msgid "Signed out"
 msgstr "Odhlášeno"
@@ -17159,6 +17164,9 @@ msgstr "Převzít ovládání"
 msgid "Take me home"
 msgstr "Zpět na úvod"
 
+msgid "Take screenshot"
+msgstr "Pořídit snímek obrazovky"
+
 msgid "Taken"
 msgstr "Obsazeno"
 
@@ -17475,9 +17483,6 @@ msgstr "Aplikaci lze stáhnout zdarma. Vyžaduje iOS 26 nebo novější a Supers
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "Aplikace je ve verzi {appVersion}, ale připojená ke službě hostitele spuštěné něčím jiným, pravděpodobně starší CLI nebo jiným sestavením Superset. Restart ji nahradí kopií této aplikace."
 
-msgid "The associated device isn't reachable right now"
-msgstr "Přidružené zařízení teď není dostupné"
-
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "Vlastník automatizace už v této organizaci nemůže používat cloudové pracovní prostory. Požádejte ho, aby si zkontroloval přístup, nebo automatizaci spusťte na zařízení."
 
@@ -17492,6 +17497,9 @@ msgstr "Změna platí hned. Platíte jen rozdíl za zbytek období."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Cloudový pracovní prostor se měl spustit, ale neodpověděl včas. Další běh to zkusí znovu."
+
+msgid "The code expired. Start again."
+msgstr "Platnost kódu vypršela. Začněte znovu."
 
 msgid "The config repository must be one of the environment's repositories"
 msgstr "Konfigurační repozitář musí být jedním z repozitářů prostředí"
@@ -18528,6 +18536,9 @@ msgstr "Zapněte „Povolit vzdálený přístup k tomuto zařízení přes rela
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "Zapněte Design a klikněte na část stránky, kterou chcete změnit."
 
+msgid "Turn on device code sign-in for Codex."
+msgstr "Zapněte pro Codex přihlášení kódem zařízení."
+
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Proměňte konverzace ve Slacku v úkoly, spouštějte agenty ze svého pracovního prostoru a držte kolegy v obraze tam, kde práce začíná."
 
@@ -19251,6 +19262,9 @@ msgstr "čeká se na {0} a {1}…"
 msgid "Waiting for activity data"
 msgstr "Čeká se na data o aktivitě"
 
+msgid "Waiting for approval. Keep this dialog open."
+msgstr "Čeká se na schválení. Nechte tento dialog otevřený."
+
 msgid "Waiting for Checks"
 msgstr "Čeká na kontroly"
 
@@ -19691,9 +19705,6 @@ msgstr "Pracovní prostor vytvořen z PR"
 msgid "Workspace details"
 msgstr "Podrobnosti pracovního prostoru"
 
-msgid "Workspace ID"
-msgstr "ID pracovního prostoru"
-
 msgid "Workspace ID copied"
 msgstr "ID pracovního prostoru zkopírováno"
 
@@ -19771,9 +19782,6 @@ msgstr "Umístění worktree změněno"
 
 msgid "Worktree missing"
 msgstr "Chybí worktree"
-
-msgid "Worktree on this device"
-msgstr "Worktree na tomto zařízení"
 
 msgid "Worktree opened"
 msgstr "Worktree otevřen"
@@ -20127,6 +20135,9 @@ msgstr "Vaše projekty a pracovní prostory z v1 se přenášejí do nového Sup
 
 msgid "Your version: {currentVersion}"
 msgstr "Vaše verze: {currentVersion}"
+
+msgid "Your workspace admin turns on device code sign-in for Codex."
+msgstr "Přihlášení kódem zařízení pro Codex zapíná správce vašeho pracovního prostoru."
 
 msgid "Zap"
 msgstr "Blesk"

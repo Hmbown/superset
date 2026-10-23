@@ -1,16 +1,16 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Button } from "@superset/ui/button";
-import { getRightPaneOptions } from "../../paneOptions";
+import { getRightPaneOptions, type RightPaneGates } from "../../paneOptions";
 import type { RightPaneKind } from "../../types";
 
 interface RightPaneEmptyStateProps {
 	onAdd: (kind: RightPaneKind) => void;
-	canAddDesktop: boolean;
+	gates: RightPaneGates;
 }
 
 export function RightPaneEmptyState({
 	onAdd,
-	canAddDesktop,
+	gates,
 }: RightPaneEmptyStateProps) {
 	const { i18n } = useLingui();
 
@@ -20,7 +20,7 @@ export function RightPaneEmptyState({
 				<Trans>Open a pane, or drag one here from the center.</Trans>
 			</p>
 			<div className="grid grid-cols-2 gap-2">
-				{getRightPaneOptions(canAddDesktop).map((option) => (
+				{getRightPaneOptions(gates).map((option) => (
 					<Button
 						key={option.kind}
 						variant="outline"

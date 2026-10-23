@@ -739,9 +739,6 @@ msgstr "{connectorName} 계정"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "쿠키 {cookieCount}개 — 이 사이트 잊기"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {활성 포트 #개 — 세부 정보 표시} other {활성 포트 #개 — 세부 정보 표시}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {검사 #개 실패} other {검사 #개 실패}}"
 
@@ -943,9 +940,6 @@ msgstr "{kind} · 제작 {author}"
 
 msgid "{kindLabel} theme"
 msgstr "{kindLabel} 테마"
-
-msgid "{label} in cloud workspaces"
-msgstr "클라우드 워크스페이스의 {label}"
 
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
@@ -1312,6 +1306,9 @@ msgstr "+{0} −{1} · {2, plural, one {파일 #개} other {파일 #개}}"
 
 msgid "+{hidden} more"
 msgstr "+{hidden}개 더"
+
+msgid "+{hiddenCount}"
+msgstr "+{hiddenCount}"
 
 msgid "+{hiddenCount} earlier"
 msgstr "이전 +{hiddenCount}개"
@@ -2726,6 +2723,9 @@ msgstr "파일 첨부"
 msgid "Attach image"
 msgstr "이미지 첨부"
 
+msgid "Attach to chat"
+msgstr "채팅에 첨부"
+
 msgid "Attached"
 msgstr "연결됨"
 
@@ -3328,6 +3328,9 @@ msgstr "이 기기의 Superset 앱에 포함되어 있습니다."
 msgid "Bundled with the Superset app on this device. Updates with the app."
 msgstr "이 기기의 Superset 앱에 포함되어 있으며 앱과 함께 업데이트됩니다."
 
+msgid "Business plan"
+msgstr "Business 플랜"
+
 msgid "Button — sizes"
 msgstr "버튼 — 크기"
 
@@ -3573,9 +3576,6 @@ msgstr "위치 변경"
 
 msgid "Change or add labels…"
 msgstr "라벨 변경 또는 추가…"
-
-msgid "Change or add tasks…"
-msgstr "작업 변경 또는 추가…"
 
 msgid "Change organization logo"
 msgstr "조직 로고 변경"
@@ -4201,9 +4201,6 @@ msgstr "현재 클라우드 워크스페이스에는 프로젝트가 필요합�
 
 msgid "Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one."
 msgstr "클라우드 워크스페이스에는 Team 또는 Ultra 플랜이 필요합니다. 시작하려면 설정의 결제에서 업그레이드하세요."
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "클라우드 워크스페이스를 프로젝트 아래에 표시하고, 로컬/클라우드 필터와 새로 디자인한 워크스페이스 행을 제공합니다."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "클라우드 워크스페이스에서 더 이상 이것으로 {agentLabel}을(를) 실행하지 않습니다."
@@ -4923,9 +4920,6 @@ msgstr "상대 경로 복사"
 msgid "Copy Relative Path"
 msgstr "상대 경로 복사"
 
-msgid "Copy screenshot"
-msgstr "스크린샷 복사"
-
 msgid "Copy Selection"
 msgstr "선택 항목 복사"
 
@@ -5249,6 +5243,9 @@ msgstr "워크스페이스에 설명을 요청하지 못했습니다"
 msgid "Couldn't attach files"
 msgstr "파일을 첨부할 수 없습니다"
 
+msgid "Couldn't attach the screenshot"
+msgstr "스크린샷을 첨부할 수 없습니다"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "새 worktree로 분기할 수 없습니다"
 
@@ -5355,6 +5352,9 @@ msgstr "서브 에이전트를 백그라운드로 옮기지 못했습니다"
 
 msgid "Couldn't name \"{name}\" automatically"
 msgstr "\"{name}\"의 이름을 자동으로 지정하지 못했습니다"
+
+msgid "Couldn't open the screenshot"
+msgstr "스크린샷을 열 수 없습니다"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "이 차이를 해석하지 못했습니다: {patchParseError}"
@@ -5662,9 +5662,6 @@ msgstr "{0} 생성 · 마지막 사용 {1}"
 
 msgid "Created {ago}"
 msgstr "{ago} 생성됨"
-
-msgid "created {createdAgo}"
-msgstr "{createdAgo} 생성됨"
 
 msgid "Created {createdAgo}"
 msgstr "{createdAgo} 생성됨"
@@ -6914,6 +6911,9 @@ msgstr "정수 입력"
 msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
 msgstr "{minHours}에서 {maxHours} GB 시간 사이의 정수를 입력하세요."
 
+msgid "Enter this code when OpenAI asks for it:"
+msgstr "OpenAI가 요청하면 이 코드를 입력하세요:"
+
 msgid "Enter URL or search..."
 msgstr "URL 또는 검색어 입력..."
 
@@ -7657,6 +7657,9 @@ msgstr "팀을 변경하지 못했습니다. 다시 시도해 주세요."
 
 msgid "Failed to update URL"
 msgstr "URL을 업데이트하지 못했습니다"
+
+msgid "Failed to update workspace"
+msgstr "워크스페이스를 업데이트하지 못했습니다"
 
 msgid "Failed to upload avatar"
 msgstr "아바타를 업로드하지 못했습니다"
@@ -8661,9 +8664,6 @@ msgstr "호스트를 사용할 수 없음"
 msgid "Host unavailable: {hostName}"
 msgstr "호스트를 사용할 수 없음: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "클라우드에서 호스팅됨"
-
 msgid "Hosts"
 msgstr "호스트"
 
@@ -8678,6 +8678,9 @@ msgstr "매시간"
 
 msgid "Hover Card"
 msgstr "호버 카드"
+
+msgid "How {label} signs in when Superset runs it for you."
+msgstr "Superset이 {label}을(를) 실행할 때 로그인하는 방법입니다."
 
 msgid "How 2026 plays out"
 msgstr "2026년은 이렇게 전개됩니다"
@@ -9578,6 +9581,12 @@ msgstr "매월 마지막 날 {time}"
 msgid "Last run"
 msgstr "마지막 실행"
 
+msgid "Last run (result)"
+msgstr "마지막 실행(결과)"
+
+msgid "Last run (time)"
+msgstr "마지막 실행(시간)"
+
 msgid "Last seen"
 msgstr "마지막 접속"
 
@@ -10205,6 +10214,9 @@ msgstr "Slack 대화에서 작업을 관리합니다."
 msgid "Manage Terminal Scripts"
 msgstr "터미널 스크립트 관리"
 
+msgid "Manage usage"
+msgstr "사용량 관리"
+
 msgid "Manage your account settings"
 msgstr "계정 설정을 관리합니다"
 
@@ -10814,9 +10826,6 @@ msgstr "새 도전자"
 msgid "New Chat"
 msgstr "새 채팅"
 
-msgid "New cloud workspace"
-msgstr "새 클라우드 워크스페이스"
-
 msgid "New environment"
 msgstr "새 환경"
 
@@ -10858,9 +10867,6 @@ msgstr "새 세션"
 
 msgid "New shell"
 msgstr "새 셸"
-
-msgid "New sidebar"
-msgstr "새 사이드바"
 
 msgid "New stars"
 msgstr "신규 스타"
@@ -11511,9 +11517,6 @@ msgstr "작업을 찾을 수 없습니다."
 msgid "No tasks in this project yet."
 msgstr "이 프로젝트에는 아직 작업이 없습니다."
 
-msgid "No tasks or pull requests yet"
-msgstr "아직 작업이나 풀 리퀘스트가 없습니다"
-
 msgid "No tasks yet"
 msgstr "아직 작업이 없습니다"
 
@@ -12081,14 +12084,20 @@ msgstr "변경 열기"
 msgid "Open Changes"
 msgstr "변경 열기"
 
+msgid "Open ChatGPT admin settings"
+msgstr "ChatGPT 관리자 설정 열기"
+
+msgid "Open ChatGPT settings"
+msgstr "ChatGPT 설정 열기"
+
 msgid "Open Command Palette"
 msgstr "명령 팔레트 열기"
 
 msgid "Open comment on GitHub"
 msgstr "GitHub에서 코멘트 열기"
 
-msgid "Open details"
-msgstr "세부 정보 열기"
+msgid "Open device sign-in"
+msgstr "기기 로그인 열기"
 
 msgid "Open DevTools"
 msgstr "DevTools 열기"
@@ -12285,6 +12294,9 @@ msgstr "내비게이션 열기"
 msgid "Open on GitHub"
 msgstr "GitHub에서 열기"
 
+msgid "Open OpenAI's device sign-in page."
+msgstr "OpenAI의 기기 로그인 페이지를 여세요."
+
 msgid "Open Page in Default Browser"
 msgstr "기본 브라우저에서 페이지 열기"
 
@@ -12320,9 +12332,6 @@ msgstr "풀 리퀘스트 열기"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "풀 리퀘스트 #{0} 열기"
-
-msgid "Open pull request #{number}"
-msgstr "풀 리퀘스트 #{number} 열기"
 
 msgid "Open pull request options"
 msgstr "풀 리퀘스트 옵션 열기"
@@ -12422,6 +12431,9 @@ msgstr "워크스페이스 열기"
 
 msgid "Open your app."
 msgstr "앱을 여세요."
+
+msgid "OpenAI did not complete the sign-in. Start again."
+msgstr "OpenAI가 로그인을 완료하지 않았습니다. 다시 시작하세요."
 
 msgid "OpenAI rejected this API key."
 msgstr "OpenAI가 이 API 키를 거부했습니다."
@@ -12881,6 +12893,9 @@ msgstr "사람"
 msgid "Personal"
 msgstr "개인"
 
+msgid "Personal plan"
+msgstr "개인 플랜"
+
 msgid "Phantom Forklift"
 msgstr "유령 지게차"
 
@@ -12934,9 +12949,6 @@ msgstr "에이전트가 입력을 기다리고 있거나, 마지막으로 확인
 
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "아이콘과 색상을 고르거나 직접 만든 이미지를 업로드하세요. 기본값은 연결된 GitHub 소유자의 아바타입니다."
-
-msgid "Pick how {label} signs in inside a sandbox. The credential is handed to the agent process when it launches and is not stored in the sandbox."
-msgstr "샌드박스 안에서 {label}이(가) 로그인하는 방식을 고르세요. 자격 증명은 실행될 때 에이전트 프로세스로 전달되며 샌드박스에는 저장되지 않습니다."
 
 msgid "Pick one in the Superset app. It's saved to your account."
 msgstr "Superset 앱에서 하나를 고르세요. 계정에 저장됩니다."
@@ -13119,10 +13131,6 @@ msgstr "PR #{0} ({1})"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "PR #{0} 생성됨"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PR 닫힘"
@@ -14864,12 +14872,6 @@ msgstr "bun test 실행 중…"
 msgid "Running now"
 msgstr "지금 실행 중"
 
-msgid "Running on a paired device"
-msgstr "페어링된 기기에서 실행 중"
-
-msgid "Running on this device"
-msgstr "이 기기에서 실행 중"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "실행 중인 터미널 프로세스는 계속되지만, 앱을 다시 시작한 뒤에는 이전 출력을 볼 수 없을 수 있습니다."
 
@@ -15743,9 +15745,6 @@ msgstr "전체 공개로 공유됨"
 msgid "Shared with me"
 msgstr "나와 공유됨"
 
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "프로젝트의 체크아웃(파일, git 인덱스, 브랜치)을 다른 로컬 워크스페이스와 공유합니다"
-
 msgid "Sheet"
 msgstr "시트"
 
@@ -16043,6 +16042,12 @@ msgstr "로그인에 실패했습니다({reason}). 다시 시도해 주세요."
 
 msgid "Signed in as <0>{userName}</0>"
 msgstr "<0>{userName}</0>(으)로 로그인됨"
+
+msgid "Signed in to ChatGPT"
+msgstr "ChatGPT에 로그인됨"
+
+msgid "Signed in to ChatGPT as {connectedAs}"
+msgstr "{connectedAs}(으)로 ChatGPT에 로그인됨"
 
 msgid "Signed out"
 msgstr "로그아웃됨"
@@ -17159,6 +17164,9 @@ msgstr "제어 시작"
 msgid "Take me home"
 msgstr "홈으로 가기"
 
+msgid "Take screenshot"
+msgstr "스크린샷 찍기"
+
 msgid "Taken"
 msgstr "사용 중"
 
@@ -17475,9 +17483,6 @@ msgstr "앱은 무료로 다운로드할 수 있습니다. iOS 26 이상과 Supe
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "앱은 {appVersion}이지만 다른 것(오래된 CLI나 다른 Superset 빌드일 가능성)이 시작한 호스트 서비스에 연결되어 있습니다. 다시 시작하면 이 앱의 복사본으로 교체됩니다."
 
-msgid "The associated device isn't reachable right now"
-msgstr "연결된 기기에 지금 접근할 수 없습니다"
-
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "자동화 소유자가 더 이상 이 조직에서 클라우드 워크스페이스를 사용할 수 없습니다. 소유자에게 액세스 권한을 확인해 달라고 요청하거나, 기기에서 자동화를 실행하세요."
 
@@ -17492,6 +17497,9 @@ msgstr "변경은 바로 적용됩니다. 남은 기간에 대한 차액만 결�
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "클라우드 워크스페이스가 시작되었어야 하지만 제시간에 응답하지 않았습니다. 다음 실행에서 다시 시도합니다."
+
+msgid "The code expired. Start again."
+msgstr "코드가 만료되었습니다. 다시 시작하세요."
 
 msgid "The config repository must be one of the environment's repositories"
 msgstr "구성 리포지토리는 환경의 리포지토리 중 하나여야 합니다"
@@ -18528,6 +18536,9 @@ msgstr "“릴레이를 통해 이 기기에 원격 액세스 허용” 켜기"
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "디자인을 켜고 변경하고 싶은 페이지 부분을 클릭하세요."
 
+msgid "Turn on device code sign-in for Codex."
+msgstr "Codex의 기기 코드 로그인을 켜세요."
+
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Slack 대화를 작업으로 바꾸고, 워크스페이스에서 에이전트를 실행하고, 일이 시작되는 곳에서 팀원과 상황을 공유하세요."
 
@@ -19251,6 +19262,9 @@ msgstr "{0}와 {1}을(를) 기다리는 중…"
 msgid "Waiting for activity data"
 msgstr "활동 데이터 대기 중"
 
+msgid "Waiting for approval. Keep this dialog open."
+msgstr "승인을 기다리는 중입니다. 이 대화 상자를 열어 두세요."
+
 msgid "Waiting for Checks"
 msgstr "검사 대기 중"
 
@@ -19691,9 +19705,6 @@ msgstr "PR에서 워크스페이스를 만들었습니다"
 msgid "Workspace details"
 msgstr "워크스페이스 세부 정보"
 
-msgid "Workspace ID"
-msgstr "워크스페이스 ID"
-
 msgid "Workspace ID copied"
 msgstr "워크스페이스 ID 복사됨"
 
@@ -19771,9 +19782,6 @@ msgstr "worktree 위치를 업데이트했습니다"
 
 msgid "Worktree missing"
 msgstr "worktree 없음"
-
-msgid "Worktree on this device"
-msgstr "이 기기의 worktree"
 
 msgid "Worktree opened"
 msgstr "worktree를 열었습니다"
@@ -20127,6 +20135,9 @@ msgstr "v1 프로젝트와 워크스페이스를 새 Superset으로 옮기는 �
 
 msgid "Your version: {currentVersion}"
 msgstr "현재 버전: {currentVersion}"
+
+msgid "Your workspace admin turns on device code sign-in for Codex."
+msgstr "Codex용 기기 코드 로그인은 워크스페이스 관리자가 켭니다."
 
 msgid "Zap"
 msgstr "번개"
