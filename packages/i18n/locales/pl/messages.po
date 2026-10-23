@@ -735,9 +735,6 @@ msgstr "Konto {connectorName}"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookies — zapomnij tę witrynę"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {# aktywny port — pokaż szczegóły} few {# aktywne porty — pokaż szczegóły} many {# aktywnych portów — pokaż szczegóły} other {# aktywnego portu — pokaż szczegóły}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {# kontrola nie przeszła} few {# kontrole nie przeszły} many {# kontroli nie przeszło} other {# kontroli nie przeszło}}"
 
@@ -927,9 +924,6 @@ msgstr "{kind} · autor: {author}"
 
 msgid "{kindLabel} theme"
 msgstr "Motyw {kindLabel}"
-
-msgid "{label} in cloud workspaces"
-msgstr "{label} w obszarach roboczych w chmurze"
 
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
@@ -3273,6 +3267,9 @@ msgstr "Dołączony do aplikacji Superset na tym urządzeniu."
 msgid "Bundled with the Superset app on this device. Updates with the app."
 msgstr "Dołączony do aplikacji Superset na tym urządzeniu. Aktualizuje się razem z aplikacją."
 
+msgid "Business plan"
+msgstr "Plan Business"
+
 msgid "Button — sizes"
 msgstr "Przycisk — rozmiary"
 
@@ -3500,9 +3497,6 @@ msgstr "Zmień lokalizację"
 
 msgid "Change or add labels…"
 msgstr "Zmień lub dodaj etykiety…"
-
-msgid "Change or add tasks…"
-msgstr "Zmień lub dodaj zadania…"
 
 msgid "Change organization logo"
 msgstr "Zmień logo organizacji"
@@ -4105,9 +4099,6 @@ msgstr "Użycie chmury"
 msgid "Cloud workspace"
 msgstr "Obszar roboczy w chmurze"
 
-msgid "Cloud workspaces"
-msgstr "Chmurowe obszary robocze"
-
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Chmurowe przestrzenie robocze ignorują tę zmienną. Agenci logują się zamiast tego w Ustawienia › Agenci."
 
@@ -4116,9 +4107,6 @@ msgstr "Obszary robocze w chmurze wymagają płatnego planu. Podnieś plan w Ust
 
 msgid "Cloud workspaces need a project for now"
 msgstr "Chmurowe obszary robocze na razie wymagają projektu"
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "Chmurowe obszary robocze pod ich projektami, filtr lokalnych i chmurowych obszarów roboczych oraz przeprojektowany wiersz obszaru roboczego."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Workspace'y w chmurze przestaną uruchamiać {agentLabel} z tymi danymi."
@@ -5584,9 +5572,6 @@ msgstr "Utworzono {0} · Ostatnio użyty {1}"
 msgid "Created {ago}"
 msgstr "Utworzono {ago}"
 
-msgid "created {createdAgo}"
-msgstr "utworzono {createdAgo}"
-
 msgid "Created {createdAgo}"
 msgstr "Utworzono {createdAgo}"
 
@@ -6819,6 +6804,9 @@ msgstr "Podaj wartość."
 
 msgid "Enter a whole number"
 msgstr "Wpisz liczbę całkowitą"
+
+msgid "Enter this code when OpenAI asks for it:"
+msgstr "Wpisz ten kod, gdy OpenAI o niego poprosi:"
 
 msgid "Enter URL or search..."
 msgstr "Wpisz URL lub szukaj..."
@@ -8537,9 +8525,6 @@ msgstr "Host niedostępny"
 msgid "Host unavailable: {hostName}"
 msgstr "Host niedostępny: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "Hostowany w chmurze"
-
 msgid "Hosts"
 msgstr "Hosty"
 
@@ -8554,6 +8539,9 @@ msgstr "Co godzinę"
 
 msgid "Hover Card"
 msgstr "Hover Card"
+
+msgid "How {label} signs in when Superset runs it for you."
+msgstr "Jak {label} się loguje, gdy Superset uruchamia go za Ciebie."
 
 msgid "How 2026 plays out"
 msgstr "Jak potoczy się 2026"
@@ -9445,6 +9433,12 @@ msgstr "Ostatni dzień każdego miesiąca o {time}"
 msgid "Last run"
 msgstr "Ostatnie uruchomienie"
 
+msgid "Last run (result)"
+msgstr "Ostatnie uruchomienie (wynik)"
+
+msgid "Last run (time)"
+msgstr "Ostatnie uruchomienie (czas)"
+
 msgid "Last seen"
 msgstr "Ostatnio widziany"
 
@@ -10077,6 +10071,9 @@ msgstr "Zarządzaj zadaniami z rozmów na Slacku."
 msgid "Manage Terminal Scripts"
 msgstr "Zarządzaj skryptami terminala"
 
+msgid "Manage usage"
+msgstr "Zarządzaj użyciem"
+
 msgid "Manage your account settings"
 msgstr "Zarządzaj ustawieniami konta"
 
@@ -10686,9 +10683,6 @@ msgstr "nowi przeciwnicy"
 msgid "New Chat"
 msgstr "Nowy czat"
 
-msgid "New cloud workspace"
-msgstr "Nowy obszar roboczy w chmurze"
-
 msgid "New environment"
 msgstr "Nowe środowisko"
 
@@ -10730,9 +10724,6 @@ msgstr "Nowa sesja"
 
 msgid "New shell"
 msgstr "Nowa powłoka"
-
-msgid "New sidebar"
-msgstr "Nowy pasek boczny"
 
 msgid "New stars"
 msgstr "Nowe gwiazdki"
@@ -11380,9 +11371,6 @@ msgstr "Nie znaleziono zadań."
 msgid "No tasks in this project yet."
 msgstr "Ten projekt nie ma jeszcze zadań."
 
-msgid "No tasks or pull requests yet"
-msgstr "Brak zadań i pull requestów"
-
 msgid "No tasks yet"
 msgstr "Brak zadań"
 
@@ -11947,14 +11935,20 @@ msgstr "Otwórz zmiany"
 msgid "Open Changes"
 msgstr "Otwórz zmiany"
 
+msgid "Open ChatGPT admin settings"
+msgstr "Otwórz ustawienia administratora ChatGPT"
+
+msgid "Open ChatGPT settings"
+msgstr "Otwórz ustawienia ChatGPT"
+
 msgid "Open Command Palette"
 msgstr "Otwórz paletę poleceń"
 
 msgid "Open comment on GitHub"
 msgstr "Otwórz komentarz na GitHub"
 
-msgid "Open details"
-msgstr "Otwórz szczegóły"
+msgid "Open device sign-in"
+msgstr "Otwórz logowanie urządzenia"
 
 msgid "Open DevTools"
 msgstr "Otwórz DevTools"
@@ -12151,6 +12145,9 @@ msgstr "Otwórz nawigację"
 msgid "Open on GitHub"
 msgstr "Otwórz na GitHub"
 
+msgid "Open OpenAI's device sign-in page."
+msgstr "Otwórz stronę logowania urządzeń OpenAI."
+
 msgid "Open Page in Default Browser"
 msgstr "Otwórz stronę w domyślnej przeglądarce"
 
@@ -12186,9 +12183,6 @@ msgstr "Otwórz pull request"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "Otwórz pull request #{0}"
-
-msgid "Open pull request #{number}"
-msgstr "Otwórz pull request #{number}"
 
 msgid "Open pull request options"
 msgstr "Otwórz opcje pull requesta"
@@ -12288,6 +12282,9 @@ msgstr "Otwórz obszar roboczy"
 
 msgid "Open your app."
 msgstr "Otwórz swoją aplikację."
+
+msgid "OpenAI did not complete the sign-in. Start again."
+msgstr "OpenAI nie ukończyło logowania. Zacznij od nowa."
 
 msgid "OpenAI rejected this API key."
 msgstr "OpenAI odrzucił ten klucz API."
@@ -12741,6 +12738,9 @@ msgstr "Osoba"
 msgid "Personal"
 msgstr "Osobiste"
 
+msgid "Personal plan"
+msgstr "Plan osobisty"
+
 msgid "Phantom Forklift"
 msgstr "Widmowy Wózek Widłowy"
 
@@ -12794,9 +12794,6 @@ msgstr "Wybierz obszar roboczy, którego agent czeka na Twoje dane, skończył p
 
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "Wybierz ikonę i kolor albo prześlij własny obraz. Domyślnie używany jest awatar powiązanego właściciela repozytorium GitHub."
-
-msgid "Pick how {label} signs in inside a sandbox. The credential is handed to the agent process when it launches and is not stored in the sandbox."
-msgstr "Wybierz, jak {label} loguje się wewnątrz piaskownicy. Poświadczenie trafia do procesu agenta przy starcie i nie jest przechowywane w piaskownicy."
 
 msgid "Pick one in the Superset app. It's saved to your account."
 msgstr "Wybierz jedną w aplikacji Superset. Zapisuje się na twoim koncie."
@@ -12979,10 +12976,6 @@ msgstr "PR #{0} ({1})"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "Utworzono PR #{0}"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PR zamknięty"
@@ -14724,12 +14717,6 @@ msgstr "Uruchamianie bun test…"
 msgid "Running now"
 msgstr "Uruchamianie teraz"
 
-msgid "Running on a paired device"
-msgstr "Działa na sparowanym urządzeniu"
-
-msgid "Running on this device"
-msgstr "Działa na tym urządzeniu"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Działające procesy terminala nie zostaną przerwane, ale starsze wyjście może być niedostępne po ponownym uruchomieniu aplikacji."
 
@@ -15600,9 +15587,6 @@ msgstr "Udostępniona wszystkim"
 msgid "Shared with me"
 msgstr "Udostępnione mi"
 
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "Współdzieli checkout projektu — pliki, indeks git i gałąź — z pozostałymi lokalnymi obszarami roboczymi"
-
 msgid "Sheet"
 msgstr "Arkusz"
 
@@ -15900,6 +15884,12 @@ msgstr "Logowanie nie powiodło się ({reason}). Spróbuj ponownie."
 
 msgid "Signed in as <0>{userName}</0>"
 msgstr "Zalogowano jako <0>{userName}</0>"
+
+msgid "Signed in to ChatGPT"
+msgstr "Zalogowano do ChatGPT"
+
+msgid "Signed in to ChatGPT as {connectedAs}"
+msgstr "Zalogowano do ChatGPT jako {connectedAs}"
 
 msgid "Signed out"
 msgstr "Wylogowano"
@@ -17321,9 +17311,6 @@ msgstr "Aplikację można pobrać bezpłatnie. Wymaga iOS 26 lub nowszego oraz S
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "Aplikacja jest w wersji {appVersion}, ale podłączona do usługi hosta uruchomionej przez coś innego, prawdopodobnie starszą CLI lub inną kompilację Superset. Ponowne uruchomienie zastąpi ją kopią z tej aplikacji."
 
-msgid "The associated device isn't reachable right now"
-msgstr "Powiązane urządzenie jest teraz nieosiągalne"
-
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "Właściciel automatyzacji nie może już używać obszarów roboczych w chmurze w tej organizacji. Poproś go o sprawdzenie dostępu albo uruchom automatyzację na urządzeniu."
 
@@ -17335,6 +17322,9 @@ msgstr "Przycisk teraz się wyróżnia. Sprawdziłem to w Twoim panelu."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Obszar roboczy w chmurze powinien był się uruchomić, ale nie odpowiedział na czas. Następne uruchomienie spróbuje ponownie."
+
+msgid "The code expired. Start again."
+msgstr "Kod wygasł. Zacznij od nowa."
 
 msgid "The commands Superset runs to set up, run and archive this project's workspaces, from .superset/config.toml."
 msgstr "Polecenia, które Superset uruchamia, aby przygotować, uruchomić i zarchiwizować obszary robocze tego projektu, z pliku .superset/config.toml."
@@ -18368,6 +18358,9 @@ msgstr "Włącz „Zezwól na zdalny dostęp do tego urządzenia przez przekaźn
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "Włącz Design i kliknij fragment strony, który chcesz zmienić."
 
+msgid "Turn on device code sign-in for Codex."
+msgstr "Włącz logowanie kodem urządzenia dla Codex."
+
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Zamieniaj rozmowy na Slacku w zadania, uruchamiaj agentów ze swojego obszaru roboczego i informuj zespół tam, gdzie zaczyna się praca."
 
@@ -19092,6 +19085,9 @@ msgstr "czekamy na {0} i {1}…"
 msgid "Waiting for activity data"
 msgstr "Oczekiwanie na dane aktywności"
 
+msgid "Waiting for approval. Keep this dialog open."
+msgstr "Oczekiwanie na zatwierdzenie. Nie zamykaj tego okna."
+
 msgid "Waiting for Checks"
 msgstr "Oczekiwanie na kontrole"
 
@@ -19526,9 +19522,6 @@ msgstr "Obszar roboczy utworzony z PR"
 msgid "Workspace details"
 msgstr "Szczegóły obszaru roboczego"
 
-msgid "Workspace ID"
-msgstr "ID obszaru roboczego"
-
 msgid "Workspace ID copied"
 msgstr "Skopiowano ID obszaru roboczego"
 
@@ -19606,9 +19599,6 @@ msgstr "Zaktualizowano lokalizację worktree"
 
 msgid "Worktree missing"
 msgstr "Brak worktree"
-
-msgid "Worktree on this device"
-msgstr "Worktree na tym urządzeniu"
 
 msgid "Worktree opened"
 msgstr "Worktree otwarty"
@@ -19950,6 +19940,9 @@ msgstr "Twoje projekty i obszary robocze z v1 są przenoszone do nowego Superset
 
 msgid "Your version: {currentVersion}"
 msgstr "Twoja wersja: {currentVersion}"
+
+msgid "Your workspace admin turns on device code sign-in for Codex."
+msgstr "Logowanie kodem urządzenia dla Codex włącza administrator Twojego obszaru roboczego."
 
 msgid "Zap"
 msgstr "Błyskawica"

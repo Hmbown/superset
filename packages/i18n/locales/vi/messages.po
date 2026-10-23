@@ -735,9 +735,6 @@ msgstr "Tài khoản {connectorName}"
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookie — quên trang này"
 
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {# cổng đang hoạt động — hiện chi tiết} other {# cổng đang hoạt động — hiện chi tiết}}"
-
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {# check thất bại} other {# check thất bại}}"
 
@@ -927,9 +924,6 @@ msgstr "{kind} · bởi {author}"
 
 msgid "{kindLabel} theme"
 msgstr "Chủ đề {kindLabel}"
-
-msgid "{label} in cloud workspaces"
-msgstr "{label} trong workspace cloud"
 
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
@@ -3273,6 +3267,9 @@ msgstr "Đi kèm với ứng dụng Superset trên thiết bị này."
 msgid "Bundled with the Superset app on this device. Updates with the app."
 msgstr "Đi kèm với ứng dụng Superset trên thiết bị này. Cập nhật cùng với ứng dụng."
 
+msgid "Business plan"
+msgstr "Gói Business"
+
 msgid "Button — sizes"
 msgstr "Nút — kích thước"
 
@@ -3500,9 +3497,6 @@ msgstr "Đổi vị trí"
 
 msgid "Change or add labels…"
 msgstr "Đổi hoặc thêm nhãn…"
-
-msgid "Change or add tasks…"
-msgstr "Đổi hoặc thêm tác vụ…"
 
 msgid "Change organization logo"
 msgstr "Đổi logo tổ chức"
@@ -4105,9 +4099,6 @@ msgstr "Mức sử dụng đám mây"
 msgid "Cloud workspace"
 msgstr "Workspace cloud"
 
-msgid "Cloud workspaces"
-msgstr "Không gian làm việc đám mây"
-
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Workspace đám mây bỏ qua biến này. Thay vào đó, các agent đăng nhập trong Cài đặt › Agent."
 
@@ -4116,9 +4107,6 @@ msgstr "Workspace cloud cần gói trả phí. Hãy nâng cấp trong Cài đặ
 
 msgid "Cloud workspaces need a project for now"
 msgstr "Hiện tại workspace đám mây cần có dự án"
-
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "Workspace đám mây nằm dưới dự án của chúng, bộ lọc cục bộ và đám mây, cùng hàng workspace được thiết kế lại."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Workspace đám mây sẽ ngừng chạy {agentLabel} với thông tin này."
@@ -5584,9 +5572,6 @@ msgstr "Tạo {0} · Dùng lần cuối {1}"
 msgid "Created {ago}"
 msgstr "Đã tạo {ago}"
 
-msgid "created {createdAgo}"
-msgstr "đã tạo {createdAgo}"
-
 msgid "Created {createdAgo}"
 msgstr "Đã tạo {createdAgo}"
 
@@ -6819,6 +6804,9 @@ msgstr "Hãy nhập một giá trị."
 
 msgid "Enter a whole number"
 msgstr "Nhập một số nguyên"
+
+msgid "Enter this code when OpenAI asks for it:"
+msgstr "Nhập mã này khi OpenAI yêu cầu:"
 
 msgid "Enter URL or search..."
 msgstr "Nhập URL hoặc tìm kiếm..."
@@ -8537,9 +8525,6 @@ msgstr "Host không khả dụng"
 msgid "Host unavailable: {hostName}"
 msgstr "Host không khả dụng: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "Chạy trên cloud"
-
 msgid "Hosts"
 msgstr "Host"
 
@@ -8554,6 +8539,9 @@ msgstr "Hằng giờ"
 
 msgid "Hover Card"
 msgstr "Hover Card"
+
+msgid "How {label} signs in when Superset runs it for you."
+msgstr "Cách {label} đăng nhập khi Superset chạy nó cho bạn."
 
 msgid "How 2026 plays out"
 msgstr "Năm 2026 diễn ra thế nào"
@@ -9445,6 +9433,12 @@ msgstr "Ngày cuối mỗi tháng lúc {time}"
 msgid "Last run"
 msgstr "Chạy lần cuối"
 
+msgid "Last run (result)"
+msgstr "Chạy lần cuối (kết quả)"
+
+msgid "Last run (time)"
+msgstr "Chạy lần cuối (thời gian)"
+
 msgid "Last seen"
 msgstr "Lần cuối trực tuyến"
 
@@ -10077,6 +10071,9 @@ msgstr "Quản lý tác vụ từ hội thoại Slack."
 msgid "Manage Terminal Scripts"
 msgstr "Quản lý script terminal"
 
+msgid "Manage usage"
+msgstr "Quản lý mức sử dụng"
+
 msgid "Manage your account settings"
 msgstr "Quản lý cài đặt tài khoản của bạn"
 
@@ -10686,9 +10683,6 @@ msgstr "đối thủ mới"
 msgid "New Chat"
 msgstr "Chat mới"
 
-msgid "New cloud workspace"
-msgstr "Workspace cloud mới"
-
 msgid "New environment"
 msgstr "Environment mới"
 
@@ -10730,9 +10724,6 @@ msgstr "Phiên mới"
 
 msgid "New shell"
 msgstr "Shell mới"
-
-msgid "New sidebar"
-msgstr "Thanh bên mới"
 
 msgid "New stars"
 msgstr "Star mới"
@@ -11380,9 +11371,6 @@ msgstr "Không tìm thấy tác vụ nào."
 msgid "No tasks in this project yet."
 msgstr "Dự án này chưa có tác vụ nào."
 
-msgid "No tasks or pull requests yet"
-msgstr "Chưa có tác vụ hay pull request nào"
-
 msgid "No tasks yet"
 msgstr "Chưa có tác vụ nào"
 
@@ -11947,14 +11935,20 @@ msgstr "Mở thay đổi"
 msgid "Open Changes"
 msgstr "Mở thay đổi"
 
+msgid "Open ChatGPT admin settings"
+msgstr "Mở cài đặt quản trị ChatGPT"
+
+msgid "Open ChatGPT settings"
+msgstr "Mở cài đặt ChatGPT"
+
 msgid "Open Command Palette"
 msgstr "Mở bảng lệnh"
 
 msgid "Open comment on GitHub"
 msgstr "Mở bình luận trên GitHub"
 
-msgid "Open details"
-msgstr "Mở chi tiết"
+msgid "Open device sign-in"
+msgstr "Mở đăng nhập thiết bị"
 
 msgid "Open DevTools"
 msgstr "Mở DevTools"
@@ -12151,6 +12145,9 @@ msgstr "Mở điều hướng"
 msgid "Open on GitHub"
 msgstr "Mở trên GitHub"
 
+msgid "Open OpenAI's device sign-in page."
+msgstr "Mở trang đăng nhập thiết bị của OpenAI."
+
 msgid "Open Page in Default Browser"
 msgstr "Mở trang trong trình duyệt mặc định"
 
@@ -12186,9 +12183,6 @@ msgstr "Mở pull request"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "Mở pull request #{0}"
-
-msgid "Open pull request #{number}"
-msgstr "Mở pull request #{number}"
 
 msgid "Open pull request options"
 msgstr "Mở tùy chọn pull request"
@@ -12288,6 +12282,9 @@ msgstr "Mở workspace"
 
 msgid "Open your app."
 msgstr "Mở ứng dụng của bạn."
+
+msgid "OpenAI did not complete the sign-in. Start again."
+msgstr "OpenAI chưa hoàn tất đăng nhập. Hãy bắt đầu lại."
 
 msgid "OpenAI rejected this API key."
 msgstr "OpenAI đã từ chối khóa API này."
@@ -12741,6 +12738,9 @@ msgstr "Người"
 msgid "Personal"
 msgstr "Cá nhân"
 
+msgid "Personal plan"
+msgstr "Gói cá nhân"
+
 msgid "Phantom Forklift"
 msgstr "Xe nâng bóng ma"
 
@@ -12794,9 +12794,6 @@ msgstr "Chọn workspace có agent đang chờ bạn nhập, đã hoàn tất k�
 
 msgid "Pick an icon and a color, or upload a custom image. Defaults to the linked GitHub owner's avatar."
 msgstr "Chọn biểu tượng và màu, hoặc tải ảnh riêng lên. Mặc định dùng ảnh đại diện của chủ sở hữu GitHub đã liên kết."
-
-msgid "Pick how {label} signs in inside a sandbox. The credential is handed to the agent process when it launches and is not stored in the sandbox."
-msgstr "Chọn cách {label} đăng nhập bên trong sandbox. Thông tin xác thực được chuyển cho tiến trình agent khi khởi chạy và không được lưu trong sandbox."
 
 msgid "Pick one in the Superset app. It's saved to your account."
 msgstr "Chọn một plugin trong ứng dụng Superset. Plugin được lưu vào tài khoản của bạn."
@@ -12979,10 +12976,6 @@ msgstr "PR #{0} ({1})"
 #. placeholder {0}: created.number
 msgid "PR #{0} created"
 msgstr "Đã tạo PR #{0}"
-
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
 
 msgid "PR Closed"
 msgstr "PR đã đóng"
@@ -14724,12 +14717,6 @@ msgstr "Đang chạy bun test…"
 msgid "Running now"
 msgstr "Đang chạy ngay"
 
-msgid "Running on a paired device"
-msgstr "Đang chạy trên thiết bị đã ghép nối"
-
-msgid "Running on this device"
-msgstr "Đang chạy trên thiết bị này"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Các tiến trình terminal đang chạy vẫn tiếp tục, nhưng kết quả cũ có thể không còn sau khi khởi động lại ứng dụng."
 
@@ -15600,9 +15587,6 @@ msgstr "Đã chia sẻ với mọi người"
 msgid "Shared with me"
 msgstr "Được chia sẻ với tôi"
 
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "Dùng chung checkout của dự án — tệp, chỉ mục git và nhánh — với các workspace cục bộ khác"
-
 msgid "Sheet"
 msgstr "Sheet"
 
@@ -15900,6 +15884,12 @@ msgstr "Đăng nhập thất bại ({reason}). Vui lòng thử lại."
 
 msgid "Signed in as <0>{userName}</0>"
 msgstr "Đang đăng nhập với <0>{userName}</0>"
+
+msgid "Signed in to ChatGPT"
+msgstr "Đã đăng nhập ChatGPT"
+
+msgid "Signed in to ChatGPT as {connectedAs}"
+msgstr "Đã đăng nhập ChatGPT với tên {connectedAs}"
 
 msgid "Signed out"
 msgstr "Đã đăng xuất"
@@ -17321,9 +17311,6 @@ msgstr "Ứng dụng được tải miễn phí. Yêu cầu iOS 26 trở lên v�
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "Ứng dụng đang ở {appVersion} nhưng kết nối với dịch vụ máy chủ do thứ khác khởi động, có thể là CLI cũ hoặc bản dựng Superset khác. Khởi động lại sẽ thay thế nó bằng bản của ứng dụng này."
 
-msgid "The associated device isn't reachable right now"
-msgstr "Hiện không kết nối được tới thiết bị liên quan"
-
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "Chủ sở hữu của tự động hóa không còn dùng được workspace cloud trong tổ chức này. Hãy nhờ họ kiểm tra quyền truy cập, hoặc chạy tự động hóa trên một thiết bị."
 
@@ -17335,6 +17322,9 @@ msgstr "Nút giờ đã nổi bật. Tôi đã kiểm tra trong ngăn của bạ
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Workspace cloud lẽ ra đã khởi động nhưng không phản hồi kịp. Lần chạy tiếp theo sẽ thử lại."
+
+msgid "The code expired. Start again."
+msgstr "Mã đã hết hạn. Hãy bắt đầu lại."
 
 msgid "The commands Superset runs to set up, run and archive this project's workspaces, from .superset/config.toml."
 msgstr "Các lệnh Superset chạy để thiết lập, chạy và lưu trữ các workspace của dự án này, từ .superset/config.toml."
@@ -18368,6 +18358,9 @@ msgstr "Bật “Cho phép truy cập từ xa vào thiết bị này qua relay�
 msgid "Turn on Design and click the part of the page you want to change."
 msgstr "Bật Thiết kế và nhấp vào phần của trang mà bạn muốn thay đổi."
 
+msgid "Turn on device code sign-in for Codex."
+msgstr "Bật đăng nhập bằng mã thiết bị cho Codex."
+
 msgid "Turn Slack conversations into tasks, run agents from your workspace, and keep teammates in the loop where work starts."
 msgstr "Biến hội thoại Slack thành tác vụ, chạy agent từ workspace của bạn và giữ đồng đội nắm thông tin ngay nơi công việc bắt đầu."
 
@@ -19092,6 +19085,9 @@ msgstr "đang chờ {0} và {1}…"
 msgid "Waiting for activity data"
 msgstr "Đang chờ dữ liệu hoạt động"
 
+msgid "Waiting for approval. Keep this dialog open."
+msgstr "Đang chờ phê duyệt. Hãy giữ hộp thoại này mở."
+
 msgid "Waiting for Checks"
 msgstr "Đang chờ check"
 
@@ -19526,9 +19522,6 @@ msgstr "Đã tạo workspace từ PR"
 msgid "Workspace details"
 msgstr "Chi tiết workspace"
 
-msgid "Workspace ID"
-msgstr "ID workspace"
-
 msgid "Workspace ID copied"
 msgstr "Đã sao chép ID workspace"
 
@@ -19606,9 +19599,6 @@ msgstr "Đã cập nhật vị trí worktree"
 
 msgid "Worktree missing"
 msgstr "Thiếu worktree"
-
-msgid "Worktree on this device"
-msgstr "Worktree trên thiết bị này"
 
 msgid "Worktree opened"
 msgstr "Đã mở worktree"
@@ -19950,6 +19940,9 @@ msgstr "Các dự án và workspace v1 của bạn đang được chuyển sang 
 
 msgid "Your version: {currentVersion}"
 msgstr "Phiên bản của bạn: {currentVersion}"
+
+msgid "Your workspace admin turns on device code sign-in for Codex."
+msgstr "Quản trị viên không gian làm việc của bạn bật đăng nhập bằng mã thiết bị cho Codex."
 
 msgid "Zap"
 msgstr "Tia chớp"
