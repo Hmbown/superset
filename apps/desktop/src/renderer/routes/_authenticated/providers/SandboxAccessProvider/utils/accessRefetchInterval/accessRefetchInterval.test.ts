@@ -19,19 +19,15 @@ describe("accessRefetchInterval", () => {
 		);
 	});
 
-	test("waits the longest after a refusal instead of asking every 30 seconds", () => {
-		const error = { data: { code: "FORBIDDEN" } };
-		expect(accessRefetchInterval({ error, errorUpdateCount: 1 }, NOW)).toBe(
-			MAX_ERROR_RETRY_MS,
-		);
-	});
-
-	test("other failures retry soon, then back off to the cap", () => {
-		const error = { data: { code: "INTERNAL_SERVER_ERROR" } };
-		const after = (errorUpdateCount: number) =>
-			accessRefetchInterval({ error, errorUpdateCount }, NOW);
-		expect(after(1)).toBe(ACCESS_RETRY_MS);
-		expect(after(3)).toBe(4 * ACCESS_RETRY_MS);
-		expect(after(50)).toBe(MAX_ERROR_RETRY_MS);
-	});
+	test.each(["FORBIDDEN", "INTERNAL_SERVER_ERROR"])(
+		"a %s retries soon, then backs off to the cap",
+		(code) => {
+			const error = { data: { code } };
+			const after = (errorUpdateCount: number) =>
+				accessRefetchInterval({ error, errorUpdateCount }, NOW);
+			expect(after(1)).toBe(ACCESS_RETRY_MS);
+			expect(after(3)).toBe(4 * ACCESS_RETRY_MS);
+			expect(after(50)).toBe(MAX_ERROR_RETRY_MS);
+		},
+	);
 });

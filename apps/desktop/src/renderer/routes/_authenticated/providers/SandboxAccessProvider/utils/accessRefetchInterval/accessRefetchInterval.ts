@@ -17,8 +17,6 @@ export function accessRefetchInterval(
 	now = Date.now(),
 ): number {
 	if (state.error) {
-		const code = (state.error as { data?: { code?: unknown } }).data?.code;
-		if (code === "FORBIDDEN") return MAX_ERROR_RETRY_MS;
 		const failures = Math.max(1, state.errorUpdateCount ?? 1);
 		return Math.min(ACCESS_RETRY_MS * 2 ** (failures - 1), MAX_ERROR_RETRY_MS);
 	}
