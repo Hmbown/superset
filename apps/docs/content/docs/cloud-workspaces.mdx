@@ -26,6 +26,8 @@ Every cloud workspace starts from an **environment**: the repositories to clone,
 
 Open **Settings → Environments** and click **New environment**. You can also pick a cloud project in the new-workspace screen, open the environment picker (it reads **Set up environment**), and choose **New environment**.
 
+![The New environment dialog with one repository, the region, and who can see it](/images/cloud-environment-editor.png)
+
 - **Name**: how the environment appears in pickers.
 - **Repositories**: one to 20 GitHub repositories. The first one is the primary.
 - **Advanced → Opens on**: the primary repository, whose `.superset/config.json` sets the workspace's [setup scripts](/setup-teardown-scripts) and ports. Shown when there is more than one repository.
@@ -46,6 +48,8 @@ Cloud workspaces ignore `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`, `CLAUDE_COD
 2. Pick a project. Only projects linked to a GitHub repository appear.
 3. Pick the base branch, the environment, and the [machine size](#machine-sizes). Superset creates a new working branch from the base branch.
 4. Write your prompt and start.
+
+![The new-workspace screen with Cloud picked and the machine size menu open](/images/cloud-new-workspace.png)
 
 If no environment includes the project's repository, the environment picker reads **Set up environment**. Choose **New environment** to open the editor with that repository already selected.
 
