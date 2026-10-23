@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname } from "node:path";
+import { dirname, join } from "node:path";
 import { parseProjectConfig } from "@superset/shared/project-config";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
@@ -22,6 +22,34 @@ import { protectedProcedure, router } from "../../index";
 const projectIdInput = z.object({ projectId: z.string().uuid() });
 
 const stringArray = z.array(z.string());
+
+const LOCAL_CONFIG_IGNORE_ENTRY = "/.superset/config.local.toml";
+
+/**
+ * Keeps the personal file out of commits on this machine without touching the
+ * repository: `.git/info/exclude` is a per-clone ignore list. Best effort.
+ */
+function excludeLocalConfig(repoPath: string): void {
+	const gitDir = join(repoPath, ".git");
+	if (!existsSync(gitDir)) return;
+	const excludePath = join(gitDir, "info", "exclude");
+	try {
+		const current = readIfExists(excludePath) ?? "";
+		if (current.split("\n").includes(LOCAL_CONFIG_IGNORE_ENTRY)) return;
+		mkdirSync(dirname(excludePath), { recursive: true });
+		const separator = current === "" || current.endsWith("\n") ? "" : "\n";
+		writeFileSync(
+			excludePath,
+			`${current}${separator}${LOCAL_CONFIG_IGNORE_ENTRY}\n`,
+			"utf-8",
+		);
+	} catch (error) {
+		console.warn(
+			"[config] could not add config.local.toml to .git/info/exclude",
+			error,
+		);
+	}
+}
 
 function readIfExists(path: string): string | null {
 	return existsSync(path) ? readFileSync(path, "utf-8") : null;
@@ -227,6 +255,7 @@ export const configRouter = router({
 			try {
 				mkdirSync(dirname(path), { recursive: true });
 				writeFileSync(path, input.content, "utf-8");
+				if (input.file === "local") excludeLocalConfig(project.repoPath);
 			} catch (error) {
 				throw new TRPCError({
 					code: "INTERNAL_SERVER_ERROR",

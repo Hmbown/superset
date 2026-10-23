@@ -135,6 +135,26 @@ describe("configRouter", () => {
 			).toContain("direnv");
 		});
 
+		it("keeps the personal file out of commits through .git/info/exclude", async () => {
+			const caller = createCaller(sandbox.repoPath);
+			mkdirSync(join(sandbox.repoPath, ".git", "info"), { recursive: true });
+			writeFileSync(join(sandbox.repoPath, ".git", "info", "exclude"), "*.log");
+			for (let i = 0; i < 2; i++) {
+				await caller.writeConfigFile({
+					projectId: PROJECT_ID,
+					file: "local",
+					format: "toml",
+					content: "",
+				});
+			}
+			expect(
+				readFileSync(
+					join(sandbox.repoPath, ".git", "info", "exclude"),
+					"utf-8",
+				),
+			).toBe("*.log\n/.superset/config.local.toml\n");
+		});
+
 		it("refuses invalid content and writes nothing", async () => {
 			const caller = createCaller(sandbox.repoPath);
 			await expect(
