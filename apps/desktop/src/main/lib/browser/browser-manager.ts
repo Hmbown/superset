@@ -1298,24 +1298,23 @@ class BrowserManager extends EventEmitter {
 	}
 
 	private setupConsoleCapture(paneId: string, wc: Electron.WebContents): void {
-		// Electron's console-message `level` is 0..3 = verbose, info, warning,
-		// error (per electron.d.ts). console.log fires level 1 (info), so a naive
-		// 0:log,1:warn,… map mislabels every message by one.
-		const LEVEL_MAP: Record<number, ConsoleEntry["level"]> = {
-			0: "debug",
-			1: "log",
-			2: "warn",
-			3: "error",
+		const LEVEL_MAP: Record<
+			Electron.WebContentsConsoleMessageEventParams["level"],
+			ConsoleEntry["level"]
+		> = {
+			debug: "debug",
+			info: "log",
+			warning: "warn",
+			error: "error",
 		};
 
-		const handler = (
-			_event: Electron.Event,
-			level: number,
-			message: string,
-		) => {
+		const handler = ({
+			level,
+			message,
+		}: Electron.Event<Electron.WebContentsConsoleMessageEventParams>) => {
 			const entries = this.consoleLogs.get(paneId) ?? [];
 			entries.push({
-				level: LEVEL_MAP[level] ?? "log",
+				level: LEVEL_MAP[level],
 				message,
 				timestamp: Date.now(),
 			});

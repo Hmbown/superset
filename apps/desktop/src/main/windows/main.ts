@@ -453,18 +453,19 @@ export async function createPlatformWindow({
 	if (isDev) {
 		window.webContents.on(
 			"console-message",
-			(_event, level, message, line, sourceId) => {
+			({ level, message, lineNumber, sourceId }) => {
+				const isProblem = level === "warning" || level === "error";
 				const shouldForward =
-					level >= 2 ||
+					isProblem ||
 					message.includes("[stress]") ||
 					message.includes("[main]");
 				if (!shouldForward) return;
 
-				const details = sourceId ? ` (${sourceId}:${line})` : "";
+				const details = sourceId ? ` (${sourceId}:${lineNumber})` : "";
 				const formatted = `[renderer-console] ${message}${details}`;
-				if (level >= 3) {
+				if (level === "error") {
 					log.error(formatted);
-				} else if (level >= 2) {
+				} else if (level === "warning") {
 					log.warn(formatted);
 				} else {
 					log.info(formatted);
