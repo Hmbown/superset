@@ -80,6 +80,9 @@ cloud_setup_main() {
   # The whole id: the first block alone is 8 hex characters, and two
   # workspaces that collided would silently share one database.
   export SUPERSET_WORKSPACE_NAME="cloud-${SUPERSET_SANDBOX_WORKSPACE_ID}"
+  # A cloud workspace's branch expires unless a boot renews it, so a box that
+  # is archived or abandoned releases its branch without running any hook.
+  export NEON_BRANCH_LEASE_DAYS=7
 
   step_install_dependencies || step_failed "Install dependencies"
   step_setup_neon_branch || step_failed "Set up Neon branch"

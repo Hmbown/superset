@@ -395,6 +395,17 @@ with `force`) instead of stopping the box. A box whose host-service predates
 the procedure answers 404 and is stopped as before, so the fix reaches a box
 only after a sandbox release.
 
+The hook is best effort, not a guarantee. It runs only when the box is still
+running at the stop stage, and boxes stop on their own after four hours idle,
+which is exactly the state an archived workspace is usually in. So a resource
+must not depend on it: this repository's Neon branch is a lease
+(`NEON_BRANCH_LEASE_DAYS=7` in `setup.cloud.sh`), set when the branch is
+created and renewed on every boot, so a box that stops renewing releases its
+branch through Neon's own expiry. **Open:** running `[archive]` at least once,
+in a fresh short-lived box from the environment's image when the original is
+stopped or gone. That works because `[archive]` only releases outside
+resources: it needs the workspace's identity and secrets, not its disk.
+
 **Sidebar affordances are driven by local state, not by the row.** Visibility,
 pinning and ordering live in `v2WorkspaceLocalState`; a section that renders
 straight off an API list will show "Remove from sidebar" doing nothing. Cloud
