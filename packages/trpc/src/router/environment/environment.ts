@@ -292,7 +292,7 @@ export const environmentRouter = {
 				await db.delete(environments).where(eq(environments.id, row.id));
 				throw error;
 			}
-			return row;
+			return { ...row, primaryRepositoryId: input.primaryRepositoryId };
 		}),
 
 	/** What promoting this workspace would make, before its golden is built. */
@@ -510,9 +510,15 @@ export const environmentRouter = {
 			const current = await loadEnvironment(input.id, ctx);
 			await assertCloudAccess(ctx, current.organizationId);
 
-			// A golden was built for its repositories: cloned, set up, snapshotted.
-			// A different set means a different golden, so it is promoted again.
-			if (input.repositoryIds && current.sourceKind !== "image") {
+			// A golden was built for its repositories and set up by its primary.
+			// Changing either means a different golden, so it is promoted again.
+			const changesPrimary =
+				input.primaryRepositoryId !== undefined &&
+				input.primaryRepositoryId !== current.primaryRepositoryId;
+			if (
+				(input.repositoryIds || changesPrimary) &&
+				current.sourceKind !== "image"
+			) {
 				throw userError({
 					code: "FORBIDDEN",
 					message:

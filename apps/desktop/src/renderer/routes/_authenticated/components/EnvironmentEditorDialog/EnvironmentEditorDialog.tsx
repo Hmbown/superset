@@ -387,7 +387,7 @@ export function EnvironmentEditorDialog({
 								label={<Trans>Opens on</Trans>}
 							>
 								<Select
-									disabled={fromWorkspaceId !== undefined}
+									disabled={repositoriesFrozen}
 									onValueChange={setPrimaryDraft}
 									value={primaryRepositoryId ?? undefined}
 								>
