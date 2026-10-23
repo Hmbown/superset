@@ -6,7 +6,7 @@ import { COMPANY } from "@superset/shared/constants";
 export interface PricingFeature {
 	id: string;
 	label: MessageDescriptor;
-	needs?: "gbHours" | "overage" | "multiple" | "pack";
+	needs?: "gbHours" | "multiple";
 	beta?: boolean;
 }
 
@@ -189,23 +189,6 @@ const BASE_FEATURES: PricingFeature[] = [
 		beta: true,
 	},
 	{
-		id: "overage",
-		label: msg({ message: "Then {overage} per GB-hour past the pool" }),
-		needs: "overage",
-	},
-	{
-		id: "gbHourPacks",
-		label: msg({ message: "Extra GB-hours: {pack}, never expire" }),
-		needs: "pack",
-		beta: true,
-	},
-	{
-		id: "unlimitedUsers",
-		label: msg({
-			message: "Unlimited users",
-		}),
-	},
-	{
 		id: "remoteAccess",
 		label: msg({
 			message: "Remote access",
@@ -249,11 +232,6 @@ const STEP_UP_FEATURES: PricingFeature[] = [
 		beta: true,
 	},
 	{
-		id: "overage",
-		label: msg({ message: "Then {overage} per GB-hour past the pool" }),
-		needs: "overage",
-	},
-	{
 		id: "cloudMultiple",
 		label: msg({ message: "{multiple}x the cloud GB-hours of {basePlan}" }),
 		needs: "multiple",
@@ -262,12 +240,6 @@ const STEP_UP_FEATURES: PricingFeature[] = [
 		id: "sharedCloudPool",
 		label: msg({ message: "One shared GB-hour pool for the team" }),
 		needs: "gbHours",
-	},
-	{
-		id: "gbHourPacks",
-		label: msg({ message: "Extra GB-hours: {pack}, never expire" }),
-		needs: "pack",
-		beta: true,
 	},
 ];
 

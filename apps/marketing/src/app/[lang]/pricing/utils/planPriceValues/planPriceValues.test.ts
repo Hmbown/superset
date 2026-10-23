@@ -120,6 +120,8 @@ describe("planPriceValues", () => {
 		});
 		expect(values.packPrice).toBe("$0.06");
 		expect(featureShown({ needs: "gbHours" }, values.byFamily.pro)).toBe(false);
-		expect(featureShown({ needs: "pack" }, values.byFamily.team)).toBe(true);
+		expect(featureShown({ needs: "multiple" }, values.byFamily.ultra)).toBe(
+			true,
+		);
 	});
 });
