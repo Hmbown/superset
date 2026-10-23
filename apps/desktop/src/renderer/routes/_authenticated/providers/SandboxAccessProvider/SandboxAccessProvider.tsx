@@ -1,11 +1,20 @@
 import { isCloudUsageRefusal } from "@superset/shared/billing";
 import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMatchRoute } from "@tanstack/react-router";
-import { createContext, type ReactNode, useContext, useMemo } from "react";
+import {
+	createContext,
+	type ReactNode,
+	useContext,
+	useMemo,
+	useState,
+} from "react";
 import { useCloudWorkspaces } from "renderer/hooks/useCloudWorkspaces";
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { setHostServiceSecret } from "renderer/lib/host-service-auth";
-import { accessRefetchInterval } from "./utils/accessRefetchInterval";
+import {
+	accessRefetchInterval,
+	createFailureStreak,
+} from "./utils/accessRefetchInterval";
 
 /**
  * The open workspace's wake is also what extends its sandbox session, which
@@ -98,6 +107,7 @@ export function SandboxAccessProvider({ children }: { children: ReactNode }) {
 		[cloudWorkspaces],
 	);
 
+	const [failureStreak] = useState(createFailureStreak);
 	const results = useQueries({
 		queries: workspaces.map((workspace) => ({
 			queryKey: sandboxAccessQueryKey(workspace.id),
@@ -106,14 +116,18 @@ export function SandboxAccessProvider({ children }: { children: ReactNode }) {
 			networkMode: "always" as const,
 			queryFn: () => requestAccess(workspace.id, false),
 			refetchInterval: (query: {
+				queryHash: string;
 				state: {
 					data?: SandboxAccess;
-					dataUpdatedAt: number;
 					error: unknown;
-					errorUpdatedAt: number;
 					errorUpdateCount: number;
 				};
-			}): number => accessRefetchInterval(query.state),
+			}): number =>
+				accessRefetchInterval({
+					data: query.state.data,
+					error: query.state.error,
+					consecutiveFailures: failureStreak(query.queryHash, query.state),
+				}),
 			refetchIntervalInBackground: true,
 		})),
 	});

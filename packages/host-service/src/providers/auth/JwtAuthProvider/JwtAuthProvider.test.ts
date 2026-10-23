@@ -379,8 +379,15 @@ describe("JwtApiAuthProvider with config-backed host auth", () => {
 });
 
 describe("JwtApiAuthProvider mint failures", () => {
-	function sessionProvider(getSessionToken: () => Promise<string>) {
-		return new JwtApiAuthProvider({ getSessionToken, apiUrl: API_URL });
+	function sessionProvider(
+		getSessionToken: () => Promise<string>,
+		mintTimeoutMs?: number,
+	) {
+		return new JwtApiAuthProvider({
+			getSessionToken,
+			apiUrl: API_URL,
+			mintTimeoutMs,
+		});
 	}
 
 	test("a rejected mint waits out a growing backoff before calling the API again", async () => {
@@ -433,5 +440,21 @@ describe("JwtApiAuthProvider mint failures", () => {
 		const tokens = await Promise.all([provider.getJwt(), provider.getJwt()]);
 		expect(tokens).toEqual(["minted.jwt.token", "minted.jwt.token"]);
 		expect(fetchMock).toHaveBeenCalledTimes(1);
+	});
+
+	test("a stalled mint gives up at its deadline instead of holding every caller", async () => {
+		mockFetch(
+			(_input, init) =>
+				new Promise<Response>((_resolve, reject) => {
+					init?.signal?.addEventListener("abort", () =>
+						reject(init.signal?.reason),
+					);
+				}),
+		);
+		const provider = sessionProvider(async () => "session-token", 20);
+
+		await expect(
+			Promise.all([provider.getJwt(), provider.getJwt()]),
+		).rejects.toThrow();
 	});
 });

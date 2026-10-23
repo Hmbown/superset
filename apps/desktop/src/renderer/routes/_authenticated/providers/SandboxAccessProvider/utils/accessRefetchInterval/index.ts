@@ -1,1 +1,4 @@
-export { accessRefetchInterval } from "./accessRefetchInterval";
+export {
+	accessRefetchInterval,
+	createFailureStreak,
+} from "./accessRefetchInterval";

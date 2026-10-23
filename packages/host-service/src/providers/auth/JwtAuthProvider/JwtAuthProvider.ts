@@ -7,6 +7,8 @@ const JWT_CACHE_DURATION_MS = 55 * 60 * 1000;
 // A synchronized fleet doing that trips Vercel's per-IP mitigation (2026-07-08).
 const MINT_RETRY_BASE_MS = 5_000;
 const MINT_RETRY_MAX_MS = 2 * 60 * 1000;
+// Callers share one in-flight mint, so a stalled request must not hold them all.
+const MINT_TIMEOUT_MS = 15_000;
 export const SESSION_REJECTED_ERROR_NAME = "SessionRejectedError";
 
 function looksLikeJwt(token: string): boolean {
@@ -23,12 +25,14 @@ export interface JwtApiAuthProviderOptions {
 	getSessionToken: () => Promise<string>;
 	onInvalidateCache?: () => void;
 	apiUrl: string;
+	mintTimeoutMs?: number;
 }
 
 export class JwtApiAuthProvider implements ApiAuthProvider {
 	private readonly getSessionToken: () => Promise<string>;
 	private readonly onInvalidateCache?: () => void;
 	private readonly apiUrl: string;
+	private readonly mintTimeoutMs: number;
 	private cachedJwt: string | null = null;
 	private cachedJwtExpiresAt = 0;
 	private inFlightMint: {
@@ -46,6 +50,7 @@ export class JwtApiAuthProvider implements ApiAuthProvider {
 		this.getSessionToken = options.getSessionToken;
 		this.onInvalidateCache = options.onInvalidateCache;
 		this.apiUrl = options.apiUrl;
+		this.mintTimeoutMs = options.mintTimeoutMs ?? MINT_TIMEOUT_MS;
 	}
 
 	async getHeaders(): Promise<Record<string, string>> {
@@ -105,6 +110,7 @@ export class JwtApiAuthProvider implements ApiAuthProvider {
 				headers: sessionToken.startsWith("sk_live_")
 					? { "x-api-key": sessionToken }
 					: { Authorization: `Bearer ${sessionToken}` },
+				signal: AbortSignal.timeout(this.mintTimeoutMs),
 			});
 			if (!response.ok) {
 				const error = new Error(`Failed to mint JWT: ${response.status}`);

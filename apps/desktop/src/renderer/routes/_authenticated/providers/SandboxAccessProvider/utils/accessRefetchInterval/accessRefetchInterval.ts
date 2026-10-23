@@ -8,11 +8,8 @@ export const MAX_ERROR_RETRY_MS = 10 * 60 * 1000;
 
 interface AccessQueryState {
 	data?: { expiresAt: number };
-	dataUpdatedAt?: number;
 	error?: unknown;
-	errorUpdatedAt?: number;
-	/** react-query never resets this on success, so it only counts failures before the first success. */
-	errorUpdateCount?: number;
+	consecutiveFailures?: number;
 }
 
 export function accessRefetchInterval(
@@ -20,17 +17,25 @@ export function accessRefetchInterval(
 	now = Date.now(),
 ): number {
 	if (state.error) {
-		if (state.dataUpdatedAt) {
-			const failingFor = (state.errorUpdatedAt ?? now) - state.dataUpdatedAt;
-			return Math.min(
-				Math.max(ACCESS_RETRY_MS, failingFor),
-				MAX_ERROR_RETRY_MS,
-			);
-		}
-		const failures = Math.max(1, state.errorUpdateCount ?? 1);
+		const failures = Math.max(1, state.consecutiveFailures ?? 1);
 		return Math.min(ACCESS_RETRY_MS * 2 ** (failures - 1), MAX_ERROR_RETRY_MS);
 	}
 	const expiresAt = state.data?.expiresAt;
 	if (!expiresAt) return ACCESS_RETRY_MS;
 	return Math.max(ACCESS_RETRY_MS, (expiresAt - now) * REFRESH_AT);
+}
+
+/**
+ * react-query's errorUpdateCount never resets on success, so remember it at
+ * each success and count only the failures since. One entry per access query.
+ */
+export function createFailureStreak(): (
+	queryHash: string,
+	state: { error?: unknown; errorUpdateCount: number },
+) => number {
+	const countAtSuccess = new Map<string, number>();
+	return (queryHash, state) => {
+		if (!state.error) countAtSuccess.set(queryHash, state.errorUpdateCount);
+		return state.errorUpdateCount - (countAtSuccess.get(queryHash) ?? 0);
+	};
 }
