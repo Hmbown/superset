@@ -850,8 +850,6 @@ export function DiffPane({
 				actionsSlot &&
 				createPortal(
 					<DiffPaneHeaderActions
-						workspaceId={workspaceId}
-						store={context.store}
 						commentNav={commentNavProps}
 						files={{
 							fileCount: totals.fileCount,
