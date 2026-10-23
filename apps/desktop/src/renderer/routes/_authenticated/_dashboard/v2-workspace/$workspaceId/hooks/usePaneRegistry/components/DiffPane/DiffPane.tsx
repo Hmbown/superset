@@ -417,7 +417,7 @@ export function DiffPane({
 		paneId: context.pane.id,
 	});
 
-	const { targetItemId, notifyScroll } = useDiffCodeViewScroll({
+	const { targetItemId, notifyScroll, releaseScroll } = useDiffCodeViewScroll({
 		codeViewRef,
 		data,
 		fileByItemId,
@@ -717,6 +717,7 @@ export function DiffPane({
 	const activeEditingItemId = items.find((item) => item.edit)?.id;
 	const handleEditorKeyDownCapture = useCallback(
 		(event: React.KeyboardEvent<HTMLDivElement>) => {
+			releaseScroll();
 			if (!activeEditingItemId) return;
 			if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
 				event.preventDefault();
@@ -730,7 +731,7 @@ export function DiffPane({
 				requestExitEditing(activeEditingItemId);
 			}
 		},
-		[activeEditingItemId, requestExitEditing, saveEditedItem],
+		[activeEditingItemId, releaseScroll, requestExitEditing, saveEditedItem],
 	);
 
 	const renderAnnotation = useCallback(
@@ -897,6 +898,9 @@ export function DiffPane({
 						ref={searchContainerRef}
 						className="relative min-h-0 w-full flex-1"
 						onKeyDownCapture={handleEditorKeyDownCapture}
+						onWheelCapture={releaseScroll}
+						onTouchStartCapture={releaseScroll}
+						onPointerDownCapture={releaseScroll}
 					>
 						<MarkdownSearch
 							isOpen={search.isSearchOpen}
