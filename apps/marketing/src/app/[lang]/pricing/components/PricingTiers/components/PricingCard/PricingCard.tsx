@@ -44,7 +44,7 @@ export function PricingCard({
 		<div
 			className={cn(
 				"flex flex-col gap-6 rounded-lg border p-6 md:p-8 xl:p-6",
-				wide && "md:col-span-2 xl:col-span-1",
+				wide && "md:col-span-2 lg:col-span-4 xl:col-span-1",
 				tier.highlight
 					? "border-foreground/30 bg-accent/20"
 					: "border-border bg-card/40",
@@ -73,7 +73,7 @@ export function PricingCard({
 						className={cn(
 							"font-medium tracking-tight leading-none text-foreground",
 							tier.price.kind === "custom"
-								? "text-3xl break-words"
+								? "text-3xl break-words xl:text-2xl"
 								: "text-4xl",
 						)}
 					>
