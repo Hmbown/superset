@@ -1,8 +1,10 @@
 import { acpHarnessForPreset } from "@superset/chat/core";
 import { Workspace } from "@superset/panes";
+import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { cn } from "@superset/ui/utils";
 import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
 import { createFileRoute } from "@tanstack/react-router";
+import { useFeatureFlagEnabled } from "posthog-js/react";
 import {
 	useCallback,
 	useEffect,
@@ -101,6 +103,10 @@ import { openSubagentPaneInStore } from "./utils/openSubagentPaneInStore";
 import type { V2WorkspaceUrlOpenTarget } from "./utils/openUrlInV2Workspace";
 
 const relayoutBrowserPanes = () => browserRuntimeRegistry.relayout();
+
+// A pane is at least 260px wide (PANE_MIN_SIZE_CLASS_NAME in @superset/panes),
+// plus the panel's 1px border; narrower clips the pane header.
+const MIN_RIGHT_PANE_AREA_WIDTH = 262;
 
 interface WorkspaceSearch {
 	sessionId?: string;
@@ -422,6 +428,7 @@ function V2WorkspaceContent() {
 		linkedStores: linkedPaneStores,
 		onOpenSubagent: openSubagentPane,
 		onSearch: handleQuickOpen,
+		isRightPaneArea: rightPaneLinkTarget !== null,
 	});
 	const defaultContextMenuActions = useDefaultContextMenuActions({
 		paneRegistry,
@@ -591,7 +598,7 @@ function V2WorkspaceContent() {
 	// here and would render the ResizablePanel without a width (full-bleed).
 	const sidebarWidth = isRightPaneAreaEnabled
 		? Math.max(
-				240,
+				MIN_RIGHT_PANE_AREA_WIDTH,
 				Math.min(
 					v2UserPreferences.rightPaneAreaWidth ?? defaultRightPaneAreaWidth,
 					maxRightPaneAreaWidth,
@@ -838,7 +845,9 @@ function V2WorkspaceContent() {
 										width={sidebarWidth}
 										onWidthChange={setSidebarWidth}
 										onResizingChange={onSidebarResizeDragging}
-										minWidth={240}
+										minWidth={
+											isRightPaneAreaEnabled ? MIN_RIGHT_PANE_AREA_WIDTH : 240
+										}
 										maxWidth={
 											isRightPaneAreaEnabled ? maxRightPaneAreaWidth : 640
 										}

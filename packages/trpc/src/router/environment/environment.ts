@@ -25,7 +25,10 @@ import {
 import { jwtProcedure, userError } from "../../trpc";
 import { loadVisibleWorkspace } from "../cloud-workspace/access";
 import { currentBundleSha } from "./current-bundle";
-import { assertEnvironmentCapacity } from "./limit";
+import {
+	assertEnvironmentCapacity,
+	assertEnvironmentCapacityLocked,
+} from "./limit";
 import { regionForRequest } from "./region-for-request";
 import { secretsRouter } from "./secrets";
 import { decryptSecret, encryptSecret } from "./secrets/utils/crypto";
@@ -199,8 +202,8 @@ export const environmentRouter = {
 	list: jwtProcedure
 		.input(z.object({ organizationId: z.string().uuid() }))
 		.query(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, input.organizationId);
+			await assertCloudAccess(ctx, input.organizationId);
 			const rows = await db
 				.select()
 				.from(environments)
@@ -226,8 +229,8 @@ export const environmentRouter = {
 	get: jwtProcedure
 		.input(z.object({ id: z.string().uuid() }))
 		.query(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			const row = await loadEnvironment(input.id, ctx);
+			await assertCloudAccess(ctx, row.organizationId);
 			const repos = await repositoriesByEnvironment([row]);
 			return { ...row, repositories: repos.get(row.id) ?? [] };
 		}),
@@ -247,9 +250,9 @@ export const environmentRouter = {
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, input.organizationId);
-			await assertEnvironmentCapacity(input.organizationId);
+			await assertCloudAccess(ctx, input.organizationId);
+			const limit = await assertEnvironmentCapacity(input.organizationId);
 			if (
 				input.hooksRepositoryId &&
 				!input.repositoryIds.includes(input.hooksRepositoryId)
@@ -261,20 +264,24 @@ export const environmentRouter = {
 					i18nKey: "serverError.environment.hooksRepositoryNotIncluded",
 				});
 			}
-			const [row] = await db
-				.insert(environments)
-				.values({
-					organizationId: input.organizationId,
-					name: input.name,
-					provider: "vercel",
-					sourceKind: "image",
-					sourceRef: SANDBOX_IMAGE_NAME,
-					region: input.region ?? regionForRequest(ctx.headers),
-					bundleSha: await currentBundleSha(),
-					scope: input.scope,
-					createdByUserId: ctx.userId,
-				})
-				.returning();
+			const [row] = await dbWs.transaction(async (tx) => {
+				await assertEnvironmentCapacityLocked(tx, input.organizationId, limit);
+				const bundleSha = await currentBundleSha();
+				return tx
+					.insert(environments)
+					.values({
+						organizationId: input.organizationId,
+						name: input.name,
+						provider: "vercel",
+						sourceKind: "image",
+						sourceRef: SANDBOX_IMAGE_NAME,
+						region: input.region ?? regionForRequest(ctx.headers),
+						bundleSha,
+						scope: input.scope,
+						createdByUserId: ctx.userId,
+					})
+					.returning();
+			});
 			if (!row) {
 				throw userError({
 					code: "INTERNAL_SERVER_ERROR",
@@ -282,12 +289,17 @@ export const environmentRouter = {
 					i18nKey: "serverError.environment.couldNotRecord",
 				});
 			}
-			await setEnvironmentRepositories({
-				environmentId: row.id,
-				organizationId: input.organizationId,
-				repositoryIds: input.repositoryIds,
-				hooksRepositoryId: input.hooksRepositoryId,
-			});
+			try {
+				await setEnvironmentRepositories({
+					environmentId: row.id,
+					organizationId: input.organizationId,
+					repositoryIds: input.repositoryIds,
+					hooksRepositoryId: input.hooksRepositoryId,
+				});
+			} catch (error) {
+				await db.delete(environments).where(eq(environments.id, row.id));
+				throw error;
+			}
 			return row;
 		}),
 
@@ -371,7 +383,9 @@ export const environmentRouter = {
 								),
 							);
 
-			if (!target) await assertEnvironmentCapacity(workspace.organizationId);
+			const limit = target
+				? null
+				: await assertEnvironmentCapacity(workspace.organizationId);
 			const { claim } = await buildSandboxClaim({ row: workspace });
 			const golden = await promoteSandboxToEnvironment({
 				sourceSandbox: workspace.providerSandboxId,
@@ -390,6 +404,13 @@ export const environmentRouter = {
 			};
 			const row = await dbWs
 				.transaction(async (tx) => {
+					if (limit !== null) {
+						await assertEnvironmentCapacityLocked(
+							tx,
+							workspace.organizationId,
+							limit,
+						);
+					}
 					const [saved] = target
 						? await tx
 								.update(environments)
@@ -495,8 +516,8 @@ export const environmentRouter = {
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			const current = await loadEnvironment(input.id, ctx);
+			await assertCloudAccess(ctx, current.organizationId);
 
 			// A golden was built for its repositories: cloned, set up, snapshotted.
 			// A different set means a different golden, so it is promoted again.
@@ -561,8 +582,8 @@ export const environmentRouter = {
 	archive: jwtProcedure
 		.input(z.object({ id: z.string().uuid() }))
 		.mutation(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			const environment = await loadEnvironment(input.id, ctx);
+			await assertCloudAccess(ctx, environment.organizationId);
 			const [archived] = await db
 				.update(environments)
 				.set({ archivedAt: new Date() })

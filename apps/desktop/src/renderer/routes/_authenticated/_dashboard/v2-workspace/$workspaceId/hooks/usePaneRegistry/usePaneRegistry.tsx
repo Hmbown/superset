@@ -90,6 +90,11 @@ import { CommentPaneTitle } from "./components/CommentPane/components/CommentPan
 import { DesktopPane } from "./components/DesktopPane";
 import { DiffPane } from "./components/DiffPane";
 import { DiffPaneHeaderExtras } from "./components/DiffPane/components/DiffPaneHeaderExtras";
+import { DiffPaneHeaderSlot } from "./components/DiffPane/components/DiffPaneHeaderSlot";
+import {
+	diffPaneActionsSlotId,
+	diffPaneTitleSlotId,
+} from "./components/DiffPane/utils/headerSlots";
 import { FilePane } from "./components/FilePane";
 import { FilePaneHeaderExtras } from "./components/FilePane/components/FilePaneHeaderExtras";
 import { FilesTreePane } from "./components/FilesTreePane";
@@ -163,6 +168,8 @@ interface UsePaneRegistryOptions {
 	linkedStores?: StoreApi<WorkspaceStore<PaneViewerData>>[];
 	onOpenSubagent: (data: SubagentPaneData) => void;
 	onSearch?: () => void;
+	/** The right pane area is on: the Changes pane draws its own header. */
+	isRightPaneArea?: boolean;
 }
 
 export function usePaneRegistry({
@@ -174,6 +181,7 @@ export function usePaneRegistry({
 	linkedStores,
 	onOpenSubagent,
 	onSearch,
+	isRightPaneArea = false,
 }: UsePaneRegistryOptions): PaneRegistry<PaneViewerData> {
 	const { t } = useLingui();
 	const { workspace } = useWorkspace();
@@ -356,6 +364,16 @@ export function usePaneRegistry({
 			diff: {
 				getIcon: () => <GitCompareArrows className="size-3.5" />,
 				getTitle: () => t({ message: "Changes" }),
+				// With the right pane area, the pane fills its own header (scope on
+				// the left, view controls on the right) through these slots.
+				renderTitle: isRightPaneArea
+					? (ctx: RendererContext<PaneViewerData>) => (
+							<DiffPaneHeaderSlot
+								id={diffPaneTitleSlotId(ctx.pane.id)}
+								className="flex min-w-0 items-center"
+							/>
+						)
+					: undefined,
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
 					<DiffPane
 						context={ctx}
@@ -364,9 +382,15 @@ export function usePaneRegistry({
 						onCreateNewAgentSession={createNewAgentSession}
 					/>
 				),
-				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) => (
-					<DiffPaneHeaderExtras workspaceId={workspaceId} store={ctx.store} />
-				),
+				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) =>
+					isRightPaneArea ? (
+						<DiffPaneHeaderSlot
+							id={diffPaneActionsSlotId(ctx.pane.id)}
+							className="flex shrink-0 items-center"
+						/>
+					) : (
+						<DiffPaneHeaderExtras workspaceId={workspaceId} store={ctx.store} />
+					),
 				contextMenuActions: (_ctx, defaults) =>
 					defaults.map((d) =>
 						d.key === "close-pane"
@@ -1017,6 +1041,7 @@ export function usePaneRegistry({
 			desktopUrl,
 			chatPaneIcon,
 			onOpenSubagent,
+			isRightPaneArea,
 		],
 	);
 }

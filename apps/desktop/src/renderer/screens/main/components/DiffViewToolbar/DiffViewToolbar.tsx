@@ -6,13 +6,13 @@ import {
 	LuChevronDown,
 	LuChevronUp,
 	LuColumns2,
-	LuFiles,
 	LuFoldVertical,
 	LuMessageSquare,
 	LuRows2,
 	LuUnfoldVertical,
 } from "react-icons/lu";
 import { useSettings } from "renderer/stores/settings";
+import { DiffTreeToggleButton } from "./components/DiffTreeToggleButton";
 
 export interface DiffViewToolbarCommentNav {
 	/** Index into the ordered thread list, or null before any navigation. */
@@ -75,43 +75,7 @@ export function DiffViewToolbar({
 	return (
 		<div className="flex shrink-0 flex-wrap items-center justify-between gap-1 border-b border-border/20 px-2 py-1.5">
 			<div className="flex shrink-0 items-center gap-1 whitespace-nowrap">
-				{tree != null && (
-					<button
-						type="button"
-						onClick={tree.onToggle}
-						aria-pressed={!tree.isCollapsed}
-						aria-label={
-							tree.isCollapsed
-								? t({
-										message: "Show file tree",
-									})
-								: t({
-										message: "Hide file tree",
-									})
-						}
-						className={cn(
-							"flex items-center gap-1.5 rounded-md px-1.5 py-1 transition-colors",
-							tree.isCollapsed
-								? "text-muted-foreground hover:bg-fill-hover hover:text-foreground"
-								: "bg-secondary text-foreground",
-						)}
-					>
-						<LuFiles className="size-3.5 shrink-0" strokeWidth={1.5} />
-						<span className="text-[11px] font-medium">
-							<Trans>Files</Trans>
-						</span>
-						<span
-							className={cn(
-								"text-[11px] tabular-nums",
-								tree.isCollapsed
-									? "text-muted-foreground/70"
-									: "text-muted-foreground",
-							)}
-						>
-							{tree.fileCount}
-						</span>
-					</button>
-				)}
+				{tree != null && <DiffTreeToggleButton {...tree} />}
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<button

@@ -93,10 +93,8 @@ export function diffCardUnsafeCss(
 		overflow: hidden;
 	}
 	/* Pierre lays [data-metadata] out as the +/- counts first, then the
-	 * slotted header actions. The actions keep their width while hidden
-	 * (opacity 0 until hover), which parked the counts a couple hundred
-	 * pixels in from the card's right edge. Ordering the slotted actions
-	 * first keeps the counts at the edge; the actions surface to their left. */
+	 * slotted header actions. Ordering the slotted actions first keeps the
+	 * counts at the edge; the actions surface to their left on hover. */
 	[data-diffs-header='default'] [data-metadata] slot[name='header-metadata']::slotted(*) {
 		order: -1;
 	}

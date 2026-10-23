@@ -6,7 +6,7 @@ import { Eye, EyeOff, MessageSquare, MessageSquareOff } from "lucide-react";
 import { useSettings } from "renderer/stores/settings";
 import type { StoreApi } from "zustand/vanilla";
 import type { PaneViewerData } from "../../../../../../types";
-import { DiffPanePRLink } from "./components/DiffPanePRLink";
+import { DiffPanePRLink } from "../DiffPanePRLink";
 
 interface DiffPaneHeaderExtrasProps {
 	workspaceId: string;

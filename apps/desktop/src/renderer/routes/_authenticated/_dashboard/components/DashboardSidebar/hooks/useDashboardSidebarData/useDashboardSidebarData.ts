@@ -177,17 +177,7 @@ function useStableDashboardSidebarProjects(
 	}, [projects]);
 }
 
-interface UseDashboardSidebarDataOptions {
-	/**
-	 * File cloud workspaces under their repo's project instead of leaving
-	 * them to the Cloud section.
-	 */
-	inlineCloudWorkspaces?: boolean;
-}
-
-export function useDashboardSidebarData({
-	inlineCloudWorkspaces = false,
-}: UseDashboardSidebarDataOptions = {}) {
+export function useDashboardSidebarData() {
 	const { t } = useLingui();
 	const collections = useCollections();
 	const { machineId, activeHostUrl } = useLocalHostService();
@@ -419,33 +409,18 @@ export function useDashboardSidebarData({
 		(state) => state.pruneEntries,
 	);
 	useEffect(() => {
-		if (
-			!inlineCloudWorkspaces ||
-			!organizationId ||
-			!cloudRows ||
-			!isCloudListFresh
-		) {
-			return;
-		}
+		if (!organizationId || !cloudRows || !isCloudListFresh) return;
 		pruneCloudSidebarEntries(
 			organizationId,
 			new Set(cloudRows.map((row) => row.id)),
 		);
-	}, [
-		inlineCloudWorkspaces,
-		organizationId,
-		cloudRows,
-		isCloudListFresh,
-		pruneCloudSidebarEntries,
-	]);
+	}, [organizationId, cloudRows, isCloudListFresh, pruneCloudSidebarEntries]);
 	const shownCloudRows = useMemo(
 		() =>
-			inlineCloudWorkspaces
-				? (cloudRows ?? []).filter((row) =>
-						isInCloudSidebar(row, cloudSidebarEntries[row.id], userId),
-					)
-				: [],
-		[inlineCloudWorkspaces, cloudRows, cloudSidebarEntries, userId],
+			(cloudRows ?? []).filter((row) =>
+				isInCloudSidebar(row, cloudSidebarEntries[row.id], userId),
+			),
+		[cloudRows, cloudSidebarEntries, userId],
 	);
 	const {
 		primaryRepositoryById: cloudRepoFullNameById,
@@ -486,24 +461,21 @@ export function useDashboardSidebarData({
 		[allHostWorkspaces],
 	);
 	const { byWorkspace: cloudPullRequestsById } = useCloudPullRequests({
-		active: inlineCloudWorkspaces && shownCloudRows.length > 0,
+		active: shownCloudRows.length > 0,
 		archived: false,
 	});
 	const cloudLayout = useMemo(
 		() =>
-			inlineCloudWorkspaces
-				? buildCloudSidebarWorkspaces({
-						cloudWorkspaces: shownCloudRows,
-						userId,
-						projects: cloudProjectTargets,
-						repoFullNameById: cloudRepoFullNameById,
-						branchById: cloudBranchById,
-						pullRequestsById: cloudPullRequestsById,
-						unknownRepoProjectName: t({ message: "Cloud" }),
-					})
-				: null,
+			buildCloudSidebarWorkspaces({
+				cloudWorkspaces: shownCloudRows,
+				userId,
+				projects: cloudProjectTargets,
+				repoFullNameById: cloudRepoFullNameById,
+				branchById: cloudBranchById,
+				pullRequestsById: cloudPullRequestsById,
+				unknownRepoProjectName: t({ message: "Cloud" }),
+			}),
 		[
-			inlineCloudWorkspaces,
 			shownCloudRows,
 			userId,
 			cloudProjectTargets,
@@ -515,7 +487,6 @@ export function useDashboardSidebarData({
 	);
 	const cloudRowById = useMemo(() => {
 		const byId = new Map<string, DashboardSidebarWorkspace>();
-		if (!cloudLayout) return byId;
 		for (const rows of cloudLayout.byProjectId.values()) {
 			for (const row of rows) byId.set(row.id, row);
 		}
@@ -526,9 +497,7 @@ export function useDashboardSidebarData({
 	}, [cloudLayout]);
 	const standInProjectIds = useMemo(
 		() =>
-			new Set(
-				(cloudLayout?.repoProjects ?? []).map((repoProject) => repoProject.id),
-			),
+			new Set(cloudLayout.repoProjects.map((repoProject) => repoProject.id)),
 		[cloudLayout],
 	);
 	// Cloud rows are placed like worktrees: a row-less workspace gets a
@@ -537,7 +506,6 @@ export function useDashboardSidebarData({
 	// (stand-in to real project) without touching order or pin.
 	useEffect(() => {
 		if (
-			!inlineCloudWorkspaces ||
 			!sidebarLocalStateReady ||
 			!cloudRepositoriesReady ||
 			!hostProjectsReady
@@ -563,7 +531,6 @@ export function useDashboardSidebarData({
 			}
 		}
 	}, [
-		inlineCloudWorkspaces,
 		sidebarLocalStateReady,
 		cloudRepositoriesReady,
 		hostProjectsReady,
@@ -576,7 +543,6 @@ export function useDashboardSidebarData({
 	// the real ones here, in placement order; one seen for the first time
 	// trails until its row lands.
 	const builderProjects = useMemo(() => {
-		if (!cloudLayout) return sidebarProjects;
 		const standIns = cloudLayout.repoProjects.flatMap((repoProject) => {
 			const row = sidebarProjectRowsById.get(repoProject.id);
 			if (row?.isHidden) return [];
@@ -842,7 +808,7 @@ export function useDashboardSidebarData({
 	// the same placement rows as a real project; the row is written on first
 	// sight so the chevron works from the start.
 	useEffect(() => {
-		if (!cloudLayout || !sidebarProjectRowsReady) return;
+		if (!sidebarProjectRowsReady) return;
 		for (const repoProject of cloudLayout.repoProjects) {
 			if (!sidebarProjectRowsById.has(repoProject.id)) {
 				ensureProjectInSidebar(repoProject.id);
@@ -857,16 +823,14 @@ export function useDashboardSidebarData({
 
 	const decoratedGroups = useMemo(
 		() =>
-			cloudLayout
-				? applyCloudSidebarRows(computedGroups, cloudRowById, standInProjectIds)
-				: computedGroups,
-		[cloudLayout, computedGroups, cloudRowById, standInProjectIds],
+			applyCloudSidebarRows(computedGroups, cloudRowById, standInProjectIds),
+		[computedGroups, cloudRowById, standInProjectIds],
 	);
 	const groups = useStableDashboardSidebarProjects(decoratedGroups);
 
 	const hiddenRepoProjects = useMemo<DashboardSidebarHiddenProject[]>(
 		() =>
-			(cloudLayout?.repoProjects ?? []).flatMap((repoProject) =>
+			cloudLayout.repoProjects.flatMap((repoProject) =>
 				sidebarProjectRowsById.get(repoProject.id)?.isHidden
 					? [
 							{
@@ -912,11 +876,8 @@ export function useDashboardSidebarData({
 		[machineId, pinnedRows, pullRequestsByWorkspaceId, builderProjects],
 	);
 	const decoratedPinnedWorkspaces = useMemo(
-		() =>
-			cloudLayout
-				? applyCloudSidebarPinnedRows(computedPinnedWorkspaces, cloudRowById)
-				: computedPinnedWorkspaces,
-		[cloudLayout, computedPinnedWorkspaces, cloudRowById],
+		() => applyCloudSidebarPinnedRows(computedPinnedWorkspaces, cloudRowById),
+		[computedPinnedWorkspaces, cloudRowById],
 	);
 	const pinnedWorkspaces = useJsonStable(decoratedPinnedWorkspaces);
 

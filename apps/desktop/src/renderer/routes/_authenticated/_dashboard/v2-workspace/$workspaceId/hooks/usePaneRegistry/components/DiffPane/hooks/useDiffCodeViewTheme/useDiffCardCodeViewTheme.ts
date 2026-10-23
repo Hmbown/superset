@@ -1,15 +1,20 @@
 import { useMemo } from "react";
 import { useResolvedTheme } from "renderer/stores/theme";
 import { diffCardUnsafeCss } from "./diffCardUnsafeCss";
+import {
+	diffFlushUnsafeCss,
+	FLUSH_DIFF_HEADER_HEIGHT,
+} from "./diffFlushUnsafeCss";
 import { useDiffCodeViewTheme } from "./useDiffCodeViewTheme";
 
 /**
  * useDiffCodeViewTheme plus the card-per-file look shared by the PR Code tab
  * and the v2-workspace DiffPane: bordered/rounded header+body pairs with a
  * real gap between files, PullRequestRow's additions/deletions colors, and
- * the app background instead of the terminal theme's.
+ * the app background instead of the terminal theme's. `flush` drops the card
+ * frame for a narrow pane: files run edge to edge with no gap between them.
  */
-export function useDiffCardCodeViewTheme() {
+export function useDiffCardCodeViewTheme({ flush = false } = {}) {
 	const { options, style } = useDiffCodeViewTheme();
 	// Matches PullRequestRow's diff-stat colors exactly (text-emerald-600 /
 	// [.dark_&]:text-[#34d399], text-red-600 / [.dark_&]:text-[#f87171]) so
@@ -37,11 +42,17 @@ export function useDiffCardCodeViewTheme() {
 			layout: {
 				paddingTop: options.layout?.paddingTop ?? 0,
 				paddingBottom: options.layout?.paddingBottom ?? 0,
-				gap: 16,
+				gap: flush ? 0 : 16,
 			},
-			unsafeCSS: `${options.unsafeCSS ?? ""}\n${diffCardUnsafeCss(additionsColor, deletionsColor)}`,
+			...(flush && {
+				itemMetrics: {
+					...options.itemMetrics,
+					diffHeaderHeight: FLUSH_DIFF_HEADER_HEIGHT,
+				},
+			}),
+			unsafeCSS: `${options.unsafeCSS ?? ""}\n${diffCardUnsafeCss(additionsColor, deletionsColor)}${flush ? diffFlushUnsafeCss : ""}`,
 		}),
-		[options, additionsColor, deletionsColor],
+		[options, additionsColor, deletionsColor, flush],
 	);
 
 	// useDiffCodeViewTheme sources its background from the *terminal* theme

@@ -11,6 +11,7 @@ import { errorMessage } from "@superset/i18n/errors";
 import { sanitizePromptForPty } from "@superset/shared/agent-prompt-launch";
 import type { PullRequestDiff } from "@superset/shared/pull-request-diff";
 import { toast } from "@superset/ui/sonner";
+import { cn } from "@superset/ui/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -29,6 +30,7 @@ import {
 import type { AgentTarget } from "renderer/routes/_authenticated/_dashboard/components/AgentSessionPicker";
 import { WorkItemDetailState } from "renderer/routes/_authenticated/_dashboard/components/WorkItemDetailState";
 import { useDiffCardCodeViewTheme } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/DiffPane/hooks/useDiffCodeViewTheme";
+import { useRightPaneLinkTarget } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/providers/RightPaneLinkTargetProvider";
 import { DiffFileCollapseButton } from "renderer/screens/main/components/DiffFileCollapseButton";
 import { DiffFileHeaderName } from "renderer/screens/main/components/DiffFileHeaderName";
 import { DiffViewToolbar } from "renderer/screens/main/components/DiffViewToolbar";
@@ -185,8 +187,11 @@ export function PullRequestCodeTab({
 	// Card look (rounded header/body pairs, gap between files, PR-row
 	// additions/deletions colors, app background instead of the terminal
 	// theme's) comes from the shared card theme hook — the same one the
-	// v2-workspace DiffPane renders with.
-	const { options, style: codeViewStyle } = useDiffCardCodeViewTheme();
+	// v2-workspace DiffPane renders with, flush in the right pane area too.
+	const isRightPaneArea = useRightPaneLinkTarget() !== null;
+	const { options, style: codeViewStyle } = useDiffCardCodeViewTheme({
+		flush: isRightPaneArea,
+	});
 	const codeViewRef = useRef<CodeViewHandle<PrAnnotationMetadata>>(null);
 	const [initialTreeExpansion] = useState<"open" | "closed">(() =>
 		window.innerWidth < NARROW_WINDOW_WIDTH_THRESHOLD ? "closed" : "open",
@@ -888,7 +893,10 @@ export function PullRequestCodeTab({
 	return (
 		<div
 			ref={rootRef}
-			className="flex min-h-0 flex-1 flex-col pb-4 pt-3 @[40rem]/detail:px-4 @[56rem]/detail:px-6"
+			className={cn(
+				"flex min-h-0 flex-1 flex-col pb-4 pt-3",
+				!isRightPaneArea && "@[40rem]/detail:px-4 @[56rem]/detail:px-6",
+			)}
 		>
 			<div className="flex min-h-0 flex-1 overflow-hidden">
 				{!isTreeCollapsed && (
