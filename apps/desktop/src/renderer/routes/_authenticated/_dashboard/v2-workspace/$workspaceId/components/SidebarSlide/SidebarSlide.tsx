@@ -6,7 +6,6 @@ export type SidebarSlideMode = "closed" | "open" | "expanded";
 interface SidebarSlideProps {
 	mode: SidebarSlideMode;
 	width: number;
-	expandedWidth: number;
 	onLayoutFrame?: () => void;
 	keepMounted?: boolean;
 	durationMs?: number;
@@ -16,7 +15,6 @@ interface SidebarSlideProps {
 export function SidebarSlide({
 	mode,
 	width,
-	expandedWidth,
 	onLayoutFrame,
 	keepMounted = false,
 	durationMs = 300,
@@ -75,7 +73,7 @@ export function SidebarSlide({
 	const inFlow = !move && settled === "open";
 	const hidden = !move && settled === "closed";
 	const widthOf = (m: SidebarSlideMode) =>
-		m === "closed" ? 0 : m === "open" ? width : expandedWidth;
+		m === "closed" ? 0 : m === "open" ? width : "100%";
 	const spaceOf = (m: SidebarSlideMode) => (m === "closed" ? 0 : width);
 	const fill = move
 		? move.from === "expanded" || move.to === "expanded"
@@ -86,20 +84,18 @@ export function SidebarSlide({
 	const panelWidth = move
 		? widthOf(armed ? move.to : move.from)
 		: widthOf(settled);
-	const contentWidth = fill
-		? "100%"
-		: move
-			? Math.max(width, widthOf(move.from), widthOf(move.to))
-			: width;
+	const contentWidth = fill ? "100%" : width;
 	const transition = {
 		transitionProperty: "width",
 		transitionDuration: move && armed ? `${durationMs}ms` : "0ms",
 		willChange: move ? "width" : undefined,
 	};
 
+	// Out of flow, the panel sizes and anchors against the nearest positioned
+	// ancestor, so that ancestor must end at this element's right edge.
 	return (
 		<div
-			className="relative flex h-full shrink-0 ease-[ease] motion-reduce:transition-none"
+			className="flex h-full shrink-0 ease-[ease] motion-reduce:transition-none"
 			style={{ width: inFlow ? undefined : spaceWidth, ...transition }}
 		>
 			<div

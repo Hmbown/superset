@@ -5,15 +5,7 @@ import { cn } from "@superset/ui/utils";
 import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
 import { createFileRoute } from "@tanstack/react-router";
 import { useFeatureFlagEnabled } from "posthog-js/react";
-import {
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
-import { createPortal } from "react-dom";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useQuickOpenStore } from "renderer/commandPalette/ui/QuickOpen/quickOpenStore";
 import { useWorkspaceHostTarget } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useAcpChatEnabled } from "renderer/hooks/useAcpChatEnabled";
@@ -31,7 +23,6 @@ import {
 	readSubagentSearch,
 } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import { CommandPalette } from "renderer/screens/main/components/CommandPalette";
-import { ResizablePanel } from "renderer/screens/main/components/ResizablePanel";
 import { useRightPaneAreaEnabled } from "renderer/stores/right-pane-area";
 import { getV2NotificationSourcesForTab } from "renderer/stores/v2-notifications";
 import { useStore } from "zustand";
@@ -40,7 +31,6 @@ import { AddTabMenu } from "./components/AddTabMenu";
 import { ChangesControl } from "./components/ChangesControl";
 import { CloudWorkspaceTabBarControls } from "./components/CloudWorkspaceTabBarControls";
 import { RightPaneArea, type RightPaneKind } from "./components/RightPaneArea";
-import { SidebarSlide } from "./components/SidebarSlide";
 import { V2NotificationStatusIndicator } from "./components/V2NotificationStatusIndicator";
 import { V2PresetsBar } from "./components/V2PresetsBar";
 import { V2WorkspaceOpenInButton } from "./components/V2WorkspaceOpenInButton";
@@ -50,6 +40,7 @@ import { WorkspaceEmptyState } from "./components/WorkspaceEmptyState";
 import { WorkspaceMissingWorktreeState } from "./components/WorkspaceMissingWorktreeState";
 import { WorkspaceMoreMenu } from "./components/WorkspaceMoreMenu";
 import { WorkspaceSidebar } from "./components/WorkspaceSidebar";
+import { WorkspaceSplitLayout } from "./components/WorkspaceSplitLayout";
 import { useAgentSessionLauncher } from "./hooks/useAgentSessionLauncher";
 import { useAutoAdoptBackgroundSessions } from "./hooks/useAutoAdoptBackgroundSessions";
 import { useAutoAdoptChatSessions } from "./hooks/useAutoAdoptChatSessions";
@@ -74,13 +65,11 @@ import { useRightPaneAreaLifecycle } from "./hooks/useRightPaneAreaLifecycle";
 import { useRunPendingChatHandoff } from "./hooks/useRunPendingChatHandoff";
 import { useRunWorkspaceCreationPresets } from "./hooks/useRunWorkspaceCreationPresets";
 import { useShellInteractionPassthrough } from "./hooks/useShellInteractionPassthrough";
-import { useSlotElement } from "./hooks/useSlotElement";
 import { useTabCloseGuard } from "./hooks/useTabCloseGuard";
 import { useV2PresetExecution } from "./hooks/useV2PresetExecution";
 import { useV2TerminalLauncher } from "./hooks/useV2TerminalLauncher";
 import { useV2WorkspacePaneLayout } from "./hooks/useV2WorkspacePaneLayout";
 import { useV2WorkspaceRun } from "./hooks/useV2WorkspaceRun";
-import { useWindowWidth } from "./hooks/useWindowWidth";
 import { useWorkspaceFileNavigation } from "./hooks/useWorkspaceFileNavigation";
 import { useWorkspaceHotkeys } from "./hooks/useWorkspaceHotkeys";
 import { useWorkspacePaneOpeners } from "./hooks/useWorkspacePaneOpeners";
@@ -107,6 +96,9 @@ const relayoutBrowserPanes = () => browserRuntimeRegistry.relayout();
 // A pane is at least 260px wide (PANE_MIN_SIZE_CLASS_NAME in @superset/panes),
 // plus the panel's 1px border; narrower clips the pane header.
 const MIN_RIGHT_PANE_AREA_WIDTH = 262;
+const defaultRightPaneAreaWidth = (containerWidth: number) =>
+	Math.round(containerWidth * 0.4);
+const defaultRightSidebarWidth = () => 340;
 
 interface WorkspaceSearch {
 	sessionId?: string;
@@ -586,45 +578,8 @@ function V2WorkspaceContent() {
 		if (active) rightStore.getState().focusPane(active.pane.id);
 	}, [showFullScreenRightPaneArea, activateRightArea, rightStore]);
 
-	const windowWidth = useWindowWidth();
-	const centerAreaRef = useRef<HTMLDivElement>(null);
-	// The left edge, not the width: the width shrinks while the pane slides in
-	// from closed, and an expanded width read from it would chase each frame.
-	const [centerAreaLeft, setCenterAreaLeft] = useState(0);
-	useLayoutEffect(() => {
-		if (!showFullScreenRightPaneArea) return;
-		const element = centerAreaRef.current;
-		if (!element) return;
-		const measure = () =>
-			setCenterAreaLeft(element.getBoundingClientRect().left);
-		measure();
-		const observer = new ResizeObserver(measure);
-		observer.observe(element);
-		return () => observer.disconnect();
-	}, [showFullScreenRightPaneArea]);
-	const defaultRightPaneAreaWidth = Math.round(windowWidth * 0.4);
-	const maxRightPaneAreaWidth = Math.round(windowWidth * 0.75);
-	// Fallback for rows persisted before the rightSidebarWidth field existed —
-	// the live collection skips zod defaults, so an older row reads undefined
-	// here and would render the ResizablePanel without a width (full-bleed).
-	const sidebarWidth = isRightPaneAreaEnabled
-		? Math.max(
-				MIN_RIGHT_PANE_AREA_WIDTH,
-				Math.min(
-					v2UserPreferences.rightPaneAreaWidth ?? defaultRightPaneAreaWidth,
-					maxRightPaneAreaWidth,
-				),
-			)
-		: (v2UserPreferences.rightSidebarWidth ?? 340);
-	const setSidebarWidth = isRightPaneAreaEnabled
-		? setRightPaneAreaWidth
-		: setRightSidebarWidth;
 	const { onSidebarResizeDragging, onWorkspaceInteractionStateChange } =
 		useShellInteractionPassthrough({ sidebarOpen });
-
-	// The sidebar slot lives at the dashboard layout level (next to TopBar) so
-	// the sidebar runs full-height.
-	const sidebarSlotEl = useSlotElement("workspace-right-sidebar-slot");
 
 	useWorkspaceHotkeys({
 		store,
@@ -728,11 +683,53 @@ function V2WorkspaceContent() {
 		<FileDocumentStoreProvider stores={fileDocumentStores}>
 			<RightPaneLinkTargetProvider value={rightPaneLinkTarget}>
 				<WorkspaceGitStatusProvider workspaceId={workspaceId}>
-					<div className="flex min-h-0 min-w-0 flex-1">
+					<WorkspaceSplitLayout
+						mode={
+							!sidebarOpen
+								? "closed"
+								: showFullScreenRightPaneArea
+									? "expanded"
+									: "open"
+						}
+						{...(isRightPaneAreaEnabled
+							? {
+									width: v2UserPreferences.rightPaneAreaWidth,
+									minWidth: MIN_RIGHT_PANE_AREA_WIDTH,
+									maxWidth: Number.POSITIVE_INFINITY,
+									defaultWidth: defaultRightPaneAreaWidth,
+									onWidthChange: setRightPaneAreaWidth,
+								}
+							: {
+									width: v2UserPreferences.rightSidebarWidth,
+									minWidth: 240,
+									maxWidth: 640,
+									defaultWidth: defaultRightSidebarWidth,
+									onWidthChange: setRightSidebarWidth,
+								})}
+						onResizingChange={onSidebarResizeDragging}
+						onLayoutFrame={relayoutBrowserPanes}
+						keepMounted={isRightPaneAreaEnabled}
+						side={
+							isRightPaneAreaEnabled ? (
+								rightPaneArea
+							) : (
+								<WorkspaceSidebar
+									workspaceId={workspaceId}
+									runButton={workspaceRunButton}
+									onSelectFile={openFilePaneFromTreeClick}
+									onSelectDiffFile={openDiffPane}
+									onOpenComment={openCommentPane}
+									onOpenPullRequest={openPullRequestPane}
+									onSearch={handleQuickOpen}
+									selectedFilePath={selectedFilePath}
+									selectedDiffTarget={diffPaneTarget}
+									pendingReveal={pendingReveal}
+								/>
+							)
+						}
+					>
 						<div
-							ref={centerAreaRef}
-							inert={showFullScreenRightPaneArea}
-							className="flex min-h-0 min-w-[320px] flex-1 flex-col overflow-hidden"
+							className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
 							data-workspace-id={workspaceId}
 							data-pane-area="center"
 							onPointerDownCapture={activateCenterArea}
@@ -833,65 +830,7 @@ function V2WorkspaceContent() {
 								/>
 							}
 						</div>
-					</div>
-					{sidebarSlotEl &&
-						createPortal(
-							<SidebarSlide
-								mode={
-									!sidebarOpen
-										? "closed"
-										: showFullScreenRightPaneArea
-											? "expanded"
-											: "open"
-								}
-								width={sidebarWidth}
-								expandedWidth={windowWidth - centerAreaLeft}
-								onLayoutFrame={relayoutBrowserPanes}
-								keepMounted={isRightPaneAreaEnabled}
-							>
-								{(fill) => (
-									<ResizablePanel
-										disabled={fill}
-										commitOnRelease
-										width={sidebarWidth}
-										onWidthChange={setSidebarWidth}
-										onResizingChange={onSidebarResizeDragging}
-										minWidth={
-											isRightPaneAreaEnabled ? MIN_RIGHT_PANE_AREA_WIDTH : 240
-										}
-										maxWidth={
-											isRightPaneAreaEnabled ? maxRightPaneAreaWidth : 640
-										}
-										handleSide="left"
-										onDoubleClickHandle={() =>
-											setSidebarWidth(
-												isRightPaneAreaEnabled
-													? defaultRightPaneAreaWidth
-													: 340,
-											)
-										}
-									>
-										{isRightPaneAreaEnabled ? (
-											rightPaneArea
-										) : (
-											<WorkspaceSidebar
-												workspaceId={workspaceId}
-												runButton={workspaceRunButton}
-												onSelectFile={openFilePaneFromTreeClick}
-												onSelectDiffFile={openDiffPane}
-												onOpenComment={openCommentPane}
-												onOpenPullRequest={openPullRequestPane}
-												onSearch={handleQuickOpen}
-												selectedFilePath={selectedFilePath}
-												selectedDiffTarget={diffPaneTarget}
-												pendingReveal={pendingReveal}
-											/>
-										)}
-									</ResizablePanel>
-								)}
-							</SidebarSlide>,
-							sidebarSlotEl,
-						)}
+					</WorkspaceSplitLayout>
 				</WorkspaceGitStatusProvider>
 			</RightPaneLinkTargetProvider>
 			<CommandPalette
