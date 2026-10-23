@@ -91,7 +91,10 @@ export function V2WorkspaceContextMenu({
 	const canRemoveFromSidebar = !(isCloud && workspace.isCreatedByCurrentUser);
 
 	// Opening the row is looking at it: the finished-unread mark clears the
-	// same way it does from the sidebar.
+	// same way it does from the sidebar. Written once the navigation has
+	// committed: a store write first re-renders every row in the same tick
+	// the route transition starts, and the list can stay on screen for
+	// seconds while the URL already says otherwise.
 	const markSeen = useCallback(() => {
 		const notifications = useV2NotificationStore.getState();
 		notifications.clearManualUnread(workspace.id);
@@ -107,16 +110,23 @@ export function V2WorkspaceContextMenu({
 	}, [workspace.id, workspace.seenMarks]);
 
 	const open = useCallback(() => {
+		if (isArchived) return;
 		const go = () => {
-			markSeen();
-			void navigateToV2Workspace(workspace.id, navigate);
+			void navigateToV2Workspace(workspace.id, navigate).then(markSeen);
 		};
 		if (workspace.hostType === "remote-device") {
 			gateFeature(GATED_FEATURES.REMOTE_ACCESS, go);
 			return;
 		}
 		go();
-	}, [gateFeature, markSeen, navigate, workspace.hostType, workspace.id]);
+	}, [
+		gateFeature,
+		isArchived,
+		markSeen,
+		navigate,
+		workspace.hostType,
+		workspace.id,
+	]);
 
 	// The cloud sidebar store is read at call time: a subscription per row
 	// would re-render the whole list on every pin.

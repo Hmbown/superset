@@ -223,6 +223,8 @@ export const V2WorkspaceRow = memo(function V2WorkspaceRow({
 				<div
 					role="button"
 					aria-current={isCurrentRoute ? "page" : undefined}
+					// An archived row has nothing to open; Restore is its action.
+					aria-disabled={isArchived || undefined}
 					tabIndex={0}
 					onClick={actions.open}
 					onKeyDown={(event) => {
@@ -236,8 +238,9 @@ export const V2WorkspaceRow = memo(function V2WorkspaceRow({
 					onBlur={handleRowBlur}
 					title={rowTitle || undefined}
 					className={cn(
-						"group flex cursor-pointer items-center gap-3 border-b border-border/40 px-6 py-3 text-sm outline-none transition-colors",
+						"group flex items-center gap-3 border-b border-border/40 px-6 py-3 text-sm outline-none transition-colors",
 						"focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-inset",
+						isArchived ? "cursor-default" : "cursor-pointer",
 						isCurrentRoute
 							? "bg-muted hover:bg-muted focus-visible:bg-muted"
 							: "hover:bg-accent/50 focus-visible:bg-accent/50",
