@@ -153,7 +153,6 @@ export function useAccessibleV2Workspaces(
 ): UseAccessibleV2WorkspacesResult {
 	const { t } = useLingui();
 	const searchQuery = options.searchQuery ?? "";
-	const whereFilter = options.whereFilter;
 	const projectFilters = options.projectFilters ?? [];
 	const creatorFilters = options.creatorFilters ?? [];
 	const includeArchived = options.includeArchived ?? false;
@@ -169,10 +168,17 @@ export function useAccessibleV2Workspaces(
 	const activeOrganizationId = useActiveOrganizationId();
 	const currentUserId = session?.user?.id ?? null;
 
-	const cloudEnabled = Boolean(
-		useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES) &&
-			activeOrganizationId,
-	);
+	// A flag still resolving counts as on: the cloud list waits for it itself,
+	// so nothing fetches early, and a "Cloud" deep link doesn't flash every
+	// host's rows first.
+	const cloudFlag = useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES);
+	const cloudEnabled = cloudFlag !== false && activeOrganizationId !== null;
+	// "Cloud" in an org without cloud reads as Anywhere (the header labels it
+	// the same way) rather than an empty list with no option to leave.
+	const whereFilter =
+		options.whereFilter === WHERE_FILTER_CLOUD && !cloudEnabled
+			? WHERE_FILTER_ANYWHERE
+			: options.whereFilter;
 	const includesCloud =
 		cloudEnabled &&
 		(whereFilter === undefined ||
@@ -624,9 +630,16 @@ export function useAccessibleV2Workspaces(
 			organizationId: activeOrganizationId,
 			enabled: cloudRows.length > 0,
 		});
+	// Unscoped callers render no PR data, so they skip this query too.
 	const { byWorkspace: cloudPullRequestsById } = useCloudPullRequests({
-		active: includesCloud && (activeCloudRows?.length ?? 0) > 0,
-		archived: includesCloud && archivedCloudRows.length > 0,
+		active:
+			whereFilter !== undefined &&
+			includesCloud &&
+			(activeCloudRows?.length ?? 0) > 0,
+		archived:
+			whereFilter !== undefined &&
+			includesCloud &&
+			archivedCloudRows.length > 0,
 	});
 	const cloudSidebarEntries = useCloudSidebarStore((state) =>
 		activeOrganizationId

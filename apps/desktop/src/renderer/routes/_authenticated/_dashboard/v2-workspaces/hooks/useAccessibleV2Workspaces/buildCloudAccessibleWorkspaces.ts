@@ -7,6 +7,7 @@ import type {
 import { buildCloudSidebarWorkspaces } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/hooks/useDashboardSidebarData/buildCloudSidebarWorkspaces";
 import type { CloudSidebarEntry } from "renderer/routes/_authenticated/_dashboard/stores/cloudSidebarStore";
 import { isInCloudSidebar } from "renderer/routes/_authenticated/_dashboard/utils/buildCloudSidebar";
+import { getV2WorkspaceDisplayName } from "renderer/utils/getV2WorkspaceDisplayName";
 import type { PaneStatus } from "shared/tabs-types";
 import type { AccessibleV2Workspace, V2WorkspacePrSummary } from "./types";
 
@@ -158,7 +159,7 @@ export function buildCloudAccessibleWorkspaces({
 		return [
 			{
 				id: workspace.id,
-				name: workspace.name || workspace.branch,
+				name: getV2WorkspaceDisplayName(workspace),
 				branch: workspace.branch,
 				type: "worktree",
 				createdAt: workspace.createdAt,

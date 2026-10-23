@@ -151,9 +151,7 @@ function V2WorkspacesPage() {
 		whereFilter,
 		projectFilters,
 		creatorFilters,
-		// Tombstones ride along so both views' Merged/Deleted groups work;
-		// each view drops them unless "Show archived" is on.
-		includeArchived: true,
+		includeArchived: showArchived,
 	});
 
 	// Re-rendering hundreds of rows takes hundreds of ms; deferring keeps

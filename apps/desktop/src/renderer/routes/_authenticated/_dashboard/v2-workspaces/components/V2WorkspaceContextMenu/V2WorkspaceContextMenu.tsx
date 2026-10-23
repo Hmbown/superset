@@ -27,14 +27,15 @@ import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId"
 import { useCopyToClipboard } from "renderer/hooks/useCopyToClipboard";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { useCopyShareLink } from "renderer/routes/_authenticated/_dashboard/hooks/useCopyShareLink";
-import { useUnarchiveCloudWorkspace } from "renderer/routes/_authenticated/_dashboard/hooks/useUnarchiveCloudWorkspace";
 import { useCloudSidebarStore } from "renderer/routes/_authenticated/_dashboard/stores/cloudSidebarStore";
 import { navigateToV2Workspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import type { AccessibleV2Workspace } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/hooks/useAccessibleV2Workspaces";
 import { useDashboardSidebarState } from "renderer/routes/_authenticated/hooks/useDashboardSidebarState";
 import { useDeleteWorkspaceIntent } from "renderer/stores/delete-workspace-intent";
+import { useRestoreCloudWorkspaceIntent } from "renderer/stores/restore-cloud-workspace-intent";
 import { useSaveAsEnvironmentIntent } from "renderer/stores/save-as-environment-intent";
 import { useV2NotificationStore } from "renderer/stores/v2-notifications";
+import { getV2WorkspaceDisplayName } from "renderer/utils/getV2WorkspaceDisplayName";
 
 export interface V2WorkspaceActions {
 	/** Navigate to the workspace (paywall-gated for remote hosts). */
@@ -46,7 +47,10 @@ export interface V2WorkspaceActions {
 	/** Archives a cloud workspace, deletes a host one, through the global dialog. */
 	openDeleteDialog: () => void;
 	restore: () => void;
+	/** An archived row that can come back: every cloud row, a host row that isn't a session. */
 	canRestore: boolean;
+	/** The restore waits on the row's device coming online. */
+	isRestoreBlocked: boolean;
 }
 
 interface V2WorkspaceContextMenuProps {
@@ -75,17 +79,15 @@ export function V2WorkspaceContextMenu({
 	const { copyToClipboard } = useCopyToClipboard();
 	const copyShareLink = useCopyShareLink();
 	const organizationId = useActiveOrganizationId();
-	const setCloudInSidebar = useCloudSidebarStore((state) => state.setInSidebar);
-	const unarchiveCloudWorkspace = useUnarchiveCloudWorkspace();
 	const hostUrl = useHostUrl(workspace.hostId);
 	const isCloud = workspace.hostType === "cloud";
 	const isArchived = workspace.archivedAt != null;
+	const workspaceName = getV2WorkspaceDisplayName(workspace);
 	const canReachHost =
 		hostUrl !== null &&
 		(workspace.hostType === "local-device" || workspace.hostIsOnline);
-	const canRestore = isCloud
-		? isArchived
-		: isArchived && workspace.type !== "session" && canReachHost;
+	const canRestore = isArchived && (isCloud || workspace.type !== "session");
+	const isRestoreBlocked = canRestore && !isCloud && !canReachHost;
 	const canRemoveFromSidebar = !(isCloud && workspace.isCreatedByCurrentUser);
 
 	// Opening the row is looking at it: the finished-unread mark clears the
@@ -116,9 +118,15 @@ export function V2WorkspaceContextMenu({
 		go();
 	}, [gateFeature, markSeen, navigate, workspace.hostType, workspace.id]);
 
+	// The cloud sidebar store is read at call time: a subscription per row
+	// would re-render the whole list on every pin.
 	const addToSidebar = useCallback(() => {
 		if (isCloud) {
-			if (organizationId) setCloudInSidebar(organizationId, workspace.id, true);
+			if (organizationId) {
+				useCloudSidebarStore
+					.getState()
+					.setInSidebar(organizationId, workspace.id, true);
+			}
 			return;
 		}
 		const add = () =>
@@ -133,7 +141,6 @@ export function V2WorkspaceContextMenu({
 		gateFeature,
 		isCloud,
 		organizationId,
-		setCloudInSidebar,
 		workspace.hostType,
 		workspace.id,
 		workspace.projectId,
@@ -143,7 +150,9 @@ export function V2WorkspaceContextMenu({
 		if (isCurrentRoute || !canRemoveFromSidebar) return;
 		if (isCloud) {
 			if (organizationId) {
-				setCloudInSidebar(organizationId, workspace.id, false);
+				useCloudSidebarStore
+					.getState()
+					.setInSidebar(organizationId, workspace.id, false);
 			}
 			return;
 		}
@@ -163,7 +172,6 @@ export function V2WorkspaceContextMenu({
 		isCurrentRoute,
 		hideWorkspaceInSidebar,
 		organizationId,
-		setCloudInSidebar,
 		workspace.id,
 		workspace.projectId,
 	]);
@@ -198,13 +206,14 @@ export function V2WorkspaceContextMenu({
 		useSaveAsEnvironmentIntent.getState().request(workspace.id);
 	}, [workspace.id]);
 
+	// A cloud restore goes through the one globally-mounted
+	// RestoreCloudWorkspaceMount, which owns the mutation for every row.
 	const restore = useCallback(async () => {
-		if (!canRestore) return;
-		const workspaceName = workspace.name || workspace.branch;
+		if (!canRestore || isRestoreBlocked) return;
 		if (isCloud) {
-			unarchiveCloudWorkspace(workspace.id, {
-				onSuccess: () =>
-					toast.success(t({ message: `Restored "${workspaceName}"` })),
+			useRestoreCloudWorkspaceIntent.getState().request({
+				workspaceId: workspace.id,
+				workspaceName,
 			});
 			return;
 		}
@@ -236,12 +245,11 @@ export function V2WorkspaceContextMenu({
 		canRestore,
 		hostUrl,
 		isCloud,
+		isRestoreBlocked,
 		navigate,
 		t,
-		unarchiveCloudWorkspace,
-		workspace.branch,
 		workspace.id,
-		workspace.name,
+		workspaceName,
 	]);
 
 	// Globally-mounted dialog (DeleteWorkspaceMount): archive-first
@@ -251,9 +259,9 @@ export function V2WorkspaceContextMenu({
 	const openDeleteDialog = useCallback(() => {
 		useDeleteWorkspaceIntent.getState().request({
 			workspaceId: workspace.id,
-			workspaceName: workspace.name || workspace.branch,
+			workspaceName,
 		});
-	}, [workspace.id, workspace.name, workspace.branch]);
+	}, [workspace.id, workspaceName]);
 
 	return (
 		<ContextMenu>
@@ -266,12 +274,13 @@ export function V2WorkspaceContextMenu({
 					openDeleteDialog,
 					restore,
 					canRestore,
+					isRestoreBlocked,
 				})}
 			</ContextMenuTrigger>
 			<ContextMenuContent onCloseAutoFocus={(event) => event.preventDefault()}>
 				{isArchived ? (
 					canRestore ? (
-						<ContextMenuItem onSelect={restore}>
+						<ContextMenuItem onSelect={restore} disabled={isRestoreBlocked}>
 							<LuArchiveRestore className="size-4" />
 							<Trans>Restore</Trans>
 						</ContextMenuItem>

@@ -72,7 +72,9 @@ export function V2WorkspacesHeader({
 	const setSearchQuery = useV2WorkspacesFilterStore(
 		(state) => state.setSearchQuery,
 	);
-	const whereFilter = useV2WorkspacesFilterStore((state) => state.whereFilter);
+	const storedWhereFilter = useV2WorkspacesFilterStore(
+		(state) => state.whereFilter,
+	);
 	const setWhereFilter = useV2WorkspacesFilterStore(
 		(state) => state.setWhereFilter,
 	);
@@ -100,6 +102,12 @@ export function V2WorkspacesHeader({
 
 	const remoteHosts = hostOptions.filter((host) => !host.isLocal);
 	const localHostName = hostOptions.find((host) => host.isLocal)?.hostName;
+	// A "Cloud" deep link in an org without cloud reads as Anywhere, which is
+	// what the rows show (useAccessibleV2Workspaces falls back the same way).
+	const whereFilter =
+		storedWhereFilter === WHERE_FILTER_CLOUD && !cloudEnabled
+			? WHERE_FILTER_ANYWHERE
+			: storedWhereFilter;
 	// The title names the actual machine ("Avi's Mac"), not the abstract
 	// "This device" — that phrasing stays in the menu where it's a choice.
 	const whereLabel =

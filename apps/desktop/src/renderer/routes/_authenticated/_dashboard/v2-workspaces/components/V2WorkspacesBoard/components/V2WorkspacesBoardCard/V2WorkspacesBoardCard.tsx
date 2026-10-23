@@ -1,6 +1,5 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { Avatar } from "@superset/ui/atoms/Avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
 import { memo } from "react";
@@ -8,6 +7,7 @@ import { CgLaptop } from "react-icons/cg";
 import { LuGitBranch, LuMonitor } from "react-icons/lu";
 import { V2WorkspaceContextMenu } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/components/V2WorkspaceContextMenu";
 import { WorkspaceChecksDot } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/components/WorkspaceChecksDot";
+import { WorkspaceOwnerAvatar } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/components/WorkspaceOwnerAvatar";
 import { WorkspaceStateGlyph } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/components/WorkspaceStateGlyph";
 import type { AccessibleV2Workspace } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/hooks/useAccessibleV2Workspaces";
 import { workspaceActivityAt } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/utils/sortWorkspaces";
@@ -136,16 +136,7 @@ function BoardCardBody({
 					</span>
 				) : null}
 				<span className="ml-auto flex shrink-0 items-center gap-1.5">
-					{/* Owner, only when it isn't you. */}
-					{!workspace.isCreatedByCurrentUser && workspace.createdByName ? (
-						<span title={workspace.createdByName}>
-							<Avatar
-								fullName={workspace.createdByName}
-								image={workspace.createdByImage}
-								className="size-4 text-[8px]"
-							/>
-						</span>
-					) : null}
+					<WorkspaceOwnerAvatar workspace={workspace} />
 					<span className="whitespace-nowrap tabular-nums">{timeLabel}</span>
 				</span>
 			</div>

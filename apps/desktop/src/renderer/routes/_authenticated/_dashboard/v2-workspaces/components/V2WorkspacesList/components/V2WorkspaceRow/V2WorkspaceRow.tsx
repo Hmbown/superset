@@ -1,7 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useFormat } from "@superset/i18n/react";
-import { Avatar } from "@superset/ui/atoms/Avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
 import { useNavigate } from "@tanstack/react-router";
@@ -26,6 +25,7 @@ import {
 } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/components/V2WorkspaceContextMenu";
 import { V2WorkspaceProjectIcon } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/components/V2WorkspaceProjectIcon";
 import { WorkspaceChecksDot } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/components/WorkspaceChecksDot";
+import { WorkspaceOwnerAvatar } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/components/WorkspaceOwnerAvatar";
 import { WorkspaceStateGlyph } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/components/WorkspaceStateGlyph";
 import type { AccessibleV2Workspace } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/hooks/useAccessibleV2Workspaces";
 import { workspaceActivityAt } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/utils/sortWorkspaces";
@@ -46,15 +46,17 @@ function formatCount(count: number): string {
 }
 
 const HOVER_ACTION_CLASS =
-	"flex size-5 items-center justify-center rounded text-muted-foreground hover:bg-foreground/10 hover:text-foreground";
+	"flex size-5 items-center justify-center rounded text-muted-foreground hover:bg-foreground/10 hover:text-foreground disabled:pointer-events-none disabled:opacity-40";
 
 function RowHoverAction({
 	label,
 	onClick,
+	disabled = false,
 	children,
 }: {
 	label: string;
 	onClick: () => void;
+	disabled?: boolean;
 	children: ReactNode;
 }) {
 	return (
@@ -62,6 +64,7 @@ function RowHoverAction({
 			<TooltipTrigger asChild>
 				<button
 					type="button"
+					disabled={disabled}
 					onClick={(event) => {
 						event.stopPropagation();
 						onClick();
@@ -163,8 +166,13 @@ export const V2WorkspaceRow = memo(function V2WorkspaceRow({
 		isArchived ? (
 			actions.canRestore ? (
 				<RowHoverAction
-					label={t({ message: "Restore workspace" })}
+					label={
+						actions.isRestoreBlocked
+							? t({ message: `${workspace.hostName} — device offline` })
+							: t({ message: "Restore workspace" })
+					}
 					onClick={actions.restore}
+					disabled={actions.isRestoreBlocked}
 				>
 					<LuArchiveRestore className="size-3.5" />
 				</RowHoverAction>
@@ -290,18 +298,8 @@ export const V2WorkspaceRow = memo(function V2WorkspaceRow({
 						</span>
 					</span>
 
-					{/* Owner, only when it isn't you: a row with no owner is
-					    unreadable once teammates' rows share the list. */}
 					<span className="flex w-4 shrink-0 items-center justify-center">
-						{!workspace.isCreatedByCurrentUser && workspace.createdByName ? (
-							<span title={workspace.createdByName}>
-								<Avatar
-									fullName={workspace.createdByName}
-									image={workspace.createdByImage}
-									className="size-4 text-[8px]"
-								/>
-							</span>
-						) : null}
+						<WorkspaceOwnerAvatar workspace={workspace} />
 					</span>
 
 					{workspace.pr ? (
