@@ -236,7 +236,10 @@ export function EnvironmentEditorDialog({
 	};
 
 	const finish = async () => {
-		await utils.environment.list.invalidate();
+		await Promise.all([
+			utils.environment.list.invalidate(),
+			utils.billing.environmentUsage.invalidate(),
+		]);
 		onOpenChange(false);
 	};
 
@@ -261,7 +264,10 @@ export function EnvironmentEditorDialog({
 			promote
 				.mutateAsync({ cloudWorkspaceId, name: name.trim(), scope })
 				.then(async (created) => {
-					await utils.environment.list.invalidate();
+					await Promise.all([
+						utils.environment.list.invalidate(),
+						utils.billing.environmentUsage.invalidate(),
+					]);
 					return created;
 				}),
 			{

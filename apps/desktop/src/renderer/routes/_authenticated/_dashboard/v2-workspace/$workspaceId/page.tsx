@@ -32,6 +32,7 @@ import {
 } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import { CommandPalette } from "renderer/screens/main/components/CommandPalette";
 import { ResizablePanel } from "renderer/screens/main/components/ResizablePanel";
+import { useRightPaneAreaEnabled } from "renderer/stores/right-pane-area";
 import { getV2NotificationSourcesForTab } from "renderer/stores/v2-notifications";
 import { useStore } from "zustand";
 import { useWorkspace } from "../providers/WorkspaceProvider";
@@ -102,6 +103,10 @@ import { openSubagentPaneInStore } from "./utils/openSubagentPaneInStore";
 import type { V2WorkspaceUrlOpenTarget } from "./utils/openUrlInV2Workspace";
 
 const relayoutBrowserPanes = () => browserRuntimeRegistry.relayout();
+
+// A pane is at least 260px wide (PANE_MIN_SIZE_CLASS_NAME in @superset/panes),
+// plus the panel's 1px border; narrower clips the pane header.
+const MIN_RIGHT_PANE_AREA_WIDTH = 262;
 
 interface WorkspaceSearch {
 	sessionId?: string;
@@ -218,9 +223,7 @@ function V2WorkspaceContent() {
 	const { store, isLayoutReady, hasRow } = useV2WorkspacePaneLayout();
 	useClearActivePaneAttention({ store });
 	const isChatTabActive = useIsChatTabActive(store);
-	const rightPaneAreaFlag = useFeatureFlagEnabled(
-		FEATURE_FLAGS.RIGHT_PANE_AREA,
-	);
+	const rightPaneAreaFlag = useRightPaneAreaEnabled();
 	const isRightPaneAreaEnabled = rightPaneAreaFlag === true;
 	const isMobilePaneEnabled =
 		useFeatureFlagEnabled(FEATURE_FLAGS.MOBILE_PANE) === true;
@@ -594,7 +597,7 @@ function V2WorkspaceContent() {
 	// here and would render the ResizablePanel without a width (full-bleed).
 	const sidebarWidth = isRightPaneAreaEnabled
 		? Math.max(
-				240,
+				MIN_RIGHT_PANE_AREA_WIDTH,
 				Math.min(
 					v2UserPreferences.rightPaneAreaWidth ?? defaultRightPaneAreaWidth,
 					maxRightPaneAreaWidth,
@@ -841,7 +844,9 @@ function V2WorkspaceContent() {
 										width={sidebarWidth}
 										onWidthChange={setSidebarWidth}
 										onResizingChange={onSidebarResizeDragging}
-										minWidth={240}
+										minWidth={
+											isRightPaneAreaEnabled ? MIN_RIGHT_PANE_AREA_WIDTH : 240
+										}
 										maxWidth={
 											isRightPaneAreaEnabled ? maxRightPaneAreaWidth : 640
 										}
