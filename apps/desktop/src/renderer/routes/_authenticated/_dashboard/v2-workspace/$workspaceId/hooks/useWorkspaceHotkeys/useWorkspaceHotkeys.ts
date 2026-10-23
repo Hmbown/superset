@@ -9,7 +9,6 @@ import {
 } from "@superset/panes";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useHotkey } from "renderer/hotkeys";
-import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
 import type { V2TerminalPresetRow } from "renderer/routes/_authenticated/providers/CollectionsProvider/dashboardSidebarLocal";
 import { useRightSidebarToggleIntent } from "renderer/stores/right-sidebar-toggle-intent";
 import type { StoreApi } from "zustand";
@@ -53,10 +52,7 @@ export function useWorkspaceHotkeys({
 		onBeforeCloseTab?: WorkspaceProps<PaneViewerData>["onBeforeCloseTab"];
 	};
 }) {
-	const { workspace } = useWorkspace();
-	const { setOpen: setRightSidebarOpen } = useWorkspaceRightSidebarOpen(
-		workspace.id,
-	);
+	const { setOpen: setRightSidebarOpen } = useWorkspaceRightSidebarOpen();
 	const defaultBrowserUrl = useDefaultBrowserUrl();
 	const visiblePresets = useMemo(
 		() => matchedPresets.filter((preset) => preset.pinnedToBar !== false),

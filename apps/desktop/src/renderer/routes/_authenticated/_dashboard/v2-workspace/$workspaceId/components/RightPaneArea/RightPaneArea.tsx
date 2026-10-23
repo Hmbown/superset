@@ -97,6 +97,7 @@ export function RightPaneArea({
 									? t({ message: "Restore width" })
 									: t({ message: "Expand" })
 							}
+							hotkeyId="TOGGLE_RIGHT_PANE_FULL_SCREEN"
 							onClick={onToggleFullScreen}
 						>
 							{isFullScreen ? (

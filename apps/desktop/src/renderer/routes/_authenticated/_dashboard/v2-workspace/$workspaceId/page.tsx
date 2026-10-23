@@ -215,7 +215,7 @@ function V2WorkspaceContent() {
 	} = useV2UserPreferences();
 	const showPresetsBar = v2UserPreferences.showPresetsBar;
 	const { isOpen: sidebarOpen, setOpen: setRightSidebarOpen } =
-		useWorkspaceRightSidebarOpen(workspaceId);
+		useWorkspaceRightSidebarOpen();
 	const toggleRightSidebar = useCallback(
 		() => setRightSidebarOpen((prev) => !prev),
 		[setRightSidebarOpen],
@@ -562,7 +562,14 @@ function V2WorkspaceContent() {
 	const {
 		isFullScreen: isRightPaneAreaFullScreen,
 		toggle: toggleRightPaneAreaFullScreen,
-	} = useRightPaneAreaFullScreen({ workspaceId, isOpen: sidebarOpen });
+	} = useRightPaneAreaFullScreen({
+		workspaceId,
+		isOpen: sidebarOpen,
+		setOpen: setRightSidebarOpen,
+	});
+	useHotkey("TOGGLE_RIGHT_PANE_FULL_SCREEN", toggleRightPaneAreaFullScreen, {
+		enabled: isRightPaneAreaEnabled,
+	});
 	const centerContextMenuActions = usePaneAreaMoveActions({
 		defaults: defaultContextMenuActions,
 		enabled: isRightPaneAreaEnabled,
@@ -575,18 +582,17 @@ function V2WorkspaceContent() {
 
 	const windowWidth = useWindowWidth();
 	const centerAreaRef = useRef<HTMLDivElement>(null);
-	// Tracked only while the right pane fills the window, the one state that
-	// reads it: observing it always re-rendered the page on every frame of a
-	// sidebar drag or ease.
-	const [centerAreaWidth, setCenterAreaWidth] = useState(0);
+	// The left edge, not the width: the width shrinks while the pane slides in
+	// from closed, and an expanded width read from it would chase each frame.
+	const [centerAreaLeft, setCenterAreaLeft] = useState(0);
 	useLayoutEffect(() => {
 		if (!showFullScreenRightPaneArea) return;
 		const element = centerAreaRef.current;
 		if (!element) return;
-		setCenterAreaWidth(element.getBoundingClientRect().width);
-		const observer = new ResizeObserver(([entry]) => {
-			if (entry) setCenterAreaWidth(entry.contentRect.width);
-		});
+		const measure = () =>
+			setCenterAreaLeft(element.getBoundingClientRect().left);
+		measure();
+		const observer = new ResizeObserver(measure);
 		observer.observe(element);
 		return () => observer.disconnect();
 	}, [showFullScreenRightPaneArea]);
@@ -833,7 +839,7 @@ function V2WorkspaceContent() {
 											: "open"
 								}
 								width={sidebarWidth}
-								expandedWidth={sidebarWidth + centerAreaWidth}
+								expandedWidth={windowWidth - centerAreaLeft}
 								onLayoutFrame={relayoutBrowserPanes}
 								keepMounted={isRightPaneAreaEnabled}
 							>
