@@ -33,6 +33,8 @@ interface DiffViewToolbarProps {
 	 * workspace Changes pane, with the right pane area off, defers to the
 	 * sidebar's Changes tab). */
 	tree?: DiffViewToolbarTreeToggle | null;
+	/** Which end of the toolbar holds the pill: beside the list it toggles. */
+	treePlacement?: "start" | "end";
 	areAllFilesCollapsed: boolean;
 	onToggleCollapseAll: () => void;
 	/** Prev/next review-comment cluster; hidden when null or total is 0. */
@@ -56,6 +58,7 @@ interface DiffViewToolbarProps {
  */
 export function DiffViewToolbar({
 	tree,
+	treePlacement = "start",
 	areAllFilesCollapsed,
 	onToggleCollapseAll,
 	commentNav,
@@ -73,46 +76,48 @@ export function DiffViewToolbar({
 				: "text-muted-foreground hover:text-foreground",
 		);
 
+	const treeToggle = tree != null && (
+		<button
+			type="button"
+			onClick={tree.onToggle}
+			aria-pressed={!tree.isCollapsed}
+			aria-label={
+				tree.isCollapsed
+					? t({
+							message: "Show file tree",
+						})
+					: t({
+							message: "Hide file tree",
+						})
+			}
+			className={cn(
+				"flex items-center gap-1.5 rounded-md px-1.5 py-1 transition-colors",
+				tree.isCollapsed
+					? "text-muted-foreground hover:bg-fill-hover hover:text-foreground"
+					: "bg-secondary text-foreground",
+			)}
+		>
+			<LuFiles className="size-3.5 shrink-0" strokeWidth={1.5} />
+			<span className="text-[11px] font-medium">
+				<Trans>Files</Trans>
+			</span>
+			<span
+				className={cn(
+					"text-[11px] tabular-nums",
+					tree.isCollapsed
+						? "text-muted-foreground/70"
+						: "text-muted-foreground",
+				)}
+			>
+				{tree.fileCount}
+			</span>
+		</button>
+	);
+
 	return (
 		<div className="flex shrink-0 flex-wrap items-center justify-between gap-1 border-b border-border/20 px-2 py-1.5">
 			<div className="flex shrink-0 items-center gap-1 whitespace-nowrap">
-				{tree != null && (
-					<button
-						type="button"
-						onClick={tree.onToggle}
-						aria-pressed={!tree.isCollapsed}
-						aria-label={
-							tree.isCollapsed
-								? t({
-										message: "Show file tree",
-									})
-								: t({
-										message: "Hide file tree",
-									})
-						}
-						className={cn(
-							"flex items-center gap-1.5 rounded-md px-1.5 py-1 transition-colors",
-							tree.isCollapsed
-								? "text-muted-foreground hover:bg-fill-hover hover:text-foreground"
-								: "bg-secondary text-foreground",
-						)}
-					>
-						<LuFiles className="size-3.5 shrink-0" strokeWidth={1.5} />
-						<span className="text-[11px] font-medium">
-							<Trans>Files</Trans>
-						</span>
-						<span
-							className={cn(
-								"text-[11px] tabular-nums",
-								tree.isCollapsed
-									? "text-muted-foreground/70"
-									: "text-muted-foreground",
-							)}
-						>
-							{tree.fileCount}
-						</span>
-					</button>
-				)}
+				{treePlacement === "start" && treeToggle}
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<button
@@ -245,6 +250,12 @@ export function DiffViewToolbar({
 						<Trans>Split view</Trans>
 					</TooltipContent>
 				</Tooltip>
+				{treePlacement === "end" && treeToggle && (
+					<>
+						<div className="mx-0.5 h-4 w-px bg-border" />
+						{treeToggle}
+					</>
+				)}
 			</div>
 		</div>
 	);

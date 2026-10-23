@@ -794,18 +794,9 @@ export function DiffPane({
 			ref={setRowElement}
 			className="relative flex h-full min-h-0 w-full min-w-0"
 		>
-			{listLayout !== "hidden" && containerWidth !== null && (
-				<DiffPaneFileList
-					context={context}
-					layout={listLayout}
-					containerWidth={containerWidth}
-					onClose={closeOverlayFileList}
-					workspaceId={workspaceId}
-					onOpenFile={onOpenFile}
-				/>
-			)}
 			<div className="flex h-full min-h-0 min-w-0 flex-1 flex-col">
 				<DiffViewToolbar
+					treePlacement="end"
 					tree={
 						showFileList
 							? {
@@ -883,6 +874,16 @@ export function DiffPane({
 					</div>
 				)}
 			</div>
+			{listLayout !== "hidden" && containerWidth !== null && (
+				<DiffPaneFileList
+					context={context}
+					layout={listLayout}
+					containerWidth={containerWidth}
+					onClose={closeOverlayFileList}
+					workspaceId={workspaceId}
+					onOpenFile={onOpenFile}
+				/>
+			)}
 		</div>
 	);
 }

@@ -101,7 +101,7 @@ export function DiffPaneFileList({
 				<div
 					role="dialog"
 					aria-label={t({ message: "Files" })}
-					className="absolute inset-y-0 left-0 z-30 border-r border-border bg-background shadow-lg"
+					className="absolute inset-y-0 right-0 z-30 border-l border-border bg-background shadow-lg"
 					style={{
 						width: Math.min(OVERLAY_WIDTH, containerWidth - OVERLAY_GUTTER),
 					}}
@@ -122,7 +122,7 @@ export function DiffPaneFileList({
 			commitOnRelease
 			minWidth={FILE_LIST_MIN_WIDTH}
 			maxWidth={maxWidth}
-			handleSide="right"
+			handleSide="left"
 			onDoubleClickHandle={() => setChangesFileListWidth(DEFAULT_WIDTH)}
 		>
 			{list}
