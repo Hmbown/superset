@@ -409,6 +409,10 @@ msgstr "{0}, оканчивается на {1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "В {where} уже есть {0} таких файлов. Заменить их?"
 
+#. placeholder {0}: formatNumber(hours)
+msgid "{0} GB-hours"
+msgstr "{0} ГБ-часов"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0} установлен"
@@ -487,9 +491,9 @@ msgstr "{0} из {totalCount}"
 msgid "{0} options"
 msgstr "Параметры {0}"
 
-#. placeholder {0}: i18n._(plan.name)
-msgid "{0} plan"
-msgstr "Тариф {0}"
+#. placeholder {0}: formatCurrency(gbHourPackPricePerGbHour(pack), PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+msgid "{0} per GB-hour"
+msgstr "{0} за ГБ-час"
 
 #. placeholder {0}: normalizedProjectIds.length
 msgid "{0} projects"
@@ -701,6 +705,9 @@ msgstr "{actual} на данный момент · прогноз ~{projected}"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "Сеансы {agents} возобновятся, когда вы откроете их рабочее пространство."
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount} ({hoursLabel} ГБ-часов)"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, one {# ждёт подтверждения} few {# ждут подтверждения} many {# ждут подтверждения} other {# ждут подтверждения}}"
 
@@ -822,6 +829,9 @@ msgstr "{count} хостов работают на более старой ве�
 msgid "{count}/day"
 msgstr "{count}/день"
 
+msgid "{credit} of credit goes toward your next invoices."
+msgstr "{credit} кредита пойдёт в счёт следующих счетов."
+
 msgid "{current} of {total}"
 msgstr "{current} из {total}"
 
@@ -882,6 +892,12 @@ msgstr "{gate} · {statusLabel}"
 
 msgid "{gate}: {statusLabel}"
 msgstr "{gate}: {statusLabel}"
+
+msgid "{gbHours} cloud GB-hours per seat each month"
+msgstr "{gbHours} облачных ГБ-часов на место в месяц"
+
+msgid "{gbHours} on {name}"
+msgstr "{gbHours} на {name}"
 
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {# скрытая строка} few {# скрытые строки} many {# скрытых строк} other {# скрытой строки}}"
@@ -961,11 +977,17 @@ msgstr "{minutes} мин. назад"
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵ — создать"
 
-msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
-msgstr "{monthlyPrice} за пользователя в месяц при помесячной оплате или {yearlyPrice} при оплате за год. Облачные рабочие области, мобильное приложение, приоритетная поддержка."
+msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Mobile, automations, priority support."
+msgstr "{monthlyPrice} за пользователя в месяц при помесячной оплате или {yearlyPrice} при оплате за год. Мобильное приложение, автоматизации, приоритетная поддержка."
+
+msgid "{monthlyPrice} per user/mo. Mobile, automations, priority support."
+msgstr "{monthlyPrice} за пользователя в месяц. Мобильное приложение, автоматизации, приоритетная поддержка."
 
 msgid "{months}mo ago"
 msgstr "{months} мес. назад"
+
+msgid "{multiple}x the cloud GB-hours of {basePlan}"
+msgstr "В {multiple} раз больше облачных ГБ-часов, чем в {basePlan}"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "Ваши автоматизации с ошибкой при последнем запуске: {myFailedCount}"
@@ -1005,6 +1027,12 @@ msgstr "{name} начал работу"
 
 msgid "{name} stopped"
 msgstr "{name} остановлен"
+
+msgid "{name}: {monthly} per user/month"
+msgstr "{name}: {monthly} за пользователя в месяц"
+
+msgid "{name}: {monthly} per user/month, or {yearly} billed yearly"
+msgstr "{name}: {monthly} за пользователя в месяц или {yearly} при оплате за год"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Укажите хотя бы одного человека или выберите {choice}.} sender {Укажите хотя бы одного отправителя или выберите {choice}.} other {Укажите хотя бы одно значение или выберите {choice}.}}"
@@ -1055,6 +1083,9 @@ msgstr "{planLabel} · присоединился {joined}"
 msgid "{planLabel} plan"
 msgstr "Тариф {planLabel}"
 
+msgid "{planName} plan"
+msgstr "Тариф {planName}"
+
 msgid "{plugin} has no OAuth client configured on this deployment yet."
 msgstr "Для {plugin} в этом развёртывании ещё не настроен клиент OAuth."
 
@@ -1068,6 +1099,18 @@ msgstr "{presetLabel} сброшен к значениям по умолчани
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · высота строки {0}"
 
+msgid "{price} per GB-hour"
+msgstr "{price} за ГБ-час"
+
+msgid "{price} per user/month"
+msgstr "{price} за пользователя в месяц"
+
+msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
+msgstr "{price} за пользователя в месяц, {gbHours} облачных ГБ-часов на место в месяц"
+
+msgid "{price}/user/mo"
+msgstr "{price}/польз./мес"
+
 msgid "{provider} logo"
 msgstr "логотип {provider}"
 
@@ -1076,6 +1119,9 @@ msgstr "{pullRequestCount, plural, one {# PR} few {# PR} many {# PR} other {# PR
 
 msgid "{queued, plural, one {# message waiting in the queue} other {# messages waiting in the queue}}"
 msgstr "{queued, plural, one {# сообщение ждёт в очереди} few {# сообщения ждут в очереди} many {# сообщений ждут в очереди} other {# сообщения ждут в очереди}}"
+
+msgid "{rate} per GB-hour. Used after the monthly pool, and never expire."
+msgstr "{rate} за ГБ-час. Расходуются после месячного пула и не сгорают."
 
 msgid "{readPercent}% read"
 msgstr "прочитано {readPercent}%"
@@ -1185,6 +1231,9 @@ msgstr "{updatedLabel} восстановлен к значениям по ум�
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Загрузка # файла…} few {Загрузка # файлов…} many {Загрузка # файлов…} other {Загрузка # файла…}}"
+
+msgid "{used} of {limit} environments"
+msgstr "{used} из {limit} окружений"
 
 msgid "{used} used"
 msgstr "Использовано {used}"
@@ -1847,6 +1896,9 @@ msgstr "Добавьте своего терминального агента н
 
 msgid "Added {added} files to {where}"
 msgstr "В {where} добавлено файлов: {added}"
+
+msgid "Added {bought} GB-hours."
+msgstr "Добавлено {bought} ГБ-часов."
 
 msgid "Added 1 file to {where}"
 msgstr "В {where} добавлен 1 файл"
@@ -2662,6 +2714,9 @@ msgstr "at"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "Хотя бы одна команда, которую мы можем назвать, включая нашу, проходит все шлюзы F4 в течение полного квартала и публикует цифры."
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "Не более {AUTO_TOPUP_MONTHLY_LIMIT} пополнений в месяц, то есть до {monthlyMax} в месяц."
+
 msgid "at once"
 msgstr "одновременно"
 
@@ -2784,6 +2839,9 @@ msgstr "Авто следует языку системы. Позже это м�
 
 msgid "Auto Save"
 msgstr "Автосохранение"
+
+msgid "Auto top-up"
+msgstr "Автопополнение"
 
 msgid "auto-generated"
 msgstr "генерируется автоматически"
@@ -2998,6 +3056,9 @@ msgstr "Отстаёт от main на ? коммитов, нужен rebase"
 msgid "Being built right now."
 msgstr "Делается прямо сейчас."
 
+msgid "Beta"
+msgstr "Бета"
+
 msgid "Beyond: F5 is not a near-term claim"
 msgstr "Дальше: F5 — не заявка на ближайшее будущее"
 
@@ -3016,8 +3077,8 @@ msgstr "Оплата"
 msgid "Billing details"
 msgstr "Платёжные данные"
 
-msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
-msgstr "Оплата не позволила запустить облачную рабочую область: организации нужен платный тариф или достигнут лимит использования облака. Перейдите на другой тариф или увеличьте лимит в разделе «Настройки > Оплата» либо запустите автоматизацию на устройстве."
+msgid "Billing refused to start a cloud workspace: the organization's plan does not include cloud workspaces, or it reached its cloud usage limit. Cloud workspaces need the Team or Ultra plan. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "Биллинг отказался запустить облачное рабочее пространство: план организации не включает облачные рабочие пространства, или достигнут лимит использования облака. Облачным рабочим пространствам нужен план Team или Ultra. Повысьте план или увеличьте лимит в разделе Настройки > Оплата, либо запустите автоматизацию на устройстве."
 
 msgid "Binary"
 msgstr "Бинарный"
@@ -3085,6 +3146,9 @@ msgstr "Заимствовано из того, как оценивают бес
 
 msgid "Bottom drawer, swipe-friendly on touch devices."
 msgstr "Нижняя шторка, удобная для свайпов на сенсорных устройствах."
+
+msgid "Bought GB-hours left: {prepaid}"
+msgstr "Осталось купленных ГБ-часов: {prepaid}"
 
 msgid "Box"
 msgstr "Box"
@@ -3291,6 +3355,18 @@ msgstr "Нажиматель кнопок"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "Кнопки, переключатели и клавиатурные подсказки"
 
+msgid "Buy"
+msgstr "Купить"
+
+msgid "Buy extra GB-hours"
+msgstr "Купить дополнительные ГБ-часы"
+
+msgid "Buy for {total}"
+msgstr "Купить за {total}"
+
+msgid "Buy GB-hours"
+msgstr "Купить ГБ-часы"
+
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "от {0}"
@@ -3356,6 +3432,9 @@ msgstr "Камера недоступна"
 
 msgid "Can comment"
 msgstr "Может комментировать"
+
+msgid "Can I buy more cloud GB-hours?"
+msgstr "Можно ли купить больше облачных ГБ-часов?"
 
 msgid "Can I create automations from a script?"
 msgstr "Можно ли создавать автоматизации из скрипта?"
@@ -3504,6 +3583,9 @@ msgstr "Сменить логотип организации"
 msgid "Change organization slug"
 msgstr "Изменить slug организации"
 
+msgid "Change plan"
+msgstr "Сменить тариф"
+
 msgid "Change preview"
 msgstr "Предпросмотр изменений"
 
@@ -3568,6 +3650,9 @@ msgstr "Смена..."
 
 msgid "Channel created"
 msgstr "Канал создан"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "Списывает с сохранённой карты оплату за новые ГБ-часы, когда купленные ГБ-часы заканчиваются."
 
 msgid "Chat"
 msgstr "Чат"
@@ -4083,15 +4168,17 @@ msgstr "Закрытие этого терминала завершит рабо
 msgid "Cloud"
 msgstr "Облако"
 
+msgid "Cloud environments"
+msgstr "Облачные окружения"
+
+msgid "Cloud GB-hours per seat each month"
+msgstr "Облачные ГБ-часы на место в месяц"
+
 msgid "Cloud is coming. Become a design partner"
 msgstr "Облачная версия скоро появится. Станьте партнёром по разработке"
 
 msgid "Cloud sandboxes"
 msgstr "Облачные песочницы"
-
-#. js-lingui-explicit-id
-msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
-msgstr "Облачные песочницы не включены для {account}. Запросите доступ у команды Superset."
 
 msgid "Cloud usage"
 msgstr "Использование облака"
@@ -4099,14 +4186,24 @@ msgstr "Использование облака"
 msgid "Cloud workspace"
 msgstr "Облачная рабочая область"
 
+msgid "Cloud workspaces"
+msgstr "Облачные рабочие области"
+
+msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan."
+msgstr "Облачные рабочие пространства тарифицируются в ГБ-часах: память машины, умноженная на часы её работы. Машина с 8 ГБ расходует 8 ГБ-часов в час. Каждое место добавляет ГБ-часы своего тарифа в общий пул команды: {allowances}. Пул обновляется каждый месяц, а использование сверх него оплачивается за ГБ-час по ставке, указанной в каждом тарифе."
+
+#. js-lingui-explicit-id
+msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
+msgstr "Облачные рабочие пространства не включены для {account}. Они входят в планы Team и Ultra: повысьте план в разделе Настройки, Оплата."
+
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "Облачные рабочие пространства игнорируют эту переменную. Вместо этого агенты входят в систему в разделе «Настройки › Агенты»."
 
-msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
-msgstr "Для облачных рабочих областей нужен платный тариф. Перейдите на него в разделе «Настройки», «Оплата», чтобы запустить облачную рабочую область."
-
 msgid "Cloud workspaces need a project for now"
 msgstr "Пока облачным рабочим пространствам нужен проект"
+
+msgid "Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one."
+msgstr "Облачным рабочим пространствам нужен план Team или Ultra. Повысьте план в разделе Настройки, Оплата, чтобы запустить его."
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "Облачные рабочие пространства перестанут запускать {agentLabel} с этими данными."
@@ -4378,6 +4475,9 @@ msgstr "Настроен для {agent}"
 
 msgid "Confirm before quitting"
 msgstr "Подтверждать выход"
+
+msgid "Confirm switch"
+msgstr "Подтвердить переход"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4970,6 +5070,9 @@ msgstr "Не удалось загрузить окружения."
 
 msgid "Could not load image"
 msgstr "Не удалось загрузить изображение"
+
+msgid "Could not load plans."
+msgstr "Не удалось загрузить тарифы."
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "Не удалось загрузить плагины. Проверьте подключение и попробуйте снова."
@@ -5705,6 +5808,12 @@ msgstr "Своя"
 
 msgid "Custom agent…"
 msgstr "Свой агент…"
+
+msgid "Custom amount"
+msgstr "Своё количество"
+
+msgid "Custom amount of GB-hours"
+msgstr "Своё количество ГБ-часов"
 
 msgid "Custom components beyond the shadcn set"
 msgstr "Свои компоненты за пределами набора shadcn"
@@ -6553,6 +6662,9 @@ msgstr "Выпадающее меню"
 msgid "Dropdown, context, and application menus"
 msgstr "Выпадающие, контекстные и прикладные меню"
 
+msgid "Due today"
+msgstr "К оплате сегодня"
+
 msgid "Duration"
 msgstr "Длительность"
 
@@ -6805,6 +6917,9 @@ msgstr "Введите значение."
 msgid "Enter a whole number"
 msgstr "Введите целое число"
 
+msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
+msgstr "Введите целое число от {minHours} до {maxHours} ГБ-часов."
+
 msgid "Enter this code when OpenAI asks for it:"
 msgstr "Введите этот код, когда OpenAI попросит:"
 
@@ -6880,6 +6995,9 @@ msgstr "Каждую минуту"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Все цели работают на следующую ступень. Измерено за последние 30 дней."
 
+msgid "Every paid plan includes Superset Mobile, automations, and priority support. Plans with cloud workspaces give your team one shared pool of GB-hours."
+msgstr "Каждый платный тариф включает Superset Mobile, автоматизации и приоритетную поддержку. Тарифы с облачными рабочими пространствами дают команде общий пул ГБ-часов."
+
 msgid "Every publish is a version"
 msgstr "Каждая публикация становится версией"
 
@@ -6910,14 +7028,17 @@ msgstr "Все остаются на v{sharedVersion}, пока вы это не
 msgid "Everyone with access to this organization."
 msgstr "Все, у кого есть доступ к этой организации."
 
+msgid "Everything in {previousPlan}"
+msgstr "Всё из тарифа {previousPlan}"
+
 msgid "Everything in Free"
 msgstr "Всё из бесплатного тарифа"
 
-msgid "Everything in Pro"
-msgstr "Всё из Pro"
+msgid "Everything in Ultra"
+msgstr "Всё из Ultra"
 
-msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
-msgstr "Всё из Pro плюс SSO и SAML, провижининг SCIM, ограничения по IP, журналы аудита, индивидуальный SLA, выделенная поддержка и индивидуальные договоры. Цена подбирается под организацию. Напишите нам, и мы соберём подходящий вариант."
+msgid "Everything in Ultra plus custom cloud GB-hours, SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
+msgstr "Всё из Ultra, а также индивидуальные облачные ГБ-часы, SSO и SAML, SCIM-провижининг, ограничения по IP, журналы аудита, индивидуальный SLA, выделенная поддержка и индивидуальные договоры. Цена подбирается под вашу организацию. Свяжитесь с нами, и мы подберём подходящий вариант."
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "Всё скриптуется. Поднимайте рабочие области и агентов из CLI, встраивайте Superset в CI через SDK или дайте агенту водить его по MCP."
@@ -7038,6 +7159,15 @@ msgstr "Внешний редактор"
 
 msgid "extra ${used} of ${limit}"
 msgstr "сверх лимита ${used} из ${limit}"
+
+msgid "Extra GB-hours"
+msgstr "Дополнительные ГБ-часы"
+
+msgid "Extra GB-hours, bought as needed"
+msgstr "Дополнительные ГБ-часы по мере необходимости"
+
+msgid "Extra GB-hours: {pack}, never expire"
+msgstr "Дополнительные ГБ-часы: {pack}, не сгорают"
 
 msgid "Extra high"
 msgstr "Очень высокий"
@@ -7762,9 +7892,6 @@ msgstr "Завершено"
 msgid "finished · worked for 7s"
 msgstr "завершил · работал 7 с"
 
-msgid "First repository by name"
-msgstr "Первый репозиторий по имени"
-
 msgid "Fix all failing checks"
 msgstr "Починить все упавшие проверки"
 
@@ -7894,6 +8021,9 @@ msgstr "Для тех, кто начинает в одиночку"
 msgid "For organizations with advanced needs"
 msgstr "Для организаций с повышенными требованиями"
 
+msgid "For people who keep agents running all day"
+msgstr "Для тех, у кого агенты работают весь день"
+
 msgid "For press inquiries and interview requests, email us."
 msgstr "По вопросам прессы и интервью пишите нам на почту."
 
@@ -7902,6 +8032,12 @@ msgstr "По вопросам оплаты <0>напишите нам</0>."
 
 msgid "For teams that need more power"
 msgstr "Для команд, которым нужно больше"
+
+msgid "For teams that run agents every day"
+msgstr "Для команд, которые запускают агентов каждый день"
+
+msgid "For teams that run more agents in the cloud"
+msgstr "Для команд, которые запускают больше агентов в облаке"
 
 msgid "Force merge"
 msgstr "Принудительное слияние"
@@ -8047,8 +8183,14 @@ msgstr "Шлюзы"
 msgid "Gates open"
 msgstr "Шлюзов открыто"
 
+msgid "GB-hours"
+msgstr "ГБ-часы"
+
 msgid "GB-hours over the plan: {overage}"
 msgstr "ГБ-часы сверх тарифа: {overage}"
+
+msgid "GB-hours past the pool"
+msgstr "ГБ-часы сверх пула"
 
 msgid "GB-hours used: {used}"
 msgstr "Использовано ГБ-часов: {used}"
@@ -8088,6 +8230,9 @@ msgstr "Генерация..."
 
 msgid "Generating…"
 msgstr "Создание…"
+
+msgid "Get {plan}"
+msgstr "Выбрать {plan}"
 
 msgid "Get an API key"
 msgstr "Получить ключ API"
@@ -8408,9 +8553,6 @@ msgstr "Скрыть с боковой панели"
 msgid "Hide log"
 msgstr "Скрыть лог"
 
-msgid "Hide PR review comments"
-msgstr "Скрыть комментарии ревью PR"
-
 msgid "Hide Preview"
 msgstr "Скрыть предпросмотр"
 
@@ -8426,17 +8568,11 @@ msgstr "Скрыть закрытые ({resolvedCount})"
 msgid "Hide resolved comments"
 msgstr "Скрыть решённые комментарии"
 
-msgid "Hide review comments"
-msgstr "Скрыть комментарии ревью"
-
 msgid "Hide sessions"
 msgstr "Скрыть сессии"
 
 msgid "Hide text"
 msgstr "Скрыть текст"
-
-msgid "Hide unchanged regions"
-msgstr "Скрыть неизменённые участки"
 
 msgid "High"
 msgstr "Высокий"
@@ -8555,11 +8691,11 @@ msgstr "Чем можем помочь?"
 msgid "How do I get started?"
 msgstr "Как начать?"
 
+msgid "How do the paid plans work?"
+msgstr "Как работают платные тарифы?"
+
 msgid "How does pricing work?"
 msgstr "Как устроена цена?"
-
-msgid "How does Pro pricing work?"
-msgstr "Как устроена цена Pro?"
 
 msgid "How does the parallel agent system work?"
 msgstr "Как работает система параллельных агентов?"
@@ -9297,6 +9433,12 @@ msgstr "только что"
 
 msgid "Kbd"
 msgstr "Kbd"
+
+msgid "Keep {planLabel}"
+msgstr "Оставить {planLabel}"
+
+msgid "Keep {planName}"
+msgstr "Оставить {planName}"
 
 msgid "Keep docs fresh"
 msgstr "Держать документацию актуальной"
@@ -10791,6 +10933,9 @@ msgstr "Далее (Enter)"
 msgid "Next branch"
 msgstr "Следующая ветка"
 
+msgid "Next charge: {nextTotal} on {nextDate}, plus any usage past the pool."
+msgstr "Следующее списание: {nextTotal} {nextDate}, плюс использование сверх пула."
+
 msgid "Next comment"
 msgstr "Следующий комментарий"
 
@@ -11653,6 +11798,9 @@ msgstr "от всех токенов"
 msgid "Off"
 msgstr "Выкл."
 
+msgid "Off. Buys more GB-hours when they run low."
+msgstr "Выключено. Докупает ГБ-часы, когда они заканчиваются."
+
 #. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
 msgstr "Официальная документация {0} — приложения для параллельного запуска более 100 агентов программирования."
@@ -11744,6 +11892,9 @@ msgstr "Один плагин, любой агент для программир
 
 msgid "One plugin. Every coding agent."
 msgstr "Один плагин. Любой агент для программирования."
+
+msgid "One shared GB-hour pool for the team"
+msgstr "Один общий пул ГБ-часов для команды"
 
 msgid "One step left"
 msgstr "Остался один шаг"
@@ -11985,6 +12136,9 @@ msgstr "Открыть файл"
 
 msgid "Open File in New Tab"
 msgstr "Открыть файл в новой вкладке"
+
+msgid "Open files, diffs and browsers in tabs on the right, and keep the center for terminals and chats."
+msgstr "Открывайте файлы, диффы и браузеры во вкладках справа, а центр оставьте для терминалов и чатов."
 
 msgid "Open from folder"
 msgstr "Открыть из папки"
@@ -12552,6 +12706,9 @@ msgstr "постраничная навигация"
 msgid "Pagination"
 msgstr "Постраничная навигация"
 
+msgid "Paid plans are priced per user per month and billed for each active seat on your team. {planPrices}."
+msgstr "Платные тарифы оплачиваются за пользователя в месяц, за каждое активное место в команде. {planPrices}."
+
 msgid "Paid work trial"
 msgstr "Оплачиваемый пробный период"
 
@@ -12664,6 +12821,9 @@ msgstr "Приостановлена"
 msgctxt "project state"
 msgid "Paused"
 msgstr "Приостановлен"
+
+msgid "Pay {total}"
+msgstr "Оплатить {total}"
 
 msgid "Pay now"
 msgstr "Оплатить"
@@ -13168,9 +13328,6 @@ msgstr "Pro и Enterprise. Для триггеров Microsoft Teams нужен 
 
 msgid "Pro Features"
 msgstr "Возможности Pro"
-
-msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro стоит {monthlyPrice} за пользователя в месяц при помесячной оплате или {yearlyPrice} при годовой (скидка 25%). Оплата за активные места в команде."
 
 msgid "Process"
 msgstr "Процесс"
@@ -14541,6 +14698,9 @@ msgstr "Расширенный ввод ({hotkeyText})"
 msgid "right pane"
 msgstr "правая панель"
 
+msgid "Right pane area"
+msgstr "Область правой панели"
+
 msgid "Right-click here"
 msgstr "Кликните здесь правой кнопкой"
 
@@ -14765,9 +14925,6 @@ msgstr "Сохранить"
 msgid "Save & create workspace"
 msgstr "Сохранить и создать рабочую область"
 
-msgid "Save 25%"
-msgstr "Экономия 25%"
-
 msgid "Save All"
 msgstr "Сохранить всё"
 
@@ -14800,6 +14957,9 @@ msgstr "сохранить команду агента"
 
 msgid "Save to get URL"
 msgstr "Сохраните, чтобы получить URL"
+
+msgid "Save up to {maxDiscount}"
+msgstr "Экономия до {maxDiscount}"
 
 msgid "Saved"
 msgstr "Сохранено"
@@ -15088,6 +15248,12 @@ msgstr "Поиск..."
 
 msgid "Searching…"
 msgstr "Поиск…"
+
+#. placeholder {0}: format(new Date(periodEnd), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(periodEnd)
+#. placeholder {0}: formatLocaleDate(new Date(seatPeriodEnd), { month: "long", day: "numeric", year: "numeric" })
+msgid "Seats removed mid-cycle stay active until {0}."
+msgstr "Места, удалённые в середине периода, остаются активными до {0}."
 
 msgid "Secondary"
 msgstr "Вторичная"
@@ -15722,9 +15888,6 @@ msgstr "Показывать только открытые"
 msgid "Show original"
 msgstr "Показать оригинал"
 
-msgid "Show PR review comments"
-msgstr "Показать комментарии ревью PR"
-
 msgid "Show Preview"
 msgstr "Показать предпросмотр"
 
@@ -15908,6 +16071,9 @@ msgstr "Простые цены для любой команды"
 
 msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
 msgstr "Понятные тарифы для любой команды. Бесплатно для одного пользователя, {yearlyPrice}/пользователь/месяц для команд, индивидуально для enterprise. Запускайте 100+ параллельных кодинг-агентов с {companyName}."
+
+msgid "Simple pricing for every team. Free for individuals, per-user plans for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "Простые цены для любой команды. Бесплатно для частных лиц, тарифы за пользователя для команд, индивидуальные условия для компаний. Запускайте более 100 агентов-программистов параллельно с {companyName}."
 
 msgid "Simulate update: downloading"
 msgstr "Симуляция обновления: загрузка"
@@ -16763,9 +16929,6 @@ msgstr "Superset Mobile запускает агентов на компьюте�
 msgid "Superset Mobile terminal on iPhone"
 msgstr "Терминал Superset Mobile на iPhone"
 
-msgid "Superset Mobile, cloud workspaces, automations, and priority support."
-msgstr "Superset Mobile, облачные рабочие пространства, автоматизации и приоритетная поддержка."
-
 msgid "Superset needs Full Disk Access to read another browser's data. Grant it in System Settings, then check again."
 msgstr "Superset нужен полный доступ к диску, чтобы читать данные другого браузера. Выдайте его в Системных настройках и проверьте снова."
 
@@ -16854,11 +17017,17 @@ msgstr "Сменить организацию"
 msgid "Switch organization or sign in again to restart the host service."
 msgstr "Смените организацию или войдите снова, чтобы перезапустить службу хоста."
 
+msgid "Switch plan"
+msgstr "Сменить тариф"
+
 msgid "Switch sign-in"
 msgstr "Сменить вход"
 
 msgid "Switch sign-in…"
 msgstr "Сменить вход…"
+
+msgid "Switch to {planName}"
+msgstr "Перейти на {planName}"
 
 msgid "Switch to Active Workspace"
 msgstr "Переключиться на активную рабочую область"
@@ -16919,6 +17088,11 @@ msgstr "Перейти в рабочую область 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Перейти в рабочую область 9"
+
+#. placeholder {0}: format(new Date(switchAt), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(scheduledAt)
+msgid "Switches to {nextPlanName} on {0}."
+msgstr "Переход на {nextPlanName} {0}."
 
 msgid "Symbol, light"
 msgstr "Символ, светлый"
@@ -17320,6 +17494,9 @@ msgstr "Лучший агент будет меняться.<0/>Ваш проц�
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Теперь кнопка выделяется. Я проверил это в вашей панели."
 
+msgid "The change starts now. You pay only the difference for the rest of this period."
+msgstr "Изменение вступает в силу сразу. Вы платите только разницу за остаток периода."
+
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Облачная рабочая область должна была запуститься, но не ответила вовремя. Следующий запуск попробует снова."
 
@@ -17328,9 +17505,6 @@ msgstr "Срок действия кода истёк. Начните занов
 
 msgid "The commands Superset runs to set up, run and archive this project's workspaces, from .superset/config.toml."
 msgstr "Команды, которые Superset выполняет при подготовке, запуске и архивации рабочих областей этого проекта, из .superset/config.toml."
-
-msgid "The config repository must be one of the environment's repositories"
-msgstr "Репозиторий конфигурации должен быть одним из репозиториев окружения"
 
 msgid "The connection timed out"
 msgstr "Истекло время ожидания соединения"
@@ -17514,6 +17688,9 @@ msgstr "Такой страницы не существует."
 msgid "The pane uses your real logins. Agents ask you before they take a consequential action."
 msgstr "Панель использует ваши настоящие входы. Агенты спрашивают вас, прежде чем выполнить важное действие."
 
+msgid "The primary repository must be one of the environment's repositories"
+msgstr "Основной репозиторий должен быть одним из репозиториев окружения"
+
 msgid "The project's checkout as it is: files and branch are shared"
 msgstr "Checkout проекта как есть: файлы и ветка общие"
 
@@ -17632,6 +17809,9 @@ msgstr "Темы"
 
 msgid "Themes and agents"
 msgstr "Темы и агенты"
+
+msgid "Then {overage} per GB-hour past the pool"
+msgstr "Сверх пула: {overage} за ГБ-час"
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Эти команды выполняются автоматически при создании рабочей области. <0>Читать документацию<1/></0>"
@@ -18040,6 +18220,9 @@ msgstr "Ветка обсуждения не найдена"
 msgid "Three steps · touches packages/ui and apps/desktop"
 msgstr "Три шага · затрагивает packages/ui и apps/desktop"
 
+msgid "Threshold"
+msgstr "Порог"
+
 msgid "Ticket to production under one day, median"
 msgstr "От тикета до продакшена меньше суток, медиана"
 
@@ -18219,6 +18402,9 @@ msgstr "Топ моделей"
 
 msgid "Top tier. Nothing left to clear."
 msgstr "Высший уровень. Больше нечего брать."
+
+msgid "Top-up amount"
+msgstr "Объём пополнения"
 
 msgid "Topic"
 msgstr "Тема"
@@ -18749,12 +18935,14 @@ msgstr "Обнови зависимость и почини то, что сло�
 msgid "Upgrade on {0}"
 msgstr "Перейти на Pro на {0}"
 
-#. placeholder {0}: i18n._(plan.name)
-msgid "Upgrade to {0}"
-msgstr "Перейти на {0}"
+msgid "Upgrade to {planName}"
+msgstr "Перейти на {planName}"
 
 msgid "Upgrade to Pro"
 msgstr "Перейти на Pro"
+
+msgid "Upgrade your plan"
+msgstr "Повысьте тариф"
 
 msgid "Upload files"
 msgstr "Загрузить файлы"
@@ -19259,6 +19447,9 @@ msgstr "Добро пожаловать в Superset"
 msgid "Welcome to the new Superset"
 msgstr "Добро пожаловать в новый Superset"
 
+msgid "What are cloud GB-hours?"
+msgstr "Что такое облачные ГБ-часы?"
+
 msgid "What are the benefits?"
 msgstr "Какие у вас льготы?"
 
@@ -19351,6 +19542,12 @@ msgstr "Что дальше"
 
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "Когда срабатывает триггер, выбранный Mac открывает новую рабочую область, и агент начинает работу над вашим промптом. Запуски по событию содержат это событие, поэтому агент знает, на что смотреть. Ответьте в запуске, чтобы продолжить."
+
+msgid "When bought GB-hours fall below"
+msgstr "Когда купленных ГБ-часов меньше"
+
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "Когда остаётся меньше {topupThreshold} ГБ-часов, пополнить на {topupPrice} ({topupGbHours} ГБ-часов)."
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Если выключено, ничто извне не может получить доступ к файлам и инструментам на этом устройстве. Отсюда по-прежнему можно подключаться к удалённым песочницам. <0>Подробнее<1/></0>"
@@ -19682,6 +19879,9 @@ msgstr "Да. Откликнитесь на наиболее подходящу�
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "Да. Бесплатный тариф покрывает одного пользователя, локальные рабочие области, десктопное приложение и CLI. Карта не нужна."
 
+msgid "Yes. On plans with cloud workspaces, owners can buy any amount of extra GB-hours at {packPrice} per GB-hour in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "Да. В планах с облачными рабочими пространствами владельцы могут купить любое количество дополнительных ГБ-часов по цене {packPrice} за ГБ-час в разделе Настройки, Оплата. Купленные ГБ-часы расходуются после месячного пула и не сгорают, а автопополнение может докупить их, когда они заканчиваются."
+
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "Да. Superset прошёл аудит SOC 2 Type II у независимого аудитора, охватывающий работу наших мер безопасности во времени. Запросите отчёт и посмотрите документацию по безопасности на trust.superset.sh."
 
@@ -19691,8 +19891,8 @@ msgstr "Да. Superset — это место, где работают ваши �
 msgid "Yes. Use superset automations in the CLI to create, run, and pause them."
 msgstr "Да. Используйте superset automations в CLI, чтобы создавать, запускать и приостанавливать их."
 
-msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Changes take effect at the end of your current billing period."
-msgstr "Да. Повысить, понизить тариф или отменить подписку можно в любой момент в настройках оплаты внутри приложения. Изменения вступают в силу в конце текущего оплаченного периода."
+msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Upgrades start right away, and you pay only the difference for the rest of the period. Downgrades and cancellations take effect at the end of your current billing period."
+msgstr "Да. Вы можете повысить или понизить план либо отменить подписку в любой момент в настройках оплаты в приложении. Повышение действует сразу, и вы платите только разницу за остаток периода. Понижение и отмена вступают в силу в конце текущего расчётного периода."
 
 msgid "Yes. You don't need US work authorization to apply. But you should be willing to relocate to San Francisco."
 msgstr "Да. Для отклика не нужно разрешение на работу в США. Но вы должны быть готовы переехать в Сан-Франциско."
@@ -19882,14 +20082,23 @@ msgid "Your organization has reached its cloud usage limit. Raise the limit or u
 msgstr "Ваша организация достигла лимита использования облака. Увеличьте лимит или перейдите на другой тариф в разделе «Настройки», «Оплата», чтобы запустить эту рабочую область."
 
 #. placeholder {0}: params?.limit
-msgid "Your organization has reached its limit of {0} environments. Archive one, or upgrade in Settings, Billing to add more."
-msgstr "Ваша организация достигла лимита в {0} окружений. Архивируйте одно или перейдите на другой тариф в разделе «Настройки», «Оплата», чтобы добавить ещё."
+msgid "Your organization has reached its environment limit ({0}). Archive an environment, or upgrade in Settings, Billing to add more."
+msgstr "Ваша организация достигла лимита окружений ({0}). Архивируйте окружение или перейдите на другой тариф в разделе «Настройки», «Оплата», чтобы добавить ещё."
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Ваша организация достигла лимита использования облака. Эта рабочая область остановится через несколько минут, если лимит не увеличить."
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "Ваши собственные учётные записи. Интеграции вашей организации дают Superset доступ к её инструментам; подключив свои, вы увидите работу, которую Superset делает для вас, под своим именем."
+
+msgid "Your plan does not include cloud environments."
+msgstr "Ваш тариф не включает облачные окружения."
+
+msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
+msgstr "Ваш тариф не включает облачные окружения. Чтобы создать окружение, перейдите на другой тариф в разделе Настройки, Оплата."
+
+msgid "Your plan switches to {planName} on {startDate}. Nothing is charged today."
+msgstr "Ваш план перейдёт на {planName} {startDate}. Сегодня ничего не списывается."
 
 msgid "Your rank"
 msgstr "Ваше место"
@@ -19910,8 +20119,8 @@ msgstr "Ваш аккаунт Slack связан с Superset. Можно зак�
 msgid "Your stats, settled in mortal combat"
 msgstr "Твоя статистика решит исход смертельной схватки"
 
-msgid "Your subscription has been activated. You can now access all Pro features."
-msgstr "Ваша подписка активирована. Теперь доступны все возможности Pro."
+msgid "Your subscription is active. Your new plan's features are ready to use."
+msgstr "Подписка активна. Возможности нового тарифа уже доступны."
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "Подписка будет пересчитана соответственно."

@@ -192,7 +192,7 @@ function identityFor(workspaceId: string, sourceRef: string): SandboxIdentity {
 		SUPERSET_SANDBOX_WORKSPACE_ID: workspaceId,
 		SUPERSET_SANDBOX_ORGANIZATION_ID: ORGANIZATION_ID as string,
 		SUPERSET_SANDBOX_REPOSITORIES: JSON.stringify([
-			{ url: REPO_URL, branch: BRANCH, path: REPO_PATH, hooks: true },
+			{ url: REPO_URL, branch: BRANCH, path: REPO_PATH },
 		]),
 		SUPERSET_SANDBOX_IMAGE_TAG: sourceRef,
 		SUPERSET_SANDBOX_PROVIDER: "vercel",
@@ -518,7 +518,7 @@ const fromGolden = {
 	sourceRef: golden,
 	region: REGION,
 	bundleSha: bundle.sha256,
-	hooksRepositoryId: monorepo.id,
+	primaryRepositoryId: monorepo.id,
 	archivedAt: null,
 };
 const { internal, bundled } = await dbWs.transaction(async (tx) => {

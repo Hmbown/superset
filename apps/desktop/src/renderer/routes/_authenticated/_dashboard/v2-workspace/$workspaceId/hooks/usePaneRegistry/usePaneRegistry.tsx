@@ -89,7 +89,11 @@ import { CommentPaneHeaderExtras } from "./components/CommentPane/components/Com
 import { CommentPaneTitle } from "./components/CommentPane/components/CommentPaneTitle";
 import { DesktopPane } from "./components/DesktopPane";
 import { DiffPane } from "./components/DiffPane";
-import { DiffPaneHeaderExtras } from "./components/DiffPane/components/DiffPaneHeaderExtras";
+import { DiffPaneHeaderSlot } from "./components/DiffPane/components/DiffPaneHeaderSlot";
+import {
+	diffPaneActionsSlotId,
+	diffPaneTitleSlotId,
+} from "./components/DiffPane/utils/headerSlots";
 import { FilePane } from "./components/FilePane";
 import { FilePaneHeaderExtras } from "./components/FilePane/components/FilePaneHeaderExtras";
 import { FilesTreePane } from "./components/FilesTreePane";
@@ -356,6 +360,14 @@ export function usePaneRegistry({
 			diff: {
 				getIcon: () => <GitCompareArrows className="size-3.5" />,
 				getTitle: () => t({ message: "Changes" }),
+				// With the right pane area, the pane fills its own header (scope on
+				// the left, view controls on the right) through these slots.
+				renderTitle: (ctx: RendererContext<PaneViewerData>) => (
+					<DiffPaneHeaderSlot
+						id={diffPaneTitleSlotId(ctx.pane.id)}
+						className="flex min-w-0 items-center"
+					/>
+				),
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
 					<DiffPane
 						context={ctx}
@@ -365,7 +377,10 @@ export function usePaneRegistry({
 					/>
 				),
 				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) => (
-					<DiffPaneHeaderExtras workspaceId={workspaceId} store={ctx.store} />
+					<DiffPaneHeaderSlot
+						id={diffPaneActionsSlotId(ctx.pane.id)}
+						className="flex shrink-0 items-center"
+					/>
 				),
 				contextMenuActions: (_ctx, defaults) =>
 					defaults.map((d) =>

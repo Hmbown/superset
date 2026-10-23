@@ -95,7 +95,7 @@ export async function buildSandboxClaim(args: {
 	if (!environment) throw new Error("Environment not found");
 	const checkouts = await workspaceRepositories({
 		cloudWorkspaceId: args.row.id,
-		hooksRepositoryId: environment.hooksRepositoryId,
+		primaryRepositoryId: environment.primaryRepositoryId,
 		primaryBranch: args.row.baseBranch,
 		workingBranch: args.row.branch,
 	});
@@ -116,12 +116,12 @@ export async function buildSandboxClaim(args: {
 	const token =
 		userToken ??
 		(await installationTokenFor(checkouts.map((entry) => entry.repository)));
-	const hooksCheckout = checkouts.find((entry) => entry.hooks) ?? checkouts[0];
+	const primaryCheckout = checkouts[0];
 	const repoHooks =
-		args.withRepoHooks && hooksCheckout
+		args.withRepoHooks && primaryCheckout
 			? await readRepoHooks({
-					repo: hooksCheckout.repository,
-					branch: hooksCheckout.baseBranch,
+					repo: primaryCheckout.repository,
+					branch: primaryCheckout.baseBranch,
 					token,
 				})
 			: null;

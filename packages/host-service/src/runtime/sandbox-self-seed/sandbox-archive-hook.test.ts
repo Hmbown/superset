@@ -17,7 +17,6 @@ function identity(): SandboxIdentity {
 		workspaceRoot: root,
 		worktreePath: root,
 		repositories: [],
-		hooksPath: root,
 		launch: null,
 		launchMarkerPath: join(root, "launch.marker"),
 	};

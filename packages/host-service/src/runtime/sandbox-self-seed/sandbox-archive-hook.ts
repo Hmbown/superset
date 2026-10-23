@@ -32,7 +32,7 @@ export async function runSandboxArchiveHook(
 	options: { timeoutMs?: number } = {},
 ): Promise<ArchiveHookResult> {
 	const resolved = resolveScript("teardown", {
-		repoPath: identity.hooksPath,
+		repoPath: identity.worktreePath,
 		projectId: identity.workspaceId,
 	});
 	if (!resolved) return { status: "skipped" };
@@ -41,14 +41,14 @@ export async function runSandboxArchiveHook(
 			? resolved.commands.join(" && ")
 			: `bash ${shellSingleQuote(resolved.scriptPath)}`;
 	const configured = resolved.cwd
-		? resolve(identity.hooksPath, resolved.cwd)
-		: identity.hooksPath;
+		? resolve(identity.worktreePath, resolved.cwd)
+		: identity.worktreePath;
 
 	return await new Promise<ArchiveHookResult>((done) => {
 		let output = "";
 		let timedOut = false;
 		const child = spawn("bash", ["-lc", command], {
-			cwd: existsSync(configured) ? configured : identity.hooksPath,
+			cwd: existsSync(configured) ? configured : identity.worktreePath,
 			env: buildStartHookEnv(process.env, getManagedEnv()),
 			stdio: ["ignore", "pipe", "pipe"],
 		});

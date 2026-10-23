@@ -409,6 +409,10 @@ msgstr "{0}，尾号{1}"
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{where}中已存在{0}个文件。是否要替换它们？"
 
+#. placeholder {0}: formatNumber(hours)
+msgid "{0} GB-hours"
+msgstr "{0} GB 小时"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
 msgstr "{0}已安装"
@@ -487,9 +491,9 @@ msgstr "{0}/{totalCount}"
 msgid "{0} options"
 msgstr "{0}选项"
 
-#. placeholder {0}: i18n._(plan.name)
-msgid "{0} plan"
-msgstr "{0}方案"
+#. placeholder {0}: formatCurrency(gbHourPackPricePerGbHour(pack), PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+msgid "{0} per GB-hour"
+msgstr "每 GB 小时 {0}"
 
 #. placeholder {0}: normalizedProjectIds.length
 msgid "{0} projects"
@@ -701,6 +705,9 @@ msgstr "目前{actual} · 预计约{projected}"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "打开对应工作区时，{agents} 会话会恢复。"
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount}（{hoursLabel} GB 小时）"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, other {# 个需要批准}}"
 
@@ -822,6 +829,9 @@ msgstr "{count} 台主机运行的主机服务比此应用旧"
 msgid "{count}/day"
 msgstr "{count}/天"
 
+msgid "{credit} of credit goes toward your next invoices."
+msgstr "{credit} 的抵扣额将用于后续账单。"
+
 msgid "{current} of {total}"
 msgstr "第 {current} 项，共 {total} 项"
 
@@ -882,6 +892,12 @@ msgstr "{gate} · {statusLabel}"
 
 msgid "{gate}: {statusLabel}"
 msgstr "{gate}：{statusLabel}"
+
+msgid "{gbHours} cloud GB-hours per seat each month"
+msgstr "每席位每月 {gbHours} 云端 GB 小时"
+
+msgid "{gbHours} on {name}"
+msgstr "{name} 含 {gbHours}"
 
 msgid "{hidden, plural, one {# hidden line} other {# hidden lines}}"
 msgstr "{hidden, plural, one {#行已隐藏} other {#行已隐藏}}"
@@ -961,11 +977,17 @@ msgstr "{minutes}分钟前"
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵创建"
 
-msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
-msgstr "按月计费每用户每月 {monthlyPrice}，按年计费为 {yearlyPrice}。包含云端工作区、移动端和优先支持。"
+msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Mobile, automations, priority support."
+msgstr "按月计费每用户每月 {monthlyPrice}，或按年计费 {yearlyPrice}。移动端、自动化、优先支持。"
+
+msgid "{monthlyPrice} per user/mo. Mobile, automations, priority support."
+msgstr "每用户每月 {monthlyPrice}。移动端、自动化、优先支持。"
 
 msgid "{months}mo ago"
 msgstr "{months}个月前"
+
+msgid "{multiple}x the cloud GB-hours of {basePlan}"
+msgstr "{basePlan} 的 {multiple} 倍云端 GB 小时"
 
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "你有{myFailedCount}个自动化上次运行失败"
@@ -1005,6 +1027,12 @@ msgstr "{name} 开始工作"
 
 msgid "{name} stopped"
 msgstr "{name} 已停止"
+
+msgid "{name}: {monthly} per user/month"
+msgstr "{name}：每用户每月 {monthly}"
+
+msgid "{name}: {monthly} per user/month, or {yearly} billed yearly"
+msgstr "{name}：每用户每月 {monthly}，或按年计费 {yearly}"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {请至少指定一个人员，或选择{choice}。} sender {请至少指定一个发件人，或选择{choice}。} other {请至少指定一个条目，或选择{choice}。}}"
@@ -1055,6 +1083,9 @@ msgstr "{planLabel} · 加入于{joined}"
 msgid "{planLabel} plan"
 msgstr "{planLabel}方案"
 
+msgid "{planName} plan"
+msgstr "{planName} 套餐"
+
 msgid "{plugin} has no OAuth client configured on this deployment yet."
 msgstr "此部署尚未为 {plugin} 配置 OAuth 客户端。"
 
@@ -1068,6 +1099,18 @@ msgstr "{presetLabel}已重置为默认值"
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · 行高{0}"
 
+msgid "{price} per GB-hour"
+msgstr "每 GB 小时 {price}"
+
+msgid "{price} per user/month"
+msgstr "每用户每月 {price}"
+
+msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
+msgstr "每用户每月 {price},每席位每月 {gbHours} 云端 GB 小时"
+
+msgid "{price}/user/mo"
+msgstr "{price}/用户/月"
+
 msgid "{provider} logo"
 msgstr "{provider}标志"
 
@@ -1076,6 +1119,9 @@ msgstr "{pullRequestCount, plural, other {# 个 PR}}"
 
 msgid "{queued, plural, one {# message waiting in the queue} other {# messages waiting in the queue}}"
 msgstr "{queued, plural, one {队列中有 # 条消息等待} other {队列中有 # 条消息等待}}"
+
+msgid "{rate} per GB-hour. Used after the monthly pool, and never expire."
+msgstr "每 GB 小时 {rate}。在每月额度池之后使用，永不过期。"
 
 msgid "{readPercent}% read"
 msgstr "已读{readPercent}%"
@@ -1185,6 +1231,9 @@ msgstr "{updatedLabel}已恢复为默认值"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {正在上传 # 个文件…}}"
+
+msgid "{used} of {limit} environments"
+msgstr "已用 {used}/{limit} 个环境"
 
 msgid "{used} used"
 msgstr "已使用 {used}"
@@ -1847,6 +1896,9 @@ msgstr "向此设备添加你自己的终端智能体。"
 
 msgid "Added {added} files to {where}"
 msgstr "已向{where}添加{added}个文件"
+
+msgid "Added {bought} GB-hours."
+msgstr "已添加 {bought} GB 小时。"
 
 msgid "Added 1 file to {where}"
 msgstr "已向{where}添加1个文件"
@@ -2662,6 +2714,9 @@ msgstr "位于"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "至少有一支叫得出名字的团队（包括我们自己）连续一个季度通过全部F4关卡，并公布数据。"
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "每月最多充值 {AUTO_TOPUP_MONTHLY_LIMIT} 次，即每月最多 {monthlyMax}。"
+
 msgid "at once"
 msgstr "同时"
 
@@ -2784,6 +2839,9 @@ msgstr "自动模式会跟随你的系统语言。之后可以在设置中更改
 
 msgid "Auto Save"
 msgstr "自动保存"
+
+msgid "Auto top-up"
+msgstr "自动充值"
 
 msgid "auto-generated"
 msgstr "自动生成"
@@ -2998,6 +3056,9 @@ msgstr "落后main ?个提交，需要变基"
 msgid "Being built right now."
 msgstr "正在构建中。"
 
+msgid "Beta"
+msgstr "测试版"
+
 msgid "Beyond: F5 is not a near-term claim"
 msgstr "再往后：F5不是近期的主张"
 
@@ -3016,8 +3077,8 @@ msgstr "账单"
 msgid "Billing details"
 msgstr "账单信息"
 
-msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
-msgstr "账单原因导致无法启动云端工作区：组织需要付费方案，或已达到云端用量上限。请在“设置 > 账单”中升级或提高上限，或在设备上运行该自动化。"
+msgid "Billing refused to start a cloud workspace: the organization's plan does not include cloud workspaces, or it reached its cloud usage limit. Cloud workspaces need the Team or Ultra plan. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "计费系统拒绝启动云工作区：组织的方案不包含云工作区，或已达到云使用上限。云工作区需要 Team 或 Ultra 方案。请在设置 > 账单中升级或提高上限，或在设备上运行此自动化。"
 
 msgid "Binary"
 msgstr "二进制"
@@ -3085,6 +3146,9 @@ msgstr "借用自动驾驶汽车的分级方式，用来衡量软件的构建方
 
 msgid "Bottom drawer, swipe-friendly on touch devices."
 msgstr "底部抽屉，在触屏设备上便于滑动操作。"
+
+msgid "Bought GB-hours left: {prepaid}"
+msgstr "已购 GB 小时剩余：{prepaid}"
 
 msgid "Box"
 msgstr "Box"
@@ -3291,6 +3355,18 @@ msgstr "按钮工"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "按钮、切换控件和键盘提示"
 
+msgid "Buy"
+msgstr "购买"
+
+msgid "Buy extra GB-hours"
+msgstr "购买额外 GB 小时"
+
+msgid "Buy for {total}"
+msgstr "以 {total} 购买"
+
+msgid "Buy GB-hours"
+msgstr "购买 GB 小时"
+
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "作者：{0}"
@@ -3356,6 +3432,9 @@ msgstr "相机不可用"
 
 msgid "Can comment"
 msgstr "可评论"
+
+msgid "Can I buy more cloud GB-hours?"
+msgstr "可以购买更多云端 GB 小时吗？"
 
 msgid "Can I create automations from a script?"
 msgstr "我可以用脚本创建自动化吗？"
@@ -3504,6 +3583,9 @@ msgstr "更改组织logo"
 msgid "Change organization slug"
 msgstr "更改组织slug"
 
+msgid "Change plan"
+msgstr "更改套餐"
+
 msgid "Change preview"
 msgstr "变更预览"
 
@@ -3568,6 +3650,9 @@ msgstr "正在更改..."
 
 msgid "Channel created"
 msgstr "频道已创建"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "当购买的 GB 小时不足时，从已保存的卡扣款购买更多 GB 小时。"
 
 msgid "Chat"
 msgstr "聊天"
@@ -4083,15 +4168,17 @@ msgstr "关闭此终端将结束正在运行的进程。"
 msgid "Cloud"
 msgstr "云端"
 
+msgid "Cloud environments"
+msgstr "云端环境"
+
+msgid "Cloud GB-hours per seat each month"
+msgstr "每席位每月云端 GB 小时"
+
 msgid "Cloud is coming. Become a design partner"
 msgstr "云端版本即将推出。成为共创伙伴"
 
 msgid "Cloud sandboxes"
 msgstr "云端沙箱"
-
-#. js-lingui-explicit-id
-msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
-msgstr "{account} 尚未启用云端沙箱。请向 Superset 团队申请访问权限。"
 
 msgid "Cloud usage"
 msgstr "云端用量"
@@ -4099,14 +4186,24 @@ msgstr "云端用量"
 msgid "Cloud workspace"
 msgstr "云端工作区"
 
+msgid "Cloud workspaces"
+msgstr "云工作区"
+
+msgid "Cloud workspaces are metered in GB-hours: the memory of the box times the hours it runs. An 8 GB box uses 8 GB-hours per hour. Each seat adds its plan's GB-hours to one pool your team shares: {allowances}. The pool resets every month, and usage past it is billed per GB-hour at the rate shown on each plan."
+msgstr "云端工作区按 GB 小时计量：机器内存乘以运行小时数。8 GB 的机器每小时使用 8 GB 小时。每个席位都会把其套餐的 GB 小时加入团队共享的同一个额度池：{allowances}。额度池每月重置，超出部分按各套餐标示的价格以每 GB 小时计费。"
+
+#. js-lingui-explicit-id
+msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
+msgstr "{account} 未开通云工作区。云工作区包含在 Team 和 Ultra 方案中：请在设置的账单中升级。"
+
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "云工作区会忽略此变量。智能体改为在「设置 › 智能体」中登录。"
 
-msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
-msgstr "云端工作区需要付费方案。请在“设置”中的“账单”升级后启动。"
-
 msgid "Cloud workspaces need a project for now"
 msgstr "云工作区目前需要一个项目"
+
+msgid "Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one."
+msgstr "云工作区需要 Team 或 Ultra 方案。请在设置的账单中升级后启动。"
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "云工作区将不再用它运行{agentLabel}。"
@@ -4378,6 +4475,9 @@ msgstr "已为 {agent} 配置"
 
 msgid "Confirm before quitting"
 msgstr "退出前确认"
+
+msgid "Confirm switch"
+msgstr "确认切换"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4970,6 +5070,9 @@ msgstr "无法加载环境。"
 
 msgid "Could not load image"
 msgstr "无法加载图片"
+
+msgid "Could not load plans."
+msgstr "无法加载套餐。"
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "无法加载插件。请检查网络连接后重试。"
@@ -5705,6 +5808,12 @@ msgstr "自定义"
 
 msgid "Custom agent…"
 msgstr "自定义智能体…"
+
+msgid "Custom amount"
+msgstr "自定义数量"
+
+msgid "Custom amount of GB-hours"
+msgstr "自定义 GB 小时数量"
 
 msgid "Custom components beyond the shadcn set"
 msgstr "shadcn组件集之外的自定义组件"
@@ -6553,6 +6662,9 @@ msgstr "下拉菜单"
 msgid "Dropdown, context, and application menus"
 msgstr "下拉菜单、右键菜单和应用菜单"
 
+msgid "Due today"
+msgstr "今日应付"
+
 msgid "Duration"
 msgstr "耗时"
 
@@ -6805,6 +6917,9 @@ msgstr "请输入一个值。"
 msgid "Enter a whole number"
 msgstr "输入整数"
 
+msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
+msgstr "请输入 {minHours} 到 {maxHours} 之间的整数 GB 小时。"
+
 msgid "Enter this code when OpenAI asks for it:"
 msgstr "OpenAI 要求时输入此代码："
 
@@ -6880,6 +6995,9 @@ msgstr "每分钟"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "所有目标都在为下一档位发力。按最近 30 天计算。"
 
+msgid "Every paid plan includes Superset Mobile, automations, and priority support. Plans with cloud workspaces give your team one shared pool of GB-hours."
+msgstr "每个付费套餐都包含 Superset Mobile、自动化和优先支持。带云端工作区的套餐为团队提供一个共享的 GB 小时额度池。"
+
 msgid "Every publish is a version"
 msgstr "每次发布都是一个版本"
 
@@ -6910,14 +7028,17 @@ msgstr "在你更改之前，所有人都停留在v{sharedVersion}"
 msgid "Everyone with access to this organization."
 msgstr "有权访问此组织的所有人。"
 
+msgid "Everything in {previousPlan}"
+msgstr "包含 {previousPlan} 的全部功能"
+
 msgid "Everything in Free"
 msgstr "免费版的全部内容"
 
-msgid "Everything in Pro"
-msgstr "Pro的全部内容"
+msgid "Everything in Ultra"
+msgstr "Ultra 的全部功能"
 
-msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
-msgstr "包含Pro的全部内容，另加SSO与SAML、SCIM账号开通、IP限制、审计日志、定制SLA、专属支持和定制合同。价格按你的组织量身定制。联系我们，一起把范围定下来。"
+msgid "Everything in Ultra plus custom cloud GB-hours, SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
+msgstr "Ultra 的全部功能，外加定制云 GB 小时、SSO 与 SAML、SCIM 配置、IP 限制、审计日志、定制 SLA、专属支持和定制合同。价格根据您的组织定制。联系我们，我们会为您制定合适的方案。"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "一切都能脚本化。用CLI创建工作区和智能体，用SDK把Superset接进CI，或者让你的智能体通过MCP来驱动它。"
@@ -7038,6 +7159,15 @@ msgstr "外部编辑器"
 
 msgid "extra ${used} of ${limit}"
 msgstr "额外用量${used}/${limit}"
+
+msgid "Extra GB-hours"
+msgstr "额外 GB 小时"
+
+msgid "Extra GB-hours, bought as needed"
+msgstr "按需购买的额外 GB 小时"
+
+msgid "Extra GB-hours: {pack}, never expire"
+msgstr "额外 GB 小时：{pack}，永不过期"
 
 msgid "Extra high"
 msgstr "极高"
@@ -7762,9 +7892,6 @@ msgstr "已完成"
 msgid "finished · worked for 7s"
 msgstr "已完成 · 用时7秒"
 
-msgid "First repository by name"
-msgstr "按名称排序的第一个仓库"
-
 msgid "Fix all failing checks"
 msgstr "修复所有失败的检查"
 
@@ -7894,6 +8021,9 @@ msgstr "面向刚上手的个人用户"
 msgid "For organizations with advanced needs"
 msgstr "面向有进阶需求的组织"
 
+msgid "For people who keep agents running all day"
+msgstr "适合让智能体整天运行的用户"
+
 msgid "For press inquiries and interview requests, email us."
 msgstr "媒体咨询和采访请求，请发邮件给我们。"
 
@@ -7902,6 +8032,12 @@ msgstr "如有账单相关问题，请<0>联系我们</0>。"
 
 msgid "For teams that need more power"
 msgstr "面向需要更多能力的团队"
+
+msgid "For teams that run agents every day"
+msgstr "适合每天运行智能体的团队"
+
+msgid "For teams that run more agents in the cloud"
+msgstr "适合在云端运行更多智能体的团队"
 
 msgid "Force merge"
 msgstr "强制合并"
@@ -8047,8 +8183,14 @@ msgstr "关卡"
 msgid "Gates open"
 msgstr "已开启关卡"
 
+msgid "GB-hours"
+msgstr "GB 小时"
+
 msgid "GB-hours over the plan: {overage}"
 msgstr "超出套餐的 GB 小时：{overage}"
+
+msgid "GB-hours past the pool"
+msgstr "超出额度池的 GB 小时"
 
 msgid "GB-hours used: {used}"
 msgstr "已用 GB 小时：{used}"
@@ -8088,6 +8230,9 @@ msgstr "正在生成..."
 
 msgid "Generating…"
 msgstr "正在生成…"
+
+msgid "Get {plan}"
+msgstr "获取 {plan}"
 
 msgid "Get an API key"
 msgstr "获取API密钥"
@@ -8408,9 +8553,6 @@ msgstr "从侧边栏隐藏"
 msgid "Hide log"
 msgstr "隐藏日志"
 
-msgid "Hide PR review comments"
-msgstr "隐藏PR审查评论"
-
 msgid "Hide Preview"
 msgstr "隐藏预览"
 
@@ -8426,17 +8568,11 @@ msgstr "隐藏已解决 ({resolvedCount})"
 msgid "Hide resolved comments"
 msgstr "隐藏已解决的评论"
 
-msgid "Hide review comments"
-msgstr "隐藏审查评论"
-
 msgid "Hide sessions"
 msgstr "隐藏会话"
 
 msgid "Hide text"
 msgstr "隐藏文本"
-
-msgid "Hide unchanged regions"
-msgstr "隐藏未更改区域"
 
 msgid "High"
 msgstr "高"
@@ -8555,11 +8691,11 @@ msgstr "我们能帮你什么？"
 msgid "How do I get started?"
 msgstr "如何开始？"
 
+msgid "How do the paid plans work?"
+msgstr "付费套餐如何计费?"
+
 msgid "How does pricing work?"
 msgstr "价格是怎么算的？"
-
-msgid "How does Pro pricing work?"
-msgstr "Pro的价格怎么算？"
 
 msgid "How does the parallel agent system work?"
 msgstr "并行智能体系统是怎么工作的？"
@@ -9297,6 +9433,12 @@ msgstr "刚刚"
 
 msgid "Kbd"
 msgstr "Kbd"
+
+msgid "Keep {planLabel}"
+msgstr "保留 {planLabel}"
+
+msgid "Keep {planName}"
+msgstr "保留 {planName}"
 
 msgid "Keep docs fresh"
 msgstr "让文档保持最新"
@@ -10791,6 +10933,9 @@ msgstr "下一个匹配项（Enter）"
 msgid "Next branch"
 msgstr "下一个分支"
 
+msgid "Next charge: {nextTotal} on {nextDate}, plus any usage past the pool."
+msgstr "下次扣款：{nextDate} 扣 {nextTotal}，另加超出额度池的用量。"
+
 msgid "Next comment"
 msgstr "下一条评论"
 
@@ -11653,6 +11798,9 @@ msgstr "占全部token"
 msgid "Off"
 msgstr "关闭"
 
+msgid "Off. Buys more GB-hours when they run low."
+msgstr "已关闭。不足时购买更多 GB 小时。"
+
 #. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
 msgstr "{0} 官方文档。这款应用可并行运行 100 多个编程代理。"
@@ -11744,6 +11892,9 @@ msgstr "一个插件，所有编码智能体：Claude Code、Codex、Cursor、Op
 
 msgid "One plugin. Every coding agent."
 msgstr "一个插件，所有编码智能体。"
+
+msgid "One shared GB-hour pool for the team"
+msgstr "团队共享一个 GB 小时额度池"
 
 msgid "One step left"
 msgstr "还差一步"
@@ -11985,6 +12136,9 @@ msgstr "打开文件"
 
 msgid "Open File in New Tab"
 msgstr "在新标签页中打开文件"
+
+msgid "Open files, diffs and browsers in tabs on the right, and keep the center for terminals and chats."
+msgstr "在右侧标签页中打开文件、差异和浏览器，中间区域留给终端和聊天。"
 
 msgid "Open from folder"
 msgstr "从文件夹打开"
@@ -12552,6 +12706,9 @@ msgstr "分页"
 msgid "Pagination"
 msgstr "分页"
 
+msgid "Paid plans are priced per user per month and billed for each active seat on your team. {planPrices}."
+msgstr "付费套餐按每用户每月定价，并按团队中的每个活跃席位计费。{planPrices}。"
+
 msgid "Paid work trial"
 msgstr "带薪工作试用"
 
@@ -12664,6 +12821,9 @@ msgstr "已暂停"
 msgctxt "project state"
 msgid "Paused"
 msgstr "已暂停"
+
+msgid "Pay {total}"
+msgstr "支付 {total}"
 
 msgid "Pay now"
 msgstr "立即支付"
@@ -13168,9 +13328,6 @@ msgstr "专业版和企业版。Microsoft Teams 触发器需要企业版。降�
 
 msgid "Pro Features"
 msgstr "Pro功能"
-
-msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Pro按月付费为每用户每月{monthlyPrice}，按年付费为每用户每月{yearlyPrice}（优惠25%）。按团队中的活跃席位计费。"
 
 msgid "Process"
 msgstr "进程"
@@ -14541,6 +14698,9 @@ msgstr "富输入（{hotkeyText}）"
 msgid "right pane"
 msgstr "右侧面板"
 
+msgid "Right pane area"
+msgstr "右侧面板区域"
+
 msgid "Right-click here"
 msgstr "在这里右键点击"
 
@@ -14765,9 +14925,6 @@ msgstr "保存"
 msgid "Save & create workspace"
 msgstr "保存并创建工作区"
 
-msgid "Save 25%"
-msgstr "省25%"
-
 msgid "Save All"
 msgstr "全部保存"
 
@@ -14800,6 +14957,9 @@ msgstr "保存智能体命令"
 
 msgid "Save to get URL"
 msgstr "保存以获取URL"
+
+msgid "Save up to {maxDiscount}"
+msgstr "最多节省 {maxDiscount}"
 
 msgid "Saved"
 msgstr "已保存"
@@ -15088,6 +15248,12 @@ msgstr "正在搜索..."
 
 msgid "Searching…"
 msgstr "搜索中…"
+
+#. placeholder {0}: format(new Date(periodEnd), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(periodEnd)
+#. placeholder {0}: formatLocaleDate(new Date(seatPeriodEnd), { month: "long", day: "numeric", year: "numeric" })
+msgid "Seats removed mid-cycle stay active until {0}."
+msgstr "周期中途移除的席位在 {0} 前仍然有效。"
 
 msgid "Secondary"
 msgstr "次要"
@@ -15722,9 +15888,6 @@ msgstr "只显示打开的条目"
 msgid "Show original"
 msgstr "显示原文"
 
-msgid "Show PR review comments"
-msgstr "显示PR评审评论"
-
 msgid "Show Preview"
 msgstr "显示预览"
 
@@ -15908,6 +16071,9 @@ msgstr "适合每支团队的简单定价"
 
 msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
 msgstr "适合各类团队的简单定价。个人免费，团队每用户每月 {yearlyPrice}，企业可定制。使用 {companyName} 并行运行 100+ 编码智能体。"
+
+msgid "Simple pricing for every team. Free for individuals, per-user plans for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "适合每个团队的简单定价。个人免费，团队按用户计费，企业定制。使用 {companyName} 并行运行 100 多个编程智能体。"
 
 msgid "Simulate update: downloading"
 msgstr "模拟更新：下载中"
@@ -16763,9 +16929,6 @@ msgstr "Superset Mobile在你连接的电脑上运行智能体。"
 msgid "Superset Mobile terminal on iPhone"
 msgstr "iPhone 上的 Superset Mobile 终端"
 
-msgid "Superset Mobile, cloud workspaces, automations, and priority support."
-msgstr "Superset Mobile、云工作区、自动化和优先支持。"
-
 msgid "Superset needs Full Disk Access to read another browser's data. Grant it in System Settings, then check again."
 msgstr "Superset需要“完全磁盘访问权限”才能读取其他浏览器的数据。请在系统设置中授予权限，然后重新检查。"
 
@@ -16854,11 +17017,17 @@ msgstr "切换组织"
 msgid "Switch organization or sign in again to restart the host service."
 msgstr "请切换组织或重新登录以重启主机服务。"
 
+msgid "Switch plan"
+msgstr "切换套餐"
+
 msgid "Switch sign-in"
 msgstr "切换登录"
 
 msgid "Switch sign-in…"
 msgstr "切换登录…"
+
+msgid "Switch to {planName}"
+msgstr "切换到 {planName}"
 
 msgid "Switch to Active Workspace"
 msgstr "切换到活动工作区"
@@ -16919,6 +17088,11 @@ msgstr "切换到工作区8"
 
 msgid "Switch to Workspace 9"
 msgstr "切换到工作区9"
+
+#. placeholder {0}: format(new Date(switchAt), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(scheduledAt)
+msgid "Switches to {nextPlanName} on {0}."
+msgstr "将于 {0} 切换到 {nextPlanName}。"
 
 msgid "Symbol, light"
 msgstr "图形标志，浅色"
@@ -17320,6 +17494,9 @@ msgstr "最好的智能体会变。<0/>你的工作流不该变。"
 msgid "The button now stands out. I checked it in your pane."
 msgstr "按钮现在更醒目了。我已在你的窗格中确认过。"
 
+msgid "The change starts now. You pay only the difference for the rest of this period."
+msgstr "变更立即生效。您只需支付本期剩余时间的差价。"
+
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "云端工作区本应已启动，但没有及时响应。下次运行时会重试。"
 
@@ -17328,9 +17505,6 @@ msgstr "代码已过期。请重新开始。"
 
 msgid "The commands Superset runs to set up, run and archive this project's workspaces, from .superset/config.toml."
 msgstr "Superset 在设置、运行和归档此项目的工作区时执行的命令，来自 .superset/config.toml。"
-
-msgid "The config repository must be one of the environment's repositories"
-msgstr "配置仓库必须是该环境的仓库之一"
 
 msgid "The connection timed out"
 msgstr "连接已超时"
@@ -17514,6 +17688,9 @@ msgstr "你要找的页面不存在。"
 msgid "The pane uses your real logins. Agents ask you before they take a consequential action."
 msgstr "窗格使用你真实的登录状态。智能体在执行重要操作前会先征求你的同意。"
 
+msgid "The primary repository must be one of the environment's repositories"
+msgstr "主仓库必须是该环境的仓库之一"
+
 msgid "The project's checkout as it is: files and branch are shared"
 msgstr "按原样使用项目的检出: 文件和分支是共享的"
 
@@ -17632,6 +17809,9 @@ msgstr "主题"
 
 msgid "Themes and agents"
 msgstr "主题与智能体"
+
+msgid "Then {overage} per GB-hour past the pool"
+msgstr "超出额度池后每 GB 小时 {overage}"
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "创建工作区时会自动运行这些命令。<0>阅读文档<1/></0>"
@@ -18040,6 +18220,9 @@ msgstr "未找到讨论串"
 msgid "Three steps · touches packages/ui and apps/desktop"
 msgstr "三个步骤 · 涉及packages/ui和apps/desktop"
 
+msgid "Threshold"
+msgstr "阈值"
+
 msgid "Ticket to production under one day, median"
 msgstr "从工单到上线中位不足一天"
 
@@ -18219,6 +18402,9 @@ msgstr "模型排行"
 
 msgid "Top tier. Nothing left to clear."
 msgstr "最高等级。没有更多可以达成的了。"
+
+msgid "Top-up amount"
+msgstr "充值数量"
 
 msgid "Topic"
 msgstr "主题"
@@ -18749,12 +18935,14 @@ msgstr "升级一个依赖，并修好被它弄坏的地方…"
 msgid "Upgrade on {0}"
 msgstr "在 {0} 升级"
 
-#. placeholder {0}: i18n._(plan.name)
-msgid "Upgrade to {0}"
-msgstr "升级到{0}"
+msgid "Upgrade to {planName}"
+msgstr "升级到 {planName}"
 
 msgid "Upgrade to Pro"
 msgstr "升级到 Pro"
+
+msgid "Upgrade your plan"
+msgstr "升级你的套餐"
 
 msgid "Upload files"
 msgstr "上传文件"
@@ -19259,6 +19447,9 @@ msgstr "欢迎使用Superset"
 msgid "Welcome to the new Superset"
 msgstr "欢迎使用全新的 Superset"
 
+msgid "What are cloud GB-hours?"
+msgstr "什么是云端 GB 小时?"
+
 msgid "What are the benefits?"
 msgstr "有哪些福利？"
 
@@ -19351,6 +19542,12 @@ msgstr "接下来"
 
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "触发器触发时，你选的 Mac 会打开一个新工作区，智能体开始执行你的提示词。由事件触发的运行会带上该事件，所以智能体知道要看什么。在运行中回复即可继续。"
+
+msgid "When bought GB-hours fall below"
+msgstr "当购买的 GB 小时低于"
+
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "剩余不足 {topupThreshold} GB 小时时，充值 {topupPrice}（{topupGbHours} GB 小时）。"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "关闭后，其他设备无法访问本设备上的文件和工具。你仍可以从这里连接到远程沙箱。<0>了解更多<1/></0>"
@@ -19682,6 +19879,9 @@ msgstr "可以。申请最合适的职位，并告诉我们你想做什么。附
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "有。免费版面向个人，包含1个用户、本地工作区、桌面应用和CLI。无需信用卡。"
 
+msgid "Yes. On plans with cloud workspaces, owners can buy any amount of extra GB-hours at {packPrice} per GB-hour in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "可以。在包含云工作区的方案中，所有者可以在设置的账单中按每 GB 小时 {packPrice} 的价格购买任意数量的额外 GB 小时。购买的 GB 小时在每月额度池之后使用，永不过期，余量不足时自动充值可以继续购买。"
+
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "是的。Superset已通过独立审计机构的SOC 2 Type II审计，覆盖我们的安全控制在一段时间内的实际运行情况。可在trust.superset.sh索取报告并查阅我们的安全文档。"
 
@@ -19691,8 +19891,8 @@ msgstr "需要。Superset是智能体运行的工作区，不是模型提供商�
 msgid "Yes. Use superset automations in the CLI to create, run, and pause them."
 msgstr "可以。在 CLI 中用 superset automations 创建、运行和暂停它们。"
 
-msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Changes take effect at the end of your current billing period."
-msgstr "可以。你随时能在应用内的账单设置里升级、降级或取消。变更会在当前计费周期结束时生效。"
+msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Upgrades start right away, and you pay only the difference for the rest of the period. Downgrades and cancellations take effect at the end of your current billing period."
+msgstr "可以。您可以随时在应用的账单设置中升级、降级或取消。升级立即生效，您只需支付本期剩余时间的差价。降级和取消在当前计费周期结束时生效。"
 
 msgid "Yes. You don't need US work authorization to apply. But you should be willing to relocate to San Francisco."
 msgstr "提供。申请时不需要美国工作许可，但你需要愿意搬到旧金山。"
@@ -19882,14 +20082,23 @@ msgid "Your organization has reached its cloud usage limit. Raise the limit or u
 msgstr "你的组织已达到云端用量上限。请在“设置”中的“账单”提高上限或升级，以启动此工作区。"
 
 #. placeholder {0}: params?.limit
-msgid "Your organization has reached its limit of {0} environments. Archive one, or upgrade in Settings, Billing to add more."
-msgstr "你的组织已达到 {0} 个环境的上限。请归档一个，或在“设置”中的“账单”升级以添加更多。"
+msgid "Your organization has reached its environment limit ({0}). Archive an environment, or upgrade in Settings, Billing to add more."
+msgstr "你的组织已达到环境数量上限（{0}）。请归档一个环境，或在“设置”中的“账单”升级以添加更多。"
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "你的组织已达到云端用量上限。除非提高上限，此工作区将在几分钟后停止。"
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "你自己的账户。组织的集成让 Superset 访问其工具；连接你自己的账户后，Superset 为你完成的工作会以你的名义显示。"
+
+msgid "Your plan does not include cloud environments."
+msgstr "你的套餐不包含云端环境。"
+
+msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
+msgstr "你的套餐不包含云端环境。请在设置的账单中升级后再创建。"
+
+msgid "Your plan switches to {planName} on {startDate}. Nothing is charged today."
+msgstr "您的方案将于 {startDate} 切换到 {planName}。今天不扣费。"
 
 msgid "Your rank"
 msgstr "你的排名"
@@ -19910,8 +20119,8 @@ msgstr "你的Slack账户已关联到Superset。你可以关闭这个标签页�
 msgid "Your stats, settled in mortal combat"
 msgstr "用你的数据，在生死对决中一决高下"
 
-msgid "Your subscription has been activated. You can now access all Pro features."
-msgstr "你的订阅已激活。现在可以使用全部Pro功能。"
+msgid "Your subscription is active. Your new plan's features are ready to use."
+msgstr "你的订阅已生效。新套餐的功能现已可用。"
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "你的订阅将相应调整。"
