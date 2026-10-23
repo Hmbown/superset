@@ -39,6 +39,8 @@ import {
 
 interface UseDiffCodeViewItemsOptions {
 	workspaceId: string;
+	/** False pauses patch fetches, also the refetch after a git change. */
+	enabled?: boolean;
 	files: ChangesetFile[];
 	collapsedSet: ReadonlySet<string>;
 	editingSet: ReadonlySet<string>;
@@ -161,6 +163,7 @@ function groupKeyFor(input: DiffPatchScope): string {
 
 export function useDiffCodeViewItems({
 	workspaceId,
+	enabled = true,
 	files,
 	collapsedSet,
 	editingSet,
@@ -309,6 +312,7 @@ export function useDiffCodeViewItems({
 				}
 			},
 			staleTime: Number.POSITIVE_INFINITY,
+			enabled,
 		})),
 	});
 

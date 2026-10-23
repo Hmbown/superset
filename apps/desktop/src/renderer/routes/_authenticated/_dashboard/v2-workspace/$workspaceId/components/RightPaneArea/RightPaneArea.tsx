@@ -25,6 +25,8 @@ import { RightPaneHeaderButton } from "./components/RightPaneHeaderButton";
 import type { RightPaneGates } from "./paneOptions";
 import type { RightPaneKind } from "./types";
 
+const RIGHT_PANE_KEPT_TABS = 2;
+
 interface RightPaneAreaProps {
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
 	registry: PaneRegistry<PaneViewerData>;
@@ -68,6 +70,7 @@ export function RightPaneArea({
 			onFocusCapture={onActivate}
 		>
 			<Workspace<PaneViewerData>
+				keepAliveTabs={RIGHT_PANE_KEPT_TABS}
 				registry={registry}
 				paneActions={paneActions}
 				contextMenuActions={contextMenuActions}
