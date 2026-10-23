@@ -1,20 +1,15 @@
 import { useMemo } from "react";
 import { useResolvedTheme } from "renderer/stores/theme";
-import { diffCardUnsafeCss } from "./diffCardUnsafeCss";
-import {
-	diffFlushUnsafeCss,
-	FLUSH_DIFF_HEADER_HEIGHT,
-} from "./diffFlushUnsafeCss";
+import { DIFF_HEADER_HEIGHT, diffCardUnsafeCss } from "./diffCardUnsafeCss";
 import { useDiffCodeViewTheme } from "./useDiffCodeViewTheme";
 
 /**
- * useDiffCodeViewTheme plus the card-per-file look shared by the PR Code tab
- * and the v2-workspace DiffPane: bordered/rounded header+body pairs with a
- * real gap between files, PullRequestRow's additions/deletions colors, and
- * the app background instead of the terminal theme's. `flush` drops the card
- * frame for a narrow pane: files run edge to edge with no gap between them.
+ * useDiffCodeViewTheme plus the per-file look shared by the PR Code tab and
+ * the v2-workspace DiffPane: files edge to edge with a divider between them,
+ * 32px headers, PullRequestRow's additions/deletions colors, and the app
+ * background instead of the terminal theme's.
  */
-export function useDiffCardCodeViewTheme({ flush = false } = {}) {
+export function useDiffCardCodeViewTheme() {
 	const { options, style } = useDiffCodeViewTheme();
 	// Matches PullRequestRow's diff-stat colors exactly (text-emerald-600 /
 	// [.dark_&]:text-[#34d399], text-red-600 / [.dark_&]:text-[#f87171]) so
@@ -33,31 +28,26 @@ export function useDiffCardCodeViewTheme({ flush = false } = {}) {
 	const cardOptions = useMemo(
 		() => ({
 			...options,
-			// A visible gap between files is what makes the rounded header/diff
-			// pair (diffCardUnsafeCss) read as separate cards rather than one
-			// continuous, oddly-cornered block. Paddings carry over from the
-			// base hook, rebuilt field-by-field because the rendered CodeView's
-			// layout type requires all three concrete (CodeViewLayout) while
+			// Rebuilt field-by-field because the rendered CodeView's layout type
+			// requires all three concrete (CodeViewLayout) while
 			// CodeViewOptions declares them optional.
 			layout: {
 				paddingTop: options.layout?.paddingTop ?? 0,
 				paddingBottom: options.layout?.paddingBottom ?? 0,
-				gap: flush ? 0 : 16,
+				gap: 0,
 			},
-			...(flush && {
-				itemMetrics: {
-					...options.itemMetrics,
-					diffHeaderHeight: FLUSH_DIFF_HEADER_HEIGHT,
-				},
-			}),
-			unsafeCSS: `${options.unsafeCSS ?? ""}\n${diffCardUnsafeCss(additionsColor, deletionsColor)}${flush ? diffFlushUnsafeCss : ""}`,
+			itemMetrics: {
+				...options.itemMetrics,
+				diffHeaderHeight: DIFF_HEADER_HEIGHT,
+			},
+			unsafeCSS: `${options.unsafeCSS ?? ""}\n${diffCardUnsafeCss(additionsColor, deletionsColor)}`,
 		}),
-		[options, additionsColor, deletionsColor, flush],
+		[options, additionsColor, deletionsColor],
 	);
 
 	// useDiffCodeViewTheme sources its background from the *terminal* theme
-	// (terminalTheme?.background ?? var(--background)), but card surfaces
-	// draw their borders/gaps against the app's own var(--background) — the
+	// (terminalTheme?.background ?? var(--background)), but the diff draws
+	// its dividers against the app's own var(--background) — the
 	// two don't match (e.g. a flat white terminal background against the
 	// app's slightly-off-white #f9f9fa). Most visible on the CodeView root's
 	// own native scrollbar, which paints against whatever background that

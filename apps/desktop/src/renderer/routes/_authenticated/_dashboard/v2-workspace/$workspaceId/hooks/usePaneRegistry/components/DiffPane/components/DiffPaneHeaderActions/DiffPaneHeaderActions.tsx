@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import type { WorkspaceStore } from "@superset/panes";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { LuChevronDown, LuChevronUp, LuMessageSquare } from "react-icons/lu";
 import {
@@ -6,17 +7,27 @@ import {
 	type DiffViewToolbarCommentNav,
 	type DiffViewToolbarTreeToggle,
 } from "renderer/screens/main/components/DiffViewToolbar";
+import type { StoreApi } from "zustand/vanilla";
+import type { PaneViewerData } from "../../../../../../types";
 import { DiffPaneMoreMenu } from "../DiffPaneMoreMenu";
+import { DiffPanePRLink } from "../DiffPanePRLink";
 
 interface DiffPaneHeaderActionsProps {
+	/** Without the right pane area the top-bar PR badge toggles Changes, so the pane links the PR itself. */
+	prLink?: {
+		workspaceId: string;
+		store: StoreApi<WorkspaceStore<PaneViewerData>>;
+	};
 	commentNav: DiffViewToolbarCommentNav;
-	files: DiffViewToolbarTreeToggle;
+	/** Only when the pane carries its own file list. */
+	files?: DiffViewToolbarTreeToggle;
 	areAllFilesCollapsed: boolean;
 	onToggleCollapseAll: () => void;
 }
 
 /** The Changes pane header's right side, before the pane's own actions. */
 export function DiffPaneHeaderActions({
+	prLink,
 	commentNav,
 	files,
 	areAllFilesCollapsed,
@@ -25,6 +36,9 @@ export function DiffPaneHeaderActions({
 	const { t } = useLingui();
 	return (
 		<div className="flex shrink-0 items-center gap-1">
+			{prLink && (
+				<DiffPanePRLink workspaceId={prLink.workspaceId} store={prLink.store} />
+			)}
 			{commentNav.total > 0 && (
 				<div className="flex shrink-0 items-center gap-0.5 rounded-md bg-muted/50 px-1">
 					<LuMessageSquare
@@ -74,7 +88,7 @@ export function DiffPaneHeaderActions({
 				areAllFilesCollapsed={areAllFilesCollapsed}
 				onToggleCollapseAll={onToggleCollapseAll}
 			/>
-			<DiffTreeToggleButton {...files} />
+			{files && <DiffTreeToggleButton {...files} />}
 			<div
 				className="mx-1 h-3.5 w-px shrink-0 bg-muted-foreground/30"
 				aria-hidden="true"

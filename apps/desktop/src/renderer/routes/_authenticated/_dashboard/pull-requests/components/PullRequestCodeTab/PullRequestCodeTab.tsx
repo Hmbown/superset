@@ -184,14 +184,11 @@ export function PullRequestCodeTab({
 	hostId,
 }: PullRequestCodeTabProps) {
 	const { t } = useLingui();
-	// Card look (rounded header/body pairs, gap between files, PR-row
+	// Same file look as the v2-workspace DiffPane (edge-to-edge files, PR-row
 	// additions/deletions colors, app background instead of the terminal
-	// theme's) comes from the shared card theme hook — the same one the
-	// v2-workspace DiffPane renders with, flush in the right pane area too.
+	// theme's).
 	const isRightPaneArea = useRightPaneLinkTarget() !== null;
-	const { options, style: codeViewStyle } = useDiffCardCodeViewTheme({
-		flush: isRightPaneArea,
-	});
+	const { options, style: codeViewStyle } = useDiffCardCodeViewTheme();
 	const codeViewRef = useRef<CodeViewHandle<PrAnnotationMetadata>>(null);
 	const [initialTreeExpansion] = useState<"open" | "closed">(() =>
 		window.innerWidth < NARROW_WINDOW_WIDTH_THRESHOLD ? "closed" : "open",

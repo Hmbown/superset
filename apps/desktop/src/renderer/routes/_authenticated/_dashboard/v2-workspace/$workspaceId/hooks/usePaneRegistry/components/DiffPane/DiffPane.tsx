@@ -17,7 +17,6 @@ import { errorMessage } from "@superset/i18n/errors";
 import type { RendererContext } from "@superset/panes";
 import { alert } from "@superset/ui/atoms/Alert";
 import { toast } from "@superset/ui/sonner";
-import { cn } from "@superset/ui/utils";
 import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -29,7 +28,6 @@ import {
 } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/state/paneScrollStateCache";
 import { DiffFileCollapseButton } from "renderer/screens/main/components/DiffFileCollapseButton";
 import { DiffFileHeaderName } from "renderer/screens/main/components/DiffFileHeaderName";
-import { DiffViewToolbar } from "renderer/screens/main/components/DiffViewToolbar";
 import { MarkdownSearch } from "renderer/screens/main/components/WorkspaceView/ContentView/TabsContent/TabView/FileViewerPane/components/MarkdownSearch";
 import { toAbsoluteWorkspacePath } from "shared/absolute-paths";
 import { useRightPaneLinkTarget } from "../../../../providers/RightPaneLinkTargetProvider";
@@ -51,8 +49,6 @@ import { DiffHeaderMetadata } from "./components/DiffHeaderMetadata";
 import { DiffPaneFileList } from "./components/DiffPaneFileList";
 import { DiffPaneHeaderActions } from "./components/DiffPaneHeaderActions";
 import { DiffPaneScope } from "./components/DiffPaneScope";
-import { DiffSectionLabel } from "./components/DiffSectionLabel";
-import { useDiffActiveSection } from "./hooks/useDiffActiveSection";
 import {
 	type DiffAnnotationMetadata,
 	useDiffAnnotationsByPath,
@@ -486,23 +482,14 @@ export function DiffPane({
 	const actionsSlot = useDiffPaneHeaderSlot(
 		diffPaneActionsSlotId(context.pane.id),
 	);
-	const { currentSection, onScroll } = useDiffActiveSection({
-		codeViewRef,
-		items,
-		fileByItemId,
-		files,
-	});
 	const handleScroll = useCallback(
 		(scrollTop: number) => {
 			savePaneScrollState(scrollStateKey, { scrollTop, scrollLeft: 0 });
-			onScroll();
 			notifyScroll();
 		},
-		[scrollStateKey, onScroll, notifyScroll],
+		[scrollStateKey, notifyScroll],
 	);
-	const { options, style } = useDiffCardCodeViewTheme({
-		flush: showFileList,
-	});
+	const { options, style } = useDiffCardCodeViewTheme();
 
 	// Patches carry hunks with three lines of context; @pierre/diffs calls this
 	// when it needs the rest of a file — expanding context, or entering edit
@@ -839,8 +826,7 @@ export function DiffPane({
 			ref={setRowElement}
 			className="relative flex h-full min-h-0 w-full min-w-0"
 		>
-			{showFileList &&
-				titleSlot &&
+			{titleSlot &&
 				createPortal(
 					<DiffPaneScope
 						workspaceId={workspaceId}
@@ -849,45 +835,35 @@ export function DiffPane({
 					/>,
 					titleSlot,
 				)}
-			{showFileList &&
-				actionsSlot &&
+			{actionsSlot &&
 				createPortal(
 					<DiffPaneHeaderActions
+						prLink={
+							showFileList ? undefined : { workspaceId, store: context.store }
+						}
 						commentNav={commentNavProps}
-						files={{
-							fileCount: totals.fileCount,
-							isCollapsed: listLayout === "hidden",
-							onToggle: () =>
-								setFileListOpen(
-									toggledFileListOpen({
-										containerWidth,
-										open: fileListOpen,
-									}),
-								),
-						}}
+						files={
+							showFileList
+								? {
+										fileCount: totals.fileCount,
+										isCollapsed: listLayout === "hidden",
+										onToggle: () =>
+											setFileListOpen(
+												toggledFileListOpen({
+													containerWidth,
+													open: fileListOpen,
+												}),
+											),
+									}
+								: undefined
+						}
 						areAllFilesCollapsed={areAllFilesCollapsed}
 						onToggleCollapseAll={handleToggleCollapseAll}
 					/>,
 					actionsSlot,
 				)}
 			<div className="flex h-full min-h-0 min-w-0 flex-1 flex-col">
-				{!showFileList && (
-					<DiffViewToolbar
-						areAllFilesCollapsed={areAllFilesCollapsed}
-						onToggleCollapseAll={handleToggleCollapseAll}
-						commentNav={commentNavProps}
-					>
-						{currentSection ? (
-							<DiffSectionLabel
-								kind={currentSection.kind}
-								count={currentSection.count}
-							/>
-						) : null}
-					</DiffViewToolbar>
-				)}
 				{files.length === 0 ? (
-					// The toolbar stays up while the current filter yields nothing;
-					// the file list holds the filter/branch controls.
 					<div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">
 						{isLoading
 							? t({ message: "Loading…" })
@@ -919,10 +895,7 @@ export function DiffPane({
 						<EditProvider<DiffAnnotationMetadata> createEditor={createEditor}>
 							<CodeView<DiffAnnotationMetadata>
 								ref={codeViewRef}
-								className={cn(
-									"h-full w-full overflow-y-auto overflow-x-clip overscroll-contain [overflow-anchor:none]",
-									!showFileList && "px-3",
-								)}
+								className="h-full w-full overflow-y-auto overflow-x-clip overscroll-contain [overflow-anchor:none]"
 								style={style}
 								items={items}
 								options={codeViewOptions}

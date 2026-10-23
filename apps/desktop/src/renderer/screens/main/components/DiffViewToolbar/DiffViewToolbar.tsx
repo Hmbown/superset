@@ -1,7 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
-import type { ReactNode } from "react";
 import {
 	LuChevronDown,
 	LuChevronUp,
@@ -36,13 +35,10 @@ interface DiffViewToolbarProps {
 	onToggleCollapseAll: () => void;
 	/** Prev/next review-comment cluster; hidden when null or total is 0. */
 	commentNav?: DiffViewToolbarCommentNav | null;
-	/** Rendered after the left-hand controls — the DiffPane's section label. */
-	children?: ReactNode;
 }
 
 /**
- * Toolbar row above a card-styled diff (the PR Code tab and the v2-workspace
- * DiffPane): optional file-tree toggle + collapse/expand-all on the left,
+ * Toolbar row above the PR Code tab's diff: optional file-tree toggle + collapse/expand-all on the left,
  * comment navigation + unified/split on the right. The unified/split toggles
  * read/write the persisted app setting directly — the same one every diff
  * surface renders from — so a toggle made here carries across surfaces
@@ -58,7 +54,6 @@ export function DiffViewToolbar({
 	areAllFilesCollapsed,
 	onToggleCollapseAll,
 	commentNav,
-	children,
 }: DiffViewToolbarProps) {
 	const { t } = useLingui();
 	const diffStyle = useSettings((s) => s.diffStyle);
@@ -107,12 +102,6 @@ export function DiffViewToolbar({
 						)}
 					</TooltipContent>
 				</Tooltip>
-				{children != null && (
-					<>
-						<div className="mx-0.5 h-4 w-px bg-border" />
-						{children}
-					</>
-				)}
 			</div>
 			<div className="flex shrink-0 items-center gap-1 whitespace-nowrap">
 				{commentNav != null && commentNav.total > 0 && (
