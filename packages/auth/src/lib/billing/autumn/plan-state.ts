@@ -143,7 +143,7 @@ export async function organizationBilling(
 			error,
 		);
 		const fallback = lastKnown
-			? { ...lastKnown, gatedMachineSizes: [] }
+			? { ...lastKnown, gatedMachineSizes: [], environmentLimit: null }
 			: FAIL_OPEN;
 		memory.set(organizationId, {
 			value: fallback,
