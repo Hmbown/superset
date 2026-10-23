@@ -65,7 +65,7 @@ run = "bun storybook"
 
 ### `[archive]`
 
-Release what `[setup]` created outside the workspace: stop containers, drop a database, delete a branch. A failing archive command is reported, and you can archive anyway.
+Release what `[setup]` created outside the workspace: stop containers, drop a database, delete a branch. A failing archive command is reported, and you can archive anyway. Archive commands are stopped after 60 seconds, and they can run more than once, so keep them quick and safe to repeat.
 
 ### Keys
 

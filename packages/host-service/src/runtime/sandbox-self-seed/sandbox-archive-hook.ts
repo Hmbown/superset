@@ -1,12 +1,14 @@
 import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
+import { TEARDOWN_TIMEOUT_MS } from "@superset/shared/constants";
 import { getManagedEnv } from "../sandbox-managed-env/sandbox-managed-env.ts";
 import { resolveScript, shellSingleQuote } from "../setup/config";
 import type { SandboxIdentity } from "./sandbox-self-seed";
 import { buildStartHookEnv } from "./utils/buildStartHookEnv";
 
-export const ARCHIVE_HOOK_TIMEOUT_MS = 120_000;
+/** The same limit as a local archive, so `[archive]` has one documented cap. */
+export const ARCHIVE_HOOK_TIMEOUT_MS = TEARDOWN_TIMEOUT_MS;
 const OUTPUT_TAIL_BYTES = 4000;
 const KILL_GRACE_MS = 2_000;
 

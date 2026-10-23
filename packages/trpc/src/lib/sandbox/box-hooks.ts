@@ -1,5 +1,5 @@
-/** Slightly above the box's own 120s limit, so the box reports its timeout. */
-const ARCHIVE_HOOK_REQUEST_TIMEOUT_MS = 150_000;
+/** Above the box's own 60s archive limit, so the box reports its timeout. */
+const ARCHIVE_HOOK_REQUEST_TIMEOUT_MS = 90_000;
 const START_HOOK_REQUEST_TIMEOUT_MS = 30_000;
 
 export type BoxHookOutcome =

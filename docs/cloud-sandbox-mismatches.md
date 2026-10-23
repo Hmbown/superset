@@ -388,7 +388,7 @@ deleted it seven days later, so anything `setup` created outside the box
 leaked: this repository's per-workspace Neon branches piled up until 383 were
 deleted by hand (2026-10-20). **Fixed:** the reap job's 60-second stop stage
 calls `sandbox.runArchiveHook` on the still-running box (direct with the host
-secret, two-minute limit) before stopping it, which runs `[archive]` from
+secret, the same 60-second limit as a local archive) before stopping it, which runs `[archive]` from
 `.superset/config.toml` resolved for the cloud. A failing hook never blocks the
 stop, and an undo that lands during the hook re-runs setup (`runStartHook`
 with `force`) instead of stopping the box. A box whose host-service predates
