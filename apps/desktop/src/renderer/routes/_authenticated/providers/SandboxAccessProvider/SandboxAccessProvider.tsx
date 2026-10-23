@@ -108,7 +108,9 @@ export function SandboxAccessProvider({ children }: { children: ReactNode }) {
 			refetchInterval: (query: {
 				state: {
 					data?: SandboxAccess;
+					dataUpdatedAt: number;
 					error: unknown;
+					errorUpdatedAt: number;
 					errorUpdateCount: number;
 				};
 			}): number => accessRefetchInterval(query.state),

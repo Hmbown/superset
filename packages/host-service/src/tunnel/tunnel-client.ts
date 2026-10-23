@@ -107,7 +107,7 @@ export class TunnelClient {
 		control.addEventListener("open", () => {
 			this.lastInboundAt = Date.now();
 			this.connectedAt = this.lastInboundAt;
-			this.lastAttemptOpened = true;
+			this.markOpened();
 			console.log(
 				`[host-service:tunnel] control connected for ${this.options.hostId}`,
 			);
@@ -177,6 +177,13 @@ export class TunnelClient {
 	// Re-invoked on every reconnect, picking up rotated tokens and relay
 	// moves. It must never reject: a rejection kills partysocket's retry
 	// cycle permanently, wedging the host until a process restart.
+	// The next failure after a working connection looks the relay up again;
+	// only a run of failures is throttled.
+	private markOpened(): void {
+		this.lastAttemptOpened = true;
+		this.lastRelayResolveAt = Number.NEGATIVE_INFINITY;
+	}
+
 	private async buildControlUrl(): Promise<string> {
 		const now = performance.now();
 		if (

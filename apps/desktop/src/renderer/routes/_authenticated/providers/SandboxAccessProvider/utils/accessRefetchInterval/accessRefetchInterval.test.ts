@@ -30,4 +30,34 @@ describe("accessRefetchInterval", () => {
 		expect(after(3)).toBe(4 * ACCESS_RETRY_MS);
 		expect(after(50)).toBe(MAX_ERROR_RETRY_MS);
 	});
+
+	test("a failure after a success starts over at 30 seconds", () => {
+		const error = { data: { code: "INTERNAL_SERVER_ERROR" } };
+		expect(
+			accessRefetchInterval(
+				{
+					error,
+					errorUpdateCount: 40,
+					errorUpdatedAt: NOW,
+					dataUpdatedAt: NOW - 1_000,
+				},
+				NOW,
+			),
+		).toBe(ACCESS_RETRY_MS);
+	});
+
+	test("a failure that has lasted since the last success waits about as long again", () => {
+		const error = { data: { code: "INTERNAL_SERVER_ERROR" } };
+		expect(
+			accessRefetchInterval(
+				{
+					error,
+					errorUpdateCount: 40,
+					errorUpdatedAt: NOW,
+					dataUpdatedAt: NOW - 3 * 60_000,
+				},
+				NOW,
+			),
+		).toBe(3 * 60_000);
+	});
 });
