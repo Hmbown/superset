@@ -1,5 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { Avatar } from "@superset/ui/atoms/Avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
 import { memo } from "react";
@@ -10,6 +11,7 @@ import { WorkspaceChecksDot } from "renderer/routes/_authenticated/_dashboard/v2
 import { WorkspaceStateGlyph } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/components/WorkspaceStateGlyph";
 import type { AccessibleV2Workspace } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/hooks/useAccessibleV2Workspaces";
 import { workspaceActivityAt } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/utils/sortWorkspaces";
+import { CloudGlyph } from "renderer/routes/_authenticated/components/CloudGlyph";
 import { PRIcon } from "renderer/screens/main/components/PRIcon/PRIcon";
 import { getRelativeTime } from "renderer/screens/main/components/WorkspacesListView/utils";
 import { V2WorkspaceProjectIcon } from "../../../V2WorkspaceProjectIcon";
@@ -119,14 +121,32 @@ function BoardCardBody({
 						</TooltipContent>
 					</Tooltip>
 				) : null}
-				{workspace.hostType !== "local-device" ? (
+				{workspace.hostType === "cloud" ? (
+					<span
+						className="flex min-w-0 shrink items-center gap-1"
+						title={t({ message: "Cloud workspace" })}
+					>
+						<CloudGlyph className="size-3 shrink-0" />
+						<span className="truncate">{workspace.hostName}</span>
+					</span>
+				) : workspace.hostType === "remote-device" ? (
 					<span className="flex min-w-0 shrink items-center gap-1">
 						<LuMonitor className="size-3 shrink-0" />
 						<span className="truncate">{workspace.hostName}</span>
 					</span>
 				) : null}
-				<span className="ml-auto whitespace-nowrap tabular-nums">
-					{timeLabel}
+				<span className="ml-auto flex shrink-0 items-center gap-1.5">
+					{/* Owner, only when it isn't you. */}
+					{!workspace.isCreatedByCurrentUser && workspace.createdByName ? (
+						<span title={workspace.createdByName}>
+							<Avatar
+								fullName={workspace.createdByName}
+								image={workspace.createdByImage}
+								className="size-4 text-[8px]"
+							/>
+						</span>
+					) : null}
+					<span className="whitespace-nowrap tabular-nums">{timeLabel}</span>
 				</span>
 			</div>
 

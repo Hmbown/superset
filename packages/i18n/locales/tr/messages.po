@@ -183,7 +183,7 @@ msgstr "{0, plural, one {# beklemede} other {# beklemede}}"
 
 #. placeholder {0}: chosenLeads.length
 #. placeholder {0}: chosenPeople.length
-#. placeholder {0}: grantee.memberCount
+#. placeholder {0}: creatorFilters.length
 msgid "{0, plural, one {# person} other {# people}}"
 msgstr "{0, plural, one {# kişi} other {# kişi}}"
 
@@ -344,6 +344,10 @@ msgstr "{0, plural, one {Yorumlar için # sayfa izleniyor} other {Yorumlar için
 #. placeholder {1}: formatDayLabel(lastDay)
 msgid "{0} – {1} · API-rate estimate from local session logs"
 msgstr "{0} – {1} · yerel oturum günlüklerinden API tarifesi tahmini"
+
+#. placeholder {0}: workspace.hostName
+msgid "{0} — device offline"
+msgstr "{0} — cihaz çevrimdışı"
 
 #. placeholder {0}: error.message
 msgid "{0} — try the Superset tray menu > Host Service > Restart."
@@ -1395,6 +1399,9 @@ msgstr "1 çerez — bu siteyi unut"
 msgid "1 hr"
 msgstr "1 sa"
 
+msgid "1 person"
+msgstr "1 kişi"
+
 msgid "1 user"
 msgstr "1 kullanıcı"
 
@@ -2138,9 +2145,6 @@ msgstr "Tüm commit'ler"
 msgid "All data will be permanently deleted for all {0} members — this cannot be undone."
 msgstr "Tüm veriler {0} üyenin tamamı için kalıcı olarak silinecek — bu geri alınamaz."
 
-msgid "All devices"
-msgstr "Tüm cihazlar"
-
 msgid "All features, side by side"
 msgstr "Tüm özellikler, yan yana"
 
@@ -2474,6 +2478,9 @@ msgstr "herhangi bir şey"
 
 msgid "Anything else? (optional)"
 msgstr "Başka bir şey var mı? (isteğe bağlı)"
+
+msgid "Anywhere"
+msgstr "Her yerde"
 
 msgid "AP"
 msgstr "AP"
@@ -6326,9 +6333,6 @@ msgstr "Fark değişikliklerine genel bakış"
 msgid "diff in new tab"
 msgstr "yeni sekmede fark"
 
-msgid "Diff size"
-msgstr "Fark boyutu"
-
 msgid "Digital Product Designer"
 msgstr "Dijital Ürün Tasarımcısı"
 
@@ -7793,14 +7797,14 @@ msgstr "@{normalizedSearch} ile filtrele"
 msgid "Filter by author: {label}"
 msgstr "Yazara göre filtrele: {label}"
 
-msgid "Filter by device"
-msgstr "Cihaza göre filtrele"
-
 msgid "Filter by reviews"
 msgstr "İncelemeye göre filtrele"
 
 msgid "Filter by state"
 msgstr "Duruma göre filtrele"
+
+msgid "Filter by where workspaces run"
+msgstr "Çalışma alanlarının çalıştığı yere göre filtrele"
 
 msgid "Filter by workspace: {label}"
 msgstr "Çalışma alanına göre filtrele: {label}"
@@ -7882,6 +7886,9 @@ msgstr "İncelemeyi bitir"
 
 msgid "Finished"
 msgstr "Tamamlandı"
+
+msgid "Finished · unread"
+msgstr "Tamamlandı · okunmadı"
 
 msgid "finished · worked for 7s"
 msgstr "bitti · 7 sn çalıştı"
@@ -8502,9 +8509,6 @@ msgstr "Henry Ford"
 msgid "Hid \"{0}\" from the sidebar"
 msgstr "\"{0}\" kenar çubuğundan gizlendi"
 
-msgid "Hidden"
-msgstr "Gizlenen"
-
 msgid "Hidden folders"
 msgstr "Gizli klasörler"
 
@@ -8965,6 +8969,9 @@ msgstr "Devam ediyor"
 
 msgid "In Progress"
 msgstr "Devam ediyor"
+
+msgid "In review"
+msgstr "İncelemede"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Superset masaüstü uygulamasında <0>Ayarlar → Görünüm → Tema</0> bölümünü açın."
@@ -9521,9 +9528,6 @@ msgstr "Etiket adı..."
 
 msgid "Labels"
 msgstr "Etiketler"
-
-msgid "Lanes"
-msgstr "Şeritler"
 
 msgid "Language"
 msgstr "Dil"
@@ -10752,12 +10756,6 @@ msgstr "İlgi bekliyor"
 msgid "Needs input"
 msgstr "Giriş gerekiyor"
 
-msgid "Needs permission"
-msgstr "İzin gerekiyor"
-
-msgid "Needs review"
-msgstr "İnceleme gerekiyor"
-
 msgid "Needs tests"
 msgstr "Test gerekiyor"
 
@@ -11615,9 +11613,6 @@ msgstr "Kimse bu yüzden farklı inceleme yapmaz."
 
 msgid "None"
 msgstr "Yok"
-
-msgid "none (session)"
-msgstr "yok (oturum)"
 
 msgid "None. This is the floor."
 msgstr "Yok. Bu, taban düzeydir."
@@ -12771,12 +12766,6 @@ msgstr "Şifre"
 msgid "Password for {email}"
 msgstr "{email} için parola"
 
-msgid "Past month"
-msgstr "Geçen ay"
-
-msgid "Past week"
-msgstr "Geçen hafta"
-
 msgid "Paste"
 msgstr "Yapıştır"
 
@@ -13150,9 +13139,6 @@ msgstr "PR inceleme yorumu"
 msgid "PR review submitted…"
 msgstr "PR incelemesi gönderildi…"
 
-msgid "PR state"
-msgstr "PR durumu"
-
 msgid "PR URL"
 msgstr "PR URL'si"
 
@@ -13418,7 +13404,6 @@ msgid "Project-wide search"
 msgstr "Proje geneli arama"
 
 #. placeholder {0}: groupFilter.name
-#. placeholder {0}: workspace.projectName ?? t({ message: "none (session)", })
 msgid "Project: {0}"
 msgstr "Proje: {0}"
 
@@ -14507,6 +14492,9 @@ msgstr "Bu sürüm geri yüklensin mi?"
 
 msgid "Restore width"
 msgstr "Genişliği geri yükle"
+
+msgid "Restore workspace"
+msgstr "Çalışma alanını geri yükle"
 
 msgid "Restored"
 msgstr "Geri yüklendi"
@@ -15793,6 +15781,9 @@ msgstr "Tüm yorumları göster"
 msgid "Show all lines"
 msgstr "Tüm satırları göster"
 
+msgid "Show archived"
+msgstr "Arşivlenenleri göster"
+
 msgid "Show Borders"
 msgstr "Kenarlıkları Göster"
 
@@ -15921,9 +15912,6 @@ msgstr "Kenar çubuğunda kullanım sekmesini göster"
 
 msgid "showArrow opt-in"
 msgstr "showArrow açık"
-
-msgid "Shown"
-msgstr "Gösterilen"
 
 msgid "Shown in launchers and this list."
 msgstr "Başlatıcılarda ve bu listede gösterilir."
@@ -18491,8 +18479,8 @@ msgstr "Şu şirketlerin geliştiricileri güveniyor"
 msgid "Try a different search or filter."
 msgstr "Farklı bir arama veya filtre deneyin."
 
-msgid "Try a different search term or another device."
-msgstr "Farklı bir arama terimi veya başka bir cihaz deneyin."
+msgid "Try a different search term or another place."
+msgstr "Farklı bir arama terimi veya başka bir yer deneyin."
 
 msgid "Try again"
 msgstr "Yeniden dene"
@@ -19756,11 +19744,11 @@ msgstr "Çalışma alanları"
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Çalışma alanları, git worktree'leriyle desteklenen yalıtılmış görev ortamlarıdır."
 
-msgid "Workspaces on this device will show up here."
-msgstr "Bu cihazdaki çalışma alanları burada görünecek."
-
 msgid "Workspaces started from this environment will stop receiving it."
 msgstr "Bu ortamdan başlatılan çalışma alanları artık bunu almayacak."
+
+msgid "Workspaces you can open will show up here."
+msgstr "Açabileceğiniz çalışma alanları burada görünecek."
 
 msgid "worktree"
 msgstr "worktree"

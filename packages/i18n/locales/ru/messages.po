@@ -183,7 +183,7 @@ msgstr "{0, plural, one {# в ожидании} few {# в ожидании} many
 
 #. placeholder {0}: chosenLeads.length
 #. placeholder {0}: chosenPeople.length
-#. placeholder {0}: grantee.memberCount
+#. placeholder {0}: creatorFilters.length
 msgid "{0, plural, one {# person} other {# people}}"
 msgstr "{0, plural, one {# человек} few {# человека} many {# человек} other {# человека}}"
 
@@ -344,6 +344,10 @@ msgstr "{0, plural, one {Следит за комментариями на # с�
 #. placeholder {1}: formatDayLabel(lastDay)
 msgid "{0} – {1} · API-rate estimate from local session logs"
 msgstr "{0} – {1} · оценка по тарифам API из локальных логов сессий"
+
+#. placeholder {0}: workspace.hostName
+msgid "{0} — device offline"
+msgstr "{0} — устройство офлайн"
 
 #. placeholder {0}: error.message
 msgid "{0} — try the Superset tray menu > Host Service > Restart."
@@ -1395,6 +1399,9 @@ msgstr "1 cookie — забыть этот сайт"
 msgid "1 hr"
 msgstr "1 ч"
 
+msgid "1 person"
+msgstr "1 человек"
+
 msgid "1 user"
 msgstr "1 пользователь"
 
@@ -2138,9 +2145,6 @@ msgstr "Все коммиты"
 msgid "All data will be permanently deleted for all {0} members — this cannot be undone."
 msgstr "Все данные будут безвозвратно удалены у всех {0} участников — это нельзя отменить."
 
-msgid "All devices"
-msgstr "Все устройства"
-
 msgid "All features, side by side"
 msgstr "Все возможности рядом"
 
@@ -2474,6 +2478,9 @@ msgstr "что угодно"
 
 msgid "Anything else? (optional)"
 msgstr "Что-нибудь ещё? (необязательно)"
+
+msgid "Anywhere"
+msgstr "Везде"
 
 msgid "AP"
 msgstr "AP"
@@ -6326,9 +6333,6 @@ msgstr "Обзор изменений diff"
 msgid "diff in new tab"
 msgstr "diff в новой вкладке"
 
-msgid "Diff size"
-msgstr "Размер diff"
-
 msgid "Digital Product Designer"
 msgstr "Дизайнер цифровых продуктов"
 
@@ -7793,14 +7797,14 @@ msgstr "Фильтр по @{normalizedSearch}"
 msgid "Filter by author: {label}"
 msgstr "Фильтр по автору: {label}"
 
-msgid "Filter by device"
-msgstr "Фильтр по устройству"
-
 msgid "Filter by reviews"
 msgstr "Фильтр по ревью"
 
 msgid "Filter by state"
 msgstr "Фильтр по состоянию"
+
+msgid "Filter by where workspaces run"
+msgstr "Фильтр по месту запуска рабочих областей"
 
 msgid "Filter by workspace: {label}"
 msgstr "Фильтр по рабочей области: {label}"
@@ -7882,6 +7886,9 @@ msgstr "Завершить ревью"
 
 msgid "Finished"
 msgstr "Завершено"
+
+msgid "Finished · unread"
+msgstr "Завершено · не прочитано"
 
 msgid "finished · worked for 7s"
 msgstr "завершил · работал 7 с"
@@ -8502,9 +8509,6 @@ msgstr "Генри Форд"
 msgid "Hid \"{0}\" from the sidebar"
 msgstr "«{0}» скрыт с боковой панели"
 
-msgid "Hidden"
-msgstr "Скрытые"
-
 msgid "Hidden folders"
 msgstr "Скрытые папки"
 
@@ -8965,6 +8969,9 @@ msgstr "В работе"
 
 msgid "In Progress"
 msgstr "В работе"
+
+msgid "In review"
+msgstr "На ревью"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "В приложении Superset откройте <0>Настройки → Внешний вид → Тема</0>."
@@ -9521,9 +9528,6 @@ msgstr "Название метки..."
 
 msgid "Labels"
 msgstr "Метки"
-
-msgid "Lanes"
-msgstr "Дорожки"
 
 msgid "Language"
 msgstr "Язык"
@@ -10752,12 +10756,6 @@ msgstr "Требует внимания"
 msgid "Needs input"
 msgstr "Нужен ввод"
 
-msgid "Needs permission"
-msgstr "Нужно разрешение"
-
-msgid "Needs review"
-msgstr "Нужно ревью"
-
 msgid "Needs tests"
 msgstr "Нужны тесты"
 
@@ -11615,9 +11613,6 @@ msgstr "Из-за этого никто не проверяет код инач�
 
 msgid "None"
 msgstr "Нет"
-
-msgid "none (session)"
-msgstr "нет (сессия)"
 
 msgid "None. This is the floor."
 msgstr "Нет. Это нижняя граница."
@@ -12771,12 +12766,6 @@ msgstr "Пароль"
 msgid "Password for {email}"
 msgstr "Пароль для {email}"
 
-msgid "Past month"
-msgstr "За месяц"
-
-msgid "Past week"
-msgstr "За неделю"
-
 msgid "Paste"
 msgstr "Вставить"
 
@@ -13150,9 +13139,6 @@ msgstr "Комментарий в ревью PR"
 msgid "PR review submitted…"
 msgstr "Отправлено ревью PR…"
 
-msgid "PR state"
-msgstr "Состояние PR"
-
 msgid "PR URL"
 msgstr "URL PR"
 
@@ -13418,7 +13404,6 @@ msgid "Project-wide search"
 msgstr "Поиск по всему проекту"
 
 #. placeholder {0}: groupFilter.name
-#. placeholder {0}: workspace.projectName ?? t({ message: "none (session)", })
 msgid "Project: {0}"
 msgstr "Проект: {0}"
 
@@ -14507,6 +14492,9 @@ msgstr "Восстановить эту версию?"
 
 msgid "Restore width"
 msgstr "Восстановить ширину"
+
+msgid "Restore workspace"
+msgstr "Восстановить рабочую область"
 
 msgid "Restored"
 msgstr "Восстановлено"
@@ -15793,6 +15781,9 @@ msgstr "Показать все комментарии"
 msgid "Show all lines"
 msgstr "Показать все строки"
 
+msgid "Show archived"
+msgstr "Показать архив"
+
 msgid "Show Borders"
 msgstr "Показывать границы"
 
@@ -15921,9 +15912,6 @@ msgstr "Показывать вкладку использования на бо
 
 msgid "showArrow opt-in"
 msgstr "showArrow по желанию"
-
-msgid "Shown"
-msgstr "Показанные"
 
 msgid "Shown in launchers and this list."
 msgstr "Показывается в запускалках и в этом списке."
@@ -18491,8 +18479,8 @@ msgstr "Нам доверяют разработчики из"
 msgid "Try a different search or filter."
 msgstr "Попробуйте другой запрос или фильтр."
 
-msgid "Try a different search term or another device."
-msgstr "Попробуйте другой запрос или другое устройство."
+msgid "Try a different search term or another place."
+msgstr "Попробуйте другой запрос или другое место."
 
 msgid "Try again"
 msgstr "Повторить"
@@ -19756,11 +19744,11 @@ msgstr "Рабочие области"
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Рабочие области — это изолированные окружения для задач на основе git worktree."
 
-msgid "Workspaces on this device will show up here."
-msgstr "Рабочие области с этого устройства появятся здесь."
-
 msgid "Workspaces started from this environment will stop receiving it."
 msgstr "Рабочие пространства, запущенные из этого окружения, перестанут её получать."
+
+msgid "Workspaces you can open will show up here."
+msgstr "Рабочие области, которые вы можете открыть, появятся здесь."
 
 msgid "worktree"
 msgstr "worktree"

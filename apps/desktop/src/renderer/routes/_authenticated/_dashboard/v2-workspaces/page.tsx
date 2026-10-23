@@ -5,14 +5,15 @@ import { V2WorkspacesHeader } from "./components/V2WorkspacesHeader";
 import { V2WorkspacesList } from "./components/V2WorkspacesList";
 import { useAccessibleV2Workspaces } from "./hooks/useAccessibleV2Workspaces";
 import {
-	DEVICE_FILTER_THIS_DEVICE,
 	useV2WorkspacesFilterStore,
 	type V2WorkspacesViewMode,
+	WHERE_FILTER_ANYWHERE,
 } from "./stores/v2WorkspacesFilterStore";
 
 export type V2WorkspacesSearch = {
 	q?: string;
-	device?: string;
+	/** A WHERE_FILTER_* sentinel or a machine id; omitted = anywhere. */
+	where?: string;
 	/** Comma-joined project ids; may include the `__sessions__` sentinel. */
 	projects?: string;
 	/** Comma-joined creator user ids. */
@@ -33,9 +34,9 @@ export const Route = createFileRoute(
 	component: V2WorkspacesPage,
 	validateSearch: (search: Record<string, unknown>): V2WorkspacesSearch => ({
 		q: typeof search.q === "string" && search.q ? search.q : undefined,
-		device:
-			typeof search.device === "string" && search.device
-				? search.device
+		where:
+			typeof search.where === "string" && search.where
+				? search.where
 				: undefined,
 		projects:
 			typeof search.projects === "string" && search.projects
@@ -58,9 +59,7 @@ function V2WorkspacesPage() {
 	const navigate = useNavigate({ from: Route.fullPath });
 
 	const searchQuery = useV2WorkspacesFilterStore((state) => state.searchQuery);
-	const deviceFilter = useV2WorkspacesFilterStore(
-		(state) => state.deviceFilter,
-	);
+	const whereFilter = useV2WorkspacesFilterStore((state) => state.whereFilter);
 	const projectFilters = useV2WorkspacesFilterStore(
 		(state) => state.projectFilters,
 	);
@@ -84,7 +83,7 @@ function V2WorkspacesPage() {
 		hydratedRef.current = true;
 		useV2WorkspacesFilterStore.setState({
 			searchQuery: search.q ?? "",
-			...(search.device !== undefined && { deviceFilter: search.device }),
+			...(search.where !== undefined && { whereFilter: search.where }),
 			...(search.projects !== undefined && {
 				projectFilters: parseList(search.projects),
 			}),
@@ -105,10 +104,8 @@ function V2WorkspacesPage() {
 			const syncUrl = navigate({
 				search: {
 					q: searchQuery || undefined,
-					device:
-						deviceFilter !== DEVICE_FILTER_THIS_DEVICE
-							? deviceFilter
-							: undefined,
+					where:
+						whereFilter !== WHERE_FILTER_ANYWHERE ? whereFilter : undefined,
 					projects: projectFilters.length
 						? projectFilters.join(",")
 						: undefined,
@@ -128,7 +125,7 @@ function V2WorkspacesPage() {
 	}, [
 		navigate,
 		searchQuery,
-		deviceFilter,
+		whereFilter,
 		projectFilters,
 		creatorFilters,
 		viewMode,
@@ -148,9 +145,10 @@ function V2WorkspacesPage() {
 		creatorOptions,
 		hostsById,
 		projectsById,
+		cloudEnabled,
 	} = useAccessibleV2Workspaces({
 		searchQuery: deferredSearchQuery,
-		deviceFilter,
+		whereFilter,
 		projectFilters,
 		creatorFilters,
 		// Tombstones ride along so both views' Merged/Deleted groups work;
@@ -175,6 +173,7 @@ function V2WorkspacesPage() {
 				creatorOptions={creatorOptions}
 				hostsById={hostsById}
 				projectsById={projectsById}
+				cloudEnabled={cloudEnabled}
 			/>
 			{viewMode === "board" ? (
 				<V2WorkspacesBoard

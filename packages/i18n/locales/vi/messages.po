@@ -183,7 +183,7 @@ msgstr "{0, plural, one {# đang chờ} other {# đang chờ}}"
 
 #. placeholder {0}: chosenLeads.length
 #. placeholder {0}: chosenPeople.length
-#. placeholder {0}: grantee.memberCount
+#. placeholder {0}: creatorFilters.length
 msgid "{0, plural, one {# person} other {# people}}"
 msgstr "{0, plural, other {# người}}"
 
@@ -344,6 +344,10 @@ msgstr "{0, plural, one {Đang theo dõi # trang để nhận bình luận} othe
 #. placeholder {1}: formatDayLabel(lastDay)
 msgid "{0} – {1} · API-rate estimate from local session logs"
 msgstr "{0} – {1} · ước tính theo giá API từ log phiên cục bộ"
+
+#. placeholder {0}: workspace.hostName
+msgid "{0} — device offline"
+msgstr "{0} — thiết bị ngoại tuyến"
 
 #. placeholder {0}: error.message
 msgid "{0} — try the Superset tray menu > Host Service > Restart."
@@ -1395,6 +1399,9 @@ msgstr "1 cookie — quên trang này"
 msgid "1 hr"
 msgstr "1 giờ"
 
+msgid "1 person"
+msgstr "1 người"
+
 msgid "1 user"
 msgstr "1 người dùng"
 
@@ -2138,9 +2145,6 @@ msgstr "Tất cả commit"
 msgid "All data will be permanently deleted for all {0} members — this cannot be undone."
 msgstr "Toàn bộ dữ liệu sẽ bị xóa vĩnh viễn với cả {0} thành viên — không thể hoàn tác."
 
-msgid "All devices"
-msgstr "Tất cả thiết bị"
-
 msgid "All features, side by side"
 msgstr "Toàn bộ tính năng, đặt cạnh nhau"
 
@@ -2474,6 +2478,9 @@ msgstr "bất kỳ điều gì"
 
 msgid "Anything else? (optional)"
 msgstr "Còn gì nữa không? (không bắt buộc)"
+
+msgid "Anywhere"
+msgstr "Mọi nơi"
 
 msgid "AP"
 msgstr "AP"
@@ -6326,9 +6333,6 @@ msgstr "Tổng quan thay đổi diff"
 msgid "diff in new tab"
 msgstr "diff ở tab mới"
 
-msgid "Diff size"
-msgstr "Kích thước diff"
-
 msgid "Digital Product Designer"
 msgstr "Nhà thiết kế sản phẩm số"
 
@@ -7793,14 +7797,14 @@ msgstr "Lọc theo @{normalizedSearch}"
 msgid "Filter by author: {label}"
 msgstr "Lọc theo tác giả: {label}"
 
-msgid "Filter by device"
-msgstr "Lọc theo thiết bị"
-
 msgid "Filter by reviews"
 msgstr "Lọc theo review"
 
 msgid "Filter by state"
 msgstr "Lọc theo trạng thái"
+
+msgid "Filter by where workspaces run"
+msgstr "Lọc theo nơi workspace chạy"
 
 msgid "Filter by workspace: {label}"
 msgstr "Lọc theo workspace: {label}"
@@ -7882,6 +7886,9 @@ msgstr "Hoàn tất review"
 
 msgid "Finished"
 msgstr "Đã xong"
+
+msgid "Finished · unread"
+msgstr "Đã xong · chưa đọc"
 
 msgid "finished · worked for 7s"
 msgstr "đã xong · làm trong 7s"
@@ -8502,9 +8509,6 @@ msgstr "Henry Ford"
 msgid "Hid \"{0}\" from the sidebar"
 msgstr "Đã ẩn \"{0}\" khỏi thanh bên"
 
-msgid "Hidden"
-msgstr "Đã ẩn"
-
 msgid "Hidden folders"
 msgstr "Thư mục đã ẩn"
 
@@ -8965,6 +8969,9 @@ msgstr "Đang thực hiện"
 
 msgid "In Progress"
 msgstr "Đang thực hiện"
+
+msgid "In review"
+msgstr "Đang xem xét"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Trong ứng dụng Superset trên máy tính, mở <0>Cài đặt → Giao diện → Chủ đề</0>."
@@ -9521,9 +9528,6 @@ msgstr "Tên nhãn..."
 
 msgid "Labels"
 msgstr "Nhãn"
-
-msgid "Lanes"
-msgstr "Làn"
 
 msgid "Language"
 msgstr "Ngôn ngữ"
@@ -10752,12 +10756,6 @@ msgstr "Cần chú ý"
 msgid "Needs input"
 msgstr "Cần nhập thêm"
 
-msgid "Needs permission"
-msgstr "Cần cấp quyền"
-
-msgid "Needs review"
-msgstr "Cần review"
-
 msgid "Needs tests"
 msgstr "Cần kiểm thử"
 
@@ -11615,9 +11613,6 @@ msgstr "Không ai review khác đi vì điều đó."
 
 msgid "None"
 msgstr "Không có"
-
-msgid "none (session)"
-msgstr "không có (phiên)"
 
 msgid "None. This is the floor."
 msgstr "Không có. Đây là mức sàn."
@@ -12771,12 +12766,6 @@ msgstr "Mật khẩu"
 msgid "Password for {email}"
 msgstr "Mật khẩu cho {email}"
 
-msgid "Past month"
-msgstr "Tháng qua"
-
-msgid "Past week"
-msgstr "Tuần qua"
-
 msgid "Paste"
 msgstr "Dán"
 
@@ -13150,9 +13139,6 @@ msgstr "Bình luận review PR"
 msgid "PR review submitted…"
 msgstr "Đã gửi review PR…"
 
-msgid "PR state"
-msgstr "Trạng thái PR"
-
 msgid "PR URL"
 msgstr "URL của PR"
 
@@ -13418,7 +13404,6 @@ msgid "Project-wide search"
 msgstr "Tìm kiếm toàn dự án"
 
 #. placeholder {0}: groupFilter.name
-#. placeholder {0}: workspace.projectName ?? t({ message: "none (session)", })
 msgid "Project: {0}"
 msgstr "Dự án: {0}"
 
@@ -14507,6 +14492,9 @@ msgstr "Khôi phục phiên bản này?"
 
 msgid "Restore width"
 msgstr "Khôi phục độ rộng"
+
+msgid "Restore workspace"
+msgstr "Khôi phục workspace"
 
 msgid "Restored"
 msgstr "Đã khôi phục"
@@ -15793,6 +15781,9 @@ msgstr "Hiển thị tất cả bình luận"
 msgid "Show all lines"
 msgstr "Hiện tất cả các dòng"
 
+msgid "Show archived"
+msgstr "Hiện mục đã lưu trữ"
+
 msgid "Show Borders"
 msgstr "Hiển thị đường viền"
 
@@ -15921,9 +15912,6 @@ msgstr "Hiển thị thẻ mức sử dụng trên thanh bên"
 
 msgid "showArrow opt-in"
 msgstr "bật showArrow"
-
-msgid "Shown"
-msgstr "Đang hiển thị"
 
 msgid "Shown in launchers and this list."
 msgstr "Hiển thị trong trình khởi chạy và danh sách này."
@@ -18491,8 +18479,8 @@ msgstr "Được tin dùng bởi các nhà phát triển từ"
 msgid "Try a different search or filter."
 msgstr "Hãy thử tìm kiếm hoặc bộ lọc khác."
 
-msgid "Try a different search term or another device."
-msgstr "Hãy thử từ khóa khác hoặc thiết bị khác."
+msgid "Try a different search term or another place."
+msgstr "Hãy thử từ khóa khác hoặc nơi khác."
 
 msgid "Try again"
 msgstr "Thử lại"
@@ -19756,11 +19744,11 @@ msgstr "Workspace"
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Workspace là môi trường tác vụ tách biệt, dựa trên git worktree."
 
-msgid "Workspaces on this device will show up here."
-msgstr "Workspace trên thiết bị này sẽ xuất hiện ở đây."
-
 msgid "Workspaces started from this environment will stop receiving it."
 msgstr "Các workspace khởi động từ môi trường này sẽ không còn nhận được nó."
+
+msgid "Workspaces you can open will show up here."
+msgstr "Workspace bạn có thể mở sẽ xuất hiện ở đây."
 
 msgid "worktree"
 msgstr "worktree"

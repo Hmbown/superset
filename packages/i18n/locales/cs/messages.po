@@ -183,7 +183,7 @@ msgstr "{0, plural, one {# čeká} few {# čekají} many {# čeká} other {# če
 
 #. placeholder {0}: chosenLeads.length
 #. placeholder {0}: chosenPeople.length
-#. placeholder {0}: grantee.memberCount
+#. placeholder {0}: creatorFilters.length
 msgid "{0, plural, one {# person} other {# people}}"
 msgstr "{0, plural, one {# osoba} few {# osoby} many {# osoby} other {# osob}}"
 
@@ -344,6 +344,10 @@ msgstr "{0, plural, one {Sleduje # stránku kvůli komentářům} few {Sleduje #
 #. placeholder {1}: formatDayLabel(lastDay)
 msgid "{0} – {1} · API-rate estimate from local session logs"
 msgstr "{0} – {1} · odhad v sazbách API z lokálních logů relací"
+
+#. placeholder {0}: workspace.hostName
+msgid "{0} — device offline"
+msgstr "{0} — zařízení offline"
 
 #. placeholder {0}: error.message
 msgid "{0} — try the Superset tray menu > Host Service > Restart."
@@ -1395,6 +1399,9 @@ msgstr "1 cookie — zapomenout tento web"
 msgid "1 hr"
 msgstr "1 h"
 
+msgid "1 person"
+msgstr "1 osoba"
+
 msgid "1 user"
 msgstr "1 uživatel"
 
@@ -2138,9 +2145,6 @@ msgstr "Všechny commity"
 msgid "All data will be permanently deleted for all {0} members — this cannot be undone."
 msgstr "Všechna data budou trvale smazána pro všechny členy ({0}) — nelze vrátit zpět."
 
-msgid "All devices"
-msgstr "Všechna zařízení"
-
 msgid "All features, side by side"
 msgstr "Všechny funkce vedle sebe"
 
@@ -2474,6 +2478,9 @@ msgstr "cokoli"
 
 msgid "Anything else? (optional)"
 msgstr "Ještě něco? (nepovinné)"
+
+msgid "Anywhere"
+msgstr "Kdekoli"
 
 msgid "AP"
 msgstr "AP"
@@ -6326,9 +6333,6 @@ msgstr "Přehled změn diff"
 msgid "diff in new tab"
 msgstr "rozdíl na nové kartě"
 
-msgid "Diff size"
-msgstr "Velikost rozdílu"
-
 msgid "Digital Product Designer"
 msgstr "Designér digitálních produktů"
 
@@ -7793,14 +7797,14 @@ msgstr "Filtrovat podle @{normalizedSearch}"
 msgid "Filter by author: {label}"
 msgstr "Filtrovat podle autora: {label}"
 
-msgid "Filter by device"
-msgstr "Filtrovat podle zařízení"
-
 msgid "Filter by reviews"
 msgstr "Filtrovat podle revizí"
 
 msgid "Filter by state"
 msgstr "Filtrovat podle stavu"
+
+msgid "Filter by where workspaces run"
+msgstr "Filtrovat podle místa běhu pracovních prostorů"
 
 msgid "Filter by workspace: {label}"
 msgstr "Filtrovat podle pracovního prostoru: {label}"
@@ -7882,6 +7886,9 @@ msgstr "Dokončit revizi"
 
 msgid "Finished"
 msgstr "Dokončeno"
+
+msgid "Finished · unread"
+msgstr "Hotovo · nepřečteno"
 
 msgid "finished · worked for 7s"
 msgstr "hotovo · pracoval 7 s"
@@ -8502,9 +8509,6 @@ msgstr "Henry Ford"
 msgid "Hid \"{0}\" from the sidebar"
 msgstr "„{0}“ skryto z postranního panelu"
 
-msgid "Hidden"
-msgstr "Skryté"
-
 msgid "Hidden folders"
 msgstr "Skryté složky"
 
@@ -8965,6 +8969,9 @@ msgstr "Probíhá"
 
 msgid "In Progress"
 msgstr "Probíhá"
+
+msgid "In review"
+msgstr "V revizi"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "V desktopové aplikaci Superset otevřete <0>Nastavení → Vzhled → Motiv</0>."
@@ -9521,9 +9528,6 @@ msgstr "Název štítku..."
 
 msgid "Labels"
 msgstr "Štítky"
-
-msgid "Lanes"
-msgstr "Sloupce"
 
 msgid "Language"
 msgstr "Jazyk"
@@ -10752,12 +10756,6 @@ msgstr "Vyžaduje pozornost"
 msgid "Needs input"
 msgstr "Čeká na vstup"
 
-msgid "Needs permission"
-msgstr "Vyžaduje oprávnění"
-
-msgid "Needs review"
-msgstr "Vyžaduje revizi"
-
 msgid "Needs tests"
 msgstr "Chybí testy"
 
@@ -11615,9 +11613,6 @@ msgstr "Nikdo kvůli tomu nereviduje jinak."
 
 msgid "None"
 msgstr "Žádný"
-
-msgid "none (session)"
-msgstr "žádný (relace)"
 
 msgid "None. This is the floor."
 msgstr "Žádná. Tohle je základ."
@@ -12771,12 +12766,6 @@ msgstr "Heslo"
 msgid "Password for {email}"
 msgstr "Heslo pro {email}"
 
-msgid "Past month"
-msgstr "Poslední měsíc"
-
-msgid "Past week"
-msgstr "Poslední týden"
-
 msgid "Paste"
 msgstr "Vložit"
 
@@ -13150,9 +13139,6 @@ msgstr "Komentář v revizi PR"
 msgid "PR review submitted…"
 msgstr "Odeslána revize PR…"
 
-msgid "PR state"
-msgstr "Stav PR"
-
 msgid "PR URL"
 msgstr "URL PR"
 
@@ -13418,7 +13404,6 @@ msgid "Project-wide search"
 msgstr "Hledání napříč projektem"
 
 #. placeholder {0}: groupFilter.name
-#. placeholder {0}: workspace.projectName ?? t({ message: "none (session)", })
 msgid "Project: {0}"
 msgstr "Projekt: {0}"
 
@@ -14507,6 +14492,9 @@ msgstr "Obnovit tuto verzi?"
 
 msgid "Restore width"
 msgstr "Obnovit šířku"
+
+msgid "Restore workspace"
+msgstr "Obnovit pracovní prostor"
 
 msgid "Restored"
 msgstr "Obnoveno"
@@ -15793,6 +15781,9 @@ msgstr "Zobrazit všechny komentáře"
 msgid "Show all lines"
 msgstr "Zobrazit všechny řádky"
 
+msgid "Show archived"
+msgstr "Zobrazit archivované"
+
 msgid "Show Borders"
 msgstr "Zobrazit ohraničení"
 
@@ -15921,9 +15912,6 @@ msgstr "Zobrazit kartu využití v postranním panelu"
 
 msgid "showArrow opt-in"
 msgstr "showArrow zapnuto"
-
-msgid "Shown"
-msgstr "Zobrazené"
 
 msgid "Shown in launchers and this list."
 msgstr "Zobrazuje se ve spouštěčích a v tomto seznamu."
@@ -18491,8 +18479,8 @@ msgstr "Důvěřují nám tvůrci z"
 msgid "Try a different search or filter."
 msgstr "Zkuste jiné hledání nebo filtr."
 
-msgid "Try a different search term or another device."
-msgstr "Zkuste jiný hledaný výraz nebo jiné zařízení."
+msgid "Try a different search term or another place."
+msgstr "Zkuste jiný hledaný výraz nebo jiné místo."
 
 msgid "Try again"
 msgstr "Zkusit znovu"
@@ -19756,11 +19744,11 @@ msgstr "Pracovní prostory"
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Pracovní prostory jsou izolovaná prostředí pro úkoly postavená na git worktree."
 
-msgid "Workspaces on this device will show up here."
-msgstr "Pracovní prostory na tomto zařízení se objeví tady."
-
 msgid "Workspaces started from this environment will stop receiving it."
 msgstr "Workspacy spuštěné z tohoto prostředí ji přestanou dostávat."
+
+msgid "Workspaces you can open will show up here."
+msgstr "Pracovní prostory, které můžete otevřít, se objeví tady."
 
 msgid "worktree"
 msgstr "worktree"

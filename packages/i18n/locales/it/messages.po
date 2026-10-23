@@ -183,7 +183,7 @@ msgstr "{0, plural, one {# in attesa} other {# in attesa}}"
 
 #. placeholder {0}: chosenLeads.length
 #. placeholder {0}: chosenPeople.length
-#. placeholder {0}: grantee.memberCount
+#. placeholder {0}: creatorFilters.length
 msgid "{0, plural, one {# person} other {# people}}"
 msgstr "{0, plural, one {# persona} other {# persone}}"
 
@@ -344,6 +344,10 @@ msgstr "{0, plural, one {Osservando # pagina per i commenti} other {Osservando #
 #. placeholder {1}: formatDayLabel(lastDay)
 msgid "{0} – {1} · API-rate estimate from local session logs"
 msgstr "{0} – {1} · stima alla tariffa API dai log locali delle sessioni"
+
+#. placeholder {0}: workspace.hostName
+msgid "{0} — device offline"
+msgstr "{0} — dispositivo offline"
 
 #. placeholder {0}: error.message
 msgid "{0} — try the Superset tray menu > Host Service > Restart."
@@ -1395,6 +1399,9 @@ msgstr "1 cookie — dimentica questo sito"
 msgid "1 hr"
 msgstr "1 h"
 
+msgid "1 person"
+msgstr "1 persona"
+
 msgid "1 user"
 msgstr "1 utente"
 
@@ -2138,9 +2145,6 @@ msgstr "Tutti i commit"
 msgid "All data will be permanently deleted for all {0} members — this cannot be undone."
 msgstr "Tutti i dati verranno eliminati definitivamente per tutti i {0} membri — l'operazione non può essere annullata."
 
-msgid "All devices"
-msgstr "Tutti i dispositivi"
-
 msgid "All features, side by side"
 msgstr "Tutte le funzioni, a confronto"
 
@@ -2474,6 +2478,9 @@ msgstr "qualsiasi cosa"
 
 msgid "Anything else? (optional)"
 msgstr "Altro? (facoltativo)"
+
+msgid "Anywhere"
+msgstr "Ovunque"
 
 msgid "AP"
 msgstr "AP"
@@ -6326,9 +6333,6 @@ msgstr "Panoramica delle modifiche del diff"
 msgid "diff in new tab"
 msgstr "diff in una nuova scheda"
 
-msgid "Diff size"
-msgstr "Dimensione del diff"
-
 msgid "Digital Product Designer"
 msgstr "Designer di prodotti digitali"
 
@@ -7793,14 +7797,14 @@ msgstr "Filtra per @{normalizedSearch}"
 msgid "Filter by author: {label}"
 msgstr "Filtra per autore: {label}"
 
-msgid "Filter by device"
-msgstr "Filtra per dispositivo"
-
 msgid "Filter by reviews"
 msgstr "Filtra per revisioni"
 
 msgid "Filter by state"
 msgstr "Filtra per stato"
+
+msgid "Filter by where workspaces run"
+msgstr "Filtra in base a dove vengono eseguiti i workspace"
 
 msgid "Filter by workspace: {label}"
 msgstr "Filtra per workspace: {label}"
@@ -7882,6 +7886,9 @@ msgstr "Concludi la revisione"
 
 msgid "Finished"
 msgstr "Completato"
+
+msgid "Finished · unread"
+msgstr "Terminato · non letto"
 
 msgid "finished · worked for 7s"
 msgstr "terminato · ha lavorato per 7s"
@@ -8502,9 +8509,6 @@ msgstr "Henry Ford"
 msgid "Hid \"{0}\" from the sidebar"
 msgstr "\"{0}\" nascosto dalla barra laterale"
 
-msgid "Hidden"
-msgstr "Nascosti"
-
 msgid "Hidden folders"
 msgstr "Cartelle nascoste"
 
@@ -8965,6 +8969,9 @@ msgstr "In corso"
 
 msgid "In Progress"
 msgstr "In corso"
+
+msgid "In review"
+msgstr "In revisione"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Nell'app desktop di Superset, apri <0>Impostazioni → Aspetto → Tema</0>."
@@ -9521,9 +9528,6 @@ msgstr "Nome dell’etichetta..."
 
 msgid "Labels"
 msgstr "Etichette"
-
-msgid "Lanes"
-msgstr "Colonne"
 
 msgid "Language"
 msgstr "Lingua"
@@ -10752,12 +10756,6 @@ msgstr "Richiede attenzione"
 msgid "Needs input"
 msgstr "Richiede input"
 
-msgid "Needs permission"
-msgstr "Richiede un'autorizzazione"
-
-msgid "Needs review"
-msgstr "Richiede revisione"
-
 msgid "Needs tests"
 msgstr "Servono test"
 
@@ -11615,9 +11613,6 @@ msgstr "Nessuno rivede in modo diverso per questo."
 
 msgid "None"
 msgstr "Nessuno"
-
-msgid "none (session)"
-msgstr "nessuno (sessione)"
 
 msgid "None. This is the floor."
 msgstr "Nessuno. Questo è il punto di partenza."
@@ -12771,12 +12766,6 @@ msgstr "Password"
 msgid "Password for {email}"
 msgstr "Password per {email}"
 
-msgid "Past month"
-msgstr "Ultimo mese"
-
-msgid "Past week"
-msgstr "Ultima settimana"
-
 msgid "Paste"
 msgstr "Incolla"
 
@@ -13150,9 +13139,6 @@ msgstr "Commento di revisione PR"
 msgid "PR review submitted…"
 msgstr "Revisione PR inviata…"
 
-msgid "PR state"
-msgstr "Stato PR"
-
 msgid "PR URL"
 msgstr "URL della PR"
 
@@ -13418,7 +13404,6 @@ msgid "Project-wide search"
 msgstr "Ricerca in tutto il progetto"
 
 #. placeholder {0}: groupFilter.name
-#. placeholder {0}: workspace.projectName ?? t({ message: "none (session)", })
 msgid "Project: {0}"
 msgstr "Progetto: {0}"
 
@@ -14507,6 +14492,9 @@ msgstr "Ripristinare questa versione?"
 
 msgid "Restore width"
 msgstr "Ripristina larghezza"
+
+msgid "Restore workspace"
+msgstr "Ripristina il workspace"
 
 msgid "Restored"
 msgstr "Ripristinato"
@@ -15793,6 +15781,9 @@ msgstr "Mostra tutti i commenti"
 msgid "Show all lines"
 msgstr "Mostra tutte le righe"
 
+msgid "Show archived"
+msgstr "Mostra archiviati"
+
 msgid "Show Borders"
 msgstr "Mostra bordi"
 
@@ -15921,9 +15912,6 @@ msgstr "Mostra la scheda di utilizzo nella barra laterale"
 
 msgid "showArrow opt-in"
 msgstr "showArrow opzionale"
-
-msgid "Shown"
-msgstr "Mostrati"
 
 msgid "Shown in launchers and this list."
 msgstr "Mostrata nei launcher e in questo elenco."
@@ -18491,8 +18479,8 @@ msgstr "Scelto da chi costruisce in"
 msgid "Try a different search or filter."
 msgstr "Prova con un'altra ricerca o un altro filtro."
 
-msgid "Try a different search term or another device."
-msgstr "Prova con un altro termine di ricerca o un altro dispositivo."
+msgid "Try a different search term or another place."
+msgstr "Prova con un altro termine di ricerca o un altro posto."
 
 msgid "Try again"
 msgstr "Riprova"
@@ -19756,11 +19744,11 @@ msgstr "Workspace"
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "I workspace sono ambienti di lavoro isolati basati sui worktree git."
 
-msgid "Workspaces on this device will show up here."
-msgstr "I workspace su questo dispositivo compariranno qui."
-
 msgid "Workspaces started from this environment will stop receiving it."
 msgstr "I workspace avviati da questo ambiente non la riceveranno più."
+
+msgid "Workspaces you can open will show up here."
+msgstr "I workspace che puoi aprire compariranno qui."
 
 msgid "worktree"
 msgstr "worktree"

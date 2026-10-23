@@ -18,10 +18,10 @@ import {
 	LuArchive,
 	LuChevronDown,
 	LuFolder,
+	LuGlobe,
 	LuLaptop,
 	LuList,
 	LuMonitor,
-	LuMonitorSmartphone,
 	LuSquareKanban,
 	LuTerminal,
 	LuUsers,
@@ -36,11 +36,13 @@ import type {
 	V2WorkspaceProjectOption,
 } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/hooks/useAccessibleV2Workspaces";
 import {
-	DEVICE_FILTER_ALL_DEVICES,
-	DEVICE_FILTER_THIS_DEVICE,
 	PROJECT_FILTER_SESSIONS,
 	useV2WorkspacesFilterStore,
+	WHERE_FILTER_ANYWHERE,
+	WHERE_FILTER_CLOUD,
+	WHERE_FILTER_THIS_DEVICE,
 } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/stores/v2WorkspacesFilterStore";
+import { CloudGlyph } from "renderer/routes/_authenticated/components/CloudGlyph";
 import { V2WorkspaceProjectIcon } from "../V2WorkspaceProjectIcon";
 import { DeviceOptionLabel } from "./components/DeviceOptionLabel";
 
@@ -53,6 +55,8 @@ interface V2WorkspacesHeaderProps {
 		{ hostName: string; isOnline: boolean; isLocal: boolean }
 	>;
 	projectsById: Map<string, { projectName: string; iconUrl: string | null }>;
+	/** Offers "Cloud" as a place; off when the org has no cloud workspaces. */
+	cloudEnabled: boolean;
 }
 
 export function V2WorkspacesHeader({
@@ -61,17 +65,16 @@ export function V2WorkspacesHeader({
 	creatorOptions,
 	hostsById,
 	projectsById,
+	cloudEnabled,
 }: V2WorkspacesHeaderProps) {
 	const { t } = useLingui();
 	const searchQuery = useV2WorkspacesFilterStore((state) => state.searchQuery);
 	const setSearchQuery = useV2WorkspacesFilterStore(
 		(state) => state.setSearchQuery,
 	);
-	const deviceFilter = useV2WorkspacesFilterStore(
-		(state) => state.deviceFilter,
-	);
-	const setDeviceFilter = useV2WorkspacesFilterStore(
-		(state) => state.setDeviceFilter,
+	const whereFilter = useV2WorkspacesFilterStore((state) => state.whereFilter);
+	const setWhereFilter = useV2WorkspacesFilterStore(
+		(state) => state.setWhereFilter,
 	);
 	const projectFilters = useV2WorkspacesFilterStore(
 		(state) => state.projectFilters,
@@ -99,27 +102,32 @@ export function V2WorkspacesHeader({
 	const localHostName = hostOptions.find((host) => host.isLocal)?.hostName;
 	// The title names the actual machine ("Avi's Mac"), not the abstract
 	// "This device" — that phrasing stays in the menu where it's a choice.
-	const deviceLabel =
-		deviceFilter === DEVICE_FILTER_THIS_DEVICE
-			? (localHostName ??
-				t({
-					message: "This device",
-				}))
-			: deviceFilter === DEVICE_FILTER_ALL_DEVICES
-				? t({
-						message: "All devices",
-					})
-				: (remoteHosts.find((host) => host.hostId === deviceFilter)?.hostName ??
-					hostsById.get(deviceFilter)?.hostName ??
+	const whereLabel =
+		whereFilter === WHERE_FILTER_ANYWHERE
+			? t({ message: "Anywhere" })
+			: whereFilter === WHERE_FILTER_THIS_DEVICE
+				? (localHostName ??
 					t({
-						message: "Unknown device",
-					}));
-	const DeviceIcon =
-		deviceFilter === DEVICE_FILTER_ALL_DEVICES
-			? LuMonitorSmartphone
-			: deviceFilter === DEVICE_FILTER_THIS_DEVICE
-				? LuLaptop
-				: LuMonitor;
+						message: "This device",
+					}))
+				: whereFilter === WHERE_FILTER_CLOUD
+					? t({ message: "Cloud" })
+					: (remoteHosts.find((host) => host.hostId === whereFilter)
+							?.hostName ??
+						hostsById.get(whereFilter)?.hostName ??
+						t({
+							message: "Unknown device",
+						}));
+	const whereIcon =
+		whereFilter === WHERE_FILTER_ANYWHERE ? (
+			<LuGlobe className="size-4 text-muted-foreground" />
+		) : whereFilter === WHERE_FILTER_THIS_DEVICE ? (
+			<LuLaptop className="size-4 text-muted-foreground" />
+		) : whereFilter === WHERE_FILTER_CLOUD ? (
+			<CloudGlyph className="size-4 text-muted-foreground" />
+		) : (
+			<LuMonitor className="size-4 text-muted-foreground" />
+		);
 
 	const projectFilterOptions = [
 		...projectOptions.map((project) => ({
@@ -220,29 +228,27 @@ export function V2WorkspacesHeader({
 							<Button
 								variant="ghost"
 								aria-label={t({
-									message: "Filter by device",
+									message: "Filter by where workspaces run",
 								})}
 								className="-ml-2 h-9 gap-2 px-2 text-lg font-semibold"
 							>
-								<DeviceIcon className="size-4 text-muted-foreground" />
-								<span className="min-w-0 truncate">{deviceLabel}</span>
+								{whereIcon}
+								<span className="min-w-0 truncate">{whereLabel}</span>
 								<LuChevronDown className="size-4 text-muted-foreground" />
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="start" className="min-w-[14rem]">
 							<DropdownMenuRadioGroup
-								value={deviceFilter}
-								onValueChange={setDeviceFilter}
+								value={whereFilter}
+								onValueChange={setWhereFilter}
 							>
-								<DropdownMenuRadioItem value={DEVICE_FILTER_ALL_DEVICES}>
+								<DropdownMenuRadioItem value={WHERE_FILTER_ANYWHERE}>
 									<DeviceOptionLabel
-										icon={<LuMonitorSmartphone className="size-3.5" />}
-										label={t({
-											message: "All devices",
-										})}
+										icon={<LuGlobe className="size-3.5" />}
+										label={t({ message: "Anywhere" })}
 									/>
 								</DropdownMenuRadioItem>
-								<DropdownMenuRadioItem value={DEVICE_FILTER_THIS_DEVICE}>
+								<DropdownMenuRadioItem value={WHERE_FILTER_THIS_DEVICE}>
 									<DeviceOptionLabel
 										icon={<LuLaptop className="size-3.5" />}
 										label={
@@ -256,6 +262,14 @@ export function V2WorkspacesHeader({
 										}
 									/>
 								</DropdownMenuRadioItem>
+								{cloudEnabled ? (
+									<DropdownMenuRadioItem value={WHERE_FILTER_CLOUD}>
+										<DeviceOptionLabel
+											icon={<CloudGlyph className="size-3.5" />}
+											label={t({ message: "Cloud" })}
+										/>
+									</DropdownMenuRadioItem>
+								) : null}
 								{remoteHosts.length > 0 ? (
 									<>
 										<DropdownMenuSeparator />

@@ -183,7 +183,7 @@ msgstr "{0, plural, one {#개 대기 중} other {#개 대기 중}}"
 
 #. placeholder {0}: chosenLeads.length
 #. placeholder {0}: chosenPeople.length
-#. placeholder {0}: grantee.memberCount
+#. placeholder {0}: creatorFilters.length
 msgid "{0, plural, one {# person} other {# people}}"
 msgstr "{0, plural, other {# 명}}"
 
@@ -344,6 +344,10 @@ msgstr "{0, plural, one {#개 페이지의 댓글을 감시 중} other {#개 페
 #. placeholder {1}: formatDayLabel(lastDay)
 msgid "{0} – {1} · API-rate estimate from local session logs"
 msgstr "{0} – {1} · 로컬 세션 로그 기반 API 요금 추정치"
+
+#. placeholder {0}: workspace.hostName
+msgid "{0} — device offline"
+msgstr "{0} — 기기 오프라인"
 
 #. placeholder {0}: error.message
 msgid "{0} — try the Superset tray menu > Host Service > Restart."
@@ -1395,6 +1399,9 @@ msgstr "쿠키 1개 — 이 사이트 잊기"
 msgid "1 hr"
 msgstr "1시간"
 
+msgid "1 person"
+msgstr "1명"
+
 msgid "1 user"
 msgstr "사용자 1명"
 
@@ -2138,9 +2145,6 @@ msgstr "모든 커밋"
 msgid "All data will be permanently deleted for all {0} members — this cannot be undone."
 msgstr "멤버 {0}명 전원의 모든 데이터가 영구적으로 삭제되며, 되돌릴 수 없습니다."
 
-msgid "All devices"
-msgstr "모든 기기"
-
 msgid "All features, side by side"
 msgstr "모든 기능 한눈에 비교"
 
@@ -2474,6 +2478,9 @@ msgstr "모든 내용"
 
 msgid "Anything else? (optional)"
 msgstr "그 밖에 알려줄 내용이 있나요? (선택)"
+
+msgid "Anywhere"
+msgstr "모든 위치"
 
 msgid "AP"
 msgstr "AP"
@@ -6326,9 +6333,6 @@ msgstr "차이 변경 개요"
 msgid "diff in new tab"
 msgstr "새 탭에서 차이"
 
-msgid "Diff size"
-msgstr "차이 크기"
-
 msgid "Digital Product Designer"
 msgstr "디지털 제품 디자이너"
 
@@ -7793,14 +7797,14 @@ msgstr "@{normalizedSearch}(으)로 필터링"
 msgid "Filter by author: {label}"
 msgstr "작성자별 필터: {label}"
 
-msgid "Filter by device"
-msgstr "기기별 필터"
-
 msgid "Filter by reviews"
 msgstr "리뷰로 필터링"
 
 msgid "Filter by state"
 msgstr "상태로 필터링"
+
+msgid "Filter by where workspaces run"
+msgstr "워크스페이스 실행 위치로 필터"
 
 msgid "Filter by workspace: {label}"
 msgstr "워크스페이스별 필터: {label}"
@@ -7882,6 +7886,9 @@ msgstr "리뷰 마치기"
 
 msgid "Finished"
 msgstr "완료"
+
+msgid "Finished · unread"
+msgstr "완료 · 읽지 않음"
 
 msgid "finished · worked for 7s"
 msgstr "완료 · 7초 작업"
@@ -8502,9 +8509,6 @@ msgstr "Henry Ford"
 msgid "Hid \"{0}\" from the sidebar"
 msgstr "\"{0}\"을(를) 사이드바에서 숨겼습니다"
 
-msgid "Hidden"
-msgstr "숨김"
-
 msgid "Hidden folders"
 msgstr "숨긴 폴더"
 
@@ -8965,6 +8969,9 @@ msgstr "진행 중"
 
 msgid "In Progress"
 msgstr "진행 중"
+
+msgid "In review"
+msgstr "리뷰 중"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Superset 데스크톱 앱에서 <0>설정 → 모양 → 테마</0>를 여세요."
@@ -9521,9 +9528,6 @@ msgstr "라벨 이름..."
 
 msgid "Labels"
 msgstr "레이블"
-
-msgid "Lanes"
-msgstr "레인"
 
 msgid "Language"
 msgstr "언어"
@@ -10752,12 +10756,6 @@ msgstr "확인 필요"
 msgid "Needs input"
 msgstr "입력 필요"
 
-msgid "Needs permission"
-msgstr "권한 필요"
-
-msgid "Needs review"
-msgstr "리뷰 필요"
-
 msgid "Needs tests"
 msgstr "테스트 필요"
 
@@ -11615,9 +11613,6 @@ msgstr "그 때문에 리뷰 방식을 바꾸는 사람은 없습니다."
 
 msgid "None"
 msgstr "없음"
-
-msgid "none (session)"
-msgstr "없음 (세션)"
 
 msgid "None. This is the floor."
 msgstr "없음. 여기가 바닥입니다."
@@ -12771,12 +12766,6 @@ msgstr "비밀번호"
 msgid "Password for {email}"
 msgstr "{email}의 비밀번호"
 
-msgid "Past month"
-msgstr "지난 한 달"
-
-msgid "Past week"
-msgstr "지난 한 주"
-
 msgid "Paste"
 msgstr "붙여넣기"
 
@@ -13150,9 +13139,6 @@ msgstr "PR 리뷰 댓글"
 msgid "PR review submitted…"
 msgstr "PR 리뷰 제출됨…"
 
-msgid "PR state"
-msgstr "PR 상태"
-
 msgid "PR URL"
 msgstr "PR URL"
 
@@ -13418,7 +13404,6 @@ msgid "Project-wide search"
 msgstr "프로젝트 전체 검색"
 
 #. placeholder {0}: groupFilter.name
-#. placeholder {0}: workspace.projectName ?? t({ message: "none (session)", })
 msgid "Project: {0}"
 msgstr "프로젝트: {0}"
 
@@ -14507,6 +14492,9 @@ msgstr "이 버전을 복원할까요?"
 
 msgid "Restore width"
 msgstr "너비 복원"
+
+msgid "Restore workspace"
+msgstr "워크스페이스 복원"
 
 msgid "Restored"
 msgstr "복원됨"
@@ -15793,6 +15781,9 @@ msgstr "모든 댓글 표시"
 msgid "Show all lines"
 msgstr "모든 줄 표시"
 
+msgid "Show archived"
+msgstr "보관된 항목 표시"
+
 msgid "Show Borders"
 msgstr "테두리 표시"
 
@@ -15921,9 +15912,6 @@ msgstr "사이드바에 사용량 탭 표시"
 
 msgid "showArrow opt-in"
 msgstr "showArrow 선택 사용"
-
-msgid "Shown"
-msgstr "표시됨"
 
 msgid "Shown in launchers and this list."
 msgstr "실행기와 이 목록에 표시됩니다."
@@ -18491,8 +18479,8 @@ msgstr "다음 기업의 빌더들이 사용합니다"
 msgid "Try a different search or filter."
 msgstr "다른 검색어나 필터를 사용해 보세요."
 
-msgid "Try a different search term or another device."
-msgstr "다른 검색어를 쓰거나 다른 기기를 선택해 보세요."
+msgid "Try a different search term or another place."
+msgstr "다른 검색어를 쓰거나 다른 위치를 선택해 보세요."
 
 msgid "Try again"
 msgstr "다시 시도"
@@ -19756,11 +19744,11 @@ msgstr "워크스페이스"
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "워크스페이스는 git worktree를 기반으로 한 격리된 작업 환경입니다."
 
-msgid "Workspaces on this device will show up here."
-msgstr "이 기기의 워크스페이스가 여기에 표시됩니다."
-
 msgid "Workspaces started from this environment will stop receiving it."
 msgstr "이 환경에서 시작한 워크스페이스는 더 이상 이 값을 받지 않습니다."
+
+msgid "Workspaces you can open will show up here."
+msgstr "열 수 있는 워크스페이스가 여기에 표시됩니다."
 
 msgid "worktree"
 msgstr "worktree"

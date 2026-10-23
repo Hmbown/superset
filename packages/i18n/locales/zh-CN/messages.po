@@ -183,7 +183,7 @@ msgstr "{0, plural, one {#项待处理} other {#项待处理}}"
 
 #. placeholder {0}: chosenLeads.length
 #. placeholder {0}: chosenPeople.length
-#. placeholder {0}: grantee.memberCount
+#. placeholder {0}: creatorFilters.length
 msgid "{0, plural, one {# person} other {# people}}"
 msgstr "{0, plural, other {# 人}}"
 
@@ -344,6 +344,10 @@ msgstr "{0, plural, one {正在关注#个页面的评论} other {正在关注#�
 #. placeholder {1}: formatDayLabel(lastDay)
 msgid "{0} – {1} · API-rate estimate from local session logs"
 msgstr "{0} – {1} · 根据本地会话日志按API价格估算"
+
+#. placeholder {0}: workspace.hostName
+msgid "{0} — device offline"
+msgstr "{0}，设备离线"
 
 #. placeholder {0}: error.message
 msgid "{0} — try the Superset tray menu > Host Service > Restart."
@@ -1395,6 +1399,9 @@ msgstr "1个cookie——忘记此站点"
 msgid "1 hr"
 msgstr "1 小时"
 
+msgid "1 person"
+msgstr "1 人"
+
 msgid "1 user"
 msgstr "1个用户"
 
@@ -2138,9 +2145,6 @@ msgstr "所有提交"
 msgid "All data will be permanently deleted for all {0} members — this cannot be undone."
 msgstr "全部{0}名成员的所有数据都将被永久删除——此操作无法撤销。"
 
-msgid "All devices"
-msgstr "全部设备"
-
 msgid "All features, side by side"
 msgstr "所有功能逐项对比"
 
@@ -2474,6 +2478,9 @@ msgstr "任意内容"
 
 msgid "Anything else? (optional)"
 msgstr "还有别的吗？（选填）"
+
+msgid "Anywhere"
+msgstr "所有位置"
 
 msgid "AP"
 msgstr "AP"
@@ -6326,9 +6333,6 @@ msgstr "差异更改概览"
 msgid "diff in new tab"
 msgstr "在新标签页看差异"
 
-msgid "Diff size"
-msgstr "差异大小"
-
 msgid "Digital Product Designer"
 msgstr "数字产品设计师"
 
@@ -7793,14 +7797,14 @@ msgstr "按@{normalizedSearch}筛选"
 msgid "Filter by author: {label}"
 msgstr "按作者筛选：{label}"
 
-msgid "Filter by device"
-msgstr "按设备筛选"
-
 msgid "Filter by reviews"
 msgstr "按审查筛选"
 
 msgid "Filter by state"
 msgstr "按状态筛选"
+
+msgid "Filter by where workspaces run"
+msgstr "按工作区运行位置筛选"
 
 msgid "Filter by workspace: {label}"
 msgstr "按工作区筛选：{label}"
@@ -7882,6 +7886,9 @@ msgstr "完成审查"
 
 msgid "Finished"
 msgstr "已完成"
+
+msgid "Finished · unread"
+msgstr "已完成 · 未读"
 
 msgid "finished · worked for 7s"
 msgstr "已完成 · 用时7秒"
@@ -8502,9 +8509,6 @@ msgstr "Henry Ford"
 msgid "Hid \"{0}\" from the sidebar"
 msgstr "已从侧边栏隐藏“{0}”"
 
-msgid "Hidden"
-msgstr "已隐藏"
-
 msgid "Hidden folders"
 msgstr "已隐藏的文件夹"
 
@@ -8965,6 +8969,9 @@ msgstr "进行中"
 
 msgid "In Progress"
 msgstr "进行中"
+
+msgid "In review"
+msgstr "审核中"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "在Superset桌面应用中打开<0>设置 → 外观 → 主题</0>。"
@@ -9521,9 +9528,6 @@ msgstr "标签名称..."
 
 msgid "Labels"
 msgstr "标签"
-
-msgid "Lanes"
-msgstr "泳道"
 
 msgid "Language"
 msgstr "语言"
@@ -10752,12 +10756,6 @@ msgstr "需要处理"
 msgid "Needs input"
 msgstr "需要输入"
 
-msgid "Needs permission"
-msgstr "需要授权"
-
-msgid "Needs review"
-msgstr "待审查"
-
 msgid "Needs tests"
 msgstr "需要测试"
 
@@ -11615,9 +11613,6 @@ msgstr "没有人因此改变审查方式。"
 
 msgid "None"
 msgstr "无"
-
-msgid "none (session)"
-msgstr "无（会话）"
 
 msgid "None. This is the floor."
 msgstr "没有。这是起点。"
@@ -12771,12 +12766,6 @@ msgstr "密码"
 msgid "Password for {email}"
 msgstr "{email}的密码"
 
-msgid "Past month"
-msgstr "过去一个月"
-
-msgid "Past week"
-msgstr "过去一周"
-
 msgid "Paste"
 msgstr "粘贴"
 
@@ -13150,9 +13139,6 @@ msgstr "PR审查评论"
 msgid "PR review submitted…"
 msgstr "提交了PR审查…"
 
-msgid "PR state"
-msgstr "PR状态"
-
 msgid "PR URL"
 msgstr "PR链接"
 
@@ -13418,7 +13404,6 @@ msgid "Project-wide search"
 msgstr "全项目搜索"
 
 #. placeholder {0}: groupFilter.name
-#. placeholder {0}: workspace.projectName ?? t({ message: "none (session)", })
 msgid "Project: {0}"
 msgstr "项目：{0}"
 
@@ -14507,6 +14492,9 @@ msgstr "恢复这个版本？"
 
 msgid "Restore width"
 msgstr "恢复宽度"
+
+msgid "Restore workspace"
+msgstr "恢复工作区"
 
 msgid "Restored"
 msgstr "已恢复"
@@ -15793,6 +15781,9 @@ msgstr "显示全部评论"
 msgid "Show all lines"
 msgstr "显示所有行"
 
+msgid "Show archived"
+msgstr "显示已归档"
+
 msgid "Show Borders"
 msgstr "显示边框"
 
@@ -15921,9 +15912,6 @@ msgstr "在侧边栏显示用量选项卡"
 
 msgid "showArrow opt-in"
 msgstr "showArrow按需开启"
-
-msgid "Shown"
-msgstr "已显示"
 
 msgid "Shown in launchers and this list."
 msgstr "会显示在启动器和此列表中。"
@@ -18491,8 +18479,8 @@ msgstr "以下公司的开发者都在用"
 msgid "Try a different search or filter."
 msgstr "换个搜索词或筛选条件试试。"
 
-msgid "Try a different search term or another device."
-msgstr "试试其他搜索词或其他设备。"
+msgid "Try a different search term or another place."
+msgstr "试试其他搜索词或其他位置。"
 
 msgid "Try again"
 msgstr "重试"
@@ -19756,11 +19744,11 @@ msgstr "工作区"
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "工作区是由git worktree支撑的隔离任务环境。"
 
-msgid "Workspaces on this device will show up here."
-msgstr "此设备上的工作区会显示在这里。"
-
 msgid "Workspaces started from this environment will stop receiving it."
 msgstr "从此环境启动的工作区将不再收到它。"
+
+msgid "Workspaces you can open will show up here."
+msgstr "你可以打开的工作区会显示在这里。"
 
 msgid "worktree"
 msgstr "worktree"

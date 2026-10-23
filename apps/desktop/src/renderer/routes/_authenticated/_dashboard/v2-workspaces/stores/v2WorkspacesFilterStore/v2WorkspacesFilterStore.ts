@@ -1,19 +1,22 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export const DEVICE_FILTER_THIS_DEVICE = "this-device";
-export const DEVICE_FILTER_ALL_DEVICES = "all-devices";
+/** Every host this client can reach, plus the cloud. */
+export const WHERE_FILTER_ANYWHERE = "anywhere";
+export const WHERE_FILTER_THIS_DEVICE = "this-device";
+export const WHERE_FILTER_CLOUD = "cloud";
 /** Sentinel for project-less "session" workspaces in the project filter. */
 export const PROJECT_FILTER_SESSIONS = "__sessions__";
 
-export type V2WorkspacesDeviceFilter = string;
+/** One of the WHERE_FILTER_* sentinels, or a device's machine id. */
+export type V2WorkspacesWhereFilter = string;
 export type V2WorkspacesProjectFilter = string;
 
 export type V2WorkspacesViewMode = "list" | "board";
 
 interface V2WorkspacesFilterState {
 	searchQuery: string;
-	deviceFilter: V2WorkspacesDeviceFilter;
+	whereFilter: V2WorkspacesWhereFilter;
 	/** Empty = all projects. May contain PROJECT_FILTER_SESSIONS. */
 	projectFilters: string[];
 	/** Creator user ids; empty = any creator. */
@@ -22,7 +25,7 @@ interface V2WorkspacesFilterState {
 	showArchived: boolean;
 	viewMode: V2WorkspacesViewMode;
 	setSearchQuery: (searchQuery: string) => void;
-	setDeviceFilter: (deviceFilter: V2WorkspacesDeviceFilter) => void;
+	setWhereFilter: (whereFilter: V2WorkspacesWhereFilter) => void;
 	setProjectFilters: (projectFilters: string[]) => void;
 	setCreatorFilters: (creatorFilters: string[]) => void;
 	setShowArchived: (showArchived: boolean) => void;
@@ -35,13 +38,13 @@ export const useV2WorkspacesFilterStore = create<V2WorkspacesFilterState>()(
 	persist(
 		(set) => ({
 			searchQuery: "",
-			deviceFilter: DEVICE_FILTER_THIS_DEVICE,
+			whereFilter: WHERE_FILTER_ANYWHERE,
 			projectFilters: [],
 			creatorFilters: [],
 			showArchived: false,
 			viewMode: "list",
 			setSearchQuery: (searchQuery) => set({ searchQuery }),
-			setDeviceFilter: (deviceFilter) => set({ deviceFilter }),
+			setWhereFilter: (whereFilter) => set({ whereFilter }),
 			setProjectFilters: (projectFilters) => set({ projectFilters }),
 			setCreatorFilters: (creatorFilters) => set({ creatorFilters }),
 			setShowArchived: (showArchived) => set({ showArchived }),
@@ -49,7 +52,7 @@ export const useV2WorkspacesFilterStore = create<V2WorkspacesFilterState>()(
 			reset: () =>
 				set({
 					searchQuery: "",
-					deviceFilter: DEVICE_FILTER_THIS_DEVICE,
+					whereFilter: WHERE_FILTER_ANYWHERE,
 					projectFilters: [],
 					creatorFilters: [],
 					showArchived: false,

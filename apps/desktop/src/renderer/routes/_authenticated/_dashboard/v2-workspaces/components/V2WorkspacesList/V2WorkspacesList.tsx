@@ -20,8 +20,8 @@ import {
 import { BoardColumnIcon } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/components/BoardColumnIcon";
 import type { AccessibleV2Workspace } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/hooks/useAccessibleV2Workspaces";
 import {
-	DEVICE_FILTER_THIS_DEVICE,
 	useV2WorkspacesFilterStore,
+	WHERE_FILTER_ANYWHERE,
 } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/stores/v2WorkspacesFilterStore";
 import {
 	BOARD_COLUMN_LABELS,
@@ -48,6 +48,7 @@ interface StatusSection {
 const LIST_SECTION_ORDER: BoardColumnKey[] = [
 	"attention",
 	"working",
+	"finished",
 	"review",
 	"idle",
 	"merged",
@@ -89,9 +90,7 @@ export function V2WorkspacesList({
 		currentWorkspaceMatch !== false ? currentWorkspaceMatch.workspaceId : null;
 
 	const searchQuery = useV2WorkspacesFilterStore((state) => state.searchQuery);
-	const deviceFilter = useV2WorkspacesFilterStore(
-		(state) => state.deviceFilter,
-	);
+	const whereFilter = useV2WorkspacesFilterStore((state) => state.whereFilter);
 	const projectFilters = useV2WorkspacesFilterStore(
 		(state) => state.projectFilters,
 	);
@@ -110,7 +109,7 @@ export function V2WorkspacesList({
 
 	const hasActiveFilters =
 		searchQuery.trim() !== "" ||
-		deviceFilter !== DEVICE_FILTER_THIS_DEVICE ||
+		whereFilter !== WHERE_FILTER_ANYWHERE ||
 		projectFilters.length > 0 ||
 		creatorFilters.length > 0 ||
 		showArchived;
@@ -137,9 +136,9 @@ export function V2WorkspacesList({
 					</EmptyTitle>
 					<EmptyDescription>
 						{hasActiveFilters ? (
-							<Trans>Try a different search term or another device.</Trans>
+							<Trans>Try a different search term or another place.</Trans>
 						) : (
-							<Trans>Workspaces on this device will show up here.</Trans>
+							<Trans>Workspaces you can open will show up here.</Trans>
 						)}
 					</EmptyDescription>
 				</EmptyHeader>

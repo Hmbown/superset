@@ -183,7 +183,7 @@ msgstr "{0, plural, one {# tertunda} other {# tertunda}}"
 
 #. placeholder {0}: chosenLeads.length
 #. placeholder {0}: chosenPeople.length
-#. placeholder {0}: grantee.memberCount
+#. placeholder {0}: creatorFilters.length
 msgid "{0, plural, one {# person} other {# people}}"
 msgstr "{0, plural, other {# orang}}"
 
@@ -344,6 +344,10 @@ msgstr "{0, plural, one {Memantau # halaman untuk komentar} other {Memantau # ha
 #. placeholder {1}: formatDayLabel(lastDay)
 msgid "{0} – {1} · API-rate estimate from local session logs"
 msgstr "{0} – {1} · perkiraan tarif API dari log sesi lokal"
+
+#. placeholder {0}: workspace.hostName
+msgid "{0} — device offline"
+msgstr "{0} — perangkat offline"
 
 #. placeholder {0}: error.message
 msgid "{0} — try the Superset tray menu > Host Service > Restart."
@@ -1395,6 +1399,9 @@ msgstr "1 cookie — lupakan situs ini"
 msgid "1 hr"
 msgstr "1 jam"
 
+msgid "1 person"
+msgstr "1 orang"
+
 msgid "1 user"
 msgstr "1 pengguna"
 
@@ -2138,9 +2145,6 @@ msgstr "Semua commit"
 msgid "All data will be permanently deleted for all {0} members — this cannot be undone."
 msgstr "Semua data akan dihapus permanen untuk seluruh {0} anggota — ini tidak bisa dibatalkan."
 
-msgid "All devices"
-msgstr "Semua perangkat"
-
 msgid "All features, side by side"
 msgstr "Semua fitur, berdampingan"
 
@@ -2474,6 +2478,9 @@ msgstr "apa saja"
 
 msgid "Anything else? (optional)"
 msgstr "Ada lagi? (opsional)"
+
+msgid "Anywhere"
+msgstr "Di mana saja"
 
 msgid "AP"
 msgstr "AP"
@@ -6326,9 +6333,6 @@ msgstr "Ringkasan perubahan diff"
 msgid "diff in new tab"
 msgstr "diff di tab baru"
 
-msgid "Diff size"
-msgstr "Ukuran diff"
-
 msgid "Digital Product Designer"
 msgstr "Desainer Produk Digital"
 
@@ -7793,14 +7797,14 @@ msgstr "Filter menurut @{normalizedSearch}"
 msgid "Filter by author: {label}"
 msgstr "Filter menurut penulis: {label}"
 
-msgid "Filter by device"
-msgstr "Filter berdasarkan perangkat"
-
 msgid "Filter by reviews"
 msgstr "Filter menurut review"
 
 msgid "Filter by state"
 msgstr "Filter menurut status"
+
+msgid "Filter by where workspaces run"
+msgstr "Filter berdasarkan tempat workspace berjalan"
 
 msgid "Filter by workspace: {label}"
 msgstr "Filter menurut workspace: {label}"
@@ -7882,6 +7886,9 @@ msgstr "Selesaikan review"
 
 msgid "Finished"
 msgstr "Selesai"
+
+msgid "Finished · unread"
+msgstr "Selesai · belum dibaca"
 
 msgid "finished · worked for 7s"
 msgstr "selesai · bekerja 7 dtk"
@@ -8502,9 +8509,6 @@ msgstr "Henry Ford"
 msgid "Hid \"{0}\" from the sidebar"
 msgstr "\"{0}\" disembunyikan dari sidebar"
 
-msgid "Hidden"
-msgstr "Disembunyikan"
-
 msgid "Hidden folders"
 msgstr "Folder tersembunyi"
 
@@ -8965,6 +8969,9 @@ msgstr "Sedang berjalan"
 
 msgid "In Progress"
 msgstr "Sedang berjalan"
+
+msgid "In review"
+msgstr "Dalam review"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Di aplikasi desktop Superset, buka <0>Pengaturan → Tampilan → Tema</0>."
@@ -9521,9 +9528,6 @@ msgstr "Nama label..."
 
 msgid "Labels"
 msgstr "Label"
-
-msgid "Lanes"
-msgstr "Jalur"
 
 msgid "Language"
 msgstr "Bahasa"
@@ -10752,12 +10756,6 @@ msgstr "Perlu perhatian"
 msgid "Needs input"
 msgstr "Perlu input"
 
-msgid "Needs permission"
-msgstr "Perlu izin"
-
-msgid "Needs review"
-msgstr "Perlu review"
-
 msgid "Needs tests"
 msgstr "Butuh tes"
 
@@ -11615,9 +11613,6 @@ msgstr "Tidak ada yang mereview secara berbeda karenanya."
 
 msgid "None"
 msgstr "Tidak ada"
-
-msgid "none (session)"
-msgstr "tidak ada (sesi)"
 
 msgid "None. This is the floor."
 msgstr "Tidak ada. Ini adalah lantai dasarnya."
@@ -12771,12 +12766,6 @@ msgstr "Kata sandi"
 msgid "Password for {email}"
 msgstr "Kata sandi untuk {email}"
 
-msgid "Past month"
-msgstr "Sebulan terakhir"
-
-msgid "Past week"
-msgstr "Seminggu terakhir"
-
 msgid "Paste"
 msgstr "Tempel"
 
@@ -13150,9 +13139,6 @@ msgstr "Komentar review PR"
 msgid "PR review submitted…"
 msgstr "Review PR dikirim…"
 
-msgid "PR state"
-msgstr "Status PR"
-
 msgid "PR URL"
 msgstr "URL PR"
 
@@ -13418,7 +13404,6 @@ msgid "Project-wide search"
 msgstr "Pencarian seluruh proyek"
 
 #. placeholder {0}: groupFilter.name
-#. placeholder {0}: workspace.projectName ?? t({ message: "none (session)", })
 msgid "Project: {0}"
 msgstr "Proyek: {0}"
 
@@ -14507,6 +14492,9 @@ msgstr "Pulihkan versi ini?"
 
 msgid "Restore width"
 msgstr "Pulihkan lebar"
+
+msgid "Restore workspace"
+msgstr "Pulihkan workspace"
 
 msgid "Restored"
 msgstr "Dipulihkan"
@@ -15793,6 +15781,9 @@ msgstr "Tampilkan semua komentar"
 msgid "Show all lines"
 msgstr "Tampilkan semua baris"
 
+msgid "Show archived"
+msgstr "Tampilkan yang diarsipkan"
+
 msgid "Show Borders"
 msgstr "Tampilkan Batas"
 
@@ -15921,9 +15912,6 @@ msgstr "Tampilkan tab penggunaan di bilah samping"
 
 msgid "showArrow opt-in"
 msgstr "showArrow opsional"
-
-msgid "Shown"
-msgstr "Ditampilkan"
 
 msgid "Shown in launchers and this list."
 msgstr "Ditampilkan di peluncur dan daftar ini."
@@ -18491,8 +18479,8 @@ msgstr "Dipercaya oleh builder dari"
 msgid "Try a different search or filter."
 msgstr "Coba pencarian atau filter lain."
 
-msgid "Try a different search term or another device."
-msgstr "Coba kata kunci lain atau perangkat lain."
+msgid "Try a different search term or another place."
+msgstr "Coba kata kunci lain atau tempat lain."
 
 msgid "Try again"
 msgstr "Coba lagi"
@@ -19756,11 +19744,11 @@ msgstr "Workspace"
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Workspace adalah lingkungan tugas terisolasi yang didukung git worktree."
 
-msgid "Workspaces on this device will show up here."
-msgstr "Workspace di perangkat ini akan muncul di sini."
-
 msgid "Workspaces started from this environment will stop receiving it."
 msgstr "Workspace yang dimulai dari environment ini tidak akan menerimanya lagi."
+
+msgid "Workspaces you can open will show up here."
+msgstr "Workspace yang bisa kamu buka akan muncul di sini."
 
 msgid "worktree"
 msgstr "worktree"
