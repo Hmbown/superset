@@ -5,6 +5,7 @@ import { join } from "node:path";
 import {
 	describeProjectConfigSources,
 	hasProjectConfig,
+	type LegacyConfigSource,
 	resolveScript,
 } from "./config";
 
@@ -162,15 +163,16 @@ describe("hasProjectConfig and describeProjectConfigSources", () => {
 		const userDir = join(homeDir, ".superset", "projects", projectId);
 		mkdirSync(userDir, { recursive: true });
 		writeFileSync(join(userDir, "config.json"), "{}");
+		const expected: LegacyConfigSource[] = [
+			"before_after",
+			"cloud_start",
+			"config_json",
+			"config_local_json",
+			"script_fallback",
+			"user_projects_override",
+		];
 		expect(describeProjectConfigSources(args()).legacySources.sort()).toEqual(
-			[
-				"before_after",
-				"cloud_start",
-				"config_json",
-				"config_local_json",
-				"script_fallback",
-				"user_projects_override",
-			].sort(),
+			expected.sort(),
 		);
 	});
 

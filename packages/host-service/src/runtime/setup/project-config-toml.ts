@@ -16,8 +16,12 @@ export type TomlConfigLoad =
 	| { kind: "ok"; path: string; resolved: ResolvedProjectConfig }
 	| { kind: "invalid"; path: string; errors: ConfigError[] };
 
+/** host-service in a sandbox runs with SUPERSET_HOST_RUN_MODE; its children get IS_SANDBOX. */
 export function configEnvironment(): ConfigEnvironment {
-	return process.env.IS_SANDBOX === "1" ? "cloud" : "local";
+	return process.env.SUPERSET_HOST_RUN_MODE === "sandbox" ||
+		process.env.IS_SANDBOX === "1"
+		? "cloud"
+		: "local";
 }
 
 export function getTomlConfigPath(root: string): string {
