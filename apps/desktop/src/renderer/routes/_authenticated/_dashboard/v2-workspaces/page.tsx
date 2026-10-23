@@ -7,14 +7,6 @@ import { useAccessibleV2Workspaces } from "./hooks/useAccessibleV2Workspaces";
 import {
 	DEVICE_FILTER_THIS_DEVICE,
 	useV2WorkspacesFilterStore,
-	V2_WORKSPACES_AGENT_STATUS_FILTERS,
-	V2_WORKSPACES_ARCHIVED_WINDOWS,
-	V2_WORKSPACES_PIN_FILTERS,
-	V2_WORKSPACES_PR_STATE_FILTERS,
-	type V2WorkspacesAgentStatusFilter,
-	type V2WorkspacesArchivedWindow,
-	type V2WorkspacesPinFilter,
-	type V2WorkspacesPrStateFilter,
 	type V2WorkspacesViewMode,
 } from "./stores/v2WorkspacesFilterStore";
 
@@ -23,27 +15,16 @@ export type V2WorkspacesSearch = {
 	device?: string;
 	/** Comma-joined project ids; may include the `__sessions__` sentinel. */
 	projects?: string;
-	/** Comma-joined PR states. */
-	pr?: string;
-	/** Comma-joined agent statuses. */
-	agent?: string;
 	/** Comma-joined creator user ids. */
 	creators?: string;
-	/** Sidebar pin visibility; omitted = "all". */
-	pin?: V2WorkspacesPinFilter;
 	view?: V2WorkspacesViewMode;
-	archived?: V2WorkspacesArchivedWindow;
+	/** Archived tombstones shown; omitted = hidden. */
+	archived?: true;
 };
 
-function parseList<T extends string>(
-	raw: unknown,
-	allowed?: readonly T[],
-): T[] {
+function parseList(raw: unknown): string[] {
 	if (typeof raw !== "string" || !raw) return [];
-	const entries = raw.split(",").filter(Boolean);
-	return (
-		allowed ? entries.filter((entry) => allowed.includes(entry as T)) : entries
-	) as T[];
+	return raw.split(",").filter(Boolean);
 }
 
 export const Route = createFileRoute(
@@ -60,27 +41,15 @@ export const Route = createFileRoute(
 			typeof search.projects === "string" && search.projects
 				? search.projects
 				: undefined,
-		pr: typeof search.pr === "string" && search.pr ? search.pr : undefined,
-		agent:
-			typeof search.agent === "string" && search.agent
-				? search.agent
-				: undefined,
 		creators:
 			typeof search.creators === "string" && search.creators
 				? search.creators
 				: undefined,
-		pin: V2_WORKSPACES_PIN_FILTERS.includes(search.pin as V2WorkspacesPinFilter)
-			? (search.pin as V2WorkspacesPinFilter)
-			: undefined,
 		view:
 			search.view === "board" || search.view === "list"
 				? search.view
 				: undefined,
-		archived: V2_WORKSPACES_ARCHIVED_WINDOWS.includes(
-			search.archived as V2WorkspacesArchivedWindow,
-		)
-			? (search.archived as V2WorkspacesArchivedWindow)
-			: undefined,
+		archived: search.archived === true ? true : undefined,
 	}),
 });
 
@@ -95,20 +64,13 @@ function V2WorkspacesPage() {
 	const projectFilters = useV2WorkspacesFilterStore(
 		(state) => state.projectFilters,
 	);
-	const prStateFilters = useV2WorkspacesFilterStore(
-		(state) => state.prStateFilters,
-	);
-	const agentStatusFilters = useV2WorkspacesFilterStore(
-		(state) => state.agentStatusFilters,
-	);
 	const creatorFilters = useV2WorkspacesFilterStore(
 		(state) => state.creatorFilters,
 	);
-	const pinFilter = useV2WorkspacesFilterStore((state) => state.pinFilter);
-	const viewMode = useV2WorkspacesFilterStore((state) => state.viewMode);
-	const archivedWindow = useV2WorkspacesFilterStore(
-		(state) => state.archivedWindow,
+	const showArchived = useV2WorkspacesFilterStore(
+		(state) => state.showArchived,
 	);
+	const viewMode = useV2WorkspacesFilterStore((state) => state.viewMode);
 
 	// URL → store, once per mount, and only for params the URL actually
 	// carries: a deep link reproduces its view exactly, while a bare
@@ -126,26 +88,11 @@ function V2WorkspacesPage() {
 			...(search.projects !== undefined && {
 				projectFilters: parseList(search.projects),
 			}),
-			...(search.pr !== undefined && {
-				prStateFilters: parseList<V2WorkspacesPrStateFilter>(
-					search.pr,
-					V2_WORKSPACES_PR_STATE_FILTERS,
-				),
-			}),
-			...(search.agent !== undefined && {
-				agentStatusFilters: parseList<V2WorkspacesAgentStatusFilter>(
-					search.agent,
-					V2_WORKSPACES_AGENT_STATUS_FILTERS,
-				),
-			}),
 			...(search.creators !== undefined && {
 				creatorFilters: parseList(search.creators),
 			}),
-			...(search.pin !== undefined && { pinFilter: search.pin }),
 			...(search.view !== undefined && { viewMode: search.view }),
-			...(search.archived !== undefined && {
-				archivedWindow: search.archived,
-			}),
+			...(search.archived !== undefined && { showArchived: search.archived }),
 		});
 	}
 
@@ -165,16 +112,11 @@ function V2WorkspacesPage() {
 					projects: projectFilters.length
 						? projectFilters.join(",")
 						: undefined,
-					pr: prStateFilters.length ? prStateFilters.join(",") : undefined,
-					agent: agentStatusFilters.length
-						? agentStatusFilters.join(",")
-						: undefined,
 					creators: creatorFilters.length
 						? creatorFilters.join(",")
 						: undefined,
-					pin: pinFilter !== "all" ? pinFilter : undefined,
-					view: viewMode !== "board" ? viewMode : undefined,
-					archived: archivedWindow !== "none" ? archivedWindow : undefined,
+					view: viewMode !== "list" ? viewMode : undefined,
+					archived: showArchived ? true : undefined,
 				},
 				replace: true,
 			});
@@ -188,12 +130,9 @@ function V2WorkspacesPage() {
 		searchQuery,
 		deviceFilter,
 		projectFilters,
-		prStateFilters,
-		agentStatusFilters,
 		creatorFilters,
-		pinFilter,
 		viewMode,
-		archivedWindow,
+		showArchived,
 	]);
 
 	// Deferred so per-keystroke filtering leaves the input's critical path:
@@ -213,12 +152,9 @@ function V2WorkspacesPage() {
 		searchQuery: deferredSearchQuery,
 		deviceFilter,
 		projectFilters,
-		prStateFilters,
-		agentStatusFilters,
 		creatorFilters,
-		pinFilter,
 		// Tombstones ride along so both views' Merged/Deleted groups work;
-		// each view scopes them by the shared archived window.
+		// each view drops them unless "Show archived" is on.
 		includeArchived: true,
 	});
 

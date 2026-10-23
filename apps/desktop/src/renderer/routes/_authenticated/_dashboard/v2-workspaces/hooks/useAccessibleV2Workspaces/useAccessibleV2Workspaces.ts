@@ -18,10 +18,7 @@ import {
 	DEVICE_FILTER_ALL_DEVICES,
 	DEVICE_FILTER_THIS_DEVICE,
 	PROJECT_FILTER_SESSIONS,
-	type V2WorkspacesAgentStatusFilter,
 	type V2WorkspacesDeviceFilter,
-	type V2WorkspacesPinFilter,
-	type V2WorkspacesPrStateFilter,
 } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/stores/v2WorkspacesFilterStore";
 import { useCollections } from "renderer/routes/_authenticated/providers/CollectionsProvider";
 import { isSidebarWorkspaceVisible } from "renderer/routes/_authenticated/providers/CollectionsProvider/dashboardSidebarLocal";
@@ -145,14 +142,8 @@ interface UseAccessibleV2WorkspacesOptions {
 	deviceFilter?: V2WorkspacesDeviceFilter;
 	/** Empty/omitted = all projects. May contain PROJECT_FILTER_SESSIONS. */
 	projectFilters?: string[];
-	/** Empty/omitted = any PR state (including no PR). */
-	prStateFilters?: V2WorkspacesPrStateFilter[];
-	/** Empty/omitted = any agent status. */
-	agentStatusFilters?: V2WorkspacesAgentStatusFilter[];
 	/** Creator user ids; empty/omitted = any creator. */
 	creatorFilters?: string[];
-	/** Omitted = "all" — sidebar-pinned and unpinned alike. */
-	pinFilter?: V2WorkspacesPinFilter;
 	/**
 	 * Also surface archived tombstones (with `archivedAt` set). Requires a
 	 * device filter — the archived fetch rides the scoped host source.
@@ -188,27 +179,6 @@ function matchesProjectFilters(
 	return projectFilters.includes(workspace.projectId);
 }
 
-function matchesPrStateFilters(
-	workspace: AccessibleV2Workspace,
-	prStateFilters: V2WorkspacesPrStateFilter[],
-): boolean {
-	if (prStateFilters.length === 0) return true;
-	return workspace.pr != null && prStateFilters.includes(workspace.pr.state);
-}
-
-function matchesPinFilter(
-	workspace: AccessibleV2Workspace,
-	pinFilter: V2WorkspacesPinFilter,
-): boolean {
-	if (pinFilter === "all") return true;
-	// Archived tombstones may keep stale sidebar metadata; they are never
-	// pinned regardless of what that metadata says.
-	if (workspace.archivedAt !== null) return pinFilter === "unpinned";
-	return pinFilter === "pinned"
-		? workspace.isInSidebar
-		: !workspace.isInSidebar;
-}
-
 function matchesCreatorFilters(
 	workspace: AccessibleV2Workspace,
 	creatorFilters: string[],
@@ -218,14 +188,6 @@ function matchesCreatorFilters(
 		workspace.createdByUserId != null &&
 		creatorFilters.includes(workspace.createdByUserId)
 	);
-}
-
-function matchesAgentStatusFilters(
-	workspace: AccessibleV2Workspace,
-	agentStatusFilters: V2WorkspacesAgentStatusFilter[],
-): boolean {
-	if (agentStatusFilters.length === 0) return true;
-	return agentStatusFilters.includes(workspace.agentStatus);
 }
 
 // useQueries returns a fresh array each render; key the map on a content
@@ -253,10 +215,7 @@ export function useAccessibleV2Workspaces(
 	const searchQuery = options.searchQuery ?? "";
 	const deviceFilter = options.deviceFilter;
 	const projectFilters = options.projectFilters ?? [];
-	const prStateFilters = options.prStateFilters ?? [];
-	const agentStatusFilters = options.agentStatusFilters ?? [];
 	const creatorFilters = options.creatorFilters ?? [];
-	const pinFilter = options.pinFilter ?? "all";
 	const { data: session } = authClient.useSession();
 	const collections = useCollections();
 	const { machineId, activeHostUrl } = useLocalHostService();
@@ -749,19 +708,9 @@ export function useAccessibleV2Workspaces(
 			searchFiltered.filter(
 				(workspace) =>
 					matchesProjectFilters(workspace, projectFilters) &&
-					matchesPrStateFilters(workspace, prStateFilters) &&
-					matchesAgentStatusFilters(workspace, agentStatusFilters) &&
-					matchesCreatorFilters(workspace, creatorFilters) &&
-					matchesPinFilter(workspace, pinFilter),
+					matchesCreatorFilters(workspace, creatorFilters),
 			),
-		[
-			searchFiltered,
-			projectFilters,
-			prStateFilters,
-			agentStatusFilters,
-			creatorFilters,
-			pinFilter,
-		],
+		[searchFiltered, projectFilters, creatorFilters],
 	);
 
 	// Hosts come straight from the (locally cached) hosts collections so the
