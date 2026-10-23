@@ -332,6 +332,7 @@ export function useDiffCodeViewItems({
 		new Map<string, { signature: string; data: PatchGroupResult }>(),
 	);
 	useEffect(() => {
+		if (!enabled) return;
 		patchGroups.forEach((group, index) => {
 			const query = patchQueries[index];
 			if (!query?.data || query.isFetching || query.isError) return;
@@ -350,7 +351,7 @@ export function useDiffCodeViewItems({
 			});
 			void query.refetch();
 		});
-	}, [patchGroups, patchQueries]);
+	}, [enabled, patchGroups, patchQueries]);
 
 	// Parsed in an effect, per section, reusing unchanged sections' objects:
 	// @pierre/diffs hydrates a partial diff in place, so a new object per

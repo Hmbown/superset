@@ -300,6 +300,7 @@ export function PullRequestCodeTab({
 			hostUrl,
 			prNumber,
 		],
+		enabled: isTabVisible,
 		queryFn: () =>
 			fetchPullRequestDiff({
 				projectId,
