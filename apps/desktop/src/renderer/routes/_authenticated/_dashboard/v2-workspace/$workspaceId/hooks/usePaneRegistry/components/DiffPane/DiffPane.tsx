@@ -14,10 +14,10 @@ import {
 	EditProvider,
 } from "@pierre/diffs/react";
 import { errorMessage } from "@superset/i18n/errors";
-
 import type { RendererContext } from "@superset/panes";
 import { alert } from "@superset/ui/atoms/Alert";
 import { toast } from "@superset/ui/sonner";
+import { cn } from "@superset/ui/utils";
 import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -500,7 +500,9 @@ export function DiffPane({
 		},
 		[scrollStateKey, onScroll, notifyScroll],
 	);
-	const { options, style } = useDiffCardCodeViewTheme();
+	const { options, style } = useDiffCardCodeViewTheme({
+		flush: showFileList,
+	});
 
 	// Patches carry hunks with three lines of context; @pierre/diffs calls this
 	// when it needs the rest of a file — expanding context, or entering edit
@@ -917,7 +919,10 @@ export function DiffPane({
 						<EditProvider<DiffAnnotationMetadata> createEditor={createEditor}>
 							<CodeView<DiffAnnotationMetadata>
 								ref={codeViewRef}
-								className="h-full w-full overflow-y-auto overflow-x-clip overscroll-contain px-3 [overflow-anchor:none]"
+								className={cn(
+									"h-full w-full overflow-y-auto overflow-x-clip overscroll-contain [overflow-anchor:none]",
+									!showFileList && "px-3",
+								)}
 								style={style}
 								items={items}
 								options={codeViewOptions}
