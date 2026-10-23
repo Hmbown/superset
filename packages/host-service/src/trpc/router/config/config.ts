@@ -6,8 +6,7 @@ import { z } from "zod";
 import { projects } from "../../../db/schema";
 import {
 	getProjectConfigPath,
-	hasConfiguredScripts,
-	loadSetupConfig,
+	hasProjectConfig,
 	resolveScript,
 	type SetupConfig,
 	shellSingleQuote,
@@ -46,11 +45,10 @@ export const configRouter = router({
 		.input(projectIdInput)
 		.query(({ ctx, input }) => {
 			const project = requireProject(ctx, input.projectId);
-			const config = loadSetupConfig({
+			return !hasProjectConfig({
 				repoPath: project.repoPath,
 				projectId: project.id,
 			});
-			return !hasConfiguredScripts(config);
 		}),
 
 	/**
