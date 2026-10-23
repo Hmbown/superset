@@ -8,7 +8,7 @@ const V2_WORKSPACE = `${DASHBOARD}/v2-workspace/$workspaceId`;
 const SIDEBAR_ROWS = `${DASHBOARD}/components/DashboardSidebar/components/DashboardSidebarWorkspaceItem/components`;
 
 const SURFACES = [
-	`${V2_WORKSPACE}/hooks/usePaneRegistry/components/DiffPane/components/DiffPaneHeaderExtras/components/DiffPanePRLink/DiffPanePRLink.tsx`,
+	`${V2_WORKSPACE}/hooks/usePaneRegistry/components/DiffPane/components/DiffPanePRLink/DiffPanePRLink.tsx`,
 	`${V2_WORKSPACE}/components/ChangesControl/components/PRStatusGroup/PRStatusGroup.tsx`,
 	`${V2_WORKSPACE}/components/WorkspaceSidebar/hooks/useReviewTab/components/PRHeader/PRHeader.tsx`,
 	`${SIDEBAR_ROWS}/DashboardSidebarExpandedWorkspaceRow/DashboardSidebarExpandedWorkspaceRow.tsx`,

@@ -81,4 +81,42 @@ describe("moveViewerPanesToRight", () => {
 		});
 		expect(right.getState().getActivePane()?.pane.id).toBe("rightDiff");
 	});
+
+	it("keeps pinned Changes panes out of the fold", () => {
+		const center = createWorkspaceStore<PaneViewerData>();
+		const right = createWorkspaceStore<PaneViewerData>();
+		right.getState().addTab({
+			id: "r1",
+			panes: [
+				{
+					id: "pinnedRight",
+					kind: "diff",
+					pinned: true,
+					data: { path: "src/keep.ts", collapsedFiles: [] } as PaneViewerData,
+				},
+			],
+		});
+		center.getState().addTab({
+			id: "c1",
+			panes: [
+				{
+					id: "pinnedCenter",
+					kind: "diff",
+					pinned: true,
+					data: { path: "src/a.ts", collapsedFiles: [] } as PaneViewerData,
+				},
+			],
+		});
+
+		moveViewerPanesToRight({ center, right });
+
+		expect(
+			right
+				.getState()
+				.tabs.map((tab) => Object.values(tab.panes).map((p) => p.id)),
+		).toEqual([["pinnedRight"], ["pinnedCenter"]]);
+		expect(right.getState().tabs[0]?.panes.pinnedRight?.data).toMatchObject({
+			path: "src/keep.ts",
+		});
+	});
 });

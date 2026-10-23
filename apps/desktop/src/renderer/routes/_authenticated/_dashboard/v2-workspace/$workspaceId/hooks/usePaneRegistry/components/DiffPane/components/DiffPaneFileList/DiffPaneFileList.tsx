@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import type { RendererContext } from "@superset/panes";
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useV2UserPreferences } from "renderer/hooks/useV2UserPreferences";
 import { ResizablePanel } from "renderer/screens/main/components/ResizablePanel";
 import { useChangesTab } from "../../../../../../components/WorkspaceSidebar/hooks/useChangesTab";
@@ -74,6 +74,11 @@ export function DiffPaneFileList({
 		[store, actions, data, layout, onClose],
 	);
 
+	const overlayRef = useRef<HTMLDivElement>(null);
+	useEffect(() => {
+		if (layout === "overlay") overlayRef.current?.focus();
+	}, [layout]);
+
 	const changesTab = useChangesTab({
 		workspaceId,
 		selectedDiffTarget: data.path
@@ -100,9 +105,11 @@ export function DiffPaneFileList({
 					onClick={onClose}
 				/>
 				<div
+					ref={overlayRef}
 					role="dialog"
+					tabIndex={-1}
 					aria-label={t({ message: "Files" })}
-					className="absolute inset-y-0 right-0 z-30 border-l border-border bg-background shadow-lg"
+					className="absolute inset-y-0 right-0 z-30 border-l border-border bg-background shadow-lg outline-none"
 					style={{
 						width: Math.min(OVERLAY_WIDTH, containerWidth - OVERLAY_GUTTER),
 					}}

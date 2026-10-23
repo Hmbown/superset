@@ -19,7 +19,10 @@ export function moveViewerPanesToRight({
 	for (const tab of center.getState().tabs) {
 		for (const pane of Object.values(tab.panes)) {
 			if (CENTER_PANE_KINDS.has(pane.kind)) continue;
-			const rightDiff = pane.kind === "diff" ? findDiffPane(right) : null;
+			const rightDiff =
+				pane.kind === "diff" && !pane.pinned
+					? findUnpinnedDiffPane(right)
+					: null;
 			if (rightDiff) {
 				foldIntoDiffPane(right, rightDiff, pane.data as DiffPaneData);
 				center
@@ -32,12 +35,12 @@ export function moveViewerPanesToRight({
 	}
 }
 
-function findDiffPane(
+function findUnpinnedDiffPane(
 	store: Store,
 ): { tabId: string; pane: Pane<PaneViewerData> } | null {
 	for (const tab of store.getState().tabs) {
 		for (const pane of Object.values(tab.panes)) {
-			if (pane.kind === "diff") return { tabId: tab.id, pane };
+			if (pane.kind === "diff" && !pane.pinned) return { tabId: tab.id, pane };
 		}
 	}
 	return null;
