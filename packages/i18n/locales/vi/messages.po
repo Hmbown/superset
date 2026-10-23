@@ -705,6 +705,9 @@ msgstr "{actual} đến hiện tại · dự kiến ~{projected}"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "Các phiên {agents} sẽ tiếp tục khi bạn mở workspace của chúng."
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount} ({hoursLabel} GB-giờ)"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, other {# cần phê duyệt}}"
 
@@ -925,9 +928,6 @@ msgstr "{hours} giờ {minutes} phút"
 
 msgid "{hours}h ago"
 msgstr "{hours} giờ trước"
-
-msgid "{hoursLabel} GB-hours ({amount})"
-msgstr "{hoursLabel} GB-giờ ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {Đã nhập # worktree thành workspace} other {Đã nhập # worktree thành workspace}}"
@@ -2714,6 +2714,9 @@ msgstr "at"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "Ít nhất một đội mà chúng tôi có thể nêu tên, kể cả đội của chúng tôi, vượt mọi cổng F4 trong trọn một quý và công bố số liệu."
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "Tối đa {AUTO_TOPUP_MONTHLY_LIMIT} lần nạp mỗi tháng, tức là tối đa {monthlyMax} mỗi tháng."
+
 msgid "at once"
 msgstr "cùng lúc"
 
@@ -3364,9 +3367,6 @@ msgstr "Mua với giá {total}"
 msgid "Buy GB-hours"
 msgstr "Mua GB-giờ"
 
-msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
-msgstr "Mua thêm GB-giờ bằng thẻ đã lưu khi số GB-giờ đã mua sắp hết. Tối đa 10 lần nạp mỗi tháng."
-
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "bởi {0}"
@@ -3650,6 +3650,9 @@ msgstr "Đang chuyển..."
 
 msgid "Channel created"
 msgstr "Kênh được tạo"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "Trừ tiền thẻ đã lưu để mua thêm GB-giờ khi số GB-giờ đã mua sắp hết."
 
 msgid "Chat"
 msgstr "Chat"
@@ -19535,8 +19538,8 @@ msgstr "Khi trigger kích hoạt, chiếc Mac bạn chọn mở một workspace 
 msgid "When bought GB-hours fall below"
 msgstr "Khi số GB-giờ đã mua xuống dưới"
 
-msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
-msgstr "Khi còn ít hơn {topupThreshold} GB-giờ, mua {topupGbHours} GB-giờ ({topupPrice})."
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "Khi còn ít hơn {topupThreshold} GB-giờ, nạp thêm {topupPrice} ({topupGbHours} GB-giờ)."
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Khi tắt, không gì khác có thể truy cập tệp và công cụ trên thiết bị này. Bạn vẫn có thể kết nối tới sandbox từ xa từ đây. <0>Tìm hiểu thêm<1/></0>"

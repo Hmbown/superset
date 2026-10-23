@@ -705,6 +705,9 @@ msgstr "現時点で{actual} · 予測は約{projected}"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "{agents} のセッションは、そのワークスペースを開くと再開されます。"
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount} ({hoursLabel} GB 時間)"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, other {#件が承認待ち}}"
 
@@ -925,9 +928,6 @@ msgstr "{hours}時間{minutes}分"
 
 msgid "{hours}h ago"
 msgstr "{hours}時間前"
-
-msgid "{hoursLabel} GB-hours ({amount})"
-msgstr "{hoursLabel} GB 時間 ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {#件のワークツリーをワークスペースとしてインポートしました} other {#件のワークツリーをワークスペースとしてインポートしました}}"
@@ -2714,6 +2714,9 @@ msgstr "at"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "名前を挙げられるチームが少なくとも1つ、当社を含めて、四半期を通してF4のゲートをすべて通過し、その数値を公開する。"
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "チャージは月 {AUTO_TOPUP_MONTHLY_LIMIT} 回まで、つまり月に最大 {monthlyMax} です。"
+
 msgid "at once"
 msgstr "同時"
 
@@ -3364,9 +3367,6 @@ msgstr "{total} で購入"
 msgid "Buy GB-hours"
 msgstr "GB 時間を購入"
 
-msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
-msgstr "購入した GB 時間が少なくなると、保存済みのカードで GB 時間を追加購入します。最大で月 10 回です。"
-
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "作成者: {0}"
@@ -3650,6 +3650,9 @@ msgstr "変更中..."
 
 msgid "Channel created"
 msgstr "チャンネル作成"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "購入した GB 時間が少なくなると、保存済みのカードに追加の GB 時間を請求します。"
 
 msgid "Chat"
 msgstr "チャット"
@@ -19535,8 +19538,8 @@ msgstr "トリガーが発火すると、選んだMacが新しいワークスペ
 msgid "When bought GB-hours fall below"
 msgstr "購入した GB 時間がこれを下回ったとき"
 
-msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
-msgstr "残りが {topupThreshold} GB 時間を下回ると、{topupGbHours} GB 時間を購入します ({topupPrice})。"
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "残りが {topupThreshold} GB 時間を下回ると、{topupPrice} をチャージします ({topupGbHours} GB 時間)。"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "オフにすると、このデバイスのファイルやツールに外部からアクセスできなくなります。ここからリモートサンドボックスへの接続は引き続き可能です。<0>詳細<1/></0>"

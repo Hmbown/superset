@@ -705,6 +705,9 @@ msgstr "{actual} sejauh ini · ~{projected} diperkirakan"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "Sesi {agents} dilanjutkan saat Anda membuka workspace-nya."
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount} ({hoursLabel} GB-jam)"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, other {# perlu persetujuan}}"
 
@@ -925,9 +928,6 @@ msgstr "{hours}j {minutes}m"
 
 msgid "{hours}h ago"
 msgstr "{hours}j lalu"
-
-msgid "{hoursLabel} GB-hours ({amount})"
-msgstr "{hoursLabel} GB-jam ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {Mengimpor # worktree sebagai workspace} other {Mengimpor # worktree sebagai workspace}}"
@@ -2714,6 +2714,9 @@ msgstr "at"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "Setidaknya satu tim yang bisa kami sebut namanya, termasuk tim kami, melewati semua gerbang F4 selama satu kuartal penuh dan mempublikasikan angkanya."
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "Paling banyak {AUTO_TOPUP_MONTHLY_LIMIT} kali isi ulang per bulan, jadi hingga {monthlyMax} per bulan."
+
 msgid "at once"
 msgstr "sekaligus"
 
@@ -3364,9 +3367,6 @@ msgstr "Beli seharga {total}"
 msgid "Buy GB-hours"
 msgstr "Beli GB-jam"
 
-msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
-msgstr "Membeli lebih banyak GB-jam dengan kartu tersimpan saat GB-jam yang dibeli hampir habis. Paling banyak 10 kali isi ulang per bulan."
-
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "oleh {0}"
@@ -3650,6 +3650,9 @@ msgstr "Mengubah..."
 
 msgid "Channel created"
 msgstr "Channel dibuat"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "Menagih kartu tersimpan untuk GB-jam tambahan saat GB-jam yang dibeli hampir habis."
 
 msgid "Chat"
 msgstr "Chat"
@@ -19535,8 +19538,8 @@ msgstr "Saat pemicu aktif, Mac yang Anda pilih membuka workspace baru dan agen m
 msgid "When bought GB-hours fall below"
 msgstr "Saat GB-jam yang dibeli turun di bawah"
 
-msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
-msgstr "Saat sisa GB-jam kurang dari {topupThreshold}, beli {topupGbHours} GB-jam ({topupPrice})."
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "Saat sisa GB-jam kurang dari {topupThreshold}, tambah {topupPrice} ({topupGbHours} GB-jam)."
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Saat nonaktif, tidak ada yang bisa mengakses file dan alat di perangkat ini. Anda tetap bisa terhubung ke sandbox jarak jauh dari sini. <0>Pelajari lebih lanjut<1/></0>"

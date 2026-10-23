@@ -705,6 +705,9 @@ msgstr "현재 {actual} · 예상 ~{projected}"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "{agents} 세션은 해당 워크스페이스를 열면 재개됩니다."
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount} ({hoursLabel} GB 시간)"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, other {#개 승인 필요}}"
 
@@ -925,9 +928,6 @@ msgstr "{hours}시간 {minutes}분"
 
 msgid "{hours}h ago"
 msgstr "{hours}시간 전"
-
-msgid "{hoursLabel} GB-hours ({amount})"
-msgstr "{hoursLabel} GB 시간 ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {worktree #개를 워크스페이스로 가져왔습니다} other {worktree #개를 워크스페이스로 가져왔습니다}}"
@@ -2714,6 +2714,9 @@ msgstr "at"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "우리를 포함해 이름을 댈 수 있는 팀 중 최소 한 곳이 한 분기 내내 모든 F4 관문을 통과하고 그 수치를 공개합니다."
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "한 달에 최대 {AUTO_TOPUP_MONTHLY_LIMIT}회, 즉 월 최대 {monthlyMax}입니다."
+
 msgid "at once"
 msgstr "동시"
 
@@ -3364,9 +3367,6 @@ msgstr "{total}에 구매"
 msgid "Buy GB-hours"
 msgstr "GB 시간 구매"
 
-msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
-msgstr "구매한 GB 시간이 부족해지면 저장된 카드로 GB 시간을 더 구매합니다. 한 달에 최대 10회입니다."
-
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "작성자: {0}"
@@ -3650,6 +3650,9 @@ msgstr "변경하는 중..."
 
 msgid "Channel created"
 msgstr "채널 생성됨"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "구매한 GB 시간이 부족해지면 저장된 카드로 GB 시간을 더 결제합니다."
 
 msgid "Chat"
 msgstr "채팅"
@@ -19535,8 +19538,8 @@ msgstr "트리거가 실행되면 선택한 Mac이 새 워크스페이스를 열
 msgid "When bought GB-hours fall below"
 msgstr "구매한 GB 시간이 다음보다 적어지면"
 
-msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
-msgstr "남은 GB 시간이 {topupThreshold}보다 적어지면 {topupGbHours} GB 시간을 구매합니다({topupPrice})."
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "남은 GB 시간이 {topupThreshold}보다 적어지면 {topupPrice}를 충전합니다({topupGbHours} GB 시간)."
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "끄면 이 기기의 파일과 도구에 아무것도 접근할 수 없습니다. 여기에서 원격 샌드박스로 나가는 연결은 계속 사용할 수 있습니다. <0>자세히 알아보기<1/></0>"

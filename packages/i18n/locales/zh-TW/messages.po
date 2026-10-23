@@ -705,6 +705,9 @@ msgstr "目前{actual} · 預計約{projected}"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "開啟對應工作區時，{agents} 工作階段會恢復。"
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount}（{hoursLabel} GB 小時）"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, other {# 個需要核准}}"
 
@@ -925,9 +928,6 @@ msgstr "{hours}小時{minutes}分"
 
 msgid "{hours}h ago"
 msgstr "{hours}小時前"
-
-msgid "{hoursLabel} GB-hours ({amount})"
-msgstr "{hoursLabel} GB 小時（{amount}）"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {已將#個worktree匯入為工作區} other {已將#個worktree匯入為工作區}}"
@@ -2714,6 +2714,9 @@ msgstr "位於"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "至少有一支叫得出名字的團隊（包括我們自己）連續一個季度通過全部F4關卡，並公佈資料。"
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "每月最多加值 {AUTO_TOPUP_MONTHLY_LIMIT} 次，即每月最多 {monthlyMax}。"
+
 msgid "at once"
 msgstr "同時"
 
@@ -3364,9 +3367,6 @@ msgstr "以 {total} 購買"
 msgid "Buy GB-hours"
 msgstr "購買 GB 小時"
 
-msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
-msgstr "當購買的 GB 小時不足時，用已儲存的卡購買更多 GB 小時。每月最多 10 次。"
-
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "作者：{0}"
@@ -3650,6 +3650,9 @@ msgstr "正在更改..."
 
 msgid "Channel created"
 msgstr "頻道已建立"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "當購買的 GB 小時不足時，從已儲存的卡扣款購買更多 GB 小時。"
 
 msgid "Chat"
 msgstr "聊天"
@@ -19535,8 +19538,8 @@ msgstr "觸發器觸發時，你選的 Mac 會開啟一個新工作區，代理�
 msgid "When bought GB-hours fall below"
 msgstr "當購買的 GB 小時低於"
 
-msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
-msgstr "剩餘不足 {topupThreshold} GB 小時時，購買 {topupGbHours} GB 小時（{topupPrice}）。"
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "剩餘不足 {topupThreshold} GB 小時時，加值 {topupPrice}（{topupGbHours} GB 小時）。"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "關閉後，任何其他來源都無法存取此裝置上的檔案和工具。你仍可從這裡連線到遠端沙箱。<0>瞭解更多<1/></0>"

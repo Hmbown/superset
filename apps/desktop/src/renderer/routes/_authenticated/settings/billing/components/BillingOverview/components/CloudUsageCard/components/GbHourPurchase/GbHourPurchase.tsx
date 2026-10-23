@@ -127,8 +127,8 @@ export function GbHourPurchase({
 					<div className="text-xs text-muted-foreground">
 						{topup.enabled ? (
 							<Trans>
-								When fewer than {topupThreshold} GB-hours remain, buy{" "}
-								{topupGbHours} GB-hours ({topupPrice}).
+								When fewer than {topupThreshold} GB-hours remain, add{" "}
+								{topupPrice} ({topupGbHours} GB-hours).
 							</Trans>
 						) : (
 							<Trans>Off. Buys more GB-hours when they run low.</Trans>

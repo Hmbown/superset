@@ -3,6 +3,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useFormat } from "@superset/i18n/react";
 import {
+	AUTO_TOPUP_MONTHLY_LIMIT,
 	type GbHourPack,
 	gbHourPurchase,
 	PLAN_PRICE_CURRENCY,
@@ -65,6 +66,9 @@ export function AutoTopupDialog({
 
 	const price = (value: number) =>
 		formatCurrency(value, PLAN_PRICE_CURRENCY, PRICE_FORMAT);
+	const monthlyMax = price(
+		gbHourPurchase(pack, gbHours).price * AUTO_TOPUP_MONTHLY_LIMIT,
+	);
 	const amounts = PRESET_GB_HOURS.includes(gbHours)
 		? PRESET_GB_HOURS
 		: [...PRESET_GB_HOURS, gbHours].sort((a, b) => a - b);
@@ -94,8 +98,8 @@ export function AutoTopupDialog({
 					</DialogTitle>
 					<DialogDescription>
 						<Trans>
-							Buy more GB-hours with your saved card when bought GB-hours run
-							low. At most 10 top-ups a month.
+							Charge your saved card for more GB-hours when bought GB-hours run
+							low.
 						</Trans>
 					</DialogDescription>
 				</DialogHeader>
@@ -122,7 +126,7 @@ export function AutoTopupDialog({
 					</div>
 					<div className="space-y-1.5">
 						<Label>
-							<Trans>Buy</Trans>
+							<Trans>Top-up amount</Trans>
 						</Label>
 						<Select
 							value={String(gbHours)}
@@ -138,13 +142,19 @@ export function AutoTopupDialog({
 									return (
 										<SelectItem key={hours} value={String(hours)}>
 											<Trans>
-												{hoursLabel} GB-hours ({amount})
+												{amount} ({hoursLabel} GB-hours)
 											</Trans>
 										</SelectItem>
 									);
 								})}
 							</SelectContent>
 						</Select>
+						<p className="text-xs text-muted-foreground">
+							<Trans>
+								At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to{" "}
+								{monthlyMax} a month.
+							</Trans>
+						</p>
 					</div>
 				</div>
 				<DialogFooter>

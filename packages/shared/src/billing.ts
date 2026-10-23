@@ -348,6 +348,7 @@ export function gbHourPack(plan: AutumnCatalogPlan): GbHourPack | null {
 }
 
 export const GB_HOUR_PURCHASE = { min: 100, max: 30_000 };
+export const AUTO_TOPUP_MONTHLY_LIMIT = 10;
 
 /** What buying about `gbHours` costs: whole pack units, never past the maximum. */
 export function gbHourPurchase(pack: GbHourPack, gbHours: number): GbHourPack {

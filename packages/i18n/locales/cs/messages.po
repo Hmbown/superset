@@ -705,6 +705,9 @@ msgstr "zatím {actual} · odhad ~{projected}"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "Relace {agents} se obnoví, když otevřete jejich pracovní prostor."
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount} ({hoursLabel} GB-hodin)"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, one {# čeká na schválení} few {# čekají na schválení} many {# čeká na schválení} other {# čeká na schválení}}"
 
@@ -925,9 +928,6 @@ msgstr "{hours} h {minutes} m"
 
 msgid "{hours}h ago"
 msgstr "před {hours} h"
-
-msgid "{hoursLabel} GB-hours ({amount})"
-msgstr "{hoursLabel} GB-hodin ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {Importován # worktree jako pracovní prostor} few {Importovány # worktree jako pracovní prostory} many {Importováno # worktree jako pracovní prostory} other {Importováno # worktree jako pracovní prostory}}"
@@ -2714,6 +2714,9 @@ msgstr "at"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "Alespoň jeden tým, který umíme jmenovat — včetně toho našeho — projde celé čtvrtletí všemi branami F4 a zveřejní čísla."
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "Nejvýše {AUTO_TOPUP_MONTHLY_LIMIT} dobití měsíčně, tedy až {monthlyMax} měsíčně."
+
 msgid "at once"
 msgstr "najednou"
 
@@ -3364,9 +3367,6 @@ msgstr "Koupit za {total}"
 msgid "Buy GB-hours"
 msgstr "Koupit GB-hodiny"
 
-msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
-msgstr "Koupí další GB-hodiny uloženou kartou, když koupené GB-hodiny docházejí. Nejvýše 10 dobití měsíčně."
-
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "od {0}"
@@ -3650,6 +3650,9 @@ msgstr "Měním..."
 
 msgid "Channel created"
 msgstr "Kanál vytvořen"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "Strhne z uložené karty další GB-hodiny, když koupené GB-hodiny docházejí."
 
 msgid "Chat"
 msgstr "Chat"
@@ -19535,8 +19538,8 @@ msgstr "Když se spouštěč spustí, Mac, který jste vybrali, otevře nový pr
 msgid "When bought GB-hours fall below"
 msgstr "Když koupené GB-hodiny klesnou pod"
 
-msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
-msgstr "Když zbývá méně než {topupThreshold} GB-hodin, koupit {topupGbHours} GB-hodin ({topupPrice})."
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "Když zbývá méně než {topupThreshold} GB-hodin, dobít {topupPrice} ({topupGbHours} GB-hodin)."
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Když je vypnuto, nic jiného se nedostane k souborům a nástrojům na tomto zařízení. Odsud se stále můžete připojovat ke vzdáleným sandboxům. <0>Zjistit více<1/></0>"

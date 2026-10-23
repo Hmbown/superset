@@ -705,6 +705,9 @@ msgstr "{actual} tot nu toe · ~{projected} verwacht"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "{agents}-sessies worden hervat wanneer je hun workspace opent."
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount} ({hoursLabel} GB-uren)"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, one {# wacht op goedkeuring} other {# wachten op goedkeuring}}"
 
@@ -925,9 +928,6 @@ msgstr "{hours}u {minutes}m"
 
 msgid "{hours}h ago"
 msgstr "{hours}u geleden"
-
-msgid "{hoursLabel} GB-hours ({amount})"
-msgstr "{hoursLabel} GB-uren ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {# worktree als werkruimte geïmporteerd} other {# worktrees als werkruimtes geïmporteerd}}"
@@ -2714,6 +2714,9 @@ msgstr "at"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "Minstens één team dat we kunnen noemen, het onze inbegrepen, haalt een heel kwartaal lang elke F4-drempel en publiceert de cijfers."
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "Maximaal {AUTO_TOPUP_MONTHLY_LIMIT} keer per maand, dus tot {monthlyMax} per maand."
+
 msgid "at once"
 msgstr "tegelijk"
 
@@ -3364,9 +3367,6 @@ msgstr "Kopen voor {total}"
 msgid "Buy GB-hours"
 msgstr "GB-uren kopen"
 
-msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
-msgstr "Koopt met je opgeslagen kaart meer GB-uren wanneer gekochte GB-uren opraken. Maximaal 10 keer per maand."
-
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "door {0}"
@@ -3650,6 +3650,9 @@ msgstr "Wijzigen..."
 
 msgid "Channel created"
 msgstr "Kanaal aangemaakt"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "Schrijft meer GB-uren af van je opgeslagen kaart wanneer gekochte GB-uren opraken."
 
 msgid "Chat"
 msgstr "Chat"
@@ -19535,8 +19538,8 @@ msgstr "Als een trigger afgaat, opent de gekozen Mac een nieuwe werkruimte en be
 msgid "When bought GB-hours fall below"
 msgstr "Wanneer gekochte GB-uren dalen onder"
 
-msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
-msgstr "Wanneer er minder dan {topupThreshold} GB-uren over zijn, {topupGbHours} GB-uren kopen ({topupPrice})."
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "Wanneer er minder dan {topupThreshold} GB-uren over zijn, {topupPrice} bijkopen ({topupGbHours} GB-uren)."
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Als dit uitstaat, kan niets anders bij de bestanden en tools op dit apparaat. Je kunt vanaf hier nog steeds verbinden met externe sandboxes. <0>Meer informatie<1/></0>"

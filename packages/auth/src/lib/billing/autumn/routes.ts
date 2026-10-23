@@ -1,6 +1,7 @@
 import { db } from "@superset/db/client";
 import { members, subscriptions } from "@superset/db/schema";
 import {
+	AUTO_TOPUP_MONTHLY_LIMIT,
 	GB_HOUR_PURCHASE,
 	gbHourPack,
 	gbHourPurchase,
@@ -34,7 +35,6 @@ import { invalidateOrganizationBilling } from "./plan-state";
 import { syncOrganizationSubscription } from "./projection";
 import {
 	ADMIN_EXPAND,
-	AUTO_TOPUP_MONTHLY_LIMIT,
 	type BillingRole,
 	checkoutSessionParams,
 	OWNER_EXPAND,

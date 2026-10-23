@@ -705,6 +705,9 @@ msgstr "{actual} finora · ~{projected} previste"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "Le sessioni di {agents} riprendono quando apri il loro workspace."
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount} ({hoursLabel} GB-ore)"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, one {# richiede approvazione} other {# richiedono approvazione}}"
 
@@ -925,9 +928,6 @@ msgstr "{hours}h {minutes}m"
 
 msgid "{hours}h ago"
 msgstr "{hours}h fa"
-
-msgid "{hoursLabel} GB-hours ({amount})"
-msgstr "{hoursLabel} GB-ore ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {Importato # worktree come workspace} other {Importati # worktree come workspace}}"
@@ -2714,6 +2714,9 @@ msgstr "at"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "Almeno un team di cui possiamo fare il nome, incluso il nostro, supera tutti i gate F4 per un intero trimestre e pubblica i numeri."
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "Al massimo {AUTO_TOPUP_MONTHLY_LIMIT} ricariche al mese, quindi fino a {monthlyMax} al mese."
+
 msgid "at once"
 msgstr "in parallelo"
 
@@ -3364,9 +3367,6 @@ msgstr "Acquista per {total}"
 msgid "Buy GB-hours"
 msgstr "Acquista GB-ore"
 
-msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
-msgstr "Acquista altre GB-ore con la carta salvata quando le GB-ore acquistate stanno per finire. Al massimo 10 ricariche al mese."
-
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "di {0}"
@@ -3650,6 +3650,9 @@ msgstr "Modifica in corso..."
 
 msgid "Channel created"
 msgstr "Canale creato"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "Addebita sulla carta salvata altre GB-ore quando le GB-ore acquistate stanno per finire."
 
 msgid "Chat"
 msgstr "Chat"
@@ -19535,8 +19538,8 @@ msgstr "Quando scatta un trigger, il Mac scelto apre un nuovo workspace e l'agen
 msgid "When bought GB-hours fall below"
 msgstr "Quando le GB-ore acquistate scendono sotto"
 
-msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
-msgstr "Quando restano meno di {topupThreshold} GB-ore, acquista {topupGbHours} GB-ore ({topupPrice})."
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "Quando restano meno di {topupThreshold} GB-ore, aggiungi {topupPrice} ({topupGbHours} GB-ore)."
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Se disattivato, nient'altro può accedere ai file e agli strumenti di questo dispositivo. Puoi comunque connetterti a sandbox remote da qui. <0>Scopri di più<1/></0>"

@@ -50,4 +50,3 @@ export function checkoutSessionParams(args: {
 }
 
 /** Auto top-ups allowed per month, so a runaway workload cannot buy without bound. */
-export const AUTO_TOPUP_MONTHLY_LIMIT = 10;

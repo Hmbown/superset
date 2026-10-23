@@ -705,6 +705,9 @@ msgstr "{actual} so far · ~{projected} projected"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "{agents} sessions resume when you open their workspace."
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount} ({hoursLabel} GB-hours)"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 
@@ -925,9 +928,6 @@ msgstr "{hours}h {minutes}m"
 
 msgid "{hours}h ago"
 msgstr "{hours}h ago"
-
-msgid "{hoursLabel} GB-hours ({amount})"
-msgstr "{hoursLabel} GB-hours ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
@@ -2714,6 +2714,9 @@ msgstr "at"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+
 msgid "at once"
 msgstr "at once"
 
@@ -3364,9 +3367,6 @@ msgstr "Buy for {total}"
 msgid "Buy GB-hours"
 msgstr "Buy GB-hours"
 
-msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
-msgstr "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
-
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "by {0}"
@@ -3650,6 +3650,9 @@ msgstr "Changing..."
 
 msgid "Channel created"
 msgstr "Channel created"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "Charge your saved card for more GB-hours when bought GB-hours run low."
 
 msgid "Chat"
 msgstr "Chat"
@@ -19535,8 +19538,8 @@ msgstr "When a trigger fires, the Mac you picked opens a new workspace and the a
 msgid "When bought GB-hours fall below"
 msgstr "When bought GB-hours fall below"
 
-msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
-msgstr "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"

@@ -705,6 +705,9 @@ msgstr "{actual} à ce jour · ~{projected} projetées"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "Les sessions {agents} reprennent quand vous ouvrez leur espace de travail."
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount} ({hoursLabel} Go-heures)"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, one {# en attente d’approbation} other {# en attente d’approbation}}"
 
@@ -925,9 +928,6 @@ msgstr "{hours} h {minutes} min"
 
 msgid "{hours}h ago"
 msgstr "il y a {hours} h"
-
-msgid "{hoursLabel} GB-hours ({amount})"
-msgstr "{hoursLabel} Go-heures ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {# worktree importé en tant qu'espace de travail} other {# worktrees importés en tant qu'espaces de travail}}"
@@ -2714,6 +2714,9 @@ msgstr "à"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "Au moins une équipe identifiable, la nôtre comprise, passe toutes les portes F4 pendant un trimestre entier et publie ses chiffres."
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "Au maximum {AUTO_TOPUP_MONTHLY_LIMIT} recharges par mois, soit jusqu'à {monthlyMax} par mois."
+
 msgid "at once"
 msgstr "en parallèle"
 
@@ -3364,9 +3367,6 @@ msgstr "Acheter pour {total}"
 msgid "Buy GB-hours"
 msgstr "Acheter des Go-heures"
 
-msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
-msgstr "Achète des Go-heures avec votre carte enregistrée quand les Go-heures achetées s'épuisent. Au maximum 10 recharges par mois."
-
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "par {0}"
@@ -3650,6 +3650,9 @@ msgstr "Changement..."
 
 msgid "Channel created"
 msgstr "Canal créé"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "Débite votre carte enregistrée pour plus de Go-heures quand les Go-heures achetées s'épuisent."
 
 msgid "Chat"
 msgstr "Chat"
@@ -19535,8 +19538,8 @@ msgstr "Quand un déclencheur se produit, le Mac choisi ouvre un nouvel espace d
 msgid "When bought GB-hours fall below"
 msgstr "Quand les Go-heures achetées passent sous"
 
-msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
-msgstr "Quand il reste moins de {topupThreshold} Go-heures, acheter {topupGbHours} Go-heures ({topupPrice})."
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "Quand il reste moins de {topupThreshold} Go-heures, ajouter {topupPrice} ({topupGbHours} Go-heures)."
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Si désactivé, rien d'autre ne peut accéder aux fichiers et aux outils de cet appareil. Vous pouvez toujours vous connecter à des sandbox distants depuis ici. <0>En savoir plus<1/></0>"

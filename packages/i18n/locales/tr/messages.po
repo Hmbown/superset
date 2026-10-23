@@ -705,6 +705,9 @@ msgstr "şu ana kadar {actual} · ~{projected} öngörülüyor"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "{agents} oturumları, çalışma alanlarını açtığınızda devam eder."
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount} ({hoursLabel} GB-saat)"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, other {# onay bekliyor}}"
 
@@ -925,9 +928,6 @@ msgstr "{hours}sa {minutes}dk"
 
 msgid "{hours}h ago"
 msgstr "{hours}sa önce"
-
-msgid "{hoursLabel} GB-hours ({amount})"
-msgstr "{hoursLabel} GB-saat ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {# worktree çalışma alanı olarak içe aktarıldı} other {# worktree çalışma alanı olarak içe aktarıldı}}"
@@ -2714,6 +2714,9 @@ msgstr "at"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "Adını verebileceğimiz en az bir takım, bizimki de dahil, tam bir çeyrek boyunca her F4 eşiğini geçer ve sayıları yayımlar."
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "Ayda en fazla {AUTO_TOPUP_MONTHLY_LIMIT} yükleme, yani ayda en fazla {monthlyMax}."
+
 msgid "at once"
 msgstr "aynı anda"
 
@@ -3364,9 +3367,6 @@ msgstr "{total} karşılığında satın al"
 msgid "Buy GB-hours"
 msgstr "GB-saat satın al"
 
-msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
-msgstr "Satın alınan GB-saatler azaldığında kayıtlı kartınızla daha fazla GB-saat satın alır. Ayda en fazla 10 yükleme."
-
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "{0} tarafından"
@@ -3650,6 +3650,9 @@ msgstr "Değiştiriliyor..."
 
 msgid "Channel created"
 msgstr "Kanal oluşturuldu"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "Satın alınan GB-saatler azaldığında kayıtlı kartınızdan daha fazla GB-saat için ücret alır."
 
 msgid "Chat"
 msgstr "Sohbet"
@@ -19535,8 +19538,8 @@ msgstr "Bir tetikleyici çalıştığında seçtiğiniz Mac yeni bir çalışma 
 msgid "When bought GB-hours fall below"
 msgstr "Satın alınan GB-saat şunun altına düştüğünde"
 
-msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
-msgstr "{topupThreshold} GB-saatten az kaldığında {topupGbHours} GB-saat satın al ({topupPrice})."
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "{topupThreshold} GB-saatten az kaldığında {topupPrice} ekle ({topupGbHours} GB-saat)."
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Kapalıyken başka hiçbir şey bu cihazdaki dosya ve araçlara erişemez. Buradan uzak sandbox'lara yine de bağlanabilirsiniz. <0>Daha fazla bilgi<1/></0>"

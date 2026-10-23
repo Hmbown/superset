@@ -705,6 +705,9 @@ msgstr "{actual} на данный момент · прогноз ~{projected}"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "Сеансы {agents} возобновятся, когда вы откроете их рабочее пространство."
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount} ({hoursLabel} ГБ-часов)"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, one {# ждёт подтверждения} few {# ждут подтверждения} many {# ждут подтверждения} other {# ждут подтверждения}}"
 
@@ -925,9 +928,6 @@ msgstr "{hours} ч. {minutes} мин."
 
 msgid "{hours}h ago"
 msgstr "{hours} ч. назад"
-
-msgid "{hoursLabel} GB-hours ({amount})"
-msgstr "{hoursLabel} ГБ-часов ({amount})"
 
 msgid "{imported, plural, one {Imported # worktree as a workspace} other {Imported # worktrees as workspaces}}"
 msgstr "{imported, plural, one {# worktree импортирован как рабочая область} few {# worktree импортированы как рабочие области} many {# worktree импортированы как рабочие области} other {# worktree импортированы как рабочие области}}"
@@ -2714,6 +2714,9 @@ msgstr "at"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "Хотя бы одна команда, которую мы можем назвать, включая нашу, проходит все шлюзы F4 в течение полного квартала и публикует цифры."
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "Не более {AUTO_TOPUP_MONTHLY_LIMIT} пополнений в месяц, то есть до {monthlyMax} в месяц."
+
 msgid "at once"
 msgstr "одновременно"
 
@@ -3364,9 +3367,6 @@ msgstr "Купить за {total}"
 msgid "Buy GB-hours"
 msgstr "Купить ГБ-часы"
 
-msgid "Buy more GB-hours with your saved card when bought GB-hours run low. At most 10 top-ups a month."
-msgstr "Докупает ГБ-часы сохранённой картой, когда купленные ГБ-часы заканчиваются. Не более 10 пополнений в месяц."
-
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "от {0}"
@@ -3650,6 +3650,9 @@ msgstr "Смена..."
 
 msgid "Channel created"
 msgstr "Канал создан"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "Списывает с сохранённой карты оплату за новые ГБ-часы, когда купленные ГБ-часы заканчиваются."
 
 msgid "Chat"
 msgstr "Чат"
@@ -19535,8 +19538,8 @@ msgstr "Когда срабатывает триггер, выбранный Mac
 msgid "When bought GB-hours fall below"
 msgstr "Когда купленных ГБ-часов меньше"
 
-msgid "When fewer than {topupThreshold} GB-hours remain, buy {topupGbHours} GB-hours ({topupPrice})."
-msgstr "Когда остаётся меньше {topupThreshold} ГБ-часов, купить {topupGbHours} ГБ-часов ({topupPrice})."
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "Когда остаётся меньше {topupThreshold} ГБ-часов, пополнить на {topupPrice} ({topupGbHours} ГБ-часов)."
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Если выключено, ничто извне не может получить доступ к файлам и инструментам на этом устройстве. Отсюда по-прежнему можно подключаться к удалённым песочницам. <0>Подробнее<1/></0>"
