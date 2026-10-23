@@ -4,7 +4,7 @@ import { useFormat } from "@superset/i18n/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
 import { useNavigate } from "@tanstack/react-router";
-import { memo, type ReactNode } from "react";
+import { memo, type ReactNode, useEffect, useState } from "react";
 import { CgLaptop } from "react-icons/cg";
 import {
 	LuArchive,
@@ -111,6 +111,15 @@ export const V2WorkspaceRow = memo(function V2WorkspaceRow({
 		onFocus: handleRowFocus,
 		onBlur: handleRowBlur,
 	} = useFocusVisible();
+
+	// The selected look appears on click, not once the route has changed: a
+	// slow route transition otherwise reads as a click that did nothing.
+	const [isOpening, setIsOpening] = useState(false);
+	useEffect(() => {
+		if (!isOpening) return;
+		const timeout = setTimeout(() => setIsOpening(false), 2000);
+		return () => clearTimeout(timeout);
+	}, [isOpening]);
 
 	const creatorLabel = workspace.isCreatedByCurrentUser
 		? t({ message: "you" })
@@ -226,11 +235,15 @@ export const V2WorkspaceRow = memo(function V2WorkspaceRow({
 					// An archived row has nothing to open; Restore is its action.
 					aria-disabled={isArchived || undefined}
 					tabIndex={0}
-					onClick={actions.open}
+					onClick={() => {
+						if (!isArchived) setIsOpening(true);
+						actions.open();
+					}}
 					onKeyDown={(event) => {
 						if (event.target !== event.currentTarget) return;
 						if (event.key === "Enter" || event.key === " ") {
 							event.preventDefault();
+							if (!isArchived) setIsOpening(true);
 							actions.open();
 						}
 					}}
@@ -241,7 +254,7 @@ export const V2WorkspaceRow = memo(function V2WorkspaceRow({
 						"group flex items-center gap-3 border-b border-border/40 px-6 py-3 text-sm outline-none transition-colors",
 						"focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-inset",
 						isArchived ? "cursor-default" : "cursor-pointer",
-						isCurrentRoute
+						isCurrentRoute || isOpening
 							? "bg-muted hover:bg-muted focus-visible:bg-muted"
 							: "hover:bg-accent/50 focus-visible:bg-accent/50",
 					)}
