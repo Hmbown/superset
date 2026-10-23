@@ -3,7 +3,7 @@ import { parseProjectConfig } from "@superset/shared/project-config";
 import { Button } from "@superset/ui/button";
 import { Textarea } from "@superset/ui/textarea";
 import type { ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export type ConfigFileFormat = "toml" | "json";
 
@@ -17,7 +17,8 @@ interface ConfigFileEditorProps {
 	note?: ReactNode;
 	/** Replaces the editor's text without saving, e.g. a conversion to review. */
 	pendingContent?: string | null;
-	actions?: ReactNode;
+	/** Gets the editor's current text, so an action works on unsaved edits. */
+	actions?: (text: string) => ReactNode;
 	isSaving: boolean;
 	saveError: string | null;
 	onSave: (content: string) => void;
@@ -67,9 +68,19 @@ export function ConfigFileEditor({
 }: ConfigFileEditorProps) {
 	const { t } = useLingui();
 	const [text, setText] = useState(savedContent ?? initialContent);
+	const syncedText = useRef(savedContent ?? initialContent);
+	const submittedText = useRef<string | null>(null);
 
+	// Typing after Save must survive the refresh that the save causes.
 	useEffect(() => {
-		setText(savedContent ?? initialContent);
+		const next = savedContent ?? initialContent;
+		setText((current) =>
+			current === syncedText.current || current === submittedText.current
+				? next
+				: current,
+		);
+		syncedText.current = next;
+		submittedText.current = null;
 	}, [savedContent, initialContent]);
 
 	useEffect(() => {
@@ -85,6 +96,10 @@ export function ConfigFileEditor({
 	);
 	const isDirty = text !== (savedContent ?? "");
 	const canSave = isDirty && problems.length === 0 && !isSaving;
+	const submit = () => {
+		submittedText.current = text;
+		onSave(text);
+	};
 
 	return (
 		<div className="flex flex-col gap-2">
@@ -93,8 +108,8 @@ export function ConfigFileEditor({
 					{path}
 				</span>
 				<div className="flex shrink-0 items-center gap-2">
-					{actions}
-					<Button size="sm" disabled={!canSave} onClick={() => onSave(text)}>
+					{actions?.(text)}
+					<Button size="sm" disabled={!canSave} onClick={submit}>
 						{isSaving ? <Trans>Saving…</Trans> : <Trans>Save</Trans>}
 					</Button>
 				</div>
@@ -106,7 +121,7 @@ export function ConfigFileEditor({
 				onKeyDown={(event) => {
 					if ((event.metaKey || event.ctrlKey) && event.key === "s") {
 						event.preventDefault();
-						if (canSave) onSave(text);
+						if (canSave) submit();
 					}
 				}}
 				spellCheck={false}

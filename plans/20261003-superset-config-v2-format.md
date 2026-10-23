@@ -1,6 +1,6 @@
-# `.superset/config.json` v2 format
+# `.superset/config.toml`: the v2 format
 
-Status: deciding the format. The implementation plan comes after the decisions below are locked.
+Status: decided. The format is `.superset/config.toml`; the implementation is `plans/done/20261022-2304-config-toml-v2.md`.
 
 ## Why
 

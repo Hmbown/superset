@@ -126,6 +126,19 @@ describe("resolveScript with config.toml", () => {
 		});
 	});
 
+	it("cloud boot stops setup at its first failure but still starts the terminal", () => {
+		process.env.SUPERSET_HOST_RUN_MODE = "sandbox";
+		write(
+			repoPath,
+			"config.toml",
+			'[setup.cloud]\nrun = ["false", "touch ready"]\n[terminals.dev]\nrun = "bun dev"\ndefault = true\n',
+		);
+		expect(resolveScript("start", { repoPath, projectId })).toEqual({
+			kind: "commands",
+			commands: ["false && touch ready", "bun dev"],
+		});
+	});
+
 	it("a local app launched from a sandbox terminal still resolves as local", () => {
 		process.env.IS_SANDBOX = "1";
 		write(

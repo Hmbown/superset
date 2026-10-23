@@ -4,6 +4,7 @@ import { resolve } from "node:path";
 import { TEARDOWN_TIMEOUT_MS } from "@superset/shared/constants";
 import { getManagedEnv } from "../sandbox-managed-env/sandbox-managed-env.ts";
 import { resolveScript, shellSingleQuote } from "../setup/config";
+import { findTomlConfigPath } from "../setup/project-config-toml";
 import type { SandboxIdentity } from "./sandbox-self-seed";
 import { buildStartHookEnv } from "./utils/buildStartHookEnv";
 
@@ -31,6 +32,10 @@ export async function runSandboxArchiveHook(
 	identity: SandboxIdentity,
 	options: { timeoutMs?: number } = {},
 ): Promise<ArchiveHookResult> {
+	// A v1 config.json `teardown` is local only; cloud boxes never ran it.
+	if (!findTomlConfigPath({ repoPath: identity.worktreePath })) {
+		return { status: "skipped" };
+	}
 	const resolved = resolveScript("teardown", {
 		repoPath: identity.worktreePath,
 		projectId: identity.workspaceId,
@@ -47,11 +52,26 @@ export async function runSandboxArchiveHook(
 	return await new Promise<ArchiveHookResult>((done) => {
 		let output = "";
 		let timedOut = false;
+		let finished = false;
+		const finish = (result: ArchiveHookResult) => {
+			if (finished) return;
+			finished = true;
+			clearTimeout(timer);
+			done(result);
+		};
 		const child = spawn("bash", ["-lc", command], {
 			cwd: existsSync(configured) ? configured : identity.worktreePath,
 			env: buildStartHookEnv(process.env, getManagedEnv()),
 			stdio: ["ignore", "pipe", "pipe"],
+			detached: true,
 		});
+		const killGroup = (signal: NodeJS.Signals) => {
+			try {
+				if (child.pid) process.kill(-child.pid, signal);
+			} catch {
+				// The group has already exited.
+			}
+		};
 		const collect = (chunk: Buffer) => {
 			output = (output + chunk.toString()).slice(-OUTPUT_TAIL_BYTES);
 		};
@@ -59,12 +79,20 @@ export async function runSandboxArchiveHook(
 		child.stderr?.on("data", collect);
 		const timer = setTimeout(() => {
 			timedOut = true;
-			child.kill("SIGTERM");
-			setTimeout(() => child.kill("SIGKILL"), KILL_GRACE_MS).unref();
+			killGroup("SIGTERM");
+			setTimeout(() => {
+				killGroup("SIGKILL");
+				// A process outside the group can still hold the pipes open.
+				finish({
+					status: "failed",
+					exitCode: null,
+					timedOut: true,
+					outputTail: output,
+				});
+			}, KILL_GRACE_MS).unref();
 		}, options.timeoutMs ?? ARCHIVE_HOOK_TIMEOUT_MS);
 		child.on("error", (error) => {
-			clearTimeout(timer);
-			done({
+			finish({
 				status: "failed",
 				exitCode: null,
 				timedOut: false,
@@ -72,9 +100,8 @@ export async function runSandboxArchiveHook(
 			});
 		});
 		child.on("close", (code) => {
-			clearTimeout(timer);
 			console.log(`[sandbox] archive hook exited ${code}: ${command}`);
-			done(
+			finish(
 				code === 0 && !timedOut
 					? { status: "ok", outputTail: output }
 					: { status: "failed", exitCode: code, timedOut, outputTail: output },

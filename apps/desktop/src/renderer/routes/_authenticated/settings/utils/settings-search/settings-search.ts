@@ -1597,8 +1597,7 @@ export const SETTINGS_ITEMS: SettingsItem[] = [
 		id: SETTING_ITEM_ID.PROJECT_SCRIPTS,
 		section: "project",
 		title: "Workspace config",
-		description:
-			"Setup, run and archive commands for this project's workspaces (.superset/config.toml)",
+		description: "The commands that set up and run this project's workspaces",
 		keywords: [
 			"project",
 			"scripts",

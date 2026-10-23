@@ -67,9 +67,22 @@ describe("runSandboxArchiveHook", () => {
 		expect(result.status === "failed" && result.outputTail).toContain("boom");
 	});
 
-	it("stops a command that runs past the timeout", async () => {
-		writeConfig('[archive]\nrun = "sleep 5"\n');
+	it("stops every process of a command that runs past the timeout", async () => {
+		writeConfig('[archive]\nrun = ["sleep 5", "echo late"]\n');
+		const started = Date.now();
 		const result = await runSandboxArchiveHook(identity(), { timeoutMs: 200 });
 		expect(result).toMatchObject({ status: "failed", timedOut: true });
+		expect(Date.now() - started).toBeLessThan(2_000);
+	});
+
+	it("never runs a v1 config.json teardown", async () => {
+		mkdirSync(join(root, ".superset"), { recursive: true });
+		writeFileSync(
+			join(root, ".superset", "config.json"),
+			JSON.stringify({ teardown: ["echo local-only"] }),
+		);
+		expect(await runSandboxArchiveHook(identity())).toEqual({
+			status: "skipped",
+		});
 	});
 });

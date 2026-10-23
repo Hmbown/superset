@@ -75,6 +75,22 @@ neon_branch_lease_expiry() {
     || date -u -v+"${days}"d +%Y-%m-%dT%H:%M:%SZ
 }
 
+# Push a branch's expiry NEON_BRANCH_LEASE_DAYS out. Never call
+# set-expiration without --expires-at: that removes the expiry.
+renew_neon_branch_lease() {
+  local branch_id="$1"
+  local lease_expiry
+  lease_expiry="$(neon_branch_lease_expiry)"
+  [ -n "$lease_expiry" ] || return 0
+  if neonctl branches set-expiration "$branch_id" \
+      --project-id "$NEON_PROJECT_ID" \
+      --expires-at "$lease_expiry" --output json > /dev/null; then
+    echo "  Lease renewed until $lease_expiry"
+  else
+    warn "Could not renew the Neon branch lease (continuing)"
+  fi
+}
+
 step_setup_neon_branch() {
   echo "🗄️  Setting up Neon branch..."
 
@@ -118,17 +134,7 @@ step_setup_neon_branch() {
   if [ -n "$EXISTING_BRANCH" ]; then
     echo "  Using existing Neon branch..."
     BRANCH_ID="$EXISTING_BRANCH"
-    # Renew the lease on every boot. Never call set-expiration without
-    # --expires-at: that removes the expiry.
-    if [ -n "$lease_expiry" ]; then
-      if neonctl branches set-expiration "$BRANCH_ID" \
-          --project-id "$NEON_PROJECT_ID" \
-          --expires-at "$lease_expiry" --output json > /dev/null; then
-        echo "  Lease renewed until $lease_expiry"
-      else
-        warn "Could not renew the Neon branch lease (continuing)"
-      fi
-    fi
+    renew_neon_branch_lease "$BRANCH_ID"
   else
     echo "  Creating new Neon branch..."
     local neon_output

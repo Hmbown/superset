@@ -94,7 +94,11 @@ export function WorkspaceConfigEditor({
 					<Trans>Personal</Trans>
 				</TabsTrigger>
 			</TabsList>
-			<TabsContent value="shared">
+			<TabsContent
+				value="shared"
+				forceMount
+				className="data-[state=inactive]:hidden"
+			>
 				<ConfigFileEditor
 					path={isJson && shared ? shared.path : tomlPath}
 					format={sharedFormat}
@@ -121,15 +125,18 @@ export function WorkspaceConfigEditor({
 						)
 					}
 					actions={
-						isJson && shared ? (
-							<Button
-								size="sm"
-								variant="outline"
-								onClick={() => setConverted(convertJsonToToml(shared.content))}
-							>
-								<Trans>Convert to config.toml</Trans>
-							</Button>
-						) : null
+						isJson
+							? (text) => (
+									<Button
+										size="sm"
+										variant="outline"
+										disabled={convertJsonToToml(text) === null}
+										onClick={() => setConverted(convertJsonToToml(text))}
+									>
+										<Trans>Convert to config.toml</Trans>
+									</Button>
+								)
+							: undefined
 					}
 					isSaving={savingFile === "shared"}
 					saveError={errorFor("shared")}
@@ -138,7 +145,11 @@ export function WorkspaceConfigEditor({
 					}
 				/>
 			</TabsContent>
-			<TabsContent value="local">
+			<TabsContent
+				value="local"
+				forceMount
+				className="data-[state=inactive]:hidden"
+			>
 				<ConfigFileEditor
 					path={local.path}
 					format="toml"

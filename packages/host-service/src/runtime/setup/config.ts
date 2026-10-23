@@ -356,7 +356,21 @@ function resolveTomlScript({
 						? [terminal]
 						: []
 					: [resolved.setup, ...(terminal ? [terminal] : [])];
-	return combinePhases({ parts, root: args.worktreePath ?? args.repoPath });
+	const combined = combinePhases({
+		parts,
+		root: args.worktreePath ?? args.repoPath,
+	});
+	// Cloud boot runs each entry on its own. Setup stops at its first failure,
+	// like a local setup; the terminal still starts after it.
+	if (key === "start" && combined?.kind === "commands") {
+		const setupCount = resolved.setup.commands.length;
+		const groups = [
+			combined.commands.slice(0, setupCount),
+			combined.commands.slice(setupCount),
+		].filter((group) => group.length > 0);
+		return { ...combined, commands: groups.map((group) => group.join(" && ")) };
+	}
+	return combined;
 }
 
 /** One cwd for all parts when they agree; otherwise each command enters its own. */

@@ -18,7 +18,9 @@ describe("fromV1Json", () => {
 				},
 			},
 			archive: { run: ["./.superset/teardown.sh"] },
-			terminals: { dev: { run: "bun dev", default: true } },
+			terminals: {
+				dev: { run: "bun dev", default: true, cloud: { default: false } },
+			},
 		});
 	});
 

@@ -11,8 +11,9 @@ function stringArray(value: unknown): string[] | undefined {
 
 /**
  * Translates a v1 `.superset/config.json` object into the v2 shape:
- * setup → [setup], teardown → [archive], run → [terminals.dev] (default),
- * start → [setup.cloud], ports → [ports.p<number>] with preview.
+ * setup → [setup], teardown → [archive], run → [terminals.dev] (default
+ * locally only, as v1 cloud boot ran only `start`), start → [setup.cloud],
+ * ports → [ports.p<number>] with preview.
  */
 export function fromV1Json(json: unknown): ProjectConfig {
 	const source =
@@ -43,6 +44,7 @@ export function fromV1Json(json: unknown): ProjectConfig {
 			dev: withCwd({
 				run: run.length === 1 ? (run[0] as string) : run,
 				default: true,
+				cloud: { default: false },
 			}),
 		};
 	}
