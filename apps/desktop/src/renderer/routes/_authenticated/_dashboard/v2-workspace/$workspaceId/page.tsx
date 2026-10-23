@@ -579,6 +579,12 @@ function V2WorkspaceContent() {
 	});
 	const showFullScreenRightPaneArea =
 		isRightPaneAreaEnabled && sidebarOpen && isRightPaneAreaFullScreen;
+	useEffect(() => {
+		if (!showFullScreenRightPaneArea) return;
+		activateRightArea();
+		const active = rightStore.getState().getActivePane();
+		if (active) rightStore.getState().focusPane(active.pane.id);
+	}, [showFullScreenRightPaneArea, activateRightArea, rightStore]);
 
 	const windowWidth = useWindowWidth();
 	const centerAreaRef = useRef<HTMLDivElement>(null);
