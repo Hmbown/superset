@@ -26,7 +26,9 @@ default = true
 run = ["docker compose down"]
 ```
 
-You can also edit it in the app: **Settings → your project → Workspace config**.
+You can also edit it in the app: **Settings → your project → Workspace config**. The editor shows the whole file, keeps your comments, and checks it as you type; **Save** stays disabled until the file is valid.
+
+![Settings → Workspace config editing .superset/config.toml](/images/workspace-config.png)
 
 ## How It Works
 
@@ -74,6 +76,22 @@ Release what `[setup]` created outside the workspace: stop containers, drop a da
 | `default` | terminals | `true` for the terminal the **Run** button starts. |
 
 Unknown keys are errors, so a typo like `defualt` is caught. When the file is invalid, the setup terminal shows what's wrong and runs nothing.
+
+## Checking It Works
+
+**Setup:** create a workspace and open its **Workspace Setup** tab. It shows each `[install]` and `[setup]` command and its output. A command that fails stops the rest, and its error stays in the tab.
+
+![The Workspace Setup tab running a setup command](/images/workspace-setup-terminal.png)
+
+**Run:** click **Run** in the top bar. The `default` terminal's command starts in its own tab, and the button turns into **Stop**.
+
+**Archive:** archive or delete a workspace. If an `[archive]` command fails, you see "Delete Anyway" and "View Logs" (see [Force Delete](#force-delete)).
+
+**A broken file:** the Workspace config editor names the problem and its line before you save:
+
+![An unknown key reported with its line number](/images/workspace-config-error.png)
+
+If the file is broken anyway, for example edited by hand, the Workspace Setup tab prints the same errors and runs nothing. Archive still works and skips the commands.
 
 ## Environment Variables
 
