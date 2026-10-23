@@ -71,11 +71,28 @@ Each cloud workspace runs on a machine size you pick when you create it. Every s
 | X-Large | `xlarge` | 16 | 32 GB | On request |
 | 2X-Large | `2xlarge` | 32 | 64 GB | On request |
 
-- **Medium is the default.** Pick a larger size for big builds, many test processes, or several agents in one workspace.
+- **Medium is the default.** See [Choosing a size](#choosing-a-size) for when to pick another one.
 - **Larger sizes use more of your usage limit.** Usage is metered by memory, so a Large workspace uses twice as much as a Medium one in the same time.
 - **The size is fixed** when the workspace is created. To use a different size, start a new workspace.
 - **X-Large and 2X-Large** appear only when they are turned on for your organization. To request them, email [support@superset.sh](mailto:support@superset.sh).
 - If your organization loses access to a size, its workspaces start on the default size the next time they wake.
+
+### Choosing a size
+
+Memory usually runs out before CPU does, so pick the size by what the workspace runs, not by the size of the repository.
+
+| Size | Good for |
+| --- | --- |
+| Small | Agents that read and edit code and run fast checks: scripts, CLIs, libraries, docs sites, code review, and issue triage. No dev servers or browsers. |
+| Medium | Most web apps and monorepos: install dependencies, build, run the tests, and run one dev stack. Superset's own monorepo (API, web app, realtime server, and Electron app) runs on Medium in about 6 GB. |
+| Large | Large TypeScript monorepos with a full typecheck, native compiles (Rust, C++, Go, Java, Android), browser end-to-end tests (Playwright, Cypress), or two or more dev stacks or busy agents in one workspace. |
+| X-Large, 2X-Large | Very large native builds or test suites that you split across many processes. |
+
+As a guide: if the work runs well on a laptop with 8 GB of memory, Medium is enough; if it needs 16 GB, use Large.
+
+**Signs a workspace is too small:** a build or test command stops with `Killed` or exit code 137, or builds run much slower than on your laptop. When memory is low, the workspace first gets slower, then stops the largest process. Start a new workspace at the next size up.
+
+**Signs it is too large:** `free -h` shows most of the memory unused for the whole session, and `top` shows the CPUs idle during builds. A smaller size uses less of your usage limit, which adds up for automations that run many times a day.
 
 The new-workspace screen shows each size with its vCPU and memory. From the CLI, pass `--machine-size`:
 
