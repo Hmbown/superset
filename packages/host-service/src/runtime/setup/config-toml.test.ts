@@ -28,11 +28,13 @@ beforeEach(() => {
 	for (const dir of [repoPath, worktreePath, homeDir]) {
 		mkdirSync(dir, { recursive: true });
 	}
+	delete process.env.SUPERSET_HOST_RUN_MODE;
 	delete process.env.IS_SANDBOX;
 });
 
 afterEach(() => {
 	rmSync(root, { recursive: true, force: true });
+	delete process.env.SUPERSET_HOST_RUN_MODE;
 	delete process.env.IS_SANDBOX;
 });
 
@@ -111,7 +113,7 @@ describe("resolveScript with config.toml", () => {
 	});
 
 	it("cloud boot runs the cloud setup then the default terminal, without the personal file", () => {
-		process.env.IS_SANDBOX = "1";
+		process.env.SUPERSET_HOST_RUN_MODE = "sandbox";
 		write(
 			repoPath,
 			"config.toml",
@@ -121,6 +123,18 @@ describe("resolveScript with config.toml", () => {
 		expect(resolveScript("start", { repoPath, projectId })).toEqual({
 			kind: "commands",
 			commands: ["cloud-setup", "bun dev"],
+		});
+	});
+
+	it("a local app launched from a sandbox terminal still resolves as local", () => {
+		process.env.IS_SANDBOX = "1";
+		write(
+			repoPath,
+			"config.toml",
+			'[terminals.dev]\nrun = "local-dev"\ndefault = true\n[terminals.dev.cloud]\nrun = "cloud-dev"\n',
+		);
+		expect(resolveScript("run", { repoPath, projectId })).toMatchObject({
+			commands: ["local-dev"],
 		});
 	});
 
