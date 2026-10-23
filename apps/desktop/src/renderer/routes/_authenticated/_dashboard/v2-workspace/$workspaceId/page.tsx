@@ -427,6 +427,7 @@ function V2WorkspaceContent() {
 		linkedStores: linkedPaneStores,
 		onOpenSubagent: openSubagentPane,
 		onSearch: handleQuickOpen,
+		isRightPaneArea: rightPaneLinkTarget !== null,
 	});
 	const defaultContextMenuActions = useDefaultContextMenuActions({
 		paneRegistry,

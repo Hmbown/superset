@@ -81,6 +81,7 @@ export function DiffPaneFileList({
 			: undefined,
 		onSelectFile: handleSelectFile,
 		onOpenFile,
+		compact: true,
 	});
 
 	const list = (

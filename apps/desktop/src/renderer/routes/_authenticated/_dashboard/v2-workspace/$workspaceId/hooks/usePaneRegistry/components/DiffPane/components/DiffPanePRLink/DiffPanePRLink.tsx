@@ -9,8 +9,8 @@ import { openPullRequestLink } from "renderer/lib/github/openPullRequestLink";
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
 import { PRIcon, type PRState } from "renderer/screens/main/components/PRIcon";
 import type { StoreApi } from "zustand/vanilla";
-import type { PaneViewerData } from "../../../../../../../../types";
-import { openPullRequestPaneInStore } from "../../../../../../../../utils/openPullRequestPaneInStore";
+import type { PaneViewerData } from "../../../../../../types";
+import { openPullRequestPaneInStore } from "../../../../../../utils/openPullRequestPaneInStore";
 
 interface DiffPanePRLinkProps {
 	workspaceId: string;

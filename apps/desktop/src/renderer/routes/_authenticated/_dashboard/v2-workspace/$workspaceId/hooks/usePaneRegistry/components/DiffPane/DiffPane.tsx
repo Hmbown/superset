@@ -20,6 +20,7 @@ import { alert } from "@superset/ui/atoms/Alert";
 import { toast } from "@superset/ui/sonner";
 import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useWorkspaceEvent } from "renderer/hooks/host-service/useWorkspaceEvent";
 import {
 	createPaneScrollStateKey,
@@ -33,6 +34,7 @@ import { MarkdownSearch } from "renderer/screens/main/components/WorkspaceView/C
 import { toAbsoluteWorkspacePath } from "shared/absolute-paths";
 import { useRightPaneLinkTarget } from "../../../../providers/RightPaneLinkTargetProvider";
 import type { DiffPaneData, PaneViewerData } from "../../../../types";
+import { changesPillStats } from "../../../../utils/changesPillStats";
 import {
 	type ChangesetFile,
 	getChangesetFileKey,
@@ -47,6 +49,8 @@ import { CommentThread } from "./components/CommentThread";
 import { DeferredDiffPlaceholder } from "./components/DeferredDiffPlaceholder";
 import { DiffHeaderMetadata } from "./components/DiffHeaderMetadata";
 import { DiffPaneFileList } from "./components/DiffPaneFileList";
+import { DiffPaneHeaderActions } from "./components/DiffPaneHeaderActions";
+import { DiffPaneScope } from "./components/DiffPaneScope";
 import { DiffSectionLabel } from "./components/DiffSectionLabel";
 import { useDiffActiveSection } from "./hooks/useDiffActiveSection";
 import {
@@ -58,6 +62,7 @@ import { useDiffCodeViewScroll } from "./hooks/useDiffCodeViewScroll";
 import { useDiffCardCodeViewTheme } from "./hooks/useDiffCodeViewTheme";
 import { useDiffCommentComposer } from "./hooks/useDiffCommentComposer";
 import { useDiffCommentNavigation } from "./hooks/useDiffCommentNavigation";
+import { useDiffPaneHeaderSlot } from "./hooks/useDiffPaneHeaderSlot";
 import { useDiffPaneSearch } from "./hooks/useDiffPaneSearch";
 import { useElementWidth } from "./hooks/useElementWidth";
 import { createGetDiffInput } from "./utils/createGetDiffInput";
@@ -67,6 +72,10 @@ import {
 } from "./utils/diffLoadingGuards";
 import { fileListLayout, toggledFileListOpen } from "./utils/fileListLayout";
 import { getCharacterOffsetAtClientX } from "./utils/getCharacterOffsetAtClientX";
+import {
+	diffPaneActionsSlotId,
+	diffPaneTitleSlotId,
+} from "./utils/headerSlots";
 
 interface CreateNewAgentSessionInput {
 	configId: string;
@@ -444,6 +453,39 @@ export function DiffPane({
 	// The section label lives in the toolbar, outside the scroller: Pierre pins
 	// one header at a time within its own box, so a body-less in-flow section
 	// item couldn't stay pinned across its group.
+	const commentNavProps = useMemo(
+		() => ({
+			focusedIndex: commentNav.focusedThreadIndex,
+			total: commentNav.orderedThreads.length,
+			onPrev: commentNav.goToPrevComment,
+			onNext: commentNav.goToNextComment,
+		}),
+		[
+			commentNav.focusedThreadIndex,
+			commentNav.orderedThreads.length,
+			commentNav.goToPrevComment,
+			commentNav.goToNextComment,
+		],
+	);
+	// Same unique-path totals as the workspace's Changes control: a path in
+	// several sections counts once, its working-tree entry winning.
+	const totals = useMemo(
+		() =>
+			changesPillStats({
+				againstBase: files.filter(
+					(file) =>
+						file.source.kind === "against-base" ||
+						file.source.kind === "commit",
+				),
+				staged: files.filter((file) => file.source.kind === "staged"),
+				unstaged: files.filter((file) => file.source.kind === "unstaged"),
+			}),
+		[files],
+	);
+	const titleSlot = useDiffPaneHeaderSlot(diffPaneTitleSlotId(context.pane.id));
+	const actionsSlot = useDiffPaneHeaderSlot(
+		diffPaneActionsSlotId(context.pane.id),
+	);
 	const { currentSection, onScroll } = useDiffActiveSection({
 		codeViewRef,
 		items,
@@ -794,40 +836,54 @@ export function DiffPane({
 			ref={setRowElement}
 			className="relative flex h-full min-h-0 w-full min-w-0"
 		>
+			{showFileList &&
+				titleSlot &&
+				createPortal(
+					<DiffPaneScope
+						workspaceId={workspaceId}
+						additions={totals.additions}
+						deletions={totals.deletions}
+					/>,
+					titleSlot,
+				)}
+			{showFileList &&
+				actionsSlot &&
+				createPortal(
+					<DiffPaneHeaderActions
+						workspaceId={workspaceId}
+						store={context.store}
+						commentNav={commentNavProps}
+						files={{
+							fileCount: totals.fileCount,
+							isCollapsed: listLayout === "hidden",
+							onToggle: () =>
+								setFileListOpen(
+									toggledFileListOpen({
+										containerWidth,
+										open: fileListOpen,
+									}),
+								),
+						}}
+						areAllFilesCollapsed={areAllFilesCollapsed}
+						onToggleCollapseAll={handleToggleCollapseAll}
+					/>,
+					actionsSlot,
+				)}
 			<div className="flex h-full min-h-0 min-w-0 flex-1 flex-col">
-				<DiffViewToolbar
-					treePlacement="end"
-					tree={
-						showFileList
-							? {
-									fileCount: files.length,
-									isCollapsed: listLayout === "hidden",
-									onToggle: () =>
-										setFileListOpen(
-											toggledFileListOpen({
-												containerWidth,
-												open: fileListOpen,
-											}),
-										),
-								}
-							: null
-					}
-					areAllFilesCollapsed={areAllFilesCollapsed}
-					onToggleCollapseAll={handleToggleCollapseAll}
-					commentNav={{
-						focusedIndex: commentNav.focusedThreadIndex,
-						total: commentNav.orderedThreads.length,
-						onPrev: commentNav.goToPrevComment,
-						onNext: commentNav.goToNextComment,
-					}}
-				>
-					{currentSection ? (
-						<DiffSectionLabel
-							kind={currentSection.kind}
-							count={currentSection.count}
-						/>
-					) : null}
-				</DiffViewToolbar>
+				{!showFileList && (
+					<DiffViewToolbar
+						areAllFilesCollapsed={areAllFilesCollapsed}
+						onToggleCollapseAll={handleToggleCollapseAll}
+						commentNav={commentNavProps}
+					>
+						{currentSection ? (
+							<DiffSectionLabel
+								kind={currentSection.kind}
+								count={currentSection.count}
+							/>
+						) : null}
+					</DiffViewToolbar>
+				)}
 				{files.length === 0 ? (
 					// The toolbar stays up while the current filter yields nothing;
 					// the file list holds the filter/branch controls.
