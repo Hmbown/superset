@@ -192,7 +192,7 @@ export function EnvironmentsSettings({
 												repositoryIds: (environment.repositories ?? []).map(
 													(repo) => repo.id,
 												),
-												hooksRepositoryId: environment.hooksRepositoryId,
+												primaryRepositoryId: environment.primaryRepositoryId,
 												repositoriesFrozen: environment.sourceKind !== "image",
 												region: environment.region,
 											},

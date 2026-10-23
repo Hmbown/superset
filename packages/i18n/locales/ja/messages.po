@@ -7886,9 +7886,6 @@ msgstr "完了"
 msgid "finished · worked for 7s"
 msgstr "完了 · 7秒稼働"
 
-msgid "First repository by name"
-msgstr "名前順で最初のリポジトリ"
-
 msgid "Fix all failing checks"
 msgstr "失敗したチェックをすべて修正"
 
@@ -17504,9 +17501,6 @@ msgstr "クラウドワークスペースは起動しているはずですが、
 msgid "The code expired. Start again."
 msgstr "コードの有効期限が切れました。やり直してください。"
 
-msgid "The config repository must be one of the environment's repositories"
-msgstr "設定リポジトリは環境のリポジトリのいずれかである必要があります"
-
 msgid "The connection timed out"
 msgstr "接続がタイムアウトしました"
 
@@ -17688,6 +17682,9 @@ msgstr "お探しのページは存在しません。"
 
 msgid "The pane uses your real logins. Agents ask you before they take a consequential action."
 msgstr "ペインでは、あなたの実際のログイン状態が使われます。重要な操作の前には、エージェントが確認を求めます。"
+
+msgid "The primary repository must be one of the environment's repositories"
+msgstr "プライマリリポジトリは環境のリポジトリのいずれかである必要があります"
 
 msgid "The project's checkout as it is: files and branch are shared"
 msgstr "プロジェクトのチェックアウトをそのまま使用: ファイルとブランチは共有されます"

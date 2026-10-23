@@ -288,11 +288,11 @@ async function pullRequestBranch(
 	if (!pullRequest?.headRef || event.repositoryId === null) return undefined;
 	const environment = await db.query.environments.findFirst({
 		where: eq(environments.id, environmentId),
-		columns: { hooksRepositoryId: true },
+		columns: { primaryRepositoryId: true },
 	});
 	const primary = primaryRepository(
 		await environmentRepositoryRows(environmentId),
-		environment?.hooksRepositoryId,
+		environment?.primaryRepositoryId,
 	);
 	return primary?.repoId === event.repositoryId
 		? pullRequest.headRef

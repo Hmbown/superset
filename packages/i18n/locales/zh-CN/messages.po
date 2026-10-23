@@ -7886,9 +7886,6 @@ msgstr "已完成"
 msgid "finished · worked for 7s"
 msgstr "已完成 · 用时7秒"
 
-msgid "First repository by name"
-msgstr "按名称排序的第一个仓库"
-
 msgid "Fix all failing checks"
 msgstr "修复所有失败的检查"
 
@@ -17504,9 +17501,6 @@ msgstr "云端工作区本应已启动，但没有及时响应。下次运行时
 msgid "The code expired. Start again."
 msgstr "代码已过期。请重新开始。"
 
-msgid "The config repository must be one of the environment's repositories"
-msgstr "配置仓库必须是该环境的仓库之一"
-
 msgid "The connection timed out"
 msgstr "连接已超时"
 
@@ -17688,6 +17682,9 @@ msgstr "你要找的页面不存在。"
 
 msgid "The pane uses your real logins. Agents ask you before they take a consequential action."
 msgstr "窗格使用你真实的登录状态。智能体在执行重要操作前会先征求你的同意。"
+
+msgid "The primary repository must be one of the environment's repositories"
+msgstr "主仓库必须是该环境的仓库之一"
 
 msgid "The project's checkout as it is: files and branch are shared"
 msgstr "按原样使用项目的检出: 文件和分支是共享的"

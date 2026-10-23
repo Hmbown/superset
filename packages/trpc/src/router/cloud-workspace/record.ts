@@ -264,7 +264,7 @@ export const cloudWorkspaceRecordRouter = {
 						: undefined,
 					db.query.environments.findFirst({
 						where: eq(environments.id, row.environmentId),
-						columns: { id: true, name: true, hooksRepositoryId: true },
+						columns: { id: true, name: true, primaryRepositoryId: true },
 					}),
 					db
 						.select({
@@ -292,7 +292,7 @@ export const cloudWorkspaceRecordRouter = {
 				]);
 			const primary = primaryRepository(
 				repositories,
-				environment?.hooksRepositoryId,
+				environment?.primaryRepositoryId,
 			);
 			const orderedRepositories = primary
 				? [primary, ...repositories.filter((repo) => repo.id !== primary.id)]

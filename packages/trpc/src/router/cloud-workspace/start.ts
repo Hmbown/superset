@@ -128,7 +128,7 @@ export async function startCloudWorkspace(args: {
 	}
 	const primary = primaryRepository(
 		repositories,
-		environment.hooksRepositoryId,
+		environment.primaryRepositoryId,
 	) as (typeof repositories)[number];
 	const branch = args.branch ?? primary.defaultBranch;
 	// A connected person's workspace acts as them on GitHub, so a

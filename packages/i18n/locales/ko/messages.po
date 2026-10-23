@@ -7886,9 +7886,6 @@ msgstr "완료"
 msgid "finished · worked for 7s"
 msgstr "완료 · 7초 작업"
 
-msgid "First repository by name"
-msgstr "이름순 첫 번째 저장소"
-
 msgid "Fix all failing checks"
 msgstr "실패한 검사 모두 고치기"
 
@@ -17504,9 +17501,6 @@ msgstr "클라우드 워크스페이스가 시작되었어야 하지만 제시�
 msgid "The code expired. Start again."
 msgstr "코드가 만료되었습니다. 다시 시작하세요."
 
-msgid "The config repository must be one of the environment's repositories"
-msgstr "구성 리포지토리는 환경의 리포지토리 중 하나여야 합니다"
-
 msgid "The connection timed out"
 msgstr "연결 시간이 초과되었습니다"
 
@@ -17688,6 +17682,9 @@ msgstr "찾으시는 페이지가 존재하지 않습니다."
 
 msgid "The pane uses your real logins. Agents ask you before they take a consequential action."
 msgstr "패널은 실제 로그인 상태를 사용합니다. 에이전트는 중요한 작업을 하기 전에 먼저 확인을 요청합니다."
+
+msgid "The primary repository must be one of the environment's repositories"
+msgstr "기본 저장소는 환경의 저장소 중 하나여야 합니다"
 
 msgid "The project's checkout as it is: files and branch are shared"
 msgstr "프로젝트의 체크아웃을 그대로 사용: 파일과 브랜치가 공유됩니다"

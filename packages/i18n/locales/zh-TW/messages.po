@@ -7886,9 +7886,6 @@ msgstr "已完成"
 msgid "finished · worked for 7s"
 msgstr "已完成 · 用時7秒"
 
-msgid "First repository by name"
-msgstr "依名稱排序的第一個儲存庫"
-
 msgid "Fix all failing checks"
 msgstr "修復所有失敗的檢查"
 
@@ -17504,9 +17501,6 @@ msgstr "雲端工作區應該已經啟動，但沒有及時回應。下次執行
 msgid "The code expired. Start again."
 msgstr "代碼已過期。請重新開始。"
 
-msgid "The config repository must be one of the environment's repositories"
-msgstr "設定儲存庫必須是該環境的儲存庫之一"
-
 msgid "The connection timed out"
 msgstr "連線已逾時"
 
@@ -17688,6 +17682,9 @@ msgstr "你要找的頁面不存在。"
 
 msgid "The pane uses your real logins. Agents ask you before they take a consequential action."
 msgstr "窗格使用你真實的登入狀態。代理程式在執行重要操作前會先徵求你的同意。"
+
+msgid "The primary repository must be one of the environment's repositories"
+msgstr "主要儲存庫必須是此環境的儲存庫之一"
 
 msgid "The project's checkout as it is: files and branch are shared"
 msgstr "按原樣使用專案的簽出: 檔案和分支是共用的"

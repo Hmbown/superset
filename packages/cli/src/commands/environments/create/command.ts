@@ -14,11 +14,9 @@ export default command({
 		repo: string()
 			.variadic()
 			.required()
-			.desc(
-				"Repository as owner/name. Repeatable; the first is the one a workspace opens on",
-			),
-		hooksRepo: string().desc(
-			"Repository whose .superset/config.json runs setup (default: the first --repo)",
+			.desc("Repository as owner/name. Repeatable"),
+		primaryRepo: string().desc(
+			"Repository a workspace opens on and whose .superset config runs (default: the first --repo)",
 		),
 		scope: string()
 			.enum("organization", "personal")
@@ -54,15 +52,19 @@ export default command({
 			}
 			return match.id;
 		};
-		const repositoryIds = (options.repo as string[]).map(repositoryId);
+		const [firstRepositoryId, ...otherRepositoryIds] = (
+			options.repo as string[]
+		).map(repositoryId);
+		if (!firstRepositoryId) throw new CLIError("Pass at least one --repo");
+		const repositoryIds = [firstRepositoryId, ...otherRepositoryIds];
 		const created = await ctx.api.environment.create
 			.mutate({
 				organizationId,
 				name: options.name,
 				repositoryIds,
-				hooksRepositoryId: options.hooksRepo
-					? repositoryId(options.hooksRepo)
-					: repositoryIds[0],
+				primaryRepositoryId: options.primaryRepo
+					? repositoryId(options.primaryRepo)
+					: firstRepositoryId,
 				scope: options.scope,
 				region,
 			})

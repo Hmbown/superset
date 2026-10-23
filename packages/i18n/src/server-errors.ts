@@ -306,11 +306,11 @@ export const serverErrorMessages: Record<
 					"A repository is not connected to this organization, or the repositories come from different GitHub installations",
 			}),
 		),
-	"serverError.environment.hooksRepositoryNotIncluded": () =>
+	"serverError.environment.primaryRepositoryNotIncluded": () =>
 		i18n._(
 			msg({
 				message:
-					"The config repository must be one of the environment's repositories",
+					"The primary repository must be one of the environment's repositories",
 			}),
 		),
 	"serverError.environment.limitReached": (params) =>

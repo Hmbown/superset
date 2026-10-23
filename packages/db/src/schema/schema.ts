@@ -805,10 +805,10 @@ export const environments = pgTable(
 		/** The sandbox bundle every workspace of this environment boots on: the newest `sandbox_bundles` row at create, moved by every release. */
 		bundleSha: text("bundle_sha").notNull(),
 		/**
-		 * Which of the environment's repositories carries the `.superset/config.json`
-		 * the box acts on; null means none does and only `hooks` applies.
+		 * The repository a workspace opens on. Its `.superset` config is the one
+		 * the box runs. The column keeps its old name until it is renamed.
 		 */
-		hooksRepositoryId: uuid("hooks_repository_id").references(
+		primaryRepositoryId: uuid("hooks_repository_id").references(
 			() => githubRepositories.id,
 			{ onDelete: "set null" },
 		),
@@ -844,8 +844,8 @@ export const sandboxBundles = pgTable("sandbox_bundles", {
 });
 
 /**
- * The repositories an environment checks out, in order; the first is the
- * primary.
+ * The repositories an environment checks out. Which one is primary is
+ * `environments.primary_repository_id`.
  */
 export const environmentRepositories = pgTable(
 	"environment_repositories",
@@ -1024,8 +1024,8 @@ export type SelectCloudWorkspaceShare =
 
 /**
  * What a cloud workspace checked out, fixed at create: each repository on a
- * branch at a path under the workspace root. The first is the primary, the
- * one the workspace opens on.
+ * branch at a path under the workspace root. The primary is the environment's
+ * `primary_repository_id`.
  */
 export const cloudWorkspaceRepositories = pgTable(
 	"cloud_workspace_repositories",

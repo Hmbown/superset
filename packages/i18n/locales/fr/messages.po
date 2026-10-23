@@ -7886,9 +7886,6 @@ msgstr "Terminé"
 msgid "finished · worked for 7s"
 msgstr "terminé · a travaillé 7 s"
 
-msgid "First repository by name"
-msgstr "Premier dépôt par nom"
-
 msgid "Fix all failing checks"
 msgstr "Corriger toutes les vérifications en échec"
 
@@ -17504,9 +17501,6 @@ msgstr "L'espace de travail cloud aurait dû démarrer, mais n'a pas répondu à
 msgid "The code expired. Start again."
 msgstr "Le code a expiré. Recommencez."
 
-msgid "The config repository must be one of the environment's repositories"
-msgstr "Le dépôt de configuration doit être l'un des dépôts de l'environnement"
-
 msgid "The connection timed out"
 msgstr "Le délai de connexion a été dépassé"
 
@@ -17688,6 +17682,9 @@ msgstr "La page que vous recherchez n'existe pas."
 
 msgid "The pane uses your real logins. Agents ask you before they take a consequential action."
 msgstr "Le volet utilise vos vraies connexions. Les agents vous demandent avant toute action importante."
+
+msgid "The primary repository must be one of the environment's repositories"
+msgstr "Le dépôt principal doit faire partie des dépôts de l'environnement"
 
 msgid "The project's checkout as it is: files and branch are shared"
 msgstr "Le checkout du projet tel quel: les fichiers et la branche sont partagés"
