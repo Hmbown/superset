@@ -32,13 +32,34 @@ describe("moveViewerPanesToRight", () => {
 		).toEqual([["file"], ["web"]]);
 	});
 
-	it("drops a center Changes pane when the right area already has one", () => {
+	it("folds a center Changes pane into the right area's, keeping the file it showed", () => {
 		const center = createWorkspaceStore<PaneViewerData>();
 		const right = createWorkspaceStore<PaneViewerData>();
-		right.getState().addTab({ id: "r1", panes: [pane("rightDiff", "diff")] });
+		right.getState().addTab({
+			id: "r1",
+			panes: [
+				{
+					id: "rightDiff",
+					kind: "diff",
+					data: { path: "", collapsedFiles: [] } as PaneViewerData,
+				},
+			],
+		});
 		center.getState().addTab({
 			id: "c1",
-			panes: [pane("term", "terminal"), pane("centerDiff", "diff")],
+			panes: [
+				pane("term", "terminal"),
+				{
+					id: "centerDiff",
+					kind: "diff",
+					data: {
+						path: "src/a.ts",
+						changeKey: "unstaged:src/a.ts",
+						collapsedFiles: [],
+						focusTick: 1,
+					} as PaneViewerData,
+				},
+			],
 		});
 
 		moveViewerPanesToRight({ center, right });
@@ -53,5 +74,11 @@ describe("moveViewerPanesToRight", () => {
 				.getState()
 				.tabs.map((tab) => Object.values(tab.panes).map((p) => p.id)),
 		).toEqual([["rightDiff"]]);
+		const rightDiff = right.getState().tabs[0]?.panes.rightDiff;
+		expect(rightDiff?.data).toMatchObject({
+			path: "src/a.ts",
+			changeKey: "unstaged:src/a.ts",
+		});
+		expect(right.getState().getActivePane()?.pane.id).toBe("rightDiff");
 	});
 });

@@ -59,11 +59,13 @@ import { useDiffCardCodeViewTheme } from "./hooks/useDiffCodeViewTheme";
 import { useDiffCommentComposer } from "./hooks/useDiffCommentComposer";
 import { useDiffCommentNavigation } from "./hooks/useDiffCommentNavigation";
 import { useDiffPaneSearch } from "./hooks/useDiffPaneSearch";
+import { useElementWidth } from "./hooks/useElementWidth";
 import { createGetDiffInput } from "./utils/createGetDiffInput";
 import {
 	isDiffContentStale,
 	isDiffContentTooLarge,
 } from "./utils/diffLoadingGuards";
+import { fileListLayout, toggledFileListOpen } from "./utils/fileListLayout";
 import { getCharacterOffsetAtClientX } from "./utils/getCharacterOffsetAtClientX";
 
 interface CreateNewAgentSessionInput {
@@ -105,6 +107,12 @@ export function DiffPane({
 
 	const showFileList = useRightPaneLinkTarget() !== null;
 	const [rowElement, setRowElement] = useState<HTMLDivElement | null>(null);
+	const containerWidth = useElementWidth(rowElement);
+	const [fileListOpen, setFileListOpen] = useState<boolean | null>(null);
+	const listLayout = showFileList
+		? fileListLayout({ containerWidth, open: fileListOpen })
+		: "hidden";
+	const closeOverlayFileList = useCallback(() => setFileListOpen(null), []);
 
 	const ref = useSidebarDiffRef(workspaceId);
 	const scrollStateKey = useMemo(
@@ -782,17 +790,37 @@ export function DiffPane({
 	);
 
 	return (
-		<div ref={setRowElement} className="flex h-full min-h-0 w-full min-w-0">
-			{showFileList && (
+		<div
+			ref={setRowElement}
+			className="relative flex h-full min-h-0 w-full min-w-0"
+		>
+			{listLayout !== "hidden" && containerWidth !== null && (
 				<DiffPaneFileList
 					context={context}
-					container={rowElement}
+					layout={listLayout}
+					containerWidth={containerWidth}
+					onClose={closeOverlayFileList}
 					workspaceId={workspaceId}
 					onOpenFile={onOpenFile}
 				/>
 			)}
 			<div className="flex h-full min-h-0 min-w-0 flex-1 flex-col">
 				<DiffViewToolbar
+					tree={
+						showFileList
+							? {
+									fileCount: files.length,
+									isCollapsed: listLayout === "hidden",
+									onToggle: () =>
+										setFileListOpen(
+											toggledFileListOpen({
+												containerWidth,
+												open: fileListOpen,
+											}),
+										),
+								}
+							: null
+					}
 					areAllFilesCollapsed={areAllFilesCollapsed}
 					onToggleCollapseAll={handleToggleCollapseAll}
 					commentNav={{
@@ -811,7 +839,7 @@ export function DiffPane({
 				</DiffViewToolbar>
 				{files.length === 0 ? (
 					// The toolbar stays up while the current filter yields nothing;
-					// the sidebar's Changes tab holds the filter/branch controls.
+					// the file list holds the filter/branch controls.
 					<div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">
 						{isLoading
 							? t({ message: "Loading…" })

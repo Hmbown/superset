@@ -30,7 +30,8 @@ export interface DiffViewToolbarTreeToggle {
 
 interface DiffViewToolbarProps {
 	/** File-tree pill; omitted where the file list lives outside the diff (the
-	 * workspace Changes pane defers to the sidebar's Changes tab). */
+	 * workspace Changes pane, with the right pane area off, defers to the
+	 * sidebar's Changes tab). */
 	tree?: DiffViewToolbarTreeToggle | null;
 	areAllFilesCollapsed: boolean;
 	onToggleCollapseAll: () => void;

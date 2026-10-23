@@ -9,7 +9,6 @@ describe("getRightPaneOptions", () => {
 		expect(kinds(true)).toEqual([
 			"files",
 			"diff",
-			"changes-list",
 			"review",
 			"pages-list",
 			"browser",
