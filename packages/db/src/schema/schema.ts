@@ -806,9 +806,9 @@ export const environments = pgTable(
 		bundleSha: text("bundle_sha").notNull(),
 		/**
 		 * The repository a workspace opens on. Its `.superset` config is the one
-		 * the box runs. The column keeps its old name until it is renamed.
+		 * the box runs. Null only after the repository is removed from GitHub.
 		 */
-		primaryRepositoryId: uuid("hooks_repository_id").references(
+		primaryRepositoryId: uuid("primary_repository_id").references(
 			() => githubRepositories.id,
 			{ onDelete: "set null" },
 		),
