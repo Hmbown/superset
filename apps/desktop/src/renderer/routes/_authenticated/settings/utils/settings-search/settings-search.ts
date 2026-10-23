@@ -1575,13 +1575,20 @@ export const SETTINGS_ITEMS: SettingsItem[] = [
 	{
 		id: SETTING_ITEM_ID.PROJECT_SCRIPTS,
 		section: "project",
-		title: "Project Lifecycle Scripts",
-		description: "Setup, teardown, and run lifecycle scripts for workspaces",
+		title: "Workspace config",
+		description:
+			"Setup, run and archive commands for this project's workspaces (.superset/config.toml)",
 		keywords: [
 			"project",
 			"scripts",
 			"setup",
 			"teardown",
+			"archive",
+			"install",
+			"terminals",
+			"toml",
+			"config.toml",
+			"lifecycle",
 			"run",
 			"bash",
 			"shell",
