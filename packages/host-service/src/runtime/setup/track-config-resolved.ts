@@ -32,7 +32,7 @@ export function trackConfigResolved({
 		if (format === "none") return;
 		if (format === "json") {
 			console.info(
-				`[config] ${repoPath} uses .superset/config.json (${legacySources.join(", ")}). Convert it to config.toml in Settings → Workspace config.`,
+				`[config] ${repoPath} uses .superset/config.json (${legacySources.join(", ")})`,
 			);
 		}
 		if (!api) return;

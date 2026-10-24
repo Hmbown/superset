@@ -130,6 +130,12 @@ export const FEATURE_FLAGS = {
 	MOBILE_LAUNCH: "mobile-launch",
 	/** Gates access to Cloud features (environment variables, sandboxes). */
 	CLOUD_ACCESS: "cloud-access",
+	/**
+	 * Shows the `.superset/config.toml` editor in project settings in place of
+	 * the config.json form. host-service reads a config.toml wherever one
+	 * exists; this gates only where people are led to write one.
+	 */
+	WORKSPACE_CONFIG_TOML: "workspace-config-toml",
 	/** Allowlist for mobile voice mode: shows the entry and authorizes `voice.createSession`. */
 	MOBILE_VOICE_MODE: "mobile-voice-mode",
 	/** When enabled, blocks remote agent execution on the desktop (e.g., for enterprise orgs). */
