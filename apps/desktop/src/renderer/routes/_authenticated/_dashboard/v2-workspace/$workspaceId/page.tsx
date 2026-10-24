@@ -1,15 +1,13 @@
-import { acpHarnessForPreset } from "@superset/chat/core";
 import { Workspace } from "@superset/panes";
 import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { cn } from "@superset/ui/utils";
-import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
+import { workspaceTrpc } from "@superset/workspace-client";
 import { createFileRoute } from "@tanstack/react-router";
 import { useFeatureFlagEnabled } from "posthog-js/react";
 import { useCallback, useMemo, useRef } from "react";
 import { useQuickOpenStore } from "renderer/commandPalette/ui/QuickOpen/quickOpenStore";
 import { useWorkspaceHostTarget } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useAcpChatEnabled } from "renderer/hooks/useAcpChatEnabled";
-import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { useV2UserPreferences } from "renderer/hooks/useV2UserPreferences";
 import { useHotkey } from "renderer/hotkeys";
 import { electronTrpc } from "renderer/lib/electron-trpc";
@@ -281,17 +279,11 @@ function V2WorkspaceContent() {
 		openNewChat,
 		focusAgentTerminal,
 	} = useAgentSessionLauncher({ workspaceId, store });
-	const { hostUrl } = useWorkspaceClient();
-	const { data: agentConfigs } = useV2AgentConfigs(hostUrl);
 	const acpChat = useAcpChatEnabled();
-	const canOpenChat =
-		acpChat === "enabled" &&
-		(agentConfigs?.some((config) => acpHarnessForPreset(config.presetId)) ??
-			false);
 	const addChatTab = useCallback(() => {
-		if (!canOpenChat) return;
 		void openNewChat();
-	}, [openNewChat, canOpenChat]);
+	}, [openNewChat]);
+	const onAddChat = acpChat === "enabled" ? addChatTab : undefined;
 	const {
 		matchedPresets,
 		newTabPresets,
@@ -561,7 +553,7 @@ function V2WorkspaceContent() {
 		isMobilePaneEnabled,
 	});
 	useHotkey("QUICK_OPEN", handleQuickOpen);
-	useHotkey("NEW_CHAT", addChatTab);
+	useHotkey("NEW_CHAT", addChatTab, { enabled: acpChat !== "disabled" });
 	useHotkey("RUN_WORKSPACE_COMMAND", () => {
 		void workspaceRun.toggleWorkspaceRun();
 	});
@@ -705,7 +697,7 @@ function V2WorkspaceContent() {
 										<AddTabMenu
 											onAddTerminal={addTerminalTab}
 											runAfterClose={runAfterClose}
-											onAddChat={canOpenChat ? addChatTab : undefined}
+											onAddChat={onAddChat}
 											onAddBrowser={
 												isRightPaneAreaEnabled ? undefined : addBrowserTab
 											}
@@ -761,7 +753,7 @@ function V2WorkspaceContent() {
 										<WorkspaceEmptyState
 											onOpenBrowser={addBrowserTab}
 											onOpenChanges={openChanges}
-											onOpenChat={canOpenChat ? addChatTab : undefined}
+											onOpenChat={onAddChat}
 											onOpenQuickOpen={handleQuickOpen}
 											onOpenTerminal={addTerminalTab}
 										/>
