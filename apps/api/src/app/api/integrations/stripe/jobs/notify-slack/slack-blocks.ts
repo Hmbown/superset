@@ -9,6 +9,14 @@ export function formatPrice(cents: number): string {
 	}).format(cents / 100);
 }
 
+export function planFromPriceId(
+	priceId: string | undefined,
+	proPriceIds: string[],
+): string | null {
+	if (!priceId) return null;
+	return proPriceIds.includes(priceId) ? "pro" : null;
+}
+
 export function planLabel(plan: string | null | undefined): string {
 	if (!plan) return "Unknown";
 	return `${plan.charAt(0).toUpperCase()}${plan.slice(1)}`;

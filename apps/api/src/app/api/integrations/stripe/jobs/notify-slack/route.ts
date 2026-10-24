@@ -19,6 +19,7 @@ import {
 	formatSubscriptionCancelled,
 	formatSubscriptionStarted,
 	getDiscountInfo,
+	planFromPriceId,
 	planLabel,
 } from "./slack-blocks";
 
@@ -86,15 +87,6 @@ const payloadSchema = z.discriminatedUnion("eventType", [
 
 // --- Enrichment ---
 
-function planFromPriceId(priceId: string | undefined): string | null {
-	if (!priceId) return null;
-	const proPriceIds = [
-		env.STRIPE_PRO_MONTHLY_PRICE_ID,
-		env.STRIPE_PRO_YEARLY_PRICE_ID,
-	];
-	return proPriceIds.includes(priceId) ? "pro" : null;
-}
-
 async function enrichFromSubscription(
 	stripeSubscriptionId: string,
 ): Promise<EnrichedSubscription | null> {
@@ -126,7 +118,13 @@ async function enrichFromSubscription(
 
 	return {
 		organizationName: org.name,
-		planName: planLabel(dbSub?.plan ?? planFromPriceId(price?.id)),
+		planName: planLabel(
+			dbSub?.plan ??
+				planFromPriceId(price?.id, [
+					env.STRIPE_PRO_MONTHLY_PRICE_ID,
+					env.STRIPE_PRO_YEARLY_PRICE_ID,
+				]),
+		),
 		stripeCustomerId: customerId,
 		stripeSubscriptionId,
 		seatCount: seat?.quantity ?? 1,
