@@ -1,19 +1,22 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { SidebarSlideMode } from "../../../../components/SidebarSlide";
 
 interface FullScreenState {
 	workspaceId: string;
 	closeOnExit: boolean;
 }
 
-export function useRightPaneAreaFullScreen({
+export function useRightPaneMode({
 	workspaceId,
 	isOpen,
 	setOpen,
+	canExpand,
 }: {
 	workspaceId: string;
 	isOpen: boolean;
 	setOpen: (open: boolean) => void;
-}): { isFullScreen: boolean; toggle: () => void } {
+	canExpand: boolean;
+}): { mode: SidebarSlideMode; toggleFullScreen: () => void } {
 	const [fullScreen, setFullScreen] = useState<FullScreenState | null>(null);
 	const isFullScreen = fullScreen?.workspaceId === workspaceId;
 
@@ -30,7 +33,7 @@ export function useRightPaneAreaFullScreen({
 		}
 	}, [isOpen, workspaceId]);
 
-	const toggle = useCallback(() => {
+	const toggleFullScreen = useCallback(() => {
 		if (isFullScreen && isOpen) {
 			if (fullScreen?.closeOnExit) setOpen(false);
 			else setFullScreen(null);
@@ -40,5 +43,11 @@ export function useRightPaneAreaFullScreen({
 		if (!isOpen) setOpen(true);
 	}, [isFullScreen, isOpen, fullScreen, workspaceId, setOpen]);
 
-	return { isFullScreen, toggle };
+	const mode: SidebarSlideMode = !isOpen
+		? "closed"
+		: canExpand && isFullScreen
+			? "expanded"
+			: "open";
+
+	return { mode, toggleFullScreen };
 }

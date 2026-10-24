@@ -1,1 +1,1 @@
-export { WorkspaceSplitLayout } from "./WorkspaceSplitLayout";
+export { type PaneArea, WorkspaceSplitLayout } from "./WorkspaceSplitLayout";

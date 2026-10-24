@@ -1,10 +1,28 @@
-import { type ReactNode, useLayoutEffect, useRef, useState } from "react";
+import {
+	type MutableRefObject,
+	type ReactNode,
+	type SyntheticEvent,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react";
 import { ResizablePanel } from "renderer/screens/main/components/ResizablePanel";
 import { SidebarSlide, type SidebarSlideMode } from "../SidebarSlide";
 import { clampSideWidth } from "./utils/clampSideWidth";
 
+export type PaneArea = "center" | "right";
+
+function paneAreaOf(element: Element | null): PaneArea | null {
+	const area = element
+		?.closest("[data-pane-area]")
+		?.getAttribute("data-pane-area");
+	return area === "center" || area === "right" ? area : null;
+}
+
 interface WorkspaceSplitLayoutProps {
 	mode: SidebarSlideMode;
+	activeAreaRef: MutableRefObject<PaneArea>;
 	width: number | undefined;
 	minWidth: number;
 	maxWidth: number;
@@ -20,6 +38,7 @@ interface WorkspaceSplitLayoutProps {
 
 export function WorkspaceSplitLayout({
 	mode,
+	activeAreaRef,
 	width,
 	minWidth,
 	maxWidth,
@@ -44,6 +63,21 @@ export function WorkspaceSplitLayout({
 		observer.observe(element);
 		return () => observer.disconnect();
 	}, []);
+	useEffect(() => {
+		const onWindowBlur = () => {
+			const area = paneAreaOf(document.activeElement);
+			if (area) activeAreaRef.current = area;
+		};
+		window.addEventListener("blur", onWindowBlur);
+		return () => window.removeEventListener("blur", onWindowBlur);
+	}, [activeAreaRef]);
+	useEffect(() => {
+		if (mode === "expanded") activeAreaRef.current = "right";
+	}, [mode, activeAreaRef]);
+	const trackActiveArea = (event: SyntheticEvent) => {
+		const area = paneAreaOf(event.target as Element);
+		if (area) activeAreaRef.current = area;
+	};
 	const clamped = clampSideWidth({
 		width: width ?? defaultWidth(containerWidth),
 		minWidth,
@@ -55,6 +89,8 @@ export function WorkspaceSplitLayout({
 		<div
 			ref={containerRef}
 			className="relative flex min-h-0 min-w-0 flex-1 overflow-hidden"
+			onPointerDownCapture={trackActiveArea}
+			onFocusCapture={trackActiveArea}
 		>
 			<div
 				inert={mode === "expanded"}
