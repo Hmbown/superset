@@ -1,14 +1,9 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { isCloudAgentId } from "@superset/shared/cloud-agent-launch";
-import { FEATURE_FLAGS } from "@superset/shared/constants";
-import {
-	HOST_AGENT_PRESETS,
-	isAgentPresetEnabled,
-} from "@superset/shared/host-agent-presets";
+import { HOST_AGENT_PRESETS } from "@superset/shared/host-agent-presets";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { SquareTerminal } from "lucide-react-native";
-import { useFeatureFlag } from "posthog-react-native";
 import { Image, Pressable, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button } from "@/components/ui/button";
@@ -21,6 +16,7 @@ import { hostServiceUrl } from "@/lib/host-service/client";
 import { posthog } from "@/lib/posthog";
 import { CLOUD_TARGET_ID } from "@/screens/(authenticated)/(home)/home/components/NewChatWidget/hooks/useNewChatTargets";
 import { useNewSessionPreferencesStore } from "@/screens/(authenticated)/(home)/home/components/NewChatWidget/stores/newSessionPreferencesStore";
+import { useIsCloudAgentEnabled } from "@/screens/(authenticated)/(home)/hooks/useIsCloudAgentEnabled";
 import { useHostAgentConfigs } from "@/screens/(authenticated)/hooks/useHostAgentConfigs";
 
 const CLOUD_AGENT_CONFIGS = HOST_AGENT_PRESETS.filter((preset) =>
@@ -64,10 +60,10 @@ export function AgentPickerScreen() {
 	const agentId = useNewSessionPreferencesStore((state) => state.agentId);
 	const setAgentId = useNewSessionPreferencesStore((state) => state.setAgentId);
 	const { machineId } = useLocalSearchParams<{ machineId?: string }>();
-	const pdevAgent = Boolean(useFeatureFlag(FEATURE_FLAGS.PDEV_AGENT));
+	const isCloudAgentEnabled = useIsCloudAgentEnabled();
 	// Under Cloud a laptop-only preset resolves to the one that launches.
 	const selectedAgentId =
-		machineId === CLOUD_TARGET_ID && (!agentId || !isCloudAgentId(agentId))
+		machineId === CLOUD_TARGET_ID && (!agentId || !isCloudAgentEnabled(agentId))
 			? "claude"
 			: agentId;
 
@@ -90,10 +86,7 @@ export function AgentPickerScreen() {
 	const configs =
 		machineId === CLOUD_TARGET_ID
 			? CLOUD_AGENT_CONFIGS.filter((config) =>
-					isAgentPresetEnabled(
-						config.presetId,
-						pdevAgent ? [FEATURE_FLAGS.PDEV_AGENT] : [],
-					),
+					isCloudAgentEnabled(config.presetId),
 				)
 			: (configsQuery.data ?? []);
 
