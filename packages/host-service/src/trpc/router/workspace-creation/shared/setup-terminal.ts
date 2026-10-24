@@ -1,8 +1,9 @@
 import { eq } from "drizzle-orm";
 import { projects, workspaces } from "../../../../db/schema";
 import {
-	resolveScript,
-	shellSingleQuote,
+	chainPhases,
+	invalidConfigCommand,
+	loadProjectConfig,
 } from "../../../../runtime/setup/config";
 import { trackConfigResolved } from "../../../../runtime/setup/track-config-resolved";
 import { createTerminalSessionInternal } from "../../../../terminal/terminal";
@@ -30,10 +31,8 @@ interface StartSetupTerminalResult {
 /**
  * Resolve and start the workspace-creation setup terminal, if any.
  *
- * Source order is the shared lifecycle-script posture (see `resolveScript`):
- * configured `setup` commands (joined with ` && ` so failures short-circuit;
- * worktree config overrides the main repo's), then `bash .superset/setup.sh`
- * (worktree first, then main repo). Scripts that need the canonical
+ * Runs `[install]` then `[setup]` from {@link loadProjectConfig}, joined with
+ * ` && ` so failures short-circuit. Scripts that need the canonical
  * `.superset/` dir read `$SUPERSET_ROOT_PATH`, injected by the v2 terminal
  * env builder. Configured `cwd` is honored via the terminal session.
  *
@@ -117,12 +116,18 @@ export function resolveInitialCommand(args: {
 	/** Override $HOME for tests. */
 	homeDir?: string;
 }): { initialCommand: string; cwd?: string } | null {
-	const resolved = resolveScript("setup", args);
-	if (!resolved) return null;
-
-	const initialCommand =
-		resolved.kind === "commands"
-			? resolved.commands.join(" && ")
-			: `bash ${shellSingleQuote(resolved.scriptPath)}`;
-	return { initialCommand, ...(resolved.cwd && { cwd: resolved.cwd }) };
+	const config = loadProjectConfig(args);
+	if (!config) return null;
+	if (config.kind === "invalid") {
+		return { initialCommand: invalidConfigCommand(config) };
+	}
+	const setup = chainPhases(
+		[config.resolved.install, config.resolved.setup],
+		args.worktreePath ?? args.repoPath,
+	);
+	if (!setup) return null;
+	return {
+		initialCommand: setup.command,
+		...(setup.cwd && { cwd: setup.cwd }),
+	};
 }

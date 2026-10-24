@@ -3,8 +3,7 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { TEARDOWN_TIMEOUT_MS } from "@superset/shared/constants";
 import { getManagedEnv } from "../sandbox-managed-env/sandbox-managed-env.ts";
-import { resolveScript, shellSingleQuote } from "../setup/config";
-import { findTomlConfigPath } from "../setup/project-config-toml";
+import { chainPhases, loadProjectConfig } from "../setup/config";
 import type { SandboxIdentity } from "./sandbox-self-seed";
 import { buildStartHookEnv } from "./utils/buildStartHookEnv";
 
@@ -32,21 +31,18 @@ export async function runSandboxArchiveHook(
 	identity: SandboxIdentity,
 	options: { timeoutMs?: number } = {},
 ): Promise<ArchiveHookResult> {
-	// A v1 config.json `teardown` is local only; cloud boxes never ran it.
-	if (!findTomlConfigPath({ repoPath: identity.worktreePath })) {
-		return { status: "skipped" };
-	}
-	const resolved = resolveScript("teardown", {
+	const config = loadProjectConfig({
 		repoPath: identity.worktreePath,
 		projectId: identity.workspaceId,
 	});
-	if (!resolved) return { status: "skipped" };
-	const command =
-		resolved.kind === "commands"
-			? resolved.commands.join(" && ")
-			: `bash ${shellSingleQuote(resolved.scriptPath)}`;
-	const configured = resolved.cwd
-		? resolve(identity.worktreePath, resolved.cwd)
+	const archive =
+		config?.kind === "ok"
+			? chainPhases([config.resolved.archive], identity.worktreePath)
+			: null;
+	if (!archive) return { status: "skipped" };
+	const { command } = archive;
+	const configured = archive.cwd
+		? resolve(identity.worktreePath, archive.cwd)
 		: identity.worktreePath;
 
 	return await new Promise<ArchiveHookResult>((done) => {

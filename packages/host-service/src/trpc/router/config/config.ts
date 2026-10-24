@@ -1,6 +1,9 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { parseProjectConfig } from "@superset/shared/project-config";
+import {
+	getDefaultTerminal,
+	parseProjectConfig,
+} from "@superset/shared/project-config";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
@@ -8,9 +11,8 @@ import { projects } from "../../../db/schema";
 import {
 	getProjectConfigPath,
 	hasProjectConfig,
-	resolveScript,
+	loadProjectConfig,
 	type SetupConfig,
-	shellSingleQuote,
 } from "../../../runtime/setup/config";
 import {
 	getLocalTomlConfigPath,
@@ -269,19 +271,18 @@ export const configRouter = router({
 		.input(projectIdInput)
 		.query(({ ctx, input }) => {
 			const project = requireProject(ctx, input.projectId);
-			const resolved = resolveScript("run", {
+			const config = loadProjectConfig({
 				repoPath: project.repoPath,
 				projectId: project.id,
 			});
-			if (!resolved) return null;
+			if (config?.kind !== "ok") return null;
+			const terminal = getDefaultTerminal(config.resolved);
+			if (!terminal) return null;
 			return {
 				source: "project-config" as const,
 				projectId: project.id,
-				commands:
-					resolved.kind === "commands"
-						? resolved.commands
-						: [`bash ${shellSingleQuote(resolved.scriptPath)}`],
-				...(resolved.cwd && { cwd: resolved.cwd }),
+				commands: terminal.commands,
+				...(terminal.cwd && { cwd: terminal.cwd }),
 			};
 		}),
 });

@@ -6,25 +6,17 @@
  * box reads its own setup and terminals.
  */
 import {
+	fromV1Json,
+	MAX_PREVIEW_PORTS,
+	type ProjectConfig,
 	parseProjectConfig,
 	resolveProjectConfig,
 } from "@superset/shared/project-config";
-import { z } from "zod";
 import type { RepositoryRow } from "./repositories";
 
-/**
- * The cloud keys of `.superset/config.json`: `setup` runs when an
- * environment's golden is built, `start` on every boot once host-service is
- * up, and `ports` are published beside the platform's own. Two phases, and a
- * repository that needs something once makes its own start step idempotent —
- * the platform does not track per-workspace steps on its behalf.
- */
-export const repositoryHooksSchema = z.object({
-	setup: z.array(z.string()).optional(),
-	start: z.array(z.string()).optional(),
-	ports: z.array(z.number().int().min(1).max(65535)).max(13).optional(),
-});
-export type RepositoryHooks = z.infer<typeof repositoryHooksSchema>;
+export interface RepositoryHooks {
+	ports?: number[];
+}
 
 const READ_TIMEOUT_MS = 5_000;
 
@@ -59,18 +51,31 @@ async function readRepoFile(
 	}
 }
 
-/** The v2 file's ports with `preview = true`, as the cloud resolves them. */
-export function repoHooksFromToml(text: string): RepositoryHooks | null {
-	const parsed = parseProjectConfig(text);
-	if (!parsed.ok) return null;
+/** The ports with `preview = true`, as the cloud resolves them. */
+function repoHooksFrom(config: ProjectConfig): RepositoryHooks {
 	const ports = resolveProjectConfig({
-		base: parsed.config,
+		base: config,
 		local: null,
 		environment: "cloud",
 	})
 		.ports.filter((port) => port.preview)
-		.map((port) => port.default);
+		.map((port) => port.default)
+		.slice(0, MAX_PREVIEW_PORTS);
 	return ports.length > 0 ? { ports } : {};
+}
+
+export function repoHooksFromToml(text: string): RepositoryHooks | null {
+	const parsed = parseProjectConfig(text);
+	return parsed.ok ? repoHooksFrom(parsed.config) : null;
+}
+
+/** A v1 file is read through its conversion, like everywhere else. */
+export function repoHooksFromJson(text: string): RepositoryHooks | null {
+	try {
+		return repoHooksFrom(fromV1Json(JSON.parse(text)));
+	} catch {
+		return null;
+	}
 }
 
 export async function readRepoHooks(
@@ -79,11 +84,5 @@ export async function readRepoHooks(
 	const toml = await readRepoFile(args, ".superset/config.toml");
 	if (toml !== null) return repoHooksFromToml(toml);
 	const json = await readRepoFile(args, ".superset/config.json");
-	if (json === null) return null;
-	try {
-		const parsed = repositoryHooksSchema.safeParse(JSON.parse(json));
-		return parsed.success ? parsed.data : null;
-	} catch {
-		return null;
-	}
+	return json === null ? null : repoHooksFromJson(json);
 }

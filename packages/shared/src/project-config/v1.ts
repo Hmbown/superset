@@ -10,9 +10,10 @@ function stringArray(value: unknown): string[] | undefined {
 }
 
 /**
- * Translates a v1 `.superset/config.json` object into the v2 shape:
- * setup → [setup], teardown → [archive], run → [terminals.dev] (default
- * locally only, as v1 cloud boot ran only `start`), start → [setup.cloud],
+ * Translates a v1 `.superset/config.json` object into the v2 shape, keeping
+ * what it did in the cloud, where v1 boot ran only `start`:
+ * setup → [setup] (start → [setup.cloud]), teardown → [archive] (off in the
+ * cloud), run → [terminals.dev] (default locally only),
  * ports → [ports.p<number>] with preview.
  */
 export function fromV1Json(json: unknown): ProjectConfig {
@@ -33,11 +34,13 @@ export function fromV1Json(json: unknown): ProjectConfig {
 	if (setup || start) {
 		config.setup = withCwd({
 			...(setup && { run: setup }),
-			...(start && { cloud: { run: start } }),
+			cloud: { run: start ?? [] },
 		});
 	}
 	const teardown = stringArray(source.teardown);
-	if (teardown) config.archive = withCwd({ run: teardown });
+	if (teardown) {
+		config.archive = withCwd({ run: teardown, cloud: { run: [] } });
+	}
 	const run = stringArray(source.run);
 	if (run) {
 		config.terminals = {

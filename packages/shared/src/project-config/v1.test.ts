@@ -17,7 +17,7 @@ describe("fromV1Json", () => {
 					run: ["./.superset/setup.cloud.sh", "./.superset/dev-stack.cloud.sh"],
 				},
 			},
-			archive: { run: ["./.superset/teardown.sh"] },
+			archive: { run: ["./.superset/teardown.sh"], cloud: { run: [] } },
 			terminals: {
 				dev: { run: "bun dev", default: true, cloud: { default: false } },
 			},
@@ -30,7 +30,11 @@ describe("fromV1Json", () => {
 			setup: ["bun install"],
 			ports: [3000, 70000],
 		});
-		expect(config.setup).toEqual({ run: ["bun install"], cwd: "apps/web" });
+		expect(config.setup).toEqual({
+			run: ["bun install"],
+			cloud: { run: [] },
+			cwd: "apps/web",
+		});
 		expect(config.ports).toEqual({ p3000: { default: 3000, preview: true } });
 	});
 

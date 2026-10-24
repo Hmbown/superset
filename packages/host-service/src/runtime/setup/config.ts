@@ -1,13 +1,18 @@
 import { existsSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join, resolve } from "node:path";
-import type { ResolvedPhase } from "@superset/shared/project-config";
-import { getDefaultTerminal } from "@superset/shared/project-config";
 import {
+	type ConfigError,
+	fromV1Json,
+	type ResolvedPhase,
+	type ResolvedProjectConfig,
+	resolveProjectConfig,
+} from "@superset/shared/project-config";
+import {
+	configEnvironment,
 	findTomlConfigPath,
 	formatConfigErrors,
 	loadTomlConfig,
-	type TomlConfigLoad,
 } from "./project-config-toml";
 
 const PROJECT_SUPERSET_DIR_NAME = ".superset";
@@ -265,140 +270,99 @@ export function hasConfiguredScripts(config: SetupConfig | null): boolean {
 	return false;
 }
 
-export type ResolvedScript =
-	| { kind: "commands"; commands: string[]; cwd?: string }
-	| { kind: "script"; scriptPath: string; cwd?: string };
+export type ProjectConfigLoad =
+	| { kind: "ok"; format: "toml" | "json"; resolved: ResolvedProjectConfig }
+	| { kind: "invalid"; path: string; errors: ConfigError[] };
 
 /**
- * Resolve a lifecycle script (`setup` | `teardown` | `run`) for a project.
- * Every key gets the same posture:
- *
- *   1. Configured commands via {@link loadSetupConfig} — worktree config
- *      overrides the main repo's when `worktreePath` is in scope.
- *   2. Fallback: `.superset/<key>.sh`, worktree first (when in scope), then
- *      the main repo — gitignored scripts only exist in the main repo.
- *
- * Setup and teardown pass their worktree; `run` resolves per project, where
- * no single worktree exists, so it uses the main repo only.
- *
- * `cwd` from the same config rides along either way. Returns null when no
- * source resolves to anything runnable.
+ * The project's config in the config.toml model. A project still on v1 is read
+ * through its conversion, so every caller sees one shape. Worktree files win
+ * over the main repo's when `worktreePath` is in scope. Null when nothing is
+ * configured.
  */
-export function resolveScript(
-	key: ScriptKey,
-	args: {
-		repoPath: string;
-		projectId: string;
-		/** Workspace worktree; its config and script win over the main repo. */
-		worktreePath?: string;
-		/** Override $HOME for tests. Defaults to `os.homedir()`. */
-		homeDir?: string;
-	},
-): ResolvedScript | null {
+export function loadProjectConfig(args: {
+	repoPath: string;
+	projectId: string;
+	worktreePath?: string;
+	/** Override $HOME for tests. Defaults to `os.homedir()`. */
+	homeDir?: string;
+}): ProjectConfigLoad | null {
 	const toml = loadTomlConfig(args);
-	if (toml) return resolveTomlScript({ key, toml, args });
+	if (toml?.kind === "invalid") return toml;
+	if (toml) return { kind: "ok", format: "toml", resolved: toml.resolved };
 
-	const config = loadSetupConfig(args);
-	const cwd = config?.cwd;
-	const commands = nonEmptyStrings(config?.[key]);
-	if (commands.length > 0) {
-		return { kind: "commands", commands, ...(cwd && { cwd }) };
-	}
+	const v1 = withScriptFallbacks(loadSetupConfig(args) ?? {}, args);
+	if (!hasConfiguredScripts(v1)) return null;
+	return {
+		kind: "ok",
+		format: "json",
+		resolved: resolveProjectConfig({
+			base: fromV1Json(v1),
+			local: null,
+			environment: configEnvironment(),
+		}),
+	};
+}
 
+/** v1 runs `.superset/<key>.sh` for a key with no commands, worktree first. */
+function withScriptFallbacks(
+	config: SetupConfig,
+	args: { repoPath: string; worktreePath?: string },
+): SetupConfig {
 	const roots = args.worktreePath
 		? [args.worktreePath, args.repoPath]
 		: [args.repoPath];
-	for (const root of roots) {
-		const scriptPath = join(root, PROJECT_SUPERSET_DIR_NAME, `${key}.sh`);
-		if (existsSync(scriptPath)) {
-			return { kind: "script", scriptPath, ...(cwd && { cwd }) };
-		}
+	const result = { ...config };
+	for (const key of SCRIPT_KEYS) {
+		if (nonEmptyStrings(config[key]).length > 0) continue;
+		const script = roots
+			.map((root) => join(root, PROJECT_SUPERSET_DIR_NAME, `${key}.sh`))
+			.find((path) => existsSync(path));
+		if (script) result[key] = [`bash ${shellSingleQuote(script)}`];
 	}
+	return result;
+}
 
-	return null;
+export interface PhaseCommand {
+	command: string;
+	cwd?: string;
 }
 
 /**
- * v1 keys on a `config.toml`: `setup` runs `install` then `setup`, `teardown`
- * runs `archive`, `run` is the first default terminal, and `start` (cloud
- * boot) runs `setup` then the first default terminal.
+ * Phases as one `&&` chain. When they name different directories, each
+ * command enters its own, resolved against `root`.
  */
-function resolveTomlScript({
-	key,
-	toml,
-	args,
-}: {
-	key: ScriptKey;
-	toml: TomlConfigLoad;
-	args: { repoPath: string; worktreePath?: string };
-}): ResolvedScript | null {
-	if (toml.kind === "invalid") {
-		const lines = formatConfigErrors(toml);
-		console.error(lines.join("\n"));
-		// Archive must never block on a broken file; setup and boot say why.
-		if (key === "teardown" || key === "run") return null;
-		return {
-			kind: "commands",
-			commands: [
-				`printf '%s\\n' ${lines.map(shellSingleQuote).join(" ")} >&2 && false`,
-			],
-		};
-	}
-	const { resolved } = toml;
-	const terminal = getDefaultTerminal(resolved);
-	const parts: ResolvedPhase[] =
-		key === "setup"
-			? [resolved.install, resolved.setup]
-			: key === "teardown"
-				? [resolved.archive]
-				: key === "run"
-					? terminal
-						? [terminal]
-						: []
-					: [resolved.setup, ...(terminal ? [terminal] : [])];
-	const combined = combinePhases({
-		parts,
-		root: args.worktreePath ?? args.repoPath,
-	});
-	// Cloud boot runs each entry on its own. Setup stops at its first failure,
-	// like a local setup; the terminal still starts after it.
-	if (key === "start" && combined?.kind === "commands") {
-		const setupCount = resolved.setup.commands.length;
-		const groups = [
-			combined.commands.slice(0, setupCount),
-			combined.commands.slice(setupCount),
-		].filter((group) => group.length > 0);
-		return { ...combined, commands: groups.map((group) => group.join(" && ")) };
-	}
-	return combined;
-}
-
-/** One cwd for all parts when they agree; otherwise each command enters its own. */
-function combinePhases({
-	parts,
-	root,
-}: {
-	parts: ResolvedPhase[];
-	root: string;
-}): ResolvedScript | null {
-	const active = parts.filter((part) => part.commands.length > 0);
+export function chainPhases(
+	phases: ResolvedPhase[],
+	root: string,
+): PhaseCommand | null {
+	const active = phases.filter((phase) => phase.commands.length > 0);
 	if (active.length === 0) return null;
-	const cwds = new Set(active.map((part) => part.cwd));
+	const cwds = new Set(active.map((phase) => phase.cwd));
 	if (cwds.size === 1) {
 		const cwd = active[0]?.cwd;
 		return {
-			kind: "commands",
-			commands: active.flatMap((part) => part.commands),
+			command: active.flatMap((phase) => phase.commands).join(" && "),
 			...(cwd && { cwd }),
 		};
 	}
 	return {
-		kind: "commands",
-		commands: active.flatMap((part) => {
-			const dir = shellSingleQuote(resolve(root, part.cwd ?? "."));
-			return part.commands.map((command) => `(cd ${dir} && ${command})`);
-		}),
+		command: active
+			.flatMap((phase) => {
+				const dir = shellSingleQuote(resolve(root, phase.cwd ?? "."));
+				return phase.commands.map((command) => `(cd ${dir} && ${command})`);
+			})
+			.join(" && "),
 	};
+}
+
+/** A command that prints why the config is invalid, then fails. */
+export function invalidConfigCommand(
+	config: Extract<ProjectConfigLoad, { kind: "invalid" }>,
+): string {
+	const lines = formatConfigErrors(config);
+	console.error(lines.join("\n"));
+	return `printf '%s\\n' ${lines.map(shellSingleQuote).join(" ")} >&2 && false`;
 }
 
 /** Whether any config source exists, for the sidebar's "set up scripts" card. */

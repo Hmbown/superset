@@ -2,11 +2,14 @@ import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { getDefaultTerminal } from "@superset/shared/project-config";
 import {
+	chainPhases,
 	describeProjectConfigSources,
 	hasProjectConfig,
+	invalidConfigCommand,
 	type LegacyConfigSource,
-	resolveScript,
+	loadProjectConfig,
 } from "./config";
 
 let root: string;
@@ -40,31 +43,39 @@ afterEach(() => {
 
 const args = () => ({ repoPath, projectId, worktreePath, homeDir });
 
-describe("resolveScript with config.toml", () => {
+type LoadArgs =
+	| ReturnType<typeof args>
+	| { repoPath: string; projectId: string };
+
+function resolved(loadArgs: LoadArgs = args()) {
+	const config = loadProjectConfig(loadArgs);
+	if (config?.kind !== "ok") throw new Error("expected a valid config");
+	return config.resolved;
+}
+
+function setupCommand(loadArgs: LoadArgs = args()) {
+	const config = resolved(loadArgs);
+	return chainPhases([config.install, config.setup], worktreePath);
+}
+
+describe("loadProjectConfig with config.toml", () => {
 	it("setup runs install then setup", () => {
 		write(
 			worktreePath,
 			"config.toml",
 			'[install]\nrun = "bun install"\n[setup]\nrun = ["./setup.sh"]\n',
 		);
-		expect(resolveScript("setup", args())).toEqual({
-			kind: "commands",
-			commands: ["bun install", "./setup.sh"],
-		});
+		expect(setupCommand()).toEqual({ command: "bun install && ./setup.sh" });
 	});
 
-	it("teardown runs archive, and run is the first default terminal", () => {
+	it("archive is its own section, and Run is the first default terminal", () => {
 		write(
 			worktreePath,
 			"config.toml",
 			'[archive]\nrun = ["./archive.sh"]\n[terminals.docs]\nrun = "bun docs"\n[terminals.dev]\nrun = "bun dev"\ndefault = true\ncwd = "apps/web"\n',
 		);
-		expect(resolveScript("teardown", args())).toEqual({
-			kind: "commands",
-			commands: ["./archive.sh"],
-		});
-		expect(resolveScript("run", args())).toEqual({
-			kind: "commands",
+		expect(resolved().archive.commands).toEqual(["./archive.sh"]);
+		expect(getDefaultTerminal(resolved())).toMatchObject({
 			commands: ["bun dev"],
 			cwd: "apps/web",
 		});
@@ -74,26 +85,20 @@ describe("resolveScript with config.toml", () => {
 		write(repoPath, "config.json", JSON.stringify({ setup: ["old"] }));
 		write(repoPath, "teardown.sh", "echo old");
 		write(worktreePath, "config.toml", '[setup]\nrun = "new"\n');
-		expect(resolveScript("setup", args())).toMatchObject({
-			commands: ["new"],
-		});
-		expect(resolveScript("teardown", args())).toBeNull();
+		expect(resolved().setup.commands).toEqual(["new"]);
+		expect(resolved().archive.commands).toEqual([]);
 	});
 
 	it("falls back to the main checkout's config.toml", () => {
 		write(repoPath, "config.toml", '[setup]\nrun = "from-main"\n');
-		expect(resolveScript("setup", args())).toMatchObject({
-			commands: ["from-main"],
-		});
+		expect(resolved().setup.commands).toEqual(["from-main"]);
 	});
 
 	it("reads config.local.toml from the main checkout only", () => {
 		write(worktreePath, "config.toml", '[setup]\nrun = "shared"\n');
 		write(repoPath, "config.local.toml", '[setup]\nrun = ["shared", "mine"]\n');
 		write(worktreePath, "config.local.toml", '[setup]\nrun = "ignored"\n');
-		expect(resolveScript("setup", args())).toMatchObject({
-			commands: ["shared", "mine"],
-		});
+		expect(resolved().setup.commands).toEqual(["shared", "mine"]);
 	});
 
 	it("different cwds give each command its own directory", () => {
@@ -102,41 +107,22 @@ describe("resolveScript with config.toml", () => {
 			"config.toml",
 			'[install]\nrun = "bun install"\n[setup]\nrun = "./setup.sh"\ncwd = "apps/web"\n',
 		);
-		const resolved = resolveScript("setup", args());
-		expect(resolved).toEqual({
-			kind: "commands",
-			commands: [
-				`(cd '${worktreePath}' && bun install)`,
-				`(cd '${join(worktreePath, "apps/web")}' && ./setup.sh)`,
-			],
+		expect(setupCommand()).toEqual({
+			command: `(cd '${worktreePath}' && bun install) && (cd '${join(worktreePath, "apps/web")}' && ./setup.sh)`,
 		});
 	});
 
-	it("cloud boot runs the cloud setup then the default terminal, without the personal file", () => {
+	it("the cloud reads the cloud tables, without the personal file", () => {
 		process.env.SUPERSET_HOST_RUN_MODE = "sandbox";
 		write(
 			repoPath,
 			"config.toml",
-			'[setup]\nrun = "local-setup"\n[setup.cloud]\nrun = "cloud-setup"\n[terminals.dev]\nrun = "bun dev"\ndefault = true\n',
+			'[setup]\nrun = "local-setup"\n[setup.cloud]\nrun = "cloud-setup"\n',
 		);
 		write(repoPath, "config.local.toml", '[setup]\nrun = "personal"\n');
-		expect(resolveScript("start", { repoPath, projectId })).toEqual({
-			kind: "commands",
-			commands: ["cloud-setup", "bun dev"],
-		});
-	});
-
-	it("cloud boot stops setup at its first failure but still starts the terminal", () => {
-		process.env.SUPERSET_HOST_RUN_MODE = "sandbox";
-		write(
-			repoPath,
-			"config.toml",
-			'[setup.cloud]\nrun = ["false", "touch ready"]\n[terminals.dev]\nrun = "bun dev"\ndefault = true\n',
-		);
-		expect(resolveScript("start", { repoPath, projectId })).toEqual({
-			kind: "commands",
-			commands: ["false && touch ready", "bun dev"],
-		});
+		expect(resolved({ repoPath, projectId }).setup.commands).toEqual([
+			"cloud-setup",
+		]);
 	});
 
 	it("a local app launched from a sandbox terminal still resolves as local", () => {
@@ -146,22 +132,34 @@ describe("resolveScript with config.toml", () => {
 			"config.toml",
 			'[terminals.dev]\nrun = "local-dev"\ndefault = true\n[terminals.dev.cloud]\nrun = "cloud-dev"\n',
 		);
-		expect(resolveScript("run", { repoPath, projectId })).toMatchObject({
-			commands: ["local-dev"],
-		});
+		expect(
+			getDefaultTerminal(resolved({ repoPath, projectId }))?.commands,
+		).toEqual(["local-dev"]);
 	});
 
-	it("an invalid file prints its errors for setup and skips archive", () => {
+	it("an invalid file reports its errors, and setup prints them and fails", () => {
 		write(worktreePath, "config.toml", '[setup]\nrun = "x"\ndefualt = 1\n');
-		const setup = resolveScript("setup", args());
-		expect(setup?.kind).toBe("commands");
-		expect(setup?.kind === "commands" && setup.commands[0]).toContain(
-			"defualt",
+		const config = loadProjectConfig(args());
+		expect(config?.kind).toBe("invalid");
+		if (config?.kind !== "invalid") return;
+		const command = invalidConfigCommand(config);
+		expect(command).toContain("defualt");
+		expect(command.endsWith("&& false")).toBe(true);
+	});
+});
+
+describe("loadProjectConfig with v1 in the cloud", () => {
+	it("keeps v1's cloud behavior: only start runs, and no teardown", () => {
+		process.env.SUPERSET_HOST_RUN_MODE = "sandbox";
+		write(
+			repoPath,
+			"config.json",
+			JSON.stringify({ setup: ["local"], teardown: ["down"], run: ["dev"] }),
 		);
-		expect(
-			setup?.kind === "commands" && setup.commands[0]?.endsWith("&& false"),
-		).toBe(true);
-		expect(resolveScript("teardown", args())).toBeNull();
+		const config = resolved({ repoPath, projectId });
+		expect(config.setup.commands).toEqual([]);
+		expect(config.archive.commands).toEqual([]);
+		expect(getDefaultTerminal(config)).toBeNull();
 	});
 });
 
