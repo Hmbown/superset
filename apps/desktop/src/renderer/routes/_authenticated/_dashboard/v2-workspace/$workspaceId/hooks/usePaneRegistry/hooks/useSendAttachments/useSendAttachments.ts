@@ -1,19 +1,8 @@
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useCallback, useRef } from "react";
-import { useWorkspaceHostTarget } from "renderer/hooks/host-service/useWorkspaceHostUrl";
-import { apiTrpcClient } from "renderer/lib/api-trpc-client";
+import { createAttachmentDeps } from "../../utils/createAttachmentDeps";
 import { sendAttachmentsToWorkspace } from "../../utils/sendAttachmentsToWorkspace";
-
-async function putObject(
-	target: { url: string; headers: Record<string, string> },
-	file: File,
-): Promise<Response> {
-	return await fetch(target.url, {
-		method: "PUT",
-		headers: target.headers,
-		body: file,
-	});
-}
+import { useAttachmentHome } from "../useAttachmentHome";
 
 /**
  * A stable function that gets files into the workspace's worktree and
@@ -23,32 +12,24 @@ async function putObject(
 export function useSendAttachments(
 	workspaceId: string,
 ): (files: File[]) => Promise<string[]> {
-	const target = useWorkspaceHostTarget(workspaceId);
-	const isCloudWorkspace =
-		target.status === "ready" && target.kind === "sandbox";
-	const isCloudRef = useRef(isCloudWorkspace);
-	isCloudRef.current = isCloudWorkspace;
-
-	const materialize =
-		workspaceTrpc.attachments.materializeIntoWorkspace.useMutation();
-	const materializeRef = useRef(materialize.mutateAsync);
-	materializeRef.current = materialize.mutateAsync;
+	const { home } = useAttachmentHome(workspaceId);
+	const homeRef = useRef(home);
+	homeRef.current = home;
+	const host = workspaceTrpc.useUtils().client;
+	const hostRef = useRef(host);
+	hostRef.current = host;
 
 	return useCallback(
-		(files: File[]) =>
-			sendAttachmentsToWorkspace({
-				deps: {
-					createUpload: (input) =>
-						apiTrpcClient.attachment.createUpload.mutate(input),
-					putObject,
-					attachFiles: (input) =>
-						apiTrpcClient.cloudWorkspace.attachFiles.mutate(input),
-					materialize: (input) => materializeRef.current(input),
-				},
+		(files: File[]) => {
+			if (!homeRef.current)
+				return Promise.reject(new Error("Workspace host is not ready yet"));
+			return sendAttachmentsToWorkspace({
+				deps: createAttachmentDeps(hostRef.current),
+				home: homeRef.current,
 				workspaceId,
-				isCloudWorkspace: isCloudRef.current,
 				files,
-			}),
+			});
+		},
 		[workspaceId],
 	);
 }
