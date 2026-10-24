@@ -111,14 +111,19 @@ async function enrichFromSubscription(
 		where: eq(subscriptions.stripeSubscriptionId, stripeSubscriptionId),
 	});
 
-	const { planTier } = await organizationBilling(org.id);
+	const planTier = await organizationBilling(org.id).then(
+		(billing) => billing.planTier,
+		() => null,
+	);
 	const seat = seatItem(stripeSub);
 	const price = seat?.price;
 	const interval = price?.recurring?.interval === "year" ? "yearly" : "monthly";
 
 	return {
 		organizationName: org.name,
-		planName: planLabel(planTier === "free" ? dbSub?.plan : planTier),
+		planName: planLabel(
+			planTier && planTier !== "free" ? planTier : dbSub?.plan,
+		),
 		stripeCustomerId: customerId,
 		stripeSubscriptionId,
 		seatCount: seat?.quantity ?? 1,
