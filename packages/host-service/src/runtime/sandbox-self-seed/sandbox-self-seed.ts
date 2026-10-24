@@ -38,6 +38,7 @@ import {
 	withPendingLaunchReport,
 } from "./launchMarker";
 import { buildStartHookEnv } from "./utils/buildStartHookEnv";
+import { pdevAgentDir, trustPdevWorkspace } from "./utils/trustPdevWorkspace";
 
 /**
  * Makes a sandbox describe its own workspace, instead of being described from
@@ -330,6 +331,8 @@ export async function launchSandboxAgentOnce(
 		// not in its table; the launch resolves the agent through that table.
 		ensurePresetRow(ctx.db, agent);
 		if (agent === "claude") approveClaudeApiKey();
+		if (agent === "pdev")
+			trustPdevWorkspace(identity.workspaceRoot, pdevAgentDir());
 		// Images the composer sent with the prompt: the bytes live in cloud
 		// storage because this box did not exist when they were uploaded.
 		// A download that fails must not cost the launch its prompt.
