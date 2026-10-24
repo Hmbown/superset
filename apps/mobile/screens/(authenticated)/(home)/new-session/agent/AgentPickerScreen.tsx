@@ -1,9 +1,14 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { isCloudAgentId } from "@superset/shared/cloud-agent-launch";
-import { HOST_AGENT_PRESETS } from "@superset/shared/host-agent-presets";
+import { FEATURE_FLAGS } from "@superset/shared/constants";
+import {
+	HOST_AGENT_PRESETS,
+	isAgentPresetEnabled,
+} from "@superset/shared/host-agent-presets";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { SquareTerminal } from "lucide-react-native";
+import { useFeatureFlag } from "posthog-react-native";
 import { Image, Pressable, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button } from "@/components/ui/button";
@@ -59,6 +64,7 @@ export function AgentPickerScreen() {
 	const agentId = useNewSessionPreferencesStore((state) => state.agentId);
 	const setAgentId = useNewSessionPreferencesStore((state) => state.setAgentId);
 	const { machineId } = useLocalSearchParams<{ machineId?: string }>();
+	const pdevAgent = Boolean(useFeatureFlag(FEATURE_FLAGS.PDEV_AGENT));
 	// Under Cloud a laptop-only preset resolves to the one that launches.
 	const selectedAgentId =
 		machineId === CLOUD_TARGET_ID && (!agentId || !isCloudAgentId(agentId))
@@ -83,7 +89,12 @@ export function AgentPickerScreen() {
 	// no host config of its own to list (custom agents: SUPER-2127).
 	const configs =
 		machineId === CLOUD_TARGET_ID
-			? CLOUD_AGENT_CONFIGS
+			? CLOUD_AGENT_CONFIGS.filter((config) =>
+					isAgentPresetEnabled(
+						config.presetId,
+						pdevAgent ? [FEATURE_FLAGS.PDEV_AGENT] : [],
+					),
+				)
 			: (configsQuery.data ?? []);
 
 	let notice: string | null = null;
