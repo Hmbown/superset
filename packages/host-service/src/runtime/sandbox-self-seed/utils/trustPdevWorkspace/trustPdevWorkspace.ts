@@ -1,4 +1,10 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import {
+	existsSync,
+	mkdirSync,
+	readFileSync,
+	renameSync,
+	writeFileSync,
+} from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 
@@ -40,5 +46,9 @@ export function trustPdevWorkspace(root: string, agentDir: string): void {
 			.map((key) => [key, trust[key]]),
 	);
 	mkdirSync(agentDir, { recursive: true });
-	writeFileSync(path, `${JSON.stringify(sorted, null, 2)}\n`);
+	// Renamed into place: a write cut short would otherwise leave a store pdev
+	// refuses to start on.
+	const next = `${path}.${process.pid}.tmp`;
+	writeFileSync(next, `${JSON.stringify(sorted, null, 2)}\n`);
+	renameSync(next, path);
 }
