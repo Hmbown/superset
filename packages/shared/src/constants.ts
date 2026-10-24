@@ -146,8 +146,6 @@ export const FEATURE_FLAGS = {
 	 * it to reach users who cross the threshold later.
 	 */
 	HIRING_BANNER: "hiring-banner",
-	/** Shows the "Star Superset on GitHub" sidebar card once a user crosses the workspace-count threshold. Lets us kill the nag instantly without a release if it reads as annoying. */
-	STAR_NAG_CARD: "star-nag-card",
 	/**
 	 * Which trigger providers the Add Trigger menu offers. Payload is a JSON
 	 * array of provider kinds, e.g. `["github", "slack"]`; Scheduled is always
