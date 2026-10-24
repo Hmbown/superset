@@ -818,6 +818,7 @@ function V2WorkspaceContent() {
 										<WorkspaceEmptyState
 											onOpenBrowser={addBrowserTab}
 											onOpenChanges={openChanges}
+											onOpenChat={canOpenChat ? addChatTab : undefined}
 											onOpenQuickOpen={handleQuickOpen}
 											onOpenTerminal={addTerminalTab}
 										/>
