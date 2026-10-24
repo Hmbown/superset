@@ -163,32 +163,6 @@ export const FEATURE_FLAGS = {
 	 */
 	AUTOMATION_EVENT_TRIGGERS: "automation-event-triggers",
 	/**
-	 * Three-arm experiment flag nested inside the shipped new-workspace screen,
-	 * testing form factor only: `control` keeps the inline sample-prompt rows,
-	 * `cards2` shows two cards above the composer, `cards4` shows four in a 2x2
-	 * grid. Every arm slices a nested prefix of one fixed prompt pool and shares
-	 * the same selection rule, so content is identical and only layout and count
-	 * vary. Evaluated when the screen opens, so exposure matches the population
-	 * that sees it.
-	 *
-	 * Anything other than `cards2`/`cards4` renders control — which is why the
-	 * flag must not go live before a build carrying those arms ships, or older
-	 * builds would be assigned a card arm and shown rows.
-	 *
-	 * Eligibility (new accounts only) is a release condition on the flag, not
-	 * code: a `created_at` person property cutoff, which the renderer sends with
-	 * flag requests at identify time. Existing accounts get `false` back and
-	 * render the rows exactly as they do today, with no exposure recorded.
-	 */
-	NEW_WORKSPACE_PROMPT_CARDS: "new-workspace-prompt-cards",
-	/**
-	 * Boolean override that forces the `cards2` arm without evaluating the
-	 * experiment flag — no exposure event, so team and dev accounts can look at
-	 * the cards without entering the analysis. Checked before the experiment
-	 * flag.
-	 */
-	NEW_WORKSPACE_PROMPT_CARDS_OVERRIDE: "new-workspace-prompt-cards-override",
-	/**
 	 * Replaces the v2 workspace's right sidebar with a second pane area that
 	 * holds Files, Changes, Review, Browser and Chat panes.
 	 */
