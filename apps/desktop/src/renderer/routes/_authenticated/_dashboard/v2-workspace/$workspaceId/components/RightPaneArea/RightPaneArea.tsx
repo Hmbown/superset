@@ -9,9 +9,10 @@ import {
 	type WorkspaceStore,
 } from "@superset/panes";
 import type { ReactNode } from "react";
-import { LuArrowLeftToLine, LuMaximize2, LuMinimize2 } from "react-icons/lu";
+import { LuMaximize2, LuMinimize2 } from "react-icons/lu";
 import { reportRendererError } from "renderer/lib/report-renderer-error";
 import { RightSidebarToggle } from "renderer/routes/_authenticated/_dashboard/components/RightSidebarToggle";
+import { WindowChrome } from "renderer/routes/_authenticated/_dashboard/components/WindowChrome";
 import { WindowControlsInset } from "renderer/routes/_authenticated/_dashboard/components/WindowControlsInset";
 import { getV2NotificationSourcesForTab } from "renderer/stores/v2-notifications";
 import type { StoreApi } from "zustand/vanilla";
@@ -21,7 +22,10 @@ import { V2NotificationStatusIndicator } from "../V2NotificationStatusIndicator"
 import { RightPaneAddMenu } from "./components/RightPaneAddMenu";
 import { RightPaneEmptyState } from "./components/RightPaneEmptyState";
 import { RightPaneHeaderButton } from "./components/RightPaneHeaderButton";
+import type { RightPaneGates } from "./paneOptions";
 import type { RightPaneKind } from "./types";
+
+const RIGHT_PANE_KEPT_TABS = 2;
 
 interface RightPaneAreaProps {
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
@@ -31,12 +35,12 @@ interface RightPaneAreaProps {
 	onBeforeCloseTab: (tab: Tab<PaneViewerData>) => boolean | Promise<boolean>;
 	onInteractionStateChange?: (state: WorkspaceInteractionState) => void;
 	workspaceControls: ReactNode;
-	isExpanded: boolean;
-	onToggleExpanded: () => void;
+	isFullScreen: boolean;
+	onToggleFullScreen: () => void;
 	onToggleSidebar: () => void;
 	onActivate: () => void;
-	onMergeIntoCenter: () => void;
 	onAdd: (kind: RightPaneKind) => void;
+	gates: RightPaneGates;
 	showWindowControls: boolean;
 }
 
@@ -48,12 +52,12 @@ export function RightPaneArea({
 	onBeforeCloseTab,
 	onInteractionStateChange,
 	workspaceControls,
-	isExpanded,
-	onToggleExpanded,
+	isFullScreen,
+	onToggleFullScreen,
 	onToggleSidebar,
 	onActivate,
-	onMergeIntoCenter,
 	onAdd,
+	gates,
 	showWindowControls,
 }: RightPaneAreaProps) {
 	const { t } = useLingui();
@@ -66,6 +70,7 @@ export function RightPaneArea({
 			onFocusCapture={onActivate}
 		>
 			<Workspace<PaneViewerData>
+				keepAliveTabs={RIGHT_PANE_KEPT_TABS}
 				registry={registry}
 				paneActions={paneActions}
 				contextMenuActions={contextMenuActions}
@@ -76,26 +81,26 @@ export function RightPaneArea({
 						sources={getV2NotificationSourcesForTab(tab)}
 					/>
 				)}
+				renderTabBarLeading={isFullScreen ? () => <WindowChrome /> : undefined}
 				renderAddTabMenu={({ runAfterClose }) => (
-					<RightPaneAddMenu onAdd={onAdd} runAfterClose={runAfterClose} />
+					<RightPaneAddMenu
+						onAdd={onAdd}
+						runAfterClose={runAfterClose}
+						gates={gates}
+					/>
 				)}
 				renderTabBarTrailing={() => (
 					<div className="flex items-center gap-1 pr-1">
 						<RightPaneHeaderButton
-							label={t({ message: "Merge into center" })}
-							onClick={onMergeIntoCenter}
-						>
-							<LuArrowLeftToLine className="size-4" strokeWidth={1.5} />
-						</RightPaneHeaderButton>
-						<RightPaneHeaderButton
 							label={
-								isExpanded
+								isFullScreen
 									? t({ message: "Restore width" })
 									: t({ message: "Expand" })
 							}
-							onClick={onToggleExpanded}
+							hotkeyId="TOGGLE_RIGHT_PANE_FULL_SCREEN"
+							onClick={onToggleFullScreen}
 						>
-							{isExpanded ? (
+							{isFullScreen ? (
 								<LuMinimize2 className="size-4" strokeWidth={1.5} />
 							) : (
 								<LuMaximize2 className="size-4" strokeWidth={1.5} />
@@ -106,7 +111,9 @@ export function RightPaneArea({
 						{showWindowControls && <WindowControlsInset />}
 					</div>
 				)}
-				renderEmptyState={() => <RightPaneEmptyState onAdd={onAdd} />}
+				renderEmptyState={() => (
+					<RightPaneEmptyState onAdd={onAdd} gates={gates} />
+				)}
 				onBeforeCloseTab={onBeforeCloseTab}
 				onInteractionStateChange={onInteractionStateChange}
 				store={store}

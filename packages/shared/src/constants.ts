@@ -128,12 +128,8 @@ export const FEATURE_FLAGS = {
 	 * hash the site's single distinct id to one side.
 	 */
 	MOBILE_LAUNCH: "mobile-launch",
-	/** Gates access to Cloud features (environment variables, sandboxes). */
-	CLOUD_ACCESS: "cloud-access",
 	/** Allowlist for mobile voice mode: shows the entry and authorizes `voice.createSession`. */
 	MOBILE_VOICE_MODE: "mobile-voice-mode",
-	/** When enabled, blocks remote agent execution on the desktop (e.g., for enterprise orgs). */
-	DISABLE_REMOTE_AGENT: "disable-remote-agent",
 	/**
 	 * Paces the v1→v2 auto-migration rollout (percentage ramp + high-profile
 	 * org exclusions). Gates only NEW migrations on the v1 surface — post-flip
@@ -193,12 +189,6 @@ export const FEATURE_FLAGS = {
 	 */
 	NEW_WORKSPACE_PROMPT_CARDS_OVERRIDE: "new-workspace-prompt-cards-override",
 	/**
-	 * Shows the rebuilt chat pane (ChatV3Pane). UI-only: host-service always
-	 * serves its `/chat-v3/*` routes, so this flag decides who sees the pane,
-	 * not what the host can do — flips take effect live, with no host restart.
-	 */
-	CHAT_V3: "chat-v3",
-	/**
 	 * Replaces the v2 workspace's right sidebar with a second pane area that
 	 * holds Files, Changes, Review, Browser and Chat panes.
 	 */
@@ -209,13 +199,6 @@ export const FEATURE_FLAGS = {
 	 * conditions are the allowlist, so access changes without a deploy.
 	 */
 	CLOUD_WORKSPACES: "cloud-workspaces",
-	/**
-	 * Renders cloud workspaces as rows of their GitHub repo's project in the
-	 * desktop sidebar instead of in a separate Cloud section. UI-only and
-	 * renderer-local: off, unloaded, or offline all keep the Cloud section, so
-	 * flips take effect live and nothing on a host changes.
-	 */
-	SIDEBAR_INLINE_CLOUD_WORKSPACES: "sidebar-inline-cloud-workspaces",
 	/**
 	 * Lets the Slack agent answer replies in a thread it has already replied
 	 * in without an @-mention. Evaluated per Slack team; off, unloaded or
@@ -244,6 +227,7 @@ export const FEATURE_FLAGS = {
 	 * release condition on the flag, so widening never needs a release.
 	 */
 	ACP_CHAT: "acp-chat",
+	MOBILE_PANE: "mobile-pane",
 	/**
 	 * Shows the `pdev` agent: in the agent catalog, agent pickers
 	 * and, with ACP_CHAT, as a chat harness (`pdev acp`). Off, unloaded or

@@ -54,11 +54,11 @@ import { useAgentEffortPreference } from "renderer/hooks/useAgentEffortPreferenc
 import { useAgentLaunchPreferences } from "renderer/hooks/useAgentLaunchPreferences";
 import { useAgentModelPreference } from "renderer/hooks/useAgentModelPreference";
 import { useAgentModePreference } from "renderer/hooks/useAgentModePreference";
+import { useCloudAgentChoices } from "renderer/hooks/useCloudAgentChoices";
 import { useRelayUrl } from "renderer/hooks/useRelayUrl";
 import { useSelectedHostProjectIds } from "renderer/hooks/useSelectedHostProjectIds";
 import { useTaskTracker } from "renderer/hooks/useTaskTracker";
 import { useV2AgentChoices } from "renderer/hooks/useV2AgentChoices";
-import { CLOUD_AGENT_CHOICES } from "renderer/hooks/useV2AgentChoices/cloud-agent-choices";
 import { track } from "renderer/lib/analytics";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
@@ -92,6 +92,7 @@ import { GitHubIssueLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup
 import { LinearIssueLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinearIssueLinkCommand";
 import { LinkedGitHubIssuePill } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinkedGitHubIssuePill";
 import { LinkedPRPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinkedPRPill";
+import { MachineSizePickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/MachineSizePickerPill";
 import { PRLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/PRLinkCommand";
 import { ProjectPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/ProjectPickerPill";
 import { PromptHistoryCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/PromptHistoryCommand";
@@ -396,24 +397,21 @@ export function NewWorkspaceScreen({
 	const selectedEnvironment = environmentOptions.find(
 		(row) => row.id === draft.environmentId,
 	);
-	// With no environment for the project's repository, the API starts from
-	// the repository's default one — as long as the GitHub App can see it.
-	const defaultRepository =
+	// The project's repository as the GitHub App sees it, for the branch picker.
+	const projectRepository =
 		!draft.isSession && projectRepositoryFullName
 			? (github.repositoriesByFullName.get(
 					projectRepositoryFullName.toLowerCase(),
 				) ?? null)
 			: null;
-	// Default: the project's first environment, else one the API makes for
-	// the project's repository on create.
+	// Default: the project's first environment. With none, the picker offers to set one up.
 	const resolvedEnvironment = selectedEnvironment ?? environmentOptions[0];
-	const defaultHint =
-		resolvedEnvironment?.name ?? defaultRepository?.fullName ?? null;
+	const defaultHint = resolvedEnvironment?.name ?? null;
 	const isCloudTargetLoading = environmentsQuery.isLoading || github.isLoading;
 	const [isCreatingEnvironment, setIsCreatingEnvironment] = useState(false);
 	const cloudRepository = useMemo(() => {
 		if (!isCloudHost) return null;
-		const primary = resolvedEnvironment?.repositories?.[0] ?? defaultRepository;
+		const primary = resolvedEnvironment?.repositories?.[0] ?? projectRepository;
 		return primary
 			? {
 					owner: primary.owner,
@@ -421,7 +419,7 @@ export function NewWorkspaceScreen({
 					defaultBranch: primary.defaultBranch,
 				}
 			: null;
-	}, [isCloudHost, resolvedEnvironment, defaultRepository]);
+	}, [isCloudHost, resolvedEnvironment, projectRepository]);
 	const isPromptEmpty = !draft.prompt.trim();
 	// The markdown editor is uncontrolled after mount, so programmatic prompt
 	// insertion bumps promptSeed to remount it with the new content.
@@ -540,9 +538,9 @@ export function NewWorkspaceScreen({
 
 	const { agents: hostAgents, isFetched: hostAgentsFetched } =
 		useV2AgentChoices(launchHostUrl);
+	const cloudAgents = useCloudAgentChoices();
 	// Under Cloud the built-in presets stand in for a host's agent list.
-	const v2Agents =
-		draft.hostId === CLOUD_HOST_ID ? CLOUD_AGENT_CHOICES : hostAgents;
+	const v2Agents = draft.hostId === CLOUD_HOST_ID ? cloudAgents : hostAgents;
 	const v2AgentsFetched = draft.hostId === CLOUD_HOST_ID || hostAgentsFetched;
 	const selectableAgentIds = useMemo(
 		() => v2Agents.map((agent) => agent.id),
@@ -666,7 +664,6 @@ export function NewWorkspaceScreen({
 		promptContext,
 		{
 			environmentId: resolvedEnvironment?.id ?? null,
-			repositoryId: defaultRepository?.id ?? null,
 			repositoryFullName: draft.isSession ? null : projectRepositoryFullName,
 		},
 	);
@@ -1180,6 +1177,14 @@ export function NewWorkspaceScreen({
 									onCreateEnvironment={() => setIsCreatingEnvironment(true)}
 									isLoading={environmentsQuery.isLoading}
 									isSessionUnavailable={draft.isSession}
+								/>
+							)}
+							{isCloudHost && (
+								<MachineSizePickerPill
+									machineSize={draft.machineSize}
+									onSelectMachineSize={(machineSize) =>
+										updateDraft({ machineSize })
+									}
 								/>
 							)}
 							{isCreatingEnvironment && activeOrganizationId && (
