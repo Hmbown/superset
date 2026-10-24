@@ -1,5 +1,5 @@
 import { cn } from "@superset/ui/utils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 export type SidebarSlideMode = "closed" | "open" | "expanded";
 
@@ -7,6 +7,7 @@ interface SidebarSlideProps {
 	mode: SidebarSlideMode;
 	width: number;
 	onLayoutFrame?: () => void;
+	onRestChange?: (rest: SidebarSlideMode | null) => void;
 	keepMounted?: boolean;
 	durationMs?: number;
 	children: (fill: boolean) => React.ReactNode;
@@ -16,6 +17,7 @@ export function SidebarSlide({
 	mode,
 	width,
 	onLayoutFrame,
+	onRestChange,
 	keepMounted = false,
 	durationMs = 300,
 	children,
@@ -30,6 +32,8 @@ export function SidebarSlide({
 	const headingRef = useRef(mode);
 	const onLayoutFrameRef = useRef(onLayoutFrame);
 	onLayoutFrameRef.current = onLayoutFrame;
+	const onRestChangeRef = useRef(onRestChange);
+	onRestChangeRef.current = onRestChange;
 
 	useEffect(() => {
 		const from = headingRef.current;
@@ -63,6 +67,11 @@ export function SidebarSlide({
 	useEffect(() => {
 		if (!move) onLayoutFrameRef.current?.();
 	}, [move]);
+
+	const rest = move ? null : settled;
+	useLayoutEffect(() => {
+		onRestChangeRef.current?.(rest);
+	}, [rest]);
 
 	if (!hasOpened) return null;
 	if (!keepMounted && !move && settled === "closed") return null;

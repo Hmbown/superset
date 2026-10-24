@@ -15,12 +15,14 @@ const settle = () =>
 
 function renderSlide(mode: SidebarSlideMode, keepMounted = false) {
 	const fills: boolean[] = [];
+	const rests: (SidebarSlideMode | null)[] = [];
 	const ui = (next: SidebarSlideMode) => (
 		<SidebarSlide
 			mode={next}
 			width={300}
 			keepMounted={keepMounted}
 			durationMs={1}
+			onRestChange={(rest) => rests.push(rest)}
 		>
 			{(fill) => {
 				fills.push(fill);
@@ -32,6 +34,7 @@ function renderSlide(mode: SidebarSlideMode, keepMounted = false) {
 	return {
 		...result,
 		fills,
+		rests,
 		setMode: (next: SidebarSlideMode) => result.rerender(ui(next)),
 		panel: () => result.queryByTestId("panel"),
 	};
@@ -96,5 +99,20 @@ describe("SidebarSlide", () => {
 		slide.setMode("closed");
 		await settle();
 		expect(slide.panel()?.parentElement?.hasAttribute("inert")).toBe(true);
+	});
+
+	test("reports the resting mode, and null from the first render of a move", async () => {
+		const slide = renderSlide("open", true);
+		expect(slide.rests).toEqual(["open"]);
+		slide.setMode("expanded");
+		expect(slide.rests).toEqual(["open", null]);
+		slide.setMode("open");
+		slide.setMode("expanded");
+		await settle();
+		expect(slide.rests).toEqual(["open", null, "expanded"]);
+		slide.setMode("closed");
+		expect(slide.rests.at(-1)).toBeNull();
+		await settle();
+		expect(slide.rests.at(-1)).toBe("closed");
 	});
 });
