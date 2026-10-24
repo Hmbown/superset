@@ -93,7 +93,7 @@ describe("WorkspaceSplitLayout", () => {
 		act(() => layout.getByTestId("side").focus());
 		layout.activeAreaRef.current = "center";
 		window.dispatchEvent(new Event("blur"));
-		expect(layout.activeAreaRef.current).toBe("right");
+		expect<PaneArea>(layout.activeAreaRef.current).toBe("right");
 	});
 
 	test("entering expanded makes the right area active", () => {
