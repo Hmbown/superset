@@ -30,9 +30,7 @@ import { electronQueryClient } from "renderer/providers/ElectronTRPCProvider";
 import { useDesktopNoticePreviewStore } from "renderer/stores/desktop-notice-preview";
 import { useReleaseNotesCardStore } from "renderer/stores/release-notes-card";
 import { useRightSidebarToggleIntent } from "renderer/stores/right-sidebar-toggle-intent";
-import {
-	useStarNagStore,
-} from "renderer/stores/star-nag";
+import { useStarNagStore } from "renderer/stores/star-nag";
 import { SYSTEM_THEME_ID, useThemeStore } from "renderer/stores/theme/store";
 import { useWorkspaceSidebarStore } from "renderer/stores/workspace-sidebar-state";
 import type { Command, CommandProvider } from "../../core/types";
