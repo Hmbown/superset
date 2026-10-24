@@ -15,14 +15,12 @@ const settle = () =>
 
 function renderSlide(mode: SidebarSlideMode, keepMounted = false) {
 	const fills: boolean[] = [];
-	const rests: (SidebarSlideMode | null)[] = [];
 	const ui = (next: SidebarSlideMode) => (
 		<SidebarSlide
 			mode={next}
 			width={300}
 			keepMounted={keepMounted}
 			durationMs={1}
-			onRestChange={(rest) => rests.push(rest)}
 		>
 			{(fill) => {
 				fills.push(fill);
@@ -34,7 +32,6 @@ function renderSlide(mode: SidebarSlideMode, keepMounted = false) {
 	return {
 		...result,
 		fills,
-		rests,
 		setMode: (next: SidebarSlideMode) => result.rerender(ui(next)),
 		panel: () => result.queryByTestId("panel"),
 	};
@@ -54,17 +51,20 @@ describe("SidebarSlide", () => {
 		expect(slide.fills.at(-1)).toBe(false);
 	});
 
-	test("expanded fills the positioned parent, from closed and from open", async () => {
+	test("expanded takes the parent's full width in flow, from closed and from open", async () => {
 		for (const from of ["closed", "open"] as const) {
 			const slide = renderSlide(from, true);
 			slide.setMode("expanded");
+			const space = slide.panel()?.parentElement?.parentElement
+				?.parentElement as HTMLElement;
+			expect(space.style.transitionProperty).toBe("width");
 			await settle();
-			const panel = slide.panel()?.parentElement?.parentElement;
-			const space = panel?.parentElement;
-			expect(panel?.style.width).toBe("100%");
-			expect(panel?.className).toContain("absolute");
-			expect(space?.style.width).toBe("300px");
-			expect(space?.className).not.toContain("relative");
+			expect(space.style.width).toBe("100%");
+			expect(space.className).toContain("shrink-0");
+			expect(space.firstElementChild?.className).toContain("inset-0");
+			slide.setMode(from);
+			await settle();
+			expect(space.style.width).toBe(from === "closed" ? "0px" : "");
 			slide.unmount();
 		}
 	});
@@ -99,20 +99,5 @@ describe("SidebarSlide", () => {
 		slide.setMode("closed");
 		await settle();
 		expect(slide.panel()?.parentElement?.hasAttribute("inert")).toBe(true);
-	});
-
-	test("reports the resting mode, and null from the first render of a move", async () => {
-		const slide = renderSlide("open", true);
-		expect(slide.rests).toEqual(["open"]);
-		slide.setMode("expanded");
-		expect(slide.rests).toEqual(["open", null]);
-		slide.setMode("open");
-		slide.setMode("expanded");
-		await settle();
-		expect(slide.rests).toEqual(["open", null, "expanded"]);
-		slide.setMode("closed");
-		expect(slide.rests.at(-1)).toBeNull();
-		await settle();
-		expect(slide.rests.at(-1)).toBe("closed");
 	});
 });

@@ -1,1 +1,1 @@
-export { clampSideWidth, MIN_CENTER_WIDTH } from "./clampSideWidth";
+export { clampSideWidth, PREFERRED_CENTER_WIDTH } from "./clampSideWidth";

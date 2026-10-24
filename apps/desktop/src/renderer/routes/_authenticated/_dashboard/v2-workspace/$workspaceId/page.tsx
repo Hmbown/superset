@@ -31,6 +31,7 @@ import { AddTabMenu } from "./components/AddTabMenu";
 import { ChangesControl } from "./components/ChangesControl";
 import { CloudWorkspaceTabBarControls } from "./components/CloudWorkspaceTabBarControls";
 import { RightPaneArea, type RightPaneKind } from "./components/RightPaneArea";
+import { MIN_RIGHT_PANE_AREA_WIDTH } from "./components/RightPaneArea/constants";
 import { V2NotificationStatusIndicator } from "./components/V2NotificationStatusIndicator";
 import { V2PresetsBar } from "./components/V2PresetsBar";
 import { V2WorkspaceOpenInButton } from "./components/V2WorkspaceOpenInButton";
@@ -93,9 +94,6 @@ import type { V2WorkspaceUrlOpenTarget } from "./utils/openUrlInV2Workspace";
 
 const relayoutBrowserPanes = () => browserRuntimeRegistry.relayout();
 
-// A pane is at least 260px wide (PANE_MIN_SIZE_CLASS_NAME in @superset/panes),
-// plus the panel's 1px border; narrower clips the pane header.
-const MIN_RIGHT_PANE_AREA_WIDTH = 262;
 const defaultRightPaneAreaWidth = (containerWidth: number) =>
 	Math.round(containerWidth * 0.4);
 const defaultRightSidebarWidth = () => 340;

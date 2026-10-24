@@ -1,15 +1,7 @@
-import { cn } from "@superset/ui/utils";
-import {
-	type ReactNode,
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from "react";
+import { type ReactNode, useLayoutEffect, useRef, useState } from "react";
 import { ResizablePanel } from "renderer/screens/main/components/ResizablePanel";
 import { SidebarSlide, type SidebarSlideMode } from "../SidebarSlide";
-import { clampSideWidth, MIN_CENTER_WIDTH } from "./utils/clampSideWidth";
+import { clampSideWidth } from "./utils/clampSideWidth";
 
 interface WorkspaceSplitLayoutProps {
 	mode: SidebarSlideMode;
@@ -52,23 +44,6 @@ export function WorkspaceSplitLayout({
 		observer.observe(element);
 		return () => observer.disconnect();
 	}, []);
-	const centerRef = useRef<HTMLDivElement>(null);
-	const [collapsedCenterWidth, setCollapsedCenterWidth] = useState<
-		number | null
-	>(null);
-	const collapsed = collapsedCenterWidth !== null;
-	const onRestChange = useCallback((rest: SidebarSlideMode | null) => {
-		setCollapsedCenterWidth(
-			rest === "expanded"
-				? (centerRef.current?.getBoundingClientRect().width ?? 0)
-				: null,
-		);
-	}, []);
-	const onLayoutFrameRef = useRef(onLayoutFrame);
-	onLayoutFrameRef.current = onLayoutFrame;
-	useEffect(() => {
-		if (collapsed) onLayoutFrameRef.current?.();
-	}, [collapsed]);
 	const clamped = clampSideWidth({
 		width: width ?? defaultWidth(containerWidth),
 		minWidth,
@@ -82,30 +57,15 @@ export function WorkspaceSplitLayout({
 			className="relative flex min-h-0 min-w-0 flex-1 overflow-hidden"
 		>
 			<div
-				ref={centerRef}
-				inert={mode === "expanded" || collapsed}
-				className={cn(
-					"flex min-h-0",
-					collapsed ? "invisible w-0 flex-none overflow-hidden" : "flex-1",
-				)}
-				style={{ minWidth: collapsed ? 0 : MIN_CENTER_WIDTH }}
+				inert={mode === "expanded"}
+				className="flex min-h-0 min-w-0 flex-1 overflow-hidden"
 			>
-				{/* Panes keep a min width, so a 0px center would still resize terminals. */}
-				<div
-					className={cn(
-						"flex min-h-0",
-						collapsed ? "flex-none" : "min-w-0 flex-1",
-					)}
-					style={{ width: collapsed ? collapsedCenterWidth : undefined }}
-				>
-					{children}
-				</div>
+				{children}
 			</div>
 			<SidebarSlide
 				mode={mode}
 				width={clamped.width}
 				onLayoutFrame={onLayoutFrame}
-				onRestChange={onRestChange}
 				keepMounted={keepMounted}
 				durationMs={durationMs}
 			>

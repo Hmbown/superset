@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { clampSideWidth, MIN_CENTER_WIDTH } from "./clampSideWidth";
+import { clampSideWidth, PREFERRED_CENTER_WIDTH } from "./clampSideWidth";
 
 describe("clampSideWidth", () => {
-	test("keeps the center its minimum width", () => {
+	test("leaves the center its preferred width when there is room", () => {
 		expect(
 			clampSideWidth({
 				width: 900,
@@ -11,8 +11,8 @@ describe("clampSideWidth", () => {
 				containerWidth: 1000,
 			}),
 		).toEqual({
-			width: 1000 - MIN_CENTER_WIDTH,
-			maxWidth: 1000 - MIN_CENTER_WIDTH,
+			width: 1000 - PREFERRED_CENTER_WIDTH,
+			maxWidth: 1000 - PREFERRED_CENTER_WIDTH,
 		});
 	});
 

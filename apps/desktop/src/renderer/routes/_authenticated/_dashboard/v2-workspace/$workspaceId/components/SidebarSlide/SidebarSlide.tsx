@@ -1,5 +1,5 @@
 import { cn } from "@superset/ui/utils";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type SidebarSlideMode = "closed" | "open" | "expanded";
 
@@ -7,7 +7,6 @@ interface SidebarSlideProps {
 	mode: SidebarSlideMode;
 	width: number;
 	onLayoutFrame?: () => void;
-	onRestChange?: (rest: SidebarSlideMode | null) => void;
 	keepMounted?: boolean;
 	durationMs?: number;
 	children: (fill: boolean) => React.ReactNode;
@@ -17,7 +16,6 @@ export function SidebarSlide({
 	mode,
 	width,
 	onLayoutFrame,
-	onRestChange,
 	keepMounted = false,
 	durationMs = 300,
 	children,
@@ -32,8 +30,6 @@ export function SidebarSlide({
 	const headingRef = useRef(mode);
 	const onLayoutFrameRef = useRef(onLayoutFrame);
 	onLayoutFrameRef.current = onLayoutFrame;
-	const onRestChangeRef = useRef(onRestChange);
-	onRestChangeRef.current = onRestChange;
 
 	useEffect(() => {
 		const from = headingRef.current;
@@ -68,11 +64,6 @@ export function SidebarSlide({
 		if (!move) onLayoutFrameRef.current?.();
 	}, [move]);
 
-	const rest = move ? null : settled;
-	useLayoutEffect(() => {
-		onRestChangeRef.current?.(rest);
-	}, [rest]);
-
 	if (!hasOpened) return null;
 	if (!keepMounted && !move && settled === "closed") return null;
 
@@ -83,13 +74,9 @@ export function SidebarSlide({
 	const hidden = !move && settled === "closed";
 	const widthOf = (m: SidebarSlideMode) =>
 		m === "closed" ? 0 : m === "open" ? width : "100%";
-	const spaceOf = (m: SidebarSlideMode) => (m === "closed" ? 0 : width);
 	const fill = move
 		? move.from === "expanded" || move.to === "expanded"
 		: settled === "expanded";
-	const spaceWidth = move
-		? spaceOf(armed ? move.to : move.from)
-		: spaceOf(settled);
 	const panelWidth = move
 		? widthOf(armed ? move.to : move.from)
 		: widthOf(settled);
@@ -100,20 +87,17 @@ export function SidebarSlide({
 		willChange: move ? "width" : undefined,
 	};
 
-	// Out of flow, the panel sizes and anchors against the nearest positioned
-	// ancestor, so that ancestor must end at this element's right edge.
 	return (
 		<div
-			className="flex h-full shrink-0 ease-[ease] motion-reduce:transition-none"
-			style={{ width: inFlow ? undefined : spaceWidth, ...transition }}
+			className="relative flex h-full shrink-0 ease-[ease] motion-reduce:transition-none"
+			style={{ width: inFlow ? undefined : panelWidth, ...transition }}
 		>
 			<div
 				data-browser-layer={inFlow ? undefined : "raised"}
 				className={cn(
-					"overflow-hidden ease-[ease] motion-reduce:transition-none",
-					inFlow ? "flex h-full" : "absolute inset-y-0 right-0 z-30",
+					"overflow-hidden",
+					inFlow ? "flex h-full" : "absolute inset-0 z-30",
 				)}
-				style={{ width: inFlow ? undefined : panelWidth, ...transition }}
 			>
 				<div
 					inert={hidden}
