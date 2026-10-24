@@ -1,4 +1,4 @@
-import { seatItem } from "@superset/auth/billing";
+import { organizationBilling, seatItem } from "@superset/auth/billing";
 import { db } from "@superset/db/client";
 import { subscriptions } from "@superset/db/schema";
 import * as authSchema from "@superset/db/schema/auth";
@@ -19,7 +19,6 @@ import {
 	formatSubscriptionCancelled,
 	formatSubscriptionStarted,
 	getDiscountInfo,
-	planFromPriceId,
 	planLabel,
 } from "./slack-blocks";
 
@@ -112,19 +111,14 @@ async function enrichFromSubscription(
 		where: eq(subscriptions.stripeSubscriptionId, stripeSubscriptionId),
 	});
 
+	const { planTier } = await organizationBilling(org.id);
 	const seat = seatItem(stripeSub);
 	const price = seat?.price;
 	const interval = price?.recurring?.interval === "year" ? "yearly" : "monthly";
 
 	return {
 		organizationName: org.name,
-		planName: planLabel(
-			dbSub?.plan ??
-				planFromPriceId(price?.id, [
-					env.STRIPE_PRO_MONTHLY_PRICE_ID,
-					env.STRIPE_PRO_YEARLY_PRICE_ID,
-				]),
-		),
+		planName: planLabel(planTier === "free" ? dbSub?.plan : planTier),
 		stripeCustomerId: customerId,
 		stripeSubscriptionId,
 		seatCount: seat?.quantity ?? 1,

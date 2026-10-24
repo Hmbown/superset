@@ -2,7 +2,6 @@ import { describe, expect, test } from "bun:test";
 import {
 	type EnrichedSubscription,
 	formatSubscriptionCancelled,
-	planFromPriceId,
 	planLabel,
 } from "./slack-blocks";
 
@@ -127,16 +126,5 @@ describe("planLabel", () => {
 	test("falls back to Unknown when the plan is missing", () => {
 		expect(planLabel(null)).toBe("Unknown");
 		expect(planLabel(undefined)).toBe("Unknown");
-	});
-});
-
-describe("planFromPriceId", () => {
-	test("maps a Pro price id to pro", () => {
-		expect(planFromPriceId("price_y", ["price_m", "price_y"])).toBe("pro");
-	});
-
-	test("returns null for an unknown or missing price id", () => {
-		expect(planFromPriceId("price_x", ["price_m"])).toBeNull();
-		expect(planFromPriceId(undefined, ["price_m"])).toBeNull();
 	});
 });
