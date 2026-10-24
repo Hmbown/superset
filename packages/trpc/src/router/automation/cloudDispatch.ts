@@ -230,10 +230,10 @@ async function assertOwnerMayUseCloud(
 			"cloud_access_denied",
 		);
 	}
-	const { enabled } = await cloudAccess({
-		userId: automation.ownerUserId,
-		session: null,
-	});
+	const { enabled } = await cloudAccess(
+		{ userId: automation.ownerUserId, session: null },
+		automation.organizationId,
+	);
 	if (enabled === undefined) {
 		throw new RunFailure("could not check the owner's cloud access", null);
 	}
@@ -288,11 +288,11 @@ async function pullRequestBranch(
 	if (!pullRequest?.headRef || event.repositoryId === null) return undefined;
 	const environment = await db.query.environments.findFirst({
 		where: eq(environments.id, environmentId),
-		columns: { hooksRepositoryId: true },
+		columns: { primaryRepositoryId: true },
 	});
 	const primary = primaryRepository(
 		await environmentRepositoryRows(environmentId),
-		environment?.hooksRepositoryId,
+		environment?.primaryRepositoryId,
 	);
 	return primary?.repoId === event.repositoryId
 		? pullRequest.headRef

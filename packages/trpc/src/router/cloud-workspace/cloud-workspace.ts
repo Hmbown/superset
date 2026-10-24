@@ -87,8 +87,8 @@ async function loadReadyWorkspace(
 			i18nKey: "serverError.cloudWorkspace.notFound",
 		});
 	}
-	await assertCloudAccess(ctx);
 	assertMember(ctx.organizationIds, row.organizationId);
+	await assertCloudAccess(ctx, row.organizationId);
 	if (!(await canOpenWorkspace(row, ctx.userId))) throw notFound();
 	if (row.status !== "ready") {
 		throw new TRPCError({
@@ -196,7 +196,7 @@ export const cloudWorkspaceRouter = {
 	 */
 	available: jwtProcedure.query(async ({ ctx }) => {
 		try {
-			await assertCloudAccess(ctx);
+			await assertCloudAccess(ctx, ctx.activeOrganizationId ?? null);
 			return { available: true };
 		} catch {
 			return { available: false };
@@ -211,8 +211,8 @@ export const cloudWorkspaceRouter = {
 			}),
 		)
 		.query(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, input.organizationId);
+			await assertCloudAccess(ctx, input.organizationId);
 			const rows = await db
 				.select({
 					workspace: cloudWorkspaces,
@@ -247,15 +247,15 @@ export const cloudWorkspaceRouter = {
 	repositories: jwtProcedure
 		.input(z.object({ organizationId: z.string().uuid() }))
 		.query(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, input.organizationId);
+			await assertCloudAccess(ctx, input.organizationId);
 			const rows = await db
 				.select({
 					cloudWorkspaceId: cloudWorkspaceRepositories.cloudWorkspaceId,
 					repositoryId: githubRepositories.id,
 					fullName: githubRepositories.fullName,
 					path: cloudWorkspaceRepositories.path,
-					hooksRepositoryId: environments.hooksRepositoryId,
+					primaryRepositoryId: environments.primaryRepositoryId,
 				})
 				.from(cloudWorkspaceRepositories)
 				.innerJoin(
@@ -282,11 +282,11 @@ export const cloudWorkspaceRouter = {
 				const own = rows.filter((r) => r.cloudWorkspaceId === workspaceId);
 				const primary = primaryRepository(
 					own.map((r) => ({ id: r.repositoryId, fullName: r.fullName })),
-					own[0]?.hooksRepositoryId,
+					own[0]?.primaryRepositoryId,
 				);
 				if (primary) primaryByWorkspace.set(workspaceId, primary.id);
 			}
-			return rows.map(({ hooksRepositoryId: _hooks, ...row }) => ({
+			return rows.map(({ primaryRepositoryId: _primary, ...row }) => ({
 				...row,
 				primary:
 					primaryByWorkspace.get(row.cloudWorkspaceId) === row.repositoryId,
@@ -301,8 +301,8 @@ export const cloudWorkspaceRouter = {
 			}),
 		)
 		.query(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, input.organizationId);
+			await assertCloudAccess(ctx, input.organizationId);
 			return listPullRequests(input.organizationId, ctx.userId, input.archived);
 		}),
 
@@ -328,8 +328,8 @@ export const cloudWorkspaceRouter = {
 			}),
 		)
 		.query(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, input.organizationId);
+			await assertCloudAccess(ctx, input.organizationId);
 			const [repo] = await loadRepositories({
 				organizationId: input.organizationId,
 				repositoryIds: [input.repositoryId],
@@ -381,8 +381,8 @@ export const cloudWorkspaceRouter = {
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
-			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, input.organizationId);
+			await assertCloudAccess(ctx, input.organizationId);
 			if (input.agent && !isCloudAgentId(input.agent)) {
 				// Only the built-in presets exist inside a sandbox; the clients offer
 				// nothing else, so this is a developer error, not a user one.
@@ -679,8 +679,8 @@ export const cloudWorkspaceRouter = {
 				where: eq(cloudWorkspaces.id, input.id),
 			});
 			if (!row) return { deleted: false };
-			await assertCloudAccess(ctx);
 			assertMember(ctx.organizationIds, row.organizationId);
+			await assertCloudAccess(ctx, row.organizationId);
 			if (!(await canOpenWorkspace(row, ctx.userId))) {
 				return { deleted: false };
 			}

@@ -183,7 +183,7 @@ msgstr "{0, plural, one {#件保留中} other {#件保留中}}"
 
 #. placeholder {0}: chosenLeads.length
 #. placeholder {0}: chosenPeople.length
-#. placeholder {0}: grantee.memberCount
+#. placeholder {0}: creatorFilters.length
 msgid "{0, plural, one {# person} other {# people}}"
 msgstr "{0, plural, other {# 人}}"
 
@@ -345,6 +345,10 @@ msgstr "{0, plural, one {#件のページのコメントを監視中} other {#�
 msgid "{0} – {1} · API-rate estimate from local session logs"
 msgstr "{0} – {1} · ローカルセッションログからのAPI定価換算"
 
+#. placeholder {0}: workspace.hostName
+msgid "{0} — device offline"
+msgstr "{0} — デバイスがオフライン"
+
 #. placeholder {0}: error.message
 msgid "{0} — try the Superset tray menu > Host Service > Restart."
 msgstr "{0} — Supersetのトレイメニュー > ホストサービス > 再起動をお試しください。"
@@ -408,6 +412,10 @@ msgstr "{0}(末尾{1})"
 #. placeholder {0}: collisions.length
 msgid "{0} files already exist in {where}. Do you want to replace them?"
 msgstr "{where}には{0}件のファイルがすでに存在します。置き換えますか?"
+
+#. placeholder {0}: formatNumber(hours)
+msgid "{0} GB-hours"
+msgstr "{0} GB 時間"
 
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} installed"
@@ -487,9 +495,9 @@ msgstr "{totalCount}件中{0}件目"
 msgid "{0} options"
 msgstr "{0}のオプション"
 
-#. placeholder {0}: i18n._(plan.name)
-msgid "{0} plan"
-msgstr "{0}プラン"
+#. placeholder {0}: formatCurrency(gbHourPackPricePerGbHour(pack), PLAN_PRICE_CURRENCY, { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+msgid "{0} per GB-hour"
+msgstr "GB 時間あたり {0}"
 
 #. placeholder {0}: normalizedProjectIds.length
 msgid "{0} projects"
@@ -701,6 +709,9 @@ msgstr "現時点で{actual} · 予測は約{projected}"
 msgid "{agents} sessions resume when you open their workspace."
 msgstr "{agents} のセッションは、そのワークスペースを開くと再開されます。"
 
+msgid "{amount} ({hoursLabel} GB-hours)"
+msgstr "{amount} ({hoursLabel} GB 時間)"
+
 msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
 msgstr "{approvalCount, plural, other {#件が承認待ち}}"
 
@@ -734,9 +745,6 @@ msgstr "{connectorName} アカウント"
 
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount}件のCookie — このサイトを削除"
-
-msgid "{count, plural, one {# active port — show details} other {# active ports — show details}}"
-msgstr "{count, plural, one {#個のアクティブなポート — 詳細を表示} other {#個のアクティブなポート — 詳細を表示}}"
 
 msgid "{count, plural, one {# Check Failed} other {# Checks Failed}}"
 msgstr "{count, plural, one {#件のチェックが失敗} other {#件のチェックが失敗}}"
@@ -825,6 +833,9 @@ msgstr "{count}台のホストがこのアプリより古いホストサービ�
 msgid "{count}/day"
 msgstr "{count}/日"
 
+msgid "{credit} of credit goes toward your next invoices."
+msgstr "{credit} のクレジットは次回以降の請求に充当されます。"
+
 msgid "{current} of {total}"
 msgstr "{total} 件中 {current} 件目"
 
@@ -907,6 +918,9 @@ msgstr "{hostName}はオフラインです"
 msgid "{hotkeyText} to hide"
 msgstr "{hotkeyText}で隠す"
 
+msgid "{hours} hours per seat each month"
+msgstr "1席あたり毎月 {hours} 時間"
+
 msgid "{hours}h"
 msgstr "{hours}時間"
 
@@ -964,8 +978,11 @@ msgstr "{minutes}分前"
 msgid "{modKey}↵ to create"
 msgstr "{modKey}↵で作成"
 
-msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Cloud workspaces, mobile, priority support."
-msgstr "1ユーザーあたり月額{monthlyPrice}（月払い）、または{yearlyPrice}（年払い）。クラウドワークスペース、モバイル、優先サポート。"
+msgid "{monthlyPrice} per user/mo billed monthly, or {yearlyPrice} billed yearly. Mobile, automations, priority support."
+msgstr "月払いで1ユーザーあたり月額 {monthlyPrice}、または年払いで {yearlyPrice}。モバイル、オートメーション、優先サポート。"
+
+msgid "{monthlyPrice} per user/mo. Mobile, automations, priority support."
+msgstr "1ユーザーあたり月額 {monthlyPrice}。モバイル、オートメーション、優先サポート。"
 
 msgid "{months}mo ago"
 msgstr "{months}か月前"
@@ -1008,6 +1025,15 @@ msgstr "{name} が作業を開始しました"
 
 msgid "{name} stopped"
 msgstr "{name} が停止しました"
+
+msgid "{name}: {hours} hours ({gbHours} GB-hours) per seat"
+msgstr "{name}: 1席あたり {hours} 時間（{gbHours} GB 時間）"
+
+msgid "{name}: {monthly} per user/month"
+msgstr "{name}: 1ユーザーあたり月額 {monthly}"
+
+msgid "{name}: {monthly} per user/month, or {yearly} billed yearly"
+msgstr "{name}: 1ユーザーあたり月額 {monthly}、または年払いで {yearly}"
 
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {人を1人以上指定するか、{choice}を選択してください。} sender {送信者を1人以上指定するか、{choice}を選択してください。} other {項目を1つ以上指定するか、{choice}を選択してください。}}"
@@ -1058,6 +1084,9 @@ msgstr "{planLabel} · {joined}に参加"
 msgid "{planLabel} plan"
 msgstr "{planLabel}プラン"
 
+msgid "{planName} plan"
+msgstr "{planName} プラン"
+
 msgid "{plugin} has no OAuth client configured on this deployment yet."
 msgstr "{plugin} の OAuth クライアントはこのデプロイにまだ設定されていません。"
 
@@ -1071,6 +1100,18 @@ msgstr "{presetLabel}をデフォルトに戻しました"
 msgid "{previewSize}px · {0} line height"
 msgstr "{previewSize}px · 行の高さ {0}"
 
+msgid "{price} per GB-hour"
+msgstr "GB 時間あたり {price}"
+
+msgid "{price} per user/month"
+msgstr "1ユーザーあたり月額 {price}"
+
+msgid "{price} per user/month, {gbHours} cloud GB-hours per seat each month"
+msgstr "1ユーザーあたり月額{price}、1席あたり毎月 {gbHours} クラウド GB 時間"
+
+msgid "{price}/user/mo"
+msgstr "{price}/ユーザー/月"
+
 msgid "{provider} logo"
 msgstr "{provider}のロゴ"
 
@@ -1079,6 +1120,9 @@ msgstr "{pullRequestCount, plural, other {# 件の PR}}"
 
 msgid "{queued, plural, one {# message waiting in the queue} other {# messages waiting in the queue}}"
 msgstr "{queued, plural, one {キューで待機中のメッセージ #件} other {キューで待機中のメッセージ #件}}"
+
+msgid "{rate} per GB-hour. Used after the monthly pool, and never expire."
+msgstr "GB 時間あたり {rate}。月間プールの後に使われ、期限はありません。"
 
 msgid "{readPercent}% read"
 msgstr "{readPercent}%読了"
@@ -1188,6 +1232,9 @@ msgstr "{updatedLabel}をデフォルトに復元しました"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {# 件のファイルをアップロード中…}}"
+
+msgid "{used} of {limit} environments"
+msgstr "{limit} 件中 {used} 件の環境"
 
 msgid "{used} used"
 msgstr "{used} 使用済み"
@@ -1348,6 +1395,9 @@ msgstr "1件のCookie — このサイトを削除"
 
 msgid "1 hr"
 msgstr "1時間"
+
+msgid "1 person"
+msgstr "1人"
 
 msgid "1 user"
 msgstr "1ユーザー"
@@ -1851,6 +1901,9 @@ msgstr "このデバイスに独自のターミナルエージェントを追加
 msgid "Added {added} files to {where}"
 msgstr "{added}件のファイルを{where}に追加しました"
 
+msgid "Added {bought} GB-hours."
+msgstr "{bought} GB 時間を追加しました。"
+
 msgid "Added 1 file to {where}"
 msgstr "1件のファイルを{where}に追加しました"
 
@@ -2088,9 +2141,6 @@ msgstr "すべてのコミット"
 #. placeholder {0}: members.length
 msgid "All data will be permanently deleted for all {0} members — this cannot be undone."
 msgstr "{0}人のメンバー全員のデータが完全に削除されます — この操作は元に戻せません。"
-
-msgid "All devices"
-msgstr "すべてのデバイス"
 
 msgid "All features, side by side"
 msgstr "全機能を並べて比較"
@@ -2426,6 +2476,9 @@ msgstr "何でも"
 msgid "Anything else? (optional)"
 msgstr "他にありますか？（任意）"
 
+msgid "Anywhere"
+msgstr "すべての場所"
+
 msgid "AP"
 msgstr "AP"
 
@@ -2665,6 +2718,9 @@ msgstr "at"
 msgid "At least one team we can name, ours included, passes every F4 gate for a full quarter and publishes the numbers."
 msgstr "名前を挙げられるチームが少なくとも1つ、当社を含めて、四半期を通してF4のゲートをすべて通過し、その数値を公開する。"
 
+msgid "At most {AUTO_TOPUP_MONTHLY_LIMIT} top-ups a month, so up to {monthlyMax} a month."
+msgstr "チャージは月 {AUTO_TOPUP_MONTHLY_LIMIT} 回まで、つまり月に最大 {monthlyMax} です。"
+
 msgid "at once"
 msgstr "同時"
 
@@ -2728,9 +2784,6 @@ msgstr "アテンションキュー"
 msgid "Audio"
 msgstr "オーディオ"
 
-msgid "Audit AGENTS.md / CLAUDE.md against the codebase and fill the gaps."
-msgstr "AGENTS.md / CLAUDE.mdをコードベースと照らして点検し、不足を埋めます。"
-
 msgid "Audit log"
 msgstr "監査ログ"
 
@@ -2787,6 +2840,9 @@ msgstr "自動ではシステムの言語に従います。後から設定で変
 
 msgid "Auto Save"
 msgstr "自動保存"
+
+msgid "Auto top-up"
+msgstr "自動チャージ"
 
 msgid "auto-generated"
 msgstr "自動生成"
@@ -3001,6 +3057,9 @@ msgstr "mainより?コミット遅れています。リベースが必要です"
 msgid "Being built right now."
 msgstr "いま作っています。"
 
+msgid "Beta"
+msgstr "ベータ"
+
 msgid "Beyond: F5 is not a near-term claim"
 msgstr "その先:F5は近い将来の主張ではない"
 
@@ -3019,8 +3078,8 @@ msgstr "請求"
 msgid "Billing details"
 msgstr "請求先情報"
 
-msgid "Billing refused to start a cloud workspace: the organization needs a paid plan, or it reached its cloud usage limit. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
-msgstr "請求の都合でクラウドワークスペースを起動できませんでした。組織に有料プランが必要か、クラウドの利用上限に達しています。「設定 > 請求」でアップグレードするか上限を引き上げるか、オートメーションをデバイスで実行してください。"
+msgid "Billing refused to start a cloud workspace: the organization's plan does not include cloud workspaces, or it reached its cloud usage limit. Cloud workspaces need the Team or Ultra plan. Upgrade or raise the limit in Settings > Billing, or run the automation on a device."
+msgstr "課金によりクラウドワークスペースの起動が拒否されました。組織のプランにクラウドワークスペースが含まれていないか、クラウド利用上限に達しています。クラウドワークスペースには Team または Ultra プランが必要です。設定 > 請求でアップグレードするか上限を上げてください。またはデバイスで自動化を実行してください。"
 
 msgid "Binary"
 msgstr "バイナリ"
@@ -3088,6 +3147,9 @@ msgstr "自動運転車の等級付けを借りて、ソフトウェアの作ら
 
 msgid "Bottom drawer, swipe-friendly on touch devices."
 msgstr "下部ドロワー。タッチデバイスではスワイプで操作できます。"
+
+msgid "Bought GB-hours left: {prepaid}"
+msgstr "購入済み GB 時間の残り: {prepaid}"
 
 msgid "Box"
 msgstr "Box"
@@ -3294,6 +3356,18 @@ msgstr "ボタン押し係"
 msgid "Buttons, toggles, and keyboard affordances"
 msgstr "ボタン、トグル、キーボード操作の手がかり"
 
+msgid "Buy"
+msgstr "購入"
+
+msgid "Buy extra GB-hours"
+msgstr "GB 時間を追加購入"
+
+msgid "Buy for {total}"
+msgstr "{total} で購入"
+
+msgid "Buy GB-hours"
+msgstr "GB 時間を購入"
+
 #. placeholder {0}: data.author
 msgid "by {0}"
 msgstr "作成者: {0}"
@@ -3359,6 +3433,9 @@ msgstr "カメラを利用できません"
 
 msgid "Can comment"
 msgstr "コメント可"
+
+msgid "Can I buy more cloud GB-hours?"
+msgstr "クラウド GB 時間を追加購入できますか?"
 
 msgid "Can I create automations from a script?"
 msgstr "スクリプトからオートメーションを作成できますか？"
@@ -3501,14 +3578,14 @@ msgstr "場所を変更"
 msgid "Change or add labels…"
 msgstr "ラベルを変更または追加…"
 
-msgid "Change or add tasks…"
-msgstr "タスクを変更または追加…"
-
 msgid "Change organization logo"
 msgstr "組織のロゴを変更"
 
 msgid "Change organization slug"
 msgstr "組織スラッグを変更"
+
+msgid "Change plan"
+msgstr "プランを変更"
 
 msgid "Change preview"
 msgstr "変更のプレビュー"
@@ -3574,6 +3651,9 @@ msgstr "変更中..."
 
 msgid "Channel created"
 msgstr "チャンネル作成"
+
+msgid "Charge your saved card for more GB-hours when bought GB-hours run low."
+msgstr "購入した GB 時間が少なくなると、保存済みのカードに追加の GB 時間を請求します。"
 
 msgid "Chat"
 msgstr "チャット"
@@ -4089,15 +4169,17 @@ msgstr "このターミナルを閉じると実行中のプロセスが終了し
 msgid "Cloud"
 msgstr "クラウド"
 
+msgid "Cloud environments"
+msgstr "クラウド環境"
+
+msgid "Cloud GB-hours per seat each month"
+msgstr "1席あたりの毎月のクラウド GB 時間"
+
 msgid "Cloud is coming. Become a design partner"
 msgstr "クラウド版が近日登場。共同開発パートナーを募集中"
 
 msgid "Cloud sandboxes"
 msgstr "クラウドサンドボックス"
-
-#. js-lingui-explicit-id
-msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
-msgstr "クラウドサンドボックスは {account} では有効になっていません。Superset チームにアクセス権をリクエストしてください。"
 
 msgid "Cloud usage"
 msgstr "クラウド使用量"
@@ -4108,17 +4190,18 @@ msgstr "クラウドワークスペース"
 msgid "Cloud workspaces"
 msgstr "クラウドワークスペース"
 
+#. js-lingui-explicit-id
+msgid "serverError.cloudWorkspace.cloudSandboxesAreInternalOnly"
+msgstr "{account} ではクラウドワークスペースが有効になっていません。Team と Ultra プランで利用できます。設定の請求からアップグレードしてください。"
+
 msgid "Cloud workspaces ignore this variable. Agents sign in under Settings › Agents instead."
 msgstr "クラウドワークスペースはこの変数を無視します。エージェントは代わりに「設定 › エージェント」でサインインします。"
-
-msgid "Cloud workspaces need a paid plan. Upgrade in Settings, Billing to start one."
-msgstr "クラウドワークスペースには有料プランが必要です。「設定」の「請求」でアップグレードすると起動できます。"
 
 msgid "Cloud workspaces need a project for now"
 msgstr "現在、クラウドワークスペースにはプロジェクトが必要です"
 
-msgid "Cloud workspaces under their projects, a local and cloud filter, and the redesigned workspace row."
-msgstr "クラウドワークスペースをプロジェクトの下に表示し、ローカル/クラウドの絞り込みと新しいワークスペース行を追加します。"
+msgid "Cloud workspaces need the Team or Ultra plan. Upgrade in Settings, Billing to start one."
+msgstr "クラウドワークスペースには Team または Ultra プランが必要です。起動するには設定の請求からアップグレードしてください。"
 
 msgid "Cloud workspaces will stop running {agentLabel} with it."
 msgstr "クラウドワークスペースはこれを使って{agentLabel}を実行しなくなります。"
@@ -4384,6 +4467,9 @@ msgstr "{agent} 用に設定済み"
 
 msgid "Confirm before quitting"
 msgstr "終了前に確認"
+
+msgid "Confirm switch"
+msgstr "変更を確定"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4973,6 +5059,9 @@ msgstr "環境を読み込めませんでした。"
 
 msgid "Could not load image"
 msgstr "画像を読み込めませんでした"
+
+msgid "Could not load plans."
+msgstr "プランを読み込めませんでした。"
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "プラグインを読み込めませんでした。接続を確認して再試行してください。"
@@ -5575,9 +5664,6 @@ msgstr "作成 {0} · 最終使用 {1}"
 msgid "Created {ago}"
 msgstr "{ago}に作成"
 
-msgid "created {createdAgo}"
-msgstr "{createdAgo}に作成"
-
 msgid "Created {createdAgo}"
 msgstr "{createdAgo}に作成"
 
@@ -5711,6 +5797,12 @@ msgstr "カスタム"
 
 msgid "Custom agent…"
 msgstr "カスタムエージェント…"
+
+msgid "Custom amount"
+msgstr "カスタム数量"
+
+msgid "Custom amount of GB-hours"
+msgstr "GB 時間のカスタム数量"
 
 msgid "Custom components beyond the shadcn set"
 msgstr "shadcnのセットにない独自コンポーネント"
@@ -6232,9 +6324,6 @@ msgstr "差分変更の概要"
 msgid "diff in new tab"
 msgstr "新しいタブで差分"
 
-msgid "Diff size"
-msgstr "差分サイズ"
-
 msgid "Digital Product Designer"
 msgstr "デジタルプロダクトデザイナー"
 
@@ -6562,6 +6651,9 @@ msgstr "Dropdown Menu"
 msgid "Dropdown, context, and application menus"
 msgstr "ドロップダウン、コンテキスト、アプリケーションメニュー"
 
+msgid "Due today"
+msgstr "本日のお支払い"
+
 msgid "Duration"
 msgstr "所要時間"
 
@@ -6601,6 +6693,9 @@ msgstr "それぞれ新しいタブで"
 
 msgid "Each morning at 8am, look at yesterday's failed CI runs, diagnose the most common failure, and open a fix PR."
 msgstr "毎朝午前8時に、前日の失敗したCI実行を確認し、最も多い失敗原因を診断して修正PRを作成する。"
+
+msgid "Each seat adds its plan's hours to one pool your team shares:"
+msgstr "各席はプランの時間をチーム全体で共有する 1 つのプールに追加します:"
 
 msgid "Each session resumes where it left off."
 msgstr "各セッションは中断したところから再開します。"
@@ -6781,9 +6876,6 @@ msgstr "終了しました"
 msgid "Ending the call"
 msgstr "通話を終了中"
 
-msgid "Enjoying Superset?"
-msgstr "Supersetを気に入っていただけましたか?"
-
 msgid "Ensure no regression"
 msgstr "デグレがないことを確認して"
 
@@ -6813,6 +6905,9 @@ msgstr "値を入力してください。"
 
 msgid "Enter a whole number"
 msgstr "整数を入力"
+
+msgid "Enter a whole number from {minHours} to {maxHours} GB-hours."
+msgstr "{minHours} から {maxHours} GB 時間までの整数を入力してください。"
 
 msgid "Enter this code when OpenAI asks for it:"
 msgstr "OpenAI に求められたら、このコードを入力してください:"
@@ -6889,6 +6984,9 @@ msgstr "毎分"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "すべての目標が次の段に向けて力を発揮しています。直近30日間で計測。"
 
+msgid "Every paid plan includes Superset Mobile, automations, and priority support. Plans with cloud workspaces give your team one shared pool of GB-hours."
+msgstr "すべての有料プランに Superset Mobile、オートメーション、優先サポートが含まれます。クラウドワークスペース付きのプランでは、チームで共有する GB 時間のプールが付きます。"
+
 msgid "Every publish is a version"
 msgstr "公開するたびにバージョンが残る"
 
@@ -6919,14 +7017,17 @@ msgstr "変更するまで全員がv{sharedVersion}を見続けます"
 msgid "Everyone with access to this organization."
 msgstr "この組織にアクセスできる全員。"
 
+msgid "Everything in {previousPlan}"
+msgstr "{previousPlan} のすべての機能"
+
 msgid "Everything in Free"
 msgstr "Freeのすべて"
 
-msgid "Everything in Pro"
-msgstr "Proのすべて"
+msgid "Everything in Ultra"
+msgstr "Ultra のすべて"
 
-msgid "Everything in Pro plus SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
-msgstr "Proのすべてに加えて、SSOとSAML、SCIMプロビジョニング、IP制限、監査ログ、個別のSLA、専任サポート、個別契約が含まれます。料金は組織に合わせて設定します。ご連絡いただければ、最適な内容をご提案します。"
+msgid "Everything in Ultra plus custom cloud GB-hours, SSO & SAML, SCIM provisioning, IP restrictions, audit logs, a custom SLA, dedicated support, and custom contracts. Pricing is tailored to your organization. Get in touch and we'll scope something that fits."
+msgstr "Ultra のすべてに加えて、カスタムのクラウド GB 時間、SSO と SAML、SCIM プロビジョニング、IP 制限、監査ログ、カスタム SLA、専任サポート、カスタム契約。価格は組織に合わせて設定します。お問い合わせいただければ、最適なプランをご提案します。"
 
 msgid "Everything is scriptable. Spawn workspaces and agents from the CLI, wire Superset into CI with the SDK, or let your agent drive it over MCP."
 msgstr "すべてスクリプトから操作できます。CLIでワークスペースやエージェントを起動し、SDKでSupersetをCIに組み込み、MCP経由でエージェント自身に操作させることもできます。"
@@ -6990,6 +7091,9 @@ msgstr "ファイルを展開"
 msgid "Expand project"
 msgstr "プロジェクトを展開"
 
+msgid "Expand the right pane to fill the window, or restore it"
+msgstr "右ペインをウィンドウ全体に広げる、または元に戻す"
+
 msgid "Expand thread"
 msgstr "スレッドを展開"
 
@@ -7047,6 +7151,12 @@ msgstr "外部エディタ"
 
 msgid "extra ${used} of ${limit}"
 msgstr "追加分 ${limit}中${used}"
+
+msgid "Extra GB-hours"
+msgstr "追加の GB 時間"
+
+msgid "Extra GB-hours, bought as needed"
+msgstr "必要に応じて購入できる追加 GB 時間"
 
 msgid "Extra high"
 msgstr "最高"
@@ -7678,14 +7788,14 @@ msgstr "@{normalizedSearch}で絞り込む"
 msgid "Filter by author: {label}"
 msgstr "作成者で絞り込み: {label}"
 
-msgid "Filter by device"
-msgstr "デバイスで絞り込む"
-
 msgid "Filter by reviews"
 msgstr "レビューで絞り込む"
 
 msgid "Filter by state"
 msgstr "状態で絞り込む"
+
+msgid "Filter by where workspaces run"
+msgstr "ワークスペースの実行場所で絞り込む"
 
 msgid "Filter by workspace: {label}"
 msgstr "ワークスペースで絞り込み: {label}"
@@ -7753,12 +7863,6 @@ msgstr "ページ内検索"
 msgid "Find in Terminal"
 msgstr "ターミナル内を検索"
 
-msgid "Find recently changed code with weak coverage and test it properly."
-msgstr "最近変更されたカバレッジの薄いコードを見つけて、きちんとテストします。"
-
-msgid "Find stale TODO/FIXME comments and resolve the quick ones."
-msgstr "古いTODO/FIXMEコメントを見つけて、すぐ直せるものを解消します。"
-
 msgid "Finder"
 msgstr "Finder"
 
@@ -7768,11 +7872,11 @@ msgstr "レビューを完了"
 msgid "Finished"
 msgstr "完了"
 
+msgid "Finished · unread"
+msgstr "完了 · 未読"
+
 msgid "finished · worked for 7s"
 msgstr "完了 · 7秒稼働"
-
-msgid "First repository by name"
-msgstr "名前順で最初のリポジトリ"
 
 msgid "Fix all failing checks"
 msgstr "失敗したチェックをすべて修正"
@@ -7903,6 +8007,9 @@ msgstr "これから始める個人向け"
 msgid "For organizations with advanced needs"
 msgstr "高度な要件がある組織向け"
 
+msgid "For people who keep agents running all day"
+msgstr "エージェントを一日中動かす人向け"
+
 msgid "For press inquiries and interview requests, email us."
 msgstr "取材やインタビューのご依頼は、メールでお問い合わせください。"
 
@@ -7911,6 +8018,12 @@ msgstr "請求に関するご質問は<0>お問い合わせ</0>ください。"
 
 msgid "For teams that need more power"
 msgstr "もっと力が必要なチーム向け"
+
+msgid "For teams that run agents every day"
+msgstr "毎日エージェントを動かすチーム向け"
+
+msgid "For teams that run more agents in the cloud"
+msgstr "クラウドでより多くのエージェントを実行するチーム向け"
 
 msgid "Force merge"
 msgstr "強制マージ"
@@ -8056,8 +8169,14 @@ msgstr "ゲート"
 msgid "Gates open"
 msgstr "通過したゲート"
 
+msgid "GB-hours"
+msgstr "GB 時間"
+
 msgid "GB-hours over the plan: {overage}"
 msgstr "プランを超えた GB 時間: {overage}"
+
+msgid "GB-hours past the pool"
+msgstr "プールを超えた GB 時間"
 
 msgid "GB-hours used: {used}"
 msgstr "使用した GB 時間: {used}"
@@ -8098,11 +8217,11 @@ msgstr "生成中..."
 msgid "Generating…"
 msgstr "生成中…"
 
+msgid "Get {plan}"
+msgstr "{plan} を始める"
+
 msgid "Get an API key"
 msgstr "APIキーを取得"
-
-msgid "Get an architecture tour: entry points, how to run it, what to read first."
-msgstr "アーキテクチャの案内: エントリポイント、実行方法、最初に読むべき場所。"
 
 msgid "Get in touch with the {companyName} team."
 msgstr "{companyName}チームにお問い合わせください。"
@@ -8369,9 +8488,6 @@ msgstr "Henry Ford"
 msgid "Hid \"{0}\" from the sidebar"
 msgstr "「{0}」をサイドバーから非表示にしました"
 
-msgid "Hidden"
-msgstr "非表示"
-
 msgid "Hidden folders"
 msgstr "非表示のフォルダ"
 
@@ -8417,9 +8533,6 @@ msgstr "サイドバーから非表示"
 msgid "Hide log"
 msgstr "ログを隠す"
 
-msgid "Hide PR review comments"
-msgstr "PRレビューコメントを隠す"
-
 msgid "Hide Preview"
 msgstr "プレビューを隠す"
 
@@ -8435,17 +8548,11 @@ msgstr "解決済みを非表示 ({resolvedCount})"
 msgid "Hide resolved comments"
 msgstr "解決済みのコメントを非表示"
 
-msgid "Hide review comments"
-msgstr "レビューコメントを隠す"
-
 msgid "Hide sessions"
 msgstr "セッションを隠す"
 
 msgid "Hide text"
 msgstr "テキストを隠す"
-
-msgid "Hide unchanged regions"
-msgstr "変更のない領域を隠す"
 
 msgid "High"
 msgstr "高"
@@ -8534,9 +8641,6 @@ msgstr "ホストが利用できません"
 msgid "Host unavailable: {hostName}"
 msgstr "ホストが利用できません: {hostName}"
 
-msgid "Hosted in the cloud"
-msgstr "クラウドでホスト"
-
 msgid "Hosts"
 msgstr "ホスト"
 
@@ -8548,6 +8652,12 @@ msgstr "HotkeyTooltip.tsx"
 
 msgid "Hourly"
 msgstr "毎時"
+
+msgid "Hours are shared across your team. They assume a standard {vcpus} vCPU / {memoryGb} GB workspace, and bigger machines use them faster."
+msgstr "時間はチーム全体で共有されます。標準の {vcpus} vCPU / {memoryGb} GB ワークスペースを基準にしており、大きいマシンほど早く消費します。"
+
+msgid "Hours assume a standard {vcpus} vCPU / {memoryGb} GB workspace. We meter GB-hours, the memory of the machine times the hours it runs, so a machine with twice the memory uses hours twice as fast."
+msgstr "時間は標準の {vcpus} vCPU / {memoryGb} GB ワークスペースを基準にしています。計測単位は GB 時間（マシンのメモリ × 稼働時間）なので、メモリが 2 倍のマシンは時間を 2 倍の速さで消費します。"
 
 msgid "Hover Card"
 msgstr "Hover Card"
@@ -8564,14 +8674,17 @@ msgstr "このプロジェクトのブランチ名とワークスペース名の
 msgid "How can we help?"
 msgstr "どのようなご用件ですか?"
 
+msgid "How do cloud hours work?"
+msgstr "クラウド時間の仕組みは?"
+
 msgid "How do I get started?"
 msgstr "どう始めればいいですか?"
 
+msgid "How do the paid plans work?"
+msgstr "有料プランの仕組みは?"
+
 msgid "How does pricing work?"
 msgstr "料金はどのような仕組みですか?"
-
-msgid "How does Pro pricing work?"
-msgstr "Proの料金はどのような仕組みですか?"
 
 msgid "How does the parallel agent system work?"
 msgstr "並列エージェントの仕組みはどうなっていますか?"
@@ -8844,6 +8957,9 @@ msgstr "進行中"
 
 msgid "In Progress"
 msgstr "進行中"
+
+msgid "In review"
+msgstr "レビュー中"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Supersetデスクトップアプリで<0>設定 → 外観 → テーマ</0>を開きます。"
@@ -9313,6 +9429,12 @@ msgstr "たった今"
 msgid "Kbd"
 msgstr "Kbd"
 
+msgid "Keep {planLabel}"
+msgstr "{planLabel} を維持"
+
+msgid "Keep {planName}"
+msgstr "{planName} を維持"
+
 msgid "Keep docs fresh"
 msgstr "ドキュメントを最新に保つ"
 
@@ -9394,9 +9516,6 @@ msgstr "ラベル名..."
 
 msgid "Labels"
 msgstr "ラベル"
-
-msgid "Lanes"
-msgstr "レーン"
 
 msgid "Language"
 msgstr "言語"
@@ -9532,8 +9651,8 @@ msgstr "学ぶ"
 msgid "Learn how to use scripts"
 msgstr "スクリプトの使い方を見る"
 
-msgid "Learn the workflow that fits this repo — parallel workspaces and agent setup."
-msgstr "このリポジトリに合うワークフロー — 並列ワークスペースとエージェント設定を学びます。"
+msgid "Learn more"
+msgstr "詳しく見る"
 
 msgid "Leave a comment"
 msgstr "コメントを残す"
@@ -10625,12 +10744,6 @@ msgstr "要対応"
 msgid "Needs input"
 msgstr "入力待ち"
 
-msgid "Needs permission"
-msgstr "許可が必要"
-
-msgid "Needs review"
-msgstr "レビューが必要"
-
 msgid "Needs tests"
 msgstr "テストが必要"
 
@@ -10693,9 +10806,6 @@ msgstr "別の対戦相手"
 msgid "New Chat"
 msgstr "新規チャット"
 
-msgid "New cloud workspace"
-msgstr "新規クラウドワークスペース"
-
 msgid "New environment"
 msgstr "新しい環境"
 
@@ -10737,9 +10847,6 @@ msgstr "新規セッション"
 
 msgid "New shell"
 msgstr "新しいシェル"
-
-msgid "New sidebar"
-msgstr "新しいサイドバー"
 
 msgid "New stars"
 msgstr "新規スター"
@@ -10806,6 +10913,9 @@ msgstr "次へ (Enter)"
 
 msgid "Next branch"
 msgstr "次のブランチ"
+
+msgid "Next charge: {nextTotal} on {nextDate}, plus any usage past the pool."
+msgstr "次回の請求: {nextDate} に {nextTotal}、プールを超えた利用分を加算。"
 
 msgid "Next comment"
 msgstr "次のコメント"
@@ -11152,9 +11262,6 @@ msgstr "一致なし"
 msgid "No matches"
 msgstr "一致なし"
 
-msgid "No matching files"
-msgstr "一致するファイルはありません"
-
 msgid "No matching MCP servers"
 msgstr "一致するMCPサーバーはありません"
 
@@ -11387,9 +11494,6 @@ msgstr "タスクが見つかりません。"
 msgid "No tasks in this project yet."
 msgstr "このプロジェクトにはまだタスクがありません。"
 
-msgid "No tasks or pull requests yet"
-msgstr "タスクやプルリクエストはまだありません"
-
 msgid "No tasks yet"
 msgstr "タスクはまだありません"
 
@@ -11494,9 +11598,6 @@ msgstr "それによってレビューのやり方が変わることはない。
 
 msgid "None"
 msgstr "なし"
-
-msgid "none (session)"
-msgstr "なし (セッション)"
 
 msgid "None. This is the floor."
 msgstr "なし。ここが出発点です。"
@@ -11671,6 +11772,9 @@ msgstr "全トークン中"
 
 msgid "Off"
 msgstr "オフ"
+
+msgid "Off. Buys more GB-hours when they run low."
+msgstr "オフ。少なくなると GB 時間を追加購入します。"
 
 #. placeholder {0}: BRAND.INTRO_NAME
 msgid "Official documentation for {0}, the app for running 100+ coding agents in parallel."
@@ -11951,6 +12055,9 @@ msgstr "変更を開く"
 msgid "Open Changes"
 msgstr "変更を開く"
 
+msgid "Open Chat"
+msgstr "チャットを開く"
+
 msgid "Open ChatGPT admin settings"
 msgstr "ChatGPT の管理者設定を開く"
 
@@ -11962,9 +12069,6 @@ msgstr "コマンドパレットを開く"
 
 msgid "Open comment on GitHub"
 msgstr "GitHubでコメントを開く"
-
-msgid "Open details"
-msgstr "詳細を開く"
 
 msgid "Open device sign-in"
 msgstr "デバイスのサインインを開く"
@@ -12004,6 +12108,9 @@ msgstr "ファイルを開く"
 
 msgid "Open File in New Tab"
 msgstr "新しいタブでファイルを開く"
+
+msgid "Open files, diffs and browsers in tabs on the right, and keep the center for terminals and chats."
+msgstr "ファイル、差分、ブラウザを右側のタブで開き、中央はターミナルとチャット用に残します。"
 
 msgid "Open from folder"
 msgstr "フォルダから開く"
@@ -12202,9 +12309,6 @@ msgstr "プルリクエストを開く"
 #. placeholder {0}: pullRequest.number
 msgid "Open pull request #{0}"
 msgstr "プルリクエスト#{0}を開く"
-
-msgid "Open pull request #{number}"
-msgstr "プルリクエスト#{number}を開く"
 
 msgid "Open pull request options"
 msgstr "プルリクエストのオプションを開く"
@@ -12574,6 +12678,9 @@ msgstr "ページネーション"
 msgid "Pagination"
 msgstr "Pagination"
 
+msgid "Paid plans are priced per user per month and billed for each active seat on your team. {planPrices}."
+msgstr "有料プランは1ユーザーあたりの月額料金で、チームの有効な席ごとに請求されます。{planPrices}。"
+
 msgid "Paid work trial"
 msgstr "有給ワークトライアル"
 
@@ -12644,12 +12751,6 @@ msgstr "パスワード"
 msgid "Password for {email}"
 msgstr "{email}のパスワード"
 
-msgid "Past month"
-msgstr "過去1か月"
-
-msgid "Past week"
-msgstr "過去1週間"
-
 msgid "Paste"
 msgstr "貼り付け"
 
@@ -12686,6 +12787,9 @@ msgstr "一時停止中"
 msgctxt "project state"
 msgid "Paused"
 msgstr "一時停止"
+
+msgid "Pay {total}"
+msgstr "{total} を支払う"
 
 msgid "Pay now"
 msgstr "今すぐ支払う"
@@ -12783,9 +12887,6 @@ msgstr "ディスク上のフォルダを選んでプロジェクトとして追
 
 msgid "Pick a folder…"
 msgstr "フォルダを選択…"
-
-msgid "Pick a low-risk papercut, fix it, and explain how it was verified."
-msgstr "リスクの低い小さな不具合を選んで修正し、検証方法を説明します。"
 
 msgid "Pick a model"
 msgstr "モデルを選択"
@@ -12999,10 +13100,6 @@ msgstr "PR #{0} ({1})"
 msgid "PR #{0} created"
 msgstr "PR #{0} を作成しました"
 
-#. placeholder {0}: i18n._(LABEL[state])
-msgid "PR #{number} — {0}"
-msgstr "PR #{number} — {0}"
-
 msgid "PR Closed"
 msgstr "PRはクローズ済み"
 
@@ -13023,9 +13120,6 @@ msgstr "PRレビューコメント"
 
 msgid "PR review submitted…"
 msgstr "PRレビュー送信…"
-
-msgid "PR state"
-msgstr "PRの状態"
 
 msgid "PR URL"
 msgstr "PRのURL"
@@ -13195,9 +13289,6 @@ msgstr "ProとEnterpriseです。Microsoft TeamsトリガーにはEnterpriseが�
 msgid "Pro Features"
 msgstr "Pro機能"
 
-msgid "Pro is {monthlyPrice} per user/month billed monthly, or {yearlyPrice} per user/month billed yearly (a 25% discount). You're billed per active seat on your team."
-msgstr "Proは月払いで1ユーザーあたり月{monthlyPrice}、年払いなら1ユーザーあたり月{yearlyPrice}(25%割引)です。チームのアクティブなシート数に応じて課金されます。"
-
 msgid "Process"
 msgstr "プロセス"
 
@@ -13295,7 +13386,6 @@ msgid "Project-wide search"
 msgstr "プロジェクト全体の検索"
 
 #. placeholder {0}: groupFilter.name
-#. placeholder {0}: workspace.projectName ?? t({ message: "none (session)", })
 msgid "Project: {0}"
 msgstr "プロジェクト: {0}"
 
@@ -14385,6 +14475,9 @@ msgstr "このバージョンを復元しますか?"
 msgid "Restore width"
 msgstr "幅を元に戻す"
 
+msgid "Restore workspace"
+msgstr "ワークスペースを復元"
+
 msgid "Restored"
 msgstr "復元済み"
 
@@ -14570,6 +14663,9 @@ msgstr "リッチ入力 ({hotkeyText})"
 msgid "right pane"
 msgstr "右ペイン"
 
+msgid "Right pane area"
+msgstr "右ペインエリア"
+
 msgid "Right-click here"
 msgstr "ここを右クリック"
 
@@ -14746,12 +14842,6 @@ msgstr "bun testを実行中…"
 msgid "Running now"
 msgstr "実行中"
 
-msgid "Running on a paired device"
-msgstr "ペアリング済みデバイスで実行中"
-
-msgid "Running on this device"
-msgstr "このデバイスで実行中"
-
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "実行中のターミナルプロセスは継続しますが、アプリ再起動後に古い出力が利用できなくなる場合があります。"
 
@@ -14800,9 +14890,6 @@ msgstr "保存"
 msgid "Save & create workspace"
 msgstr "保存してワークスペースを作成"
 
-msgid "Save 25%"
-msgstr "25%お得"
-
 msgid "Save All"
 msgstr "すべて保存"
 
@@ -14835,6 +14922,9 @@ msgstr "エージェントコマンドを保存する"
 
 msgid "Save to get URL"
 msgstr "保存するとURLが表示されます"
+
+msgid "Save up to {maxDiscount}"
+msgstr "最大{maxDiscount}お得"
 
 msgid "Saved"
 msgstr "保存済み"
@@ -15123,6 +15213,12 @@ msgstr "検索中..."
 
 msgid "Searching…"
 msgstr "検索中…"
+
+#. placeholder {0}: format(new Date(periodEnd), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(periodEnd)
+#. placeholder {0}: formatLocaleDate(new Date(seatPeriodEnd), { month: "long", day: "numeric", year: "numeric" })
+msgid "Seats removed mid-cycle stay active until {0}."
+msgstr "期間の途中で削除した席は {0} まで有効です。"
 
 msgid "Secondary"
 msgstr "Secondary"
@@ -15619,9 +15715,6 @@ msgstr "全員と共有中"
 msgid "Shared with me"
 msgstr "共有アイテム"
 
-msgid "Shares the project's checkout — files, git index and branch — with its other local workspaces"
-msgstr "プロジェクトのチェックアウト（ファイル、git インデックス、ブランチ）を他のローカルワークスペースと共有します"
-
 msgid "Sheet"
 msgstr "Sheet"
 
@@ -15669,6 +15762,9 @@ msgstr "すべてのコメントを表示"
 
 msgid "Show all lines"
 msgstr "すべての行を表示"
+
+msgid "Show archived"
+msgstr "アーカイブ済みを表示"
 
 msgid "Show Borders"
 msgstr "境界線を表示"
@@ -15757,9 +15853,6 @@ msgstr "オープンな項目を表示"
 msgid "Show original"
 msgstr "原文を表示"
 
-msgid "Show PR review comments"
-msgstr "PRレビューコメントを表示"
-
 msgid "Show Preview"
 msgstr "プレビューを表示"
 
@@ -15801,9 +15894,6 @@ msgstr "サイドバーに使用状況タブを表示"
 
 msgid "showArrow opt-in"
 msgstr "showArrowで有効化"
-
-msgid "Shown"
-msgstr "表示中"
 
 msgid "Shown in launchers and this list."
 msgstr "ランチャーとこの一覧に表示されます。"
@@ -15943,6 +16033,9 @@ msgstr "どのチームにも分かりやすい料金"
 
 msgid "Simple pricing for every team. Free for individuals, {yearlyPrice}/user/month for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
 msgstr "あらゆるチームに分かりやすい料金。個人は無料、チームは1ユーザーあたり月額{yearlyPrice}、エンタープライズはカスタム。{companyName}で100以上の並列コーディングエージェントを実行できます。"
+
+msgid "Simple pricing for every team. Free for individuals, per-user plans for teams, custom for enterprise. Run 100+ parallel coding agents with {companyName}."
+msgstr "すべてのチームにシンプルな料金。個人は無料、チームはユーザー単位のプラン、エンタープライズはカスタム。{companyName} で 100 以上のコーディングエージェントを並列に実行できます。"
 
 msgid "Simulate update: downloading"
 msgstr "アップデートをシミュレート: ダウンロード中"
@@ -16307,8 +16400,8 @@ msgstr "スター履歴"
 msgid "Star history isn't available right now. Check back soon."
 msgstr "スター履歴はいま利用できません。しばらくしてからご確認ください。"
 
-msgid "Star nag reset — eligible again on the empty state, sidebar card, and onboarding toast"
-msgstr "スターのリマインダーをリセットしました。空の状態、サイドバーのカード、初期設定の通知で再び表示できます"
+msgid "Star nag reset — eligible again on the empty state and onboarding toast"
+msgstr "スターのリマインダーをリセットしました。空の状態と初期設定の通知で再び表示できます"
 
 msgid "Star on GitHub"
 msgstr "GitHubでスターをつける"
@@ -16744,9 +16837,6 @@ msgstr "Supersetは既存のツールと併用できるように設計されて�
 msgid "Superset is getting a new name soon"
 msgstr "Superset はまもなく新しい名前になります"
 
-msgid "Superset is open source. If it's helped you today, a GitHub star helps other developers find it."
-msgstr "Supersetはオープンソースです。今日役に立ったなら、GitHubスターが他の開発者の発見につながります。"
-
 msgid "Superset is source-available: the code is public on GitHub under Elastic License 2.0 (ELv2), which lets you inspect and self-host it subject to the license terms, but is not OSI-approved open source. Superset is unrelated to Apache Superset, the business-intelligence tool."
 msgstr "Supersetはソース公開型です。コードはElastic License 2.0(ELv2)のもとGitHubで公開されており、ライセンス条件の範囲で内容の確認やセルフホストができますが、OSI承認のオープンソースではありません。なお、SupersetはBIツールのApache Supersetとは無関係です。"
 
@@ -16797,9 +16887,6 @@ msgstr "Superset Mobileは、接続したコンピュータ上でエージェン
 
 msgid "Superset Mobile terminal on iPhone"
 msgstr "iPhone 上の Superset Mobile のターミナル"
-
-msgid "Superset Mobile, cloud workspaces, automations, and priority support."
-msgstr "Superset Mobile、クラウドワークスペース、オートメーション、優先サポート。"
 
 msgid "Superset needs Full Disk Access to read another browser's data. Grant it in System Settings, then check again."
 msgstr "他のブラウザのデータを読み取るには、Supersetにフルディスクアクセスが必要です。システム設定で許可してから再確認してください。"
@@ -16889,11 +16976,17 @@ msgstr "組織を切り替え"
 msgid "Switch organization or sign in again to restart the host service."
 msgstr "組織を切り替えるか、サインインし直してホストサービスを再起動してください。"
 
+msgid "Switch plan"
+msgstr "プランを切り替え"
+
 msgid "Switch sign-in"
 msgstr "サインインを切り替え"
 
 msgid "Switch sign-in…"
 msgstr "サインインを切り替え…"
+
+msgid "Switch to {planName}"
+msgstr "{planName} に変更"
 
 msgid "Switch to Active Workspace"
 msgstr "アクティブなワークスペースに切り替え"
@@ -16954,6 +17047,11 @@ msgstr "ワークスペース8に切り替え"
 
 msgid "Switch to Workspace 9"
 msgstr "ワークスペース9に切り替え"
+
+#. placeholder {0}: format(new Date(switchAt), "MMMM d, yyyy")
+#. placeholder {0}: formatDate(scheduledAt)
+msgid "Switches to {nextPlanName} on {0}."
+msgstr "{0} に {nextPlanName} に切り替わります。"
 
 msgid "Symbol, light"
 msgstr "シンボル（明色）"
@@ -17349,9 +17447,6 @@ msgstr "アプリは無料でダウンロードできます。iOS 26 以降と S
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "アプリは{appVersion}ですが、別のもの（古いCLIや別のSupersetビルドの可能性）が起動したホストサービスに接続しています。再起動するとこのアプリのコピーに置き換わります。"
 
-msgid "The associated device isn't reachable right now"
-msgstr "関連デバイスに現在接続できません"
-
 msgid "The automation's owner can't use cloud workspaces in this organization anymore. Ask them to check their access, or run the automation on a device."
 msgstr "このオートメーションの所有者は、この組織でクラウドワークスペースを使用できなくなりました。所有者にアクセス権の確認を依頼するか、デバイス上でオートメーションを実行してください。"
 
@@ -17361,14 +17456,14 @@ msgstr "最良のエージェントは変わります。<0/>ワークフロー�
 msgid "The button now stands out. I checked it in your pane."
 msgstr "ボタンが目立つようになりました。ペインで確認済みです。"
 
+msgid "The change starts now. You pay only the difference for the rest of this period."
+msgstr "変更はすぐに適用されます。期間の残りについて差額のみをお支払いいただきます。"
+
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "クラウドワークスペースは起動しているはずですが、時間内に応答がありませんでした。次回の実行で再試行します。"
 
 msgid "The code expired. Start again."
 msgstr "コードの有効期限が切れました。やり直してください。"
-
-msgid "The config repository must be one of the environment's repositories"
-msgstr "設定リポジトリは環境のリポジトリのいずれかである必要があります"
 
 msgid "The connection timed out"
 msgstr "接続がタイムアウトしました"
@@ -17390,6 +17485,9 @@ msgstr "デスクトップアプリはmacOSで動作し、Linux向けには実�
 
 msgid "The device that hosts this project is unavailable."
 msgstr "このプロジェクトをホストするデバイスが利用できません。"
+
+msgid "The device was offline when this run started. It may have been asleep or shut down."
+msgstr "この実行の開始時、デバイスはオフラインでした。スリープ中または電源オフだった可能性があります。"
 
 msgid "The diff is still up to date — only comments failed to load."
 msgstr "差分は最新です — コメントの読み込みだけが失敗しました。"
@@ -17457,9 +17555,6 @@ msgstr "ホストからの応答がありません。"
 
 msgid "The host is online. Pick it when you create a workspace."
 msgstr "ホストはオンラインです。ワークスペースを作成するときに選択してください。"
-
-msgid "The host isn't connected to the Superset relay. If it's this device, turn on \"Allow remote access to this device via relay\" in Settings > Remote Access, then try again."
-msgstr "ホストがSupersetリレーに接続されていません。このデバイスの場合は、設定 > リモートアクセスで「リレー経由でこのデバイスへのリモートアクセスを許可」をオンにしてから再試行してください。"
 
 msgid "The host reported a failed update."
 msgstr "ホストが更新の失敗を報告しました。"
@@ -17551,6 +17646,12 @@ msgstr "お探しのページは存在しません。"
 
 msgid "The pane uses your real logins. Agents ask you before they take a consequential action."
 msgstr "ペインでは、あなたの実際のログイン状態が使われます。重要な操作の前には、エージェントが確認を求めます。"
+
+msgid "The pool resets every month. Usage past it is billed per GB-hour at the rate shown on each plan."
+msgstr "プールは毎月リセットされます。超過分は各プランに表示された GB 時間あたりの料金で請求されます。"
+
+msgid "The primary repository must be one of the environment's repositories"
+msgstr "プライマリリポジトリは環境のリポジトリのいずれかである必要があります"
 
 msgid "The project's checkout as it is: files and branch are shared"
 msgstr "プロジェクトのチェックアウトをそのまま使用: ファイルとブランチは共有されます"
@@ -18075,6 +18176,9 @@ msgstr "スレッドが見つかりません"
 msgid "Three steps · touches packages/ui and apps/desktop"
 msgstr "3ステップ · packages/uiとapps/desktopに変更"
 
+msgid "Threshold"
+msgstr "しきい値"
+
 msgid "Ticket to production under one day, median"
 msgstr "チケットから本番まで中央値1日未満"
 
@@ -18140,6 +18244,9 @@ msgstr "左サイドバーを切り替え"
 
 msgid "Toggle plan"
 msgstr "プランの表示を切り替え"
+
+msgid "Toggle Right Pane Full Screen"
+msgstr "右ペインの全画面表示を切り替え"
 
 msgid "Toggle right sidebar"
 msgstr "右サイドバーを切り替え"
@@ -18255,6 +18362,9 @@ msgstr "上位のモデル"
 msgid "Top tier. Nothing left to clear."
 msgstr "最上位ティア。クリアすべきものはもうありません。"
 
+msgid "Top-up amount"
+msgstr "チャージ量"
+
 msgid "Topic"
 msgstr "トピック"
 
@@ -18351,8 +18461,8 @@ msgstr "以下の企業のビルダーが使っています"
 msgid "Try a different search or filter."
 msgstr "検索条件やフィルターを変えてみてください。"
 
-msgid "Try a different search term or another device."
-msgstr "別の検索語や別のデバイスを試してください。"
+msgid "Try a different search term or another place."
+msgstr "別の検索語や別の場所を試してください。"
 
 msgid "Try again"
 msgstr "再試行"
@@ -18602,9 +18712,6 @@ msgstr "不明なワークスペース"
 msgid "Unlimited"
 msgstr "無制限"
 
-msgid "Unlimited users"
-msgstr "ユーザー数無制限"
-
 msgid "Unlink task"
 msgstr "タスクのリンクを解除"
 
@@ -18781,12 +18888,14 @@ msgstr "依存関係を更新して壊れた箇所を直す…"
 msgid "Upgrade on {0}"
 msgstr "{0} でアップグレード"
 
-#. placeholder {0}: i18n._(plan.name)
-msgid "Upgrade to {0}"
-msgstr "{0}にアップグレード"
+msgid "Upgrade to {planName}"
+msgstr "{planName} にアップグレード"
 
 msgid "Upgrade to Pro"
 msgstr "Pro にアップグレード"
+
+msgid "Upgrade your plan"
+msgstr "プランをアップグレード"
 
 msgid "Upload files"
 msgstr "ファイルをアップロード"
@@ -19384,6 +19493,12 @@ msgstr "今後の予定"
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "トリガーが発火すると、選んだMacが新しいワークスペースを開き、エージェントがプロンプトに取りかかります。イベントによる実行にはそのイベントが含まれるので、エージェントは何を見ればよいか分かります。続けるには実行に返信します。"
 
+msgid "When bought GB-hours fall below"
+msgstr "購入した GB 時間がこれを下回ったとき"
+
+msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
+msgstr "残りが {topupThreshold} GB 時間を下回ると、{topupPrice} をチャージします ({topupGbHours} GB 時間)。"
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "オフにすると、このデバイスのファイルやツールに外部からアクセスできなくなります。ここからリモートサンドボックスへの接続は引き続き可能です。<0>詳細<1/></0>"
 
@@ -19551,9 +19666,6 @@ msgstr "PRからワークスペースを作成しました"
 msgid "Workspace details"
 msgstr "ワークスペースの詳細"
 
-msgid "Workspace ID"
-msgstr "ワークスペースID"
-
 msgid "Workspace ID copied"
 msgstr "ワークスペースIDをコピーしました"
 
@@ -19608,11 +19720,11 @@ msgstr "ワークスペース"
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "ワークスペースはgitワークツリーを基盤とした独立したタスク環境です。"
 
-msgid "Workspaces on this device will show up here."
-msgstr "このデバイスのワークスペースがここに表示されます。"
-
 msgid "Workspaces started from this environment will stop receiving it."
 msgstr "この環境から起動したワークスペースはこれを受け取らなくなります。"
+
+msgid "Workspaces you can open will show up here."
+msgstr "開けるワークスペースがここに表示されます。"
 
 msgid "worktree"
 msgstr "ワークツリー"
@@ -19631,9 +19743,6 @@ msgstr "ワークツリーの場所を更新しました"
 
 msgid "Worktree missing"
 msgstr "ワークツリーが見つかりません"
-
-msgid "Worktree on this device"
-msgstr "このデバイス上のワークツリー"
 
 msgid "Worktree opened"
 msgstr "ワークツリーを開きました"
@@ -19677,9 +19786,6 @@ msgstr "よく質問される部分のドキュメントを書く…"
 msgid "Write once. Runs in every agent."
 msgstr "一度書けば、すべてのエージェントで動きます。"
 
-msgid "Write setup and teardown scripts so every new workspace starts ready to run."
-msgstr "新しいワークスペースがすぐ動くよう、セットアップとティアダウンのスクリプトを書きます。"
-
 msgid "Writing code is no longer where engineer hours go. Reading it is. Teams that adopted parallel agents in 2025 hit the wall first: ten agents can produce more diffs before lunch than a team can honestly review by Friday."
 msgstr "エンジニアの時間はもうコードを書くことには費やされません。読むことに費やされます。2025年に並列エージェントを導入したチームが最初に壁にぶつかりました。10体のエージェントは、昼までに、チームが金曜までに正直にレビューしきれない量の差分を生み出します。"
 
@@ -19717,6 +19823,9 @@ msgstr "はい。最も合うポジションに応募し、何を作りたいか
 msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
 msgstr "はい。Freeプランは個人向けで、1ユーザー、ローカルワークスペース、デスクトップアプリ、CLIが使えます。クレジットカードは不要です。"
 
+msgid "Yes. On plans with cloud workspaces, owners can buy any amount of extra GB-hours at {packPrice} per GB-hour in Settings, Billing. Bought GB-hours are used after the monthly pool and never expire, and auto top-up can buy more when they run low."
+msgstr "はい。クラウドワークスペースのあるプランでは、オーナーが設定の請求から、GB 時間あたり {packPrice} で追加の GB 時間を好きなだけ購入できます。購入した GB 時間は月間プールの後に使われ、期限はありません。残りが少なくなると自動チャージで追加購入することもできます。"
+
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "はい。Supersetは独立監査人によるSOC 2 Type II監査を完了しており、一定期間にわたるセキュリティ統制の運用状況が対象です。レポートのご請求やセキュリティ関連ドキュメントの確認はtrust.superset.shから行えます。"
 
@@ -19726,8 +19835,8 @@ msgstr "はい。Supersetはエージェントが動くワークスペースで�
 msgid "Yes. Use superset automations in the CLI to create, run, and pause them."
 msgstr "はい。CLIの superset automations で作成、実行、一時停止ができます。"
 
-msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Changes take effect at the end of your current billing period."
-msgstr "はい。アプリ内の請求設定から、いつでもアップグレード、ダウングレード、解約ができます。変更は現在の請求期間の終了時に適用されます。"
+msgid "Yes. You can upgrade, downgrade, or cancel at any time from the billing settings inside the app. Upgrades start right away, and you pay only the difference for the rest of the period. Downgrades and cancellations take effect at the end of your current billing period."
+msgstr "はい。アプリ内の請求設定から、いつでもアップグレード、ダウングレード、解約ができます。アップグレードはすぐに適用され、期間の残りについて差額のみをお支払いいただきます。ダウングレードと解約は現在の請求期間の終了時に適用されます。"
 
 msgid "Yes. You don't need US work authorization to apply. But you should be willing to relocate to San Francisco."
 msgstr "はい。応募に米国の就労許可は必要ありません。ただし、サンフランシスコへ移住する意思が必要です。"
@@ -19917,14 +20026,23 @@ msgid "Your organization has reached its cloud usage limit. Raise the limit or u
 msgstr "組織がクラウドの利用上限に達しました。このワークスペースを起動するには、「設定」の「請求」で上限を引き上げるかアップグレードしてください。"
 
 #. placeholder {0}: params?.limit
-msgid "Your organization has reached its limit of {0} environments. Archive one, or upgrade in Settings, Billing to add more."
-msgstr "組織が環境数の上限（{0}）に達しました。いずれかをアーカイブするか、「設定」の「請求」でアップグレードして追加してください。"
+msgid "Your organization has reached its environment limit ({0}). Archive an environment, or upgrade in Settings, Billing to add more."
+msgstr "組織が環境数の上限（{0}）に達しました。環境をアーカイブするか、「設定」の「請求」でアップグレードして追加してください。"
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "組織がクラウドの利用上限に達しました。上限を引き上げない限り、このワークスペースは数分後に停止します。"
 
 msgid "Your own accounts. Your organization's integrations let Superset reach its tools; connecting yours makes the work Superset does for you show up as you."
 msgstr "あなた自身のアカウントです。組織の連携は Superset がそのツールにアクセスするためのもので、あなたのアカウントを接続すると、Superset があなたのために行った作業があなたの名前で表示されます。"
+
+msgid "Your plan does not include cloud environments."
+msgstr "ご利用のプランにはクラウド環境が含まれていません。"
+
+msgid "Your plan does not include cloud environments. Upgrade in Settings, Billing to create one."
+msgstr "ご利用のプランにはクラウド環境が含まれていません。作成するには、設定の請求からアップグレードしてください。"
+
+msgid "Your plan switches to {planName} on {startDate}. Nothing is charged today."
+msgstr "{startDate} にプランが {planName} に変わります。本日の請求はありません。"
 
 msgid "Your rank"
 msgstr "あなたのランク"
@@ -19945,8 +20063,8 @@ msgstr "SlackアカウントをSupersetに紐付けました。このタブを�
 msgid "Your stats, settled in mortal combat"
 msgstr "君のステータス、決着は死闘で"
 
-msgid "Your subscription has been activated. You can now access all Pro features."
-msgstr "サブスクリプションが有効になりました。すべてのPro機能を利用できます。"
+msgid "Your subscription is active. Your new plan's features are ready to use."
+msgstr "サブスクリプションが有効になりました。新しいプランの機能をすぐに使えます。"
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "サブスクリプションはそれに応じて調整されます。"

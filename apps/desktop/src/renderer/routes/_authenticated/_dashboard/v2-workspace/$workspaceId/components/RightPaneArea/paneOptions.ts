@@ -4,7 +4,6 @@ import type { IconType } from "react-icons";
 import { BsTerminalPlus } from "react-icons/bs";
 import {
 	LuFileDiff,
-	LuFiles,
 	LuFileText,
 	LuFolderTree,
 	LuGitPullRequestArrow,
@@ -36,12 +35,6 @@ const RIGHT_PANE_OPTIONS: RightPaneOption[] = [
 		kind: "diff",
 		label: msg({ message: "Changes" }),
 		Icon: LuFileDiff,
-		group: "workspace",
-	},
-	{
-		kind: "changes-list",
-		label: msg({ message: "Files changed" }),
-		Icon: LuFiles,
 		group: "workspace",
 	},
 	{

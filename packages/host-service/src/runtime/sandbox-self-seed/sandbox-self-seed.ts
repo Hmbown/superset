@@ -24,7 +24,7 @@ import {
 } from "../../trpc/router/agents/agents";
 import { importCloudAttachments } from "../../trpc/router/attachments/attachments";
 import { createChatSessionInWorkspace } from "../../trpc/router/sessions/session-service";
-import { seedDefaultsIfEmpty } from "../../trpc/router/settings/agent-configs";
+import { ensurePresetRow } from "../../trpc/router/settings/agent-configs";
 import type { HostServiceContext } from "../../types";
 import {
 	getManagedEnv,
@@ -38,6 +38,7 @@ import {
 	withPendingLaunchReport,
 } from "./launchMarker";
 import { buildStartHookEnv } from "./utils/buildStartHookEnv";
+import { pdevAgentDir, trustPdevWorkspace } from "./utils/trustPdevWorkspace";
 
 /**
  * Makes a sandbox describe its own workspace, instead of being described from
@@ -61,12 +62,13 @@ export interface SandboxIdentity {
 	branch: string;
 	/** The directory the checkouts live under. */
 	workspaceRoot: string;
-	/** The primary repository's checkout: the one the workspace opens on. */
+	/**
+	 * The primary repository's checkout: the one the workspace opens on and
+	 * whose `.superset/config.json` the box acts on.
+	 */
 	worktreePath: string;
 	/** Every checkout on the box, the primary first. */
 	repositories: SandboxRepository[];
-	/** The checkout whose `.superset/config.json` the box acts on. */
-	hooksPath: string;
 	/** The agent the workspace was created with, or null for an idle one. */
 	launch: CloudAgentLaunch | null;
 	/** Written once the launch has happened, so a restart never repeats it. */
@@ -102,13 +104,11 @@ export function readSandboxIdentity(
 	);
 	const primary = repositories[0];
 	if (!primary) return null;
-	const hooksRepository = repositories.find((repo) => repo.hooks) ?? primary;
 	return {
 		workspaceId,
 		workspaceRoot: root,
 		worktreePath: sandboxCheckoutDir(root, primary.path),
 		repositories,
-		hooksPath: sandboxCheckoutDir(root, hooksRepository.path),
 		// The API owns the workspace's name; the row here is scratch host-service
 		// serves panes against, so it needs a name, not the name.
 		workspaceName: "workspace",
@@ -178,7 +178,7 @@ export async function runSandboxStartHook(
 	if (existsSync(START_HOOK_MARKER))
 		return { started: false, reason: "already-started" };
 	const resolved = resolveScript("start", {
-		repoPath: identity.hooksPath,
+		repoPath: identity.worktreePath,
 		projectId: identity.workspaceId,
 	});
 	const commands = !resolved
@@ -191,15 +191,15 @@ export async function runSandboxStartHook(
 	// failed take the rest with it. Each is its own process, and the services
 	// still come up when something earlier had nothing to do.
 	const configured = resolved?.cwd
-		? resolve(identity.hooksPath, resolved.cwd)
-		: identity.hooksPath;
+		? resolve(identity.worktreePath, resolved.cwd)
+		: identity.worktreePath;
 	const log = openSync(START_HOOK_LOG, "a");
 	const command = commands.join("; ");
 	const child = spawn(
 		"bash",
 		["-lc", commands.map((one) => `{ ${one}; }`).join("\n")],
 		{
-			cwd: existsSync(configured) ? configured : identity.hooksPath,
+			cwd: existsSync(configured) ? configured : identity.worktreePath,
 			env: buildStartHookEnv(process.env, getManagedEnv()),
 			stdio: ["ignore", log, log],
 			detached: true,
@@ -329,8 +329,10 @@ export async function launchSandboxAgentOnce(
 	try {
 		// Nothing has listed this host's agents yet, so the built-in presets are
 		// not in its table; the launch resolves the agent through that table.
-		seedDefaultsIfEmpty(ctx.db);
+		ensurePresetRow(ctx.db, agent);
 		if (agent === "claude") approveClaudeApiKey();
+		if (agent === "pdev")
+			trustPdevWorkspace(identity.workspaceRoot, pdevAgentDir());
 		// Images the composer sent with the prompt: the bytes live in cloud
 		// storage because this box did not exist when they were uploaded.
 		// A download that fails must not cost the launch its prompt.

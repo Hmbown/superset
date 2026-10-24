@@ -455,6 +455,7 @@ jobs:
           SLACK_BILLING_WEBHOOK_URL: ${{ secrets.SLACK_BILLING_WEBHOOK_URL }}
           SECRETS_ENCRYPTION_KEY: ${{ secrets.SECRETS_ENCRYPTION_KEY }}
           SERVER_ANTHROPIC_API_KEY: ${{ secrets.SERVER_ANTHROPIC_API_KEY }}
+          AUTUMN_SECRET_KEY: ${{ secrets.AUTUMN_SECRET_KEY }}
         run: |
           vercel pull --yes --environment=production --token=$VERCEL_TOKEN
           vercel build --prod --token=$VERCEL_TOKEN
@@ -486,6 +487,7 @@ jobs:
             --env STRIPE_ENTERPRISE_YEARLY_PRICE_ID=$STRIPE_ENTERPRISE_YEARLY_PRICE_ID \
             --env SLACK_BILLING_WEBHOOK_URL=$SLACK_BILLING_WEBHOOK_URL \
             --env SECRETS_ENCRYPTION_KEY=$SECRETS_ENCRYPTION_KEY \
+            --env AUTUMN_SECRET_KEY=$AUTUMN_SECRET_KEY \
             --env SERVER_ANTHROPIC_API_KEY=$SERVER_ANTHROPIC_API_KEY
 
   # Every relay deploy restarts every Durable Object, which drops the control

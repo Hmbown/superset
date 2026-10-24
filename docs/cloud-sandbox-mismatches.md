@@ -223,6 +223,14 @@ Archiving the box from inside it
 about a minute later: put the box's own id last when archiving several, and
 unarchive from a signed-in client.
 
+**pdev signs in to its router with the box's credential.** On a laptop pdev
+gets a token from `superset auth mcp-headers`, which a box refuses because it
+holds no token. The firewall adds the same `x-superset-sandbox-credential` to
+requests for `router.superset.sh`, and the router passes it to `user.me` and
+`user.myOrganization`, so pdev runs as the workspace's creator in the box's
+organization. The box sets `PDEV_TOKEN` to the placeholder only so pdev skips
+the CLI; the router ignores a key without the `pdev_` prefix.
+
 The same credential also names the box itself, which is what host-service's
 own calls about its workspace need: an automation's workspace has no creator,
 and a box keeps working after its creator leaves the organization. Those calls
@@ -301,7 +309,7 @@ is frozen because its golden was built for it. host-service seeds one
 project and one workspace row per checkout; the primary's row carries the cloud workspace's
 id, the others get ids derived from it and the path, so anything keyed on the cloud id (the
 desktop route, the agent launch, the terminals) lands in the primary and the rest are
-siblings. The `start` hook runs in the hooks repository's checkout, not in `/workspace`.
+siblings. The `start` hook runs in the primary repository's checkout, not in `/workspace`.
 
 **The checkout is the workspace.** No worktrees and no base repo — anything
 assuming a worktree can be created or discarded next to a main checkout has

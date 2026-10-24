@@ -31,6 +31,9 @@ function DevSeedV2SidebarEffect(): null {
 		}
 
 		for (const workspace of accessibleWorkspaces) {
+			// Cloud rows place themselves (the sidebar's reconciler), and only
+			// yours or opted-in ones belong there.
+			if (workspace.hostType === "cloud") continue;
 			ensureWorkspaceInSidebar(workspace.id, workspace.projectId);
 		}
 		window.localStorage.setItem(SEED_FLAG_KEY, "1");
