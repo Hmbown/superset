@@ -19,6 +19,7 @@ import {
 	formatSubscriptionCancelled,
 	formatSubscriptionStarted,
 	getDiscountInfo,
+	planLabel,
 } from "./slack-blocks";
 
 // --- QStash verification ---
@@ -85,6 +86,15 @@ const payloadSchema = z.discriminatedUnion("eventType", [
 
 // --- Enrichment ---
 
+function planFromPriceId(priceId: string | undefined): string | null {
+	if (!priceId) return null;
+	const proPriceIds = [
+		env.STRIPE_PRO_MONTHLY_PRICE_ID,
+		env.STRIPE_PRO_YEARLY_PRICE_ID,
+	];
+	return proPriceIds.includes(priceId) ? "pro" : null;
+}
+
 async function enrichFromSubscription(
 	stripeSubscriptionId: string,
 ): Promise<EnrichedSubscription | null> {
@@ -116,7 +126,7 @@ async function enrichFromSubscription(
 
 	return {
 		organizationName: org.name,
-		planName: dbSub?.plan ?? "Pro",
+		planName: planLabel(dbSub?.plan ?? planFromPriceId(price?.id)),
 		stripeCustomerId: customerId,
 		stripeSubscriptionId,
 		seatCount: seat?.quantity ?? 1,
