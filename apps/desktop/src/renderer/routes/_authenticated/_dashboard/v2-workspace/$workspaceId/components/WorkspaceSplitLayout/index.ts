@@ -1,0 +1,1 @@
+export { WorkspaceSplitLayout } from "./WorkspaceSplitLayout";

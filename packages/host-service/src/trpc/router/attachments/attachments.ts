@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { closeSync, mkdirSync, openSync } from "node:fs";
+import { closeSync, openSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import {
@@ -14,6 +14,7 @@ import {
 import { TRPCError } from "@trpc/server";
 import mimeTypes from "mime-types";
 import { z } from "zod";
+import { ensureWorkspaceAttachmentsDir } from "../../../runtime/workspace-attachments-dir";
 import { protectedProcedure, router } from "../../index";
 import { resolveWorktreePath } from "../git/utils/resolve-worktree";
 import { type CloudAttachment, downloadAttachment } from "./download";
@@ -182,8 +183,7 @@ export const attachmentsRouter = router({
 		)
 		.mutation(async ({ ctx, input }) => {
 			const worktreePath = resolveWorktreePath(ctx, input.workspaceId);
-			const directory = join(worktreePath, WORKSPACE_ATTACHMENTS_DIR);
-			mkdirSync(directory, { recursive: true });
+			const directory = ensureWorkspaceAttachmentsDir(worktreePath);
 
 			const resolved = await ctx.api.attachment.resolve.mutate({
 				fileIds: input.fileIds,
