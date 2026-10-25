@@ -43,6 +43,7 @@ import {
 } from "./components/DashboardSidebarActiveWorkspaceSwitcher";
 import { DashboardSidebarBulkActions } from "./components/DashboardSidebarBulkActions";
 import { DashboardSidebarBulkDeleteMount } from "./components/DashboardSidebarBulkDeleteMount";
+import { DashboardSidebarChannelsSection } from "./components/DashboardSidebarChannelsSection";
 import { DashboardSidebarGithubNotice } from "./components/DashboardSidebarGithubNotice";
 import { DashboardSidebarHeader } from "./components/DashboardSidebarHeader";
 import { DashboardSidebarHiddenProjects } from "./components/DashboardSidebarHiddenProjects";
@@ -162,6 +163,8 @@ export const DashboardSidebar = memo(function DashboardSidebar({
 	const { t } = useLingui();
 	const isCloudEnabled =
 		useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES) === true;
+	const isChannelsEnabled =
+		useFeatureFlagEnabled(FEATURE_FLAGS.CHANNELS) === true;
 	const {
 		groups,
 		hiddenProjects,
@@ -523,6 +526,9 @@ export const DashboardSidebar = memo(function DashboardSidebar({
 											onRenameSection={renameSection}
 											onToggleSectionCollapse={toggleSectionCollapsed}
 										/>
+										{isChannelsEnabled && !isCollapsed && (
+											<DashboardSidebarChannelsSection />
+										)}
 										{!isCollapsed && (
 											<div className="mt-3 first:mt-0">
 												<DashboardSidebarBulkActions projects={orderedGroups}>

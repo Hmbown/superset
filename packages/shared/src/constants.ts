@@ -128,6 +128,8 @@ export const FEATURE_FLAGS = {
 	 * hash the site's single distinct id to one side.
 	 */
 	MOBILE_LAUNCH: "mobile-launch",
+	/** In-app channels in the desktop sidebar. */
+	CHANNELS: "channels",
 	/** Gates access to Cloud features (environment variables, sandboxes). */
 	CLOUD_ACCESS: "cloud-access",
 	/** Allowlist for mobile voice mode: shows the entry and authorizes `voice.createSession`. */
