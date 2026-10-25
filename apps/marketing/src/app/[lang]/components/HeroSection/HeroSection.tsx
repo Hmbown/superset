@@ -78,7 +78,9 @@ export function HeroSection() {
 								className="size-1.5 shrink-0 rounded-full bg-brand"
 							/>
 							<span>
-								<Trans>Superset is now Paradev</Trans>
+								<Trans>
+									Superset is now Paradev, and we raised an $11.5M seed
+								</Trans>
 							</span>
 							<span
 								aria-hidden="true"
