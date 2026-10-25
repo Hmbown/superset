@@ -59,7 +59,7 @@ export default async function ContactPage() {
 						<Trans>Contact</Trans>
 					</span>
 					<h1 className="text-3xl md:text-4xl font-medium tracking-tight text-foreground mt-4">
-						<Trans>Talk to Superset</Trans>
+						<Trans>Talk to Paradev</Trans>
 					</h1>
 					<p className="text-muted-foreground mt-3 max-w-lg">
 						<Trans>
@@ -82,8 +82,8 @@ export default async function ContactPage() {
 					</h2>
 					<p className="text-muted-foreground mt-3">
 						<Trans>
-							Superset is built by a team based in San Francisco, California.
-							For product support or account questions, email{" "}
+							Paradev is built by a team based in San Francisco, California. For
+							product support or account questions, email{" "}
 							<a className="text-foreground underline" href={COMPANY.MAIL_TO}>
 								{supportEmail}
 							</a>{" "}

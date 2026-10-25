@@ -25,7 +25,7 @@ export default defineConfig({
 		quiet: boolean().desc("Output IDs only"),
 		apiKey: string()
 			.env("SUPERSET_API_KEY")
-			.desc("Use a Superset API key (sk_live_…) instead of OAuth login"),
+			.desc("Use a Paradev API key (sk_live_…) instead of OAuth login"),
 	},
 	audiences: () =>
 		process.env.SUPERSET_CLI_AUDIENCE === "internal" ||
@@ -36,7 +36,7 @@ export default defineConfig({
 	help: {
 		tagline: "Command your fleet of coding agents from any shell.",
 		docsUrl: `${CANONICAL_URLS.DOCS}/cli`,
-		tip: "Agents in Superset terminals already have `superset` on PATH — tell them to use it.",
+		tip: "Agents in Paradev terminals already have `superset` on PATH — tell them to use it.",
 		sections: [
 			{
 				title: "Workspaces & agents",

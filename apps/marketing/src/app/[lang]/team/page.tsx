@@ -28,13 +28,13 @@ export async function generateMetadata(): Promise<Metadata> {
 	const description = i18n._(
 		msg({
 			message:
-				"What Superset is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents.",
+				"What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents.",
 		}),
 	);
 	const ogDescription = i18n._(
 		msg({
 			message:
-				"Meet the team behind Superset, building parallel coding agents for developers.",
+				"Meet the team behind Paradev, building parallel coding agents for developers.",
 		}),
 	);
 	return {
@@ -45,14 +45,14 @@ export async function generateMetadata(): Promise<Metadata> {
 			languages: localizedAlternates(lang, "/team").languages,
 		},
 		openGraph: {
-			title: `${title} | Superset`,
+			title: `${title} | Paradev`,
 			description: ogDescription,
 			url: localeUrl(lang, "/team"),
 			images: ["/og-image.png"],
 		},
 		twitter: {
 			card: "summary_large_image",
-			title: `${title} | Superset`,
+			title: `${title} | Paradev`,
 			description: ogDescription,
 			images: ["/og-image.png"],
 		},
@@ -72,16 +72,16 @@ export default async function TeamPage() {
 				{/* Hero */}
 				<section className="mb-12 md:mb-16">
 					<p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">
-						<Trans>About Superset</Trans>
+						<Trans>About Paradev</Trans>
 					</p>
 					<h1 className="text-4xl sm:text-5xl md:text-6xl font-normal leading-[1.05] text-foreground max-w-4xl mb-8">
 						<Trans>Building the last piece of software.</Trans>
 					</h1>
 					<p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">
 						<Trans>
-							Superset is building self-improving software. It starts with
-							giving engineers the best tools that adapt to their needs over
-							time. We're 3 ex-YC CTOs building a tool that we love.
+							Paradev is building self-improving software. It starts with giving
+							engineers the best tools that adapt to their needs over time.
+							We're 3 ex-YC CTOs building a tool that we love.
 						</Trans>
 					</p>
 				</section>
@@ -102,7 +102,7 @@ export default async function TeamPage() {
 							<div className="space-y-4 text-muted-foreground leading-relaxed">
 								<p>
 									<Trans>
-										Superset started as a hackathon project in November 2025. It
+										Paradev started as a hackathon project in November 2025. It
 										was a simple desktop app for managing worktrees.
 									</Trans>
 								</p>
@@ -112,7 +112,7 @@ export default async function TeamPage() {
 										<span className="text-foreground">
 											tens of thousands of engineers
 										</span>{" "}
-										run Superset as their primary IDE, at companies like Wix,
+										run Paradev as their primary IDE, at companies like Wix,
 										DoorDash, and Netflix.
 									</Trans>
 								</p>

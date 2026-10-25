@@ -77,7 +77,7 @@ export function LatestNewsSection({ lang }: LatestNewsSectionProps) {
 					</h3>
 					<p className="mt-4 text-muted-foreground leading-relaxed">
 						<Trans>
-							Superset Mobile lets developers continue the Superset workspaces
+							Paradev Mobile lets developers continue the Paradev workspaces
 							they already use on their computer from an iPhone.
 						</Trans>
 					</p>
@@ -98,7 +98,7 @@ export function LatestNewsSection({ lang }: LatestNewsSectionProps) {
 					<p className="mt-4 text-muted-foreground leading-relaxed">
 						<Trans>
 							The app is free to download. It requires iOS 26 or later and
-							Superset Pro. Android is next.
+							Paradev Pro. Android is next.
 						</Trans>
 					</p>
 					<div className="mt-6 flex flex-wrap gap-3 text-sm">
@@ -114,7 +114,7 @@ export function LatestNewsSection({ lang }: LatestNewsSectionProps) {
 							href={mobilePath}
 							className="border border-border px-4 py-2 text-foreground transition-colors hover:border-foreground"
 						>
-							<Trans>Superset Mobile page</Trans>
+							<Trans>Paradev Mobile page</Trans>
 						</Link>
 					</div>
 				</article>

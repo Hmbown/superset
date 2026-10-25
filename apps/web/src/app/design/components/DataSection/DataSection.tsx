@@ -73,7 +73,7 @@ export function DataSection() {
 				importPath="@superset/ui/badge"
 				description={i18n._(
 					msg({
-						message: "Includes the Superset-specific box variant",
+						message: "Includes the Paradev-specific box variant",
 					}),
 				)}
 			>
@@ -107,7 +107,7 @@ export function DataSection() {
 						src="https://github.com/superset-sh.png"
 						alt={i18n._(
 							msg({
-								message: "Superset",
+								message: "Paradev",
 							}),
 						)}
 					/>
@@ -139,7 +139,7 @@ export function DataSection() {
 							<Trans>Notifications</Trans>
 						</CardTitle>
 						<CardDescription>
-							<Trans>Choose when Superset pings you.</Trans>
+							<Trans>Choose when Paradev pings you.</Trans>
 						</CardDescription>
 					</CardHeader>
 					<CardContent className="space-y-3">

@@ -121,13 +121,13 @@ update_path() {
     info "Adding $bin_dir to PATH in $profile"
     mkdir -p "$(dirname "$profile")"
     {
-        printf "\n# Superset CLI\n"
+        printf "\n# Paradev CLI\n"
         printf "%s\n" "$export_line"
     } >> "$profile"
 }
 
 main() {
-    printf "${BOLD}Installing Superset CLI${RESET}\n\n"
+    printf "${BOLD}Installing Paradev CLI${RESET}\n\n"
 
     target="$(detect_target)"
     info "Platform: $target"

@@ -163,13 +163,13 @@ export async function processAgentMessage({
 		await slack.chat.postMessage({
 			channel: event.channel,
 			thread_ts: event.thread_ts ?? event.ts,
-			text: "The Superset Slack integration requires a Pro plan.",
+			text: "The Paradev Slack integration requires a Pro plan.",
 			blocks: [
 				{
 					type: "section",
 					text: {
 						type: "mrkdwn",
-						text: "The Superset Slack integration requires a Pro plan.",
+						text: "The Paradev Slack integration requires a Pro plan.",
 					},
 				},
 				{
@@ -206,13 +206,13 @@ export async function processAgentMessage({
 		await slack.chat.postMessage({
 			channel: event.channel,
 			thread_ts: event.thread_ts ?? event.ts,
-			text: "To use Superset, you need to link your Slack account first.",
+			text: "To use Paradev, you need to link your Slack account first.",
 			blocks: [
 				{
 					type: "section",
 					text: {
 						type: "mrkdwn",
-						text: "To use Superset, you need to link your Slack account first.",
+						text: "To use Paradev, you need to link your Slack account first.",
 					},
 				},
 				{
@@ -517,7 +517,7 @@ export async function processAgentMessage({
 		);
 		if (toConnect.length > 0) {
 			const names = toConnect.map((plugin) => plugin.displayName).join(" and ");
-			const text = `${names} ${toConnect.length === 1 ? "isn't" : "aren't"} connected to your Superset account yet.`;
+			const text = `${names} ${toConnect.length === 1 ? "isn't" : "aren't"} connected to your Paradev account yet.`;
 			try {
 				await reply.chat.postMessage({
 					channel: event.channel,

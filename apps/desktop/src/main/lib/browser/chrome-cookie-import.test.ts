@@ -464,7 +464,7 @@ describe("importCookies", () => {
 		]);
 	});
 
-	it("skips Superset's own hosts, host-only or domain", async () => {
+	it("skips Paradev's own hosts, host-only or domain", async () => {
 		const s = fakeSession();
 		const result = await importCookies(s.session, [
 			imported("app.superset.sh", "session", "x"),

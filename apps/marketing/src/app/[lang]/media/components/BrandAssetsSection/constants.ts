@@ -57,7 +57,7 @@ export const PRODUCT_IMAGE_ASSETS: BrandAsset[] = [
 		fileName: "superset-desktop.png",
 		format: "PNG",
 		dimensions: "2400 × 1260",
-		label: msg({ message: "Superset desktop app" }),
+		label: msg({ message: "Paradev desktop app" }),
 		previewClassName: "",
 	},
 	{
@@ -65,7 +65,7 @@ export const PRODUCT_IMAGE_ASSETS: BrandAsset[] = [
 		fileName: "superset-mobile-terminal.png",
 		format: "PNG",
 		dimensions: "1600 × 1000",
-		label: msg({ message: "Superset Mobile terminal on iPhone" }),
+		label: msg({ message: "Paradev Mobile terminal on iPhone" }),
 		previewClassName: "",
 	},
 	{
@@ -73,7 +73,7 @@ export const PRODUCT_IMAGE_ASSETS: BrandAsset[] = [
 		fileName: "superset-mobile-diff.png",
 		format: "PNG",
 		dimensions: "1600 × 1000",
-		label: msg({ message: "Superset Mobile code diff on iPhone" }),
+		label: msg({ message: "Paradev Mobile code diff on iPhone" }),
 		previewClassName: "",
 	},
 ];

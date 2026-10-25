@@ -111,7 +111,7 @@ function resolveInstallRoot(): string {
 
 export default command({
 	sandbox: false,
-	description: "Update the Superset CLI and host service to the latest release",
+	description: "Update the Paradev CLI and host service to the latest release",
 	skipMiddleware: true,
 	options: {
 		check: boolean().desc("Only check for updates; don't install"),
@@ -126,7 +126,7 @@ export default command({
 	run: async ({ options }) => {
 		if (isDesktopBundled()) {
 			throw new CLIError(
-				"This CLI is bundled with the Superset desktop app and updates together with the app.",
+				"This CLI is bundled with the Paradev desktop app and updates together with the app.",
 				`For a standalone CLI that updates in place: curl -fsSL ${CANONICAL_URLS.MARKETING}/cli/install.sh | sh`,
 			);
 		}

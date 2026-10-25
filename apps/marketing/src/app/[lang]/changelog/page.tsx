@@ -21,8 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	);
 	const description = i18n._(
 		msg({
-			message:
-				"The latest updates, improvements, and new features in Superset.",
+			message: "The latest updates, improvements, and new features in Paradev.",
 		}),
 	);
 	return {
@@ -36,14 +35,14 @@ export async function generateMetadata(): Promise<Metadata> {
 			languages: localizedAlternates(lang, "/changelog").languages,
 		},
 		openGraph: {
-			title: `${title} | Superset`,
+			title: `${title} | Paradev`,
 			description: description,
 			url: localeUrl(lang, "/changelog"),
 			images: ["/og-image.png"],
 		},
 		twitter: {
 			card: "summary_large_image",
-			title: `${title} | Superset`,
+			title: `${title} | Paradev`,
 			description: description,
 			images: ["/og-image.png"],
 		},
@@ -81,7 +80,7 @@ export default async function ChangelogPage() {
 					</h1>
 					<p className="text-muted-foreground mt-3 max-w-lg">
 						<Trans>
-							The latest updates, improvements, and new features in Superset.
+							The latest updates, improvements, and new features in Paradev.
 							Updated weekly. For detailed release notes, see{" "}
 							<a
 								href="https://github.com/superset-sh/superset/releases"

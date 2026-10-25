@@ -25,7 +25,7 @@ export const INSTALL_TABS: InstallTab[] = [
 	{
 		id: "agent",
 		label: "agent",
-		command: `Install the Superset CLI: ${CANONICAL_URLS.MARKETING}/llms.txt`,
+		command: `Install the Paradev CLI: ${CANONICAL_URLS.MARKETING}/llms.txt`,
 		shell: false,
 	},
 ];
