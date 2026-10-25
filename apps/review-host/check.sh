@@ -44,7 +44,7 @@ HOST_ID=$(printf '%s' "$INFO" | python3 -c 'import json,sys;print(json.load(sys.
 if [ -n "$RUNNING_VERSION" ]; then note "host-service: $RUNNING_VERSION (host $HOST_ID)"; else fail "host-service is not answering"; fi
 
 TAG=$(curl -sfL -m 20 -H "Accept: application/vnd.github+json" \
-  https://api.github.com/repos/paradevai/superset/releases/latest 2>/dev/null \
+  https://api.github.com/repos/paradevai/paradev/releases/latest 2>/dev/null \
   | python3 -c 'import json,sys;print(json.load(sys.stdin).get("tag_name",""))' 2>/dev/null)
 LATEST="${TAG#desktop-v}"
 # Every branch below fails closed. A probe that cannot run tells us nothing

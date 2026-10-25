@@ -27,7 +27,7 @@ const config: Configuration = {
 	publish: {
 		provider: "github",
 		owner: "paradevai",
-		repo: "superset",
+		repo: "paradev",
 		releaseType: "prerelease",
 	},
 
