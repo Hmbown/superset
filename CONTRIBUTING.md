@@ -1,4 +1,4 @@
-# Contributing to Superset
+# Contributing to Paradev
 
 Thanks for contributing! Please follow our [code of conduct](./CODE_OF_CONDUCT.md).
 
@@ -10,8 +10,8 @@ Thanks for contributing! Please follow our [code of conduct](./CODE_OF_CONDUCT.m
 
 ## Local development
 
-Development is expected to run from a Superset workspace, which is a managed
-git worktree. Add your clone to the installed Superset app, create a workspace
+Development is expected to run from a Paradev workspace, which is a managed
+git worktree. Add your clone to the installed Paradev app, create a workspace
 for your change, then run the following commands in that workspace:
 
 ```bash

@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="full" alt="병렬 Superset 워크스페이스에서 실시간 차이를 보여주며 작업 중인 Claude와 OpenCode" src="../apps/marketing/public/images/readme-hero.gif" />
+<img width="full" alt="병렬 Paradev 워크스페이스에서 실시간 차이를 보여주며 작업 중인 Claude와 OpenCode" src="../apps/marketing/public/images/readme-hero.gif" />
 
 ### 100개 이상의 코딩 에이전트를 병렬로 실행
 
@@ -36,7 +36,7 @@ Claude Code, Codex를 비롯한 모든 CLI 에이전트를 각각 격리된 work
 
 ## 전환 비용 없이 10배 빠른 코딩
 
-Superset은 CLI 기반 코딩 에이전트를 격리된 git worktree에서 병렬로 실행하며, 터미널, 리뷰, 에디터로 열기 워크플로를 기본 제공합니다.
+Paradev는 CLI 기반 코딩 에이전트를 격리된 git worktree에서 병렬로 실행하며, 터미널, 리뷰, 에디터로 열기 워크플로를 기본 제공합니다.
 
 - **여러 에이전트를 동시에 실행** — 컨텍스트 전환 부담이 없습니다
 - **각 작업을 격리된 git worktree에 분리** — 에이전트끼리 서로 간섭하지 않습니다
@@ -151,15 +151,15 @@ Superset은 CLI 기반 코딩 에이전트를 격리된 git worktree에서 병�
 <tr>
 <td width="50%" valign="middle">
 
-### Superset CLI
+### Paradev CLI
 
-어떤 셸에서든 스크립트로 제어하세요: 단일 바이너리로 워크스페이스 생성, 에이전트 실행, 터미널 읽기, 자동화 관리까지. 명령을 실행할 수 있는 에이전트라면 Superset을 조종할 수 있습니다.
+어떤 셸에서든 스크립트로 제어하세요: 단일 바이너리로 워크스페이스 생성, 에이전트 실행, 터미널 읽기, 자동화 관리까지. 명령을 실행할 수 있는 에이전트라면 Paradev를 조종할 수 있습니다.
 
 [문서 →](https://docs.superset.sh/cli/getting-started)
 
 </td>
 <td width="50%">
-  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="Superset CLI에서 워크스페이스를 만들고 에이전트를 실행하는 모습" width="100%" /></a>
+  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="Paradev CLI에서 워크스페이스를 만들고 에이전트를 실행하는 모습" width="100%" /></a>
 </td>
 </tr>
 <tr>
@@ -193,7 +193,7 @@ Superset은 CLI 기반 코딩 에이전트를 격리된 git worktree에서 병�
 
 ## 지원 에이전트
 
-Superset은 다음을 포함한 모든 CLI 기반 코딩 에이전트와 함께 작동합니다:
+Paradev는 다음을 포함한 모든 CLI 기반 코딩 에이전트와 함께 작동합니다:
 
 | 에이전트 | 상태 |
 |:------|:-------|
@@ -220,7 +220,7 @@ Superset은 다음을 포함한 모든 CLI 기반 코딩 에이전트와 함께 
 | <picture><source media="(prefers-color-scheme: dark)" srcset="../packages/ui/src/assets/icons/preset-icons/polygraph-white.svg" /><img height="16" align="top" alt="Polygraph" src="../packages/ui/src/assets/icons/preset-icons/polygraph.svg" /></picture> &nbsp;[Polygraph](https://trypolygraph.com/) | 완전 지원 |
 | 그 밖의 모든 CLI 에이전트 | 별도 설정 없이 작동 |
 
-터미널에서 돌아간다면, Superset에서도 돌아갑니다
+터미널에서 돌아간다면, Paradev에서도 돌아갑니다
 
 에이전트는 터미널 그 이상을 얻습니다:
 
@@ -238,7 +238,7 @@ Superset은 다음을 포함한 모든 CLI 기반 코딩 에이전트와 함께 
 |:--------|:-------------|
 | [**데스크톱 앱**](https://github.com/superset-sh/superset/releases/latest) | 완전한 IDE: 터미널, 차이 뷰어, 앱 내 브라우저, 자동화 |
 | [**CLI**](https://docs.superset.sh/cli/getting-started) | 어떤 셸에서든 워크스페이스, 에이전트, 터미널, 호스트를 관리하는 단일 `superset` 바이너리 |
-| [**TypeScript SDK**](https://docs.superset.sh/sdk/getting-started) | [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk)로 Node, Bun, Deno에서 Superset을 프로그래밍 방식으로 제어 |
+| [**TypeScript SDK**](https://docs.superset.sh/sdk/getting-started) | [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk)로 Node, Bun, Deno에서 Paradev를 프로그래밍 방식으로 제어 |
 | [**MCP 서버**](https://docs.superset.sh/mcp) | Claude Code, Codex, Cursor 같은 에이전트가 직접 워크스페이스를 만들고 관리 |
 
 CLI는 데스크톱 앱에 번들로 포함되어 있으며, 단독으로 설치할 수도 있습니다:
@@ -260,11 +260,11 @@ iOS 앱도 곧 출시됩니다. 휴대폰에서 에이전트를 확인할 수 �
 - **Windows**: 아직 제공되지 않음
 - [모든 빌드](https://github.com/superset-sh/superset/releases/latest)
 
-필요한 것은 [Git](https://git-scm.com/)뿐입니다. [gh](https://cli.github.com/)는 선택 사항으로 PR 워크플로를 사용할 수 있게 해 주며, Superset이 대신 설치해 주겠다고 제안합니다.
+필요한 것은 [Git](https://git-scm.com/)뿐입니다. [gh](https://cli.github.com/)는 선택 사항으로 PR 워크플로를 사용할 수 있게 해 주며, Paradev가 대신 설치해 주겠다고 제안합니다.
 
 ## 개발
 
-Superset을 직접 만져 보거나 PR을 기여하고 싶으신가요? 저장소를 클론하고, 설치된 Superset 앱에 추가한 다음, 변경 작업용 워크스페이스를 만드세요:
+Paradev를 직접 만져 보거나 PR을 기여하고 싶으신가요? 저장소를 클론하고, 설치된 Paradev 앱에 추가한 다음, 변경 작업용 워크스페이스를 만드세요:
 
 ```bash
 git clone https://github.com/superset-sh/superset.git
@@ -277,7 +277,7 @@ git clone https://github.com/superset-sh/superset.git
 bun run dev
 ```
 
-`setup.local.sh`는 새 worktree마다 한 번씩 실행하세요. 워크스페이스별 앱 아이덴티티와 포트를 구성해서 개발용 데스크톱 앱이 설치된 Superset 앱 및 다른 개발 worktree와 나란히 실행될 수 있게 합니다.
+`setup.local.sh`는 새 worktree마다 한 번씩 실행하세요. 워크스페이스별 앱 아이덴티티와 포트를 구성해서 개발용 데스크톱 앱이 설치된 Paradev 앱 및 다른 개발 worktree와 나란히 실행될 수 있게 합니다.
 
 Neon 계정이나 서드파티 자격 증명은 필요 없습니다. `setup.local.sh`가 Docker로 로컬 Postgres + Electric 스택을 띄우고 개발 계정을 시드합니다. **"Sign in as dev"** 버튼(또는 `admin@local.test` / `supersetdev`)으로 로그인하세요.
 
@@ -329,7 +329,7 @@ Neon 계정이나 서드파티 자격 증명은 필요 없습니다. `setup.loca
 
 ## 커뮤니티
 
-Superset 커뮤니티에 참여해 도움을 받고, 피드백을 나누고, 다른 사용자와 교류하세요:
+Paradev 커뮤니티에 참여해 도움을 받고, 피드백을 나누고, 다른 사용자와 교류하세요:
 
 - **[Discord](https://discord.gg/cZeD9WYcV7)**: 팀 및 커뮤니티와 대화
 - **[Twitter](https://x.com/superset_sh)**: 업데이트와 소식 팔로우
@@ -346,4 +346,4 @@ Superset 커뮤니티에 참여해 도움을 받고, 피드백을 나누고, 다
 
 **데스크톱 앱은 영원히 무료입니다.** 자신의 컴퓨터에서 에이전트를 병렬로 실행하는 데는 결코 비용이 들지 않습니다. 유료화가 있더라도 그 위에 얹히는 선택적 서비스일 뿐입니다.
 
-앱 전체가 이 저장소에 [Elastic License 2.0](../LICENSE.md)으로 공개되어 있습니다: 사용하고, 포크하고, 수정하고, 팀을 위해 셀프 호스팅하세요. 유일하게 안 되는 것은 Superset 자체를 서비스로 재포장해 다른 사람에게 판매하는 것뿐입니다.
+앱 전체가 이 저장소에 [Elastic License 2.0](../LICENSE.md)으로 공개되어 있습니다: 사용하고, 포크하고, 수정하고, 팀을 위해 셀프 호스팅하세요. 유일하게 안 되는 것은 Paradev 자체를 서비스로 재포장해 다른 사람에게 판매하는 것뿐입니다.

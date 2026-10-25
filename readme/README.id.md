@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="full" alt="Claude dan OpenCode bekerja paralel di workspace Superset dengan diff langsung" src="../apps/marketing/public/images/readme-hero.gif" />
+<img width="full" alt="Claude dan OpenCode bekerja paralel di workspace Paradev dengan diff langsung" src="../apps/marketing/public/images/readme-hero.gif" />
 
 ### Jalankan 100+ Agen Coding Secara Paralel
 
@@ -36,7 +36,7 @@ Habiskan waktu Anda untuk shipping, bukan menunggu.
 
 ## Coding 10x Lebih Cepat Tanpa Biaya Berpindah Konteks
 
-Superset menjalankan agen coding berbasis CLI secara paralel di git worktree yang terisolasi, dengan alur kerja terminal, review, dan buka-di-editor bawaan.
+Paradev menjalankan agen coding berbasis CLI secara paralel di git worktree yang terisolasi, dengan alur kerja terminal, review, dan buka-di-editor bawaan.
 
 - **Jalankan banyak agen sekaligus** tanpa beban berpindah konteks
 - **Isolasi tiap tugas** di git worktree-nya sendiri sehingga agen tidak saling mengganggu
@@ -151,15 +151,15 @@ Hubungkan mesin lain dan akses workspace-nya dari mana saja: aplikasi desktop, C
 <tr>
 <td width="50%" valign="middle">
 
-### Superset CLI
+### Paradev CLI
 
-Skrip dari shell mana pun: buat workspace, luncurkan agen, baca terminal mereka, dan kelola otomatisasi dengan satu binary. Kalau sebuah agen bisa menjalankan perintah, ia bisa mengendalikan Superset.
+Skrip dari shell mana pun: buat workspace, luncurkan agen, baca terminal mereka, dan kelola otomatisasi dengan satu binary. Kalau sebuah agen bisa menjalankan perintah, ia bisa mengendalikan Paradev.
 
 [Dokumentasi →](https://docs.superset.sh/cli/getting-started)
 
 </td>
 <td width="50%">
-  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="Membuat workspace dan meluncurkan agen dari Superset CLI" width="100%" /></a>
+  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="Membuat workspace dan meluncurkan agen dari Paradev CLI" width="100%" /></a>
 </td>
 </tr>
 <tr>
@@ -193,7 +193,7 @@ Lompat ke workspace, aksi, atau pengaturan mana pun dari satu kotak pencarian.
 
 ## Agen yang Didukung
 
-Superset bekerja dengan agen coding berbasis CLI apa pun, termasuk:
+Paradev bekerja dengan agen coding berbasis CLI apa pun, termasuk:
 
 | Agen | Status |
 |:------|:-------|
@@ -220,7 +220,7 @@ Superset bekerja dengan agen coding berbasis CLI apa pun, termasuk:
 | <picture><source media="(prefers-color-scheme: dark)" srcset="../packages/ui/src/assets/icons/preset-icons/polygraph-white.svg" /><img height="16" align="top" alt="Polygraph" src="../packages/ui/src/assets/icons/preset-icons/polygraph.svg" /></picture> &nbsp;[Polygraph](https://trypolygraph.com/) | Didukung penuh |
 | Agen CLI lainnya | Bekerja tanpa konfigurasi |
 
-Kalau bisa berjalan di terminal, ia bisa berjalan di Superset
+Kalau bisa berjalan di terminal, ia bisa berjalan di Paradev
 
 Agen mendapat lebih dari sekadar terminal:
 
@@ -238,7 +238,7 @@ Setiap permukaan berbicara dengan workspace yang sama, jadi Anda bisa memulai tu
 |:--------|:-------------|
 | [**Aplikasi Desktop**](https://github.com/superset-sh/superset/releases/latest) | IDE lengkap: terminal, diff viewer, browser dalam aplikasi, otomatisasi |
 | [**CLI**](https://docs.superset.sh/cli/getting-started) | Satu binary `superset` untuk mengelola workspace, agen, terminal, dan host dari shell mana pun |
-| [**TypeScript SDK**](https://docs.superset.sh/sdk/getting-started) | Kendalikan Superset secara programatik dengan [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk) dari Node, Bun, atau Deno |
+| [**TypeScript SDK**](https://docs.superset.sh/sdk/getting-started) | Kendalikan Paradev secara programatik dengan [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk) dari Node, Bun, atau Deno |
 | [**MCP Server**](https://docs.superset.sh/mcp) | Biarkan Claude Code, Codex, Cursor, dan agen lainnya membuat dan mengelola workspace sendiri |
 
 CLI sudah dibundel dengan aplikasi desktop, atau pasang secara terpisah:
@@ -260,12 +260,12 @@ Unduh aplikasi desktop:
 - **Windows**: belum tersedia
 - [Semua build](https://github.com/superset-sh/superset/releases/latest)
 
-Yang perlu terpasang hanya [Git](https://git-scm.com/). [gh](https://cli.github.com/) bersifat opsional dan membuka alur kerja PR; Superset menawarkan untuk memasangnya bagi Anda.
+Yang perlu terpasang hanya [Git](https://git-scm.com/). [gh](https://cli.github.com/) bersifat opsional dan membuka alur kerja PR; Paradev menawarkan untuk memasangnya bagi Anda.
 
 ## Pengembangan
 
-Ingin mengutak-atik Superset atau menyumbang PR? Clone repositorinya, tambahkan ke
-aplikasi Superset yang terpasang, lalu buat workspace untuk perubahan Anda:
+Ingin mengutak-atik Paradev atau menyumbang PR? Clone repositorinya, tambahkan ke
+aplikasi Paradev yang terpasang, lalu buat workspace untuk perubahan Anda:
 
 ```bash
 git clone https://github.com/superset-sh/superset.git
@@ -280,7 +280,7 @@ bun run dev
 
 Jalankan `setup.local.sh` sekali di setiap worktree baru. Skrip ini mengonfigurasi identitas
 aplikasi dan port yang spesifik per workspace, sehingga aplikasi desktop versi pengembangan
-bisa berjalan berdampingan dengan aplikasi Superset yang terpasang dan worktree pengembangan lainnya.
+bisa berjalan berdampingan dengan aplikasi Paradev yang terpasang dan worktree pengembangan lainnya.
 
 Tidak perlu akun Neon atau kredensial pihak ketiga. `setup.local.sh` menyiapkan
 stack Postgres + Electric lokal via Docker dan mengisi akun dev. Masuk
@@ -334,7 +334,7 @@ Kami menyambut kontribusi! Lihat [CONTRIBUTING.md](../CONTRIBUTING.md) untuk car
 
 ## Komunitas
 
-Bergabunglah dengan komunitas Superset untuk mendapat bantuan, berbagi umpan balik, dan terhubung dengan pengguna lain:
+Bergabunglah dengan komunitas Paradev untuk mendapat bantuan, berbagi umpan balik, dan terhubung dengan pengguna lain:
 
 - **[Discord](https://discord.gg/cZeD9WYcV7)**: mengobrol dengan tim dan komunitas
 - **[Twitter](https://x.com/superset_sh)**: ikuti untuk pembaruan dan pengumuman
@@ -351,4 +351,4 @@ Bergabunglah dengan komunitas Superset untuk mendapat bantuan, berbagi umpan bal
 
 **Aplikasi desktop gratis selamanya.** Menjalankan agen secara paralel di mesin Anda sendiri tidak akan pernah memerlukan pembayaran. Apa pun yang kami kenakan biaya akan berupa layanan opsional di atasnya.
 
-Seluruh aplikasi ada di repositori ini di bawah [Elastic License 2.0](../LICENSE.md): gunakan, fork, modifikasi, self-host untuk tim Anda. Satu-satunya yang tidak boleh adalah mengemas ulang Superset itu sendiri sebagai layanan yang Anda jual ke orang lain.
+Seluruh aplikasi ada di repositori ini di bawah [Elastic License 2.0](../LICENSE.md): gunakan, fork, modifikasi, self-host untuk tim Anda. Satu-satunya yang tidak boleh adalah mengemas ulang Paradev itu sendiri sebagai layanan yang Anda jual ke orang lain.

@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="full" alt="Claude 与 OpenCode 在并行的 Superset 工作区中工作并实时显示差异" src="../apps/marketing/public/images/readme-hero.gif" />
+<img width="full" alt="Claude 与 OpenCode 在并行的 Paradev 工作区中工作并实时显示差异" src="../apps/marketing/public/images/readme-hero.gif" />
 
 ### 并行运行 100+ 个编码智能体
 
@@ -36,7 +36,7 @@ Claude Code、Codex 或任何 CLI 智能体,各自运行在独立的 worktree �
 
 ## 零切换成本,编码快 10 倍
 
-Superset 在相互隔离的 git worktree 中并行运行基于 CLI 的编码智能体,并内置终端、审查和在编辑器中打开的工作流。
+Paradev 在相互隔离的 git worktree 中并行运行基于 CLI 的编码智能体,并内置终端、审查和在编辑器中打开的工作流。
 
 - **同时运行多个智能体**,没有上下文切换的开销
 - **将每个任务隔离**在独立的 git worktree 中,智能体之间互不干扰
@@ -151,15 +151,15 @@ Superset 在相互隔离的 git worktree 中并行运行基于 CLI 的编码智�
 <tr>
 <td width="50%" valign="middle">
 
-### Superset CLI
+### Paradev CLI
 
-在任何 shell 中编写脚本:用单个二进制文件创建工作区、启动智能体、读取它们的终端、管理自动化。只要智能体能运行命令,它就能驱动 Superset。
+在任何 shell 中编写脚本:用单个二进制文件创建工作区、启动智能体、读取它们的终端、管理自动化。只要智能体能运行命令,它就能驱动 Paradev。
 
 [文档 →](https://docs.superset.sh/cli/getting-started)
 
 </td>
 <td width="50%">
-  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="通过 Superset CLI 创建工作区并启动智能体" width="100%" /></a>
+  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="通过 Paradev CLI 创建工作区并启动智能体" width="100%" /></a>
 </td>
 </tr>
 <tr>
@@ -193,7 +193,7 @@ Superset 在相互隔离的 git worktree 中并行运行基于 CLI 的编码智�
 
 ## 支持的智能体
 
-Superset 适用于任何基于 CLI 的编码智能体,包括:
+Paradev 适用于任何基于 CLI 的编码智能体,包括:
 
 | 智能体 | 状态 |
 |:------|:-------|
@@ -220,7 +220,7 @@ Superset 适用于任何基于 CLI 的编码智能体,包括:
 | <picture><source media="(prefers-color-scheme: dark)" srcset="../packages/ui/src/assets/icons/preset-icons/polygraph-white.svg" /><img height="16" align="top" alt="Polygraph" src="../packages/ui/src/assets/icons/preset-icons/polygraph.svg" /></picture> &nbsp;[Polygraph](https://trypolygraph.com/) | 完全支持 |
 | 任何其他 CLI 智能体 | 无需配置即可使用 |
 
-只要能在终端里运行,就能在 Superset 上运行
+只要能在终端里运行,就能在 Paradev 上运行
 
 智能体得到的不只是一个终端:
 
@@ -238,7 +238,7 @@ Superset 适用于任何基于 CLI 的编码智能体,包括:
 |:--------|:-------------|
 | [**桌面应用**](https://github.com/superset-sh/superset/releases/latest) | 完整的 IDE:终端、差异查看器、应用内浏览器、自动化 |
 | [**CLI**](https://docs.superset.sh/cli/getting-started) | 单个 `superset` 二进制文件,在任何 shell 中管理工作区、智能体、终端和主机 |
-| [**TypeScript SDK**](https://docs.superset.sh/sdk/getting-started) | 通过 [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk) 在 Node、Bun 或 Deno 中以编程方式驱动 Superset |
+| [**TypeScript SDK**](https://docs.superset.sh/sdk/getting-started) | 通过 [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk) 在 Node、Bun 或 Deno 中以编程方式驱动 Paradev |
 | [**MCP 服务器**](https://docs.superset.sh/mcp) | 让 Claude Code、Codex、Cursor 等智能体自己创建和管理工作区 |
 
 CLI 随桌面应用一起提供,也可以独立安装:
@@ -260,11 +260,11 @@ iOS 应用即将推出,让你可以在手机上查看你的智能体。
 - **Windows**:暂不可用
 - [所有构建版本](https://github.com/superset-sh/superset/releases/latest)
 
-你只需要安装 [Git](https://git-scm.com/)。[gh](https://cli.github.com/) 是可选的,用于解锁 PR 工作流;Superset 会主动提议为你安装。
+你只需要安装 [Git](https://git-scm.com/)。[gh](https://cli.github.com/) 是可选的,用于解锁 PR 工作流;Paradev 会主动提议为你安装。
 
 ## 开发
 
-想折腾 Superset 或贡献一个 PR?克隆仓库,把它添加到已安装的 Superset 应用中,然后为你的更改创建一个工作区:
+想折腾 Paradev 或贡献一个 PR?克隆仓库,把它添加到已安装的 Paradev 应用中,然后为你的更改创建一个工作区:
 
 ```bash
 git clone https://github.com/superset-sh/superset.git
@@ -277,7 +277,7 @@ git clone https://github.com/superset-sh/superset.git
 bun run dev
 ```
 
-在每个新 worktree 中运行一次 `setup.local.sh`。它会配置工作区专属的应用标识和端口,让开发版桌面应用可以与已安装的 Superset 应用及其他开发 worktree 并行运行。
+在每个新 worktree 中运行一次 `setup.local.sh`。它会配置工作区专属的应用标识和端口,让开发版桌面应用可以与已安装的 Paradev 应用及其他开发 worktree 并行运行。
 
 无需 Neon 账号或第三方凭据。`setup.local.sh` 会通过 Docker 启动本地 Postgres + Electric 栈并植入一个开发账号。用 **"Sign in as dev"** 按钮(或 `admin@local.test` / `supersetdev`)登录即可。
 
@@ -329,7 +329,7 @@ bun run dev
 
 ## 社区
 
-加入 Superset 社区,获取帮助、分享反馈,并与其他用户交流:
+加入 Paradev 社区,获取帮助、分享反馈,并与其他用户交流:
 
 - **[Discord](https://discord.gg/cZeD9WYcV7)**:与团队和社区聊天
 - **[Twitter](https://x.com/superset_sh)**:关注以获取更新和公告
@@ -346,4 +346,4 @@ bun run dev
 
 **桌面应用永久免费。**在你自己的机器上并行运行智能体永远不需要付费。我们收费的任何东西都会是在此之上的可选服务。
 
-整个应用都在这个仓库中,采用 [Elastic License 2.0](../LICENSE.md) 许可:使用它、fork 它、修改它、为你的团队自托管它,都可以。唯一不允许的,是把 Superset 本身重新打包成服务卖给他人。
+整个应用都在这个仓库中,采用 [Elastic License 2.0](../LICENSE.md) 许可:使用它、fork 它、修改它、为你的团队自托管它,都可以。唯一不允许的,是把 Paradev 本身重新打包成服务卖给他人。

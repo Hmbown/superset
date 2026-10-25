@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="full" alt="Claude 與 OpenCode 在平行的 Superset 工作區中工作並即時顯示差異" src="../apps/marketing/public/images/readme-hero.gif" />
+<img width="full" alt="Claude 與 OpenCode 在平行的 Paradev 工作區中工作並即時顯示差異" src="../apps/marketing/public/images/readme-hero.gif" />
 
 ### 平行執行 100+ 個編碼代理程式
 
@@ -36,7 +36,7 @@ Claude Code、Codex 或任何 CLI 代理程式,各自執行在獨立的 worktree
 
 ## 零切換成本,寫程式快 10 倍
 
-Superset 在相互隔離的 git worktree 中平行執行以 CLI 為基礎的編碼代理程式,並內建終端、審查以及在編輯器中開啟的工作流程。
+Paradev 在相互隔離的 git worktree 中平行執行以 CLI 為基礎的編碼代理程式,並內建終端、審查以及在編輯器中開啟的工作流程。
 
 - **同時執行多個代理程式**,沒有情境切換的負擔
 - **將每項任務隔離**在獨立的 git worktree 中,代理程式之間互不干擾
@@ -151,15 +151,15 @@ Superset 在相互隔離的 git worktree 中平行執行以 CLI 為基礎的編�
 <tr>
 <td width="50%" valign="middle">
 
-### Superset CLI
+### Paradev CLI
 
-在任何 shell 中撰寫指令碼:用單一執行檔建立工作區、啟動代理程式、讀取它們的終端、管理自動化。只要代理程式能執行命令,它就能操作 Superset。
+在任何 shell 中撰寫指令碼:用單一執行檔建立工作區、啟動代理程式、讀取它們的終端、管理自動化。只要代理程式能執行命令,它就能操作 Paradev。
 
 [文件 →](https://docs.superset.sh/cli/getting-started)
 
 </td>
 <td width="50%">
-  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="透過 Superset CLI 建立工作區並啟動代理程式" width="100%" /></a>
+  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="透過 Paradev CLI 建立工作區並啟動代理程式" width="100%" /></a>
 </td>
 </tr>
 <tr>
@@ -193,7 +193,7 @@ Superset 在相互隔離的 git worktree 中平行執行以 CLI 為基礎的編�
 
 ## 支援的代理程式
 
-Superset 適用於任何以 CLI 為基礎的編碼代理程式,包括:
+Paradev 適用於任何以 CLI 為基礎的編碼代理程式,包括:
 
 | 代理程式 | 狀態 |
 |:------|:-------|
@@ -220,7 +220,7 @@ Superset 適用於任何以 CLI 為基礎的編碼代理程式,包括:
 | <picture><source media="(prefers-color-scheme: dark)" srcset="../packages/ui/src/assets/icons/preset-icons/polygraph-white.svg" /><img height="16" align="top" alt="Polygraph" src="../packages/ui/src/assets/icons/preset-icons/polygraph.svg" /></picture> &nbsp;[Polygraph](https://trypolygraph.com/) | 完整支援 |
 | 任何其他 CLI 代理程式 | 無需設定即可使用 |
 
-只要能在終端裡執行,就能在 Superset 上執行
+只要能在終端裡執行,就能在 Paradev 上執行
 
 代理程式得到的不只是一個終端:
 
@@ -238,7 +238,7 @@ Superset 適用於任何以 CLI 為基礎的編碼代理程式,包括:
 |:--------|:-------------|
 | [**桌面應用程式**](https://github.com/superset-sh/superset/releases/latest) | 完整的 IDE:終端、差異檢視器、應用程式內瀏覽器、自動化 |
 | [**CLI**](https://docs.superset.sh/cli/getting-started) | 單一 `superset` 執行檔,在任何 shell 中管理工作區、代理程式、終端和主機 |
-| [**TypeScript SDK**](https://docs.superset.sh/sdk/getting-started) | 透過 [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk) 在 Node、Bun 或 Deno 中以程式方式操作 Superset |
+| [**TypeScript SDK**](https://docs.superset.sh/sdk/getting-started) | 透過 [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk) 在 Node、Bun 或 Deno 中以程式方式操作 Paradev |
 | [**MCP 伺服器**](https://docs.superset.sh/mcp) | 讓 Claude Code、Codex、Cursor 等代理程式自己建立和管理工作區 |
 
 CLI 隨桌面應用程式一起提供,也可以獨立安裝:
@@ -260,11 +260,11 @@ iOS 應用程式即將推出,讓你可以在手機上查看你的代理程式。
 - **Windows**:暫不提供
 - [所有建置版本](https://github.com/superset-sh/superset/releases/latest)
 
-你只需要安裝 [Git](https://git-scm.com/)。[gh](https://cli.github.com/) 是選用的,可解鎖 PR 工作流程;Superset 會主動提議為你安裝。
+你只需要安裝 [Git](https://git-scm.com/)。[gh](https://cli.github.com/) 是選用的,可解鎖 PR 工作流程;Paradev 會主動提議為你安裝。
 
 ## 開發
 
-想研究 Superset 或貢獻一個 PR?複製儲存庫,把它加入已安裝的 Superset 應用程式,然後為你的變更建立一個工作區:
+想研究 Paradev 或貢獻一個 PR?複製儲存庫,把它加入已安裝的 Paradev 應用程式,然後為你的變更建立一個工作區:
 
 ```bash
 git clone https://github.com/superset-sh/superset.git
@@ -277,7 +277,7 @@ git clone https://github.com/superset-sh/superset.git
 bun run dev
 ```
 
-在每個新的 worktree 中執行一次 `setup.local.sh`。它會設定工作區專屬的應用程式識別與連接埠,讓開發版桌面應用程式可以與已安裝的 Superset 應用程式及其他開發 worktree 並行執行。
+在每個新的 worktree 中執行一次 `setup.local.sh`。它會設定工作區專屬的應用程式識別與連接埠,讓開發版桌面應用程式可以與已安裝的 Paradev 應用程式及其他開發 worktree 並行執行。
 
 不需要 Neon 帳號或第三方憑證。`setup.local.sh` 會透過 Docker 啟動本機 Postgres + Electric 堆疊並植入一個開發帳號。用 **「Sign in as dev」**按鈕(或 `admin@local.test` / `supersetdev`)登入即可。
 
@@ -329,7 +329,7 @@ bun run dev
 
 ## 社群
 
-加入 Superset 社群,取得協助、分享意見,並與其他使用者交流:
+加入 Paradev 社群,取得協助、分享意見,並與其他使用者交流:
 
 - **[Discord](https://discord.gg/cZeD9WYcV7)**:與團隊和社群聊天
 - **[Twitter](https://x.com/superset_sh)**:追蹤以取得更新和公告
@@ -346,4 +346,4 @@ bun run dev
 
 **桌面應用程式永久免費。**在你自己的機器上平行執行代理程式永遠不需要付費。我們若收費,也會是建立在其上的選用服務。
 
-整個應用程式都在這個儲存庫中,採用 [Elastic License 2.0](../LICENSE.md) 授權:使用它、fork 它、修改它、為你的團隊自行架設,都可以。唯一不允許的,是把 Superset 本身重新包裝成服務販售給他人。
+整個應用程式都在這個儲存庫中,採用 [Elastic License 2.0](../LICENSE.md) 授權:使用它、fork 它、修改它、為你的團隊自行架設,都可以。唯一不允許的,是把 Paradev 本身重新包裝成服務販售給他人。

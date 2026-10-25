@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="full" alt="並列のSupersetワークスペースでライブ差分を表示しながら動作するClaudeとOpenCode" src="../apps/marketing/public/images/readme-hero.gif" />
+<img width="full" alt="並列のParadevワークスペースでライブ差分を表示しながら動作するClaudeとOpenCode" src="../apps/marketing/public/images/readme-hero.gif" />
 
 ### 100以上のコーディングエージェントを並列実行
 
@@ -36,7 +36,7 @@ Claude Code、Codex、その他あらゆるCLIエージェントを、それぞ�
 
 ## 切り替えコストなしで10倍速くコーディング
 
-Supersetは、CLIベースのコーディングエージェントを独立したgit worktree間で並列実行します。ターミナル、レビュー、エディタで開くワークフローも内蔵しています。
+Paradevは、CLIベースのコーディングエージェントを独立したgit worktree間で並列実行します。ターミナル、レビュー、エディタで開くワークフローも内蔵しています。
 
 - **複数のエージェントを同時に実行** — コンテキスト切り替えのオーバーヘッドはありません
 - **各タスクを独立したgit worktreeに分離** — エージェント同士が干渉しません
@@ -151,15 +151,15 @@ Supersetは、CLIベースのコーディングエージェントを独立した
 <tr>
 <td width="50%" valign="middle">
 
-### Superset CLI
+### Paradev CLI
 
-どのシェルからでもスクリプト化:ワークスペースの作成、エージェントの起動、ターミナルの読み取り、オートメーションの管理を単一のバイナリで。コマンドを実行できるエージェントなら、Supersetを操作できます。
+どのシェルからでもスクリプト化:ワークスペースの作成、エージェントの起動、ターミナルの読み取り、オートメーションの管理を単一のバイナリで。コマンドを実行できるエージェントなら、Paradevを操作できます。
 
 [ドキュメント →](https://docs.superset.sh/cli/getting-started)
 
 </td>
 <td width="50%">
-  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="Superset CLIからワークスペースを作成してエージェントを起動する様子" width="100%" /></a>
+  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="Paradev CLIからワークスペースを作成してエージェントを起動する様子" width="100%" /></a>
 </td>
 </tr>
 <tr>
@@ -193,7 +193,7 @@ Supersetは、CLIベースのコーディングエージェントを独立した
 
 ## 対応エージェント
 
-Supersetは、次のものを含むあらゆるCLIベースのコーディングエージェントで動作します:
+Paradevは、次のものを含むあらゆるCLIベースのコーディングエージェントで動作します:
 
 | エージェント | ステータス |
 |:------|:-------|
@@ -220,7 +220,7 @@ Supersetは、次のものを含むあらゆるCLIベースのコーディング
 | <picture><source media="(prefers-color-scheme: dark)" srcset="../packages/ui/src/assets/icons/preset-icons/polygraph-white.svg" /><img height="16" align="top" alt="Polygraph" src="../packages/ui/src/assets/icons/preset-icons/polygraph.svg" /></picture> &nbsp;[Polygraph](https://trypolygraph.com/) | 完全対応 |
 | その他のCLIエージェント | 設定不要で動作 |
 
-ターミナルで動くものなら、Supersetでも動きます
+ターミナルで動くものなら、Paradevでも動きます
 
 エージェントが得られるのはターミナルだけではありません:
 
@@ -238,7 +238,7 @@ Supersetは、次のものを含むあらゆるCLIベースのコーディング
 |:--------|:-------------|
 | [**デスクトップアプリ**](https://github.com/superset-sh/superset/releases/latest) | フル機能のIDE:ターミナル、差分ビューア、アプリ内ブラウザ、オートメーション |
 | [**CLI**](https://docs.superset.sh/cli/getting-started) | ワークスペース、エージェント、ターミナル、ホストをあらゆるシェルから管理できる単一の `superset` バイナリ |
-| [**TypeScript SDK**](https://docs.superset.sh/sdk/getting-started) | [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk)を使ってNode、Bun、DenoからSupersetをプログラムで操作 |
+| [**TypeScript SDK**](https://docs.superset.sh/sdk/getting-started) | [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk)を使ってNode、Bun、DenoからParadevをプログラムで操作 |
 | [**MCPサーバー**](https://docs.superset.sh/mcp) | Claude Code、Codex、Cursorなどのエージェント自身にワークスペースを作成・管理させる |
 
 CLIはデスクトップアプリに同梱されていますが、単体でもインストールできます:
@@ -260,11 +260,11 @@ iOSアプリも近日公開予定です。スマートフォンからエージ�
 - **Windows**: 現時点では未対応
 - [すべてのビルド](https://github.com/superset-sh/superset/releases/latest)
 
-必要なのは[Git](https://git-scm.com/)だけです。[gh](https://cli.github.com/)は任意ですが、インストールするとPRワークフローが使えるようになります。Supersetが代わりにインストールを提案してくれます。
+必要なのは[Git](https://git-scm.com/)だけです。[gh](https://cli.github.com/)は任意ですが、インストールするとPRワークフローが使えるようになります。Paradevが代わりにインストールを提案してくれます。
 
 ## 開発
 
-Supersetをいじってみたい、またはPRを送りたいですか?リポジトリをクローンし、インストール済みのSupersetアプリに追加して、変更用のワークスペースを作成してください:
+Paradevをいじってみたい、またはPRを送りたいですか?リポジトリをクローンし、インストール済みのParadevアプリに追加して、変更用のワークスペースを作成してください:
 
 ```bash
 git clone https://github.com/superset-sh/superset.git
@@ -277,7 +277,7 @@ git clone https://github.com/superset-sh/superset.git
 bun run dev
 ```
 
-`setup.local.sh` は新しいworktreeごとに1回実行してください。ワークスペース固有のアプリIDとポートを設定するため、開発版のデスクトップアプリをインストール済みのSupersetアプリや他の開発用worktreeと並行して実行できます。
+`setup.local.sh` は新しいworktreeごとに1回実行してください。ワークスペース固有のアプリIDとポートを設定するため、開発版のデスクトップアプリをインストール済みのParadevアプリや他の開発用worktreeと並行して実行できます。
 
 Neonアカウントやサードパーティの認証情報は不要です。`setup.local.sh` がDocker経由でローカルのPostgres + Electricスタックを立ち上げ、開発用アカウントをシードします。**「Sign in as dev」**ボタン(または `admin@local.test` / `supersetdev`)でサインインしてください。
 
@@ -329,7 +329,7 @@ Neonアカウントやサードパーティの認証情報は不要です。`set
 
 ## コミュニティ
 
-Supersetコミュニティに参加して、サポートを受けたり、フィードバックを共有したり、他のユーザーとつながりましょう:
+Paradevコミュニティに参加して、サポートを受けたり、フィードバックを共有したり、他のユーザーとつながりましょう:
 
 - **[Discord](https://discord.gg/cZeD9WYcV7)**: チームやコミュニティとチャット
 - **[Twitter](https://x.com/superset_sh)**: 最新情報とお知らせをフォロー
@@ -346,4 +346,4 @@ Supersetコミュニティに参加して、サポートを受けたり、フィ
 
 **デスクトップアプリは永久に無料です。**自分のマシンでエージェントを並列実行することに、料金がかかることは決してありません。課金があるとしても、その上に載るオプションサービスだけです。
 
-アプリ全体がこのリポジトリに[Elastic License 2.0](../LICENSE.md)の下で公開されています:使う、フォークする、改変する、チームでセルフホストする、すべて自由です。唯一できないのは、Superset自体をサービスとして再パッケージし、他者に販売することだけです。
+アプリ全体がこのリポジトリに[Elastic License 2.0](../LICENSE.md)の下で公開されています:使う、フォークする、改変する、チームでセルフホストする、すべて自由です。唯一できないのは、Paradev自体をサービスとして再パッケージし、他者に販売することだけです。

@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="full" alt="Claude a OpenCode pracují paralelně v pracovních prostorech Supersetu s živými diffy" src="../apps/marketing/public/images/readme-hero.gif" />
+<img width="full" alt="Claude a OpenCode pracují paralelně v pracovních prostorech Paradevu s živými diffy" src="../apps/marketing/public/images/readme-hero.gif" />
 
 ### Spusťte 100+ kódovacích agentů paralelně
 
@@ -36,7 +36,7 @@ Trávte čas dodáváním, ne čekáním.
 
 ## Kódujte 10x rychleji bez nákladů na přepínání
 
-Superset spouští CLI kódovací agenty paralelně v izolovaných git worktree, s vestavěným terminálem, review a workflow otevření v editoru.
+Paradev spouští CLI kódovací agenty paralelně v izolovaných git worktree, s vestavěným terminálem, review a workflow otevření v editoru.
 
 - **Spouštějte více agentů současně** bez režie přepínání kontextu
 - **Izolujte každý úkol** ve vlastním git worktree, takže si agenti navzájem nezasahují do práce
@@ -151,15 +151,15 @@ Připojte další počítač a dostaňte se k jeho pracovním prostorům odkudko
 <tr>
 <td width="50%" valign="middle">
 
-### Superset CLI
+### Paradev CLI
 
-Skriptujte z libovolného shellu: vytvářejte pracovní prostory, spouštějte agenty, čtěte jejich terminály a spravujte automatizace jedinou binárkou. Pokud agent umí spustit příkaz, umí řídit Superset.
+Skriptujte z libovolného shellu: vytvářejte pracovní prostory, spouštějte agenty, čtěte jejich terminály a spravujte automatizace jedinou binárkou. Pokud agent umí spustit příkaz, umí řídit Paradev.
 
 [Dokumentace →](https://docs.superset.sh/cli/getting-started)
 
 </td>
 <td width="50%">
-  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="Vytvoření pracovního prostoru a spuštění agenta ze Superset CLI" width="100%" /></a>
+  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="Vytvoření pracovního prostoru a spuštění agenta ze Paradev CLI" width="100%" /></a>
 </td>
 </tr>
 <tr>
@@ -193,7 +193,7 @@ Přejděte na libovolný pracovní prostor, akci nebo nastavení z jednoho vyhle
 
 ## Podporovaní agenti
 
-Superset funguje s libovolným CLI kódovacím agentem, mimo jiné:
+Paradev funguje s libovolným CLI kódovacím agentem, mimo jiné:
 
 | Agent | Stav |
 |:------|:-------|
@@ -220,7 +220,7 @@ Superset funguje s libovolným CLI kódovacím agentem, mimo jiné:
 | <picture><source media="(prefers-color-scheme: dark)" srcset="../packages/ui/src/assets/icons/preset-icons/polygraph-white.svg" /><img height="16" align="top" alt="Polygraph" src="../packages/ui/src/assets/icons/preset-icons/polygraph.svg" /></picture> &nbsp;[Polygraph](https://trypolygraph.com/) | Plně podporován |
 | Jakýkoli jiný CLI agent | Funguje bez konfigurace |
 
-Pokud běží v terminálu, běží na Supersetu
+Pokud běží v terminálu, běží na Paradevu
 
 Agenti dostávají víc než jen terminál:
 
@@ -238,7 +238,7 @@ Každé rozhraní komunikuje se stejnými pracovními prostory, takže můžete 
 |:--------|:-------------|
 | [**Desktopová aplikace**](https://github.com/superset-sh/superset/releases/latest) | Plnohodnotné IDE: terminály, diff prohlížeč, vestavěný prohlížeč, automatizace |
 | [**CLI**](https://docs.superset.sh/cli/getting-started) | Jediná binárka `superset` pro správu pracovních prostorů, agentů, terminálů a hostitelů z libovolného shellu |
-| [**TypeScript SDK**](https://docs.superset.sh/sdk/getting-started) | Řiďte Superset programově pomocí [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk) z Node, Bunu nebo Dena |
+| [**TypeScript SDK**](https://docs.superset.sh/sdk/getting-started) | Řiďte Paradev programově pomocí [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk) z Node, Bunu nebo Dena |
 | [**MCP server**](https://docs.superset.sh/mcp) | Nechte Claude Code, Codex, Cursor a další agenty vytvářet a spravovat pracovní prostory samostatně |
 
 CLI je přibalené k desktopové aplikaci, nebo ho nainstalujte samostatně:
@@ -260,12 +260,12 @@ Stáhněte si desktopovou aplikaci:
 - **Windows**: zatím není k dispozici
 - [Všechny buildy](https://github.com/superset-sh/superset/releases/latest)
 
-Jediné, co potřebujete mít nainstalované, je [Git](https://git-scm.com/). [gh](https://cli.github.com/) je volitelný a odemyká PR workflow; Superset vám ho nabídne nainstalovat.
+Jediné, co potřebujete mít nainstalované, je [Git](https://git-scm.com/). [gh](https://cli.github.com/) je volitelný a odemyká PR workflow; Paradev vám ho nabídne nainstalovat.
 
 ## Vývoj
 
-Chcete na Supersetu bastlit nebo přispět PR? Naklonujte repozitář, přidejte ho do
-nainstalované aplikace Superset a vytvořte pracovní prostor pro svou změnu:
+Chcete na Paradevu bastlit nebo přispět PR? Naklonujte repozitář, přidejte ho do
+nainstalované aplikace Paradev a vytvořte pracovní prostor pro svou změnu:
 
 ```bash
 git clone https://github.com/superset-sh/superset.git
@@ -280,7 +280,7 @@ bun run dev
 
 Spusťte `setup.local.sh` jednou v každém novém worktree. Nakonfiguruje identitu
 aplikace a porty specifické pro pracovní prostor, aby vývojová desktopová aplikace mohla
-běžet vedle nainstalované aplikace Superset a dalších vývojových worktree.
+běžet vedle nainstalované aplikace Paradev a dalších vývojových worktree.
 
 Není potřeba účet Neon ani přihlašovací údaje třetích stran. `setup.local.sh` nastartuje
 lokální stack Postgres + Electric přes Docker a naplní dev účet. Přihlaste se
@@ -334,7 +334,7 @@ Příspěvky vítáme! V [CONTRIBUTING.md](../CONTRIBUTING.md) najdete, jak se n
 
 ## Komunita
 
-Připojte se ke komunitě Supersetu — získáte pomoc, můžete sdílet zpětnou vazbu a poznat další uživatele:
+Připojte se ke komunitě Paradevu — získáte pomoc, můžete sdílet zpětnou vazbu a poznat další uživatele:
 
 - **[Discord](https://discord.gg/cZeD9WYcV7)**: chatujte s týmem a komunitou
 - **[Twitter](https://x.com/superset_sh)**: sledujte novinky a oznámení
@@ -351,4 +351,4 @@ Připojte se ke komunitě Supersetu — získáte pomoc, můžete sdílet zpětn
 
 **Desktopová aplikace je navždy zdarma.** Paralelní spouštění agentů na vlastním počítači nebude nikdy vyžadovat platbu. Cokoli zpoplatníme, bude volitelná služba navíc.
 
-Celá aplikace je v tomto repozitáři pod licencí [Elastic License 2.0](../LICENSE.md): používejte ji, forkněte ji, upravujte ji, provozujte ji na vlastní infrastruktuře pro svůj tým. Jediné, co nejde, je přebalit samotný Superset jako službu, kterou prodáváte ostatním.
+Celá aplikace je v tomto repozitáři pod licencí [Elastic License 2.0](../LICENSE.md): používejte ji, forkněte ji, upravujte ji, provozujte ji na vlastní infrastruktuře pro svůj tým. Jediné, co nejde, je přebalit samotný Paradev jako službu, kterou prodáváte ostatním.

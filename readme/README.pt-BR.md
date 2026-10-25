@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="full" alt="Claude e OpenCode trabalhando em paralelo em áreas de trabalho do Superset com diffs ao vivo" src="../apps/marketing/public/images/readme-hero.gif" />
+<img width="full" alt="Claude e OpenCode trabalhando em paralelo em áreas de trabalho do Paradev com diffs ao vivo" src="../apps/marketing/public/images/readme-hero.gif" />
 
 ### Execute mais de 100 agentes de código em paralelo
 
@@ -36,7 +36,7 @@ Passe seu tempo entregando, não esperando.
 
 ## Programe 10x mais rápido sem custo de troca de contexto
 
-O Superset executa agentes de código baseados em CLI em paralelo em worktrees git isolados, com terminal, revisão e fluxos de abrir no editor integrados.
+O Paradev executa agentes de código baseados em CLI em paralelo em worktrees git isolados, com terminal, revisão e fluxos de abrir no editor integrados.
 
 - **Execute vários agentes ao mesmo tempo** sem a sobrecarga da troca de contexto
 - **Isole cada tarefa** em seu próprio worktree git para que os agentes não interfiram uns nos outros
@@ -151,15 +151,15 @@ Conecte outra máquina e acesse as áreas de trabalho dela de qualquer lugar: pe
 <tr>
 <td width="50%" valign="middle">
 
-### CLI do Superset
+### CLI do Paradev
 
-Automatize de qualquer shell: crie áreas de trabalho, inicie agentes, leia seus terminais e gerencie automações com um único binário. Se um agente consegue executar um comando, ele consegue controlar o Superset.
+Automatize de qualquer shell: crie áreas de trabalho, inicie agentes, leia seus terminais e gerencie automações com um único binário. Se um agente consegue executar um comando, ele consegue controlar o Paradev.
 
 [Docs →](https://docs.superset.sh/cli/getting-started)
 
 </td>
 <td width="50%">
-  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="Criando uma área de trabalho e iniciando um agente pela CLI do Superset" width="100%" /></a>
+  <a href="https://docs.superset.sh/cli/getting-started"><img src="../apps/marketing/public/images/readme/cli-demo.gif" alt="Criando uma área de trabalho e iniciando um agente pela CLI do Paradev" width="100%" /></a>
 </td>
 </tr>
 <tr>
@@ -193,7 +193,7 @@ Vá para qualquer área de trabalho, ação ou configuração a partir de uma ú
 
 ## Agentes compatíveis
 
-O Superset funciona com qualquer agente de código baseado em CLI, incluindo:
+O Paradev funciona com qualquer agente de código baseado em CLI, incluindo:
 
 | Agente | Status |
 |:------|:-------|
@@ -220,7 +220,7 @@ O Superset funciona com qualquer agente de código baseado em CLI, incluindo:
 | <picture><source media="(prefers-color-scheme: dark)" srcset="../packages/ui/src/assets/icons/preset-icons/polygraph-white.svg" /><img height="16" align="top" alt="Polygraph" src="../packages/ui/src/assets/icons/preset-icons/polygraph.svg" /></picture> &nbsp;[Polygraph](https://trypolygraph.com/) | Totalmente compatível |
 | Qualquer outro agente de CLI | Funciona sem configuração |
 
-Se roda em um terminal, roda no Superset
+Se roda em um terminal, roda no Paradev
 
 Os agentes recebem mais do que um terminal:
 
@@ -238,7 +238,7 @@ Todas as superfícies conversam com as mesmas áreas de trabalho, então você p
 |:--------|:-------------|
 | [**App desktop**](https://github.com/superset-sh/superset/releases/latest) | A IDE completa: terminais, visualizador de diff, navegador integrado, automações |
 | [**CLI**](https://docs.superset.sh/cli/getting-started) | Um único binário `superset` para gerenciar áreas de trabalho, agentes, terminais e hosts de qualquer shell |
-| [**SDK TypeScript**](https://docs.superset.sh/sdk/getting-started) | Controle o Superset programaticamente com [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk) a partir de Node, Bun ou Deno |
+| [**SDK TypeScript**](https://docs.superset.sh/sdk/getting-started) | Controle o Paradev programaticamente com [`@superset_sh/sdk`](https://www.npmjs.com/package/@superset_sh/sdk) a partir de Node, Bun ou Deno |
 | [**Servidor MCP**](https://docs.superset.sh/mcp) | Deixe o Claude Code, o Codex, o Cursor e outros agentes criarem e gerenciarem áreas de trabalho por conta própria |
 
 A CLI vem junto com o app desktop, ou instale-a separadamente:
@@ -260,12 +260,12 @@ Baixe o app desktop:
 - **Windows**: ainda não disponível
 - [Todas as builds](https://github.com/superset-sh/superset/releases/latest)
 
-Tudo o que você precisa ter instalado é o [Git](https://git-scm.com/). O [gh](https://cli.github.com/) é opcional e desbloqueia os fluxos de PR; o Superset se oferece para instalá-lo para você.
+Tudo o que você precisa ter instalado é o [Git](https://git-scm.com/). O [gh](https://cli.github.com/) é opcional e desbloqueia os fluxos de PR; o Paradev se oferece para instalá-lo para você.
 
 ## Desenvolvimento
 
-Quer mexer no Superset ou contribuir com uma PR? Clone o repositório, adicione-o ao
-app do Superset instalado e crie uma área de trabalho para a sua mudança:
+Quer mexer no Paradev ou contribuir com uma PR? Clone o repositório, adicione-o ao
+app do Paradev instalado e crie uma área de trabalho para a sua mudança:
 
 ```bash
 git clone https://github.com/superset-sh/superset.git
@@ -280,7 +280,7 @@ bun run dev
 
 Execute `setup.local.sh` uma vez em cada worktree novo. Ele configura a identidade
 do app e as portas específicas da área de trabalho para que o app desktop de desenvolvimento
-possa rodar ao lado do app do Superset instalado e de outros worktrees de desenvolvimento.
+possa rodar ao lado do app do Paradev instalado e de outros worktrees de desenvolvimento.
 
 Não é preciso conta na Neon nem credenciais de terceiros. O `setup.local.sh` sobe
 uma stack local de Postgres + Electric via Docker e cria uma conta de dev. Entre
@@ -334,7 +334,7 @@ Contribuições são bem-vindas! Veja [CONTRIBUTING.md](../CONTRIBUTING.md) para
 
 ## Comunidade
 
-Junte-se à comunidade do Superset para obter ajuda, compartilhar feedback e se conectar com outros usuários:
+Junte-se à comunidade do Paradev para obter ajuda, compartilhar feedback e se conectar com outros usuários:
 
 - **[Discord](https://discord.gg/cZeD9WYcV7)**: converse com o time e a comunidade
 - **[Twitter](https://x.com/superset_sh)**: siga para novidades e anúncios
@@ -351,4 +351,4 @@ Junte-se à comunidade do Superset para obter ajuda, compartilhar feedback e se 
 
 **O app desktop é grátis para sempre.** Executar agentes em paralelo na sua própria máquina nunca exigirá pagamento. Qualquer coisa que cobrarmos será um serviço opcional por cima.
 
-O app inteiro está neste repositório sob a [Elastic License 2.0](../LICENSE.md): use, faça fork, modifique, hospede você mesmo para o seu time. A única coisa fora de questão é reempacotar o próprio Superset como um serviço que você vende para terceiros.
+O app inteiro está neste repositório sob a [Elastic License 2.0](../LICENSE.md): use, faça fork, modifique, hospede você mesmo para o seu time. A única coisa fora de questão é reempacotar o próprio Paradev como um serviço que você vende para terceiros.
