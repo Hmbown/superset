@@ -189,8 +189,31 @@ export function V1AutoMigration() {
 			}, delayMs);
 			return true;
 		};
+		// Terminals live in the pty-daemon, which outlives a host-service reset,
+		// so this is safe on either surface. Once per org per session.
+		const resetOutdatedHostOnce = async (
+			reasons: string[],
+		): Promise<"ok" | "failed" | undefined> => {
+			if (
+				!reasons.some(isHostVersionSkewV1MigrationFailure) ||
+				hostResetOrgsRef.current.has(organizationId)
+			) {
+				return undefined;
+			}
+			hostResetOrgsRef.current.add(organizationId);
+			try {
+				await electronTrpcClient.hostServiceCoordinator.reset.mutate({
+					organizationId,
+				});
+				return "ok";
+			} catch (resetError) {
+				console.error("[v1-migration] host-service reset failed", resetError);
+				return "failed";
+			}
+		};
 		void (async () => {
 			let lockToken: string | null = null;
+			let hostReset: "ok" | "failed" | undefined;
 			let showsProgress = false;
 			const startedAt = Date.now();
 			try {
@@ -282,9 +305,13 @@ export function V1AutoMigration() {
 					try {
 						gatingReasons = await listGatingFailureReasons(ipc, organizationId);
 					} catch {}
+					// A per-item import that hit an outdated host-service is ledgered
+					// rather than thrown; reset it and retry like the thrown case.
+					hostReset = await resetOutdatedHostOnce(gatingReasons);
 					const retrying =
 						gatingReasons.length > 0 &&
-						gatingReasons.every(isTransientV1MigrationFailure) &&
+						(hostReset === "ok" ||
+							gatingReasons.every(isTransientV1MigrationFailure)) &&
 						scheduleRetry(gatingReasons);
 					if (!retrying) await settleStatus(true);
 				} else {
@@ -352,33 +379,14 @@ export function V1AutoMigration() {
 					duration_ms: Date.now() - startedAt,
 					failure_reasons: failureReasons,
 					skip_reasons: skipReasons,
+					host_reset: hostReset,
 				});
 			} catch (err) {
 				// Retries next boot; the ledger holds whatever progress landed.
 				console.error("[v1-migration] auto pass failed", err);
 				const message = err instanceof Error ? err.message : String(err);
 				const durationMs = Date.now() - startedAt;
-				// Terminals live in the pty-daemon, which outlives a host-service
-				// reset, so this is safe on either surface.
-				let hostReset: "ok" | "failed" | undefined;
-				if (
-					isHostVersionSkewV1MigrationFailure(message) &&
-					!hostResetOrgsRef.current.has(organizationId)
-				) {
-					hostResetOrgsRef.current.add(organizationId);
-					try {
-						await electronTrpcClient.hostServiceCoordinator.reset.mutate({
-							organizationId,
-						});
-						hostReset = "ok";
-					} catch (resetError) {
-						hostReset = "failed";
-						console.error(
-							"[v1-migration] host-service reset failed",
-							resetError,
-						);
-					}
-				}
+				hostReset = await resetOutdatedHostOnce([message]);
 				posthog.capture("v1_auto_migration_failed", {
 					trigger,
 					duration_ms: durationMs,
