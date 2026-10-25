@@ -8,8 +8,9 @@ export type AcpChatAvailability = "enabled" | "disabled" | "resolving";
 export function useAcpChatEnabled(): AcpChatAvailability {
 	const flag = useFeatureFlagEnabled(FEATURE_FLAGS.ACP_CHAT);
 	const chosen = useAcpChatStore((state) => state.enabled);
+	if (chosen === false) return "disabled";
 	if (flag === undefined) return "resolving";
-	return flag && chosen !== false ? "enabled" : "disabled";
+	return flag ? "enabled" : "disabled";
 }
 
 const RESOLVE_TIMEOUT_MS = 2_000;
