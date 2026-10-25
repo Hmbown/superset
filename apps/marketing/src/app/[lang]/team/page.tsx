@@ -1,6 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
 import { getI18nInstance } from "@superset/i18n/server";
+import { BRAND } from "@superset/shared/brand";
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -45,14 +46,14 @@ export async function generateMetadata(): Promise<Metadata> {
 			languages: localizedAlternates(lang, "/team").languages,
 		},
 		openGraph: {
-			title: `${title} | Paradev`,
+			title: `${title} | ${BRAND.NAME}`,
 			description: ogDescription,
 			url: localeUrl(lang, "/team"),
 			images: ["/og-image.png"],
 		},
 		twitter: {
 			card: "summary_large_image",
-			title: `${title} | Paradev`,
+			title: `${title} | ${BRAND.NAME}`,
 			description: ogDescription,
 			images: ["/og-image.png"],
 		},
@@ -183,7 +184,10 @@ export default async function TeamPage() {
 							Combinator, Paul Graham, and founders we admire.
 						</Trans>
 					</p>
-					<Investors investors={about.investors} />
+					<Investors
+						investors={about.investors}
+						moreInvestors={about.moreInvestors}
+					/>
 				</section>
 
 				<section className="mb-24 md:mb-32">
