@@ -36,11 +36,8 @@
 import { randomUUID } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import {
-	SANDBOX_IMAGE_NAME,
-	SHARED_ENVIRONMENT_NAME,
-	SHARED_ENVIRONMENT_ORGANIZATION_ID,
-} from "@superset/shared/constants";
+import { GOLDEN_BOX_VCPUS } from "@superset/shared/billing";
+import { SANDBOX_IMAGE_NAME } from "@superset/shared/constants";
 import {
 	SANDBOX_CONTRACT_VERSION,
 	SANDBOX_PATHS,
@@ -164,15 +161,21 @@ if (SKIP_IMAGE) {
 }
 
 // 3. golden
+// The modules, not the `lib/sandbox` barrel: it also builds the billing and
+// email clients, whose secrets this job does not have.
 const {
 	deleteSandbox,
-	deriveSandboxCredentials,
 	provisionSandbox,
-	sandboxHostSecretFor,
 	stopAndSnapshot,
 	stripWorkspaceIdentity,
 	wakeSandbox,
-} = await import("@superset/trpc/lib/sandbox");
+} = await import("@superset/trpc/lib/sandbox/vercel");
+const { deriveSandboxCredentials } = await import(
+	"@superset/trpc/lib/sandbox/credentials"
+);
+const { sandboxHostSecretFor } = await import(
+	"@superset/trpc/lib/sandbox/access"
+);
 const { probeBox, checkWakeLog } = await import("./probe");
 
 const setupScript = readFileSync(
@@ -189,7 +192,7 @@ function identityFor(workspaceId: string, sourceRef: string): SandboxIdentity {
 		SUPERSET_SANDBOX_WORKSPACE_ID: workspaceId,
 		SUPERSET_SANDBOX_ORGANIZATION_ID: ORGANIZATION_ID as string,
 		SUPERSET_SANDBOX_REPOSITORIES: JSON.stringify([
-			{ url: REPO_URL, branch: BRANCH, path: REPO_PATH, hooks: true },
+			{ url: REPO_URL, branch: BRANCH, path: REPO_PATH },
 		]),
 		SUPERSET_SANDBOX_IMAGE_TAG: sourceRef,
 		SUPERSET_SANDBOX_PROVIDER: "vercel",
@@ -218,6 +221,7 @@ for (;;) {
 				hostSecret: goldenSecret,
 				managedEnv: {},
 				networkPolicy: "allow-all",
+				vcpus: GOLDEN_BOX_VCPUS,
 			},
 		});
 		break;
@@ -240,6 +244,7 @@ await wakeSandbox({
 		hostSecret: goldenSecret,
 		managedEnv: {},
 		networkPolicy: "allow-all",
+		vcpus: GOLDEN_BOX_VCPUS,
 	},
 });
 log("golden: host-service up; waiting for the checkout");
@@ -400,6 +405,7 @@ const probeClaim = {
 	hostSecret: probeSecret,
 	managedEnv,
 	networkPolicy,
+	vcpus: GOLDEN_BOX_VCPUS,
 };
 log(`probe: provisioning ${probe} as a fork of ${golden}`);
 await provisionSandbox({
@@ -472,8 +478,8 @@ if (!SKIP_IMAGE) {
 const { db, dbWs } = await import("@superset/db/client");
 const { environments, environmentRepositories, githubRepositories } =
 	await import("@superset/db/schema");
-const { and, eq, isNotNull, isNull, or } = await import("drizzle-orm");
-const { seedSharedEnvironments } = await import("./seed");
+const { and, eq, isNull } = await import("drizzle-orm");
+const { recordReleasedBundle } = await import("./record-bundle");
 
 // The golden baked the monorepo at its path; a fork asks for the same, and
 // the box acts on the monorepo's own .superset/config.json.
@@ -502,29 +508,24 @@ if (ENVIRONMENT_ID && !previous)
 		`rows: environment ${ENVIRONMENT_ID} is not in organization ${ORGANIZATION_ID}; ${golden} left for inspection`,
 	);
 
-await seedSharedEnvironments(SANDBOX_IMAGE_NAME);
+await recordReleasedBundle({
+	imageRef: SANDBOX_IMAGE_NAME,
+	bundleSha: bundle.sha256,
+});
 const fromGolden = {
 	provider: "vercel" as const,
 	sourceKind: "fork" as const,
 	sourceRef: golden,
 	region: REGION,
 	bundleSha: bundle.sha256,
-	hooksRepositoryId: monorepo.id,
+	primaryRepositoryId: monorepo.id,
 	archivedAt: null,
 };
 const { internal, bundled } = await dbWs.transaction(async (tx) => {
 	const bundled = await tx
 		.update(environments)
 		.set({ bundleSha: bundle.sha256 })
-		.where(
-			and(
-				isNull(environments.archivedAt),
-				or(
-					isNotNull(environments.bundleSha),
-					eq(environments.organizationId, SHARED_ENVIRONMENT_ORGANIZATION_ID),
-				),
-			),
-		)
+		.where(isNull(environments.archivedAt))
 		.returning({ id: environments.id });
 	const [internal] = previous
 		? await tx
@@ -552,7 +553,7 @@ const { internal, bundled } = await dbWs.transaction(async (tx) => {
 	return { internal, bundled };
 });
 log(
-	`rows: ${SHARED_ENVIRONMENT_NAME} -> image ${SANDBOX_IMAGE_NAME}; ${bundled.length} environments -> bundle ${bundle.sha256.slice(0, 12)}`,
+	`rows: bundle ${bundle.sha256.slice(0, 12)} recorded; ${bundled.length} environments -> it`,
 );
 log(
 	`rows: ${internal.name} (${internal.id}) -> fork of ${golden}, bundle ${bundle.sha256.slice(0, 12)}`,

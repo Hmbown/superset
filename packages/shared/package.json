@@ -69,6 +69,14 @@
 			"types": "./src/page-presence.ts",
 			"default": "./src/page-presence.ts"
 		},
+		"./presence-visits": {
+			"types": "./src/presence-visits.ts",
+			"default": "./src/presence-visits.ts"
+		},
+		"./workspace-access": {
+			"types": "./src/workspace-access.ts",
+			"default": "./src/workspace-access.ts"
+		},
 		"./page-presence-client": {
 			"types": "./src/page-presence-client.ts",
 			"default": "./src/page-presence-client.ts"
@@ -116,6 +124,10 @@
 		"./app-identity": {
 			"types": "./src/app-identity.ts",
 			"default": "./src/app-identity.ts"
+		},
+		"./brand": {
+			"types": "./src/brand.ts",
+			"default": "./src/brand.ts"
 		},
 		"./constants": {
 			"types": "./src/constants.ts",
@@ -204,6 +216,10 @@
 		"./desktop-notices": {
 			"types": "./src/desktop-notices.ts",
 			"default": "./src/desktop-notices.ts"
+		},
+		"./mcp-servers": {
+			"types": "./src/mcp-servers.ts",
+			"default": "./src/mcp-servers.ts"
 		},
 		"./media-files": {
 			"types": "./src/media-files.ts",
@@ -405,9 +421,9 @@
 			"types": "./src/rrule.ts",
 			"default": "./src/rrule.ts"
 		},
-		"./terminal-session-handoff": {
-			"types": "./src/terminal-session-handoff.ts",
-			"default": "./src/terminal-session-handoff.ts"
+		"./session-handoff": {
+			"types": "./src/session-handoff.ts",
+			"default": "./src/session-handoff.ts"
 		},
 		"./theme-colors": {
 			"types": "./src/themes/types.ts",
@@ -432,6 +448,10 @@
 		"./page-storage-ticket": {
 			"types": "./src/page-storage-ticket.ts",
 			"default": "./src/page-storage-ticket.ts"
+		},
+		"./missing-procedure-error": {
+			"types": "./src/missing-procedure-error.ts",
+			"default": "./src/missing-procedure-error.ts"
 		}
 	},
 	"scripts": {
@@ -457,7 +477,7 @@
 		"@types/friendly-words": "1.2.2",
 		"@types/semver": "7.7.1",
 		"@xterm/xterm": "6.1.0-beta.315",
-		"bun-types": "1.4.2",
+		"bun-types": "1.4.3",
 		"typescript": "7.0.2"
 	}
 }
