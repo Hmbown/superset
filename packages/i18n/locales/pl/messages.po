@@ -2838,9 +2838,6 @@ msgstr "Uwierzytelnianie"
 msgid "Authentication Code"
 msgstr "Kod uwierzytelniający"
 
-msgid "Authentication failed"
-msgstr "Uwierzytelnianie nie powiodło się"
-
 msgid "Author"
 msgstr "Autor"
 
@@ -4761,6 +4758,9 @@ msgstr "Menu kontekstowe"
 msgid "Continue"
 msgstr "Kontynuuj"
 
+msgid "Continue in your browser"
+msgstr "Kontynuuj w przeglądarce"
+
 msgid "Continue or fork session"
 msgstr "Kontynuuj lub forkuj sesję"
 
@@ -5398,6 +5398,9 @@ msgstr "Nie udało się automatycznie nazwać „{name}”"
 
 msgid "Couldn't open the screenshot"
 msgstr "Nie udało się otworzyć zrzutu ekranu"
+
+msgid "Couldn't open your browser. Try again."
+msgstr "Nie udało się otworzyć przeglądarki. Spróbuj ponownie."
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Nie udało się przetworzyć tych różnic: {patchParseError}"
@@ -6353,6 +6356,9 @@ msgstr "Dyktowanie jest teraz niedostępne"
 
 msgid "Didn't hear back"
 msgstr "Brak odpowiedzi"
+
+msgid "Didn't open? Use the link below."
+msgstr "Nie otworzyło się? Użyj linku poniżej."
 
 msgid "diff"
 msgstr "różnice"
@@ -8382,6 +8388,9 @@ msgstr "Wstecz"
 msgid "Go back home"
 msgstr "Wróć na stronę główną"
 
+msgid "Go back to {appName} and sign in again."
+msgstr "Wróć do {appName} i zaloguj się ponownie."
+
 msgid "Go back to the previous page in history"
 msgstr "Wróć do poprzedniej strony w historii"
 
@@ -9636,6 +9645,9 @@ msgstr "Ostatnia aktualizacja: {lastUpdated}"
 msgid "Last used"
 msgstr "Ostatnio używane"
 
+msgid "Last used: {lastUsedProviderLabel}"
+msgstr "Ostatnio użyto: {lastUsedProviderLabel}"
+
 msgid "Late 2026"
 msgstr "Koniec 2026"
 
@@ -10527,9 +10539,6 @@ msgstr "Pominięte"
 
 msgid "Missed <0>· 7d</0>"
 msgstr "Pominięte <0>· 7 dni</0>"
-
-msgid "Missing auth state"
-msgstr "Brak stanu uwierzytelniania"
 
 msgid "Missing authorization code. Re-run"
 msgstr "Brak kodu autoryzacji. Uruchom ponownie"
@@ -12043,6 +12052,9 @@ msgstr "Otwórz {0}"
 msgid "Open {0} website"
 msgstr "Otwórz stronę {0}"
 
+msgid "Open {appName}"
+msgstr "Otwórz {appName}"
+
 msgid "Open {appName} on that computer"
 msgstr "Otwórz {appName} na tym komputerze"
 
@@ -12096,6 +12108,9 @@ msgstr "Otwórz gałąź na GitHub"
 
 msgid "Open Browser"
 msgstr "Otwórz przeglądarkę"
+
+msgid "Open browser again"
+msgstr "Otwórz przeglądarkę ponownie"
 
 msgid "Open changes"
 msgstr "Otwórz zmiany"
@@ -12468,6 +12483,9 @@ msgstr "Otwarty"
 
 msgid "opened PR #841 for review"
 msgstr "otworzył PR #841 do przeglądu"
+
+msgid "Opening {appName}…"
+msgstr "Otwieranie {appName}…"
 
 msgid "Opening {what}"
 msgstr "Otwieram {what}"
@@ -13248,9 +13266,6 @@ msgstr "Wybierz organizację"
 
 msgid "Please try again, or restart Paradev on that device."
 msgstr "Spróbuj ponownie lub uruchom ponownie Paradev na tym urządzeniu."
-
-msgid "Please try signing in again from the desktop app."
-msgstr "Spróbuj zalogować się ponownie z aplikacji desktopowej."
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.noApiKeyAuth"
@@ -16183,6 +16198,9 @@ msgstr "Zaloguj się, aby zacząć"
 msgid "Sign in to view this page"
 msgstr "Zaloguj się, aby zobaczyć tę stronę"
 
+msgid "Sign in with {browserProviderLabel}, then come back here."
+msgstr "Zaloguj się przez {browserProviderLabel}, a potem wróć tutaj."
+
 msgid "Sign in with email"
 msgstr "Zaloguj się e-mailem"
 
@@ -16223,6 +16241,9 @@ msgstr "Zarejestruj się przez GitHub"
 
 msgid "Sign up with Google"
 msgstr "Zarejestruj się przez Google"
+
+msgid "Sign-in didn't finish"
+msgstr "Logowanie nie zostało ukończone"
 
 msgid "Sign-in expired"
 msgstr "Logowanie wygasło"
@@ -19926,6 +19947,9 @@ msgstr "Przeglądasz wersję {version}, tylko do odczytu"
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "Możesz dołączyć maksymalnie {MAX_ATTACHMENTS} plików"
 
+msgid "You can close this tab."
+msgstr "Możesz zamknąć tę kartę."
+
 msgid "You can only share with people and teams in this organization"
 msgstr "Możesz udostępniać tylko osobom i zespołom w tej organizacji"
 
@@ -20000,6 +20024,9 @@ msgstr "Jesteś na liście!"
 
 msgid "You're one of our most active users. Come help us build it."
 msgstr "Jesteś jednym z naszych najaktywniejszych użytkowników. Pomóż nam to budować."
+
+msgid "You're signed in"
+msgstr "Zalogowano"
 
 msgid "You're up to date!"
 msgstr "Wszystko aktualne!"

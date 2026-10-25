@@ -2838,9 +2838,6 @@ msgstr "Ověřování"
 msgid "Authentication Code"
 msgstr "Ověřovací kód"
 
-msgid "Authentication failed"
-msgstr "Ověření selhalo"
-
 msgid "Author"
 msgstr "Autor"
 
@@ -4761,6 +4758,9 @@ msgstr "Kontextová nabídka"
 msgid "Continue"
 msgstr "Pokračovat"
 
+msgid "Continue in your browser"
+msgstr "Pokračujte v prohlížeči"
+
 msgid "Continue or fork session"
 msgstr "Pokračovat nebo forkovat relaci"
 
@@ -5398,6 +5398,9 @@ msgstr "Nepodařilo se automaticky pojmenovat „{name}“"
 
 msgid "Couldn't open the screenshot"
 msgstr "Snímek obrazovky se nepodařilo otevřít"
+
+msgid "Couldn't open your browser. Try again."
+msgstr "Prohlížeč se nepodařilo otevřít. Zkuste to znovu."
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Tento diff se nepodařilo zpracovat: {patchParseError}"
@@ -6353,6 +6356,9 @@ msgstr "Diktování teď není dostupné"
 
 msgid "Didn't hear back"
 msgstr "Bez odpovědi"
+
+msgid "Didn't open? Use the link below."
+msgstr "Neotevřelo se? Použijte odkaz níže."
 
 msgid "diff"
 msgstr "rozdíl"
@@ -8382,6 +8388,9 @@ msgstr "Zpět"
 msgid "Go back home"
 msgstr "Zpět na úvod"
 
+msgid "Go back to {appName} and sign in again."
+msgstr "Vraťte se do {appName} a přihlaste se znovu."
+
 msgid "Go back to the previous page in history"
 msgstr "Přejít zpět na předchozí stránku v historii"
 
@@ -9636,6 +9645,9 @@ msgstr "Naposledy aktualizováno: {lastUpdated}"
 msgid "Last used"
 msgstr "Naposledy použito"
 
+msgid "Last used: {lastUsedProviderLabel}"
+msgstr "Naposledy použito: {lastUsedProviderLabel}"
+
 msgid "Late 2026"
 msgstr "Konec 2026"
 
@@ -10527,9 +10539,6 @@ msgstr "Zmeškaná"
 
 msgid "Missed <0>· 7d</0>"
 msgstr "Zmeškaná <0>· 7 d</0>"
-
-msgid "Missing auth state"
-msgstr "Chybí stav ověření"
 
 msgid "Missing authorization code. Re-run"
 msgstr "Chybí autorizační kód. Spusťte znovu"
@@ -12043,6 +12052,9 @@ msgstr "Otevřít {0}"
 msgid "Open {0} website"
 msgstr "Otevřít web {0}"
 
+msgid "Open {appName}"
+msgstr "Otevřít {appName}"
+
 msgid "Open {appName} on that computer"
 msgstr "Otevřete {appName} na tomto počítači"
 
@@ -12096,6 +12108,9 @@ msgstr "Otevřít větev na GitHubu"
 
 msgid "Open Browser"
 msgstr "Otevřít prohlížeč"
+
+msgid "Open browser again"
+msgstr "Znovu otevřít prohlížeč"
 
 msgid "Open changes"
 msgstr "Otevřít změny"
@@ -12468,6 +12483,9 @@ msgstr "Otevřen"
 
 msgid "opened PR #841 for review"
 msgstr "otevřel PR #841 k revizi"
+
+msgid "Opening {appName}…"
+msgstr "Otevírá se {appName}…"
 
 msgid "Opening {what}"
 msgstr "Otevírám {what}"
@@ -13248,9 +13266,6 @@ msgstr "Vyberte prosím organizaci"
 
 msgid "Please try again, or restart Paradev on that device."
 msgstr "Zkuste to znovu nebo na daném zařízení restartujte Paradev."
-
-msgid "Please try signing in again from the desktop app."
-msgstr "Zkuste se prosím znovu přihlásit z desktopové aplikace."
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.noApiKeyAuth"
@@ -16183,6 +16198,9 @@ msgstr "Přihlaste se a můžete začít"
 msgid "Sign in to view this page"
 msgstr "Přihlaste se, abyste zobrazili tuto stránku"
 
+msgid "Sign in with {browserProviderLabel}, then come back here."
+msgstr "Přihlaste se přes {browserProviderLabel} a pak se sem vraťte."
+
 msgid "Sign in with email"
 msgstr "Přihlásit se e-mailem"
 
@@ -16223,6 +16241,9 @@ msgstr "Zaregistrovat se přes GitHub"
 
 msgid "Sign up with Google"
 msgstr "Zaregistrovat se přes Google"
+
+msgid "Sign-in didn't finish"
+msgstr "Přihlášení se nedokončilo"
 
 msgid "Sign-in expired"
 msgstr "Přihlášení vypršelo"
@@ -19926,6 +19947,9 @@ msgstr "Prohlížíte si verzi {version}, jen pro čtení"
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "Můžete přiložit nejvýše {MAX_ATTACHMENTS} souborů"
 
+msgid "You can close this tab."
+msgstr "Tuto kartu můžete zavřít."
+
 msgid "You can only share with people and teams in this organization"
 msgstr "Sdílet můžete jen s lidmi a týmy v této organizaci"
 
@@ -20000,6 +20024,9 @@ msgstr "Jste na seznamu!"
 
 msgid "You're one of our most active users. Come help us build it."
 msgstr "Patříte k našim nejaktivnějším uživatelům. Pojďte nám ho pomoct stavět."
+
+msgid "You're signed in"
+msgstr "Jste přihlášeni"
 
 msgid "You're up to date!"
 msgstr "Máte aktuální verzi!"

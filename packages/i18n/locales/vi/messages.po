@@ -2838,9 +2838,6 @@ msgstr "Xác thực"
 msgid "Authentication Code"
 msgstr "Mã xác thực"
 
-msgid "Authentication failed"
-msgstr "Xác thực thất bại"
-
 msgid "Author"
 msgstr "Tác giả"
 
@@ -4761,6 +4758,9 @@ msgstr "Context Menu"
 msgid "Continue"
 msgstr "Tiếp tục"
 
+msgid "Continue in your browser"
+msgstr "Tiếp tục trong trình duyệt"
+
 msgid "Continue or fork session"
 msgstr "Tiếp tục hoặc fork phiên"
 
@@ -5398,6 +5398,9 @@ msgstr "Không thể tự động đặt tên cho \"{name}\""
 
 msgid "Couldn't open the screenshot"
 msgstr "Không thể mở ảnh chụp màn hình"
+
+msgid "Couldn't open your browser. Try again."
+msgstr "Không thể mở trình duyệt. Hãy thử lại."
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Không thể phân tích diff này: {patchParseError}"
@@ -6353,6 +6356,9 @@ msgstr "Đọc chính tả hiện không khả dụng"
 
 msgid "Didn't hear back"
 msgstr "Không có phản hồi"
+
+msgid "Didn't open? Use the link below."
+msgstr "Không mở được? Dùng liên kết bên dưới."
 
 msgid "diff"
 msgstr "diff"
@@ -8382,6 +8388,9 @@ msgstr "Quay lại"
 msgid "Go back home"
 msgstr "Quay về trang chủ"
 
+msgid "Go back to {appName} and sign in again."
+msgstr "Quay lại {appName} và đăng nhập lại."
+
 msgid "Go back to the previous page in history"
 msgstr "Quay lại trang trước trong lịch sử"
 
@@ -9636,6 +9645,9 @@ msgstr "Cập nhật lần cuối: {lastUpdated}"
 msgid "Last used"
 msgstr "Dùng lần cuối"
 
+msgid "Last used: {lastUsedProviderLabel}"
+msgstr "Dùng lần cuối: {lastUsedProviderLabel}"
+
 msgid "Late 2026"
 msgstr "Cuối 2026"
 
@@ -10527,9 +10539,6 @@ msgstr "Bị bỏ lỡ"
 
 msgid "Missed <0>· 7d</0>"
 msgstr "Bị bỏ lỡ <0>· 7 ngày</0>"
-
-msgid "Missing auth state"
-msgstr "Thiếu trạng thái xác thực"
 
 msgid "Missing authorization code. Re-run"
 msgstr "Thiếu mã cấp quyền. Hãy chạy lại"
@@ -12043,6 +12052,9 @@ msgstr "Mở {0}"
 msgid "Open {0} website"
 msgstr "Mở website {0}"
 
+msgid "Open {appName}"
+msgstr "Mở {appName}"
+
 msgid "Open {appName} on that computer"
 msgstr "Mở {appName} trên máy tính đó"
 
@@ -12096,6 +12108,9 @@ msgstr "Mở nhánh trên GitHub"
 
 msgid "Open Browser"
 msgstr "Mở trình duyệt"
+
+msgid "Open browser again"
+msgstr "Mở lại trình duyệt"
 
 msgid "Open changes"
 msgstr "Mở thay đổi"
@@ -12468,6 +12483,9 @@ msgstr "Đã mở"
 
 msgid "opened PR #841 for review"
 msgstr "đã mở PR #841 để review"
+
+msgid "Opening {appName}…"
+msgstr "Đang mở {appName}…"
 
 msgid "Opening {what}"
 msgstr "Đang mở {what}"
@@ -13248,9 +13266,6 @@ msgstr "Vui lòng chọn một tổ chức"
 
 msgid "Please try again, or restart Paradev on that device."
 msgstr "Vui lòng thử lại hoặc khởi động lại Paradev trên thiết bị đó."
-
-msgid "Please try signing in again from the desktop app."
-msgstr "Vui lòng thử đăng nhập lại từ ứng dụng máy tính."
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.noApiKeyAuth"
@@ -16183,6 +16198,9 @@ msgstr "Đăng nhập để bắt đầu"
 msgid "Sign in to view this page"
 msgstr "Đăng nhập để xem trang này"
 
+msgid "Sign in with {browserProviderLabel}, then come back here."
+msgstr "Đăng nhập bằng {browserProviderLabel}, rồi quay lại đây."
+
 msgid "Sign in with email"
 msgstr "Đăng nhập bằng email"
 
@@ -16223,6 +16241,9 @@ msgstr "Đăng ký bằng GitHub"
 
 msgid "Sign up with Google"
 msgstr "Đăng ký bằng Google"
+
+msgid "Sign-in didn't finish"
+msgstr "Đăng nhập chưa hoàn tất"
 
 msgid "Sign-in expired"
 msgstr "Đăng nhập đã hết hạn"
@@ -19926,6 +19947,9 @@ msgstr "Bạn đang xem phiên bản {version}, chỉ đọc"
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "Bạn có thể đính kèm tối đa {MAX_ATTACHMENTS} tệp"
 
+msgid "You can close this tab."
+msgstr "Bạn có thể đóng tab này."
+
 msgid "You can only share with people and teams in this organization"
 msgstr "Bạn chỉ có thể chia sẻ với người và nhóm trong tổ chức này"
 
@@ -20000,6 +20024,9 @@ msgstr "Bạn đã có trong danh sách!"
 
 msgid "You're one of our most active users. Come help us build it."
 msgstr "Bạn là một trong những người dùng tích cực nhất của chúng tôi. Hãy đến cùng xây dựng nó."
+
+msgid "You're signed in"
+msgstr "Bạn đã đăng nhập"
 
 msgid "You're up to date!"
 msgstr "Bạn đang dùng bản mới nhất!"

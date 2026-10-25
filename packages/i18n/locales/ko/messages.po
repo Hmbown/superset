@@ -2838,9 +2838,6 @@ msgstr "인증"
 msgid "Authentication Code"
 msgstr "인증 코드"
 
-msgid "Authentication failed"
-msgstr "인증 실패"
-
 msgid "Author"
 msgstr "작성자"
 
@@ -4761,6 +4758,9 @@ msgstr "컨텍스트 메뉴"
 msgid "Continue"
 msgstr "계속"
 
+msgid "Continue in your browser"
+msgstr "브라우저에서 계속하세요"
+
 msgid "Continue or fork session"
 msgstr "세션 계속하기 또는 포크"
 
@@ -5398,6 +5398,9 @@ msgstr "\"{name}\"의 이름을 자동으로 지정하지 못했습니다"
 
 msgid "Couldn't open the screenshot"
 msgstr "스크린샷을 열 수 없습니다"
+
+msgid "Couldn't open your browser. Try again."
+msgstr "브라우저를 열 수 없습니다. 다시 시도하세요."
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "이 차이를 해석하지 못했습니다: {patchParseError}"
@@ -6353,6 +6356,9 @@ msgstr "지금은 받아쓰기를 사용할 수 없습니다"
 
 msgid "Didn't hear back"
 msgstr "응답이 없습니다"
+
+msgid "Didn't open? Use the link below."
+msgstr "열리지 않나요? 아래 링크를 사용하세요."
 
 msgid "diff"
 msgstr "차이"
@@ -8382,6 +8388,9 @@ msgstr "뒤로 가기"
 msgid "Go back home"
 msgstr "홈으로 돌아가기"
 
+msgid "Go back to {appName} and sign in again."
+msgstr "{appName}(으)로 돌아가서 다시 로그인하세요."
+
 msgid "Go back to the previous page in history"
 msgstr "기록에서 이전 페이지로 돌아갑니다"
 
@@ -9636,6 +9645,9 @@ msgstr "마지막 업데이트: {lastUpdated}"
 msgid "Last used"
 msgstr "최근 사용"
 
+msgid "Last used: {lastUsedProviderLabel}"
+msgstr "최근 사용: {lastUsedProviderLabel}"
+
 msgid "Late 2026"
 msgstr "2026년 말"
 
@@ -10527,9 +10539,6 @@ msgstr "놓침"
 
 msgid "Missed <0>· 7d</0>"
 msgstr "놓침 <0>· 7일</0>"
-
-msgid "Missing auth state"
-msgstr "인증 상태 누락"
 
 msgid "Missing authorization code. Re-run"
 msgstr "인증 코드가 없습니다. 다시 실행하세요"
@@ -12043,6 +12052,9 @@ msgstr "{0} 열기"
 msgid "Open {0} website"
 msgstr "{0} 웹사이트 열기"
 
+msgid "Open {appName}"
+msgstr "{appName} 열기"
+
 msgid "Open {appName} on that computer"
 msgstr "해당 컴퓨터에서 {appName} 열기"
 
@@ -12096,6 +12108,9 @@ msgstr "GitHub에서 브랜치 열기"
 
 msgid "Open Browser"
 msgstr "브라우저 열기"
+
+msgid "Open browser again"
+msgstr "브라우저 다시 열기"
 
 msgid "Open changes"
 msgstr "변경 열기"
@@ -12468,6 +12483,9 @@ msgstr "열림"
 
 msgid "opened PR #841 for review"
 msgstr "리뷰용 PR #841 생성"
+
+msgid "Opening {appName}…"
+msgstr "{appName}을(를) 여는 중…"
 
 msgid "Opening {what}"
 msgstr "{what} 여는 중"
@@ -13248,9 +13266,6 @@ msgstr "조직을 선택해 주세요"
 
 msgid "Please try again, or restart Paradev on that device."
 msgstr "다시 시도하거나 해당 기기에서 Paradev를 다시 시작해 주세요."
-
-msgid "Please try signing in again from the desktop app."
-msgstr "데스크톱 앱에서 다시 로그인해 주세요."
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.noApiKeyAuth"
@@ -16183,6 +16198,9 @@ msgstr "로그인하고 시작하세요"
 msgid "Sign in to view this page"
 msgstr "이 페이지를 보려면 로그인하세요"
 
+msgid "Sign in with {browserProviderLabel}, then come back here."
+msgstr "{browserProviderLabel}(으)로 로그인한 후 여기로 돌아오세요."
+
 msgid "Sign in with email"
 msgstr "이메일로 로그인"
 
@@ -16223,6 +16241,9 @@ msgstr "GitHub로 가입"
 
 msgid "Sign up with Google"
 msgstr "Google로 가입"
+
+msgid "Sign-in didn't finish"
+msgstr "로그인이 완료되지 않았습니다"
 
 msgid "Sign-in expired"
 msgstr "로그인 만료됨"
@@ -19926,6 +19947,9 @@ msgstr "버전 {version}을 읽기 전용으로 보고 있습니다"
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "파일은 최대 {MAX_ATTACHMENTS}개까지 첨부할 수 있습니다"
 
+msgid "You can close this tab."
+msgstr "이 탭을 닫아도 됩니다."
+
 msgid "You can only share with people and teams in this organization"
 msgstr "이 조직의 사람과 팀하고만 공유할 수 있습니다"
 
@@ -20000,6 +20024,9 @@ msgstr "명단에 등록되었습니다!"
 
 msgid "You're one of our most active users. Come help us build it."
 msgstr "가장 활발히 사용하는 분들 중 한 명이시네요. 함께 만들어 가요."
+
+msgid "You're signed in"
+msgstr "로그인되었습니다"
 
 msgid "You're up to date!"
 msgstr "최신 상태입니다!"

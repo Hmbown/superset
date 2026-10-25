@@ -2838,9 +2838,6 @@ msgstr "Autentikasi"
 msgid "Authentication Code"
 msgstr "Kode Autentikasi"
 
-msgid "Authentication failed"
-msgstr "Autentikasi gagal"
-
 msgid "Author"
 msgstr "Penulis"
 
@@ -4761,6 +4758,9 @@ msgstr "Menu Konteks"
 msgid "Continue"
 msgstr "Lanjutkan"
 
+msgid "Continue in your browser"
+msgstr "Lanjutkan di browser Anda"
+
 msgid "Continue or fork session"
 msgstr "Lanjutkan atau fork sesi"
 
@@ -5398,6 +5398,9 @@ msgstr "Tidak dapat menamai \"{name}\" secara otomatis"
 
 msgid "Couldn't open the screenshot"
 msgstr "Tidak dapat membuka tangkapan layar"
+
+msgid "Couldn't open your browser. Try again."
+msgstr "Tidak dapat membuka browser Anda. Coba lagi."
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Tidak bisa mengurai diff ini: {patchParseError}"
@@ -6353,6 +6356,9 @@ msgstr "Dikte sedang tidak tersedia"
 
 msgid "Didn't hear back"
 msgstr "Tidak ada respons"
+
+msgid "Didn't open? Use the link below."
+msgstr "Tidak terbuka? Gunakan tautan di bawah."
 
 msgid "diff"
 msgstr "diff"
@@ -8382,6 +8388,9 @@ msgstr "Kembali"
 msgid "Go back home"
 msgstr "Kembali ke beranda"
 
+msgid "Go back to {appName} and sign in again."
+msgstr "Kembali ke {appName} dan masuk lagi."
+
 msgid "Go back to the previous page in history"
 msgstr "Kembali ke halaman sebelumnya di riwayat"
 
@@ -9636,6 +9645,9 @@ msgstr "Terakhir diperbarui: {lastUpdated}"
 msgid "Last used"
 msgstr "Terakhir digunakan"
 
+msgid "Last used: {lastUsedProviderLabel}"
+msgstr "Terakhir digunakan: {lastUsedProviderLabel}"
+
 msgid "Late 2026"
 msgstr "Akhir 2026"
 
@@ -10527,9 +10539,6 @@ msgstr "Terlewat"
 
 msgid "Missed <0>· 7d</0>"
 msgstr "Terlewat <0>· 7h</0>"
-
-msgid "Missing auth state"
-msgstr "State auth tidak ada"
 
 msgid "Missing authorization code. Re-run"
 msgstr "Kode otorisasi tidak ada. Jalankan ulang"
@@ -12043,6 +12052,9 @@ msgstr "Buka {0}"
 msgid "Open {0} website"
 msgstr "Buka situs web {0}"
 
+msgid "Open {appName}"
+msgstr "Buka {appName}"
+
 msgid "Open {appName} on that computer"
 msgstr "Buka {appName} di komputer itu"
 
@@ -12096,6 +12108,9 @@ msgstr "Buka branch di GitHub"
 
 msgid "Open Browser"
 msgstr "Buka Browser"
+
+msgid "Open browser again"
+msgstr "Buka browser lagi"
 
 msgid "Open changes"
 msgstr "Buka perubahan"
@@ -12468,6 +12483,9 @@ msgstr "Dibuka"
 
 msgid "opened PR #841 for review"
 msgstr "membuka PR #841 untuk direview"
+
+msgid "Opening {appName}…"
+msgstr "Membuka {appName}…"
 
 msgid "Opening {what}"
 msgstr "Membuka {what}"
@@ -13248,9 +13266,6 @@ msgstr "Silakan pilih sebuah organisasi"
 
 msgid "Please try again, or restart Paradev on that device."
 msgstr "Coba lagi, atau mulai ulang Paradev di perangkat tersebut."
-
-msgid "Please try signing in again from the desktop app."
-msgstr "Silakan coba masuk lagi dari aplikasi desktop."
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.noApiKeyAuth"
@@ -16183,6 +16198,9 @@ msgstr "Masuk untuk memulai"
 msgid "Sign in to view this page"
 msgstr "Masuk untuk melihat halaman ini"
 
+msgid "Sign in with {browserProviderLabel}, then come back here."
+msgstr "Masuk dengan {browserProviderLabel}, lalu kembali ke sini."
+
 msgid "Sign in with email"
 msgstr "Masuk dengan email"
 
@@ -16223,6 +16241,9 @@ msgstr "Daftar dengan GitHub"
 
 msgid "Sign up with Google"
 msgstr "Daftar dengan Google"
+
+msgid "Sign-in didn't finish"
+msgstr "Proses masuk tidak selesai"
 
 msgid "Sign-in expired"
 msgstr "Sesi masuk kedaluwarsa"
@@ -19926,6 +19947,9 @@ msgstr "Anda melihat versi {version}, hanya-baca"
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "Anda dapat melampirkan hingga {MAX_ATTACHMENTS} file"
 
+msgid "You can close this tab."
+msgstr "Anda dapat menutup tab ini."
+
 msgid "You can only share with people and teams in this organization"
 msgstr "Anda hanya dapat berbagi dengan orang dan tim di organisasi ini"
 
@@ -20000,6 +20024,9 @@ msgstr "Anda sudah terdaftar!"
 
 msgid "You're one of our most active users. Come help us build it."
 msgstr "Anda salah satu pengguna teraktif kami. Ayo bantu kami membangunnya."
+
+msgid "You're signed in"
+msgstr "Anda sudah masuk"
 
 msgid "You're up to date!"
 msgstr "Anda sudah memakai versi terbaru!"

@@ -2838,9 +2838,6 @@ msgstr "認証"
 msgid "Authentication Code"
 msgstr "認証コード"
 
-msgid "Authentication failed"
-msgstr "認証に失敗しました"
-
 msgid "Author"
 msgstr "作成者"
 
@@ -4761,6 +4758,9 @@ msgstr "Context Menu"
 msgid "Continue"
 msgstr "続行"
 
+msgid "Continue in your browser"
+msgstr "ブラウザで続行してください"
+
 msgid "Continue or fork session"
 msgstr "セッションを続行またはフォーク"
 
@@ -5398,6 +5398,9 @@ msgstr "「{name}」に自動で名前を付けられませんでした"
 
 msgid "Couldn't open the screenshot"
 msgstr "スクリーンショットを開けませんでした"
+
+msgid "Couldn't open your browser. Try again."
+msgstr "ブラウザを開けませんでした。もう一度お試しください。"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "この差分を解析できませんでした: {patchParseError}"
@@ -6353,6 +6356,9 @@ msgstr "現在、音声入力は利用できません"
 
 msgid "Didn't hear back"
 msgstr "応答がありません"
+
+msgid "Didn't open? Use the link below."
+msgstr "開きませんか？下のリンクを使ってください。"
 
 msgid "diff"
 msgstr "差分"
@@ -8382,6 +8388,9 @@ msgstr "戻る"
 msgid "Go back home"
 msgstr "ホームに戻る"
 
+msgid "Go back to {appName} and sign in again."
+msgstr "{appName} に戻って、もう一度サインインしてください。"
+
 msgid "Go back to the previous page in history"
 msgstr "履歴の前のページに戻る"
 
@@ -9636,6 +9645,9 @@ msgstr "最終更新: {lastUpdated}"
 msgid "Last used"
 msgstr "前回使用"
 
+msgid "Last used: {lastUsedProviderLabel}"
+msgstr "前回使用：{lastUsedProviderLabel}"
+
 msgid "Late 2026"
 msgstr "2026年後半"
 
@@ -10527,9 +10539,6 @@ msgstr "未実行"
 
 msgid "Missed <0>· 7d</0>"
 msgstr "未実行 <0>· 7日</0>"
-
-msgid "Missing auth state"
-msgstr "認証ステートがありません"
 
 msgid "Missing authorization code. Re-run"
 msgstr "認可コードがありません。再実行してください"
@@ -12043,6 +12052,9 @@ msgstr "{0}を開く"
 msgid "Open {0} website"
 msgstr "{0} のウェブサイトを開く"
 
+msgid "Open {appName}"
+msgstr "{appName} を開く"
+
 msgid "Open {appName} on that computer"
 msgstr "そのコンピュータで{appName}を開く"
 
@@ -12096,6 +12108,9 @@ msgstr "GitHubでブランチを開く"
 
 msgid "Open Browser"
 msgstr "ブラウザを開く"
+
+msgid "Open browser again"
+msgstr "ブラウザをもう一度開く"
 
 msgid "Open changes"
 msgstr "変更を開く"
@@ -12468,6 +12483,9 @@ msgstr "オープン"
 
 msgid "opened PR #841 for review"
 msgstr "レビュー用にPR #841を作成"
+
+msgid "Opening {appName}…"
+msgstr "{appName} を開いています…"
 
 msgid "Opening {what}"
 msgstr "{what} を開いています"
@@ -13248,9 +13266,6 @@ msgstr "組織を選択してください"
 
 msgid "Please try again, or restart Paradev on that device."
 msgstr "もう一度試すか、そのデバイスで Paradev を再起動してください。"
-
-msgid "Please try signing in again from the desktop app."
-msgstr "デスクトップアプリからもう一度サインインしてください。"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.noApiKeyAuth"
@@ -16183,6 +16198,9 @@ msgstr "サインインして始めましょう"
 msgid "Sign in to view this page"
 msgstr "サインインしてこのページを表示"
 
+msgid "Sign in with {browserProviderLabel}, then come back here."
+msgstr "{browserProviderLabel} でサインインしてから、ここに戻ってください。"
+
 msgid "Sign in with email"
 msgstr "メールでサインイン"
 
@@ -16223,6 +16241,9 @@ msgstr "GitHubでサインアップ"
 
 msgid "Sign up with Google"
 msgstr "Googleでサインアップ"
+
+msgid "Sign-in didn't finish"
+msgstr "サインインが完了しませんでした"
 
 msgid "Sign-in expired"
 msgstr "サインインの期限切れ"
@@ -19926,6 +19947,9 @@ msgstr "バージョン {version} を閲覧中です（読み取り専用）"
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "添付できるファイルは最大{MAX_ATTACHMENTS}件です"
 
+msgid "You can close this tab."
+msgstr "このタブは閉じてかまいません。"
+
 msgid "You can only share with people and teams in this organization"
 msgstr "共有できるのはこの組織内のユーザーとチームのみです"
 
@@ -20000,6 +20024,9 @@ msgstr "登録が完了しました!"
 
 msgid "You're one of our most active users. Come help us build it."
 msgstr "最もアクティブなユーザーのお一人です。一緒に作りませんか。"
+
+msgid "You're signed in"
+msgstr "サインインしました"
 
 msgid "You're up to date!"
 msgstr "最新の状態です!"
