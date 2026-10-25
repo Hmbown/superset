@@ -56,9 +56,10 @@ describe("unlisted blog posts", () => {
 	});
 });
 
-test("frontmatter FAQs match the FAQ section in the post body", () => {
+test("posts with a frontmatter FAQ do not repeat it in the body", () => {
 	for (const post of getBlogPosts()) {
 		if (!post.faq) continue;
-		expect(post.faq).toEqual(extractComparisonFaqItems(post.content));
+		expect(post.faq.length).toBeGreaterThan(0);
+		expect(extractComparisonFaqItems(post.content)).toEqual([]);
 	}
 });
