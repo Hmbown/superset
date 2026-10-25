@@ -183,7 +183,10 @@ export default async function TeamPage() {
 							Combinator, Paul Graham, and founders we admire.
 						</Trans>
 					</p>
-					<Investors investors={about.investors} />
+					<Investors
+						investors={about.investors}
+						moreInvestors={about.moreInvestors}
+					/>
 				</section>
 
 				<section className="mb-24 md:mb-32">
