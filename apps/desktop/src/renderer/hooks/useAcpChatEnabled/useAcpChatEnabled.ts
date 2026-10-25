@@ -1,13 +1,15 @@
 import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { useFeatureFlagEnabled, usePostHog } from "posthog-js/react";
 import { useCallback } from "react";
+import { useAcpChatStore } from "renderer/stores/acp-chat";
 
 export type AcpChatAvailability = "enabled" | "disabled" | "resolving";
 
 export function useAcpChatEnabled(): AcpChatAvailability {
 	const flag = useFeatureFlagEnabled(FEATURE_FLAGS.ACP_CHAT);
+	const chosen = useAcpChatStore((state) => state.enabled);
 	if (flag === undefined) return "resolving";
-	return flag ? "enabled" : "disabled";
+	return flag && chosen !== false ? "enabled" : "disabled";
 }
 
 const RESOLVE_TIMEOUT_MS = 2_000;
