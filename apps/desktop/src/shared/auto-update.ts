@@ -24,4 +24,4 @@ export interface AutoUpdateStatusEvent {
 	progress?: AutoUpdateProgress;
 }
 
-export const RELEASES_URL = "https://github.com/paradevai/superset/releases";
+export const RELEASES_URL = "https://github.com/paradevai/paradev/releases";

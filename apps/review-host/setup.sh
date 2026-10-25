@@ -37,7 +37,7 @@ if [ ! -x /opt/superset/bin/superset-host ] || [ "$INSTALLED" != "$SUPERSET_VERS
   rm -rf /opt/superset.new
   mkdir -p /opt/superset.new
   curl -fsSL -o /tmp/superset.tar.gz \
-    "https://github.com/paradevai/superset/releases/download/cli-v${SUPERSET_VERSION}/superset-linux-x64.tar.gz"
+    "https://github.com/paradevai/paradev/releases/download/cli-v${SUPERSET_VERSION}/superset-linux-x64.tar.gz"
   tar -xzf /tmp/superset.tar.gz -C /opt/superset.new
   rm -f /tmp/superset.tar.gz
   echo "$SUPERSET_VERSION" > /opt/superset.new/.superset-version
