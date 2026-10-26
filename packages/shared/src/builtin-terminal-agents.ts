@@ -63,7 +63,7 @@ export const BUILTIN_TERMINAL_AGENTS = [
 		description:
 			"Open-source Rust terminal coding agent supporting hosted and local models.",
 		command: "codewhale",
-		promptCommand: "codewhale --fresh --prompt",
+		promptCommand: "codewhale run --fresh --prompt=",
 		resumeCommand: "codewhale --resume",
 		includeInDefaultTerminalPresets: true,
 	}),

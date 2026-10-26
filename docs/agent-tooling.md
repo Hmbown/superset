@@ -38,8 +38,9 @@ description matches the task.
 
 Install with `npm install -g codewhale` and configure model access in Codewhale.
 Add the Codewhale preset in Settings → Agents. Task prompt launches use `--fresh` to
-avoid resuming another task in the same workspace, with `--prompt` for the initial
-task. Resume uses `codewhale --resume <session-id>` with a Codewhale session ID.
+avoid resuming another task in the same workspace. `run --prompt=<text>` preserves
+flag-like prompts and avoids the 0.10.2 root parser issue without bypassing approvals.
+Resume uses `codewhale --resume <session-id>` with a Codewhale session ID.
 These flags were checked against the published
 0.10.2 binary. The preset preserves Codewhale's approval and sandbox settings.
 
